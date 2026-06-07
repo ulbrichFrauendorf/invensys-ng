@@ -19,6 +19,7 @@ export * from './lib/components/dialog/base-dialog.component';
 export * from './lib/components/dialog/inner/dialog-actions/dialog-actions.component';
 export * from './lib/components/dialog/services/dialog.service';
 export * from './lib/components/dialog/services/dialog.interfaces';
+export * from './lib/components/divider/divider.component';
 export * from './lib/components/empty-state/empty-state.component';
 export * from './lib/components/input-text/input-text.component';
 export * from './lib/components/textarea/textarea.component';

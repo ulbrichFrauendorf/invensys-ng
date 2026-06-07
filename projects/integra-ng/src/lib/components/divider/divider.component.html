@@ -1,0 +1,18 @@
+<div
+  class="i-divider"
+  [class.i-divider--horizontal]="layout === 'horizontal'"
+  [class.i-divider--vertical]="layout === 'vertical'"
+  [class.i-divider--align-start]="align === 'start'"
+  [class.i-divider--align-center]="align === 'center'"
+  [class.i-divider--align-end]="align === 'end'"
+  role="separator"
+  [attr.aria-orientation]="layout"
+>
+  @if (layout === 'horizontal') {
+  <span class="i-divider-line"></span>
+  <span class="i-divider-content"><ng-content></ng-content></span>
+  <span class="i-divider-line"></span>
+  } @else {
+  <span class="i-divider-line"></span>
+  }
+</div>

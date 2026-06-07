@@ -1,0 +1,64 @@
+<div class="dividers-demo">
+  <header class="demo-header">
+    <h1>Divider Component</h1>
+    <p>
+      Visual separators for grouping content. Supports horizontal and vertical
+      layouts, optional labels, and label alignment.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Basic Usage -->
+    <app-demo-card [title]="'Basic Divider'" [sourceCode]="codeExamples.basic">
+      <i-divider />
+    </app-demo-card>
+
+    <!-- With Content -->
+    <app-demo-card
+      [title]="'Dividers with Labels'"
+      [sourceCode]="codeExamples.withContent"
+    >
+      <i-divider>Details</i-divider>
+      <i-divider align="start">Start aligned</i-divider>
+      <i-divider align="center">Center aligned</i-divider>
+      <i-divider align="end">End aligned</i-divider>
+    </app-demo-card>
+
+    <!-- Vertical -->
+    <app-demo-card
+      [title]="'Vertical Divider'"
+      [sourceCode]="codeExamples.vertical"
+    >
+      <div class="vertical-example">
+        <span>Left content</span>
+        <i-divider layout="vertical" />
+        <span>Right content</span>
+      </div>
+    </app-demo-card>
+
+    <!-- Practical Usage -->
+    <app-demo-card
+      [title]="'Practical Usage'"
+      [sourceCode]="codeExamples.usage"
+    >
+      <div class="usage-example">
+        <section>
+          <h3>Profile</h3>
+          <p>Basic account information and preferences.</p>
+        </section>
+
+        <i-divider>Permissions</i-divider>
+
+        <section>
+          <h3>Access</h3>
+          <p>Role, claims, and data access settings.</p>
+        </section>
+      </div>
+    </app-demo-card>
+
+    <!-- Features -->
+    <app-demo-card [title]="'Features'">
+      <app-features-list [features]="features"></app-features-list>
+    </app-demo-card>
+  </div>
+</div>

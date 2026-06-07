@@ -1,0 +1,11 @@
+@use '../../themes/color-variables.scss' as colors;
+
+@mixin i-divider-theme() {
+  .i-divider {
+    color: colors.$color-text-secondary;
+
+    .i-divider-line {
+      background: colors.$color-surface-border;
+    }
+  }
+}

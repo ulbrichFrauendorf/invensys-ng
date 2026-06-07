@@ -1,0 +1,74 @@
+@use './divider.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
+
+@include theme.i-divider-theme();
+
+:host {
+  display: block;
+}
+
+:host:has(.i-divider--vertical) {
+  display: inline-flex;
+  align-self: stretch;
+}
+
+.i-divider {
+  display: flex;
+  align-items: center;
+
+  &--horizontal {
+    width: 100%;
+    min-height: 1.5rem;
+    margin: 1rem 0;
+
+    .i-divider-line {
+      height: 1px;
+      min-width: 1rem;
+    }
+
+    .i-divider-content {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 0 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+
+      &:empty {
+        display: none;
+      }
+    }
+
+    &.i-divider--align-start {
+      .i-divider-line:first-child {
+        max-width: 2rem;
+      }
+    }
+
+    &.i-divider--align-center {
+      .i-divider-line {
+        flex: 1 1 0;
+      }
+    }
+
+    &.i-divider--align-end {
+      .i-divider-line:last-child {
+        max-width: 2rem;
+      }
+    }
+  }
+
+  &--vertical {
+    align-self: stretch;
+    justify-content: center;
+    min-height: 2rem;
+    margin: 0 1rem;
+
+    .i-divider-line {
+      width: 1px;
+      min-height: 100%;
+    }
+  }
+}

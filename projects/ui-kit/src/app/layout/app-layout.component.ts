@@ -124,6 +124,11 @@ export class AppLayoutComponent {
           routerLink: ['/components/cards'],
         },
         {
+          label: 'Dividers',
+          icon: 'pi pi-fw pi-minus',
+          routerLink: ['/components/dividers'],
+        },
+        {
           label: 'Panels',
           icon: 'pi pi-fw pi-window-maximize',
           routerLink: ['/components/panels'],

@@ -1,0 +1,26 @@
+@use '../shared-demo-styles.scss' as *;
+
+.dividers-demo {
+  @extend .demo-component;
+}
+
+.vertical-example {
+  display: flex;
+  align-items: center;
+  min-height: 4rem;
+}
+
+.usage-example {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+}

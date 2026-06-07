@@ -32,6 +32,7 @@ import { OverlayPanelsComponent } from './components/overlay-panels/overlay-pane
 import { ProgressSpinnersComponent } from './components/progress-spinners/progress-spinners.component';
 import { NoContentComponent } from './components/no-content/no-content.component';
 import { TogglesComponent } from './components/toggles/toggles.component';
+import { DividersComponent } from './components/dividers/dividers.component';
 
 export const routes: Routes = [
   {
@@ -67,6 +68,7 @@ export const routes: Routes = [
             component: ConfirmationDialogsComponent,
           },
           { path: 'dialogs', component: DialogsComponent },
+          { path: 'dividers', component: DividersComponent },
           { path: 'input-texts', component: InputTextsComponent },
           { path: 'textareas', component: TextareasComponent },
           { path: 'layouts', component: LayoutsComponent },

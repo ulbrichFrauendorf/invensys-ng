@@ -1,0 +1,10 @@
+.angular
+.codex
+.git
+.gitignore
+dist
+node_modules
+npm-debug.log
+Dockerfile
+docker-compose.override.yml
+*.md

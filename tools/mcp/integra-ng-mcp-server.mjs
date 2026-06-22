@@ -326,6 +326,20 @@ function buildUsageMarkdown(item) {
     lines.push('', 'Supports Angular forms APIs such as `ngModel`, `formControl`, or `formControlName`.');
   }
 
+  if (item.id === 'i-layout') {
+    lines.push(
+      '',
+      '## Theme Initialization',
+      'When using the built-in light/dark theme toggle, initialize the body theme class before Angular bootstraps. Add this script after `</body>` in `src/index.html` so first paint uses the saved `viewModeColorScheme` value or `light` by default:',
+      '```html',
+      '<script>',
+      '  const colorSchemeSet = localStorage.getItem("viewModeColorScheme") || "light";',
+      '  document.body.classList.add(colorSchemeSet === "dark" ? "dark" : "light");',
+      '</script>',
+      '```'
+    );
+  }
+
   if (item.inputs.length) {
     lines.push('', '## Inputs');
     for (const input of item.inputs) {

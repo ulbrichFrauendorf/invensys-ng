@@ -59,6 +59,19 @@ export class AppComponent {
 }
 ```
 
+### Theme Initialization
+
+When `showThemeToggle` is enabled, initialize the body theme class before Angular bootstraps so the first paint uses the saved mode. Add this script after `</body>` in `src/index.html`:
+
+```html
+<script>
+  const colorSchemeSet = localStorage.getItem("viewModeColorScheme") || "light";
+  document.body.classList.add(colorSchemeSet === "dark" ? "dark" : "light");
+</script>
+```
+
+This mirrors the layout service and topbar toggle, which persist the mode in `viewModeColorScheme` and switch `body.light` / `body.dark` classes.
+
 ### Configuration
 
 #### LayoutConfig

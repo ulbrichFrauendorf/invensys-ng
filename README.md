@@ -168,7 +168,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo usermod -aG docker deploy
+sudo usermod -aG docker github-actions
 ```
 
 Log out and back in after adding the deploy user to the Docker group.
@@ -178,17 +178,17 @@ Log out and back in after adding the deploy user to the Docker group.
 Create the app folder:
 
 ```bash
-sudo mkdir -p /opt/integra-ng
-sudo chown deploy:deploy /opt/integra-ng
+sudo mkdir -p /home/github-actions/sites/invensys-ng
+sudo chown -R github-actions:github-actions /home/github-actions
 ```
 
 Clone the repository:
 
 ```bash
-sudo -iu deploy
-cd /opt/integra-ng
+sudo -iu github-actions
+cd /home/github-actions/sites/invensys-ng
 git clone <repository-url> .
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 exit
 ```
 
@@ -255,8 +255,8 @@ Deploy from your workstation with the included PowerShell helper:
 ```powershell
 .\scripts\deploy-prod.ps1 `
   -HostName integra.web.za `
-  -User deploy `
-  -RemotePath /opt/integra-ng `
+  -User github-actions `
+  -RemotePath /home/github-actions/sites/invensys-ng `
   -Branch main `
   -RepositoryUrl <repository-url>
 ```
@@ -264,7 +264,7 @@ Deploy from your workstation with the included PowerShell helper:
 After the first deploy, `-RepositoryUrl` is optional because the remote checkout already exists:
 
 ```powershell
-.\scripts\deploy-prod.ps1 -HostName integra.web.za -User deploy -RemotePath /opt/integra-ng -Branch main
+.\scripts\deploy-prod.ps1 -HostName integra.web.za -User github-actions -RemotePath /home/github-actions/sites/invensys-ng -Branch main
 ```
 
 The deploy script connects over SSH, updates the Git checkout, rebuilds the Docker image, restarts the container, and prunes unused images.
@@ -284,19 +284,20 @@ NPM publishing still uses OIDC trusted publishing and only runs for `v*` tags.
 Configure these GitHub repository secrets:
 
 ```text
-INTEGRA_NG_SSH_HOST  production host, for example integra.web.za
-INTEGRA_NG_SSH_USER  SSH user, for example deploy
-INTEGRA_NG_SSH_KEY   private SSH key for the deploy user
-INTEGRA_NG_SSH_PORT  optional SSH port, defaults to 22
-INTEGRA_NG_APP_DIR   optional app directory, defaults to /opt/integra-ng
+DEPLOY_SSH_HOST        production host, for example integra.web.za
+DEPLOY_SSH_USER        SSH user, for example github-actions
+DEPLOY_SSH_KEY         private SSH key for the deploy user
+DEPLOY_SSH_PORT        optional SSH port, defaults to 22
+DEPLOY_SSH_PASSPHRASE  optional; leave unset if the key has no passphrase
+DEPLOY_APP_PATH        optional app directory, defaults to /home/github-actions/sites/invensys-ng
 ```
 
-The server must already have the repository checked out in `INTEGRA_NG_APP_DIR`. The action runs:
+The server must already have the repository checked out in `DEPLOY_APP_PATH`. The action runs:
 
 ```bash
 git fetch --all --tags --prune
 git checkout --force <github-sha>
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 docker image prune -f
 ```
 
@@ -305,11 +306,11 @@ docker image prune -f
 The same deploy can be run manually:
 
 ```bash
-ssh deploy@integra.web.za
-cd /opt/integra-ng
+ssh github-actions@integra.web.za
+cd /home/github-actions/sites/invensys-ng
 git fetch origin main
 git reset --hard origin/main
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 docker image prune -f
 ```
 

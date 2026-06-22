@@ -11,14 +11,13 @@ Assumptions:
 - GitHub Actions may reuse the same server SSH key and secret values for every site on this server.
 - Each site lives under `/home/github-actions/sites/<site-name>`.
 
-The guide uses `ng` as the example site name. Replace these values per site:
+This guide uses this repository's production site values:
 
 ```bash
-APP_NAME="ng"
-GITHUB_REPO="ulbrichFrauendorf/ngng"
+APP_NAME="invensys-ng"
+GITHUB_REPO="ulbrichFrauendorf/invensys-ng"
 APP_PATH="/home/github-actions/sites/${APP_NAME}"
 WEB_PORT="8083"
-BRANCH="main"
 ```
 
 ## 1. Create The Shared Linux User
@@ -94,7 +93,7 @@ Run as `root` on the Ubuntu server.
 Each repository must have its own deploy key because GitHub does not allow the same deploy key to be attached to multiple repositories.
 
 ```bash
-APP_NAME="ng"
+APP_NAME="invensys-ng"
 GITHUB_REPO="ulbrichFrauendorf/invensys-ng"
 
 sudo -u github-actions mkdir -p /home/github-actions/.ssh
@@ -161,34 +160,21 @@ DEPLOY_SSH_PASSPHRASE
 Add site-specific secrets:
 
 ```text
-DEPLOY_APP_NAME    ng
-DEPLOY_APP_PATH    /home/github-actions/sites/ng
-DEPLOY_WEB_PORT    8083
+DEPLOY_APP_PATH    /home/github-actions/sites/invensys-ng
 ```
 
-Add the SQL password for the existing SQL Server:
+This production container is a Dockerized Angular UI kit plus the local MCP server, using `docker-compose.yml`, `Dockerfile`, and `docker/nginx/default.conf`.
+
+The deploy workflow only needs SSH access to the server and the app directory:
 
 ```text
-MSSQL_SA_PASSWORD
+DEPLOY_SSH_HOST
+DEPLOY_SSH_PORT
+DEPLOY_SSH_USER
+DEPLOY_SSH_KEY
+DEPLOY_SSH_PASSPHRASE  optional; leave unset if the key has no passphrase
+DEPLOY_APP_PATH
 ```
-
-For this repository, production is app-only by default. It expects SQL Server to already exist and be reachable from the app container through the Ubuntu host on port `1433`.
-
-`docker-compose.production.yml` builds this connection string automatically:
-
-```text
-Server=host.docker.internal,1433;Database=invensys.ng;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true
-```
-
-If SQL Server is not published on the Ubuntu host port `1433`, update `docker-compose.production.yml` before deploying.
-
-The SQL service in `docker-compose.production.yml` is behind the `local-sql` profile. It will not start during the normal deployment. To intentionally create a dedicated SQL container for this app, deploy with:
-
-```bash
-docker compose --profile local-sql -f docker-compose.production.yml up -d --remove-orphans
-```
-
-For your preferred setup, do not use the `local-sql` profile.
 
 ## 5. Deploy A Release
 
@@ -210,6 +196,15 @@ GitHub -> Actions -> Deploy Production -> Run workflow
 ```
 
 Use `main`, a tag like `v1.0.0`, or a commit SHA as the `ref`.
+
+The workflow runs the same production path as the local script:
+
+```bash
+git fetch --all --tags --prune
+git checkout --force <github-sha>
+docker compose up -d --build --remove-orphans
+docker image prune -f
+```
 
 ## 6. Add Host Nginx And SSL
 

@@ -4,6 +4,8 @@ param(
 
   [string]$User = "github-actions",
   [string]$RemotePath = "/home/github-actions/sites/invensys-ng",
+  [string]$AppName = "invensys-ng",
+  [string]$WebPort = "8083",
   [string]$Branch = "main",
   [string]$RepositoryUrl = ""
 )
@@ -21,7 +23,7 @@ if ($RepositoryUrl) {
   ssh $target "cd $RemotePath && if [ ! -d .git ]; then echo 'Missing git checkout. Re-run with -RepositoryUrl <repo-url> for first deploy.' >&2; exit 2; fi"
 }
 ssh $target "cd $RemotePath && git fetch origin $Branch && git reset --hard origin/$Branch"
-ssh $target "cd $RemotePath && docker compose up -d --build --remove-orphans"
+ssh $target "cd $RemotePath && COMPOSE_PROJECT_NAME=$AppName DEPLOY_APP_NAME=$AppName DEPLOY_WEB_PORT=$WebPort docker compose up -d --build --remove-orphans"
 ssh $target "cd $RemotePath && docker image prune -f"
 
 Write-Host "Deployment complete. Check the configured public site and /health endpoint."

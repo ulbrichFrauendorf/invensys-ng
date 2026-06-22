@@ -100,7 +100,7 @@ Integra NG is deployed as a Dockerized app with:
 - The integra-ng MCP server running as a Node sidecar inside the same container.
 - Host nginx terminating TLS and reverse proxying public traffic to the container.
 
-The container listens on `127.0.0.1:8081` on the host. The public domain, such as `https://integra.web.za`, should be served by host nginx.
+The container listens on `127.0.0.1:8083` on the host by default. The public domain, such as `https://integra.web.za`, should be served by host nginx.
 
 ### Shared Server Port Allocation
 
@@ -110,9 +110,9 @@ Recommended host port allocation:
 
 ```text
 integraflow  keep existing port
-integra-ng   127.0.0.1:8081
-iserve       127.0.0.1:8082
-itrace       127.0.0.1:8083
+integra-ng   127.0.0.1:8083
+itrace       127.0.0.1:8082
+iserve       choose an unused localhost port
 ```
 
 Host nginx should route each public domain to the correct localhost port. This avoids Docker port collisions while keeping every app private behind nginx.
@@ -146,9 +146,9 @@ docker compose up -d --build
 Then check:
 
 ```bash
-curl http://127.0.0.1:8081/
-curl http://127.0.0.1:8081/health
-curl -X POST http://127.0.0.1:8081/mcp \
+curl http://127.0.0.1:8083/
+curl http://127.0.0.1:8083/health
+curl -X POST http://127.0.0.1:8083/mcp \
   -H "content-type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
@@ -195,7 +195,7 @@ exit
 The container should now be reachable from the server itself:
 
 ```bash
-curl http://127.0.0.1:8081/health
+curl http://127.0.0.1:8083/health
 ```
 
 Expected response:
@@ -214,7 +214,7 @@ server {
     server_name integra.web.za;
 
     location / {
-        proxy_pass http://127.0.0.1:8081;
+        proxy_pass http://127.0.0.1:8083;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -289,7 +289,9 @@ DEPLOY_SSH_USER        SSH user, for example github-actions
 DEPLOY_SSH_KEY         private SSH key for the deploy user
 DEPLOY_SSH_PORT        optional SSH port, defaults to 22
 DEPLOY_SSH_PASSPHRASE  optional; leave unset if the key has no passphrase
+DEPLOY_APP_NAME        optional Compose app/container name, defaults to invensys-ng
 DEPLOY_APP_PATH        optional app directory, defaults to /home/github-actions/sites/invensys-ng
+DEPLOY_WEB_PORT        optional host localhost port, defaults to 8083
 ```
 
 The server must already have the repository checked out in `DEPLOY_APP_PATH`. The action runs:
@@ -297,6 +299,7 @@ The server must already have the repository checked out in `DEPLOY_APP_PATH`. Th
 ```bash
 git fetch --all --tags --prune
 git checkout --force <github-sha>
+export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
 docker compose up -d --build --remove-orphans
 docker image prune -f
 ```

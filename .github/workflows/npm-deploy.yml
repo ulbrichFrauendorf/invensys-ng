@@ -84,10 +84,15 @@ jobs:
             set -eu
 
             APP_DIR="${{ secrets.DEPLOY_APP_PATH || '/home/github-actions/sites/invensys-ng' }}"
+            DEPLOY_APP_NAME="${{ secrets.DEPLOY_APP_NAME || 'invensys-ng' }}"
+            DEPLOY_WEB_PORT="${{ secrets.DEPLOY_WEB_PORT || '8083' }}"
             DEPLOY_REF="${{ github.sha }}"
 
             cd "$APP_DIR"
             git fetch --all --tags --prune
             git checkout --force "$DEPLOY_REF"
+            export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
+            export DEPLOY_APP_NAME
+            export DEPLOY_WEB_PORT
             docker compose up -d --build --remove-orphans
             docker image prune -f

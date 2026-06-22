@@ -160,7 +160,9 @@ DEPLOY_SSH_PASSPHRASE
 Add site-specific secrets:
 
 ```text
+DEPLOY_APP_NAME    invensys-ng
 DEPLOY_APP_PATH    /home/github-actions/sites/invensys-ng
+DEPLOY_WEB_PORT    8083
 ```
 
 This production container is a Dockerized Angular UI kit plus the local MCP server, using `docker-compose.yml`, `Dockerfile`, and `docker/nginx/default.conf`.
@@ -173,7 +175,9 @@ DEPLOY_SSH_PORT
 DEPLOY_SSH_USER
 DEPLOY_SSH_KEY
 DEPLOY_SSH_PASSPHRASE  optional; leave unset if the key has no passphrase
+DEPLOY_APP_NAME
 DEPLOY_APP_PATH
+DEPLOY_WEB_PORT
 ```
 
 ## 5. Deploy A Release
@@ -202,6 +206,7 @@ The workflow runs the same production path as the local script:
 ```bash
 git fetch --all --tags --prune
 git checkout --force <github-sha>
+export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
 docker compose up -d --build --remove-orphans
 docker image prune -f
 ```

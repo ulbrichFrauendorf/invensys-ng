@@ -3,14 +3,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: integra-ng:latest
-    container_name: integra-ng
+    image: ${DEPLOY_APP_NAME:-invensys-ng}:latest
+    container_name: ${DEPLOY_APP_NAME:-invensys-ng}
     restart: unless-stopped
     environment:
       NODE_ENV: production
       INTEGRA_NG_MCP_CATALOG_PATH: /app/dist/mcp/integra-ng-catalog.json
     ports:
-      - "127.0.0.1:8081:8080"
+      - "127.0.0.1:${DEPLOY_WEB_PORT:-8083}:8080"
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/health"]
       interval: 30s

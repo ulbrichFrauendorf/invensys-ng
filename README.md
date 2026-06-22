@@ -267,7 +267,7 @@ After the first deploy, `-RepositoryUrl` is optional because the remote checkout
 .\scripts\deploy-prod.ps1 -HostName integra.web.za -User github-actions -RemotePath /home/github-actions/sites/invensys-ng -Branch main
 ```
 
-The deploy script connects over SSH, updates the Git checkout, rebuilds the Docker image, restarts the container, and prunes unused images.
+The deploy script connects over SSH, updates the Git checkout, rebuilds the Docker image, restarts the container, waits for `/health`, and prunes unused images.
 
 ### GitHub Actions Deployment
 

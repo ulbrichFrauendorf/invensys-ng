@@ -5,7 +5,7 @@ This is a root-first walkthrough for deploying one or more sites from GitHub Act
 Assumptions:
 
 - You are logged into the Ubuntu server as `root`.
-- Docker is already installed.
+- Docker, Git, and curl are already installed.
 - All sites are deployed by one Linux user: `github-actions`.
 - Each repository gets its own GitHub deploy key.
 - GitHub Actions may reuse the same server SSH key and secret values for every site on this server.

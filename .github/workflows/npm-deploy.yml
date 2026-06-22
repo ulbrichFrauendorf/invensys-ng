@@ -22,6 +22,10 @@ on:
         required: true
         default: false
 
+concurrency:
+  group: production-deploy-${{ github.repository }}
+  cancel-in-progress: true
+
 # Required for OIDC trusted publishing
 permissions:
   contents: read
@@ -47,7 +51,7 @@ jobs:
           registry-url: "https://registry.npmjs.org/"
 
       - name: Install root dependencies
-        run: npm install
+        run: npm ci
 
       - name: Update version in package.json
         run: |
@@ -71,6 +75,19 @@ jobs:
       contents: read
 
     steps:
+      - name: Preflight SSH connectivity
+        env:
+          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+          SSH_PORT: ${{ secrets.DEPLOY_SSH_PORT || 22 }}
+        run: |
+          set -euo pipefail
+          echo "Testing SSH TCP connectivity..."
+          if ! nc -vz -w 10 "$SSH_HOST" "$SSH_PORT"; then
+            echo "Unable to reach $SSH_HOST:$SSH_PORT from this GitHub runner."
+            echo "Check firewall/security-group allowlists and SSH daemon bind/port settings."
+            exit 1
+          fi
+
       - name: Deploy Docker site over SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -80,6 +97,8 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ secrets.DEPLOY_SSH_PORT || 22 }}
           script_stop: true
+          timeout: 120s
+          command_timeout: 60m
           script: |
             set -eu
 
@@ -88,11 +107,74 @@ jobs:
             DEPLOY_WEB_PORT="${{ secrets.DEPLOY_WEB_PORT || '8083' }}"
             DEPLOY_REF="${{ github.sha }}"
 
+            echo "=== Deploying ${DEPLOY_APP_NAME} ${DEPLOY_REF} ==="
+
+            if [ "$(whoami)" != "github-actions" ]; then
+              echo "DEPLOY_SSH_USER must be github-actions."
+              exit 1
+            fi
+
+            path_prefix="/home/github-actions/sites/"
+            if [ "${APP_DIR#"$path_prefix"}" = "$APP_DIR" ]; then
+              echo "DEPLOY_APP_PATH must be under /home/github-actions/sites/."
+              exit 1
+            fi
+
+            if ! printf '%s' "$DEPLOY_APP_NAME" | grep -Eq '^[A-Za-z0-9._-]+$'; then
+              echo "DEPLOY_APP_NAME may only contain letters, numbers, dot, underscore, and dash."
+              exit 1
+            fi
+
+            if ! printf '%s' "$DEPLOY_WEB_PORT" | grep -Eq '^[0-9]+$'; then
+              echo "DEPLOY_WEB_PORT must be numeric."
+              exit 1
+            fi
+
+            mkdir -p "$APP_DIR"
             cd "$APP_DIR"
+
+            if [ ! -d ".git" ]; then
+              rm -rf .docker
+              if [ -n "$(find . -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+                echo "DEPLOY_APP_PATH exists but is not a git checkout: $APP_DIR"
+                echo "Move or clean this directory, then rerun the deployment."
+                ls -la
+                exit 1
+              fi
+              git clone "git@github.com-${DEPLOY_APP_NAME}:${{ github.repository }}.git" .
+            fi
+
+            export HOME="/home/github-actions"
+            export DOCKER_CONFIG="$APP_DIR/.docker"
+            mkdir -p "$DOCKER_CONFIG"
+            chmod 700 "$DOCKER_CONFIG"
+
             git fetch --all --tags --prune
             git checkout --force "$DEPLOY_REF"
             export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
             export DEPLOY_APP_NAME
             export DEPLOY_WEB_PORT
             docker compose up -d --build --remove-orphans
+            docker compose ps
+
+            health_url="http://127.0.0.1:${DEPLOY_WEB_PORT}/health"
+            echo "Waiting for app health at ${health_url}"
+            attempt=1
+            while [ "$attempt" -le 60 ]; do
+              if curl -fsS "$health_url" >/dev/null 2>&1; then
+                echo "App health check passed"
+                break
+              fi
+
+              attempt=$((attempt + 1))
+              sleep 5
+            done
+
+            if [ "$attempt" -gt 60 ]; then
+              echo "App health check failed at ${health_url}"
+              docker compose logs --tail=200 integra-ng
+              exit 1
+            fi
+
             docker image prune -f
+            echo "=== Deployment of ${DEPLOY_APP_NAME} ${DEPLOY_REF} complete ==="

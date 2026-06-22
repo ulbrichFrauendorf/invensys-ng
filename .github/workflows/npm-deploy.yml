@@ -74,19 +74,25 @@ jobs:
       - name: Deploy Docker site over SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.INTEGRA_NG_SSH_HOST }}
-          username: ${{ secrets.INTEGRA_NG_SSH_USER }}
-          key: ${{ secrets.INTEGRA_NG_SSH_KEY }}
-          port: ${{ secrets.INTEGRA_NG_SSH_PORT || 22 }}
+          host: ${{ secrets.DEPLOY_SSH_HOST }}
+          username: ${{ secrets.DEPLOY_SSH_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+          port: ${{ secrets.DEPLOY_SSH_PORT || 22 }}
           script_stop: true
           script: |
             set -eu
 
-            APP_DIR="${{ secrets.INTEGRA_NG_APP_DIR || '/opt/integra-ng' }}"
+            APP_DIR="${{ secrets.DEPLOY_APP_PATH || '/home/github-actions/sites/invensys-ng' }}"
+            DEPLOY_APP_NAME="${{ secrets.DEPLOY_APP_NAME || 'invensys-ng' }}"
+            DEPLOY_WEB_PORT="${{ secrets.DEPLOY_WEB_PORT || '8083' }}"
             DEPLOY_REF="${{ github.sha }}"
 
             cd "$APP_DIR"
             git fetch --all --tags --prune
             git checkout --force "$DEPLOY_REF"
-            docker compose up -d --build
+            export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
+            export DEPLOY_APP_NAME
+            export DEPLOY_WEB_PORT
+            docker compose up -d --build --remove-orphans
             docker image prune -f

@@ -100,7 +100,7 @@ Integra NG is deployed as a Dockerized app with:
 - The integra-ng MCP server running as a Node sidecar inside the same container.
 - Host nginx terminating TLS and reverse proxying public traffic to the container.
 
-The container listens on `127.0.0.1:8081` on the host. The public domain, such as `https://integra.web.za`, should be served by host nginx.
+The container listens on `127.0.0.1:8083` on the host by default. The public domain, such as `https://integra.web.za`, should be served by host nginx.
 
 ### Shared Server Port Allocation
 
@@ -110,9 +110,9 @@ Recommended host port allocation:
 
 ```text
 integraflow  keep existing port
-integra-ng   127.0.0.1:8081
-iserve       127.0.0.1:8082
-itrace       127.0.0.1:8083
+integra-ng   127.0.0.1:8083
+itrace       127.0.0.1:8082
+iserve       choose an unused localhost port
 ```
 
 Host nginx should route each public domain to the correct localhost port. This avoids Docker port collisions while keeping every app private behind nginx.
@@ -146,9 +146,9 @@ docker compose up -d --build
 Then check:
 
 ```bash
-curl http://127.0.0.1:8081/
-curl http://127.0.0.1:8081/health
-curl -X POST http://127.0.0.1:8081/mcp \
+curl http://127.0.0.1:8083/
+curl http://127.0.0.1:8083/health
+curl -X POST http://127.0.0.1:8083/mcp \
   -H "content-type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
@@ -168,7 +168,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-sudo usermod -aG docker deploy
+sudo usermod -aG docker github-actions
 ```
 
 Log out and back in after adding the deploy user to the Docker group.
@@ -178,24 +178,24 @@ Log out and back in after adding the deploy user to the Docker group.
 Create the app folder:
 
 ```bash
-sudo mkdir -p /opt/integra-ng
-sudo chown deploy:deploy /opt/integra-ng
+sudo mkdir -p /home/github-actions/sites/invensys-ng
+sudo chown -R github-actions:github-actions /home/github-actions
 ```
 
 Clone the repository:
 
 ```bash
-sudo -iu deploy
-cd /opt/integra-ng
+sudo -iu github-actions
+cd /home/github-actions/sites/invensys-ng
 git clone <repository-url> .
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 exit
 ```
 
 The container should now be reachable from the server itself:
 
 ```bash
-curl http://127.0.0.1:8081/health
+curl http://127.0.0.1:8083/health
 ```
 
 Expected response:
@@ -214,7 +214,7 @@ server {
     server_name integra.web.za;
 
     location / {
-        proxy_pass http://127.0.0.1:8081;
+        proxy_pass http://127.0.0.1:8083;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -255,8 +255,8 @@ Deploy from your workstation with the included PowerShell helper:
 ```powershell
 .\scripts\deploy-prod.ps1 `
   -HostName integra.web.za `
-  -User deploy `
-  -RemotePath /opt/integra-ng `
+  -User github-actions `
+  -RemotePath /home/github-actions/sites/invensys-ng `
   -Branch main `
   -RepositoryUrl <repository-url>
 ```
@@ -264,7 +264,7 @@ Deploy from your workstation with the included PowerShell helper:
 After the first deploy, `-RepositoryUrl` is optional because the remote checkout already exists:
 
 ```powershell
-.\scripts\deploy-prod.ps1 -HostName integra.web.za -User deploy -RemotePath /opt/integra-ng -Branch main
+.\scripts\deploy-prod.ps1 -HostName integra.web.za -User github-actions -RemotePath /home/github-actions/sites/invensys-ng -Branch main
 ```
 
 The deploy script connects over SSH, updates the Git checkout, rebuilds the Docker image, restarts the container, and prunes unused images.
@@ -284,19 +284,23 @@ NPM publishing still uses OIDC trusted publishing and only runs for `v*` tags.
 Configure these GitHub repository secrets:
 
 ```text
-INTEGRA_NG_SSH_HOST  production host, for example integra.web.za
-INTEGRA_NG_SSH_USER  SSH user, for example deploy
-INTEGRA_NG_SSH_KEY   private SSH key for the deploy user
-INTEGRA_NG_SSH_PORT  optional SSH port, defaults to 22
-INTEGRA_NG_APP_DIR   optional app directory, defaults to /opt/integra-ng
+DEPLOY_SSH_HOST        production host, for example integra.web.za
+DEPLOY_SSH_USER        SSH user, for example github-actions
+DEPLOY_SSH_KEY         private SSH key for the deploy user
+DEPLOY_SSH_PORT        optional SSH port, defaults to 22
+DEPLOY_SSH_PASSPHRASE  optional; leave unset if the key has no passphrase
+DEPLOY_APP_NAME        optional Compose app/container name, defaults to invensys-ng
+DEPLOY_APP_PATH        optional app directory, defaults to /home/github-actions/sites/invensys-ng
+DEPLOY_WEB_PORT        optional host localhost port, defaults to 8083
 ```
 
-The server must already have the repository checked out in `INTEGRA_NG_APP_DIR`. The action runs:
+The server must already have the repository checked out in `DEPLOY_APP_PATH`. The action runs:
 
 ```bash
 git fetch --all --tags --prune
 git checkout --force <github-sha>
-docker compose up -d --build
+export COMPOSE_PROJECT_NAME="$DEPLOY_APP_NAME"
+docker compose up -d --build --remove-orphans
 docker image prune -f
 ```
 
@@ -305,11 +309,11 @@ docker image prune -f
 The same deploy can be run manually:
 
 ```bash
-ssh deploy@integra.web.za
-cd /opt/integra-ng
+ssh github-actions@integra.web.za
+cd /home/github-actions/sites/invensys-ng
 git fetch origin main
 git reset --hard origin/main
-docker compose up -d --build
+docker compose up -d --build --remove-orphans
 docker image prune -f
 ```
 

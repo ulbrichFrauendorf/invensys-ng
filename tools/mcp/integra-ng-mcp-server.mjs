@@ -540,6 +540,278 @@ async function searchComponents(args = {}) {
   return results;
 }
 
+const THEME_SOURCE_FILES = [
+  'projects/integra-ng/src/lib/themes/colors.theme.scss',
+  'projects/integra-ng/src/lib/themes/color-variables.scss',
+  'projects/ui-kit/src/theme/colors.theme.scss',
+  'projects/ui-kit/src/app/components/theming/theming.component.html',
+  'projects/ui-kit/src/app/components/theming/theming.component.ts',
+  'projects/integra-ng/src/lib/components/layout/services/layout.service.ts',
+  'projects/integra-ng/src/lib/components/layout/topbar/topbar.component.ts',
+];
+
+const THEME_TOKEN_GROUPS = [
+  {
+    name: 'Brand and status colors',
+    tokens: [
+      ['--color-primary', 'Primary brand/accent color used by primary controls and emphasis states.'],
+      ['--color-secondary', 'Secondary neutral/brand color.'],
+      ['--color-tertiary', 'Tertiary accent used by components such as tertiary spinners.'],
+      ['--color-success', 'Success state color.'],
+      ['--color-info', 'Information state color.'],
+      ['--color-warning', 'Warning state color.'],
+      ['--color-danger', 'Danger/error state color.'],
+      ['--color-contrast', 'High-contrast foreground/background companion color.'],
+      ['--color-contrast-inverse', 'Inverse of the contrast token.'],
+    ],
+  },
+  {
+    name: 'Text colors',
+    tokens: [
+      ['--color-text-primary', 'Default readable text color.'],
+      ['--color-text-contrast', 'Text used on strong/contrast backgrounds.'],
+      ['--color-text-secondary', 'Secondary and helper text color.'],
+      ['--color-text-tertiary', 'Subtle tertiary text color.'],
+      ['--color-text-disabled', 'Disabled text color.'],
+    ],
+  },
+  {
+    name: 'Component backgrounds and borders',
+    tokens: [
+      ['--color-component-background', 'Primary component background.'],
+      ['--color-component-background-secondary', 'Secondary component background.'],
+      ['--color-component-background-solid', 'Solid high-contrast component background.'],
+      ['--color-border', 'Default component border color.'],
+      ['--color-disabled-background', 'Disabled control background.'],
+      ['--color-disabled-border', 'Disabled control border.'],
+    ],
+  },
+  {
+    name: 'Surface colors',
+    tokens: [
+      ['--surface-ground', 'Page/application background.'],
+      ['--surface-elevated', 'Raised surface background.'],
+      ['--surface-section', 'Section background.'],
+      ['--surface-card', 'Card/panel background.'],
+      ['--surface-overlay', 'Overlay, popover, and dropdown background.'],
+      ['--surface-border', 'Surface divider/border color.'],
+      ['--surface-hover', 'Hover-state surface background.'],
+    ],
+  },
+];
+
+const THEME_SAMPLE_SCSS = `.light {
+  --color-primary: #f97316;
+  --color-secondary: #374151;
+  --color-tertiary: #64748b;
+  --color-success: #22c55e;
+  --color-info: #0ea5e9;
+  --color-warning: #eab308;
+  --color-danger: #ef4444;
+  --color-contrast: #000000;
+  --color-contrast-inverse: #ffffff;
+
+  --color-text-primary: #374151;
+  --color-text-contrast: #ffffffde;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #64748b;
+  --color-text-disabled: #374151;
+
+  --color-component-background: #ffffff;
+  --color-component-background-secondary: #ffffff;
+  --color-component-background-solid: #0f172a;
+
+  --color-border: #d1d5db;
+  --color-disabled-background: #f5f5f5;
+  --color-disabled-border: #e2e8f0;
+
+  --surface-ground: #f8fafc;
+  --surface-elevated: #ffffff;
+  --surface-section: #ffffff;
+  --surface-card: #ffffff;
+  --surface-overlay: #ffffff;
+  --surface-border: #e2e8f0;
+  --surface-hover: #f1f5f9;
+}
+
+.dark {
+  --color-primary: #eab308;
+  --color-secondary: #d1d5db;
+  --color-tertiary: #64748b;
+  --color-success: #4ade80;
+  --color-info: #38bdf8;
+  --color-warning: #facc15;
+  --color-danger: #f87171;
+  --color-contrast: #ffffff;
+  --color-contrast-inverse: #000000;
+
+  --color-text-primary: #ffffffde;
+  --color-text-contrast: #ffffffde;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #64748b;
+  --color-text-disabled: #ffffffde;
+
+  --color-component-background: #0b121c;
+  --color-component-background-secondary: #000510;
+  --color-component-background-solid: #0f172a;
+
+  --color-border: #5e564b;
+  --color-disabled-background: #1f2937;
+  --color-disabled-border: #4b4e50;
+
+  --surface-ground: #000510;
+  --surface-elevated: #1f2937;
+  --surface-section: #111827;
+  --surface-card: #0b121c;
+  --surface-overlay: #0b121c;
+  --surface-border: #4b4e50;
+  --surface-hover: rgba(255, 255, 255, 0.03);
+}`;
+
+const THEME_IMPORT_SNIPPET = `/* src/styles.scss */
+@use "./theme.scss";`;
+
+const THEME_INDEX_SNIPPET = `<body class="light">
+  <app-root></app-root>
+</body>
+
+<script>
+  const colorSchemeSet = localStorage.getItem("viewModeColorScheme") || "light";
+  document.body.classList.remove("light", "dark");
+  document.body.classList.add(colorSchemeSet === "dark" ? "dark" : "light");
+</script>`;
+
+const THEME_TOGGLE_SNIPPET = `const nextTheme = isDarkMode ? "light" : "dark";
+
+document.body.classList.remove("light", "dark");
+document.body.classList.add(nextTheme);
+localStorage.setItem("viewModeColorScheme", nextTheme);`;
+
+function flattenThemeTokens() {
+  return THEME_TOKEN_GROUPS.flatMap((group) => (
+    group.tokens.map(([token, description]) => ({
+      token,
+      group: group.name,
+      description,
+    }))
+  ));
+}
+
+function buildThemingGuide() {
+  return {
+    packageName: 'integra-ng',
+    purpose: 'Guide an AI agent to theme the integra-ng component library using its CSS variable contract.',
+    model: {
+      scoping: 'Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.',
+      runtimeBehavior: 'Components consume the CSS custom properties through SCSS variables in `color-variables.scss`; switching the body class changes every component theme without changing component templates.',
+      persistenceKey: 'viewModeColorScheme',
+    },
+    instructions: [
+      'Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.',
+      'Define both `.light` and `.dark` blocks in that file. Each block must include every required token from this guide.',
+      'Import the theme file from the application global stylesheet, such as `src/styles.scss`; do not place the token definitions only in a component stylesheet.',
+      'Set the initial body class to `light` or `dark` in `index.html`. If the app uses the integra-ng layout theme toggle, read and write `localStorage["viewModeColorScheme"]`.',
+      'When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.',
+      'Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.',
+      'Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.',
+    ],
+    requiredTokens: flattenThemeTokens(),
+    tokenGroups: THEME_TOKEN_GROUPS.map((group) => ({
+      name: group.name,
+      tokens: group.tokens.map(([token, description]) => ({ token, description })),
+    })),
+    snippets: {
+      themeScss: THEME_SAMPLE_SCSS,
+      stylesScss: THEME_IMPORT_SNIPPET,
+      indexHtml: THEME_INDEX_SNIPPET,
+      runtimeToggle: THEME_TOGGLE_SNIPPET,
+    },
+    verification: [
+      'Inspect `document.body.classList` and confirm exactly one theme class is present: `light` or `dark`.',
+      'In DevTools, confirm required CSS variables resolve on `body`, not only inside an Angular component host.',
+      'Check representative components in both themes: button, input/textarea disabled state, card/panel surface, dialog/overlay, table hover/border, and progress spinner tertiary color.',
+      'If using `i-layout` with `showThemeToggle`, reload after toggling and confirm the first paint uses the saved `viewModeColorScheme` value.',
+    ],
+    avoid: [
+      'Do not edit each component theme file to brand an application.',
+      'Do not define only `.light` or only `.dark`; the library expects both modes to be available when toggled.',
+      'Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.',
+      'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for integra-ng library components.',
+    ],
+    sourceFiles: THEME_SOURCE_FILES,
+  };
+}
+
+function buildThemingGuideMarkdown(guide) {
+  const lines = [
+    '# integra-ng Theming Guide',
+    '',
+    guide.purpose,
+    '',
+    '## Mental Model',
+    `- ${guide.model.scoping}`,
+    `- ${guide.model.runtimeBehavior}`,
+    `- Persist the layout theme value with \`${guide.model.persistenceKey}\` when the app needs reload-safe theme switching.`,
+    '',
+    '## Agent Instructions',
+    ...guide.instructions.map((instruction, index) => `${index + 1}. ${instruction}`),
+    '',
+    '## Required CSS Variables',
+  ];
+
+  for (const group of guide.tokenGroups) {
+    lines.push('', `### ${group.name}`);
+    for (const { token, description } of group.tokens) {
+      lines.push(`- \`${token}\`: ${description}`);
+    }
+  }
+
+  lines.push(
+    '',
+    '## Starter Theme File',
+    'Create or adapt a global theme file with this full token contract:',
+    '```scss',
+    guide.snippets.themeScss,
+    '```',
+    '',
+    '## Import The Theme',
+    'Load the theme from the global stylesheet so every Angular component and overlay can inherit the tokens:',
+    '```scss',
+    guide.snippets.stylesScss,
+    '```',
+    '',
+    '## Initialize Before Angular Paints',
+    'Set the initial body class in `index.html`. This mirrors the UI kit and the `i-layout` theme toggle:',
+    '```html',
+    guide.snippets.indexHtml,
+    '```',
+    '',
+    '## Runtime Toggle',
+    'Use this body-class pattern for custom theme toggles:',
+    '```ts',
+    guide.snippets.runtimeToggle,
+    '```',
+    '',
+    '## Verification',
+    ...guide.verification.map((item) => `- ${item}`),
+    '',
+    '## Avoid',
+    ...guide.avoid.map((item) => `- ${item}`),
+    '',
+    '## Source Files',
+    ...guide.sourceFiles.map((file) => `- \`${file}\``),
+  );
+
+  return lines.join('\n');
+}
+
+function getThemingGuide(args = {}) {
+  const guide = buildThemingGuide();
+  const format = args.format || 'markdown';
+  if (format === 'json') return guide;
+  return buildThemingGuideMarkdown(guide);
+}
+
 async function getOverview() {
   const catalog = await loadCatalog();
   return {
@@ -554,6 +826,7 @@ async function getOverview() {
       'Use list_components to discover selectors and exported names.',
       'Use get_component_usage for inputs, outputs, projected content slots, and UI-kit examples.',
       'Use search_components when you know a behavior, input, output, or partial selector.',
+      'Use get_theming_guide before changing brand colors, light/dark mode, surfaces, borders, disabled states, or component theme tokens.',
     ],
   };
 }
@@ -609,6 +882,20 @@ const tools = [
     description: 'Describe how AI agents should use the integra-ng UI component library through this MCP server.',
     inputSchema: { type: 'object', properties: {} },
   },
+  {
+    name: 'get_theming_guide',
+    description: 'Return exact agent instructions for theming integra-ng with the required light/dark CSS variable contract.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        format: {
+          type: 'string',
+          enum: ['markdown', 'json'],
+          default: 'markdown',
+        },
+      },
+    },
+  },
 ];
 
 async function callTool(name, args) {
@@ -616,6 +903,7 @@ async function callTool(name, args) {
   if (name === 'get_component_usage') return getComponentUsage(args);
   if (name === 'search_components') return searchComponents(args);
   if (name === 'get_library_overview') return getOverview();
+  if (name === 'get_theming_guide') return getThemingGuide(args);
   throw new Error(`Unknown tool "${name}"`);
 }
 

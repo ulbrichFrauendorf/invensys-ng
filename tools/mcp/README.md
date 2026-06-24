@@ -86,6 +86,7 @@ For MCP clients that launch servers by command:
 - `search_components`: searches selectors, display names, exports, inputs, outputs, and demo examples.
 - `get_component_usage`: returns import, selector, inputs, outputs, slots, source files, and examples for one component.
 - `get_library_overview`: explains how an agent should use this MCP server.
+- `get_theming_guide`: gives exact AI-agent instructions for theming the component library with the required `.light` / `.dark` CSS variable contract.
 
 The server also exposes resources:
 

@@ -1,26 +1,9 @@
 name: npm package and site deploy
 
 on:
-  workflow_dispatch:
-    inputs:
-      deploy-site:
-        description: Deploy the Dockerized site to the SSH server
-        type: boolean
-        required: true
-        default: true
-
   push:
-    branches:
-      - main
     tags:
       - "v*" # Runs only when a tag like v1.0.0 is pushed
-
-  workflow_call:
-    inputs:
-      build-artifacts:
-        type: boolean
-        required: true
-        default: false
 
 concurrency:
   group: production-deploy-${{ github.repository }}
@@ -40,6 +23,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure tag commit is on main
+        run: |
+          set -euo pipefail
+          git fetch --force origin refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "Tag ${GITHUB_REF_NAME} does not point to a commit on main."
+            exit 1
+          fi
 
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
@@ -68,7 +62,7 @@ jobs:
           npm publish --access public
 
   deploy-site:
-    if: always() && (github.event_name != 'workflow_dispatch' || inputs.deploy-site) && (needs.publish.result == 'success' || needs.publish.result == 'skipped')
+    if: needs.publish.result == 'success'
     runs-on: ubuntu-latest
     needs: [publish]
     permissions:

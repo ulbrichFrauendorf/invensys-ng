@@ -541,8 +541,12 @@ async function searchComponents(args = {}) {
 }
 
 const THEME_SOURCE_FILES = [
+  'projects/invensys-ng/src/lib/themes/theme.scss',
   'projects/invensys-ng/src/lib/themes/colors.theme.scss',
   'projects/invensys-ng/src/lib/themes/color-variables.scss',
+  'projects/invensys-ng/src/lib/themes/typography.theme.scss',
+  'projects/invensys-ng/src/lib/themes/scrollbar.theme.scss',
+  'projects/invensys-ng/src/lib/themes/scrollbar-mixins.scss',
   'projects/ui-kit/src/theme/colors.theme.scss',
   'projects/ui-kit/src/app/components/theming/theming.component.html',
   'projects/ui-kit/src/app/components/theming/theming.component.ts',
@@ -598,6 +602,16 @@ const THEME_TOKEN_GROUPS = [
       ['--surface-hover', 'Hover-state surface background.'],
     ],
   },
+];
+
+const THEME_SCROLLBAR_TOKENS = [
+  ['--scrollbar-size', 'Themed scrollbar width and height.'],
+  ['--scrollbar-radius', 'Scrollbar track and thumb radius.'],
+  ['--scrollbar-track', 'Default scrollbar track color.'],
+  ['--scrollbar-track-dropdown', 'Track color for dropdown and overlay scroll containers.'],
+  ['--scrollbar-thumb', 'Default scrollbar thumb color.'],
+  ['--scrollbar-thumb-hover', 'Scrollbar thumb color on hover.'],
+  ['--scrollbar-thumb-active', 'Scrollbar thumb color while active.'],
 ];
 
 const THEME_SAMPLE_SCSS = `.light {
@@ -669,7 +683,28 @@ const THEME_SAMPLE_SCSS = `.light {
 }`;
 
 const THEME_IMPORT_SNIPPET = `/* src/styles.scss */
-@use "./theme.scss";`;
+@use "invensys-ng/src/lib/themes/theme.scss" as invensys-theme;
+
+@include invensys-theme.define-theme();`;
+
+const THEME_ADVANCED_IMPORT_SNIPPET = `/* src/styles.scss */
+@use "invensys-ng/src/lib/themes/colors.theme.scss" as colors-theme;
+@use "invensys-ng/src/lib/themes/typography.theme.scss" as typography-theme;
+@use "invensys-ng/src/lib/themes/scrollbar.theme.scss" as scrollbar-theme;
+@use "invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
+@use "invensys-ng/src/lib/themes/color-variables.scss" as vars;
+
+@include colors-theme.define-color-palette(light);
+@include colors-theme.define-color-palette(dark);
+@include scrollbar-theme.define-scrollbar-theme();
+@include typography-theme.define-typography();
+
+html,
+body {
+  background-color: vars.$color-surface-ground;
+  color: vars.$color-text-primary;
+  @include scrollbar.themed-scrollbar();
+}`;
 
 const THEME_INDEX_SNIPPET = `<body class="light">
   <app-root></app-root>
@@ -703,26 +738,31 @@ function buildThemingGuide() {
     purpose: 'Guide an AI agent to theme the invensys-ng component library using its CSS variable contract.',
     model: {
       scoping: 'Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.',
-      runtimeBehavior: 'Components consume the CSS custom properties through SCSS variables in `color-variables.scss`; switching the body class changes every component theme without changing component templates.',
+      runtimeBehavior: 'Components consume CSS custom properties through SCSS variables in `color-variables.scss`; typography and scrollbar helpers use the same light/dark token contract.',
       persistenceKey: 'viewModeColorScheme',
     },
     instructions: [
+      'For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once.',
       'Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.',
-      'Define both `.light` and `.dark` blocks in that file. Each block must include every required token from this guide.',
-      'Import the theme file from the application global stylesheet, such as `src/styles.scss`; do not place the token definitions only in a component stylesheet.',
+      'Define both `.light` and `.dark` blocks in that file. Each block must include every required color token from this guide.',
+      'Import theme files from the application global stylesheet, such as `src/styles.scss`; do not place token definitions only in a component stylesheet.',
       'Set the initial body class to `light` or `dark` in `index.html`. If the app uses the invensys-ng layout theme toggle, read and write `localStorage["viewModeColorScheme"]`.',
       'When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.',
       'Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.',
       'Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.',
+      'Use `typography.theme.scss` when a caller wants the library heading, paragraph, mark, blockquote, and divider defaults without hand-copying CSS.',
+      'Use `scrollbar.theme.scss` with `scrollbar-mixins.scss` when a caller wants themed scrollbars on app-level or custom scroll containers.',
     ],
     requiredTokens: flattenThemeTokens(),
     tokenGroups: THEME_TOKEN_GROUPS.map((group) => ({
       name: group.name,
       tokens: group.tokens.map(([token, description]) => ({ token, description })),
     })),
+    scrollbarTokens: THEME_SCROLLBAR_TOKENS.map(([token, description]) => ({ token, description })),
     snippets: {
       themeScss: THEME_SAMPLE_SCSS,
       stylesScss: THEME_IMPORT_SNIPPET,
+      advancedStylesScss: THEME_ADVANCED_IMPORT_SNIPPET,
       indexHtml: THEME_INDEX_SNIPPET,
       runtimeToggle: THEME_TOGGLE_SNIPPET,
     },
@@ -730,6 +770,8 @@ function buildThemingGuide() {
       'Inspect `document.body.classList` and confirm exactly one theme class is present: `light` or `dark`.',
       'In DevTools, confirm required CSS variables resolve on `body`, not only inside an Angular component host.',
       'Check representative components in both themes: button, input/textarea disabled state, card/panel surface, dialog/overlay, table hover/border, and progress spinner tertiary color.',
+      'Check global typography in a caller page: headings use `--color-text-primary`, `mark` uses warning color, blockquotes use tertiary text color, and `hr` uses `--surface-border`.',
+      'Check custom scroll containers that include `scrollbar.themed-scrollbar()` or `scrollbar.dropdown-scrollbar()` in both light and dark modes.',
       'If using `i-layout` with `showThemeToggle`, reload after toggling and confirm the first paint uses the saved `viewModeColorScheme` value.',
     ],
     avoid: [
@@ -737,6 +779,8 @@ function buildThemingGuide() {
       'Do not define only `.light` or only `.dark`; the library expects both modes to be available when toggled.',
       'Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.',
       'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for invensys-ng library components.',
+      'Do not hard-code `node_modules` in Sass imports; use package imports such as `invensys-ng/src/lib/themes/theme.scss`.',
+      'Do not copy typography CSS into every caller. Include `typography-theme.define-typography()` or the bundled `invensys-theme.define-theme()` mixin.',
     ],
     sourceFiles: THEME_SOURCE_FILES,
   };
@@ -766,6 +810,11 @@ function buildThemingGuideMarkdown(guide) {
     }
   }
 
+  lines.push('', '### Scrollbar Helper Tokens');
+  for (const { token, description } of guide.scrollbarTokens) {
+    lines.push(`- \`${token}\`: ${description}`);
+  }
+
   lines.push(
     '',
     '## Starter Theme File',
@@ -775,9 +824,15 @@ function buildThemingGuideMarkdown(guide) {
     '```',
     '',
     '## Import The Theme',
-    'Load the theme from the global stylesheet so every Angular component and overlay can inherit the tokens:',
+    'For most caller projects, load the bundled theme from the global stylesheet so every Angular component, overlay, scrollbar, and typography element can inherit the tokens:',
     '```scss',
     guide.snippets.stylesScss,
+    '```',
+    '',
+    '## Modular Imports',
+    'When the caller needs explicit control, import the theme pieces separately:',
+    '```scss',
+    guide.snippets.advancedStylesScss,
     '```',
     '',
     '## Initialize Before Angular Paints',

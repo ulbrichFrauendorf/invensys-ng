@@ -50,9 +50,30 @@
     >
       <div class="theming-content">
         <p>
-          Import your theme file in your global <code>styles.scss</code> or
-          <code>styles.css</code> file:
+          For most applications, import the bundled theme entry point in your
+          global <code>styles.scss</code>. This defines light and dark color
+          variables, scrollbar tokens, and global typography styles in one step:
         </p>
+      </div>
+    </app-demo-card>
+
+    <!-- Modular Theme Imports -->
+    <app-demo-card
+      [title]="'Optional: Import Theme Pieces Separately'"
+      [scssCode]="advancedThemeCode"
+      [language]="'scss'"
+    >
+      <div class="theming-content">
+        <p>
+          Use the separate theme files when a project wants explicit control over
+          colors, typography, scrollbar tokens, or where scrollbar mixins are
+          applied.
+        </p>
+        <i-message severity="info">
+          Prefer package imports such as
+          <code>invensys-ng/src/lib/themes/theme.scss</code>. Avoid hard-coding a
+          <code>node_modules</code> path.
+        </i-message>
       </div>
     </app-demo-card>
 
@@ -111,6 +132,7 @@
           <ul class="variable-list">
             <li><code>--color-primary</code>: Main brand color</li>
             <li><code>--color-secondary</code>: Secondary/neutral brand color</li>
+            <li><code>--color-tertiary</code>: Tertiary accent color</li>
             <li><code>--color-success</code>: Success state color (green)</li>
             <li><code>--color-info</code>: Info state color (blue)</li>
             <li><code>--color-warning</code>: Warning state color (yellow)</li>
@@ -128,6 +150,7 @@
             <li><code>--color-text-primary</code>: Main text color</li>
             <li><code>--color-text-secondary</code>: Secondary text color</li>
             <li><code>--color-text-tertiary</code>: Tertiary text color</li>
+            <li><code>--color-text-disabled</code>: Disabled text color</li>
             <li>
               <code>--color-text-contrast</code>: Text on contrast backgrounds
             </li>
@@ -156,6 +179,11 @@
           <h3>Border Colors</h3>
           <ul class="variable-list">
             <li><code>--color-border</code>: Component border color</li>
+            <li>
+              <code>--color-disabled-background</code>: Disabled control
+              background
+            </li>
+            <li><code>--color-disabled-border</code>: Disabled control border</li>
             <li><code>--surface-border</code>: Surface border color</li>
           </ul>
         </div>
@@ -173,6 +201,24 @@
               <code>--surface-overlay</code>: Overlay/dropdown backgrounds
             </li>
             <li><code>--surface-hover</code>: Hover state background</li>
+          </ul>
+        </div>
+
+        <div class="variable-section">
+          <h3>Typography and Scrollbars</h3>
+          <ul class="variable-list">
+            <li>
+              <code>typography.theme.scss</code>: Provides global heading,
+              paragraph, mark, blockquote, and divider styles.
+            </li>
+            <li>
+              <code>scrollbar.theme.scss</code>: Defines scrollbar CSS variables
+              from the current light or dark color palette.
+            </li>
+            <li>
+              <code>scrollbar-mixins.scss</code>: Applies themed scrollbars to
+              specific scroll containers.
+            </li>
           </ul>
         </div>
 

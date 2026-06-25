@@ -1,0 +1,16 @@
+@use "./colors.theme.scss" as colors-theme;
+@use "./scrollbar.theme.scss" as scrollbar-theme;
+@use "./typography.theme.scss" as typography-theme;
+
+@mixin define-theme($typography: true, $scrollbar: true) {
+  @include colors-theme.define-color-palette(light);
+  @include colors-theme.define-color-palette(dark);
+
+  @if $scrollbar {
+    @include scrollbar-theme.define-scrollbar-theme();
+  }
+
+  @if $typography {
+    @include typography-theme.define-typography();
+  }
+}

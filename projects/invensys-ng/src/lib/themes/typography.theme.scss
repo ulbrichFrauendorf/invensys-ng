@@ -1,0 +1,73 @@
+@use "./_variables" as *;
+@use "./color-variables.scss" as colors;
+
+@mixin define-typography() {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 24px 0 16px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: colors.$color-text-primary;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  h5 {
+    font-size: 16px;
+  }
+
+  h6 {
+    font-size: 14px;
+  }
+
+  mark {
+    background: colors.$color-warning;
+    color: colors.$color-contrast;
+    padding: 4px 6.4px;
+    font-family: monospace;
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 0 32px;
+    border-left: 4px solid colors.$color-text-tertiary;
+  }
+
+  hr {
+    border-top: solid colors.$color-surface-border;
+    border-width: 1px 0 0;
+    margin: 16px 0;
+  }
+
+  p {
+    margin: 0 0 16px;
+    line-height: 1.5;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

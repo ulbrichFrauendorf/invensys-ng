@@ -1,11 +1,10 @@
-@use "../src/theme/colors.theme.scss" as colors-theme;
-
+@use "../../invensys-ng/src/lib/themes/theme.scss" as invensys-theme;
 @use "../../invensys-ng/src/lib/themes/color-variables.scss" as vars;
+@use "../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
 
 @import "primeicons/primeicons.css";
 
-@include colors-theme.define-color-palette(light);
-@include colors-theme.define-color-palette(dark);
+@include invensys-theme.define-theme();
 
 * {
   box-sizing: border-box;
@@ -33,6 +32,8 @@ body {
   gap: 2rem;
   max-width: 100%;
   overflow-x: auto;
+
+  @include scrollbar.themed-scrollbar();
 
   .ui-section {
     display: flex;

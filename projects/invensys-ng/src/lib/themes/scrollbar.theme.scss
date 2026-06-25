@@ -1,0 +1,12 @@
+@mixin define-scrollbar-theme() {
+  .light,
+  .dark {
+    --scrollbar-size: 6px;
+    --scrollbar-radius: 3px;
+    --scrollbar-track: transparent;
+    --scrollbar-track-dropdown: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb: var(--color-text-secondary);
+    --scrollbar-thumb-hover: var(--color-text-primary);
+    --scrollbar-thumb-active: var(--color-primary);
+  }
+}

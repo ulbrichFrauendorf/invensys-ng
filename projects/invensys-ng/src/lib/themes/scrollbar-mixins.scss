@@ -4,18 +4,18 @@
 @mixin thin-scrollbar() {
   // Webkit browsers (Chrome, Safari, Edge)
   &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: var(--scrollbar-size, 6px);
+    height: var(--scrollbar-size, 6px);
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 3px;
+    background: var(--scrollbar-track, transparent);
+    border-radius: var(--scrollbar-radius, 3px);
   }
 
   &::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
+    border-radius: var(--scrollbar-radius, 3px);
     transition: background 0.2s ease;
 
     &:hover {
@@ -45,22 +45,20 @@
 
   // Override default colors with theme colors
   &::-webkit-scrollbar-thumb {
-    background: colors.$color-text-secondary;
-    opacity: 0.4;
+    background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
 
     &:hover {
-      background: colors.$color-text-primary;
-      opacity: 0.6;
+      background: var(--scrollbar-thumb-hover, #{colors.$color-text-primary});
     }
 
     &:active {
-      background: colors.$color-primary;
-      opacity: 0.7;
+      background: var(--scrollbar-thumb-active, #{colors.$color-primary});
     }
   }
 
   // Firefox with theme colors
-  scrollbar-color: colors.$color-text-secondary transparent;
+  scrollbar-color: var(--scrollbar-thumb, #{colors.$color-text-secondary})
+    var(--scrollbar-track, transparent);
 }
 
 // Scrollbar for dropdown/overlay components
@@ -69,36 +67,37 @@
 
   // Additional styling for dropdown contexts
   &::-webkit-scrollbar {
-    width: 6px; // Slightly wider for better visibility
-    height: 6px;
+    width: var(--scrollbar-size, 6px); // Slightly wider for better visibility
+    height: var(--scrollbar-size, 6px);
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05); // Subtle track background
-    border-radius: 3px;
+    background: var(
+      --scrollbar-track-dropdown,
+      rgba(0, 0, 0, 0.05)
+    ); // Subtle track background
+    border-radius: var(--scrollbar-radius, 3px);
     margin: 2px 0; // Add margin to prevent cutoff
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
+    border-radius: var(--scrollbar-radius, 3px);
     min-height: 20px; // Ensure minimum thumb size
 
     // More visible colors for dropdowns
-    background: colors.$color-text-secondary;
-    opacity: 0.6;
+    background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
 
     &:hover {
-      background: colors.$color-text-primary;
-      opacity: 0.8;
+      background: var(--scrollbar-thumb-hover, #{colors.$color-text-primary});
     }
 
     &:active {
-      background: colors.$color-primary;
-      opacity: 0.9;
+      background: var(--scrollbar-thumb-active, #{colors.$color-primary});
     }
   }
 
   // Better Firefox scrollbar visibility
   scrollbar-width: thin;
-  scrollbar-color: colors.$color-text-secondary rgba(0, 0, 0, 0.05);
+  scrollbar-color: var(--scrollbar-thumb, #{colors.$color-text-secondary})
+    var(--scrollbar-track-dropdown, rgba(0, 0, 0, 0.05));
 }

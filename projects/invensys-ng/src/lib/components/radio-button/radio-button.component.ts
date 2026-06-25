@@ -242,10 +242,10 @@ export class IRadioButton implements ControlValueAccessor, OnInit, OnDestroy {
     if (form) {
       formKey =
         form.id ||
-        form.getAttribute('data-integrang-form-id') ||
+        form.getAttribute('data-invensysng-form-id') ||
         UniqueComponentId('i-radio-form-');
-      if (!form.id && !form.getAttribute('data-integrang-form-id')) {
-        form.setAttribute('data-integrang-form-id', formKey);
+      if (!form.id && !form.getAttribute('data-invensysng-form-id')) {
+        form.setAttribute('data-invensysng-form-id', formKey);
       }
     }
     this.groupKey = `${this.name}@${formKey}`;

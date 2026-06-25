@@ -1,6 +1,6 @@
-# integra-ng MCP Server
+# invensys-ng MCP Server
 
-This sidecar serves source-backed usage guidance for the Angular components in `projects/integra-ng`.
+This sidecar serves source-backed usage guidance for the Angular components in `projects/invensys-ng`.
 It scans the library source, public API exports, templates, projected slots, inputs, outputs, and UI-kit demo snippets at request time.
 
 ## Run With The UI App
@@ -14,7 +14,7 @@ This starts:
 - the Angular UI kit app through `npm run start`
 - the MCP HTTP endpoint at `http://127.0.0.1:3200/mcp`
 
-The port can be changed with `INTEGRA_NG_MCP_PORT`.
+The port can be changed with `INVENSYS_NG_MCP_PORT`.
 
 ## Run Only The MCP Server
 
@@ -22,7 +22,7 @@ The port can be changed with `INTEGRA_NG_MCP_PORT`.
 npm run mcp
 ```
 
-By default the server reads the generated catalog at `dist/mcp/integra-ng-catalog.json`.
+By default the server reads the generated catalog at `dist/mcp/invensys-ng-catalog.json`.
 If that file does not exist, it falls back to scanning the library and UI-kit source files.
 
 Health and quick catalog checks:
@@ -47,22 +47,22 @@ npm run build
 The generated artifact is:
 
 ```text
-dist/mcp/integra-ng-catalog.json
+dist/mcp/invensys-ng-catalog.json
 ```
 
-Deploy that JSON file alongside the Node MCP server. In production, this lets the MCP server serve component usage from a static catalog instead of requiring `projects/integra-ng/src` and `projects/ui-kit/src/app/components` to be present.
+Deploy that JSON file alongside the Node MCP server. In production, this lets the MCP server serve component usage from a static catalog instead of requiring `projects/invensys-ng/src` and `projects/ui-kit/src/app/components` to be present.
 
 To write or read the catalog from another location:
 
 ```bash
-INTEGRA_NG_MCP_CATALOG_PATH=/app/catalog/integra-ng-catalog.json npm run build:mcp-catalog
-INTEGRA_NG_MCP_CATALOG_PATH=/app/catalog/integra-ng-catalog.json npm run mcp
+INVENSYS_NG_MCP_CATALOG_PATH=/app/catalog/invensys-ng-catalog.json npm run build:mcp-catalog
+INVENSYS_NG_MCP_CATALOG_PATH=/app/catalog/invensys-ng-catalog.json npm run mcp
 ```
 
 To force source scanning in local development:
 
 ```bash
-INTEGRA_NG_MCP_CATALOG_MODE=source npm run mcp
+INVENSYS_NG_MCP_CATALOG_MODE=source npm run mcp
 ```
 
 ## Stdio Mode
@@ -72,7 +72,7 @@ For MCP clients that launch servers by command:
 ```json
 {
   "mcpServers": {
-    "integra-ng": {
+    "invensys-ng": {
       "command": "npm",
       "args": ["run", "mcp:stdio"]
     }
@@ -90,9 +90,9 @@ For MCP clients that launch servers by command:
 
 The server also exposes resources:
 
-- `integra-ng://catalog`
-- `integra-ng://overview`
-- `integra-ng://component/<component-id>`
+- `invensys-ng://catalog`
+- `invensys-ng://overview`
+- `invensys-ng://component/<component-id>`
 
 ## Example HTTP MCP Request
 

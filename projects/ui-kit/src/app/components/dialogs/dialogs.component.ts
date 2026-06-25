@@ -166,9 +166,9 @@ export class DialogsComponent implements OnInit, OnDestroy {
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IDialogBase } from 'integra-ng';
-import { IDialogActions } from 'integra-ng';
-import { IInputText } from 'integra-ng';
+import { IDialogBase } from 'invensys-ng';
+import { IDialogActions } from 'invensys-ng';
+import { IInputText } from 'invensys-ng';
 
 @Component({
   selector: 'app-example-dialog',
@@ -221,7 +221,7 @@ export class ExampleDialogComponent extends IDialogBase {
 
 // dialogs.component.ts - Opening the dialog
 import { Component, inject } from '@angular/core';
-import { DialogService, IDynamicDialogRef } from 'integra-ng';
+import { DialogService, IDynamicDialogRef } from 'invensys-ng';
 import { ExampleDialogComponent } from './example-dialog.component';
 
 @Component({
@@ -264,7 +264,7 @@ export class DialogsComponent {
     basic: `<i-dialog
   [(visible)]="showBasicDialog"
   [closable]="true"
-  header="Welcome to Integra"
+  header="Welcome to Invensys"
   width="500px"
   height="600px"
   [breakpoints]="{
@@ -276,7 +276,7 @@ export class DialogsComponent {
     </div>
     <h4>Getting Started</h4>
     <p class="dialog-description">
-      Welcome to the Integra component library! This dialog demonstrates a
+      Welcome to the Invensys component library! This dialog demonstrates a
       clean, user-friendly design with proper spacing and hierarchy.
     </p>
     <div class="feature-highlights">

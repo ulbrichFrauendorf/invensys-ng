@@ -6,8 +6,8 @@ import {
   Validators,
   FormsModule,
 } from '@angular/forms';
-import { ICalendar } from '../../../../../integra-ng/src/lib/components/calendar/calendar.component';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { ICalendar } from '../../../../../invensys-ng/src/lib/components/calendar/calendar.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
@@ -218,7 +218,7 @@ export class CalendarsComponent implements OnInit {
   // TypeScript examples
   tsExamples = {
     ngModel: `import { FormsModule } from '@angular/forms';
-import { ICalendar } from 'integra-ng';
+import { ICalendar } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -232,7 +232,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ICalendar } from 'integra-ng';
+import { ICalendar } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

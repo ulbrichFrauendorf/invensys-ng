@@ -14,8 +14,8 @@ import {
   TableColumn,
   TableDownloadEvent,
 } from '@shared/components/table/table.component';
-import { IWhisper } from '../../../../../integra-ng/src/lib/components/whisper/whisper.component';
-import { WhisperService } from '../../../../../integra-ng/src/lib/components/whisper/services/whisper.service';
+import { IWhisper } from '../../../../../invensys-ng/src/lib/components/whisper/whisper.component';
+import { WhisperService } from '../../../../../invensys-ng/src/lib/components/whisper/services/whisper.service';
 
 // ─── Domain types ──────────────────────────────────────────────────────────────
 

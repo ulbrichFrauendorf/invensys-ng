@@ -9,6 +9,6 @@
     "types": [],
     "rootDir": "../../"
   },
-  "include": ["src/**/*.ts", "../integra-ng/src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "../integra-ng/src/**/*.spec.ts"]
+  "include": ["src/**/*.ts", "../invensys-ng/src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts", "../invensys-ng/src/**/*.spec.ts"]
 }

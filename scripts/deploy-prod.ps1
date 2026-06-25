@@ -14,7 +14,7 @@ $ErrorActionPreference = "Stop"
 
 $target = "${User}@${HostName}"
 
-Write-Host "Deploying integra-ng to ${target}:${RemotePath}"
+Write-Host "Deploying invensys-ng to ${target}:${RemotePath}"
 
 ssh $target "mkdir -p $RemotePath"
 if ($RepositoryUrl) {

@@ -6,8 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IRadioButton } from '../../../../../integra-ng/src/lib/components/radio-button/radio-button.component';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { IRadioButton } from '../../../../../invensys-ng/src/lib/components/radio-button/radio-button.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { JsonPipe } from '@angular/common';
 import {
@@ -121,7 +121,7 @@ export class RadioButtonsComponent {
   // TypeScript examples
   tsExamples = {
     basic: `import { FormsModule } from '@angular/forms';
-import { IRadioButton } from 'integra-ng';
+import { IRadioButton } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -133,7 +133,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IRadioButton } from 'integra-ng';
+import { IRadioButton } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

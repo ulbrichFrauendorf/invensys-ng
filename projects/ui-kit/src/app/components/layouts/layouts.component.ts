@@ -15,7 +15,7 @@ export class LayoutsComponent {
   // Code examples
   codeExamples = {
     basic: `import { Component } from '@angular/core';
-import { LayoutComponent, MenuModel, LayoutConfig } from 'integra-ng';
+import { LayoutComponent, MenuModel, LayoutConfig } from 'invensys-ng';
 
 @Component({
   selector: 'app-root',
@@ -120,10 +120,10 @@ interface MenuModel {
 ]`,
 
     installation: `// Install the library
-npm install integra-ng
+npm install invensys-ng
 
 // Import in your component
-import { LayoutComponent, MenuModel, LayoutConfig } from 'integra-ng';
+import { LayoutComponent, MenuModel, LayoutConfig } from 'invensys-ng';
 
 // Use in your template
 <i-layout [config]="layoutConfig" [menuModel]="menuModel" />`,
@@ -131,7 +131,7 @@ import { LayoutComponent, MenuModel, LayoutConfig } from 'integra-ng';
     // Claims-based access control examples
     claimsService: `import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ClaimsChecker } from 'integra-ng';
+import { ClaimsChecker } from 'invensys-ng';
 
 @Injectable({ providedIn: 'root' })
 export class ClaimsService implements ClaimsChecker {
@@ -146,7 +146,7 @@ export class ClaimsService implements ClaimsChecker {
 
     claimsProvider: `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideMenuClaimsChecker } from 'integra-ng';
+import { provideMenuClaimsChecker } from 'invensys-ng';
 import { ClaimsService } from './services/claims.service';
 
 export const appConfig: ApplicationConfig = {
@@ -202,7 +202,7 @@ menuModel: MenuModel[] = [
 // If a group has no visible items, the entire group is hidden`,
 
     claimsManual: `// Manual provider configuration (alternative)
-import { CLAIMS_CHECKER } from 'integra-ng';
+import { CLAIMS_CHECKER } from 'invensys-ng';
 import { ClaimsService } from './services/claims.service';
 
 export const appConfig: ApplicationConfig = {

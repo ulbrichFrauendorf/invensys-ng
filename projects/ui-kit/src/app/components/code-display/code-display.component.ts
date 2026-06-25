@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 
 @Component({
   selector: 'app-code-display',

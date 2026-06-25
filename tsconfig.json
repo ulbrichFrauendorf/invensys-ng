@@ -8,8 +8,8 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
-      "integra-ng": ["./dist/integra-ng"],
-      "@shared/*": ["./projects/integra-ng/src/lib/*"]
+      "invensys-ng": ["./dist/invensys-ng"],
+      "@shared/*": ["./projects/invensys-ng/src/lib/*"]
     },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

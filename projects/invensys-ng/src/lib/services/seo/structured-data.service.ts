@@ -62,7 +62,7 @@ export interface ArticleSchema {
  *
  * @example
  * ```typescript
- * import { StructuredDataService } from 'integra-ng';
+ * import { StructuredDataService } from 'invensys-ng';
  *
  * export class AppComponent {
  *   constructor(private structuredDataService: StructuredDataService) {

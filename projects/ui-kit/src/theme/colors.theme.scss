@@ -1,6 +1,6 @@
 @use "sass:map";
-@use "../../../integra-ng/src/lib/themes/color-variables.scss" as vars;
-@use "../../../integra-ng/src/lib/themes/get-color.scss" as color;
+@use "../../../invensys-ng/src/lib/themes/color-variables.scss" as vars;
+@use "../../../invensys-ng/src/lib/themes/get-color.scss" as color;
 
 @mixin define-color-palette($mode: light) {
   @if $mode == light {

@@ -6,8 +6,8 @@ import {
   Validators,
   FormsModule,
 } from '@angular/forms';
-import { ITextarea } from '../../../../../integra-ng/src/lib/components/textarea/textarea.component';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { ITextarea } from '../../../../../invensys-ng/src/lib/components/textarea/textarea.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
@@ -67,7 +67,7 @@ export class TextareasComponent implements OnInit {
 
   tsExamples = {
     ngModel: `import { FormsModule } from '@angular/forms';
-import { ITextarea } from 'integra-ng';
+import { ITextarea } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -81,7 +81,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ITextarea } from 'integra-ng';
+import { ITextarea } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

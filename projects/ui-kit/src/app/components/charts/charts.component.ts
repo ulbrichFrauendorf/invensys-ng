@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IChart } from '../../../../../integra-ng/src/lib/components/chart/chart.component';
-import { IChartData } from '../../../../../integra-ng/src/lib/components/chart/chart.interfaces';
+import { IChart } from '../../../../../invensys-ng/src/lib/components/chart/chart.component';
+import { IChartData } from '../../../../../invensys-ng/src/lib/components/chart/chart.interfaces';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
@@ -320,7 +320,7 @@ export class ChartsComponent {
   // TypeScript initialization example
   initializationCode = `import { Component, Input } from '@angular/core';
 import { Chart } from 'app/web-api-client';
-import { IChart, IChartData } from 'integra-ng';
+import { IChart, IChartData } from 'invensys-ng';
 
 @Component({
   selector: 'app-dashboard-chart',
@@ -355,7 +355,7 @@ export class DashboardChartComponent {
 
   // Simple direct usage example
   simpleUsageCode = `import { Component } from '@angular/core';
-import { IChart, IChartData } from 'integra-ng';
+import { IChart, IChartData } from 'invensys-ng';
 
 @Component({
   selector: 'app-simple-chart',

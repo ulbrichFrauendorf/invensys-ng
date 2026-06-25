@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-node /app/tools/mcp/integra-ng-mcp-server.mjs \
+node /app/tools/mcp/invensys-ng-mcp-server.mjs \
   --http \
   --host 127.0.0.1 \
   --port 3200 &

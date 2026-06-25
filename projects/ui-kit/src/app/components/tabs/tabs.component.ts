@@ -72,7 +72,7 @@ export class TabsComponent {
 
   // TypeScript examples
   tsExamples = {
-    basic: `import { ITabs, ITabPanel } from 'integra-ng';
+    basic: `import { ITabs, ITabPanel } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -83,7 +83,7 @@ export class ExampleComponent {
   activeTab = 0;
 }`,
 
-    closable: `import { ITabs, ITabPanel } from 'integra-ng';
+    closable: `import { ITabs, ITabPanel } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

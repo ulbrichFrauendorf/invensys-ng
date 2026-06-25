@@ -40,7 +40,7 @@ export const CLAIMS_CHECKER = new InjectionToken<ClaimsChecker>('ClaimsChecker')
  * 
  * @example
  * // In your app.config.ts:
- * import { provideMenuClaimsChecker } from 'integra-ng';
+ * import { provideMenuClaimsChecker } from 'invensys-ng';
  * import { ClaimsService } from './services/claims.service';
  * 
  * export const appConfig: ApplicationConfig = {

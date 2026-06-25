@@ -17,7 +17,7 @@ import { MenuModel } from '@shared/components/layout/models/menu.model';
 })
 export class AppLayoutComponent {
   layoutConfig: LayoutConfig = {
-    websiteName: 'Integra-NG',
+    websiteName: 'Invensys-NG',
     logoLight: 'assets/layout/images/invensys-icon-light.png',
     logoDark: 'assets/layout/images/invensys-icon-dark.png',
     showThemeToggle: true,

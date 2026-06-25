@@ -1,13 +1,13 @@
 {
-  "name": "integra-ng",
+  "name": "invensys-ng",
   "version": "21.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "start:with-mcp": "node tools/mcp/run-with-ui.mjs",
-    "mcp": "node tools/mcp/integra-ng-mcp-server.mjs --http",
-    "mcp:stdio": "node tools/mcp/integra-ng-mcp-server.mjs --stdio",
-    "build": "ng build integra-ng && ng build ui-kit && npm run build:mcp-catalog",
+    "mcp": "node tools/mcp/invensys-ng-mcp-server.mjs --http",
+    "mcp:stdio": "node tools/mcp/invensys-ng-mcp-server.mjs --stdio",
+    "build": "ng build invensys-ng && ng build ui-kit && npm run build:mcp-catalog",
     "build:mcp-catalog": "node tools/mcp/generate-catalog.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

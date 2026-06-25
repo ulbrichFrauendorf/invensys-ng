@@ -1,9 +1,9 @@
 {
-  "name": "integra-ng",
+  "name": "invensys-ng",
   "version": "21.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ulbrichFrauendorf/integra-ng"
+    "url": "https://github.com/ulbrichFrauendorf/invensys-ng"
   },
   "peerDependencies": {
     "@angular/common": "^21.2.12",

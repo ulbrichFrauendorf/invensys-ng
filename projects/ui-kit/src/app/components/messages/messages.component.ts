@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { IMessage } from '../../../../../integra-ng/src/lib/components/message/message.component';
+import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/message.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,

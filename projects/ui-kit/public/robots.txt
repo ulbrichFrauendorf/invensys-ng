@@ -1,10 +1,10 @@
-# Robots.txt for https://integra.web.za
+# Robots.txt for https://invensys.web.za
 
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://integra.web.za/sitemap.xml
+Sitemap: https://invensys.web.za/sitemap.xml
 
 # Crawl delay (optional, for rate limiting)
 Crawl-delay: 1

@@ -6,8 +6,8 @@ import {
   Validators,
   FormsModule,
 } from '@angular/forms';
-import { IInputText } from '../../../../../integra-ng/src/lib/components/input-text/input-text.component';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { IInputText } from '../../../../../invensys-ng/src/lib/components/input-text/input-text.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
@@ -142,7 +142,7 @@ export class InputTextsComponent implements OnInit {
   // TypeScript examples
   tsExamples = {
     ngModel: `import { FormsModule } from '@angular/forms';
-import { IInputText } from 'integra-ng';
+import { IInputText } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -158,7 +158,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IInputText } from 'integra-ng';
+import { IInputText } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -196,7 +196,7 @@ prefilledForm = this.fb.group({
   };
 
   // Component setup
-  initializationCode = `import { IInputText } from 'integra-ng';
+  initializationCode = `import { IInputText } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

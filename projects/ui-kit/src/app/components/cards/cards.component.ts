@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
-import { ICard } from '../../../../../integra-ng/src/lib/components/card/card.component';
+import { ICard } from '../../../../../invensys-ng/src/lib/components/card/card.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
@@ -80,7 +80,7 @@ export class CardsComponent {
 
   // TypeScript code examples
   tsExamples = {
-    closable: `import { ICard } from 'integra-ng';
+    closable: `import { ICard } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

@@ -6,9 +6,9 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { IAccordion } from '../../../../../integra-ng/src/lib/components/accordion/accordion.component';
-import { IAccordionList } from '../../../../../integra-ng/src/lib/components/accordion-list/accordion-list.component';
-import { IPanel } from '../../../../../integra-ng/src/lib/components/panel/panel.component';
+import { IAccordion } from '../../../../../invensys-ng/src/lib/components/accordion/accordion.component';
+import { IAccordionList } from '../../../../../invensys-ng/src/lib/components/accordion-list/accordion-list.component';
+import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
 import { ISelect } from '@shared/components/select/select.component';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
 import { IButton } from '@shared/components/button/button.component';
@@ -178,7 +178,7 @@ export class ComponentInteractionsComponent implements OnInit {
 
   tsExamples = {
     setup: `import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { IAccordion, IAccordionList, ISelect, IMultiSelect } from 'integra-ng';
+import { IAccordion, IAccordionList, ISelect, IMultiSelect } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

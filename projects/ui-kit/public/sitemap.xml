@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Homepage -->
   <url>
-    <loc>https://integra.web.za/</loc>
+    <loc>https://invensys.web.za/</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -10,13 +10,13 @@
 
   <!-- Getting Started Section -->
   <url>
-    <loc>https://integra.web.za/getting-started/installation</loc>
+    <loc>https://invensys.web.za/getting-started/installation</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/getting-started/theming</loc>
+    <loc>https://invensys.web.za/getting-started/theming</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -24,121 +24,121 @@
 
   <!-- Components Section -->
   <url>
-    <loc>https://integra.web.za/components/accordions</loc>
+    <loc>https://invensys.web.za/components/accordions</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/buttons</loc>
+    <loc>https://invensys.web.za/components/buttons</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/calendars</loc>
+    <loc>https://invensys.web.za/components/calendars</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/checkboxes</loc>
+    <loc>https://invensys.web.za/components/checkboxes</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/radio-buttons</loc>
+    <loc>https://invensys.web.za/components/radio-buttons</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/input-texts</loc>
+    <loc>https://invensys.web.za/components/input-texts</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/cards</loc>
+    <loc>https://invensys.web.za/components/cards</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/dialogs</loc>
+    <loc>https://invensys.web.za/components/dialogs</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/confirmation-dialogs</loc>
+    <loc>https://invensys.web.za/components/confirmation-dialogs</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/tooltips</loc>
+    <loc>https://invensys.web.za/components/tooltips</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/selects</loc>
+    <loc>https://invensys.web.za/components/selects</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/multi-selects</loc>
+    <loc>https://invensys.web.za/components/multi-selects</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/chips</loc>
+    <loc>https://invensys.web.za/components/chips</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/listboxes</loc>
+    <loc>https://invensys.web.za/components/listboxes</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/messages</loc>
+    <loc>https://invensys.web.za/components/messages</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/panels</loc>
+    <loc>https://invensys.web.za/components/panels</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/tree-views</loc>
+    <loc>https://invensys.web.za/components/tree-views</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/tabs</loc>
+    <loc>https://invensys.web.za/components/tabs</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/whispers</loc>
+    <loc>https://invensys.web.za/components/whispers</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://integra.web.za/components/tables</loc>
+    <loc>https://invensys.web.za/components/tables</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -1,4 +1,4 @@
-# integra-ng
+# invensys-ng
 
 A comprehensive Angular component library containing reusable UI components, directives, services, and themes.
 
@@ -43,23 +43,23 @@ This will launch the ui-kit project at `http://localhost:4200/` where you can se
 To generate a new component:
 
 ```bash
-ng generate component component-name --project integra-ng
+ng generate component component-name --project invensys-ng
 ```
 
 You can also generate other artifacts:
 
 ```bash
-ng generate directive|pipe|service|class|guard|interface|enum|module --project integra-ng
+ng generate directive|pipe|service|class|guard|interface|enum|module --project invensys-ng
 ```
 
-> Note: Always include `--project integra-ng` or the artifact will be added to the default project in your `angular.json` file.
+> Note: Always include `--project invensys-ng` or the artifact will be added to the default project in your `angular.json` file.
 
 ## Build
 
 To build the library:
 
 ```bash
-ng build integra-ng
+ng build invensys-ng
 ```
 
 The build artifacts will be stored in the `dist/` directory.
@@ -69,7 +69,7 @@ The build artifacts will be stored in the `dist/` directory.
 After building your library:
 
 ```bash
-cd dist/integra-ng
+cd dist/invensys-ng
 npm publish
 ```
 
@@ -78,7 +78,7 @@ npm publish
 To execute the unit tests via [Karma](https://karma-runner.github.io):
 
 ```bash
-ng test integra-ng
+ng test invensys-ng
 ```
 
 ## Further Help
@@ -90,17 +90,17 @@ ng help
 ```
 
 Or visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-# Integra NG
+# Invensys NG
 
 ## Production Docker Deployment
 
-Integra NG is deployed as a Dockerized app with:
+Invensys NG is deployed as a Dockerized app with:
 
 - Angular UI kit static files served by nginx inside the container.
-- The integra-ng MCP server running as a Node sidecar inside the same container.
+- The invensys-ng MCP server running as a Node sidecar inside the same container.
 - Host nginx terminating TLS and reverse proxying public traffic to the container.
 
-The container listens on `127.0.0.1:8083` on the host by default. The public domain, such as `https://integra.web.za`, should be served by host nginx.
+The container listens on `127.0.0.1:8083` on the host by default. The public domain, such as `https://invensys.web.za`, should be served by host nginx.
 
 ### Shared Server Port Allocation
 
@@ -110,7 +110,7 @@ Recommended host port allocation:
 
 ```text
 integraflow  keep existing port
-integra-ng   127.0.0.1:8083
+invensys-ng   127.0.0.1:8083
 itrace       127.0.0.1:8082
 iserve       choose an unused localhost port
 ```
@@ -129,8 +129,8 @@ This creates:
 
 ```text
 dist/ui-kit
-dist/integra-ng
-dist/mcp/integra-ng-catalog.json
+dist/invensys-ng
+dist/mcp/invensys-ng-catalog.json
 ```
 
 The Docker image builds these artifacts internally, so production deploys do not need `dist` committed to Git.
@@ -201,17 +201,17 @@ curl http://127.0.0.1:8083/health
 Expected response:
 
 ```json
-{"ok":true,"server":"integra-ng-mcp"}
+{"ok":true,"server":"invensys-ng-mcp"}
 ```
 
 ### Host Nginx Configuration
 
-Create `/etc/nginx/sites-available/integra.web.za`:
+Create `/etc/nginx/sites-available/invensys.web.za`:
 
 ```nginx
 server {
     listen 80;
-    server_name integra.web.za;
+    server_name invensys.web.za;
 
     location / {
         proxy_pass http://127.0.0.1:8083;
@@ -227,7 +227,7 @@ server {
 Enable the site:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/integra.web.za /etc/nginx/sites-enabled/integra.web.za
+sudo ln -s /etc/nginx/sites-available/invensys.web.za /etc/nginx/sites-enabled/invensys.web.za
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -235,15 +235,15 @@ sudo systemctl reload nginx
 Issue and install the TLS certificate:
 
 ```bash
-sudo certbot --nginx -d integra.web.za
+sudo certbot --nginx -d invensys.web.za
 ```
 
 After Certbot updates nginx, verify the public app:
 
 ```bash
-curl https://integra.web.za/
-curl https://integra.web.za/health
-curl -X POST https://integra.web.za/mcp \
+curl https://invensys.web.za/
+curl https://invensys.web.za/health
+curl -X POST https://invensys.web.za/mcp \
   -H "content-type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
@@ -254,7 +254,7 @@ Deploy from your workstation with the included PowerShell helper:
 
 ```powershell
 .\scripts\deploy-prod.ps1 `
-  -HostName integra.web.za `
+  -HostName invensys.web.za `
   -User github-actions `
   -RemotePath /home/github-actions/sites/invensys-ng `
   -Branch main `
@@ -264,7 +264,7 @@ Deploy from your workstation with the included PowerShell helper:
 After the first deploy, `-RepositoryUrl` is optional because the remote checkout already exists:
 
 ```powershell
-.\scripts\deploy-prod.ps1 -HostName integra.web.za -User github-actions -RemotePath /home/github-actions/sites/invensys-ng -Branch main
+.\scripts\deploy-prod.ps1 -HostName invensys.web.za -User github-actions -RemotePath /home/github-actions/sites/invensys-ng -Branch main
 ```
 
 The deploy script connects over SSH, updates the Git checkout, rebuilds the Docker image, restarts the container, waits for `/health`, and prunes unused images.
@@ -284,7 +284,7 @@ NPM publishing still uses OIDC trusted publishing and only runs for `v*` tags.
 Configure these GitHub repository secrets:
 
 ```text
-DEPLOY_SSH_HOST        production host, for example integra.web.za
+DEPLOY_SSH_HOST        production host, for example invensys.web.za
 DEPLOY_SSH_USER        SSH user, for example github-actions
 DEPLOY_SSH_KEY         private SSH key for the deploy user
 DEPLOY_SSH_PORT        optional SSH port, defaults to 22
@@ -309,7 +309,7 @@ docker image prune -f
 The same deploy can be run manually:
 
 ```bash
-ssh github-actions@integra.web.za
+ssh github-actions@invensys.web.za
 cd /home/github-actions/sites/invensys-ng
 git fetch origin main
 git reset --hard origin/main
@@ -322,14 +322,14 @@ docker image prune -f
 The deployed app exposes:
 
 ```text
-https://integra.web.za/          Angular UI kit
-https://integra.web.za/health    MCP health check
-https://integra.web.za/components
-https://integra.web.za/mcp       MCP JSON-RPC endpoint
+https://invensys.web.za/          Angular UI kit
+https://invensys.web.za/health    MCP health check
+https://invensys.web.za/components
+https://invensys.web.za/mcp       MCP JSON-RPC endpoint
 ```
 
 Agents should connect to:
 
 ```text
-https://integra.web.za/mcp
+https://invensys.web.za/mcp
 ```

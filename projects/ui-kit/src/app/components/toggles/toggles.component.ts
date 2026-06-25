@@ -5,8 +5,8 @@ import {
   FormControl,
   FormGroup,
 } from '@angular/forms';
-import { IToggle } from '../../../../../integra-ng/src/lib/components/toggle/toggle.component';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { IToggle } from '../../../../../invensys-ng/src/lib/components/toggle/toggle.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { JsonPipe } from '@angular/common';
 import {
@@ -75,7 +75,7 @@ export class TogglesComponent {
   // TypeScript examples
   tsExamples = {
     ngModel: `import { FormsModule } from '@angular/forms';
-import { IToggle } from 'integra-ng';
+import { IToggle } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -94,7 +94,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IToggle } from 'integra-ng';
+import { IToggle } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -123,7 +123,7 @@ console.log(this.formControlExample.value);`,
   };
 
   // Component setup
-  initializationCode = `import { IToggle } from 'integra-ng';
+  initializationCode = `import { IToggle } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

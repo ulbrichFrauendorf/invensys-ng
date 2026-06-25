@@ -357,7 +357,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
 
   // TypeScript examples
   tsExamples = {
-    multiple: `import { IListbox, ListboxOption } from 'integra-ng';
+    multiple: `import { IListbox, ListboxOption } from 'invensys-ng';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -407,7 +407,7 @@ selectedMenuItem: ListboxOption | null = {
 
     reactive: `import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { IListbox, ListboxOption } from 'integra-ng';
+import { IListbox, ListboxOption } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

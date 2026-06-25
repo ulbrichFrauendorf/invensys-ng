@@ -1,6 +1,6 @@
 @use "./card.component.theme.scss" as theme;
 @use "../../themes/_variables.scss" as vars;
-@use "../../../../../integra-ng/src/lib/themes/scrollbar-mixins.scss" as
+@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
   scrollbar;
 
 @include theme.i-card-theme();

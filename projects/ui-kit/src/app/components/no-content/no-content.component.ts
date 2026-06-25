@@ -4,7 +4,7 @@ import {
   FeaturesListComponent,
   Feature,
 } from '../features-list/features-list.component';
-import { NoContentComponent as INoContent } from '../../../../../integra-ng/src/lib/components/no-content/no-content.component';
+import { NoContentComponent as INoContent } from '../../../../../invensys-ng/src/lib/components/no-content/no-content.component';
 
 @Component({
   selector: 'app-no-content',
@@ -69,7 +69,7 @@ export class NoContentComponent {
   };
 
   // TypeScript initialization example
-  initializationCode = `import { NoContentComponent } from 'integra-ng';
+  initializationCode = `import { NoContentComponent } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

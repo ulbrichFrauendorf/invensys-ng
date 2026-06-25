@@ -7,10 +7,10 @@ import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
 const ROOT = path.resolve(new URL('../..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
-const LIB_ROOT = path.join(ROOT, 'projects', 'integra-ng', 'src');
+const LIB_ROOT = path.join(ROOT, 'projects', 'invensys-ng', 'src');
 const UI_DEMO_ROOT = path.join(ROOT, 'projects', 'ui-kit', 'src', 'app', 'components');
 const PUBLIC_API = path.join(LIB_ROOT, 'public-api.ts');
-const DEFAULT_STATIC_CATALOG_PATH = path.join(ROOT, 'dist', 'mcp', 'integra-ng-catalog.json');
+const DEFAULT_STATIC_CATALOG_PATH = path.join(ROOT, 'dist', 'mcp', 'invensys-ng-catalog.json');
 const PROTOCOL_VERSION = '2024-11-05';
 
 const textEncoder = new TextEncoder();
@@ -48,8 +48,8 @@ function classToTitle(value) {
 function parseArgs(argv) {
   const args = {
     mode: 'stdio',
-    host: process.env.INTEGRA_NG_MCP_HOST || '127.0.0.1',
-    port: Number(process.env.INTEGRA_NG_MCP_PORT || 3200),
+    host: process.env.INVENSYS_NG_MCP_HOST || '127.0.0.1',
+    port: Number(process.env.INVENSYS_NG_MCP_PORT || 3200),
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -97,7 +97,7 @@ async function readOptional(filePath) {
   }
 }
 
-function resolveCatalogPath(filePath = process.env.INTEGRA_NG_MCP_CATALOG_PATH || DEFAULT_STATIC_CATALOG_PATH) {
+function resolveCatalogPath(filePath = process.env.INVENSYS_NG_MCP_CATALOG_PATH || DEFAULT_STATIC_CATALOG_PATH) {
   return path.isAbsolute(filePath) ? filePath : path.join(ROOT, filePath);
 }
 
@@ -317,7 +317,7 @@ function buildUsageMarkdown(item) {
   const lines = [
     `# ${item.displayName}`,
     '',
-    `Import from \`integra-ng\`: \`${item.exportName}\`.`,
+    `Import from \`invensys-ng\`: \`${item.exportName}\`.`,
     `Selector: \`${item.selector}\`.`,
     `Source: \`${item.sourcePath}\`.`,
   ];
@@ -430,8 +430,8 @@ export async function buildCatalogFromSource() {
   const exportedComponents = components.filter((component) => component.publicApi);
   return {
     generatedAt: new Date().toISOString(),
-    packageName: 'integra-ng',
-    importFrom: 'integra-ng',
+    packageName: 'invensys-ng',
+    importFrom: 'invensys-ng',
     catalogSource: 'source',
     componentCount: components.length,
     exportedComponentCount: exportedComponents.length,
@@ -453,7 +453,7 @@ export async function writeStaticCatalog(filePath = resolveCatalogPath()) {
 }
 
 export async function loadCatalog(options = {}) {
-  const forceSource = Boolean(options.forceSource) || process.env.INTEGRA_NG_MCP_CATALOG_MODE === 'source';
+  const forceSource = Boolean(options.forceSource) || process.env.INVENSYS_NG_MCP_CATALOG_MODE === 'source';
 
   if (!forceSource) {
     const staticCatalog = await readStaticCatalog(resolveCatalogPath());
@@ -498,7 +498,7 @@ async function findComponent(identifier) {
 
   if (!component) {
     const available = catalog.components.map((item) => item.selector).join(', ');
-    throw new Error(`Unknown integra-ng component "${identifier}". Available selectors: ${available}`);
+    throw new Error(`Unknown invensys-ng component "${identifier}". Available selectors: ${available}`);
   }
 
   return component;
@@ -541,13 +541,13 @@ async function searchComponents(args = {}) {
 }
 
 const THEME_SOURCE_FILES = [
-  'projects/integra-ng/src/lib/themes/colors.theme.scss',
-  'projects/integra-ng/src/lib/themes/color-variables.scss',
+  'projects/invensys-ng/src/lib/themes/colors.theme.scss',
+  'projects/invensys-ng/src/lib/themes/color-variables.scss',
   'projects/ui-kit/src/theme/colors.theme.scss',
   'projects/ui-kit/src/app/components/theming/theming.component.html',
   'projects/ui-kit/src/app/components/theming/theming.component.ts',
-  'projects/integra-ng/src/lib/components/layout/services/layout.service.ts',
-  'projects/integra-ng/src/lib/components/layout/topbar/topbar.component.ts',
+  'projects/invensys-ng/src/lib/components/layout/services/layout.service.ts',
+  'projects/invensys-ng/src/lib/components/layout/topbar/topbar.component.ts',
 ];
 
 const THEME_TOKEN_GROUPS = [
@@ -699,8 +699,8 @@ function flattenThemeTokens() {
 
 function buildThemingGuide() {
   return {
-    packageName: 'integra-ng',
-    purpose: 'Guide an AI agent to theme the integra-ng component library using its CSS variable contract.',
+    packageName: 'invensys-ng',
+    purpose: 'Guide an AI agent to theme the invensys-ng component library using its CSS variable contract.',
     model: {
       scoping: 'Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.',
       runtimeBehavior: 'Components consume the CSS custom properties through SCSS variables in `color-variables.scss`; switching the body class changes every component theme without changing component templates.',
@@ -710,7 +710,7 @@ function buildThemingGuide() {
       'Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.',
       'Define both `.light` and `.dark` blocks in that file. Each block must include every required token from this guide.',
       'Import the theme file from the application global stylesheet, such as `src/styles.scss`; do not place the token definitions only in a component stylesheet.',
-      'Set the initial body class to `light` or `dark` in `index.html`. If the app uses the integra-ng layout theme toggle, read and write `localStorage["viewModeColorScheme"]`.',
+      'Set the initial body class to `light` or `dark` in `index.html`. If the app uses the invensys-ng layout theme toggle, read and write `localStorage["viewModeColorScheme"]`.',
       'When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.',
       'Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.',
       'Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.',
@@ -736,7 +736,7 @@ function buildThemingGuide() {
       'Do not edit each component theme file to brand an application.',
       'Do not define only `.light` or only `.dark`; the library expects both modes to be available when toggled.',
       'Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.',
-      'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for integra-ng library components.',
+      'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for invensys-ng library components.',
     ],
     sourceFiles: THEME_SOURCE_FILES,
   };
@@ -744,7 +744,7 @@ function buildThemingGuide() {
 
 function buildThemingGuideMarkdown(guide) {
   const lines = [
-    '# integra-ng Theming Guide',
+    '# invensys-ng Theming Guide',
     '',
     guide.purpose,
     '',
@@ -822,7 +822,7 @@ async function getOverview() {
     componentCount: catalog.componentCount,
     exportedComponentCount: catalog.exportedComponentCount,
     usage: [
-      'Import standalone components/directives from integra-ng.',
+      'Import standalone components/directives from invensys-ng.',
       'Use list_components to discover selectors and exported names.',
       'Use get_component_usage for inputs, outputs, projected content slots, and UI-kit examples.',
       'Use search_components when you know a behavior, input, output, or partial selector.',
@@ -834,7 +834,7 @@ async function getOverview() {
 const tools = [
   {
     name: 'list_components',
-    description: 'List every integra-ng Angular component/directive known to the MCP catalog.',
+    description: 'List every invensys-ng Angular component/directive known to the MCP catalog.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -848,7 +848,7 @@ const tools = [
   },
   {
     name: 'get_component_usage',
-    description: 'Return usage guidance for one integra-ng component/directive, including imports, selector, inputs, outputs, slots, source files, and examples from the UI kit.',
+    description: 'Return usage guidance for one invensys-ng component/directive, including imports, selector, inputs, outputs, slots, source files, and examples from the UI kit.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -867,7 +867,7 @@ const tools = [
   },
   {
     name: 'search_components',
-    description: 'Search integra-ng components by selector, display name, exported class, inputs, outputs, and demo usage snippets.',
+    description: 'Search invensys-ng components by selector, display name, exported class, inputs, outputs, and demo usage snippets.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -879,12 +879,12 @@ const tools = [
   },
   {
     name: 'get_library_overview',
-    description: 'Describe how AI agents should use the integra-ng UI component library through this MCP server.',
+    description: 'Describe how AI agents should use the invensys-ng UI component library through this MCP server.',
     inputSchema: { type: 'object', properties: {} },
   },
   {
     name: 'get_theming_guide',
-    description: 'Return exact agent instructions for theming integra-ng with the required light/dark CSS variable contract.',
+    description: 'Return exact agent instructions for theming invensys-ng with the required light/dark CSS variable contract.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -911,19 +911,19 @@ async function listResources() {
   const catalog = await loadCatalog();
   return [
     {
-      uri: 'integra-ng://catalog',
-      name: 'integra-ng component catalog',
+      uri: 'invensys-ng://catalog',
+      name: 'invensys-ng component catalog',
       mimeType: 'application/json',
       description: 'Full generated catalog of all selector-bearing components and directives.',
     },
     {
-      uri: 'integra-ng://overview',
-      name: 'integra-ng overview',
+      uri: 'invensys-ng://overview',
+      name: 'invensys-ng overview',
       mimeType: 'application/json',
       description: 'Short guidance for agents using the component library.',
     },
     ...catalog.components.map((component) => ({
-      uri: `integra-ng://component/${component.id}`,
+      uri: `invensys-ng://component/${component.id}`,
       name: component.displayName,
       mimeType: 'text/markdown',
       description: `${component.selector} usage guide`,
@@ -932,13 +932,13 @@ async function listResources() {
 }
 
 async function readResource(uri) {
-  if (uri === 'integra-ng://catalog') {
+  if (uri === 'invensys-ng://catalog') {
     return JSON.stringify(await loadCatalog(), null, 2);
   }
-  if (uri === 'integra-ng://overview') {
+  if (uri === 'invensys-ng://overview') {
     return JSON.stringify(await getOverview(), null, 2);
   }
-  const componentMatch = uri.match(/^integra-ng:\/\/component\/(.+)$/);
+  const componentMatch = uri.match(/^invensys-ng:\/\/component\/(.+)$/);
   if (componentMatch) {
     return getComponentUsage({ component: componentMatch[1], format: 'markdown' });
   }
@@ -948,8 +948,8 @@ async function readResource(uri) {
 function listPrompts() {
   return [
     {
-      name: 'use_integra_ng_component',
-      description: 'Guide an agent to choose and implement integra-ng components correctly.',
+      name: 'use_invensys_ng_component',
+      description: 'Guide an agent to choose and implement invensys-ng components correctly.',
       arguments: [
         {
           name: 'goal',
@@ -962,23 +962,23 @@ function listPrompts() {
 }
 
 function getPrompt(name, args = {}) {
-  if (name !== 'use_integra_ng_component') {
+  if (name !== 'use_invensys_ng_component') {
     throw new Error(`Unknown prompt "${name}"`);
   }
 
   return {
-    description: 'Use integra-ng components with source-backed usage guidance.',
+    description: 'Use invensys-ng components with source-backed usage guidance.',
     messages: [
       {
         role: 'user',
         content: {
           type: 'text',
           text: [
-            `Goal: ${args.goal || 'Build an Angular UI using integra-ng.'}`,
+            `Goal: ${args.goal || 'Build an Angular UI using invensys-ng.'}`,
             '',
             'First call list_components or search_components to choose the right selector.',
             'Then call get_component_usage for every selected component.',
-            'Import standalone components from integra-ng and follow the documented inputs, outputs, slots, and examples.',
+            'Import standalone components from invensys-ng and follow the documented inputs, outputs, slots, and examples.',
           ].join('\n'),
         },
       },
@@ -1018,7 +1018,7 @@ async function handleRequest(message) {
           prompts: {},
         },
         serverInfo: {
-          name: 'integra-ng-mcp',
+          name: 'invensys-ng-mcp',
           version: '1.0.0',
         },
       });
@@ -1040,7 +1040,7 @@ async function handleRequest(message) {
       return jsonRpcResult(id, {
         contents: [{
           uri: params.uri,
-          mimeType: params.uri?.startsWith('integra-ng://component/') ? 'text/markdown' : 'application/json',
+          mimeType: params.uri?.startsWith('invensys-ng://component/') ? 'text/markdown' : 'application/json',
           text,
         }],
       });
@@ -1095,7 +1095,7 @@ function startHttpServer({ host, port }) {
       }
 
       if (request.method === 'GET' && request.url === '/health') {
-        writeJson(response, 200, { ok: true, server: 'integra-ng-mcp' });
+        writeJson(response, 200, { ok: true, server: 'invensys-ng-mcp' });
         return;
       }
 
@@ -1124,7 +1124,7 @@ function startHttpServer({ host, port }) {
   });
 
   server.listen(port, host, () => {
-    process.stderr.write(`integra-ng MCP server listening on http://${host}:${port}/mcp\n`);
+    process.stderr.write(`invensys-ng MCP server listening on http://${host}:${port}/mcp\n`);
   });
 
   return server;

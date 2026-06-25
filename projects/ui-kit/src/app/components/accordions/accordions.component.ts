@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IAccordion } from '../../../../../integra-ng/src/lib/components/accordion/accordion.component';
-import { IAccordionList } from '../../../../../integra-ng/src/lib/components/accordion-list/accordion-list.component';
+import { IAccordion } from '../../../../../invensys-ng/src/lib/components/accordion/accordion.component';
+import { IAccordionList } from '../../../../../invensys-ng/src/lib/components/accordion-list/accordion-list.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
@@ -88,7 +88,7 @@ export class AccordionsComponent {
 
   // TypeScript examples
   tsExamples = {
-    basic: `import { IAccordion } from 'integra-ng';
+    basic: `import { IAccordion } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -97,7 +97,7 @@ export class AccordionsComponent {
 })
 export class ExampleComponent {}`,
 
-    programmatic: `import { IAccordion } from 'integra-ng';
+    programmatic: `import { IAccordion } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -112,7 +112,7 @@ export class ExampleComponent {
   }
 }`,
 
-    accordionList: `import { IAccordion, IAccordionList } from 'integra-ng';
+    accordionList: `import { IAccordion, IAccordionList } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -123,7 +123,7 @@ export class ExampleComponent {}`,
   };
 
   // Component initialization
-  initializationCode = `import { IAccordion, IAccordionList } from 'integra-ng';
+  initializationCode = `import { IAccordion, IAccordionList } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

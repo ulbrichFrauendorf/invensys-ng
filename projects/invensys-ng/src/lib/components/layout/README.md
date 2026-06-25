@@ -17,7 +17,7 @@ The `i-layout` component provides a complete application layout with sidebar nav
 
 ```typescript
 import { Component } from '@angular/core';
-import { LayoutComponent, MenuModel, LayoutConfig } from 'integra-ng';
+import { LayoutComponent, MenuModel, LayoutConfig } from 'invensys-ng';
 
 @Component({
   selector: 'app-root',
@@ -116,7 +116,7 @@ First, create a service that implements the `ClaimsChecker` interface:
 ```typescript
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ClaimsChecker } from 'integra-ng';
+import { ClaimsChecker } from 'invensys-ng';
 
 @Injectable({ providedIn: 'root' })
 export class ClaimsService implements ClaimsChecker {
@@ -136,7 +136,7 @@ The easiest way to configure claims checking is using the `provideMenuClaimsChec
 ```typescript
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideMenuClaimsChecker } from 'integra-ng';
+import { provideMenuClaimsChecker } from 'invensys-ng';
 import { ClaimsService } from './services/claims.service';
 
 export const appConfig: ApplicationConfig = {
@@ -198,7 +198,7 @@ If you prefer manual configuration:
 
 ```typescript
 // app.config.ts
-import { CLAIMS_CHECKER } from 'integra-ng';
+import { CLAIMS_CHECKER } from 'invensys-ng';
 import { ClaimsService } from './services/claims.service';
 
 export const appConfig: ApplicationConfig = {

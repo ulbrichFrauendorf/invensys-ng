@@ -1,5 +1,5 @@
 services:
-  integra-ng:
+  invensys-ng:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
     environment:
       NODE_ENV: production
-      INTEGRA_NG_MCP_CATALOG_PATH: /app/dist/mcp/integra-ng-catalog.json
+      INVENSYS_NG_MCP_CATALOG_PATH: /app/dist/mcp/invensys-ng-catalog.json
     ports:
       - "127.0.0.1:${DEPLOY_WEB_PORT:-8083}:8080"
     healthcheck:

@@ -6,8 +6,8 @@ import process from 'node:process';
 const isWindows = process.platform === 'win32';
 const npmCommand = 'npm';
 const nodeCommand = process.execPath;
-const mcpPort = process.env.INTEGRA_NG_MCP_PORT || '3200';
-const mcpHost = process.env.INTEGRA_NG_MCP_HOST || '127.0.0.1';
+const mcpPort = process.env.INVENSYS_NG_MCP_PORT || '3200';
+const mcpHost = process.env.INVENSYS_NG_MCP_HOST || '127.0.0.1';
 
 const children = [];
 
@@ -47,7 +47,7 @@ if (isWindows) {
   spawnManaged('ui-kit', npmCommand, ['run', 'start', '--', '--host', '127.0.0.1']);
 }
 
-spawnManaged('mcp', nodeCommand, ['tools/mcp/integra-ng-mcp-server.mjs', '--http', '--host', mcpHost, '--port', mcpPort]);
+spawnManaged('mcp', nodeCommand, ['tools/mcp/invensys-ng-mcp-server.mjs', '--http', '--host', mcpHost, '--port', mcpPort]);
 
 function stopChildren() {
   for (const { child } of children) {
@@ -65,4 +65,4 @@ process.on('SIGTERM', () => {
   stopChildren();
 });
 
-process.stdout.write(`Starting UI kit and integra-ng MCP sidecar at http://${mcpHost}:${mcpPort}/mcp\n`);
+process.stdout.write(`Starting UI kit and invensys-ng MCP sidecar at http://${mcpHost}:${mcpPort}/mcp\n`);

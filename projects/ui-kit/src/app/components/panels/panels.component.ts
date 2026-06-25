@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IPanel } from '../../../../../integra-ng/src/lib/components/panel/panel.component';
-import { IRadioButton } from '../../../../../integra-ng/src/lib/components/radio-button/radio-button.component';
+import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
+import { IRadioButton } from '../../../../../invensys-ng/src/lib/components/radio-button/radio-button.component';
 import { FormsModule } from '@angular/forms';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
@@ -85,7 +85,7 @@ export class PanelsComponent {
 
   // TypeScript examples
   tsExamples = {
-    basic: `import { IPanel } from 'integra-ng';
+    basic: `import { IPanel } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -94,7 +94,7 @@ export class PanelsComponent {
 })
 export class ExampleComponent {}`,
 
-    programmatic: `import { IPanel } from 'integra-ng';
+    programmatic: `import { IPanel } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -109,7 +109,7 @@ export class ExampleComponent {
   }
 }`,
 
-    withContent: `import { IPanel, IRadioButton } from 'integra-ng';
+    withContent: `import { IPanel, IRadioButton } from 'invensys-ng';
 import { FormsModule } from '@angular/forms';
 
 @Component({

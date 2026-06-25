@@ -3,25 +3,25 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "integra-ng": {
+    "invensys-ng": {
       "projectType": "library",
-      "root": "projects/integra-ng",
-      "sourceRoot": "projects/integra-ng/src",
+      "root": "projects/invensys-ng",
+      "sourceRoot": "projects/invensys-ng/src",
       "prefix": "i",
 
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/integra-ng/ng-package.json"
+            "project": "projects/invensys-ng/ng-package.json"
           },
 
           "configurations": {
             "production": {
-              "tsConfig": "projects/integra-ng/tsconfig.lib.prod.json"
+              "tsConfig": "projects/invensys-ng/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/integra-ng/tsconfig.lib.json"
+              "tsConfig": "projects/invensys-ng/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -29,7 +29,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/integra-ng/tsconfig.spec.json",
+            "tsConfig": "projects/invensys-ng/tsconfig.spec.json",
             "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
@@ -60,7 +60,7 @@
             ],
             "styles": ["projects/ui-kit/src/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/integra-ng"]
+              "includePaths": ["node_modules/invensys-ng"]
             }
           },
           "configurations": {

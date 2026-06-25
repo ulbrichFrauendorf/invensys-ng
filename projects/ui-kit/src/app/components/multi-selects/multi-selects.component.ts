@@ -178,7 +178,7 @@ export class MultiSelectsComponent implements OnInit {
   // TypeScript examples
   tsExamples = {
     ngModel: `import { FormsModule } from '@angular/forms';
-import { IMultiSelect } from 'integra-ng';
+import { IMultiSelect } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -198,7 +198,7 @@ export class ExampleComponent {
 }`,
 
     reactiveForm: `import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IMultiSelect } from 'integra-ng';
+import { IMultiSelect } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -243,7 +243,7 @@ private minArrayLengthValidator(minLength: number) {
   };
 
   // Component setup
-  initializationCode = `import { IMultiSelect } from 'integra-ng';
+  initializationCode = `import { IMultiSelect } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

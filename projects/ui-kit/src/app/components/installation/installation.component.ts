@@ -8,9 +8,9 @@ import { DemoCardComponent } from '../demo-card/demo-card.component';
   styleUrl: './installation.component.scss',
 })
 export class InstallationComponent {
-  npmInstallCode = `npm install integra-ng`;
+  npmInstallCode = `npm install invensys-ng`;
 
-  importComponentCode = `import { IButton } from 'integra-ng';
+  importComponentCode = `import { IButton } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',
@@ -28,7 +28,7 @@ export class ExampleComponent {
   IInputText,
   ISelect,
   ICheckbox
-} from 'integra-ng';
+} from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

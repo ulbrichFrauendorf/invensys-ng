@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { IButton } from '../../../../../integra-ng/src/lib/components/button/button.component';
+import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import {
   FeaturesListComponent,
   Feature,
 } from '../features-list/features-list.component';
-import { ISeverity } from '../../../../../integra-ng/src/lib/enums/IButtonSeverity';
+import { ISeverity } from '../../../../../invensys-ng/src/lib/enums/IButtonSeverity';
 
 @Component({
   selector: 'app-buttons',
@@ -70,7 +70,7 @@ export class ButtonsComponent {
 
   // TypeScript code example
   tsExamples = {
-    basic: `import { IButton } from 'integra-ng';
+    basic: `import { IButton } from 'invensys-ng';
 
 @Component({
   selector: 'app-example',

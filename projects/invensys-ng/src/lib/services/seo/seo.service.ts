@@ -31,7 +31,7 @@ export interface SeoConfig {
  *
  * @example
  * ```typescript
- * import { SeoService } from 'integra-ng';
+ * import { SeoService } from 'invensys-ng';
  *
  * export class MyComponent {
  *   constructor(private seoService: SeoService) {

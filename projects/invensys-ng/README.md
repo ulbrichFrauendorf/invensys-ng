@@ -1,13 +1,13 @@
-# Integra NG
+# Invensys NG
 
 A modern Angular component library for enterprise apps.
 
 ## Project Website
 
-[integra.web.za](https://integra.web.za)
+[invensys.web.za](https://invensys.web.za)
 
 ## Installation
 
 ```bash
-npm install integra-ng
+npm install invensys-ng
 ```

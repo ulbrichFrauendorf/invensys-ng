@@ -87,11 +87,13 @@ For MCP clients that launch servers by command:
 - `get_component_usage`: returns import, selector, inputs, outputs, slots, source files, and examples for one component.
 - `get_library_overview`: explains how an agent should use this MCP server.
 - `get_theming_guide`: gives exact AI-agent instructions for theming the component library with the required `.light` / `.dark` CSS variable contract.
+- `get_tables_guide`: gives exact AI-agent instructions for implementing `i-table`, including `GridData`, grouped expandable detail sub-tables, row actions, and default virtual scrolling guidance.
 
 The server also exposes resources:
 
 - `invensys-ng://catalog`
 - `invensys-ng://overview`
+- `invensys-ng://guides/tables`
 - `invensys-ng://component/<component-id>`
 
 ## Example HTTP MCP Request

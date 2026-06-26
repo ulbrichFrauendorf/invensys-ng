@@ -52,7 +52,8 @@
         <p>
           For most applications, import the bundled theme entry point in your
           global <code>styles.scss</code>. This defines light and dark color
-          variables, scrollbar tokens, and global typography styles in one step:
+          variables, body font/background/text defaults, scrollbar tokens, and
+          global typography styles in one step:
         </p>
       </div>
     </app-demo-card>
@@ -66,8 +67,8 @@
       <div class="theming-content">
         <p>
           Use the separate theme files when a project wants explicit control over
-          colors, typography, scrollbar tokens, or where scrollbar mixins are
-          applied.
+          colors, body defaults, typography, scrollbar tokens, or where scrollbar
+          mixins are applied.
         </p>
         <i-message severity="info">
           Prefer package imports such as
@@ -207,6 +208,10 @@
         <div class="variable-section">
           <h3>Typography and Scrollbars</h3>
           <ul class="variable-list">
+            <li>
+              <code>body.theme.scss</code>: Applies the default body font,
+              background, and text color from the theme variables.
+            </li>
             <li>
               <code>typography.theme.scss</code>: Provides global heading,
               paragraph, mark, blockquote, and divider styles.

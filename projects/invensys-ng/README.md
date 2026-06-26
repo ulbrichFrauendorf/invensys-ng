@@ -22,10 +22,14 @@ Import the bundled theme once from your application `styles.scss`:
 @include invensys-theme.define-theme();
 ```
 
+This includes light/dark color tokens, body defaults, typography, and scrollbar tokens.
+Use `@include invensys-theme.define-theme($body: false);` if your application owns its body styling.
+
 For explicit control, import the theme pieces separately:
 
 ```scss
 @use "invensys-ng/src/lib/themes/colors.theme.scss" as colors-theme;
+@use "invensys-ng/src/lib/themes/body.theme.scss" as body-theme;
 @use "invensys-ng/src/lib/themes/typography.theme.scss" as typography-theme;
 @use "invensys-ng/src/lib/themes/scrollbar.theme.scss" as scrollbar-theme;
 @use "invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
@@ -33,13 +37,12 @@ For explicit control, import the theme pieces separately:
 
 @include colors-theme.define-color-palette(light);
 @include colors-theme.define-color-palette(dark);
+@include body-theme.define-body();
 @include scrollbar-theme.define-scrollbar-theme();
 @include typography-theme.define-typography();
 
 html,
 body {
-  background-color: vars.$color-surface-ground;
-  color: vars.$color-text-primary;
   @include scrollbar.themed-scrollbar();
 }
 ```

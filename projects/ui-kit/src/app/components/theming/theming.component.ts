@@ -82,6 +82,7 @@ export class ThemingComponent {
 @include invensys-theme.define-theme();`;
 
   advancedThemeCode = `@use "invensys-ng/src/lib/themes/colors.theme.scss" as colors-theme;
+@use "invensys-ng/src/lib/themes/body.theme.scss" as body-theme;
 @use "invensys-ng/src/lib/themes/typography.theme.scss" as typography-theme;
 @use "invensys-ng/src/lib/themes/scrollbar.theme.scss" as scrollbar-theme;
 @use "invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
@@ -89,13 +90,12 @@ export class ThemingComponent {
 
 @include colors-theme.define-color-palette(light);
 @include colors-theme.define-color-palette(dark);
+@include body-theme.define-body();
 @include scrollbar-theme.define-scrollbar-theme();
 @include typography-theme.define-typography();
 
 html,
 body {
-  background-color: vars.$color-surface-ground;
-  color: vars.$color-text-primary;
   @include scrollbar.themed-scrollbar();
 }`;
 

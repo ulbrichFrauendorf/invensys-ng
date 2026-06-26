@@ -544,6 +544,7 @@ const THEME_SOURCE_FILES = [
   'projects/invensys-ng/src/lib/themes/theme.scss',
   'projects/invensys-ng/src/lib/themes/colors.theme.scss',
   'projects/invensys-ng/src/lib/themes/color-variables.scss',
+  'projects/invensys-ng/src/lib/themes/body.theme.scss',
   'projects/invensys-ng/src/lib/themes/typography.theme.scss',
   'projects/invensys-ng/src/lib/themes/scrollbar.theme.scss',
   'projects/invensys-ng/src/lib/themes/scrollbar-mixins.scss',
@@ -689,6 +690,7 @@ const THEME_IMPORT_SNIPPET = `/* src/styles.scss */
 
 const THEME_ADVANCED_IMPORT_SNIPPET = `/* src/styles.scss */
 @use "invensys-ng/src/lib/themes/colors.theme.scss" as colors-theme;
+@use "invensys-ng/src/lib/themes/body.theme.scss" as body-theme;
 @use "invensys-ng/src/lib/themes/typography.theme.scss" as typography-theme;
 @use "invensys-ng/src/lib/themes/scrollbar.theme.scss" as scrollbar-theme;
 @use "invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
@@ -696,13 +698,12 @@ const THEME_ADVANCED_IMPORT_SNIPPET = `/* src/styles.scss */
 
 @include colors-theme.define-color-palette(light);
 @include colors-theme.define-color-palette(dark);
+@include body-theme.define-body();
 @include scrollbar-theme.define-scrollbar-theme();
 @include typography-theme.define-typography();
 
 html,
 body {
-  background-color: vars.$color-surface-ground;
-  color: vars.$color-text-primary;
   @include scrollbar.themed-scrollbar();
 }`;
 
@@ -738,11 +739,12 @@ function buildThemingGuide() {
     purpose: 'Guide an AI agent to theme the invensys-ng component library using its CSS variable contract.',
     model: {
       scoping: 'Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.',
-      runtimeBehavior: 'Components consume CSS custom properties through SCSS variables in `color-variables.scss`; typography and scrollbar helpers use the same light/dark token contract.',
+      runtimeBehavior: 'Components consume CSS custom properties through SCSS variables in `color-variables.scss`; body defaults, typography, and scrollbar helpers use the same light/dark token contract.',
       persistenceKey: 'viewModeColorScheme',
     },
     instructions: [
-      'For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once.',
+      'For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once. This includes colors, body defaults, typography, and scrollbar tokens.',
+      'If the caller owns body styling, use `@include invensys-theme.define-theme($body: false);` or import `body.theme.scss` separately only where desired.',
       'Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.',
       'Define both `.light` and `.dark` blocks in that file. Each block must include every required color token from this guide.',
       'Import theme files from the application global stylesheet, such as `src/styles.scss`; do not place token definitions only in a component stylesheet.',
@@ -750,6 +752,7 @@ function buildThemingGuide() {
       'When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.',
       'Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.',
       'Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.',
+      'Use `body.theme.scss` when a caller wants only the default `body` font family, surface background, and primary text color.',
       'Use `typography.theme.scss` when a caller wants the library heading, paragraph, mark, blockquote, and divider defaults without hand-copying CSS.',
       'Use `scrollbar.theme.scss` with `scrollbar-mixins.scss` when a caller wants themed scrollbars on app-level or custom scroll containers.',
     ],
@@ -770,6 +773,7 @@ function buildThemingGuide() {
       'Inspect `document.body.classList` and confirm exactly one theme class is present: `light` or `dark`.',
       'In DevTools, confirm required CSS variables resolve on `body`, not only inside an Angular component host.',
       'Check representative components in both themes: button, input/textarea disabled state, card/panel surface, dialog/overlay, table hover/border, and progress spinner tertiary color.',
+      'Check body defaults in a caller page: `body` uses Roboto, `--surface-ground`, and `--color-text-primary` unless `$body: false` is passed.',
       'Check global typography in a caller page: headings use `--color-text-primary`, `mark` uses warning color, blockquotes use tertiary text color, and `hr` uses `--surface-border`.',
       'Check custom scroll containers that include `scrollbar.themed-scrollbar()` or `scrollbar.dropdown-scrollbar()` in both light and dark modes.',
       'If using `i-layout` with `showThemeToggle`, reload after toggling and confirm the first paint uses the saved `viewModeColorScheme` value.',
@@ -780,6 +784,7 @@ function buildThemingGuide() {
       'Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.',
       'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for invensys-ng library components.',
       'Do not hard-code `node_modules` in Sass imports; use package imports such as `invensys-ng/src/lib/themes/theme.scss`.',
+      'Do not duplicate body background and text color rules if the bundled `define-theme()` body defaults are enabled.',
       'Do not copy typography CSS into every caller. Include `typography-theme.define-typography()` or the bundled `invensys-theme.define-theme()` mixin.',
     ],
     sourceFiles: THEME_SOURCE_FILES,
@@ -824,7 +829,7 @@ function buildThemingGuideMarkdown(guide) {
     '```',
     '',
     '## Import The Theme',
-    'For most caller projects, load the bundled theme from the global stylesheet so every Angular component, overlay, scrollbar, and typography element can inherit the tokens:',
+    'For most caller projects, load the bundled theme from the global stylesheet so every Angular component, overlay, body, scrollbar, and typography element can inherit the tokens:',
     '```scss',
     guide.snippets.stylesScss,
     '```',

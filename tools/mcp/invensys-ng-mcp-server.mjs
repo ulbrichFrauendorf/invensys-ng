@@ -872,6 +872,285 @@ function getThemingGuide(args = {}) {
   return buildThemingGuideMarkdown(guide);
 }
 
+function buildTablesGuide() {
+  return {
+    component: {
+      selector: 'i-table',
+      importName: 'ITable',
+      importFrom: 'invensys-ng',
+      sourceFiles: [
+        'projects/invensys-ng/src/lib/components/table/table.component.ts',
+        'projects/invensys-ng/src/lib/components/table/table.component.html',
+        'projects/ui-kit/src/app/components/tables/tables.component.ts',
+        'projects/ui-kit/src/app/components/tables/tables.component.html',
+      ],
+    },
+    purpose: 'Use this guide before implementing data grids, grouped rows, expandable row details, table actions, filtering, selection, downloads, or virtual scrolling with invensys-ng.',
+    defaultPolicy: [
+      'Use `<i-table>` for tabular data. Do not create a custom HTML table when invensys-ng is available.',
+      'Import the standalone `ITable` component from `invensys-ng` and pass one `[grid]` object.',
+      'Represent table data with `GridData<TRow, TDetail>`: `columns`, `rows`, optional `actions`, and optional `details`.',
+      'Virtual scrolling is the default choice for flat, non-expandable tables. Set `[virtualScroll]="true"` and provide a stable `[height]` unless the table is intentionally tiny or needs expandable details.',
+      'Grouped data must be implemented as expandable detail sub-tables with `GridData.details`. Do not flatten groups into fake header rows, colspans, nested arrays inside a cell, or a custom grouped table.',
+      'When using `details`, omit `[virtualScroll]` on the parent table. The component switches to the detail-expansion path so nested `<i-table>` rows can expand inline correctly.',
+      'Use `dataKey` for selection and stable row identity whenever rows have an id-like field.',
+      'Put row actions in `grid.actions`; each action owns its own `handler(row)`.',
+    ],
+    types: {
+      TableColumn: {
+        required: ['field', 'header'],
+        optional: ['sortable', 'filterable', 'width', 'align', 'type', 'format', 'iconClass', 'severity', 'iconSize'],
+        columnTypes: ['text', 'number', 'date', 'boolean', 'currency', 'icon', 'list'],
+        notes: [
+          '`field` supports nested property paths such as `customer.name`.',
+          '`type: "currency"` uses `format` as the currency code when provided.',
+          '`type: "date"` can use formats such as `yyyy-MM-dd`.',
+          '`type: "icon"` should use `iconClass` and optional `severity` fields or functions.',
+          '`type: "list"` renders array values as chips.',
+        ],
+      },
+      GridAction: {
+        required: ['id', 'handler'],
+        optional: ['icon', 'label', 'severity', 'disabled', 'tooltip', 'visible'],
+        notes: [
+          '`handler` receives the row and performs the action directly.',
+          '`disabled`, `tooltip`, and `visible` may be static values or functions of the row.',
+        ],
+      },
+      GridDetails: {
+        required: ['columns', 'rows'],
+        optional: ['actions'],
+        notes: [
+          '`rows(parentRow)` returns the detail rows for a parent/group row.',
+          'Use this for grouped data: parent rows are group summaries, detail rows are the grouped records.',
+        ],
+      },
+      GridData: {
+        required: ['columns', 'rows'],
+        optional: ['actions', 'details'],
+        notes: [
+          'This is the only data object passed to `[grid]`.',
+          'Do not pass separate columns/actions/groupedData inputs; the table API is grid-first.',
+        ],
+      },
+    },
+    inputs: [
+      { name: 'grid', type: 'GridData', default: '{ columns: [], rows: [] }', guidance: 'Always bind this.' },
+      { name: 'sortable', type: 'boolean', default: false, guidance: 'Enable when any column has `sortable: true`.' },
+      { name: 'filterable', type: 'boolean', default: false, guidance: 'Enables per-column filters for columns where `filterable !== false`.' },
+      { name: 'globalFilter', type: 'boolean', default: false, guidance: 'Shows the global search input.' },
+      { name: 'selectionMode', type: "'single' | 'multiple' | null", default: null, guidance: 'Use with `[(selection)]` and `dataKey`.' },
+      { name: 'dataKey', type: 'string', guidance: 'Use the stable id field, such as `id`.' },
+      { name: 'height', type: 'string', guidance: 'Required for virtual scroll; also constrains regular scroll containers.' },
+      { name: 'virtualScroll', type: 'boolean', default: false, guidance: 'Set true by default for flat tables; omit for expandable detail tables.' },
+      { name: 'virtualScrollItemSize', type: 'number', default: 48, guidance: 'Must match row height for correct CDK virtualization.' },
+      { name: 'downloadable', type: 'boolean', default: false, guidance: 'Enables export button.' },
+    ],
+    outputs: [
+      'onSort: SortEvent',
+      'onFilter: FilterEvent',
+      'selectionChange / onSelectionChange: any[]',
+      'onRowSelect: any',
+      'onRowUnselect: any',
+      'onRowExpand: any',
+      'onRowCollapse: any',
+      'onDownload: TableDownloadEvent',
+    ],
+    snippets: {
+      flatVirtualTableTs: `import { ITable, GridData, TableColumn } from 'invensys-ng';
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  status: string;
+}
+
+readonly columns: TableColumn[] = [
+  { field: 'name', header: 'Name', sortable: true, filterable: true },
+  { field: 'category', header: 'Category', sortable: true, filterable: true },
+  { field: 'price', header: 'Price', sortable: true, type: 'currency' },
+  { field: 'status', header: 'Status', sortable: true, filterable: true },
+];
+
+grid: GridData<Product> = {
+  columns: this.columns,
+  rows: this.products,
+};`,
+      flatVirtualTableHtml: `<i-table
+  [grid]="grid"
+  [sortable]="true"
+  [filterable]="true"
+  [globalFilter]="true"
+  [virtualScroll]="true"
+  [height]="'420px'"
+  dataKey="id"
+></i-table>`,
+      groupedDetailsTs: `import { ITable, GridAction, GridData, TableColumn } from 'invensys-ng';
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  quantity: number;
+}
+
+interface CategorySummary {
+  category: string;
+  itemCount: number;
+  totalValue: number;
+}
+
+readonly groupColumns: TableColumn[] = [
+  { field: 'category', header: 'Category', sortable: true },
+  { field: 'itemCount', header: 'Items', sortable: true, type: 'number' },
+  { field: 'totalValue', header: 'Total Value', sortable: true, type: 'currency' },
+];
+
+readonly detailColumns: TableColumn[] = [
+  { field: 'name', header: 'Product', sortable: true, filterable: true },
+  { field: 'price', header: 'Price', sortable: true, type: 'currency' },
+  { field: 'quantity', header: 'Qty', sortable: true, type: 'number' },
+];
+
+readonly detailActions: GridAction<Product>[] = [
+  { id: 'edit', icon: 'pi pi-pencil', tooltip: 'Edit product', handler: (row) => this.edit(row) },
+];
+
+groupedGrid: GridData<CategorySummary, Product> = {
+  columns: this.groupColumns,
+  rows: this.buildCategorySummaries(),
+  details: {
+    columns: this.detailColumns,
+    rows: (group) => this.products.filter((product) => product.category === group.category),
+    actions: this.detailActions,
+  },
+};`,
+      groupedDetailsHtml: `<i-table
+  [grid]="groupedGrid"
+  [sortable]="true"
+  [filterable]="true"
+  [height]="'420px'"
+  dataKey="category"
+></i-table>`,
+      actionsTs: `readonly actions: GridAction<Product>[] = [
+  {
+    id: 'delete',
+    icon: 'pi pi-trash',
+    severity: 'danger',
+    tooltip: (row) => \`Delete \${row.name}\`,
+    disabled: (row) => row.quantity === 0,
+    handler: (row) => this.delete(row),
+  },
+];
+
+grid: GridData<Product> = {
+  columns: this.columns,
+  rows: this.products,
+  actions: this.actions,
+};`,
+    },
+    avoid: [
+      'Do not use deprecated or imaginary inputs such as `[columns]`, `[rows]`, `[actions]`, `[groupedData]`, or `[rowGroupMode]`.',
+      'Do not build grouped rows by inserting category strings into the data array.',
+      'Do not render expandable details inside a cell with custom markup; use `GridData.details`.',
+      'Do not enable `[virtualScroll]` together with `details`; expandable nested rows require the component detail path.',
+      'Do not forget `[height]` when virtual scrolling is enabled.',
+      'Do not use index-only identity for selectable data; provide `dataKey`.',
+    ],
+    verification: [
+      'Confirm `ITable` is imported by the consuming standalone component.',
+      'Confirm the template has exactly one `[grid]` binding and no fake table API inputs.',
+      'For flat tables, confirm `[virtualScroll]="true"` and `[height]` are present by default.',
+      'For grouped data, confirm `grid.details.rows(parentRow)` returns the child records and `[virtualScroll]` is omitted.',
+      'Confirm action handlers live inside `GridAction.handler`.',
+      'Confirm sortable/filterable inputs are enabled when the column definitions request them.',
+    ],
+  };
+}
+
+function buildTablesGuideMarkdown(guide) {
+  const lines = [
+    '# invensys-ng Tables Guide',
+    '',
+    guide.purpose,
+    '',
+    '## Component',
+    `Import \`${guide.component.importName}\` from \`${guide.component.importFrom}\`.`,
+    `Selector: \`${guide.component.selector}\`.`,
+    '',
+    '## Agent Rules',
+    ...guide.defaultPolicy.map((instruction, index) => `${index + 1}. ${instruction}`),
+    '',
+    '## Types',
+  ];
+
+  for (const [name, typeInfo] of Object.entries(guide.types)) {
+    lines.push('', `### ${name}`);
+    lines.push(`- Required: ${typeInfo.required.map((item) => `\`${item}\``).join(', ')}`);
+    if (typeInfo.optional.length) {
+      lines.push(`- Optional: ${typeInfo.optional.map((item) => `\`${item}\``).join(', ')}`);
+    }
+    if (typeInfo.columnTypes) {
+      lines.push(`- Column types: ${typeInfo.columnTypes.map((item) => `\`${item}\``).join(', ')}`);
+    }
+    for (const note of typeInfo.notes) lines.push(`- ${note}`);
+  }
+
+  lines.push('', '## Inputs');
+  for (const input of guide.inputs) {
+    const defaultValue = input.default !== undefined ? ` Default: \`${input.default}\`.` : '';
+    lines.push(`- \`${input.name}\`: ${input.type}.${defaultValue} ${input.guidance || ''}`.trim());
+  }
+
+  lines.push('', '## Outputs', ...guide.outputs.map((output) => `- \`${output}\``));
+
+  lines.push(
+    '',
+    '## Flat Table With Virtual Scroll',
+    '```ts',
+    guide.snippets.flatVirtualTableTs,
+    '```',
+    '```html',
+    guide.snippets.flatVirtualTableHtml,
+    '```',
+    '',
+    '## Grouped Data With Expandable Details',
+    'Grouped data uses parent summary rows plus `GridData.details`. This is the correct grouped-data implementation.',
+    '```ts',
+    guide.snippets.groupedDetailsTs,
+    '```',
+    '```html',
+    guide.snippets.groupedDetailsHtml,
+    '```',
+    '',
+    '## Row Actions',
+    '```ts',
+    guide.snippets.actionsTs,
+    '```',
+    '',
+    '## Avoid',
+    ...guide.avoid.map((item) => `- ${item}`),
+    '',
+    '## Verification',
+    ...guide.verification.map((item) => `- ${item}`),
+    '',
+    '## Source Files',
+    ...guide.component.sourceFiles.map((file) => `- \`${file}\``),
+  );
+
+  return lines.join('\n');
+}
+
+function getTablesGuide(args = {}) {
+  const guide = buildTablesGuide();
+  const format = args.format || 'markdown';
+  if (format === 'json') return guide;
+  return buildTablesGuideMarkdown(guide);
+}
+
 async function getOverview() {
   const catalog = await loadCatalog();
   return {
@@ -887,6 +1166,7 @@ async function getOverview() {
       'Use get_component_usage for inputs, outputs, projected content slots, and UI-kit examples.',
       'Use search_components when you know a behavior, input, output, or partial selector.',
       'Use get_theming_guide before changing brand colors, light/dark mode, surfaces, borders, disabled states, or component theme tokens.',
+      'Use get_tables_guide before implementing tables, grouped data, expandable detail rows, table actions, or virtual scrolling.',
     ],
   };
 }
@@ -956,6 +1236,20 @@ const tools = [
       },
     },
   },
+  {
+    name: 'get_tables_guide',
+    description: 'Return exact agent instructions for implementing invensys-ng tables, including GridData types, grouped expandable detail sub-tables, actions, and default virtual scrolling guidance.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        format: {
+          type: 'string',
+          enum: ['markdown', 'json'],
+          default: 'markdown',
+        },
+      },
+    },
+  },
 ];
 
 async function callTool(name, args) {
@@ -964,6 +1258,7 @@ async function callTool(name, args) {
   if (name === 'search_components') return searchComponents(args);
   if (name === 'get_library_overview') return getOverview();
   if (name === 'get_theming_guide') return getThemingGuide(args);
+  if (name === 'get_tables_guide') return getTablesGuide(args);
   throw new Error(`Unknown tool "${name}"`);
 }
 
@@ -982,6 +1277,12 @@ async function listResources() {
       mimeType: 'application/json',
       description: 'Short guidance for agents using the component library.',
     },
+    {
+      uri: 'invensys-ng://guides/tables',
+      name: 'invensys-ng tables guide',
+      mimeType: 'text/markdown',
+      description: 'Exact table implementation guidance for agents, including GridData, expandable details, and virtual scrolling.',
+    },
     ...catalog.components.map((component) => ({
       uri: `invensys-ng://component/${component.id}`,
       name: component.displayName,
@@ -998,11 +1299,21 @@ async function readResource(uri) {
   if (uri === 'invensys-ng://overview') {
     return JSON.stringify(await getOverview(), null, 2);
   }
+  if (uri === 'invensys-ng://guides/tables') {
+    return getTablesGuide({ format: 'markdown' });
+  }
   const componentMatch = uri.match(/^invensys-ng:\/\/component\/(.+)$/);
   if (componentMatch) {
     return getComponentUsage({ component: componentMatch[1], format: 'markdown' });
   }
   throw new Error(`Unknown resource "${uri}"`);
+}
+
+function getResourceMimeType(uri) {
+  if (uri?.startsWith('invensys-ng://component/') || uri === 'invensys-ng://guides/tables') {
+    return 'text/markdown';
+  }
+  return 'application/json';
 }
 
 function listPrompts() {
@@ -1100,7 +1411,7 @@ async function handleRequest(message) {
       return jsonRpcResult(id, {
         contents: [{
           uri: params.uri,
-          mimeType: params.uri?.startsWith('invensys-ng://component/') ? 'text/markdown' : 'application/json',
+          mimeType: getResourceMimeType(params.uri),
           text,
         }],
       });

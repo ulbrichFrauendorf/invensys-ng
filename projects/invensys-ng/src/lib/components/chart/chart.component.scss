@@ -13,10 +13,71 @@
   gap: 4rem;
 }
 
-.i-chart-item {
+.i-chart-panel {
   flex: 1 1 45%;
   min-width: 300px;
   box-sizing: border-box;
+}
+
+.i-chart-item {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.i-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius, 0.5rem);
+  background: var(--surface-card, var(--surface-ground, transparent));
+}
+
+.i-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.25rem 0.5rem;
+  border: 0;
+  border-radius: var(--border-radius, 0.5rem);
+  background: transparent;
+  color: var(--chart-text-color);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.i-chart-legend-item:hover,
+.i-chart-legend-item:focus-visible {
+  background: var(--surface-hover, rgba(148, 163, 184, 0.12));
+  outline: none;
+}
+
+.i-chart-legend-item-hidden {
+  opacity: 0.55;
+}
+
+.i-chart-legend-item-hidden .i-chart-legend-label {
+  text-decoration: line-through;
+}
+
+.i-chart-legend-marker {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: 0 0 0.875rem;
+  border: 1px solid;
+  border-radius: 0.25rem;
+}
+
+.i-chart-legend-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -24,7 +85,7 @@
     flex-direction: column;
   }
 
-  .i-chart-item {
+  .i-chart-panel {
     width: 100%;
   }
 }

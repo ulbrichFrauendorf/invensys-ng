@@ -1,7 +1,31 @@
 <div class="i-charts-container">
-  @for (chartDisplay of chartDisplays; track chartDisplay.id) {
-    <div class="i-chart-item" [style.height]="getChartHeightStyle(chartDisplay)">
-      <canvas #chartCanvas></canvas>
+  @for (chartDisplay of chartDisplays; track chartDisplay.id; let chartIndex = $index) {
+    <div class="i-chart-panel">
+      <div class="i-chart-item" [style.height]="getChartHeightStyle(chartDisplay)">
+        <canvas #chartCanvas></canvas>
+      </div>
+
+      @if (getLegendItems(chartIndex).length) {
+        <div class="i-chart-legend" role="list" aria-label="Chart data series">
+          @for (legendItem of getLegendItems(chartIndex); track $index) {
+            <button
+              class="i-chart-legend-item"
+              type="button"
+              role="listitem"
+              [class.i-chart-legend-item-hidden]="legendItem.hidden"
+              [attr.aria-pressed]="!legendItem.hidden"
+              (click)="toggleLegendItem(chartIndex, legendItem)"
+            >
+              <span
+                class="i-chart-legend-marker"
+                [style.background-color]="legendItem.fillStyleText"
+                [style.border-color]="legendItem.strokeStyleText"
+              ></span>
+              <span class="i-chart-legend-label">{{ legendItem.text }}</span>
+            </button>
+          }
+        </div>
+      }
     </div>
   }
 </div>

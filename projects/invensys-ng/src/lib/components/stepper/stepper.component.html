@@ -25,14 +25,25 @@
         >
           <span class="i-stepper__indicator" aria-hidden="true">
             @if (step.icon) {
-              <i [ngClass]="step.icon"></i>
-            } @else if (step.completed) {
-              <i class="pi pi-check"></i>
+              <i [ngClass]="step.icon" class="i-stepper__icon"></i>
             } @else {
               {{ index + 1 }}
             }
+            @if (step.completed) {
+              <span class="i-stepper__complete-mark">
+                <i class="pi pi-check"></i>
+              </span>
+            }
           </span>
           <span class="i-stepper__copy">
+            <span class="i-stepper__meta">
+              <span>Step {{ index + 1 }} of {{ steps.length }}</span>
+              @if (step.completed) {
+                <span class="i-stepper__status i-stepper__status--completed">Completed</span>
+              } @else if (step.optional) {
+                <span class="i-stepper__status">Optional</span>
+              }
+            </span>
             <span class="i-stepper__label">{{ step.label }}</span>
             @if (step.description) {
               <span
@@ -40,10 +51,8 @@
                 [attr.id]="componentId + '-description-' + index"
               >{{ step.description }}</span>
             }
-            @if (step.optional) {
-              <span class="i-stepper__optional">Optional</span>
-            }
           </span>
+          <i class="pi pi-chevron-right i-stepper__chevron" aria-hidden="true"></i>
         </button>
         @if (!last) {
           <span class="i-stepper__connector" aria-hidden="true"></span>

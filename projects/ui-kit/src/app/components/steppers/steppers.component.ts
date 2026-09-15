@@ -21,6 +21,7 @@ export class SteppersComponent {
   <i-step
     label="Report details"
     description="Name, access and scope"
+    icon="pi pi-file-edit"
     [completed]="detailsComplete"
   >
     <!-- First step content -->
@@ -28,11 +29,17 @@ export class SteppersComponent {
   <i-step
     label="Choose columns"
     description="Select and arrange fields"
+    icon="pi pi-table"
     [completed]="columnsComplete"
   >
     <!-- Second step content -->
   </i-step>
-  <i-step label="Refine results" description="Optional filters and sorting">
+  <i-step
+    label="Refine results"
+    description="Optional filters and sorting"
+    icon="pi pi-sliders-h"
+    [optional]="true"
+  >
     <!-- Third step content -->
   </i-step>
 </i-stepper>`;
@@ -51,7 +58,8 @@ export class ReportWizardComponent {
 
   readonly features: Feature[] = [
     { title: 'Guided workflows', description: 'Linear mode prevents users from skipping incomplete required steps.' },
-    { title: 'Progress states', description: 'Active, completed, optional, and disabled states are built in.' },
+    { title: 'Progress states', description: 'Step counts remain visible alongside active, completed, optional, and disabled states.' },
+    { title: 'Custom icons', description: 'Use the same PrimeIcons classes as tabs without losing step-number context.' },
     { title: 'Accessible navigation', description: 'Includes progress semantics, panel relationships, and keyboard navigation.' },
     { title: 'Responsive layouts', description: 'Supports horizontal and vertical layouts and adapts on small screens.' },
     { title: 'Projected content', description: 'Each step accepts forms, tables, or any other Angular content.' },

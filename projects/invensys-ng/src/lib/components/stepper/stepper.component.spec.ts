@@ -78,5 +78,16 @@ describe('IStepper', () => {
     const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
     expect(first.getAttribute('aria-current')).toBe('step');
     expect(first.getAttribute('aria-controls')).toContain('-panel-0');
+    expect(first.textContent).toContain('Step 1 of 3');
+  });
+
+  it('keeps the step number visible when a custom icon is used', () => {
+    const step = fixture.debugElement.query(By.directive(IStep)).componentInstance as IStep;
+    step.icon = 'pi pi-file-edit';
+    fixture.detectChanges();
+
+    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
+    expect(first.querySelector('.pi-file-edit')).not.toBeNull();
+    expect(first.textContent).toContain('Step 1 of 3');
   });
 });

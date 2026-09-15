@@ -44,6 +44,8 @@ export * from './lib/components/panel/panel.component';
 export * from './lib/components/placeholder/placeholder.component';
 export * from './lib/components/progress-spinner/progress-spinner.component';
 export * from './lib/components/select/select.component';
+export * from './lib/components/stepper/step.component';
+export * from './lib/components/stepper/stepper.component';
 export * from './lib/components/tabs/tabs.component';
 export * from './lib/components/tabs/tab-panel.component';
 export * from './lib/components/toggle/toggle.component';

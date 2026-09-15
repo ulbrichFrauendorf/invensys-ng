@@ -1,0 +1,64 @@
+@use '../../themes/color-variables.scss' as colors;
+
+@mixin i-stepper-theme() {
+  .i-stepper {
+    color: colors.$color-text-primary;
+
+    &__trigger {
+      &:hover:not(:disabled) {
+        background: colors.$color-surface-hover;
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$color-primary;
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        color: colors.$color-text-disabled;
+        cursor: not-allowed;
+      }
+    }
+
+    &__indicator {
+      border-color: colors.$color-border;
+      background: colors.$color-surface-card;
+      color: colors.$color-text-secondary;
+    }
+
+    &__description,
+    &__optional {
+      color: colors.$color-text-secondary;
+    }
+
+    &__connector {
+      background: colors.$color-border;
+    }
+
+    &__item--active .i-stepper__indicator {
+      border-color: colors.$color-primary;
+      background: colors.$color-primary;
+      color: colors.$color-contrast-inverse;
+    }
+
+    &__item--active .i-stepper__label {
+      color: colors.$color-primary;
+    }
+
+    &__item--completed {
+      .i-stepper__indicator {
+        border-color: colors.$color-success;
+        background: colors.$color-success;
+        color: colors.$color-contrast-inverse;
+      }
+
+      .i-stepper__connector {
+        background: colors.$color-success;
+      }
+    }
+
+    &__item--disabled {
+      opacity: 0.6;
+    }
+  }
+}

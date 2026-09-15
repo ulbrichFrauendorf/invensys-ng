@@ -20,6 +20,7 @@ import { CheckboxesComponent } from './components/checkboxes/checkboxes.componen
 import { RadioButtonsComponent } from './components/radio-buttons/radio-buttons.component';
 import { TreeViewsComponent } from './components/tree-views/tree-views.component';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { SteppersComponent } from './components/steppers/steppers.component';
 import { InstallationComponent } from './components/installation/installation.component';
 import { ThemingComponent } from './components/theming/theming.component';
 import { TablesComponent } from './components/tables/tables.component';
@@ -83,6 +84,7 @@ export const routes: Routes = [
           { path: 'radio-buttons', component: RadioButtonsComponent },
           { path: 'selects', component: SelectsComponent },
           { path: 'tables', component: TablesComponent },
+          { path: 'steppers', component: SteppersComponent },
           { path: 'tabs', component: TabsComponent },
           { path: 'tooltips', component: TooltipsComponent },
           { path: 'toggles', component: TogglesComponent },

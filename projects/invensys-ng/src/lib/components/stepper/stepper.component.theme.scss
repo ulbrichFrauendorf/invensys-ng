@@ -1,0 +1,95 @@
+@use '../../themes/color-variables.scss' as colors;
+
+@mixin i-stepper-theme() {
+  .i-stepper {
+    color: colors.$color-text-primary;
+
+    &__trigger {
+      border-color: colors.$color-border;
+      background: colors.$color-surface-card;
+
+      &:hover:not(:disabled) {
+        background: colors.$color-surface-hover;
+        border-color: color-mix(in srgb, colors.$color-primary 35%, colors.$color-border);
+        transform: translateY(-1px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$color-primary;
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        color: colors.$color-text-disabled;
+        cursor: not-allowed;
+      }
+    }
+
+    &__indicator {
+      border-color: colors.$color-border;
+      background: colors.$color-surface-ground;
+      color: colors.$color-text-secondary;
+    }
+
+    &__description,
+    &__meta {
+      color: colors.$color-text-secondary;
+    }
+
+    &__status {
+      background: colors.$color-surface-hover;
+
+      &--completed {
+        background: color-mix(in srgb, colors.$color-success 12%, transparent);
+        color: colors.$color-success;
+      }
+    }
+
+    &__complete-mark {
+      border-color: colors.$color-surface-card;
+      background: colors.$color-success;
+      color: colors.$color-contrast-inverse;
+    }
+
+    &__connector {
+      background: colors.$color-border;
+    }
+
+    &__item--active .i-stepper__trigger {
+      border-color: color-mix(in srgb, colors.$color-primary 55%, colors.$color-border);
+      box-shadow: 0 6px 18px color-mix(in srgb, colors.$color-primary 12%, transparent);
+    }
+
+    &__item--active .i-stepper__indicator {
+      border-color: color-mix(in srgb, colors.$color-primary 35%, transparent);
+      background: color-mix(in srgb, colors.$color-primary 10%, colors.$color-surface-card);
+      color: colors.$color-primary;
+    }
+
+    &__item--active .i-stepper__label {
+      color: colors.$color-primary;
+    }
+
+    &__item--active .i-stepper__chevron {
+      color: colors.$color-primary;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    &__item--completed {
+      .i-stepper__indicator {
+        border-color: colors.$color-success;
+        background: color-mix(in srgb, colors.$color-success 10%, colors.$color-surface-card);
+        color: colors.$color-success;
+      }
+
+      .i-stepper__connector {
+        background: colors.$color-success;
+      }
+    }
+
+    &__item--disabled {
+      opacity: 0.58;
+    }
+  }
+}

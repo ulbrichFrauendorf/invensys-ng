@@ -1,0 +1,78 @@
+<div
+  class="i-stepper"
+  [ngClass]="'i-stepper--' + orientation"
+  [attr.id]="componentId"
+>
+  <ol class="i-stepper__navigation" [attr.aria-label]="ariaLabel">
+    @for (step of steps; track step; let index = $index; let last = $last) {
+      <li
+        class="i-stepper__item"
+        [class.i-stepper__item--active]="activeIndex === index"
+        [class.i-stepper__item--completed]="step.completed"
+        [class.i-stepper__item--disabled]="!canSelect(index)"
+      >
+        <button
+          class="i-stepper__trigger"
+          type="button"
+          [attr.id]="componentId + '-step-' + index"
+          [attr.aria-current]="activeIndex === index ? 'step' : null"
+          [attr.aria-controls]="componentId + '-panel-' + index"
+          [attr.aria-describedby]="step.description ? componentId + '-description-' + index : null"
+          [attr.tabindex]="activeIndex === index ? 0 : -1"
+          [disabled]="!canSelect(index)"
+          (click)="selectStep($event, index)"
+          (keydown)="onKeyDown($event, index)"
+        >
+          <span class="i-stepper__indicator" aria-hidden="true">
+            @if (step.icon) {
+              <i [ngClass]="step.icon" class="i-stepper__icon"></i>
+            } @else {
+              {{ index + 1 }}
+            }
+            @if (step.completed) {
+              <span class="i-stepper__complete-mark">
+                <i class="pi pi-check"></i>
+              </span>
+            }
+          </span>
+          <span class="i-stepper__copy">
+            <span class="i-stepper__meta">
+              <span>Step {{ index + 1 }} of {{ steps.length }}</span>
+              @if (step.completed) {
+                <span class="i-stepper__status i-stepper__status--completed">Completed</span>
+              } @else if (step.optional) {
+                <span class="i-stepper__status">Optional</span>
+              }
+            </span>
+            <span class="i-stepper__label">{{ step.label }}</span>
+            @if (step.description) {
+              <span
+                class="i-stepper__description"
+                [attr.id]="componentId + '-description-' + index"
+              >{{ step.description }}</span>
+            }
+          </span>
+          <i class="pi pi-chevron-right i-stepper__chevron" aria-hidden="true"></i>
+        </button>
+        @if (!last) {
+          <span class="i-stepper__connector" aria-hidden="true"></span>
+        }
+      </li>
+    }
+  </ol>
+
+  @for (step of steps; track step; let index = $index) {
+    <section
+      class="i-stepper__panel"
+      [class.i-stepper__panel--active]="activeIndex === index"
+      [attr.id]="componentId + '-panel-' + index"
+      [attr.aria-labelledby]="componentId + '-step-' + index"
+      [attr.hidden]="activeIndex !== index || null"
+      role="region"
+    >
+      @if (activeIndex === index) {
+        <ng-container [ngTemplateOutlet]="step.contentTemplate"></ng-container>
+      }
+    </section>
+  }
+</div>

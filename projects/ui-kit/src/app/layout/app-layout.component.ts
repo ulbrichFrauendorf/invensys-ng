@@ -139,6 +139,11 @@ export class AppLayoutComponent {
           routerLink: ['/components/tabs'],
         },
         {
+          label: 'Steppers',
+          icon: 'pi pi-fw pi-list-check',
+          routerLink: ['/components/steppers'],
+        },
+        {
           label: 'Accordions',
           icon: 'pi pi-fw pi-list',
           routerLink: ['/components/accordions'],

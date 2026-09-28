@@ -1,0 +1,6 @@
+@use '../../themes/color-variables.scss' as colors;
+@mixin i-rule-editor-theme() {
+  .i-rule-editor { color: colors.$color-text-primary; }
+  .i-rule-editor__row { border-color: colors.$color-surface-border; background: colors.$color-surface-card; }
+  .i-rule-editor__number { color: colors.$color-primary; background: colors.$color-surface-section; }
+}

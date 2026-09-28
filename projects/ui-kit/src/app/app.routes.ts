@@ -1,3 +1,4 @@
+import { DataEditorsComponent } from './components/data-editors/data-editors.component';
 import { Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app-layout.component';
 import { AccordionsComponent } from './components/accordions/accordions.component';
@@ -56,6 +57,7 @@ export const routes: Routes = [
       {
         path: 'components',
         children: [
+          { path: 'data-editors', component: DataEditorsComponent },
           { path: 'accordions', component: AccordionsComponent },
           { path: 'buttons', component: ButtonsComponent },
           { path: 'calendars', component: CalendarsComponent },

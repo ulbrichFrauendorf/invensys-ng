@@ -1,0 +1,24 @@
+@use "../shared-demo-styles.scss" as *;
+
+.data-editors-demo {
+  @extend .demo-component;
+
+  .editor-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--surface-border);
+
+    h3 { margin: 0 0 .25rem; color: var(--color-text-primary); font-size: 1rem; font-weight: 600; }
+    p { margin: 0; color: var(--color-text-secondary); line-height: 1.5; }
+  }
+
+  i-field-picker, i-ordered-list, i-rule-editor { display: block; max-width: 100%; }
+
+  @media (max-width: 40rem) {
+    .editor-intro { align-items: flex-start; flex-direction: column; gap: .75rem; }
+  }
+}

@@ -106,13 +106,13 @@
       pointer-events: none;
     }
 
-    /* Dim only the visual content (text/icon) when disabled so the spinner
-       can remain fully opaque on top. But NOT when loading. */
+    /* Disabled colour tokens convey unavailable state; do not stack opacity on
+       top or text buttons become illegibly faint. The spinner stays opaque. */
     &:disabled:not(.i-button--loading) .button-content,
     &--outlined:disabled:not(.i-button--loading) .button-content,
     &:disabled:not(.i-button--loading) .i-button__icon,
     &--outlined:disabled:not(.i-button--loading) .i-button__icon {
-      opacity: 0.38;
+      opacity: 1;
     }
 
     /* Spinner is always fully opaque regardless of disabled state */

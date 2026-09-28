@@ -1,0 +1,8 @@
+@use '../../themes/color-variables.scss' as colors;
+@mixin i-ordered-list-theme() {
+  .i-ordered-list {
+    color: colors.$color-text-primary;
+    &__item { border-color: colors.$color-surface-border; background: colors.$color-surface-card; }
+    &__position { color: colors.$color-primary; background: colors.$color-surface-section; }
+  }
+}

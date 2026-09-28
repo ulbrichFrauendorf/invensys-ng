@@ -207,4 +207,27 @@
       }
     }
   }
+
+  // Disabled actions use a neutral, non-semantic surface.  Keeping the severity
+  // colour on a disabled control makes destructive and primary actions appear
+  // available, especially for text buttons used in dense editors.
+  .i-button:disabled {
+    background: colors.$color-disabled-background;
+    border-color: colors.$color-disabled-border;
+    color: colors.$color-text-disabled;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .i-button.i-button--outlined:disabled {
+    background: transparent;
+    border-color: colors.$color-disabled-border !important;
+    color: colors.$color-text-disabled;
+  }
+
+  .i-button.i-button--text:disabled {
+    background: transparent;
+    border-color: transparent;
+    color: colors.$color-text-disabled;
+  }
 }

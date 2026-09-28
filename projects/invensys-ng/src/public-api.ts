@@ -69,3 +69,7 @@ export * from './lib/services/seo/structured-data.service';
 /* Utils */
 export * from './lib/utils/uniquecomponentid';
 export * from './lib/utils/zindexutils';
+
+export * from './lib/components/field-picker/field-picker.component';
+export * from './lib/components/ordered-list/ordered-list.component';
+export * from './lib/components/rule-editor/rule-editor.component';

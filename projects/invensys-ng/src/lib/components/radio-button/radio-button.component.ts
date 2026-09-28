@@ -153,7 +153,7 @@ export class IRadioButton implements ControlValueAccessor, OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
-    private injector: Injector
+    private injector: Injector,
   ) {}
 
   /**
@@ -236,7 +236,7 @@ export class IRadioButton implements ControlValueAccessor, OnInit, OnDestroy {
 
     // compute a form-scoped key: name@formId or name@root
     const form = this.elementRef.nativeElement.closest(
-      'form'
+      'form',
     ) as HTMLFormElement | null;
     let formKey = 'root';
     if (form) {

@@ -5,7 +5,10 @@ describe('IFieldPicker', () => {
   it('keeps hidden selections and updates the form without mutating its value', async () => {
     const fixture = TestBed.createComponent(IFieldPicker);
     const component = fixture.componentInstance;
-    component.options = [{ key: 'name', label: 'Name', group: 'Identity' }, { key: 'amount', label: 'Amount', group: 'Pay' }];
+    component.options = [
+      { key: 'name', label: 'Name', group: 'Identity' },
+      { key: 'amount', label: 'Amount', group: 'Pay' },
+    ];
     const original = ['name'];
     const change = jasmine.createSpy('change');
     const touched = jasmine.createSpy('touched');
@@ -15,7 +18,9 @@ describe('IFieldPicker', () => {
     expect(change).not.toHaveBeenCalled();
     component.search = 'pay';
     fixture.detectChanges();
-    const checkbox = fixture.nativeElement.querySelector('[role="checkbox"]') as HTMLElement;
+    const checkbox = fixture.nativeElement.querySelector(
+      '[role="checkbox"]',
+    ) as HTMLElement;
     checkbox.click();
     await fixture.whenStable();
     expect(change).toHaveBeenCalledWith(['name', 'amount']);

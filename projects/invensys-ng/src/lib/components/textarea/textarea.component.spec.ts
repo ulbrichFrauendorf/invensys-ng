@@ -56,7 +56,9 @@ describe('ITextarea', () => {
     it('should apply maxlength attribute when provided', () => {
       component.maxLength = 100;
       fixture.detectChanges();
-      expect(textareaElement.nativeElement.getAttribute('maxlength')).toBe('100');
+      expect(textareaElement.nativeElement.getAttribute('maxlength')).toBe(
+        '100',
+      );
     });
   });
 

@@ -1,4 +1,3 @@
-
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -74,7 +73,10 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
   /** Unique component identifier */
   componentId = UniqueComponentId('i-chips-');
 
-  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['collapseOnOverflow']) {

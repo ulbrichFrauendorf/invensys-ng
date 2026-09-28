@@ -1,6 +1,14 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
-import { CLAIMS_CHECKER, ClaimsChecker } from '../services/claims-checker.token';
+import {
+  CLAIMS_CHECKER,
+  ClaimsChecker,
+} from '../services/claims-checker.token';
 import { MenuModel } from '../models/menu.model';
 import { Observable, of } from 'rxjs';
 import { provideRouter } from '@angular/router';
@@ -20,9 +28,7 @@ describe('MenuComponent', () => {
     {
       label: 'Group 2',
       claim: 'view-group2',
-      items: [
-        { label: 'Item 3', routerLink: ['/item3'] },
-      ],
+      items: [{ label: 'Item 3', routerLink: ['/item3'] }],
     },
     {
       label: 'Group 3',
@@ -79,7 +85,7 @@ describe('MenuComponent', () => {
 
     beforeEach(async () => {
       mockClaimsChecker = jasmine.createSpyObj('ClaimsChecker', ['hasClaim']);
-      
+
       await TestBed.configureTestingModule({
         imports: [MenuComponent],
         providers: [
@@ -106,14 +112,14 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      
+
       // Group 1 should have 2 items (both visible)
       expect(filtered[0].label).toBe('Group 1');
       expect(filtered[0].items.length).toBe(2);
-      
+
       // Group 2 should be filtered out (claim failed)
-      expect(filtered.find(g => g.label === 'Group 2')).toBeUndefined();
-      
+      expect(filtered.find((g) => g.label === 'Group 2')).toBeUndefined();
+
       // Group 3 should have 1 parent item with 1 sub item (view-sub2 filtered out)
       expect(filtered[1].label).toBe('Group 3');
       expect(filtered[1].items[0].items?.length).toBe(1);
@@ -128,7 +134,7 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      
+
       expect(filtered.length).toBe(3);
       expect(filtered[0].items.length).toBe(2);
       expect(filtered[1].items.length).toBe(1);
@@ -143,14 +149,14 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      
+
       // Group 1 should only have Item 1 (Item 2 filtered out)
       expect(filtered[0].items.length).toBe(1);
       expect(filtered[0].items[0].label).toBe('Item 1');
-      
+
       // Group 2 should be filtered out entirely
-      expect(filtered.find(g => g.label === 'Group 2')).toBeUndefined();
-      
+      expect(filtered.find((g) => g.label === 'Group 2')).toBeUndefined();
+
       // Group 3 should have parent with only Sub Item 1
       expect(filtered[1].items[0].items?.length).toBe(1);
       expect(filtered[1].items[0].items?.[0].label).toBe('Sub Item 1');
@@ -174,7 +180,7 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      
+
       // Group should be completely hidden since no items are visible
       expect(filtered.length).toBe(0);
     }));
@@ -189,8 +195,8 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      const group3 = filtered.find(g => g.label === 'Group 3');
-      
+      const group3 = filtered.find((g) => g.label === 'Group 3');
+
       expect(group3).toBeDefined();
       expect(group3?.items[0].items?.length).toBe(1);
       expect(group3?.items[0].items?.[0].label).toBe('Sub Item 2');
@@ -220,7 +226,7 @@ describe('MenuComponent', () => {
       tick();
 
       const filtered = component.filteredModel();
-      
+
       // Parent should be hidden since all sub-items are filtered out
       expect(filtered.length).toBe(0);
     }));
@@ -250,8 +256,16 @@ describe('MenuComponent', () => {
         {
           label: 'Group 1',
           items: [
-            { label: 'Item 1', routerLink: ['/item1'], claim: 'duplicate-claim' },
-            { label: 'Item 2', routerLink: ['/item2'], claim: 'duplicate-claim' },
+            {
+              label: 'Item 1',
+              routerLink: ['/item1'],
+              claim: 'duplicate-claim',
+            },
+            {
+              label: 'Item 2',
+              routerLink: ['/item2'],
+              claim: 'duplicate-claim',
+            },
           ],
         },
       ];
@@ -262,7 +276,9 @@ describe('MenuComponent', () => {
 
       // Should only check 'duplicate-claim' once
       expect(mockClaimsChecker.hasClaim).toHaveBeenCalledTimes(1);
-      expect(mockClaimsChecker.hasClaim).toHaveBeenCalledWith('duplicate-claim');
+      expect(mockClaimsChecker.hasClaim).toHaveBeenCalledWith(
+        'duplicate-claim',
+      );
     }));
   });
 

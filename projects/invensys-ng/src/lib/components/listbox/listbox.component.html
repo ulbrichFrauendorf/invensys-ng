@@ -11,98 +11,99 @@
     <div class="i-listbox-header-content">
       <span class="i-listbox-title">{{ effectiveTitle }}</span>
       @if (actionIcon) {
-      <i-button
-        [text]="true"
-        [size]="'small'"
-        [severity]="'contrast'"
-        [icon]="actionIcon"
-        [disabled]="disabled"
-        (clicked)="onActionClick($event)"
-        [attr.title]="actionTooltip"
-      ></i-button>
+        <i-button
+          [text]="true"
+          [size]="'small'"
+          [severity]="'contrast'"
+          [icon]="actionIcon"
+          [disabled]="disabled"
+          (clicked)="onActionClick($event)"
+          [attr.title]="actionTooltip"
+        ></i-button>
       }
     </div>
 
     <!-- Chips area for multiselect mode -->
     @if (multiple && showChips) {
-    <div class="i-listbox-chips-wrapper">
-      <i-chips
-        class="i-listbox-chips"
-        [chips]="getSelectedChipItems()"
-        [removable]="!disabled"
-        [disabled]="disabled"
-        [collapseOnOverflow]="true"
-        [overflowLabel]="getDisplayLabel()"
-        (removeChip)="onChipRemove($event)"
-      ></i-chips>
-    </div>
+      <div class="i-listbox-chips-wrapper">
+        <i-chips
+          class="i-listbox-chips"
+          [chips]="getSelectedChipItems()"
+          [removable]="!disabled"
+          [disabled]="disabled"
+          [collapseOnOverflow]="true"
+          [overflowLabel]="getDisplayLabel()"
+          (removeChip)="onChipRemove($event)"
+        ></i-chips>
+      </div>
     }
   </div>
 
   <!-- Dropdown content -->
   <div class="i-listbox-dropdown">
     @if (filter) {
-    <div class="i-listbox-filter">
-      <i-input-text
-        #searchInput
-        [useFloatLabel]="false"
-        placeholder="Search..."
-        [ngModel]="filterValue()"
-        (ngModelChange)="filterValue.set($event)"
-        [fluid]="true"
-        [icon]="'pi pi-search'"
-      >
-      </i-input-text>
-    </div>
+      <div class="i-listbox-filter">
+        <i-input-text
+          #searchInput
+          [useFloatLabel]="false"
+          placeholder="Search..."
+          [ngModel]="filterValue()"
+          (ngModelChange)="filterValue.set($event)"
+          [fluid]="true"
+          [icon]="'pi pi-search'"
+        >
+        </i-input-text>
+      </div>
     }
 
     <div class="i-listbox-options">
       @for (option of filteredOptions(); track getOptionValue(option)) {
-      <div
-        class="i-listbox-option"
-        [class.selected]="isOptionSelected(option)"
-        [class.has-icon]="!multiple && getOptionIcon(option)"
-        (click)="toggleOption(option)"
-      >
-        <!-- Checkbox only in multiple mode -->
-        @if (multiple) {
-        <i-checkbox
-          [checked]="isOptionSelected(option)"
-          [readonly]="true"
-          size="small"
-          class="i-listbox-checkbox"
-        ></i-checkbox>
-        }
+        <div
+          class="i-listbox-option"
+          [class.selected]="isOptionSelected(option)"
+          [class.has-icon]="!multiple && getOptionIcon(option)"
+          (click)="toggleOption(option)"
+        >
+          <!-- Checkbox only in multiple mode -->
+          @if (multiple) {
+            <i-checkbox
+              [checked]="isOptionSelected(option)"
+              [readonly]="true"
+              size="small"
+              class="i-listbox-checkbox"
+            ></i-checkbox>
+          }
 
-        <!-- Left icon -->
-        @if (getOptionIcon(option) && !displayAsMenu) {
-        <i
-          [class]="getOptionIcon(option)"
-          class="i-listbox-option-icon i-listbox-option-icon--left"
-        ></i>
-        }
+          <!-- Left icon -->
+          @if (getOptionIcon(option) && !displayAsMenu) {
+            <i
+              [class]="getOptionIcon(option)"
+              class="i-listbox-option-icon i-listbox-option-icon--left"
+            ></i>
+          }
 
-        <span class="i-listbox-option-label">
-          {{ getOptionLabel(option) }}
-        </span>
+          <span class="i-listbox-option-label">
+            {{ getOptionLabel(option) }}
+          </span>
 
-        <!-- Right chevron for menu mode -->
-        @if (displayAsMenu) {
-        <i
-          class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"
-        ></i>
-        }
-      </div>
-      } @if (filteredOptions().length === 0) {
-      <div class="i-listbox-no-options">No options found</div>
+          <!-- Right chevron for menu mode -->
+          @if (displayAsMenu) {
+            <i
+              class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"
+            ></i>
+          }
+        </div>
+      }
+      @if (filteredOptions().length === 0) {
+        <div class="i-listbox-no-options">No options found</div>
       }
     </div>
   </div>
 
   <!-- Error message -->
   @if (showErrors) {
-  <div class="i-listbox-error">
-    {{ getErrorMessage() }}
-  </div>
+    <div class="i-listbox-error">
+      {{ getErrorMessage() }}
+    </div>
   }
 </div>

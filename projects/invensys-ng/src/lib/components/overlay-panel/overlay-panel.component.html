@@ -1,26 +1,26 @@
 @if (render) {
-<div
-  #container
-  class="overlay-panel"
-  [class.overlay-panel-visible]="overlayVisible"
-  (click)="onContainerClick()"
-  (keydown.escape)="onEscapeKey()"
-  [@animation]="visible ? 'open' : 'closed'"
-  (@animation.start)="onAnimationStart($event)"
-  (@animation.done)="onAnimationEnd($event)"
-  role="dialog"
-  [attr.aria-hidden]="!visible"
->
-  <i-button
-    class="overlay-panel-close"
-    size="xtra-small"
-    [icon]="'pi pi-times'"
-    [text]="true"
-    [severity]="'contrast'"
-    (clicked)="hide()"
-  ></i-button>
-  <div class="overlay-panel-content">
-    <ng-content></ng-content>
+  <div
+    #container
+    class="overlay-panel"
+    [class.overlay-panel-visible]="overlayVisible"
+    (click)="onContainerClick()"
+    (keydown.escape)="onEscapeKey()"
+    [@animation]="visible ? 'open' : 'closed'"
+    (@animation.start)="onAnimationStart($event)"
+    (@animation.done)="onAnimationEnd($event)"
+    role="dialog"
+    [attr.aria-hidden]="!visible"
+  >
+    <i-button
+      class="overlay-panel-close"
+      size="xtra-small"
+      [icon]="'pi pi-times'"
+      [text]="true"
+      [severity]="'contrast'"
+      (clicked)="hide()"
+    ></i-button>
+    <div class="overlay-panel-content">
+      <ng-content></ng-content>
+    </div>
   </div>
-</div>
 }

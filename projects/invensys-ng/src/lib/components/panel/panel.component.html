@@ -6,25 +6,26 @@
 >
   <div class="i-panel-header-wrap">
     @if (toggleable) {
-    <button
-      class="i-panel-header"
-      type="button"
-      (click)="toggle()"
-      [attr.aria-expanded]="!collapsed"
-    >
-      <i
-        class="i-panel-toggle-icon pi"
-        [class.pi-minus]="!collapsed"
-        [class.pi-plus]="collapsed"
-        aria-hidden="true"
-      ></i>
-      <span class="i-panel-title">{{ header }}</span>
-    </button>
-    } @if (!toggleable) {
-    <div class="i-panel-header">
-      <i class="i-panel-toggle-icon" aria-hidden="true"></i>
-      <span class="i-panel-title">{{ header }}</span>
-    </div>
+      <button
+        class="i-panel-header"
+        type="button"
+        (click)="toggle()"
+        [attr.aria-expanded]="!collapsed"
+      >
+        <i
+          class="i-panel-toggle-icon pi"
+          [class.pi-minus]="!collapsed"
+          [class.pi-plus]="collapsed"
+          aria-hidden="true"
+        ></i>
+        <span class="i-panel-title">{{ header }}</span>
+      </button>
+    }
+    @if (!toggleable) {
+      <div class="i-panel-header">
+        <i class="i-panel-toggle-icon" aria-hidden="true"></i>
+        <span class="i-panel-title">{{ header }}</span>
+      </div>
     }
   </div>
   <div

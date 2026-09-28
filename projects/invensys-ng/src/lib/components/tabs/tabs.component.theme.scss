@@ -13,7 +13,9 @@
 
     &__tab {
       color: colors.$color-text-secondary;
-      transition: color 0.2s, background 0.2s;
+      transition:
+        color 0.2s,
+        background 0.2s;
 
       &:hover:not(:disabled) {
         color: colors.$color-text-primary;

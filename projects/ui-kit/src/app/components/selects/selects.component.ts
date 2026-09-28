@@ -246,7 +246,12 @@ export class ExampleComponent {
       country: [null],
       status: [null],
       preselected: [{ value: 'us', label: 'United States', code: 'US' }],
-      disabled: [{ value: { value: 'uk', label: 'United Kingdom', code: 'GB' }, disabled: true }],
+      disabled: [
+        {
+          value: { value: 'uk', label: 'United Kingdom', code: 'GB' },
+          disabled: true,
+        },
+      ],
       // Now all selects store full objects by default
       fullObjectSelect: [null],
     });
@@ -274,7 +279,7 @@ export class ExampleComponent {
   onReportChange() {
     console.log(
       'Report changed:',
-      this.advancedForm.get('selectedReport')?.value
+      this.advancedForm.get('selectedReport')?.value,
     );
   }
 
@@ -301,7 +306,7 @@ export class ExampleComponent {
     console.log('Country Object Changed (full object):', value);
     console.log(
       'Form control value:',
-      this.basicForm.get('fullObjectSelect')?.value
+      this.basicForm.get('fullObjectSelect')?.value,
     );
     console.log('Type:', typeof value);
     console.log('Full object properties:', value ? Object.keys(value) : 'null');

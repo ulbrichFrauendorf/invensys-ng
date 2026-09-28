@@ -15,10 +15,7 @@ export type IChartType =
  * Extended chart types including custom variants
  */
 export type IChartTypeExtended =
-  | IChartType
-  | 'bar-stack'
-  | 'bar-large'
-  | 'bar-horizontal';
+  IChartType | 'bar-stack' | 'bar-large' | 'bar-horizontal';
 
 /**
  * Dataset configuration for a chart

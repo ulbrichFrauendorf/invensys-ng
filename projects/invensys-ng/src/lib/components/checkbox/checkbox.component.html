@@ -21,21 +21,22 @@
     (keydown.enter)="$event.preventDefault(); toggle()"
   >
     @if (!checked && indeterminate) {
-    <i class="pi pi-minus i-checkbox-icon"></i>
-    } @if (!indeterminate) {
-    <i
-      class="pi pi-check i-checkbox-icon"
-      [style.opacity]="checked ? '1' : '0'"
-    ></i>
+      <i class="pi pi-minus i-checkbox-icon"></i>
+    }
+    @if (!indeterminate) {
+      <i
+        class="pi pi-check i-checkbox-icon"
+        [style.opacity]="checked ? '1' : '0'"
+      ></i>
     }
   </div>
   @if (label) {
-  <label
-    [id]="(id || componentId) + '-label'"
-    class="i-checkbox-label"
-    (click)="toggle()"
-  >
-    {{ label }}
-  </label>
+    <label
+      [id]="(id || componentId) + '-label'"
+      class="i-checkbox-label"
+      (click)="toggle()"
+    >
+      {{ label }}
+    </label>
   }
 </div>

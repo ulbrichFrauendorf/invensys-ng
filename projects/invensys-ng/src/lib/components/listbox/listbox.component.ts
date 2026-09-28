@@ -285,7 +285,7 @@ export class IListbox implements ControlValueAccessor {
     if (this.multiple) {
       const currentValues = Array.isArray(this.value) ? [...this.value] : [];
       const index = currentValues.findIndex(
-        (val) => JSON.stringify(val) === JSON.stringify(optionValue)
+        (val) => JSON.stringify(val) === JSON.stringify(optionValue),
       );
 
       if (index > -1) {
@@ -317,7 +317,7 @@ export class IListbox implements ControlValueAccessor {
       return (
         Array.isArray(this.value) &&
         this.value.some(
-          (val) => JSON.stringify(val) === JSON.stringify(optionValue)
+          (val) => JSON.stringify(val) === JSON.stringify(optionValue),
         )
       );
     } else {
@@ -339,7 +339,7 @@ export class IListbox implements ControlValueAccessor {
     if (this.multiple) {
       const currentValues = Array.isArray(this.value) ? [...this.value] : [];
       const index = currentValues.findIndex(
-        (val) => JSON.stringify(val) === JSON.stringify(value)
+        (val) => JSON.stringify(val) === JSON.stringify(value),
       );
       if (index > -1) {
         currentValues.splice(index, 1);
@@ -386,7 +386,7 @@ export class IListbox implements ControlValueAccessor {
       const option = currentOptions.find(
         (opt: ListboxOption) =>
           JSON.stringify(this.getOptionValue(opt)) ===
-          JSON.stringify(this.value)
+          JSON.stringify(this.value),
       );
       return option ? [this.getOptionLabel(option)] : [String(this.value)];
     }
@@ -395,7 +395,7 @@ export class IListbox implements ControlValueAccessor {
     return values.map((val: any) => {
       const option = currentOptions.find(
         (opt: ListboxOption) =>
-          JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(val)
+          JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(val),
       );
       return option ? this.getOptionLabel(option) : String(val);
     });
@@ -425,7 +425,7 @@ export class IListbox implements ControlValueAccessor {
       const option = currentOptions.find(
         (opt: ListboxOption) =>
           JSON.stringify(this.getOptionValue(opt)) ===
-          JSON.stringify(this.value)
+          JSON.stringify(this.value),
       );
       return option ? this.getOptionLabel(option) : String(this.value);
     }
@@ -441,7 +441,7 @@ export class IListbox implements ControlValueAccessor {
     } else {
       return this.selectedItemsLabel.replace(
         '{0}',
-        selectedLabels.length.toString()
+        selectedLabels.length.toString(),
       );
     }
   }

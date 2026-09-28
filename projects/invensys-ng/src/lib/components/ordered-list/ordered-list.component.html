@@ -1,23 +1,61 @@
 <ol class="i-ordered-list" [attr.aria-label]="ariaLabel">
   @for (item of items; track itemKey(item); let index = $index) {
     <li class="i-ordered-list__item">
-      <span class="i-ordered-list__position" aria-hidden="true">{{ index + 1 }}</span>
+      <span class="i-ordered-list__position" aria-hidden="true">{{
+        index + 1
+      }}</span>
       <div class="i-ordered-list__content">
         <strong>{{ itemLabel(item) }}</strong>
         @if (itemTemplate) {
-          <ng-container [ngTemplateOutlet]="itemTemplate"
-            [ngTemplateOutletContext]="{ $implicit: item, index: index, readonly: readonly || disabled }" />
+          <ng-container
+            [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{
+              $implicit: item,
+              index: index,
+              readonly: readonly || disabled,
+            }"
+          />
         }
       </div>
-      <div class="i-ordered-list__actions" role="group" [attr.aria-label]="'Actions for ' + itemLabel(item)">
-        <i-button icon="pi pi-arrow-up" size="small" [text]="true" [disabled]="readonly || disabled || index === 0" (clicked)="move(index, -1)">Move up</i-button>
-        <i-button icon="pi pi-arrow-down" size="small" [text]="true" [disabled]="readonly || disabled || index === items.length - 1" (clicked)="move(index, 1)">Move down</i-button>
+      <div
+        class="i-ordered-list__actions"
+        role="group"
+        [attr.aria-label]="'Actions for ' + itemLabel(item)"
+      >
+        <i-button
+          icon="pi pi-arrow-up"
+          size="small"
+          [text]="true"
+          [disabled]="readonly || disabled || index === 0"
+          (clicked)="move(index, -1)"
+          >Move up</i-button
+        >
+        <i-button
+          icon="pi pi-arrow-down"
+          size="small"
+          [text]="true"
+          [disabled]="readonly || disabled || index === items.length - 1"
+          (clicked)="move(index, 1)"
+          >Move down</i-button
+        >
         @if (removable) {
-          <i-button icon="pi pi-times" size="small" severity="danger" [text]="true" [disabled]="readonly || disabled" (clicked)="remove(index)">Remove</i-button>
+          <i-button
+            icon="pi pi-times"
+            size="small"
+            severity="danger"
+            [text]="true"
+            [disabled]="readonly || disabled"
+            (clicked)="remove(index)"
+            >Remove</i-button
+          >
         }
       </div>
     </li>
   }
 </ol>
-@if (!items.length) { <i-no-content [message]="emptyMessage" /> }
-<span class="i-ordered-list__announcement" role="status" aria-live="polite">{{ announcement }}</span>
+@if (!items.length) {
+  <i-no-content [message]="emptyMessage" />
+}
+<span class="i-ordered-list__announcement" role="status" aria-live="polite">{{
+  announcement
+}}</span>

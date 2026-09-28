@@ -137,7 +137,8 @@ export class ExampleComponent {
   features: Feature[] = [
     {
       title: 'Expandable Content',
-      description: 'Smooth expand/collapse animations with customizable content',
+      description:
+        'Smooth expand/collapse animations with customizable content',
     },
     {
       title: 'Icon Support',
@@ -157,7 +158,8 @@ export class ExampleComponent {
     },
     {
       title: 'Multiple Expansion Mode',
-      description: 'Accordion list allowing multiple items to be open simultaneously',
+      description:
+        'Accordion list allowing multiple items to be open simultaneously',
     },
     {
       title: 'Accessibility',

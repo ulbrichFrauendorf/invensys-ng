@@ -80,7 +80,9 @@ describe('ITable', () => {
 
     it('should handle nested field paths', () => {
       const nestedData = { user: { profile: { name: 'John' } } };
-      expect(component.getCellValue(nestedData, 'user.profile.name')).toBe('John');
+      expect(component.getCellValue(nestedData, 'user.profile.name')).toBe(
+        'John',
+      );
     });
 
     it('should return empty string for null/undefined values', () => {
@@ -92,20 +94,32 @@ describe('ITable', () => {
 
   describe('Cell Formatting', () => {
     it('should format currency values', () => {
-      const column: TableColumn = { field: 'price', header: 'Price', type: 'currency' };
+      const column: TableColumn = {
+        field: 'price',
+        header: 'Price',
+        type: 'currency',
+      };
       const formatted = component.formatCellValue(100, column);
       expect(formatted).toContain('$');
       expect(formatted).toContain('100');
     });
 
     it('should format boolean values', () => {
-      const column: TableColumn = { field: 'active', header: 'Active', type: 'boolean' };
+      const column: TableColumn = {
+        field: 'active',
+        header: 'Active',
+        type: 'boolean',
+      };
       expect(component.formatCellValue(true, column)).toBe('Yes');
       expect(component.formatCellValue(false, column)).toBe('No');
     });
 
     it('should format number values', () => {
-      const column: TableColumn = { field: 'count', header: 'Count', type: 'number' };
+      const column: TableColumn = {
+        field: 'count',
+        header: 'Count',
+        type: 'number',
+      };
       const formatted = component.formatCellValue(1000, column);
       expect(formatted).toBe('1,000');
     });
@@ -402,7 +416,9 @@ describe('ITable', () => {
 
     it('should check if action is disabled', () => {
       const disabledAction: TableAction = { id: 'test', disabled: true };
-      expect(component.isActionDisabled(disabledAction, mockData[0])).toBe(true);
+      expect(component.isActionDisabled(disabledAction, mockData[0])).toBe(
+        true,
+      );
     });
 
     it('should evaluate function-based disabled', () => {
@@ -410,8 +426,12 @@ describe('ITable', () => {
         id: 'test',
         disabled: (row) => row.id === 1,
       };
-      expect(component.isActionDisabled(conditionalAction, mockData[0])).toBe(true);
-      expect(component.isActionDisabled(conditionalAction, mockData[1])).toBe(false);
+      expect(component.isActionDisabled(conditionalAction, mockData[0])).toBe(
+        true,
+      );
+      expect(component.isActionDisabled(conditionalAction, mockData[1])).toBe(
+        false,
+      );
     });
   });
 

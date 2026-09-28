@@ -49,7 +49,9 @@
   color: var(--chart-text-color);
   font: inherit;
   cursor: pointer;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .i-chart-legend-item:hover,

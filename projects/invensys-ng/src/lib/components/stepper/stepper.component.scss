@@ -1,5 +1,5 @@
-@use './stepper.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
+@use "./stepper.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
 
 @include theme.i-stepper-theme();
 
@@ -88,8 +88,11 @@
     font: inherit;
     text-align: left;
     cursor: pointer;
-    transition: background vars.$transitionDuration, border-color vars.$transitionDuration,
-      box-shadow vars.$transitionDuration, transform vars.$transitionDuration;
+    transition:
+      background vars.$transitionDuration,
+      border-color vars.$transitionDuration,
+      box-shadow vars.$transitionDuration,
+      transform vars.$transitionDuration;
   }
 
   &__indicator {
@@ -103,7 +106,9 @@
     border: 1px solid;
     border-radius: 10px;
     font-weight: 600;
-    transition: background vars.$transitionDuration, border-color vars.$transitionDuration,
+    transition:
+      background vars.$transitionDuration,
+      border-color vars.$transitionDuration,
       color vars.$transitionDuration;
   }
 
@@ -174,7 +179,9 @@
     font-size: 11px;
     opacity: 0;
     transform: translateX(-4px);
-    transition: opacity vars.$transitionDuration, transform vars.$transitionDuration;
+    transition:
+      opacity vars.$transitionDuration,
+      transform vars.$transitionDuration;
   }
 
   &__panel {

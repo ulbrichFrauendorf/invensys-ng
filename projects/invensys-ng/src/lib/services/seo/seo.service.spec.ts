@@ -67,10 +67,10 @@ describe('SeoService', () => {
 
       expect(titleService.getTitle()).toBe(config.title);
       expect(metaService.getTag('name="description"')?.content).toBe(
-        config.description
+        config.description,
       );
       expect(metaService.getTag('name="keywords"')?.content).toBe(
-        config.keywords
+        config.keywords,
       );
     });
 
@@ -86,17 +86,17 @@ describe('SeoService', () => {
       service.updateMetaTags(config);
 
       expect(metaService.getTag('property="og:title"')?.content).toBe(
-        config.title
+        config.title,
       );
       expect(metaService.getTag('property="og:description"')?.content).toBe(
-        config.description
+        config.description,
       );
       expect(metaService.getTag('property="og:url"')?.content).toBe(config.url);
       expect(metaService.getTag('property="og:image"')?.content).toBe(
-        config.image
+        config.image,
       );
       expect(metaService.getTag('property="og:site_name"')?.content).toBe(
-        config.siteName
+        config.siteName,
       );
     });
 
@@ -112,16 +112,16 @@ describe('SeoService', () => {
       service.updateMetaTags(config);
 
       expect(metaService.getTag('name="twitter:card"')?.content).toBe(
-        config.twitterCard
+        config.twitterCard,
       );
       expect(metaService.getTag('name="twitter:title"')?.content).toBe(
-        config.title
+        config.title,
       );
       expect(metaService.getTag('name="twitter:description"')?.content).toBe(
-        config.description
+        config.description,
       );
       expect(metaService.getTag('name="twitter:image"')?.content).toBe(
-        config.image
+        config.image,
       );
     });
 

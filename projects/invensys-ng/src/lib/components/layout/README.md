@@ -16,11 +16,11 @@ The `i-layout` component provides a complete application layout with sidebar nav
 ### Basic Example
 
 ```typescript
-import { Component } from '@angular/core';
-import { LayoutComponent, MenuModel, LayoutConfig } from 'invensys-ng';
+import { Component } from "@angular/core";
+import { LayoutComponent, MenuModel, LayoutConfig } from "invensys-ng";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   template: `
     <i-layout [config]="layoutConfig" [menuModel]="menuModel">
       <div topbarActions>
@@ -29,32 +29,32 @@ import { LayoutComponent, MenuModel, LayoutConfig } from 'invensys-ng';
       </div>
     </i-layout>
   `,
-  imports: [LayoutComponent]
+  imports: [LayoutComponent],
 })
 export class AppComponent {
   layoutConfig: LayoutConfig = {
-    websiteName: 'My App',
-    logoLight: 'assets/logo-light.png',
-    logoDark: 'assets/logo-dark.png',
-    showThemeToggle: true
+    websiteName: "My App",
+    logoLight: "assets/logo-light.png",
+    logoDark: "assets/logo-dark.png",
+    showThemeToggle: true,
   };
 
   menuModel: MenuModel[] = [
     {
-      label: 'Main Menu',
+      label: "Main Menu",
       items: [
         {
-          label: 'Dashboard',
-          icon: 'pi pi-home',
-          routerLink: ['/dashboard']
+          label: "Dashboard",
+          icon: "pi pi-home",
+          routerLink: ["/dashboard"],
         },
         {
-          label: 'Settings',
-          icon: 'pi pi-cog',
-          routerLink: ['/settings']
-        }
-      ]
-    }
+          label: "Settings",
+          icon: "pi pi-cog",
+          routerLink: ["/settings"],
+        },
+      ],
+    },
   ];
 }
 ```
@@ -78,10 +78,10 @@ This mirrors the layout service and topbar toggle, which persist the mode in `vi
 
 ```typescript
 interface LayoutConfig {
-  websiteName: string;        // Required: Name displayed in top bar
-  logoLight?: string;         // Optional: Logo URL for light theme
-  logoDark?: string;          // Optional: Logo URL for dark theme
-  showThemeToggle?: boolean;  // Optional: Show/hide theme toggle (default: true)
+  websiteName: string; // Required: Name displayed in top bar
+  logoLight?: string; // Optional: Logo URL for light theme
+  logoDark?: string; // Optional: Logo URL for dark theme
+  showThemeToggle?: boolean; // Optional: Show/hide theme toggle (default: true)
   enablePullToRefresh?: boolean; // Optional: Enable pull-to-refresh on mobile (default: false)
 }
 ```
@@ -90,18 +90,18 @@ interface LayoutConfig {
 
 ```typescript
 interface MenuItem {
-  label: string;              // Menu item label
-  icon?: string;              // Optional PrimeIcons class
-  routerLink?: string[];      // Angular router link
-  items?: MenuItem[];         // Optional sub-menu items
-  claim?: string;             // Optional claim required to view this menu item
+  label: string; // Menu item label
+  icon?: string; // Optional PrimeIcons class
+  routerLink?: string[]; // Angular router link
+  items?: MenuItem[]; // Optional sub-menu items
+  claim?: string; // Optional claim required to view this menu item
 }
 
 interface MenuModel {
-  label: string;              // Menu group label
-  items: MenuItem[];          // Menu items in this group
-  separator?: boolean;        // Optional separator after group
-  claim?: string;             // Optional claim required to view this menu group
+  label: string; // Menu group label
+  items: MenuItem[]; // Menu items in this group
+  separator?: boolean; // Optional separator after group
+  claim?: string; // Optional claim required to view this menu group
 }
 ```
 
@@ -114,13 +114,13 @@ The menu component supports claims-based access control, allowing you to conditi
 First, create a service that implements the `ClaimsChecker` interface:
 
 ```typescript
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ClaimsChecker } from 'invensys-ng';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { ClaimsChecker } from "invensys-ng";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ClaimsService implements ClaimsChecker {
-  private userClaims = ['view-dashboard', 'view-reports', 'admin-access'];
+  private userClaims = ["view-dashboard", "view-reports", "admin-access"];
 
   hasClaim(claim: string): Observable<boolean> {
     // Check if user has the specified claim
@@ -135,15 +135,15 @@ The easiest way to configure claims checking is using the `provideMenuClaimsChec
 
 ```typescript
 // app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { provideMenuClaimsChecker } from 'invensys-ng';
-import { ClaimsService } from './services/claims.service';
+import { ApplicationConfig } from "@angular/core";
+import { provideMenuClaimsChecker } from "invensys-ng";
+import { ClaimsService } from "./services/claims.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideMenuClaimsChecker(ClaimsService),
     // ... other providers
-  ]
+  ],
 };
 ```
 
@@ -198,16 +198,16 @@ If you prefer manual configuration:
 
 ```typescript
 // app.config.ts
-import { CLAIMS_CHECKER } from 'invensys-ng';
-import { ClaimsService } from './services/claims.service';
+import { CLAIMS_CHECKER } from "invensys-ng";
+import { ClaimsService } from "./services/claims.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     {
       provide: CLAIMS_CHECKER,
-      useExisting: ClaimsService
-    }
-  ]
+      useExisting: ClaimsService,
+    },
+  ],
 };
 ```
 
@@ -230,8 +230,8 @@ The theme toggle is enabled by default and allows users to switch between light 
 
 ```typescript
 layoutConfig: LayoutConfig = {
-  websiteName: 'My App',
-  showThemeToggle: false
+  websiteName: "My App",
+  showThemeToggle: false,
 };
 ```
 
@@ -241,12 +241,13 @@ On mobile devices (viewport width ≤ 991px), you can enable pull-to-refresh fun
 
 ```typescript
 layoutConfig: LayoutConfig = {
-  websiteName: 'My App',
-  enablePullToRefresh: true
+  websiteName: "My App",
+  enablePullToRefresh: true,
 };
 ```
 
 When enabled, users can:
+
 1. Pull down from the top of the page (when scrolled to the top)
 2. See a visual indicator showing the pull distance
 3. Release to trigger a page refresh when the threshold is reached

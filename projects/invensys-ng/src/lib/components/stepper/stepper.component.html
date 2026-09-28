@@ -17,7 +17,9 @@
           [attr.id]="componentId + '-step-' + index"
           [attr.aria-current]="activeIndex === index ? 'step' : null"
           [attr.aria-controls]="componentId + '-panel-' + index"
-          [attr.aria-describedby]="step.description ? componentId + '-description-' + index : null"
+          [attr.aria-describedby]="
+            step.description ? componentId + '-description-' + index : null
+          "
           [attr.tabindex]="activeIndex === index ? 0 : -1"
           [disabled]="!canSelect(index)"
           (click)="selectStep($event, index)"
@@ -39,7 +41,9 @@
             <span class="i-stepper__meta">
               <span>Step {{ index + 1 }} of {{ steps.length }}</span>
               @if (step.completed) {
-                <span class="i-stepper__status i-stepper__status--completed">Completed</span>
+                <span class="i-stepper__status i-stepper__status--completed"
+                  >Completed</span
+                >
               } @else if (step.optional) {
                 <span class="i-stepper__status">Optional</span>
               }
@@ -49,10 +53,14 @@
               <span
                 class="i-stepper__description"
                 [attr.id]="componentId + '-description-' + index"
-              >{{ step.description }}</span>
+                >{{ step.description }}</span
+              >
             }
           </span>
-          <i class="pi pi-chevron-right i-stepper__chevron" aria-hidden="true"></i>
+          <i
+            class="pi pi-chevron-right i-stepper__chevron"
+            aria-hidden="true"
+          ></i>
         </button>
         @if (!last) {
           <span class="i-stepper__connector" aria-hidden="true"></span>

@@ -13,7 +13,7 @@
       [externalInvalid]="showErrors"
       [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
       [readonly]="readonly"
-      >
+    >
       <!-- Icons overlay on the input -->
       <div class="i-select-icons">
         @if (showClear && value !== null && value !== undefined) {
@@ -43,7 +43,7 @@
             (ngModelChange)="filterValue.set($event)"
             [fluid]="true"
             [icon]="'pi pi-search'"
-            >
+          >
           </i-input-text>
         </div>
       }
@@ -54,7 +54,7 @@
             class="i-select-option"
             [class.selected]="isOptionSelected(option)"
             (click)="selectOption(option)"
-            >
+          >
             {{ getOptionLabel(option) }}
           </div>
         }

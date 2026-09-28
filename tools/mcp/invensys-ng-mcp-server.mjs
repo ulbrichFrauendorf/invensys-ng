@@ -1,22 +1,36 @@
 #!/usr/bin/env node
 
-import { createServer } from 'node:http';
-import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
-import path from 'node:path';
-import process from 'node:process';
-import { pathToFileURL } from 'node:url';
+import { createServer } from "node:http";
+import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
+import path from "node:path";
+import process from "node:process";
+import { pathToFileURL } from "node:url";
 
-const ROOT = path.resolve(new URL('../..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
-const LIB_ROOT = path.join(ROOT, 'projects', 'invensys-ng', 'src');
-const UI_DEMO_ROOT = path.join(ROOT, 'projects', 'ui-kit', 'src', 'app', 'components');
-const PUBLIC_API = path.join(LIB_ROOT, 'public-api.ts');
-const DEFAULT_STATIC_CATALOG_PATH = path.join(ROOT, 'dist', 'mcp', 'invensys-ng-catalog.json');
-const PROTOCOL_VERSION = '2024-11-05';
+const ROOT = path.resolve(
+  new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
+);
+const LIB_ROOT = path.join(ROOT, "projects", "invensys-ng", "src");
+const UI_DEMO_ROOT = path.join(
+  ROOT,
+  "projects",
+  "ui-kit",
+  "src",
+  "app",
+  "components",
+);
+const PUBLIC_API = path.join(LIB_ROOT, "public-api.ts");
+const DEFAULT_STATIC_CATALOG_PATH = path.join(
+  ROOT,
+  "dist",
+  "mcp",
+  "invensys-ng-catalog.json",
+);
+const PROTOCOL_VERSION = "2024-11-05";
 
 const textEncoder = new TextEncoder();
 
 function toPosix(filePath) {
-  return filePath.split(path.sep).join('/');
+  return filePath.split(path.sep).join("/");
 }
 
 function relativeFromRoot(filePath) {
@@ -24,40 +38,43 @@ function relativeFromRoot(filePath) {
 }
 
 function normalizeWhitespace(value) {
-  return value.replace(/\r\n/g, '\n').replace(/[ \t]+\n/g, '\n').trim();
+  return value
+    .replace(/\r\n/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .trim();
 }
 
 function kebabToTitle(value) {
   return value
-    .replace(/^\[|\]$/g, '')
-    .replace(/^i-/, '')
-    .split('-')
+    .replace(/^\[|\]$/g, "")
+    .replace(/^i-/, "")
+    .split("-")
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 function classToTitle(value) {
   return value
-    .replace(/^I(?=[A-Z])/, '')
-    .replace(/Component$|Directive$/, '')
-    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/^I(?=[A-Z])/, "")
+    .replace(/Component$|Directive$/, "")
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .trim();
 }
 
 function parseArgs(argv) {
   const args = {
-    mode: 'stdio',
-    host: process.env.INVENSYS_NG_MCP_HOST || '127.0.0.1',
+    mode: "stdio",
+    host: process.env.INVENSYS_NG_MCP_HOST || "127.0.0.1",
     port: Number(process.env.INVENSYS_NG_MCP_PORT || 3200),
   };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-    if (arg === '--http') args.mode = 'http';
-    if (arg === '--stdio') args.mode = 'stdio';
-    if (arg === '--host') args.host = argv[++index] || args.host;
-    if (arg === '--port') args.port = Number(argv[++index] || args.port);
+    if (arg === "--http") args.mode = "http";
+    if (arg === "--stdio") args.mode = "stdio";
+    if (arg === "--host") args.host = argv[++index] || args.host;
+    if (arg === "--port") args.port = Number(argv[++index] || args.port);
   }
 
   return args;
@@ -91,13 +108,16 @@ async function walk(directory, predicate = () => true) {
 
 async function readOptional(filePath) {
   try {
-    return await readFile(filePath, 'utf8');
+    return await readFile(filePath, "utf8");
   } catch {
-    return '';
+    return "";
   }
 }
 
-function resolveCatalogPath(filePath = process.env.INVENSYS_NG_MCP_CATALOG_PATH || DEFAULT_STATIC_CATALOG_PATH) {
+function resolveCatalogPath(
+  filePath = process.env.INVENSYS_NG_MCP_CATALOG_PATH ||
+    DEFAULT_STATIC_CATALOG_PATH,
+) {
   return path.isAbsolute(filePath) ? filePath : path.join(ROOT, filePath);
 }
 
@@ -108,7 +128,7 @@ async function readStaticCatalog(filePath = resolveCatalogPath()) {
   const catalog = JSON.parse(text);
   return {
     ...catalog,
-    catalogSource: 'static',
+    catalogSource: "static",
     catalogPath: relativeFromRoot(filePath),
   };
 }
@@ -124,16 +144,17 @@ async function fileExists(filePath) {
 
 function parsePublicExports(publicApiText) {
   const exports = new Map();
-  const exportRegex = /export\s+(?:type\s+)?(?:\{[^}]+\}\s+from\s+)?\*\s+from\s+['"]([^'"]+)['"]|export\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/g;
+  const exportRegex =
+    /export\s+(?:type\s+)?(?:\{[^}]+\}\s+from\s+)?\*\s+from\s+['"]([^'"]+)['"]|export\s+(?:type\s+)?\{([^}]+)\}\s+from\s+['"]([^'"]+)['"]/g;
 
   for (const match of publicApiText.matchAll(exportRegex)) {
     const specifier = match[1] || match[3];
     if (!specifier) continue;
-    const normalized = specifier.replace(/^\.\//, '');
+    const normalized = specifier.replace(/^\.\//, "");
     const fullPath = path.join(LIB_ROOT, `${normalized}.ts`);
     exports.set(path.normalize(fullPath), {
       specifier,
-      symbols: match[2]?.split(',').map((symbol) => symbol.trim()) || ['*'],
+      symbols: match[2]?.split(",").map((symbol) => symbol.trim()) || ["*"],
     });
   }
 
@@ -142,28 +163,32 @@ function parsePublicExports(publicApiText) {
 
 function extractDecoratorBody(source, decoratorName) {
   const start = source.indexOf(`@${decoratorName}(`);
-  if (start === -1) return '';
+  if (start === -1) return "";
 
-  const bodyStart = source.indexOf('(', start);
+  const bodyStart = source.indexOf("(", start);
   let depth = 0;
   for (let index = bodyStart; index < source.length; index += 1) {
     const char = source[index];
-    if (char === '(') depth += 1;
-    if (char === ')') depth -= 1;
+    if (char === "(") depth += 1;
+    if (char === ")") depth -= 1;
     if (depth === 0) return source.slice(bodyStart + 1, index);
   }
 
-  return '';
+  return "";
 }
 
 function parseSelector(source) {
-  const decorator = extractDecoratorBody(source, 'Component') || extractDecoratorBody(source, 'Directive');
+  const decorator =
+    extractDecoratorBody(source, "Component") ||
+    extractDecoratorBody(source, "Directive");
   const selector = decorator.match(/selector\s*:\s*['"`]([^'"`]+)['"`]/)?.[1];
-  return selector || '';
+  return selector || "";
 }
 
 function parseClassName(source) {
-  return source.match(/export\s+(?:abstract\s+)?class\s+([A-Za-z0-9_]+)/)?.[1] || '';
+  return (
+    source.match(/export\s+(?:abstract\s+)?class\s+([A-Za-z0-9_]+)/)?.[1] || ""
+  );
 }
 
 function parseInputOutputLine(lines, index, decoratorName) {
@@ -171,23 +196,35 @@ function parseInputOutputLine(lines, index, decoratorName) {
   const trimmedLine = line.trim();
   if (!trimmedLine.startsWith(`@${decoratorName}`)) return null;
 
-  const decoratorMatch = trimmedLine.match(new RegExp(`@${decoratorName}\\s*(?:\\(([^)]*)\\))?`));
-  const decoratorArgs = decoratorMatch?.[1]?.trim() || '';
+  const decoratorMatch = trimmedLine.match(
+    new RegExp(`@${decoratorName}\\s*(?:\\(([^)]*)\\))?`),
+  );
+  const decoratorArgs = decoratorMatch?.[1]?.trim() || "";
   let declaration = trimmedLine.slice(decoratorMatch?.[0]?.length || 0).trim();
 
   if (!declaration) {
     for (let next = index + 1; next < lines.length; next += 1) {
       const candidate = lines[next].trim();
-      if (!candidate || candidate.startsWith('//') || candidate.startsWith('*') || candidate.startsWith('@')) continue;
+      if (
+        !candidate ||
+        candidate.startsWith("//") ||
+        candidate.startsWith("*") ||
+        candidate.startsWith("@")
+      )
+        continue;
       declaration = candidate;
       break;
     }
   }
 
-  const propMatch = declaration.match(/^(?:public\s+|readonly\s+|set\s+|get\s+)?([A-Za-z0-9_$]+)\??\s*(?::\s*([^=;{]+))?\s*(?:=\s*([^;]+))?/);
+  const propMatch = declaration.match(
+    /^(?:public\s+|readonly\s+|set\s+|get\s+)?([A-Za-z0-9_$]+)\??\s*(?::\s*([^=;{]+))?\s*(?:=\s*([^;]+))?/,
+  );
   if (!propMatch) return null;
 
-  const alias = decoratorArgs.match(/^['"`]([^'"`]+)['"`]$/)?.[1] || decoratorArgs.match(/alias\s*:\s*['"`]([^'"`]+)['"`]/)?.[1];
+  const alias =
+    decoratorArgs.match(/^['"`]([^'"`]+)['"`]$/)?.[1] ||
+    decoratorArgs.match(/alias\s*:\s*['"`]([^'"`]+)['"`]/)?.[1];
   return {
     name: propMatch[1],
     binding: alias || propMatch[1],
@@ -204,14 +241,15 @@ function parseInputsOutputs(source) {
   const outputs = [];
 
   for (let index = 0; index < lines.length; index += 1) {
-    const input = parseInputOutputLine(lines, index, 'Input');
+    const input = parseInputOutputLine(lines, index, "Input");
     if (input) inputs.push(input);
 
-    const output = parseInputOutputLine(lines, index, 'Output');
+    const output = parseInputOutputLine(lines, index, "Output");
     if (output) outputs.push(output);
   }
 
-  const signalInputRegex = /^\s*(?:readonly\s+)?([A-Za-z0-9_$]+)\s*:\s*InputSignal<([^>]+)>\s*=\s*input(?:\.(required))?(?:<[^>]+>)?\(([^;]*)\);/gm;
+  const signalInputRegex =
+    /^\s*(?:readonly\s+)?([A-Za-z0-9_$]+)\s*:\s*InputSignal<([^>]+)>\s*=\s*input(?:\.(required))?(?:<[^>]+>)?\(([^;]*)\);/gm;
   for (const match of source.matchAll(signalInputRegex)) {
     if (!inputs.some((input) => input.binding === match[1])) {
       inputs.push({
@@ -228,13 +266,17 @@ function parseInputsOutputs(source) {
 }
 
 function parseTemplateSlots(templateText) {
-  return [...templateText.matchAll(/<ng-content(?:\s+select=["']([^"']+)["'])?\s*><\/ng-content>|<ng-content(?:\s+select=["']([^"']+)["'])?\s*\/>/g)]
-    .map((match) => match[1] || match[2] || 'default')
+  return [
+    ...templateText.matchAll(
+      /<ng-content(?:\s+select=["']([^"']+)["'])?\s*><\/ng-content>|<ng-content(?:\s+select=["']([^"']+)["'])?\s*\/>/g,
+    ),
+  ]
+    .map((match) => match[1] || match[2] || "default")
     .filter(Boolean);
 }
 
 function findMatchingTagEnd(text, startIndex, selector) {
-  const startTagEnd = text.indexOf('>', startIndex);
+  const startTagEnd = text.indexOf(">", startIndex);
   if (startTagEnd === -1) return -1;
 
   const startTag = text.slice(startIndex, startTagEnd + 1);
@@ -248,7 +290,10 @@ function findMatchingTagEnd(text, startIndex, selector) {
 
 function extractElementExamples(text, selector, limit = 5) {
   const examples = [];
-  const tagRegex = new RegExp(`<${selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g');
+  const tagRegex = new RegExp(
+    `<${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
+    "g",
+  );
 
   for (const match of text.matchAll(tagRegex)) {
     const end = findMatchingTagEnd(text, match.index, selector);
@@ -263,7 +308,7 @@ function extractElementExamples(text, selector, limit = 5) {
 
 function extractDirectiveExamples(text, directiveName, limit = 5) {
   const examples = [];
-  const attrRegex = new RegExp(`<[^>]+\\b${directiveName}\\b[^>]*>`, 'g');
+  const attrRegex = new RegExp(`<[^>]+\\b${directiveName}\\b[^>]*>`, "g");
 
   for (const match of text.matchAll(attrRegex)) {
     const snippet = normalizeWhitespace(match[0]);
@@ -276,11 +321,12 @@ function extractDirectiveExamples(text, directiveName, limit = 5) {
 
 function extractBacktickExamples(text, needle, limit = 5) {
   const examples = [];
-  const parts = text.split('`');
+  const parts = text.split("`");
 
   for (let index = 1; index < parts.length; index += 2) {
     const snippet = normalizeWhitespace(parts[index]);
-    if (snippet.includes(needle) && !examples.includes(snippet)) examples.push(snippet);
+    if (snippet.includes(needle) && !examples.includes(snippet))
+      examples.push(snippet);
     if (examples.length >= limit) break;
   }
 
@@ -288,22 +334,33 @@ function extractBacktickExamples(text, needle, limit = 5) {
 }
 
 async function collectExamples(selector) {
-  const files = await walk(UI_DEMO_ROOT, (filePath) => /\.(html|ts)$/.test(filePath));
-  const isDirective = selector.startsWith('[') && selector.endsWith(']');
+  const files = await walk(UI_DEMO_ROOT, (filePath) =>
+    /\.(html|ts)$/.test(filePath),
+  );
+  const isDirective = selector.startsWith("[") && selector.endsWith("]");
   const needle = isDirective ? selector.slice(1, -1) : `<${selector}`;
   const examples = [];
 
   for (const filePath of files) {
     const text = await readOptional(filePath);
     const snippets = isDirective
-      ? [...extractDirectiveExamples(text, selector.slice(1, -1)), ...extractBacktickExamples(text, selector.slice(1, -1))]
-      : [...extractElementExamples(text, selector), ...extractBacktickExamples(text, needle)];
+      ? [
+          ...extractDirectiveExamples(text, selector.slice(1, -1)),
+          ...extractBacktickExamples(text, selector.slice(1, -1)),
+        ]
+      : [
+          ...extractElementExamples(text, selector),
+          ...extractBacktickExamples(text, needle),
+        ];
 
     for (const snippet of snippets) {
       if (!examples.some((example) => example.code === snippet)) {
         examples.push({
           source: relativeFromRoot(filePath),
-          code: snippet.length > 1800 ? `${snippet.slice(0, 1800).trimEnd()}\n...` : snippet,
+          code:
+            snippet.length > 1800
+              ? `${snippet.slice(0, 1800).trimEnd()}\n...`
+              : snippet,
         });
       }
       if (examples.length >= 8) return examples;
@@ -316,72 +373,83 @@ async function collectExamples(selector) {
 function buildUsageMarkdown(item) {
   const lines = [
     `# ${item.displayName}`,
-    '',
+    "",
     `Import from \`invensys-ng\`: \`${item.exportName}\`.`,
     `Selector: \`${item.selector}\`.`,
     `Source: \`${item.sourcePath}\`.`,
   ];
 
   if (item.formsSupport) {
-    lines.push('', 'Supports Angular forms APIs such as `ngModel`, `formControl`, or `formControlName`.');
+    lines.push(
+      "",
+      "Supports Angular forms APIs such as `ngModel`, `formControl`, or `formControlName`.",
+    );
   }
 
-  if (item.id === 'i-layout') {
+  if (item.id === "i-layout") {
     lines.push(
-      '',
-      '## Theme Initialization',
-      'When using the built-in light/dark theme toggle, initialize the body theme class before Angular bootstraps. Add this script after `</body>` in `src/index.html` so first paint uses the saved `viewModeColorScheme` value or `light` by default:',
-      '```html',
-      '<script>',
+      "",
+      "## Theme Initialization",
+      "When using the built-in light/dark theme toggle, initialize the body theme class before Angular bootstraps. Add this script after `</body>` in `src/index.html` so first paint uses the saved `viewModeColorScheme` value or `light` by default:",
+      "```html",
+      "<script>",
       '  const colorSchemeSet = localStorage.getItem("viewModeColorScheme") || "light";',
       '  document.body.classList.add(colorSchemeSet === "dark" ? "dark" : "light");',
-      '</script>',
-      '```'
+      "</script>",
+      "```",
     );
   }
 
   if (item.inputs.length) {
-    lines.push('', '## Inputs');
+    lines.push("", "## Inputs");
     for (const input of item.inputs) {
-      const required = input.required ? ' required' : '';
-      const type = input.type ? `: ${input.type}` : '';
-      const defaultValue = input.default ? ` = ${input.default}` : '';
+      const required = input.required ? " required" : "";
+      const type = input.type ? `: ${input.type}` : "";
+      const defaultValue = input.default ? ` = ${input.default}` : "";
       lines.push(`- \`${input.binding}\`${type}${defaultValue}${required}`);
     }
   }
 
   if (item.outputs.length) {
-    lines.push('', '## Outputs');
+    lines.push("", "## Outputs");
     for (const output of item.outputs) {
-      const type = output.type ? `: ${output.type}` : '';
+      const type = output.type ? `: ${output.type}` : "";
       lines.push(`- \`${output.binding}\`${type}`);
     }
   }
 
   if (item.slots.length) {
-    lines.push('', '## Content Slots');
+    lines.push("", "## Content Slots");
     for (const slot of item.slots) lines.push(`- \`${slot}\``);
   }
 
   if (item.examples.length) {
-    lines.push('', '## Examples');
+    lines.push("", "## Examples");
     for (const example of item.examples.slice(0, 3)) {
-      lines.push('', `From \`${example.source}\`:`, '```html', example.code, '```');
+      lines.push(
+        "",
+        `From \`${example.source}\`:`,
+        "```html",
+        example.code,
+        "```",
+      );
     }
   }
 
   if (item.relatedFiles.length) {
-    lines.push('', '## Related Files');
+    lines.push("", "## Related Files");
     for (const file of item.relatedFiles) lines.push(`- \`${file}\``);
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 export async function buildCatalogFromSource() {
   const publicApiText = await readOptional(PUBLIC_API);
   const publicExports = parsePublicExports(publicApiText);
-  const candidateFiles = await walk(path.join(LIB_ROOT, 'lib'), (filePath) => /\.(component|directive)\.ts$/.test(filePath));
+  const candidateFiles = await walk(path.join(LIB_ROOT, "lib"), (filePath) =>
+    /\.(component|directive)\.ts$/.test(filePath),
+  );
   const components = [];
 
   for (const filePath of candidateFiles) {
@@ -392,17 +460,17 @@ export async function buildCatalogFromSource() {
     const className = parseClassName(source);
     const exportInfo = publicExports.get(path.normalize(filePath));
     const relativePath = relativeFromRoot(filePath);
-    const templatePath = filePath.replace(/\.ts$/, '.html');
-    const stylePath = filePath.replace(/\.ts$/, '.scss');
-    const themePath = filePath.replace(/\.ts$/, '.theme.scss');
+    const templatePath = filePath.replace(/\.ts$/, ".html");
+    const stylePath = filePath.replace(/\.ts$/, ".scss");
+    const themePath = filePath.replace(/\.ts$/, ".theme.scss");
     const templateText = await readOptional(templatePath);
     const { inputs, outputs } = parseInputsOutputs(source);
     const examples = await collectExamples(selector);
-    const kind = source.includes('@Directive') ? 'directive' : 'component';
-    const name = selector.replace(/^\[|\]$/g, '');
+    const kind = source.includes("@Directive") ? "directive" : "component";
+    const name = selector.replace(/^\[|\]$/g, "");
     const relatedFiles = [];
     for (const relatedPath of [templatePath, stylePath, themePath]) {
-      if (relatedPath !== filePath && await fileExists(relatedPath)) {
+      if (relatedPath !== filePath && (await fileExists(relatedPath))) {
         relatedFiles.push(relativeFromRoot(relatedPath));
       }
     }
@@ -412,14 +480,15 @@ export async function buildCatalogFromSource() {
       displayName: className ? classToTitle(className) : kebabToTitle(selector),
       kind,
       selector,
-      exportName: className || kebabToTitle(selector).replace(/\s/g, ''),
+      exportName: className || kebabToTitle(selector).replace(/\s/g, ""),
       publicApi: Boolean(exportInfo),
       publicApiSpecifier: exportInfo?.specifier,
       sourcePath: relativePath,
       inputs,
       outputs,
       slots: parseTemplateSlots(templateText),
-      formsSupport: /ControlValueAccessor|NG_VALUE_ACCESSOR|writeValue\s*\(/.test(source),
+      formsSupport:
+        /ControlValueAccessor|NG_VALUE_ACCESSOR|writeValue\s*\(/.test(source),
       examples,
       relatedFiles,
     });
@@ -427,12 +496,14 @@ export async function buildCatalogFromSource() {
 
   components.sort((a, b) => a.selector.localeCompare(b.selector));
 
-  const exportedComponents = components.filter((component) => component.publicApi);
+  const exportedComponents = components.filter(
+    (component) => component.publicApi,
+  );
   return {
     generatedAt: new Date().toISOString(),
-    packageName: 'invensys-ng',
-    importFrom: 'invensys-ng',
-    catalogSource: 'source',
+    packageName: "invensys-ng",
+    importFrom: "invensys-ng",
+    catalogSource: "source",
     componentCount: components.length,
     exportedComponentCount: exportedComponents.length,
     components,
@@ -443,17 +514,23 @@ export async function writeStaticCatalog(filePath = resolveCatalogPath()) {
   const catalog = await buildCatalogFromSource();
   const outputCatalog = {
     ...catalog,
-    catalogSource: 'static',
+    catalogSource: "static",
     catalogPath: relativeFromRoot(filePath),
   };
 
   await mkdir(path.dirname(filePath), { recursive: true });
-  await writeFile(filePath, `${JSON.stringify(outputCatalog, null, 2)}\n`, 'utf8');
+  await writeFile(
+    filePath,
+    `${JSON.stringify(outputCatalog, null, 2)}\n`,
+    "utf8",
+  );
   return outputCatalog;
 }
 
 export async function loadCatalog(options = {}) {
-  const forceSource = Boolean(options.forceSource) || process.env.INVENSYS_NG_MCP_CATALOG_MODE === 'source';
+  const forceSource =
+    Boolean(options.forceSource) ||
+    process.env.INVENSYS_NG_MCP_CATALOG_MODE === "source";
 
   if (!forceSource) {
     const staticCatalog = await readStaticCatalog(resolveCatalogPath());
@@ -488,32 +565,39 @@ async function listComponents(args = {}) {
 
 async function findComponent(identifier) {
   const catalog = await loadCatalog();
-  const normalized = String(identifier || '').toLowerCase();
-  const component = catalog.components.find((item) => (
-    item.id.toLowerCase() === normalized ||
-    item.selector.toLowerCase() === normalized ||
-    item.displayName.toLowerCase() === normalized ||
-    item.exportName.toLowerCase() === normalized
-  ));
+  const normalized = String(identifier || "").toLowerCase();
+  const component = catalog.components.find(
+    (item) =>
+      item.id.toLowerCase() === normalized ||
+      item.selector.toLowerCase() === normalized ||
+      item.displayName.toLowerCase() === normalized ||
+      item.exportName.toLowerCase() === normalized,
+  );
 
   if (!component) {
-    const available = catalog.components.map((item) => item.selector).join(', ');
-    throw new Error(`Unknown invensys-ng component "${identifier}". Available selectors: ${available}`);
+    const available = catalog.components
+      .map((item) => item.selector)
+      .join(", ");
+    throw new Error(
+      `Unknown invensys-ng component "${identifier}". Available selectors: ${available}`,
+    );
   }
 
   return component;
 }
 
 async function getComponentUsage(args = {}) {
-  const component = await findComponent(args.component || args.selector || args.name);
-  const format = args.format || 'markdown';
-  if (format === 'json') return component;
+  const component = await findComponent(
+    args.component || args.selector || args.name,
+  );
+  const format = args.format || "markdown";
+  if (format === "json") return component;
   return buildUsageMarkdown(component);
 }
 
 async function searchComponents(args = {}) {
   const catalog = await loadCatalog();
-  const query = String(args.query || '').toLowerCase();
+  const query = String(args.query || "").toLowerCase();
   const results = catalog.components
     .map((component) => {
       const haystack = [
@@ -523,7 +607,9 @@ async function searchComponents(args = {}) {
         ...component.inputs.map((input) => input.binding),
         ...component.outputs.map((output) => output.binding),
         ...component.examples.map((example) => example.code),
-      ].join(' ').toLowerCase();
+      ]
+        .join(" ")
+        .toLowerCase();
 
       let score = 0;
       if (component.selector.toLowerCase() === query) score += 20;
@@ -533,7 +619,11 @@ async function searchComponents(args = {}) {
       return { component, score };
     })
     .filter((result) => result.score > 0)
-    .sort((a, b) => b.score - a.score || a.component.selector.localeCompare(b.component.selector))
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        a.component.selector.localeCompare(b.component.selector),
+    )
     .slice(0, Number(args.limit || 10))
     .map((result) => summarizeComponent(result.component));
 
@@ -541,78 +631,96 @@ async function searchComponents(args = {}) {
 }
 
 const THEME_SOURCE_FILES = [
-  'projects/invensys-ng/src/lib/themes/theme.scss',
-  'projects/invensys-ng/src/lib/themes/colors.theme.scss',
-  'projects/invensys-ng/src/lib/themes/color-variables.scss',
-  'projects/invensys-ng/src/lib/themes/body.theme.scss',
-  'projects/invensys-ng/src/lib/themes/typography.theme.scss',
-  'projects/invensys-ng/src/lib/themes/scrollbar.theme.scss',
-  'projects/invensys-ng/src/lib/themes/scrollbar-mixins.scss',
-  'projects/ui-kit/src/theme/colors.theme.scss',
-  'projects/ui-kit/src/app/components/theming/theming.component.html',
-  'projects/ui-kit/src/app/components/theming/theming.component.ts',
-  'projects/invensys-ng/src/lib/components/layout/services/layout.service.ts',
-  'projects/invensys-ng/src/lib/components/layout/topbar/topbar.component.ts',
+  "projects/invensys-ng/src/lib/themes/theme.scss",
+  "projects/invensys-ng/src/lib/themes/colors.theme.scss",
+  "projects/invensys-ng/src/lib/themes/color-variables.scss",
+  "projects/invensys-ng/src/lib/themes/body.theme.scss",
+  "projects/invensys-ng/src/lib/themes/typography.theme.scss",
+  "projects/invensys-ng/src/lib/themes/scrollbar.theme.scss",
+  "projects/invensys-ng/src/lib/themes/scrollbar-mixins.scss",
+  "projects/ui-kit/src/theme/colors.theme.scss",
+  "projects/ui-kit/src/app/components/theming/theming.component.html",
+  "projects/ui-kit/src/app/components/theming/theming.component.ts",
+  "projects/invensys-ng/src/lib/components/layout/services/layout.service.ts",
+  "projects/invensys-ng/src/lib/components/layout/topbar/topbar.component.ts",
 ];
 
 const THEME_TOKEN_GROUPS = [
   {
-    name: 'Brand and status colors',
+    name: "Brand and status colors",
     tokens: [
-      ['--color-primary', 'Primary brand/accent color used by primary controls and emphasis states.'],
-      ['--color-secondary', 'Secondary neutral/brand color.'],
-      ['--color-tertiary', 'Tertiary accent used by components such as tertiary spinners.'],
-      ['--color-success', 'Success state color.'],
-      ['--color-info', 'Information state color.'],
-      ['--color-warning', 'Warning state color.'],
-      ['--color-danger', 'Danger/error state color.'],
-      ['--color-contrast', 'High-contrast foreground/background companion color.'],
-      ['--color-contrast-inverse', 'Inverse of the contrast token.'],
+      [
+        "--color-primary",
+        "Primary brand/accent color used by primary controls and emphasis states.",
+      ],
+      ["--color-secondary", "Secondary neutral/brand color."],
+      [
+        "--color-tertiary",
+        "Tertiary accent used by components such as tertiary spinners.",
+      ],
+      ["--color-success", "Success state color."],
+      ["--color-info", "Information state color."],
+      ["--color-warning", "Warning state color."],
+      ["--color-danger", "Danger/error state color."],
+      [
+        "--color-contrast",
+        "High-contrast foreground/background companion color.",
+      ],
+      ["--color-contrast-inverse", "Inverse of the contrast token."],
     ],
   },
   {
-    name: 'Text colors',
+    name: "Text colors",
     tokens: [
-      ['--color-text-primary', 'Default readable text color.'],
-      ['--color-text-contrast', 'Text used on strong/contrast backgrounds.'],
-      ['--color-text-secondary', 'Secondary and helper text color.'],
-      ['--color-text-tertiary', 'Subtle tertiary text color.'],
-      ['--color-text-disabled', 'Disabled text color.'],
+      ["--color-text-primary", "Default readable text color."],
+      ["--color-text-contrast", "Text used on strong/contrast backgrounds."],
+      ["--color-text-secondary", "Secondary and helper text color."],
+      ["--color-text-tertiary", "Subtle tertiary text color."],
+      ["--color-text-disabled", "Disabled text color."],
     ],
   },
   {
-    name: 'Component backgrounds and borders',
+    name: "Component backgrounds and borders",
     tokens: [
-      ['--color-component-background', 'Primary component background.'],
-      ['--color-component-background-secondary', 'Secondary component background.'],
-      ['--color-component-background-solid', 'Solid high-contrast component background.'],
-      ['--color-border', 'Default component border color.'],
-      ['--color-disabled-background', 'Disabled control background.'],
-      ['--color-disabled-border', 'Disabled control border.'],
+      ["--color-component-background", "Primary component background."],
+      [
+        "--color-component-background-secondary",
+        "Secondary component background.",
+      ],
+      [
+        "--color-component-background-solid",
+        "Solid high-contrast component background.",
+      ],
+      ["--color-border", "Default component border color."],
+      ["--color-disabled-background", "Disabled control background."],
+      ["--color-disabled-border", "Disabled control border."],
     ],
   },
   {
-    name: 'Surface colors',
+    name: "Surface colors",
     tokens: [
-      ['--surface-ground', 'Page/application background.'],
-      ['--surface-elevated', 'Raised surface background.'],
-      ['--surface-section', 'Section background.'],
-      ['--surface-card', 'Card/panel background.'],
-      ['--surface-overlay', 'Overlay, popover, and dropdown background.'],
-      ['--surface-border', 'Surface divider/border color.'],
-      ['--surface-hover', 'Hover-state surface background.'],
+      ["--surface-ground", "Page/application background."],
+      ["--surface-elevated", "Raised surface background."],
+      ["--surface-section", "Section background."],
+      ["--surface-card", "Card/panel background."],
+      ["--surface-overlay", "Overlay, popover, and dropdown background."],
+      ["--surface-border", "Surface divider/border color."],
+      ["--surface-hover", "Hover-state surface background."],
     ],
   },
 ];
 
 const THEME_SCROLLBAR_TOKENS = [
-  ['--scrollbar-size', 'Themed scrollbar width and height.'],
-  ['--scrollbar-radius', 'Scrollbar track and thumb radius.'],
-  ['--scrollbar-track', 'Default scrollbar track color.'],
-  ['--scrollbar-track-dropdown', 'Track color for dropdown and overlay scroll containers.'],
-  ['--scrollbar-thumb', 'Default scrollbar thumb color.'],
-  ['--scrollbar-thumb-hover', 'Scrollbar thumb color on hover.'],
-  ['--scrollbar-thumb-active', 'Scrollbar thumb color while active.'],
+  ["--scrollbar-size", "Themed scrollbar width and height."],
+  ["--scrollbar-radius", "Scrollbar track and thumb radius."],
+  ["--scrollbar-track", "Default scrollbar track color."],
+  [
+    "--scrollbar-track-dropdown",
+    "Track color for dropdown and overlay scroll containers.",
+  ],
+  ["--scrollbar-thumb", "Default scrollbar thumb color."],
+  ["--scrollbar-thumb-hover", "Scrollbar thumb color on hover."],
+  ["--scrollbar-thumb-active", "Scrollbar thumb color while active."],
 ];
 
 const THEME_SAMPLE_SCSS = `.light {
@@ -724,44 +832,53 @@ document.body.classList.add(nextTheme);
 localStorage.setItem("viewModeColorScheme", nextTheme);`;
 
 function flattenThemeTokens() {
-  return THEME_TOKEN_GROUPS.flatMap((group) => (
+  return THEME_TOKEN_GROUPS.flatMap((group) =>
     group.tokens.map(([token, description]) => ({
       token,
       group: group.name,
       description,
-    }))
-  ));
+    })),
+  );
 }
 
 function buildThemingGuide() {
   return {
-    packageName: 'invensys-ng',
-    purpose: 'Guide an AI agent to theme the invensys-ng component library using its CSS variable contract.',
+    packageName: "invensys-ng",
+    purpose:
+      "Guide an AI agent to theme the invensys-ng component library using its CSS variable contract.",
     model: {
-      scoping: 'Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.',
-      runtimeBehavior: 'Components consume CSS custom properties through SCSS variables in `color-variables.scss`; body defaults, typography, and scrollbar helpers use the same light/dark token contract.',
-      persistenceKey: 'viewModeColorScheme',
+      scoping:
+        "Define all theme tokens on global `.light` and `.dark` classes. Apply exactly one of those classes to `document.body`.",
+      runtimeBehavior:
+        "Components consume CSS custom properties through SCSS variables in `color-variables.scss`; body defaults, typography, and scrollbar helpers use the same light/dark token contract.",
+      persistenceKey: "viewModeColorScheme",
     },
     instructions: [
-      'For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once. This includes colors, body defaults, typography, and scrollbar tokens.',
-      'If the caller owns body styling, use `@include invensys-theme.define-theme($body: false);` or import `body.theme.scss` separately only where desired.',
-      'Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.',
-      'Define both `.light` and `.dark` blocks in that file. Each block must include every required color token from this guide.',
-      'Import theme files from the application global stylesheet, such as `src/styles.scss`; do not place token definitions only in a component stylesheet.',
+      "For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once. This includes colors, body defaults, typography, and scrollbar tokens.",
+      "If the caller owns body styling, use `@include invensys-theme.define-theme($body: false);` or import `body.theme.scss` separately only where desired.",
+      "Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.",
+      "Define both `.light` and `.dark` blocks in that file. Each block must include every required color token from this guide.",
+      "Import theme files from the application global stylesheet, such as `src/styles.scss`; do not place token definitions only in a component stylesheet.",
       'Set the initial body class to `light` or `dark` in `index.html`. If the app uses the invensys-ng layout theme toggle, read and write `localStorage["viewModeColorScheme"]`.',
-      'When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.',
-      'Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.',
-      'Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.',
-      'Use `body.theme.scss` when a caller wants only the default `body` font family, surface background, and primary text color.',
-      'Use `typography.theme.scss` when a caller wants the library heading, paragraph, mark, blockquote, and divider defaults without hand-copying CSS.',
-      'Use `scrollbar.theme.scss` with `scrollbar-mixins.scss` when a caller wants themed scrollbars on app-level or custom scroll containers.',
+      "When toggling at runtime, remove both `light` and `dark` from `document.body`, then add the selected class. Persist the same selected value if the app should remember it.",
+      "Use the exact token names. Change values only; do not rename tokens, scope them under another selector, or replace them with unrelated PrimeNG token names.",
+      "Use component inputs and severity values for behavior variants. Use theme tokens for brand, state, surface, text, border, and disabled colors.",
+      "Use `body.theme.scss` when a caller wants only the default `body` font family, surface background, and primary text color.",
+      "Use `typography.theme.scss` when a caller wants the library heading, paragraph, mark, blockquote, and divider defaults without hand-copying CSS.",
+      "Use `scrollbar.theme.scss` with `scrollbar-mixins.scss` when a caller wants themed scrollbars on app-level or custom scroll containers.",
     ],
     requiredTokens: flattenThemeTokens(),
     tokenGroups: THEME_TOKEN_GROUPS.map((group) => ({
       name: group.name,
-      tokens: group.tokens.map(([token, description]) => ({ token, description })),
+      tokens: group.tokens.map(([token, description]) => ({
+        token,
+        description,
+      })),
     })),
-    scrollbarTokens: THEME_SCROLLBAR_TOKENS.map(([token, description]) => ({ token, description })),
+    scrollbarTokens: THEME_SCROLLBAR_TOKENS.map(([token, description]) => ({
+      token,
+      description,
+    })),
     snippets: {
       themeScss: THEME_SAMPLE_SCSS,
       stylesScss: THEME_IMPORT_SNIPPET,
@@ -770,22 +887,22 @@ function buildThemingGuide() {
       runtimeToggle: THEME_TOGGLE_SNIPPET,
     },
     verification: [
-      'Inspect `document.body.classList` and confirm exactly one theme class is present: `light` or `dark`.',
-      'In DevTools, confirm required CSS variables resolve on `body`, not only inside an Angular component host.',
-      'Check representative components in both themes: button, input/textarea disabled state, card/panel surface, dialog/overlay, table hover/border, and progress spinner tertiary color.',
-      'Check body defaults in a caller page: `body` uses Roboto, `--surface-ground`, and `--color-text-primary` unless `$body: false` is passed.',
-      'Check global typography in a caller page: headings use `--color-text-primary`, `mark` uses warning color, blockquotes use tertiary text color, and `hr` uses `--surface-border`.',
-      'Check custom scroll containers that include `scrollbar.themed-scrollbar()` or `scrollbar.dropdown-scrollbar()` in both light and dark modes.',
-      'If using `i-layout` with `showThemeToggle`, reload after toggling and confirm the first paint uses the saved `viewModeColorScheme` value.',
+      "Inspect `document.body.classList` and confirm exactly one theme class is present: `light` or `dark`.",
+      "In DevTools, confirm required CSS variables resolve on `body`, not only inside an Angular component host.",
+      "Check representative components in both themes: button, input/textarea disabled state, card/panel surface, dialog/overlay, table hover/border, and progress spinner tertiary color.",
+      "Check body defaults in a caller page: `body` uses Roboto, `--surface-ground`, and `--color-text-primary` unless `$body: false` is passed.",
+      "Check global typography in a caller page: headings use `--color-text-primary`, `mark` uses warning color, blockquotes use tertiary text color, and `hr` uses `--surface-border`.",
+      "Check custom scroll containers that include `scrollbar.themed-scrollbar()` or `scrollbar.dropdown-scrollbar()` in both light and dark modes.",
+      "If using `i-layout` with `showThemeToggle`, reload after toggling and confirm the first paint uses the saved `viewModeColorScheme` value.",
     ],
     avoid: [
-      'Do not edit each component theme file to brand an application.',
-      'Do not define only `.light` or only `.dark`; the library expects both modes to be available when toggled.',
-      'Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.',
-      'Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for invensys-ng library components.',
-      'Do not hard-code `node_modules` in Sass imports; use package imports such as `invensys-ng/src/lib/themes/theme.scss`.',
-      'Do not duplicate body background and text color rules if the bundled `define-theme()` body defaults are enabled.',
-      'Do not copy typography CSS into every caller. Include `typography-theme.define-typography()` or the bundled `invensys-theme.define-theme()` mixin.',
+      "Do not edit each component theme file to brand an application.",
+      "Do not define only `.light` or only `.dark`; the library expects both modes to be available when toggled.",
+      "Do not apply theme classes to `app-root` or a nested container unless every overlay and body-level component is also inside that scope.",
+      "Do not rely on old tokens such as `--text-color`, `--primary-color`, or `--surface-100` for invensys-ng library components.",
+      "Do not hard-code `node_modules` in Sass imports; use package imports such as `invensys-ng/src/lib/themes/theme.scss`.",
+      "Do not duplicate body background and text color rules if the bundled `define-theme()` body defaults are enabled.",
+      "Do not copy typography CSS into every caller. Include `typography-theme.define-typography()` or the bundled `invensys-theme.define-theme()` mixin.",
     ],
     sourceFiles: THEME_SOURCE_FILES,
   };
@@ -793,116 +910,137 @@ function buildThemingGuide() {
 
 function buildThemingGuideMarkdown(guide) {
   const lines = [
-    '# invensys-ng Theming Guide',
-    '',
+    "# invensys-ng Theming Guide",
+    "",
     guide.purpose,
-    '',
-    '## Mental Model',
+    "",
+    "## Mental Model",
     `- ${guide.model.scoping}`,
     `- ${guide.model.runtimeBehavior}`,
     `- Persist the layout theme value with \`${guide.model.persistenceKey}\` when the app needs reload-safe theme switching.`,
-    '',
-    '## Agent Instructions',
-    ...guide.instructions.map((instruction, index) => `${index + 1}. ${instruction}`),
-    '',
-    '## Required CSS Variables',
+    "",
+    "## Agent Instructions",
+    ...guide.instructions.map(
+      (instruction, index) => `${index + 1}. ${instruction}`,
+    ),
+    "",
+    "## Required CSS Variables",
   ];
 
   for (const group of guide.tokenGroups) {
-    lines.push('', `### ${group.name}`);
+    lines.push("", `### ${group.name}`);
     for (const { token, description } of group.tokens) {
       lines.push(`- \`${token}\`: ${description}`);
     }
   }
 
-  lines.push('', '### Scrollbar Helper Tokens');
+  lines.push("", "### Scrollbar Helper Tokens");
   for (const { token, description } of guide.scrollbarTokens) {
     lines.push(`- \`${token}\`: ${description}`);
   }
 
   lines.push(
-    '',
-    '## Starter Theme File',
-    'Create or adapt a global theme file with this full token contract:',
-    '```scss',
+    "",
+    "## Starter Theme File",
+    "Create or adapt a global theme file with this full token contract:",
+    "```scss",
     guide.snippets.themeScss,
-    '```',
-    '',
-    '## Import The Theme',
-    'For most caller projects, load the bundled theme from the global stylesheet so every Angular component, overlay, body, scrollbar, and typography element can inherit the tokens:',
-    '```scss',
+    "```",
+    "",
+    "## Import The Theme",
+    "For most caller projects, load the bundled theme from the global stylesheet so every Angular component, overlay, body, scrollbar, and typography element can inherit the tokens:",
+    "```scss",
     guide.snippets.stylesScss,
-    '```',
-    '',
-    '## Modular Imports',
-    'When the caller needs explicit control, import the theme pieces separately:',
-    '```scss',
+    "```",
+    "",
+    "## Modular Imports",
+    "When the caller needs explicit control, import the theme pieces separately:",
+    "```scss",
     guide.snippets.advancedStylesScss,
-    '```',
-    '',
-    '## Initialize Before Angular Paints',
-    'Set the initial body class in `index.html`. This mirrors the UI kit and the `i-layout` theme toggle:',
-    '```html',
+    "```",
+    "",
+    "## Initialize Before Angular Paints",
+    "Set the initial body class in `index.html`. This mirrors the UI kit and the `i-layout` theme toggle:",
+    "```html",
     guide.snippets.indexHtml,
-    '```',
-    '',
-    '## Runtime Toggle',
-    'Use this body-class pattern for custom theme toggles:',
-    '```ts',
+    "```",
+    "",
+    "## Runtime Toggle",
+    "Use this body-class pattern for custom theme toggles:",
+    "```ts",
     guide.snippets.runtimeToggle,
-    '```',
-    '',
-    '## Verification',
+    "```",
+    "",
+    "## Verification",
     ...guide.verification.map((item) => `- ${item}`),
-    '',
-    '## Avoid',
+    "",
+    "## Avoid",
     ...guide.avoid.map((item) => `- ${item}`),
-    '',
-    '## Source Files',
+    "",
+    "## Source Files",
     ...guide.sourceFiles.map((file) => `- \`${file}\``),
   );
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 function getThemingGuide(args = {}) {
   const guide = buildThemingGuide();
-  const format = args.format || 'markdown';
-  if (format === 'json') return guide;
+  const format = args.format || "markdown";
+  if (format === "json") return guide;
   return buildThemingGuideMarkdown(guide);
 }
 
 function buildTablesGuide() {
   return {
     component: {
-      selector: 'i-table',
-      importName: 'ITable',
-      importFrom: 'invensys-ng',
+      selector: "i-table",
+      importName: "ITable",
+      importFrom: "invensys-ng",
       sourceFiles: [
-        'projects/invensys-ng/src/lib/components/table/table.component.ts',
-        'projects/invensys-ng/src/lib/components/table/table.component.html',
-        'projects/ui-kit/src/app/components/tables/tables.component.ts',
-        'projects/ui-kit/src/app/components/tables/tables.component.html',
+        "projects/invensys-ng/src/lib/components/table/table.component.ts",
+        "projects/invensys-ng/src/lib/components/table/table.component.html",
+        "projects/ui-kit/src/app/components/tables/tables.component.ts",
+        "projects/ui-kit/src/app/components/tables/tables.component.html",
       ],
     },
-    purpose: 'Use this guide before implementing data grids, grouped rows, expandable row details, table actions, filtering, selection, downloads, or virtual scrolling with invensys-ng.',
+    purpose:
+      "Use this guide before implementing data grids, grouped rows, expandable row details, table actions, filtering, selection, downloads, or virtual scrolling with invensys-ng.",
     defaultPolicy: [
-      'Use `<i-table>` for tabular data. Do not create a custom HTML table when invensys-ng is available.',
-      'Import the standalone `ITable` component from `invensys-ng` and pass one `[grid]` object.',
-      'Represent table data with `GridData<TRow, TDetail>`: `columns`, `rows`, optional `actions`, and optional `details`.',
+      "Use `<i-table>` for tabular data. Do not create a custom HTML table when invensys-ng is available.",
+      "Import the standalone `ITable` component from `invensys-ng` and pass one `[grid]` object.",
+      "Represent table data with `GridData<TRow, TDetail>`: `columns`, `rows`, optional `actions`, and optional `details`.",
       'Virtual scrolling is the default choice for flat, non-expandable tables. Set `[virtualScroll]="true"` and provide a stable `[height]` unless the table is intentionally tiny or needs expandable details.',
-      'Grouped data must be implemented as expandable detail sub-tables with `GridData.details`. Do not flatten groups into fake header rows, colspans, nested arrays inside a cell, or a custom grouped table.',
-      'When using `details`, omit `[virtualScroll]` on the parent table. The component switches to the detail-expansion path so nested `<i-table>` rows can expand inline correctly.',
-      'Use `dataKey` for selection and stable row identity whenever rows have an id-like field.',
-      'Put row actions in `grid.actions`; each action owns its own `handler(row)`.',
+      "Grouped data must be implemented as expandable detail sub-tables with `GridData.details`. Do not flatten groups into fake header rows, colspans, nested arrays inside a cell, or a custom grouped table.",
+      "When using `details`, omit `[virtualScroll]` on the parent table. The component switches to the detail-expansion path so nested `<i-table>` rows can expand inline correctly.",
+      "Use `dataKey` for selection and stable row identity whenever rows have an id-like field.",
+      "Put row actions in `grid.actions`; each action owns its own `handler(row)`.",
     ],
     types: {
       TableColumn: {
-        required: ['field', 'header'],
-        optional: ['sortable', 'filterable', 'width', 'align', 'type', 'format', 'iconClass', 'severity', 'iconSize'],
-        columnTypes: ['text', 'number', 'date', 'boolean', 'currency', 'icon', 'list'],
+        required: ["field", "header"],
+        optional: [
+          "sortable",
+          "filterable",
+          "width",
+          "align",
+          "type",
+          "format",
+          "iconClass",
+          "severity",
+          "iconSize",
+        ],
+        columnTypes: [
+          "text",
+          "number",
+          "date",
+          "boolean",
+          "currency",
+          "icon",
+          "list",
+        ],
         notes: [
-          '`field` supports nested property paths such as `customer.name`.',
+          "`field` supports nested property paths such as `customer.name`.",
           '`type: "currency"` uses `format` as the currency code when provided.',
           '`type: "date"` can use formats such as `yyyy-MM-dd`.',
           '`type: "icon"` should use `iconClass` and optional `severity` fields or functions.',
@@ -910,51 +1048,109 @@ function buildTablesGuide() {
         ],
       },
       GridAction: {
-        required: ['id', 'handler'],
-        optional: ['icon', 'label', 'severity', 'disabled', 'tooltip', 'visible'],
+        required: ["id", "handler"],
+        optional: [
+          "icon",
+          "label",
+          "severity",
+          "disabled",
+          "tooltip",
+          "visible",
+        ],
         notes: [
-          '`handler` receives the row and performs the action directly.',
-          '`disabled`, `tooltip`, and `visible` may be static values or functions of the row.',
+          "`handler` receives the row and performs the action directly.",
+          "`disabled`, `tooltip`, and `visible` may be static values or functions of the row.",
         ],
       },
       GridDetails: {
-        required: ['columns', 'rows'],
-        optional: ['actions'],
+        required: ["columns", "rows"],
+        optional: ["actions"],
         notes: [
-          '`rows(parentRow)` returns the detail rows for a parent/group row.',
-          'Use this for grouped data: parent rows are group summaries, detail rows are the grouped records.',
+          "`rows(parentRow)` returns the detail rows for a parent/group row.",
+          "Use this for grouped data: parent rows are group summaries, detail rows are the grouped records.",
         ],
       },
       GridData: {
-        required: ['columns', 'rows'],
-        optional: ['actions', 'details'],
+        required: ["columns", "rows"],
+        optional: ["actions", "details"],
         notes: [
-          'This is the only data object passed to `[grid]`.',
-          'Do not pass separate columns/actions/groupedData inputs; the table API is grid-first.',
+          "This is the only data object passed to `[grid]`.",
+          "Do not pass separate columns/actions/groupedData inputs; the table API is grid-first.",
         ],
       },
     },
     inputs: [
-      { name: 'grid', type: 'GridData', default: '{ columns: [], rows: [] }', guidance: 'Always bind this.' },
-      { name: 'sortable', type: 'boolean', default: false, guidance: 'Enable when any column has `sortable: true`.' },
-      { name: 'filterable', type: 'boolean', default: false, guidance: 'Enables per-column filters for columns where `filterable !== false`.' },
-      { name: 'globalFilter', type: 'boolean', default: false, guidance: 'Shows the global search input.' },
-      { name: 'selectionMode', type: "'single' | 'multiple' | null", default: null, guidance: 'Use with `[(selection)]` and `dataKey`.' },
-      { name: 'dataKey', type: 'string', guidance: 'Use the stable id field, such as `id`.' },
-      { name: 'height', type: 'string', guidance: 'Required for virtual scroll; also constrains regular scroll containers.' },
-      { name: 'virtualScroll', type: 'boolean', default: false, guidance: 'Set true by default for flat tables; omit for expandable detail tables.' },
-      { name: 'virtualScrollItemSize', type: 'number', default: 48, guidance: 'Must match row height for correct CDK virtualization.' },
-      { name: 'downloadable', type: 'boolean', default: false, guidance: 'Enables export button.' },
+      {
+        name: "grid",
+        type: "GridData",
+        default: "{ columns: [], rows: [] }",
+        guidance: "Always bind this.",
+      },
+      {
+        name: "sortable",
+        type: "boolean",
+        default: false,
+        guidance: "Enable when any column has `sortable: true`.",
+      },
+      {
+        name: "filterable",
+        type: "boolean",
+        default: false,
+        guidance:
+          "Enables per-column filters for columns where `filterable !== false`.",
+      },
+      {
+        name: "globalFilter",
+        type: "boolean",
+        default: false,
+        guidance: "Shows the global search input.",
+      },
+      {
+        name: "selectionMode",
+        type: "'single' | 'multiple' | null",
+        default: null,
+        guidance: "Use with `[(selection)]` and `dataKey`.",
+      },
+      {
+        name: "dataKey",
+        type: "string",
+        guidance: "Use the stable id field, such as `id`.",
+      },
+      {
+        name: "height",
+        type: "string",
+        guidance:
+          "Required for virtual scroll; also constrains regular scroll containers.",
+      },
+      {
+        name: "virtualScroll",
+        type: "boolean",
+        default: false,
+        guidance:
+          "Set true by default for flat tables; omit for expandable detail tables.",
+      },
+      {
+        name: "virtualScrollItemSize",
+        type: "number",
+        default: 48,
+        guidance: "Must match row height for correct CDK virtualization.",
+      },
+      {
+        name: "downloadable",
+        type: "boolean",
+        default: false,
+        guidance: "Enables export button.",
+      },
     ],
     outputs: [
-      'onSort: SortEvent',
-      'onFilter: FilterEvent',
-      'selectionChange / onSelectionChange: any[]',
-      'onRowSelect: any',
-      'onRowUnselect: any',
-      'onRowExpand: any',
-      'onRowCollapse: any',
-      'onDownload: TableDownloadEvent',
+      "onSort: SortEvent",
+      "onFilter: FilterEvent",
+      "selectionChange / onSelectionChange: any[]",
+      "onRowSelect: any",
+      "onRowUnselect: any",
+      "onRowExpand: any",
+      "onRowCollapse: any",
+      "onDownload: TableDownloadEvent",
     ],
     snippets: {
       flatVirtualTableTs: `import { ITable, GridData, TableColumn } from 'invensys-ng';
@@ -1053,101 +1249,116 @@ grid: GridData<Product> = {
 };`,
     },
     avoid: [
-      'Do not use deprecated or imaginary inputs such as `[columns]`, `[rows]`, `[actions]`, `[groupedData]`, or `[rowGroupMode]`.',
-      'Do not build grouped rows by inserting category strings into the data array.',
-      'Do not render expandable details inside a cell with custom markup; use `GridData.details`.',
-      'Do not enable `[virtualScroll]` together with `details`; expandable nested rows require the component detail path.',
-      'Do not forget `[height]` when virtual scrolling is enabled.',
-      'Do not use index-only identity for selectable data; provide `dataKey`.',
+      "Do not use deprecated or imaginary inputs such as `[columns]`, `[rows]`, `[actions]`, `[groupedData]`, or `[rowGroupMode]`.",
+      "Do not build grouped rows by inserting category strings into the data array.",
+      "Do not render expandable details inside a cell with custom markup; use `GridData.details`.",
+      "Do not enable `[virtualScroll]` together with `details`; expandable nested rows require the component detail path.",
+      "Do not forget `[height]` when virtual scrolling is enabled.",
+      "Do not use index-only identity for selectable data; provide `dataKey`.",
     ],
     verification: [
-      'Confirm `ITable` is imported by the consuming standalone component.',
-      'Confirm the template has exactly one `[grid]` binding and no fake table API inputs.',
+      "Confirm `ITable` is imported by the consuming standalone component.",
+      "Confirm the template has exactly one `[grid]` binding and no fake table API inputs.",
       'For flat tables, confirm `[virtualScroll]="true"` and `[height]` are present by default.',
-      'For grouped data, confirm `grid.details.rows(parentRow)` returns the child records and `[virtualScroll]` is omitted.',
-      'Confirm action handlers live inside `GridAction.handler`.',
-      'Confirm sortable/filterable inputs are enabled when the column definitions request them.',
+      "For grouped data, confirm `grid.details.rows(parentRow)` returns the child records and `[virtualScroll]` is omitted.",
+      "Confirm action handlers live inside `GridAction.handler`.",
+      "Confirm sortable/filterable inputs are enabled when the column definitions request them.",
     ],
   };
 }
 
 function buildTablesGuideMarkdown(guide) {
   const lines = [
-    '# invensys-ng Tables Guide',
-    '',
+    "# invensys-ng Tables Guide",
+    "",
     guide.purpose,
-    '',
-    '## Component',
+    "",
+    "## Component",
     `Import \`${guide.component.importName}\` from \`${guide.component.importFrom}\`.`,
     `Selector: \`${guide.component.selector}\`.`,
-    '',
-    '## Agent Rules',
-    ...guide.defaultPolicy.map((instruction, index) => `${index + 1}. ${instruction}`),
-    '',
-    '## Types',
+    "",
+    "## Agent Rules",
+    ...guide.defaultPolicy.map(
+      (instruction, index) => `${index + 1}. ${instruction}`,
+    ),
+    "",
+    "## Types",
   ];
 
   for (const [name, typeInfo] of Object.entries(guide.types)) {
-    lines.push('', `### ${name}`);
-    lines.push(`- Required: ${typeInfo.required.map((item) => `\`${item}\``).join(', ')}`);
+    lines.push("", `### ${name}`);
+    lines.push(
+      `- Required: ${typeInfo.required.map((item) => `\`${item}\``).join(", ")}`,
+    );
     if (typeInfo.optional.length) {
-      lines.push(`- Optional: ${typeInfo.optional.map((item) => `\`${item}\``).join(', ')}`);
+      lines.push(
+        `- Optional: ${typeInfo.optional.map((item) => `\`${item}\``).join(", ")}`,
+      );
     }
     if (typeInfo.columnTypes) {
-      lines.push(`- Column types: ${typeInfo.columnTypes.map((item) => `\`${item}\``).join(', ')}`);
+      lines.push(
+        `- Column types: ${typeInfo.columnTypes.map((item) => `\`${item}\``).join(", ")}`,
+      );
     }
     for (const note of typeInfo.notes) lines.push(`- ${note}`);
   }
 
-  lines.push('', '## Inputs');
+  lines.push("", "## Inputs");
   for (const input of guide.inputs) {
-    const defaultValue = input.default !== undefined ? ` Default: \`${input.default}\`.` : '';
-    lines.push(`- \`${input.name}\`: ${input.type}.${defaultValue} ${input.guidance || ''}`.trim());
+    const defaultValue =
+      input.default !== undefined ? ` Default: \`${input.default}\`.` : "";
+    lines.push(
+      `- \`${input.name}\`: ${input.type}.${defaultValue} ${input.guidance || ""}`.trim(),
+    );
   }
 
-  lines.push('', '## Outputs', ...guide.outputs.map((output) => `- \`${output}\``));
+  lines.push(
+    "",
+    "## Outputs",
+    ...guide.outputs.map((output) => `- \`${output}\``),
+  );
 
   lines.push(
-    '',
-    '## Flat Table With Virtual Scroll',
-    '```ts',
+    "",
+    "## Flat Table With Virtual Scroll",
+    "```ts",
     guide.snippets.flatVirtualTableTs,
-    '```',
-    '```html',
+    "```",
+    "```html",
     guide.snippets.flatVirtualTableHtml,
-    '```',
-    '',
-    '## Grouped Data With Expandable Details',
-    'Grouped data uses parent summary rows plus `GridData.details`. This is the correct grouped-data implementation.',
-    '```ts',
+    "```",
+    "",
+    "## Grouped Data With Expandable Details",
+    "Grouped data uses parent summary rows plus `GridData.details`. This is the correct grouped-data implementation.",
+    "```ts",
     guide.snippets.groupedDetailsTs,
-    '```',
-    '```html',
+    "```",
+    "```html",
     guide.snippets.groupedDetailsHtml,
-    '```',
-    '',
-    '## Row Actions',
-    '```ts',
+    "```",
+    "",
+    "## Row Actions",
+    "```ts",
     guide.snippets.actionsTs,
-    '```',
-    '',
-    '## Avoid',
+    "```",
+    "",
+    "## Avoid",
     ...guide.avoid.map((item) => `- ${item}`),
-    '',
-    '## Verification',
+    "",
+    "## Verification",
     ...guide.verification.map((item) => `- ${item}`),
-    '',
-    '## Source Files',
+    "",
+    "## Source Files",
     ...guide.component.sourceFiles.map((file) => `- \`${file}\``),
   );
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 function getTablesGuide(args = {}) {
   const guide = buildTablesGuide();
-  const format = args.format || 'markdown';
-  if (format === 'json') return guide;
+  const format = args.format || "markdown";
+  if (format === "json") return guide;
   return buildTablesGuideMarkdown(guide);
 }
 
@@ -1161,91 +1372,99 @@ async function getOverview() {
     componentCount: catalog.componentCount,
     exportedComponentCount: catalog.exportedComponentCount,
     usage: [
-      'Import standalone components/directives from invensys-ng.',
-      'Use list_components to discover selectors and exported names.',
-      'Use get_component_usage for inputs, outputs, projected content slots, and UI-kit examples.',
-      'Use search_components when you know a behavior, input, output, or partial selector.',
-      'Use get_theming_guide before changing brand colors, light/dark mode, surfaces, borders, disabled states, or component theme tokens.',
-      'Use get_tables_guide before implementing tables, grouped data, expandable detail rows, table actions, or virtual scrolling.',
+      "Import standalone components/directives from invensys-ng.",
+      "Use list_components to discover selectors and exported names.",
+      "Use get_component_usage for inputs, outputs, projected content slots, and UI-kit examples.",
+      "Use search_components when you know a behavior, input, output, or partial selector.",
+      "Use get_theming_guide before changing brand colors, light/dark mode, surfaces, borders, disabled states, or component theme tokens.",
+      "Use get_tables_guide before implementing tables, grouped data, expandable detail rows, table actions, or virtual scrolling.",
     ],
   };
 }
 
 const tools = [
   {
-    name: 'list_components',
-    description: 'List every invensys-ng Angular component/directive known to the MCP catalog.',
+    name: "list_components",
+    description:
+      "List every invensys-ng Angular component/directive known to the MCP catalog.",
     inputSchema: {
-      type: 'object',
+      type: "object",
       properties: {
         includePrivate: {
-          type: 'boolean',
-          description: 'Include selector-bearing artifacts that are not exported from the public API.',
+          type: "boolean",
+          description:
+            "Include selector-bearing artifacts that are not exported from the public API.",
           default: false,
         },
       },
     },
   },
   {
-    name: 'get_component_usage',
-    description: 'Return usage guidance for one invensys-ng component/directive, including imports, selector, inputs, outputs, slots, source files, and examples from the UI kit.',
+    name: "get_component_usage",
+    description:
+      "Return usage guidance for one invensys-ng component/directive, including imports, selector, inputs, outputs, slots, source files, and examples from the UI kit.",
     inputSchema: {
-      type: 'object',
+      type: "object",
       properties: {
         component: {
-          type: 'string',
-          description: 'Selector, id, display name, or exported class name, such as i-button, button, or IButton.',
+          type: "string",
+          description:
+            "Selector, id, display name, or exported class name, such as i-button, button, or IButton.",
         },
         format: {
-          type: 'string',
-          enum: ['markdown', 'json'],
-          default: 'markdown',
+          type: "string",
+          enum: ["markdown", "json"],
+          default: "markdown",
         },
       },
-      required: ['component'],
+      required: ["component"],
     },
   },
   {
-    name: 'search_components',
-    description: 'Search invensys-ng components by selector, display name, exported class, inputs, outputs, and demo usage snippets.',
+    name: "search_components",
+    description:
+      "Search invensys-ng components by selector, display name, exported class, inputs, outputs, and demo usage snippets.",
     inputSchema: {
-      type: 'object',
+      type: "object",
       properties: {
-        query: { type: 'string' },
-        limit: { type: 'number', default: 10 },
+        query: { type: "string" },
+        limit: { type: "number", default: 10 },
       },
-      required: ['query'],
+      required: ["query"],
     },
   },
   {
-    name: 'get_library_overview',
-    description: 'Describe how AI agents should use the invensys-ng UI component library through this MCP server.',
-    inputSchema: { type: 'object', properties: {} },
+    name: "get_library_overview",
+    description:
+      "Describe how AI agents should use the invensys-ng UI component library through this MCP server.",
+    inputSchema: { type: "object", properties: {} },
   },
   {
-    name: 'get_theming_guide',
-    description: 'Return exact agent instructions for theming invensys-ng with the required light/dark CSS variable contract.',
+    name: "get_theming_guide",
+    description:
+      "Return exact agent instructions for theming invensys-ng with the required light/dark CSS variable contract.",
     inputSchema: {
-      type: 'object',
+      type: "object",
       properties: {
         format: {
-          type: 'string',
-          enum: ['markdown', 'json'],
-          default: 'markdown',
+          type: "string",
+          enum: ["markdown", "json"],
+          default: "markdown",
         },
       },
     },
   },
   {
-    name: 'get_tables_guide',
-    description: 'Return exact agent instructions for implementing invensys-ng tables, including GridData types, grouped expandable detail sub-tables, actions, and default virtual scrolling guidance.',
+    name: "get_tables_guide",
+    description:
+      "Return exact agent instructions for implementing invensys-ng tables, including GridData types, grouped expandable detail sub-tables, actions, and default virtual scrolling guidance.",
     inputSchema: {
-      type: 'object',
+      type: "object",
       properties: {
         format: {
-          type: 'string',
-          enum: ['markdown', 'json'],
-          default: 'markdown',
+          type: "string",
+          enum: ["markdown", "json"],
+          default: "markdown",
         },
       },
     },
@@ -1253,12 +1472,12 @@ const tools = [
 ];
 
 async function callTool(name, args) {
-  if (name === 'list_components') return listComponents(args);
-  if (name === 'get_component_usage') return getComponentUsage(args);
-  if (name === 'search_components') return searchComponents(args);
-  if (name === 'get_library_overview') return getOverview();
-  if (name === 'get_theming_guide') return getThemingGuide(args);
-  if (name === 'get_tables_guide') return getTablesGuide(args);
+  if (name === "list_components") return listComponents(args);
+  if (name === "get_component_usage") return getComponentUsage(args);
+  if (name === "search_components") return searchComponents(args);
+  if (name === "get_library_overview") return getOverview();
+  if (name === "get_theming_guide") return getThemingGuide(args);
+  if (name === "get_tables_guide") return getTablesGuide(args);
   throw new Error(`Unknown tool "${name}"`);
 }
 
@@ -1266,65 +1485,74 @@ async function listResources() {
   const catalog = await loadCatalog();
   return [
     {
-      uri: 'invensys-ng://catalog',
-      name: 'invensys-ng component catalog',
-      mimeType: 'application/json',
-      description: 'Full generated catalog of all selector-bearing components and directives.',
+      uri: "invensys-ng://catalog",
+      name: "invensys-ng component catalog",
+      mimeType: "application/json",
+      description:
+        "Full generated catalog of all selector-bearing components and directives.",
     },
     {
-      uri: 'invensys-ng://overview',
-      name: 'invensys-ng overview',
-      mimeType: 'application/json',
-      description: 'Short guidance for agents using the component library.',
+      uri: "invensys-ng://overview",
+      name: "invensys-ng overview",
+      mimeType: "application/json",
+      description: "Short guidance for agents using the component library.",
     },
     {
-      uri: 'invensys-ng://guides/tables',
-      name: 'invensys-ng tables guide',
-      mimeType: 'text/markdown',
-      description: 'Exact table implementation guidance for agents, including GridData, expandable details, and virtual scrolling.',
+      uri: "invensys-ng://guides/tables",
+      name: "invensys-ng tables guide",
+      mimeType: "text/markdown",
+      description:
+        "Exact table implementation guidance for agents, including GridData, expandable details, and virtual scrolling.",
     },
     ...catalog.components.map((component) => ({
       uri: `invensys-ng://component/${component.id}`,
       name: component.displayName,
-      mimeType: 'text/markdown',
+      mimeType: "text/markdown",
       description: `${component.selector} usage guide`,
     })),
   ];
 }
 
 async function readResource(uri) {
-  if (uri === 'invensys-ng://catalog') {
+  if (uri === "invensys-ng://catalog") {
     return JSON.stringify(await loadCatalog(), null, 2);
   }
-  if (uri === 'invensys-ng://overview') {
+  if (uri === "invensys-ng://overview") {
     return JSON.stringify(await getOverview(), null, 2);
   }
-  if (uri === 'invensys-ng://guides/tables') {
-    return getTablesGuide({ format: 'markdown' });
+  if (uri === "invensys-ng://guides/tables") {
+    return getTablesGuide({ format: "markdown" });
   }
   const componentMatch = uri.match(/^invensys-ng:\/\/component\/(.+)$/);
   if (componentMatch) {
-    return getComponentUsage({ component: componentMatch[1], format: 'markdown' });
+    return getComponentUsage({
+      component: componentMatch[1],
+      format: "markdown",
+    });
   }
   throw new Error(`Unknown resource "${uri}"`);
 }
 
 function getResourceMimeType(uri) {
-  if (uri?.startsWith('invensys-ng://component/') || uri === 'invensys-ng://guides/tables') {
-    return 'text/markdown';
+  if (
+    uri?.startsWith("invensys-ng://component/") ||
+    uri === "invensys-ng://guides/tables"
+  ) {
+    return "text/markdown";
   }
-  return 'application/json';
+  return "application/json";
 }
 
 function listPrompts() {
   return [
     {
-      name: 'use_invensys_ng_component',
-      description: 'Guide an agent to choose and implement invensys-ng components correctly.',
+      name: "use_invensys_ng_component",
+      description:
+        "Guide an agent to choose and implement invensys-ng components correctly.",
       arguments: [
         {
-          name: 'goal',
-          description: 'The UI task or component behavior to build.',
+          name: "goal",
+          description: "The UI task or component behavior to build.",
           required: true,
         },
       ],
@@ -1333,24 +1561,25 @@ function listPrompts() {
 }
 
 function getPrompt(name, args = {}) {
-  if (name !== 'use_invensys_ng_component') {
+  if (name !== "use_invensys_ng_component") {
     throw new Error(`Unknown prompt "${name}"`);
   }
 
   return {
-    description: 'Use invensys-ng components with source-backed usage guidance.',
+    description:
+      "Use invensys-ng components with source-backed usage guidance.",
     messages: [
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: [
-            `Goal: ${args.goal || 'Build an Angular UI using invensys-ng.'}`,
-            '',
-            'First call list_components or search_components to choose the right selector.',
-            'Then call get_component_usage for every selected component.',
-            'Import standalone components from invensys-ng and follow the documented inputs, outputs, slots, and examples.',
-          ].join('\n'),
+            `Goal: ${args.goal || "Build an Angular UI using invensys-ng."}`,
+            "",
+            "First call list_components or search_components to choose the right selector.",
+            "Then call get_component_usage for every selected component.",
+            "Import standalone components from invensys-ng and follow the documented inputs, outputs, slots, and examples.",
+          ].join("\n"),
         },
       },
     ],
@@ -1358,12 +1587,12 @@ function getPrompt(name, args = {}) {
 }
 
 function jsonRpcResult(id, result) {
-  return { jsonrpc: '2.0', id, result };
+  return { jsonrpc: "2.0", id, result };
 }
 
 function jsonRpcError(id, error) {
   return {
-    jsonrpc: '2.0',
+    jsonrpc: "2.0",
     id,
     error: {
       code: -32000,
@@ -1373,14 +1602,14 @@ function jsonRpcError(id, error) {
 }
 
 async function handleRequest(message) {
-  if (!message || typeof message !== 'object') {
-    return jsonRpcError(null, new Error('Invalid JSON-RPC message.'));
+  if (!message || typeof message !== "object") {
+    return jsonRpcError(null, new Error("Invalid JSON-RPC message."));
   }
 
   const { id, method, params = {} } = message;
 
   try {
-    if (method === 'initialize') {
+    if (method === "initialize") {
       return jsonRpcResult(id, {
         protocolVersion: PROTOCOL_VERSION,
         capabilities: {
@@ -1389,35 +1618,41 @@ async function handleRequest(message) {
           prompts: {},
         },
         serverInfo: {
-          name: 'invensys-ng-mcp',
-          version: '1.0.0',
+          name: "invensys-ng-mcp",
+          version: "1.0.0",
         },
       });
     }
 
-    if (method === 'notifications/initialized') return undefined;
-    if (method === 'ping') return jsonRpcResult(id, {});
-    if (method === 'tools/list') return jsonRpcResult(id, { tools });
-    if (method === 'tools/call') {
+    if (method === "notifications/initialized") return undefined;
+    if (method === "ping") return jsonRpcResult(id, {});
+    if (method === "tools/list") return jsonRpcResult(id, { tools });
+    if (method === "tools/call") {
       const result = await callTool(params.name, params.arguments || {});
-      const text = typeof result === 'string' ? result : JSON.stringify(result, null, 2);
+      const text =
+        typeof result === "string" ? result : JSON.stringify(result, null, 2);
       return jsonRpcResult(id, {
-        content: [{ type: 'text', text }],
+        content: [{ type: "text", text }],
       });
     }
-    if (method === 'resources/list') return jsonRpcResult(id, { resources: await listResources() });
-    if (method === 'resources/read') {
+    if (method === "resources/list")
+      return jsonRpcResult(id, { resources: await listResources() });
+    if (method === "resources/read") {
       const text = await readResource(params.uri);
       return jsonRpcResult(id, {
-        contents: [{
-          uri: params.uri,
-          mimeType: getResourceMimeType(params.uri),
-          text,
-        }],
+        contents: [
+          {
+            uri: params.uri,
+            mimeType: getResourceMimeType(params.uri),
+            text,
+          },
+        ],
       });
     }
-    if (method === 'prompts/list') return jsonRpcResult(id, { prompts: listPrompts() });
-    if (method === 'prompts/get') return jsonRpcResult(id, getPrompt(params.name, params.arguments || {}));
+    if (method === "prompts/list")
+      return jsonRpcResult(id, { prompts: listPrompts() });
+    if (method === "prompts/get")
+      return jsonRpcResult(id, getPrompt(params.name, params.arguments || {}));
 
     return jsonRpcError(id, new Error(`Unsupported method "${method}"`));
   } catch (error) {
@@ -1437,17 +1672,17 @@ async function handleJsonRpcPayload(payload) {
 async function readRequestBody(request) {
   const chunks = [];
   for await (const chunk of request) chunks.push(chunk);
-  return Buffer.concat(chunks).toString('utf8');
+  return Buffer.concat(chunks).toString("utf8");
 }
 
 function writeJson(response, statusCode, payload) {
   const body = JSON.stringify(payload);
   response.writeHead(statusCode, {
-    'content-type': 'application/json; charset=utf-8',
-    'content-length': textEncoder.encode(body).length,
-    'access-control-allow-origin': '*',
-    'access-control-allow-headers': 'content-type, mcp-session-id',
-    'access-control-allow-methods': 'GET, POST, OPTIONS',
+    "content-type": "application/json; charset=utf-8",
+    "content-length": textEncoder.encode(body).length,
+    "access-control-allow-origin": "*",
+    "access-control-allow-headers": "content-type, mcp-session-id",
+    "access-control-allow-methods": "GET, POST, OPTIONS",
   });
   response.end(body);
 }
@@ -1455,28 +1690,34 @@ function writeJson(response, statusCode, payload) {
 function startHttpServer({ host, port }) {
   const server = createServer(async (request, response) => {
     try {
-      if (request.method === 'OPTIONS') {
+      if (request.method === "OPTIONS") {
         response.writeHead(204, {
-          'access-control-allow-origin': '*',
-          'access-control-allow-headers': 'content-type, mcp-session-id',
-          'access-control-allow-methods': 'GET, POST, OPTIONS',
+          "access-control-allow-origin": "*",
+          "access-control-allow-headers": "content-type, mcp-session-id",
+          "access-control-allow-methods": "GET, POST, OPTIONS",
         });
         response.end();
         return;
       }
 
-      if (request.method === 'GET' && request.url === '/health') {
-        writeJson(response, 200, { ok: true, server: 'invensys-ng-mcp' });
+      if (request.method === "GET" && request.url === "/health") {
+        writeJson(response, 200, { ok: true, server: "invensys-ng-mcp" });
         return;
       }
 
-      if (request.method === 'GET' && request.url === '/components') {
-        writeJson(response, 200, await listComponents({ includePrivate: true }));
+      if (request.method === "GET" && request.url === "/components") {
+        writeJson(
+          response,
+          200,
+          await listComponents({ includePrivate: true }),
+        );
         return;
       }
 
-      if (request.method !== 'POST' || request.url !== '/mcp') {
-        writeJson(response, 404, { error: 'Use POST /mcp for JSON-RPC MCP requests.' });
+      if (request.method !== "POST" || request.url !== "/mcp") {
+        writeJson(response, 404, {
+          error: "Use POST /mcp for JSON-RPC MCP requests.",
+        });
         return;
       }
 
@@ -1484,7 +1725,7 @@ function startHttpServer({ host, port }) {
       const payload = JSON.parse(body);
       const result = await handleJsonRpcPayload(payload);
       if (result === undefined) {
-        response.writeHead(202, { 'access-control-allow-origin': '*' });
+        response.writeHead(202, { "access-control-allow-origin": "*" });
         response.end();
         return;
       }
@@ -1495,19 +1736,21 @@ function startHttpServer({ host, port }) {
   });
 
   server.listen(port, host, () => {
-    process.stderr.write(`invensys-ng MCP server listening on http://${host}:${port}/mcp\n`);
+    process.stderr.write(
+      `invensys-ng MCP server listening on http://${host}:${port}/mcp\n`,
+    );
   });
 
   return server;
 }
 
 function startStdioServer() {
-  let buffer = '';
+  let buffer = "";
 
-  process.stdin.setEncoding('utf8');
-  process.stdin.on('data', async (chunk) => {
+  process.stdin.setEncoding("utf8");
+  process.stdin.on("data", async (chunk) => {
     buffer += chunk;
-    let boundary = buffer.indexOf('\n');
+    let boundary = buffer.indexOf("\n");
 
     while (boundary !== -1) {
       const line = buffer.slice(0, boundary).trim();
@@ -1516,22 +1759,27 @@ function startStdioServer() {
       if (line) {
         try {
           const response = await handleJsonRpcPayload(JSON.parse(line));
-          if (response !== undefined) process.stdout.write(`${JSON.stringify(response)}\n`);
+          if (response !== undefined)
+            process.stdout.write(`${JSON.stringify(response)}\n`);
         } catch (error) {
-          process.stdout.write(`${JSON.stringify(jsonRpcError(null, error))}\n`);
+          process.stdout.write(
+            `${JSON.stringify(jsonRpcError(null, error))}\n`,
+          );
         }
       }
 
-      boundary = buffer.indexOf('\n');
+      boundary = buffer.indexOf("\n");
     }
   });
 }
 
-const isMain = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
+const isMain =
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
 
 if (isMain) {
   const args = parseArgs(process.argv.slice(2));
-  if (args.mode === 'http') {
+  if (args.mode === "http") {
     startHttpServer(args);
   } else {
     startStdioServer();

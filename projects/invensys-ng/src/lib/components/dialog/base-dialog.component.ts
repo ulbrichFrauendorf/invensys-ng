@@ -30,7 +30,7 @@ export abstract class IDialogBase implements OnInit, AfterViewInit {
       setTimeout(() => {
         if (!this.dialogRef) {
           console.warn(
-            'BaseDialogComponent: dialogRef is not available. Dialog may not close properly.'
+            'BaseDialogComponent: dialogRef is not available. Dialog may not close properly.',
           );
         }
       }, 100);
@@ -42,7 +42,7 @@ export abstract class IDialogBase implements OnInit, AfterViewInit {
       this.dialogRef.close(result);
     } else {
       console.error(
-        'BaseDialogComponent: Cannot close dialog - dialogRef is not available'
+        'BaseDialogComponent: Cannot close dialog - dialogRef is not available',
       );
     }
   }

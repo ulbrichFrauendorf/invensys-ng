@@ -56,7 +56,7 @@ describe('IAccordion', () => {
       component.header = 'My Accordion Title';
       fixture.detectChanges();
       const titleElement = fixture.debugElement.query(
-        By.css('.i-accordion-title')
+        By.css('.i-accordion-title'),
       );
       expect(titleElement.nativeElement.textContent).toBe('My Accordion Title');
     });
@@ -65,7 +65,7 @@ describe('IAccordion', () => {
       component.icon = 'pi pi-info-circle';
       fixture.detectChanges();
       const iconElement = fixture.debugElement.query(
-        By.css('.i-accordion-icon')
+        By.css('.i-accordion-icon'),
       );
       expect(iconElement).toBeTruthy();
       expect(iconElement.nativeElement.classList).toContain('pi-info-circle');
@@ -74,7 +74,7 @@ describe('IAccordion', () => {
     it('should not display icon when not provided', () => {
       fixture.detectChanges();
       const iconElement = fixture.debugElement.query(
-        By.css('.i-accordion-icon')
+        By.css('.i-accordion-icon'),
       );
       expect(iconElement).toBeFalsy();
     });
@@ -144,7 +144,7 @@ describe('IAccordion', () => {
       component.expanded = false;
       fixture.detectChanges();
       const contentWrapper = fixture.debugElement.query(
-        By.css('.i-accordion-content-wrapper')
+        By.css('.i-accordion-content-wrapper'),
       );
       expect(contentWrapper.nativeElement.classList).toContain('collapsed');
     });
@@ -153,7 +153,7 @@ describe('IAccordion', () => {
       component.expanded = true;
       fixture.detectChanges();
       const contentWrapper = fixture.debugElement.query(
-        By.css('.i-accordion-content-wrapper')
+        By.css('.i-accordion-content-wrapper'),
       );
       expect(contentWrapper.nativeElement.classList).not.toContain('collapsed');
     });

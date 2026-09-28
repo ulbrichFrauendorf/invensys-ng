@@ -90,6 +90,7 @@ ng help
 ```
 
 Or visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
 # Invensys NG
 
 ## Production Docker Deployment
@@ -201,7 +202,7 @@ curl http://127.0.0.1:8083/health
 Expected response:
 
 ```json
-{"ok":true,"server":"invensys-ng-mcp"}
+{ "ok": true, "server": "invensys-ng-mcp" }
 ```
 
 ### Host Nginx Configuration

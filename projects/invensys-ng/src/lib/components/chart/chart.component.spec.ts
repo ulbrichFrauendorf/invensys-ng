@@ -196,9 +196,7 @@ describe('IChart', () => {
       const chart: IChartData = {
         chartType: 'bar',
         labels: ['A'],
-        dataSets: [
-          { label: 'Test', data: [1], backgroundColors: ['#ff0000'] },
-        ],
+        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#ff0000'] }],
       };
       component.charts = [chart];
       fixture.detectChanges();
@@ -273,7 +271,11 @@ describe('IChart', () => {
         chartType: 'bar',
         labels: ['A'],
         dataSets: [
-          { label: 'Test', data: [1], backgroundColors: ['rgba(255, 0, 0, 0.5)'] },
+          {
+            label: 'Test',
+            data: [1],
+            backgroundColors: ['rgba(255, 0, 0, 0.5)'],
+          },
         ],
       };
       component.charts = [chart];
@@ -310,13 +312,24 @@ describe('IChart', () => {
 
   describe('getChartHeightStyle', () => {
     it('should return display height when set', () => {
-      const display = { id: 'test-1', type: 'bar' as const, data: {}, options: {}, height: '30rem' };
+      const display = {
+        id: 'test-1',
+        type: 'bar' as const,
+        data: {},
+        options: {},
+        height: '30rem',
+      };
       expect(component.getChartHeightStyle(display)).toBe('30rem');
     });
 
     it('should return component height when display height is not set', () => {
       component.height = '25rem';
-      const display = { id: 'test-2', type: 'bar' as const, data: {}, options: {} };
+      const display = {
+        id: 'test-2',
+        type: 'bar' as const,
+        data: {},
+        options: {},
+      };
       expect(component.getChartHeightStyle(display)).toBe('25rem');
     });
   });

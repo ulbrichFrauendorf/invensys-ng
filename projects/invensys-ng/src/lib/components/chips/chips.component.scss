@@ -4,7 +4,9 @@
 
 @include theme.i-chips-theme();
 
-$chips-transition: border-color 0.15s ease, box-shadow 0.15s ease;
+$chips-transition:
+  border-color 0.15s ease,
+  box-shadow 0.15s ease;
 $chip-row-height: 24px;
 $chip-vertical-padding: math.max(
   0px,

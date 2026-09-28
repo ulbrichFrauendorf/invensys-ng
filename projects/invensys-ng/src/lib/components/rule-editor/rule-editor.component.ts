@@ -7,7 +7,11 @@ import { NoContentComponent } from '../no-content/no-content.component';
 
 export type RuleFieldType = 'text' | 'number' | 'date' | 'boolean';
 /** Fields presented by a rule editor; keys must be unique. */
-export interface RuleEditorField { key: string; label: string; type: RuleFieldType; }
+export interface RuleEditorField {
+  key: string;
+  label: string;
+  type: RuleFieldType;
+}
 /** Operator semantics belong to the consumer. Keys must be unique. */
 export interface RuleEditorOperator {
   key: string;
@@ -18,7 +22,11 @@ export interface RuleEditorOperator {
   fieldTypes?: RuleFieldType[];
 }
 /** UI rule value. Numeric/date/boolean values are represented as strings. */
-export interface EditorRule { fieldKey: string; operator: string; value?: string; }
+export interface EditorRule {
+  fieldKey: string;
+  operator: string;
+  value?: string;
+}
 
 /**
  * Controlled field/operator/value rows. Can also edit sorting rules by supplying
@@ -56,43 +64,97 @@ export class IRuleEditor {
   @Input() disabled = false;
   /** Immutable replacement emitted after a user action. */
   @Output() rulesChange = new EventEmitter<EditorRule[]>();
-  readonly booleanOptions = [{ key: 'true', label: 'True' }, { key: 'false', label: 'False' }];
+  readonly booleanOptions = [
+    { key: 'true', label: 'True' },
+    { key: 'false', label: 'False' },
+  ];
 
-  field(rule: EditorRule): RuleEditorField | null { return this.fields.find(field => field.key === rule.fieldKey) ?? null; }
-  operator(rule: EditorRule): RuleEditorOperator | null { return this.operators.find(operator => operator.key === rule.operator) ?? null; }
-  booleanValue(rule: EditorRule): { key: string; label: string } | null { return this.booleanOptions.find(option => option.key === rule.value) ?? null; }
+  field(rule: EditorRule): RuleEditorField | null {
+    return this.fields.find((field) => field.key === rule.fieldKey) ?? null;
+  }
+  operator(rule: EditorRule): RuleEditorOperator | null {
+    return (
+      this.operators.find((operator) => operator.key === rule.operator) ?? null
+    );
+  }
+  booleanValue(rule: EditorRule): { key: string; label: string } | null {
+    return (
+      this.booleanOptions.find((option) => option.key === rule.value) ?? null
+    );
+  }
 
   operatorsFor(field: RuleEditorField | null): RuleEditorOperator[] {
-    return field ? this.operators.filter(operator => !operator.fieldTypes || operator.fieldTypes.includes(field.type)) : [];
+    return field
+      ? this.operators.filter(
+          (operator) =>
+            !operator.fieldTypes || operator.fieldTypes.includes(field.type),
+        )
+      : [];
   }
 
   get canAdd(): boolean {
-    return !this.readonly && !this.disabled && this.fields.some(field => this.operatorsFor(field).length > 0);
+    return (
+      !this.readonly &&
+      !this.disabled &&
+      this.fields.some((field) => this.operatorsFor(field).length > 0)
+    );
   }
 
   add(): void {
     if (!this.canAdd) return;
-    const field = this.fields.find(field => this.operatorsFor(field).length > 0)!;
-    this.rulesChange.emit([...this.rules, { fieldKey: field.key, operator: this.operatorsFor(field)[0].key, value: '' }]);
+    const field = this.fields.find(
+      (field) => this.operatorsFor(field).length > 0,
+    )!;
+    this.rulesChange.emit([
+      ...this.rules,
+      {
+        fieldKey: field.key,
+        operator: this.operatorsFor(field)[0].key,
+        value: '',
+      },
+    ]);
   }
 
   changeField(index: number, field: RuleEditorField | null): void {
     if (!field) return;
-    this.update(index, { fieldKey: field.key, operator: this.operatorsFor(field)[0]?.key ?? '', value: '' });
+    this.update(index, {
+      fieldKey: field.key,
+      operator: this.operatorsFor(field)[0]?.key ?? '',
+      value: '',
+    });
   }
 
   changeOperator(index: number, operator: RuleEditorOperator | null): void {
     if (!operator) return;
-    this.update(index, { operator: operator.key, value: operator.requiresValue === false ? '' : this.rules[index]?.value });
+    this.update(index, {
+      operator: operator.key,
+      value: operator.requiresValue === false ? '' : this.rules[index]?.value,
+    });
   }
 
   update(index: number, changes: Partial<EditorRule>): void {
-    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
-    this.rulesChange.emit(this.rules.map((rule, i) => i === index ? { ...rule, ...changes } : rule));
+    if (
+      this.readonly ||
+      this.disabled ||
+      index < 0 ||
+      index >= this.rules.length
+    )
+      return;
+    this.rulesChange.emit(
+      this.rules.map((rule, i) =>
+        i === index ? { ...rule, ...changes } : rule,
+      ),
+    );
   }
 
   remove(index: number): void {
-    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
+    if (
+      this.readonly ||
+      this.disabled ||
+      index < 0 ||
+      index >= this.rules.length
+    )
+      return;
     this.rulesChange.emit(this.rules.filter((_, i) => i !== index));
   }
 }

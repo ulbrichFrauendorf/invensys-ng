@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-stepper-theme() {
   .i-stepper {
@@ -10,7 +10,11 @@
 
       &:hover:not(:disabled) {
         background: colors.$color-surface-hover;
-        border-color: color-mix(in srgb, colors.$color-primary 35%, colors.$color-border);
+        border-color: color-mix(
+          in srgb,
+          colors.$color-primary 35%,
+          colors.$color-border
+        );
         transform: translateY(-1px);
       }
 
@@ -56,13 +60,22 @@
     }
 
     &__item--active .i-stepper__trigger {
-      border-color: color-mix(in srgb, colors.$color-primary 55%, colors.$color-border);
-      box-shadow: 0 6px 18px color-mix(in srgb, colors.$color-primary 12%, transparent);
+      border-color: color-mix(
+        in srgb,
+        colors.$color-primary 55%,
+        colors.$color-border
+      );
+      box-shadow: 0 6px 18px
+        color-mix(in srgb, colors.$color-primary 12%, transparent);
     }
 
     &__item--active .i-stepper__indicator {
       border-color: color-mix(in srgb, colors.$color-primary 35%, transparent);
-      background: color-mix(in srgb, colors.$color-primary 10%, colors.$color-surface-card);
+      background: color-mix(
+        in srgb,
+        colors.$color-primary 10%,
+        colors.$color-surface-card
+      );
       color: colors.$color-primary;
     }
 
@@ -79,7 +92,11 @@
     &__item--completed {
       .i-stepper__indicator {
         border-color: colors.$color-success;
-        background: color-mix(in srgb, colors.$color-success 10%, colors.$color-surface-card);
+        background: color-mix(
+          in srgb,
+          colors.$color-success 10%,
+          colors.$color-surface-card
+        );
         color: colors.$color-success;
       }
 

@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-
 export type TooltipPosition = 'above' | 'below' | 'left' | 'right';
 
 @Component({

@@ -235,13 +235,11 @@ export const appConfig: ApplicationConfig = {
     },
     {
       title: 'Router Integration',
-      description:
-        'Full Angular router support with active state highlighting',
+      description: 'Full Angular router support with active state highlighting',
     },
     {
       title: 'Customizable Topbar',
-      description:
-        'Add custom actions to the top-right section via ng-content',
+      description: 'Add custom actions to the top-right section via ng-content',
     },
     {
       title: 'Nested Menus',

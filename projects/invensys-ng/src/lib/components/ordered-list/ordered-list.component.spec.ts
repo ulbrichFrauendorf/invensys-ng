@@ -13,11 +13,15 @@ describe('IOrderedList', () => {
     expect(changed).toHaveBeenCalledWith(['B', 'A']);
     expect(original).toEqual(['A', 'B']);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[role="status"]').textContent).toContain('A moved to position 2');
+    expect(
+      fixture.nativeElement.querySelector('[role="status"]').textContent,
+    ).toContain('A moved to position 2');
   });
 
   it('blocks out-of-range and readonly actions', () => {
-    const component = TestBed.createComponent(IOrderedList<string>).componentInstance;
+    const component = TestBed.createComponent(
+      IOrderedList<string>,
+    ).componentInstance;
     component.items = ['A'];
     const changed = jasmine.createSpy('changed');
     component.itemsChange.subscribe(changed);

@@ -2,24 +2,21 @@
   <header class="demo-header">
     <h1>Tag Component</h1>
     <p>
-      Compact badges for status indicators, labels, and categorisation.
-      Supports all severity colours, optional icons, pill shape, and three sizes.
+      Compact badges for status indicators, labels, and categorisation. Supports
+      all severity colours, optional icons, pill shape, and three sizes.
     </p>
   </header>
 
   <div class="cards-container">
     <!-- Basic Severities -->
-    <app-demo-card
-      [title]="'Severities'"
-      [sourceCode]="codeExamples.basic"
-    >
+    <app-demo-card [title]="'Severities'" [sourceCode]="codeExamples.basic">
       <div class="tag-row">
         <i-tag value="Default" />
         @for (s of severities; track s) {
-        <i-tag
-          [value]="s.charAt(0).toUpperCase() + s.slice(1)"
-          [severity]="s"
-        />
+          <i-tag
+            [value]="s.charAt(0).toUpperCase() + s.slice(1)"
+            [severity]="s"
+          />
         }
       </div>
     </app-demo-card>
@@ -32,37 +29,31 @@
       <div class="tag-row">
         <i-tag value="Default" [rounded]="true" />
         @for (tag of roundedExamples; track tag.value) {
-        <i-tag
-          [value]="tag.value"
-          [severity]="tag.severity"
-          [rounded]="true"
-        />
+          <i-tag
+            [value]="tag.value"
+            [severity]="tag.severity"
+            [rounded]="true"
+          />
         }
       </div>
     </app-demo-card>
 
     <!-- With Icons -->
-    <app-demo-card
-      [title]="'With Icons'"
-      [sourceCode]="codeExamples.withIcon"
-    >
+    <app-demo-card [title]="'With Icons'" [sourceCode]="codeExamples.withIcon">
       <div class="tag-row">
         @for (tag of iconExamples; track tag.value) {
-        <i-tag
-          [value]="tag.value"
-          [severity]="tag.severity"
-          [icon]="tag.icon"
-          [rounded]="true"
-        />
+          <i-tag
+            [value]="tag.value"
+            [severity]="tag.severity"
+            [icon]="tag.icon"
+            [rounded]="true"
+          />
         }
       </div>
     </app-demo-card>
 
     <!-- Sizes -->
-    <app-demo-card
-      [title]="'Sizes'"
-      [sourceCode]="codeExamples.sizes"
-    >
+    <app-demo-card [title]="'Sizes'" [sourceCode]="codeExamples.sizes">
       <div class="tag-row tag-row--align-center">
         <i-tag value="Small" severity="primary" size="sm" />
         <i-tag value="Medium" severity="primary" />
@@ -98,11 +89,21 @@
         </div>
         <div class="usage-row">
           <span class="usage-label">Feature Flag</span>
-          <i-tag value="Beta" severity="secondary" icon="pi pi-tag" [rounded]="true" />
+          <i-tag
+            value="Beta"
+            severity="secondary"
+            icon="pi pi-tag"
+            [rounded]="true"
+          />
         </div>
         <div class="usage-row">
           <span class="usage-label">Form State</span>
-          <i-tag value="Saved" severity="success" icon="pi pi-check" [rounded]="true" />
+          <i-tag
+            value="Saved"
+            severity="success"
+            icon="pi pi-check"
+            [rounded]="true"
+          />
         </div>
       </div>
     </app-demo-card>

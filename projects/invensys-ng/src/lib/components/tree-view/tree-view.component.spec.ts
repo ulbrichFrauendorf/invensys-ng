@@ -281,14 +281,14 @@ describe('ITreeView', () => {
       component.onSelectAllChange();
 
       const allNodesCount = (component as any).flattenNodes(
-        component.filteredValue
+        component.filteredValue,
       ).length;
       expect((component.selection as ITreeNode[]).length).toBe(allNodesCount);
     });
 
     it('should deselect all nodes', () => {
       component.selection = (component as any).flattenNodes(
-        component.filteredValue
+        component.filteredValue,
       );
       component.selectAllChecked = false;
       component.onSelectAllChange();

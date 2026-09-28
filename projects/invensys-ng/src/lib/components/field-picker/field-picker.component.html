@@ -1,6 +1,13 @@
 <div class="i-field-picker" role="group" [attr.aria-label]="ariaLabel">
-  <i-input-text [label]="searchLabel" icon="pi pi-search" [fluid]="true" [disabled]="disabled"
-    [ngModel]="search" (ngModelChange)="search = $event ?? ''" [ngModelOptions]="{ standalone: true }" />
+  <i-input-text
+    [label]="searchLabel"
+    icon="pi pi-search"
+    [fluid]="true"
+    [disabled]="disabled"
+    [ngModel]="search"
+    (ngModelChange)="search = $event ?? ''"
+    [ngModelOptions]="{ standalone: true }"
+  />
   <div class="i-field-picker__catalog">
     @for (group of groups; track group.name; let groupIndex = $index) {
       <section [attr.aria-labelledby]="componentId + '-group-' + groupIndex">
@@ -10,12 +17,21 @@
         </header>
         @for (option of group.options; track option.key) {
           <div class="i-field-picker__option">
-            <i-checkbox [label]="option.label" [checked]="value.includes(option.key)" [readonly]="readonly"
-              [disabled]="disabled || !!option.disabled" (onChange)="select(option, $event)" />
-            @if (option.description) { <small>{{ option.description }}</small> }
+            <i-checkbox
+              [label]="option.label"
+              [checked]="value.includes(option.key)"
+              [readonly]="readonly"
+              [disabled]="disabled || !!option.disabled"
+              (onChange)="select(option, $event)"
+            />
+            @if (option.description) {
+              <small>{{ option.description }}</small>
+            }
           </div>
         }
       </section>
-    } @empty { <i-no-content [message]="emptyMessage" /> }
+    } @empty {
+      <i-no-content [message]="emptyMessage" />
+    }
   </div>
 </div>

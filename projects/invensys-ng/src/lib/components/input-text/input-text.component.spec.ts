@@ -228,7 +228,9 @@ describe('IInputText', () => {
         control: {
           invalid: true,
           dirty: true,
-          errors: { pattern: { requiredPattern: '^[0-9]+$', actualValue: 'abc' } },
+          errors: {
+            pattern: { requiredPattern: '^[0-9]+$', actualValue: 'abc' },
+          },
         },
       } as any;
 

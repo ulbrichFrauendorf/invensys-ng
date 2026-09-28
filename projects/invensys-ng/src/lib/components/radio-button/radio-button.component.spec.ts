@@ -170,7 +170,7 @@ describe('IRadioButton', () => {
       hostFixture.detectChanges();
 
       const debugEls = hostFixture.debugElement.queryAll(
-        By.directive(IRadioButton)
+        By.directive(IRadioButton),
       );
       radioButtons = debugEls.map((de) => de.componentInstance as IRadioButton);
     });
@@ -221,7 +221,7 @@ describe('IRadioButton', () => {
       sharedFixture.detectChanges();
 
       const debugEls = sharedFixture.debugElement.queryAll(
-        By.directive(IRadioButton)
+        By.directive(IRadioButton),
       );
       const radios = debugEls.map((de) => de.componentInstance as IRadioButton);
 
@@ -267,7 +267,7 @@ describe('IRadioButton', () => {
       fgFixture.detectChanges();
 
       const debugEls = fgFixture.debugElement.queryAll(
-        By.directive(IRadioButton)
+        By.directive(IRadioButton),
       );
       const radios = debugEls.map((de) => de.componentInstance as IRadioButton);
 

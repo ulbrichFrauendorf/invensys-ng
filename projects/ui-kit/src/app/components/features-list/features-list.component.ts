@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-
 export interface Feature {
   title: string;
   description: string;
@@ -12,10 +11,10 @@ export interface Feature {
   template: `
     <div class="features-grid">
       @for (feature of features; track feature.title) {
-      <div class="feature-item">
-        <strong>{{ feature.title }}:</strong>
-        <span>{{ feature.description }}</span>
-      </div>
+        <div class="feature-item">
+          <strong>{{ feature.title }}:</strong>
+          <span>{{ feature.description }}</span>
+        </div>
       }
     </div>
   `,

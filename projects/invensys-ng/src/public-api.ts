@@ -33,7 +33,10 @@ export * from './lib/components/layout/menu/menu.component';
 export * from './lib/components/layout/models/menu.model';
 export * from './lib/components/layout/models/layout-config.model';
 export * from './lib/components/layout/services/layout.service';
-export { CLAIMS_CHECKER, provideMenuClaimsChecker } from './lib/components/layout/services/claims-checker.token';
+export {
+  CLAIMS_CHECKER,
+  provideMenuClaimsChecker,
+} from './lib/components/layout/services/claims-checker.token';
 export type { ClaimsChecker } from './lib/components/layout/services/claims-checker.token';
 export * from './lib/components/listbox/listbox.component';
 export * from './lib/components/radio-button/radio-button.component';

@@ -79,7 +79,9 @@ describe('IMultiSelect', () => {
     it('should emit onChange event on toggle', () => {
       spyOn(component.onChange, 'emit');
       component.toggleOption(mockOptions[0]);
-      expect(component.onChange.emit).toHaveBeenCalledWith([mockOptions[0]['id']]);
+      expect(component.onChange.emit).toHaveBeenCalledWith([
+        mockOptions[0]['id'],
+      ]);
     });
 
     it('should store full objects when optionValue is not provided', () => {
@@ -273,7 +275,9 @@ describe('IMultiSelect', () => {
 
   describe('Custom error messages', () => {
     it('should use custom error messages', () => {
-      component.errorMessages = { required: 'Please select at least one option' };
+      component.errorMessages = {
+        required: 'Please select at least one option',
+      };
       component.ngControl = {
         control: {
           invalid: true,
@@ -281,7 +285,9 @@ describe('IMultiSelect', () => {
           errors: { required: true },
         },
       } as any;
-      expect(component.getErrorMessage()).toBe('Please select at least one option');
+      expect(component.getErrorMessage()).toBe(
+        'Please select at least one option',
+      );
     });
 
     it('should handle minlength error', () => {
@@ -368,7 +374,9 @@ describe('IMultiSelect', () => {
 
     it('should fallback to label for search value', () => {
       component.filterBy = 'nonexistent';
-      expect(component.getOptionSearchValue(mockOptions[0])).toBe('First Option');
+      expect(component.getOptionSearchValue(mockOptions[0])).toBe(
+        'First Option',
+      );
     });
   });
 });

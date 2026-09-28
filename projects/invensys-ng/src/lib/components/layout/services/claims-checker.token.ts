@@ -19,7 +19,7 @@ export interface ClaimsChecker {
  * Injection token for providing a claims checking service.
  * Applications using claims-based menu filtering should provide
  * an implementation of ClaimsChecker using this token.
- * 
+ *
  * @example
  * // In your app.config.ts or module:
  * providers: [
@@ -29,27 +29,29 @@ export interface ClaimsChecker {
  *   }
  * ]
  */
-export const CLAIMS_CHECKER = new InjectionToken<ClaimsChecker>('ClaimsChecker');
+export const CLAIMS_CHECKER = new InjectionToken<ClaimsChecker>(
+  'ClaimsChecker',
+);
 
 /**
  * Provides a claims checker service for menu item filtering.
  * This is the recommended way to configure claims-based access control in your application.
- * 
+ *
  * @param claimsService The claims service instance that implements the ClaimsChecker interface
  * @returns Provider configuration for dependency injection
- * 
+ *
  * @example
  * // In your app.config.ts:
  * import { provideMenuClaimsChecker } from 'invensys-ng';
  * import { ClaimsService } from './services/claims.service';
- * 
+ *
  * export const appConfig: ApplicationConfig = {
  *   providers: [
  *     provideMenuClaimsChecker(ClaimsService),
  *     // ... other providers
  *   ]
  * };
- * 
+ *
  * @example
  * // Or provide an existing service instance:
  * providers: [

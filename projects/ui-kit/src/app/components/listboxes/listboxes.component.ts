@@ -162,7 +162,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
     interval(5000)
       .pipe(
         takeWhile(() => this.isComponentActive),
-        map((index) => index % additionalDepartments.length)
+        map((index) => index % additionalDepartments.length),
       )
       .subscribe((index) => {
         const currentDepartments = this.departmentSubject.value;

@@ -10,7 +10,11 @@
 
   <div class="cards-container">
     <!-- Basic Confirmation -->
-    <app-demo-card [title]="'Basic Confirmation'" [sourceCode]="htmlExamples.basic" [tsCode]="codeExamples.basic">
+    <app-demo-card
+      [title]="'Basic Confirmation'"
+      [sourceCode]="htmlExamples.basic"
+      [tsCode]="codeExamples.basic"
+    >
       <div class="demo-content">
         <p>Simple confirmation dialog with standard accept/reject options.</p>
         <i-button severity="danger" (click)="showBasicConfirmation()"

@@ -8,7 +8,7 @@ describe('ICalendar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ICalendar, FormsModule]
+      imports: [ICalendar, FormsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ICalendar);

@@ -54,20 +54,20 @@
       </i-tree-view>
 
       @if (checkboxSelection.length > 0) {
-      <div class="selection-info">
-        <strong>Selected ({{ checkboxSelection.length }} items):</strong>
-        <ul>
-          @for (node of checkboxSelection; track node.key) {
-          <li>
-            {{ node.label }} <small>({{ node.key }})</small>
-          </li>
-          }
-        </ul>
-        <details>
-          <summary>View Details</summary>
-          <pre>{{ getMultipleNodesSummary(checkboxSelection) | json }}</pre>
-        </details>
-      </div>
+        <div class="selection-info">
+          <strong>Selected ({{ checkboxSelection.length }} items):</strong>
+          <ul>
+            @for (node of checkboxSelection; track node.key) {
+              <li>
+                {{ node.label }} <small>({{ node.key }})</small>
+              </li>
+            }
+          </ul>
+          <details>
+            <summary>View Details</summary>
+            <pre>{{ getMultipleNodesSummary(checkboxSelection) | json }}</pre>
+          </details>
+        </div>
       }
     </app-demo-card>
 
@@ -98,13 +98,13 @@
       </i-tree-view>
 
       @if (singleSelection) {
-      <div class="selection-info">
-        <strong>Selected:</strong> {{ singleSelection.label }}
-        <details>
-          <summary>View Details</summary>
-          <pre>{{ getNodeSummary(singleSelection) | json }}</pre>
-        </details>
-      </div>
+        <div class="selection-info">
+          <strong>Selected:</strong> {{ singleSelection.label }}
+          <details>
+            <summary>View Details</summary>
+            <pre>{{ getNodeSummary(singleSelection) | json }}</pre>
+          </details>
+        </div>
       }
     </app-demo-card>
 
@@ -129,20 +129,20 @@
       </i-tree-view>
 
       @if (multipleSelection.length > 0) {
-      <div class="selection-info">
-        <strong>Selected ({{ multipleSelection.length }} items):</strong>
-        <ul>
-          @for (node of multipleSelection; track node.key) {
-          <li>
-            {{ node.label }} <small>({{ node.key }})</small>
-          </li>
-          }
-        </ul>
-        <details>
-          <summary>View Details</summary>
-          <pre>{{ getMultipleNodesSummary(multipleSelection) | json }}</pre>
-        </details>
-      </div>
+        <div class="selection-info">
+          <strong>Selected ({{ multipleSelection.length }} items):</strong>
+          <ul>
+            @for (node of multipleSelection; track node.key) {
+              <li>
+                {{ node.label }} <small>({{ node.key }})</small>
+              </li>
+            }
+          </ul>
+          <details>
+            <summary>View Details</summary>
+            <pre>{{ getMultipleNodesSummary(multipleSelection) | json }}</pre>
+          </details>
+        </div>
       }
     </app-demo-card>
 

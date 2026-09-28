@@ -1,7 +1,7 @@
 <div class="layout-topbar">
   <a class="layout-topbar-logo" routerLink="">
     @if (logo) {
-    <img [src]="logo" [alt]="config.websiteName + ' logo'" />
+      <img [src]="logo" [alt]="config.websiteName + ' logo'" />
     }
     <span>{{ config.websiteName }}</span>
   </a>
@@ -25,18 +25,18 @@
     class="layout-topbar-menu"
     [ngClass]="{
       'layout-topbar-menu-mobile-active':
-        layoutService.state().profileSidebarVisible
+        layoutService.state().profileSidebarVisible,
     }"
   >
     <ng-content />
     @if (config.showThemeToggle !== false) {
-    <i-button
-      [severity]="'contrast'"
-      size="medium"
-      [text]="true"
-      [icon]="isDark ? 'pi pi-moon' : 'pi pi-sun'"
-      (clicked)="changeTheme()"
-    />
+      <i-button
+        [severity]="'contrast'"
+        size="medium"
+        [text]="true"
+        [icon]="isDark ? 'pi pi-moon' : 'pi pi-sun'"
+        (clicked)="changeTheme()"
+      />
     }
   </div>
 </div>

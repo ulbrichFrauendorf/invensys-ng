@@ -8,7 +8,7 @@
         [ngClass]="{
           'i-tabs__tab--active': activeIndex === $index,
           'i-tabs__tab--disabled': tab.disabled,
-          'i-tabs__tab--icon-only': tab.icon && !tab.header
+          'i-tabs__tab--icon-only': tab.icon && !tab.header,
         }"
         role="tab"
         [attr.aria-selected]="activeIndex === $index"

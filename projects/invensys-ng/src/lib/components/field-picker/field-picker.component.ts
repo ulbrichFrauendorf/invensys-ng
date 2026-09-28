@@ -1,5 +1,15 @@
-import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { ICheckbox } from '../checkbox/checkbox.component';
 import { IInputText } from '../input-text/input-text.component';
 import { NoContentComponent } from '../no-content/no-content.component';
@@ -28,7 +38,13 @@ export interface FieldPickerOption {
   imports: [FormsModule, ICheckbox, IInputText, NoContentComponent],
   templateUrl: './field-picker.component.html',
   styleUrl: './field-picker.component.scss',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => IFieldPicker), multi: true }],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => IFieldPicker),
+      multi: true,
+    },
+  ],
   host: { '(focusout)': 'markTouched()' },
 })
 export class IFieldPicker implements ControlValueAccessor {
@@ -60,24 +76,46 @@ export class IFieldPicker implements ControlValueAccessor {
     const groups = new Map<string, FieldPickerOption[]>();
     for (const option of this.options) {
       const name = option.group || this.ungroupedLabel;
-      if (term && !`${option.label} ${name} ${option.description ?? ''}`.toLocaleLowerCase().includes(term)) continue;
+      if (
+        term &&
+        !`${option.label} ${name} ${option.description ?? ''}`
+          .toLocaleLowerCase()
+          .includes(term)
+      )
+        continue;
       groups.set(name, [...(groups.get(name) ?? []), option]);
     }
     return Array.from(groups, ([name, options]) => ({ name, options }));
   }
 
   select(option: FieldPickerOption, checked: boolean): void {
-    if (this.disabled || this.readonly || option.disabled || this.value.includes(option.key) === checked) return;
-    const remaining = this.value.filter(key => key !== option.key);
+    if (
+      this.disabled ||
+      this.readonly ||
+      option.disabled ||
+      this.value.includes(option.key) === checked
+    )
+      return;
+    const remaining = this.value.filter((key) => key !== option.key);
     this.value = checked ? [...remaining, option.key] : remaining;
     this.change([...this.value]);
     this.onChange.emit([...this.value]);
     this.markTouched();
   }
 
-  writeValue(value: string[] | null): void { this.value = [...(value ?? [])]; }
-  registerOnChange(fn: (value: string[]) => void): void { this.change = fn; }
-  registerOnTouched(fn: () => void): void { this.touched = fn; }
-  setDisabledState(disabled: boolean): void { this.disabled = disabled; }
-  markTouched(): void { this.touched(); }
+  writeValue(value: string[] | null): void {
+    this.value = [...(value ?? [])];
+  }
+  registerOnChange(fn: (value: string[]) => void): void {
+    this.change = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.touched = fn;
+  }
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+  markTouched(): void {
+    this.touched();
+  }
 }

@@ -27,7 +27,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
                   [text]="true"
                   [class.active]="activeTab === 'html'"
                   (clicked)="activeTab = 'html'"
-                  >
+                >
                   HTML
                 </i-button>
               }
@@ -38,7 +38,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
                   [text]="true"
                   [class.active]="activeTab === 'ts'"
                   (clicked)="activeTab = 'ts'"
-                  >
+                >
                   TypeScript
                 </i-button>
               }
@@ -49,7 +49,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
                   [text]="true"
                   [class.active]="activeTab === 'scss'"
                   (clicked)="activeTab = 'scss'"
-                  >
+                >
                   SCSS
                 </i-button>
               }
@@ -58,11 +58,11 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
           @if (!showTabs || (!tsCode && !scssCode)) {
             <span class="code-title">
               {{
-              activeTab === 'html'
-              ? 'HTML'
-              : activeTab === 'ts'
-              ? 'TypeScript'
-              : 'SCSS'
+                activeTab === 'html'
+                  ? 'HTML'
+                  : activeTab === 'ts'
+                    ? 'TypeScript'
+                    : 'SCSS'
               }}
             </span>
           }
@@ -72,31 +72,28 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
             [text]="true"
             (clicked)="copyCode()"
             [title]="'Copy code'"
-            >
+          >
             <i class="pi pi-copy"></i>
           </i-button>
         </div>
         <div class="code-block">
           <div class="code-scroll" role="region" aria-label="Code block scroll">
             @if (activeTab === 'html') {
-              <pre
-                ><code [innerHTML]="formattedCode"></code></pre>
-              }
-              @if (activeTab === 'ts') {
-                <pre
-                  ><code [innerHTML]="formattedTsCode"></code></pre>
-                }
-                @if (activeTab === 'scss') {
-                  <pre
-                    ><code [innerHTML]="formattedScssCode"></code></pre>
-                  }
-                </div>
-                <div class="scroll-indicator left" aria-hidden="true"></div>
-                <div class="scroll-indicator right" aria-hidden="true"></div>
-              </div>
-            </div>
+              <pre><code [innerHTML]="formattedCode"></code></pre>
+            }
+            @if (activeTab === 'ts') {
+              <pre><code [innerHTML]="formattedTsCode"></code></pre>
+            }
+            @if (activeTab === 'scss') {
+              <pre><code [innerHTML]="formattedScssCode"></code></pre>
+            }
           </div>
-    `,
+          <div class="scroll-indicator left" aria-hidden="true"></div>
+          <div class="scroll-indicator right" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  `,
   styleUrls: ['./code-display.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
@@ -177,7 +174,7 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       setTimeout(() => {
         if (this.uiContent?.nativeElement) {
           const fluidButtons = this.uiContent.nativeElement.querySelectorAll(
-            'i-button[ng-reflect-fluid="true"]'
+            'i-button[ng-reflect-fluid="true"]',
           );
           this.hasFluidComponents = fluidButtons.length > 0;
         }
@@ -295,25 +292,25 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     // 1. HTML/XML tags (opening and closing)
     highlighted = highlighted.replace(
       /(&lt;\/?)([a-zA-Z][-a-zA-Z0-9]*)/g,
-      '<span class="html-tag">$1$2</span>'
+      '<span class="html-tag">$1$2</span>',
     );
 
     // 2. Closing brackets > and self-closing />
     highlighted = highlighted.replace(
       /(\s*\/?)(&gt;)/g,
-      '<span class="html-tag">$1$2</span>'
+      '<span class="html-tag">$1$2</span>',
     );
 
     // 3. Angular property bindings [property]="value"
     highlighted = highlighted.replace(
       /(\[[\w-]+\])(\s*=\s*)(&quot;[^&quot;]*&quot;)/g,
-      '<span class="angular-binding">$1</span>$2<span class="html-attr-value">$3</span>'
+      '<span class="angular-binding">$1</span>$2<span class="html-attr-value">$3</span>',
     );
 
     // 4. Angular event bindings (event)="value"
     highlighted = highlighted.replace(
       /(\([\w-]+\))(\s*=\s*)(&quot;[^&quot;]*&quot;)/g,
-      '<span class="angular-event">$1</span>$2<span class="html-attr-value">$3</span>'
+      '<span class="angular-event">$1</span>$2<span class="html-attr-value">$3</span>',
     );
 
     // 5. Regular HTML attributes (not already processed)
@@ -325,19 +322,19 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           return match;
         }
         return `${space}<span class="html-attr-name">${attrName}</span>${equals}<span class="html-attr-value">${value}</span>`;
-      }
+      },
     );
 
     // 6. Angular interpolation {{ ... }}
     highlighted = highlighted.replace(
       /({{[^}]*}})/g,
-      '<span class="angular-interpolation">$1</span>'
+      '<span class="angular-interpolation">$1</span>',
     );
 
     // 7. Numbers
     highlighted = highlighted.replace(
       /\b(\d+)\b/g,
-      '<span class="code-number">$1</span>'
+      '<span class="code-number">$1</span>',
     );
 
     return highlighted;
@@ -355,7 +352,7 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         const placeholder = `__STRING_${stringCounter++}__`;
         stringMap.set(placeholder, match);
         return placeholder;
-      }
+      },
     );
 
     // Extract and replace all comments
@@ -378,22 +375,22 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     // Apply highlighting to keywords, numbers, functions, etc.
     processed = processed.replace(
       /\b(import|from|export|class|interface|type|const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|this|super|extends|implements|public|private|protected|readonly|static|abstract|async|await|enum|namespace|module|declare)\b/g,
-      '<span class="code-keyword">$1</span>'
+      '<span class="code-keyword">$1</span>',
     );
 
     processed = processed.replace(
       /\b(\d+)\b/g,
-      '<span class="code-number">$1</span>'
+      '<span class="code-number">$1</span>',
     );
 
     processed = processed.replace(
       /([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g,
-      '<span class="code-function">$1</span>('
+      '<span class="code-function">$1</span>(',
     );
 
     processed = processed.replace(
       /:\s*([A-Z][a-zA-Z0-9_$]*)/g,
-      ': <span class="code-function">$1</span>'
+      ': <span class="code-function">$1</span>',
     );
 
     // Restore comments with highlighting
@@ -431,7 +428,7 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         const placeholder = `__STRING_${stringCounter++}__`;
         stringMap.set(placeholder, match);
         return placeholder;
-      }
+      },
     );
 
     // Extract and replace all comments
@@ -461,49 +458,49 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     // SCSS @ directives and keywords
     processed = processed.replace(
       /(@use|@import|@mixin|@include|@extend|@if|@else|@for|@each|@while|@function|@return|@media|@keyframes|@supports)\b/g,
-      '<span class="code-keyword">$1</span>'
+      '<span class="code-keyword">$1</span>',
     );
 
     // CSS properties (word followed by colon)
     processed = processed.replace(
       /\b([a-z-]+)(\s*:)/g,
-      '<span class="scss-property">$1</span>$2'
+      '<span class="scss-property">$1</span>$2',
     );
 
     // Class selectors
     processed = processed.replace(
       /(\.[a-zA-Z_-][a-zA-Z0-9_-]*)/g,
-      '<span class="scss-selector">$1</span>'
+      '<span class="scss-selector">$1</span>',
     );
 
     // ID selectors
     processed = processed.replace(
       /(#[a-zA-Z_-][a-zA-Z0-9_-]*)/g,
-      '<span class="scss-selector">$1</span>'
+      '<span class="scss-selector">$1</span>',
     );
 
     // Pseudo-classes and pseudo-elements
     processed = processed.replace(
       /(::?[a-z-]+)/g,
-      '<span class="scss-pseudo">$1</span>'
+      '<span class="scss-pseudo">$1</span>',
     );
 
     // CSS variables
     processed = processed.replace(
       /(--[a-zA-Z0-9-]+)/g,
-      '<span class="scss-variable">$1</span>'
+      '<span class="scss-variable">$1</span>',
     );
 
     // Color values (hex)
     processed = processed.replace(
       /(#[0-9a-fA-F]{3,8})\b/g,
-      '<span class="code-number">$1</span>'
+      '<span class="code-number">$1</span>',
     );
 
     // Numbers with units
     processed = processed.replace(
       /\b(\d+(?:\.\d+)?)(px|em|rem|%|vh|vw|pt|cm|mm|in|ex|ch|vmin|vmax|s|ms)?\b/g,
-      '<span class="code-number">$1$2</span>'
+      '<span class="code-number">$1$2</span>',
     );
 
     // Restore comments with highlighting

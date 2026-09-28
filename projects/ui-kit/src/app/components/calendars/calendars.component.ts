@@ -14,7 +14,6 @@ import {
   Feature,
 } from '../features-list/features-list.component';
 
-
 @Component({
   selector: 'app-calendars',
   imports: [
@@ -23,8 +22,8 @@ import {
     ReactiveFormsModule,
     FormsModule,
     DemoCardComponent,
-    FeaturesListComponent
-],
+    FeaturesListComponent,
+  ],
   templateUrl: './calendars.component.html',
   styleUrl: './calendars.component.scss',
 })
@@ -306,7 +305,8 @@ onEndDateChange(date: Date): void {
     },
     {
       title: 'Customizable Date Formats',
-      description: 'Support for various date format patterns (dd/mm/yy, MMM yy, etc.)',
+      description:
+        'Support for various date format patterns (dd/mm/yy, MMM yy, etc.)',
     },
     {
       title: 'Angular Forms Integration',

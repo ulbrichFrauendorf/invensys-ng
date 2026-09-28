@@ -1,7 +1,10 @@
 <div class="steppers-demo">
   <header class="demo-header">
     <h1>Stepper Components</h1>
-    <p>Guide users through ordered, multi-stage workflows with clear progress and validation states.</p>
+    <p>
+      Guide users through ordered, multi-stage workflows with clear progress and
+      validation states.
+    </p>
   </header>
 
   <div class="cards-container">
@@ -10,7 +13,11 @@
       [sourceCode]="sourceCode"
       [tsCode]="tsCode"
     >
-      <i-stepper [(activeIndex)]="activeIndex" [linear]="true" ariaLabel="Report setup">
+      <i-stepper
+        [(activeIndex)]="activeIndex"
+        [linear]="true"
+        ariaLabel="Report setup"
+      >
         <i-step
           label="Report details"
           description="Name, access and scope"
@@ -19,7 +26,10 @@
         >
           <div class="step-content">
             <h3>Report details</h3>
-            <p>Collect and validate the information required to create the report.</p>
+            <p>
+              Collect and validate the information required to create the
+              report.
+            </p>
             <i-button icon="pi pi-arrow-right" (clicked)="completeDetails()">
               Complete and continue
             </i-button>

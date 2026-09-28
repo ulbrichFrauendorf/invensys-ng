@@ -28,7 +28,7 @@ describe('IWhisper', () => {
     fixture = TestBed.createComponent(IWhisper);
     component = fixture.componentInstance;
     whisperService = TestBed.inject(
-      WhisperService
+      WhisperService,
     ) as jasmine.SpyObj<WhisperService>;
     fixture.detectChanges();
   });
@@ -246,7 +246,7 @@ describe('IWhisper', () => {
       expect(component.getMessageIcon('success')).toBe('pi-check-circle');
       expect(component.getMessageIcon('info')).toBe('pi-info-circle');
       expect(component.getMessageIcon('warning')).toBe(
-        'pi-exclamation-triangle'
+        'pi-exclamation-triangle',
       );
       expect(component.getMessageIcon('danger')).toBe('pi-times-circle');
     });
@@ -254,7 +254,7 @@ describe('IWhisper', () => {
     it('should get correct container class', () => {
       component.position = 'bottom-right';
       expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-right'
+        'i-whisper i-whisper-bottom-right',
       );
     });
 
@@ -266,7 +266,7 @@ describe('IWhisper', () => {
         detail: 'Message',
       };
       expect(component.getMessageClass(message)).toContain(
-        'i-whisper-message-success'
+        'i-whisper-message-success',
       );
     });
   });
@@ -303,28 +303,28 @@ describe('IWhisper', () => {
     it('should apply top-left position class', () => {
       component.position = 'top-left';
       expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-top-left'
+        'i-whisper i-whisper-top-left',
       );
     });
 
     it('should apply top-center position class', () => {
       component.position = 'top-center';
       expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-top-center'
+        'i-whisper i-whisper-top-center',
       );
     });
 
     it('should apply bottom-center position class', () => {
       component.position = 'bottom-center';
       expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-center'
+        'i-whisper i-whisper-bottom-center',
       );
     });
 
     it('should apply bottom-left position class', () => {
       component.position = 'bottom-left';
       expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-left'
+        'i-whisper i-whisper-bottom-left',
       );
     });
   });

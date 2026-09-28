@@ -14,12 +14,7 @@ import { IButton } from '@shared/components/button/button.component';
 @Component({
   selector: 'app-placeholders',
   standalone: true,
-  imports: [
-    DemoCardComponent,
-    FeaturesListComponent,
-    IPlaceholder,
-    IButton
-],
+  imports: [DemoCardComponent, FeaturesListComponent, IPlaceholder, IButton],
   templateUrl: './placeholders.component.html',
   styleUrls: ['./placeholders.component.scss', '../shared-demo-styles.scss'],
 })

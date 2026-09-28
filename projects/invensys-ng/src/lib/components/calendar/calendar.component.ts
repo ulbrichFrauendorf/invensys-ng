@@ -447,13 +447,13 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
       this.viewDate = new Date(
         this.viewDate.getFullYear(),
         this.viewDate.getMonth() - 1,
-        1
+        1,
       );
     } else if (this.currentView === 'month') {
       this.viewDate = new Date(
         this.viewDate.getFullYear() - 1,
         this.viewDate.getMonth(),
-        1
+        1,
       );
     } else if (this.currentView === 'year') {
       const startYear = Math.floor(this.viewDate.getFullYear() / 10) * 10;
@@ -471,13 +471,13 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
       this.viewDate = new Date(
         this.viewDate.getFullYear(),
         this.viewDate.getMonth() + 1,
-        1
+        1,
       );
     } else if (this.currentView === 'month') {
       this.viewDate = new Date(
         this.viewDate.getFullYear() + 1,
         this.viewDate.getMonth(),
-        1
+        1,
       );
     } else if (this.currentView === 'year') {
       const startYear = Math.floor(this.viewDate.getFullYear() / 10) * 10;
@@ -592,7 +592,7 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
     // Day
     formatted = formatted.replace(
       'dd',
-      date.getDate().toString().padStart(2, '0')
+      date.getDate().toString().padStart(2, '0'),
     );
 
     // Month
@@ -600,7 +600,7 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
     formatted = formatted.replace('MMM', this.monthsShort[date.getMonth()]);
     formatted = formatted.replace(
       'mm',
-      (date.getMonth() + 1).toString().padStart(2, '0')
+      (date.getMonth() + 1).toString().padStart(2, '0'),
     );
 
     // Year

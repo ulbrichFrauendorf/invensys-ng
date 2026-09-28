@@ -16,12 +16,12 @@ import { CodeDisplayComponent } from '../code-display/code-display.component';
       </div>
     </i-card>
     @if (sourceCode || tsCode || scssCode) {
-    <app-code-display
-      [sourceCode]="sourceCode || ''"
-      [tsCode]="tsCode || ''"
-      [scssCode]="scssCode || ''"
-      [language]="language"
-    ></app-code-display>
+      <app-code-display
+        [sourceCode]="sourceCode || ''"
+        [tsCode]="tsCode || ''"
+        [scssCode]="scssCode || ''"
+        [language]="language"
+      ></app-code-display>
     }
   `,
   styles: [

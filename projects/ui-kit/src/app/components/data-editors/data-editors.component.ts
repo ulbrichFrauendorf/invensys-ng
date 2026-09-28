@@ -1,16 +1,35 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IToggle } from '@shared/components/toggle/toggle.component';
-import { FieldPickerOption, IFieldPicker } from '@shared/components/field-picker/field-picker.component';
+import {
+  FieldPickerOption,
+  IFieldPicker,
+} from '@shared/components/field-picker/field-picker.component';
 import { IOrderedList } from '@shared/components/ordered-list/ordered-list.component';
-import { EditorRule, IRuleEditor, RuleEditorField, RuleEditorOperator } from '@shared/components/rule-editor/rule-editor.component';
+import {
+  EditorRule,
+  IRuleEditor,
+  RuleEditorField,
+  RuleEditorOperator,
+} from '@shared/components/rule-editor/rule-editor.component';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
-import { Feature, FeaturesListComponent } from '../features-list/features-list.component';
+import {
+  Feature,
+  FeaturesListComponent,
+} from '../features-list/features-list.component';
 
 @Component({
   selector: 'app-data-editors',
   standalone: true,
-  imports: [FormsModule, IToggle, IFieldPicker, IOrderedList, IRuleEditor, DemoCardComponent, FeaturesListComponent],
+  imports: [
+    FormsModule,
+    IToggle,
+    IFieldPicker,
+    IOrderedList,
+    IRuleEditor,
+    DemoCardComponent,
+    FeaturesListComponent,
+  ],
   templateUrl: './data-editors.component.html',
   styleUrl: './data-editors.component.scss',
 })
@@ -39,7 +58,8 @@ export class DataEditorsComponent {
     { key: 'asc', label: 'Ascending', requiresValue: false },
     { key: 'desc', label: 'Descending', requiresValue: false },
   ];
-  label = (key: string): string => this.fields.find(field => field.key === key)?.label ?? key;
+  label = (key: string): string =>
+    this.fields.find((field) => field.key === key)?.label ?? key;
 
   codeExamples = {
     fieldPicker: `<i-field-picker [options]="fields" [(ngModel)]="selectedFields" />`,
@@ -50,11 +70,32 @@ export class DataEditorsComponent {
   };
 
   features: Feature[] = [
-    { title: 'Form-ready', description: 'Supports ngModel and predictable immutable change events.' },
-    { title: 'Typed rules', description: 'Fields control the appropriate editor and compatible operators.' },
-    { title: 'Keyboard-friendly', description: 'Controls preserve visible labels and accessible action groups.' },
-    { title: 'Responsive layout', description: 'Rule rows and item actions adapt cleanly to narrow screens.' },
-    { title: 'Read-only state', description: 'Keep selections and rules visible while preventing edits.' },
-    { title: 'Composable', description: 'Project item-specific settings into ordered list entries.' },
+    {
+      title: 'Form-ready',
+      description: 'Supports ngModel and predictable immutable change events.',
+    },
+    {
+      title: 'Typed rules',
+      description:
+        'Fields control the appropriate editor and compatible operators.',
+    },
+    {
+      title: 'Keyboard-friendly',
+      description:
+        'Controls preserve visible labels and accessible action groups.',
+    },
+    {
+      title: 'Responsive layout',
+      description:
+        'Rule rows and item actions adapt cleanly to narrow screens.',
+    },
+    {
+      title: 'Read-only state',
+      description: 'Keep selections and rules visible while preventing edits.',
+    },
+    {
+      title: 'Composable',
+      description: 'Project item-specific settings into ordered list entries.',
+    },
   ];
 }

@@ -2,8 +2,8 @@
   <header class="demo-header">
     <h1>Tabs Components</h1>
     <p>
-      Flexible tabs component with support for icons, text, or both.
-      Built with accessibility and keyboard navigation in mind.
+      Flexible tabs component with support for icons, text, or both. Built with
+      accessibility and keyboard navigation in mind.
     </p>
   </header>
 
@@ -19,7 +19,10 @@
           <i-tab-panel header="Home">
             <div class="tab-content">
               <h3>Home</h3>
-              <p>Welcome to the home tab. This is an example of a text-only tab panel.</p>
+              <p>
+                Welcome to the home tab. This is an example of a text-only tab
+                panel.
+              </p>
             </div>
           </i-tab-panel>
           <i-tab-panel header="Profile">
@@ -77,13 +80,19 @@
           <i-tab-panel header="Home" icon="pi pi-home">
             <div class="tab-content">
               <h3>Home</h3>
-              <p>Combining icons and text provides the best of both worlds - visual recognition and clear labels.</p>
+              <p>
+                Combining icons and text provides the best of both worlds -
+                visual recognition and clear labels.
+              </p>
             </div>
           </i-tab-panel>
           <i-tab-panel header="Profile" icon="pi pi-user">
             <div class="tab-content">
               <h3>Profile</h3>
-              <p>Users can quickly identify tabs with icons while still having text for clarity.</p>
+              <p>
+                Users can quickly identify tabs with icons while still having
+                text for clarity.
+              </p>
             </div>
           </i-tab-panel>
           <i-tab-panel header="Settings" icon="pi pi-cog">
@@ -133,9 +142,16 @@
     >
       <div class="tab-examples">
         @if (closableTabs.length > 0) {
-          <i-tabs [(activeIndex)]="closableActiveIndex" (onClose)="onTabClose($event)">
+          <i-tabs
+            [(activeIndex)]="closableActiveIndex"
+            (onClose)="onTabClose($event)"
+          >
             @for (tab of closableTabs; track $index) {
-              <i-tab-panel [header]="tab.header" [icon]="tab.icon" [closable]="true">
+              <i-tab-panel
+                [header]="tab.header"
+                [icon]="tab.icon"
+                [closable]="true"
+              >
                 <div class="tab-content">
                   <h3>{{ tab.header }}</h3>
                   <p>Click the X button on the tab to close it.</p>

@@ -340,7 +340,7 @@ export class IMultiSelect implements ControlValueAccessor {
     const optionValue = this.getOptionValue(option);
 
     const index = currentValues.findIndex(
-      (val) => JSON.stringify(val) === JSON.stringify(optionValue)
+      (val) => JSON.stringify(val) === JSON.stringify(optionValue),
     );
 
     if (index > -1) {
@@ -362,7 +362,7 @@ export class IMultiSelect implements ControlValueAccessor {
   isOptionSelected(option: MultiSelectOption): boolean {
     const optionValue = this.getOptionValue(option);
     return this.value.some(
-      (val) => JSON.stringify(val) === JSON.stringify(optionValue)
+      (val) => JSON.stringify(val) === JSON.stringify(optionValue),
     );
   }
 
@@ -386,7 +386,7 @@ export class IMultiSelect implements ControlValueAccessor {
     const currentValues = [...this.value];
 
     const index = currentValues.findIndex(
-      (val) => JSON.stringify(val) === JSON.stringify(event.chip.value)
+      (val) => JSON.stringify(val) === JSON.stringify(event.chip.value),
     );
 
     if (index > -1) {
@@ -459,7 +459,7 @@ export class IMultiSelect implements ControlValueAccessor {
     } else {
       return this.selectedItemsLabel.replace(
         '{0}',
-        selectedLabels.length.toString()
+        selectedLabels.length.toString(),
       );
     }
   }

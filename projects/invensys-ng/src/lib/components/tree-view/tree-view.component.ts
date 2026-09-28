@@ -307,7 +307,7 @@ export class ITreeView implements OnInit, OnChanges {
 
     this.filteredValue = this.filterNodes(
       this.value,
-      this.filterValue.toLowerCase()
+      this.filterValue.toLowerCase(),
     );
   }
 
@@ -378,7 +378,7 @@ export class ITreeView implements OnInit, OnChanges {
 
     const selection = Array.isArray(this.selection) ? this.selection : [];
     const selectedChildren = node.children.filter((child) =>
-      selection.includes(child)
+      selection.includes(child),
     );
     const totalChildren = node.children.length;
 
@@ -503,7 +503,7 @@ export class ITreeView implements OnInit, OnChanges {
   propagateUp(node: ITreeNode, selection: ITreeNode[]) {
     if (node.children) {
       const selectedChildren = node.children.filter((child) =>
-        selection.includes(child)
+        selection.includes(child),
       );
       const totalChildren = node.children.length;
 

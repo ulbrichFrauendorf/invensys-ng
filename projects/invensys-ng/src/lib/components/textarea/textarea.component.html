@@ -25,17 +25,17 @@
         [class.readonly]="readonly"
         [class.no-resize]="!resizable"
         [class.component-border]="backgroundStyle === 'component'"
-        [iTooltip]="showErrors ? (getErrorMessage() || '') : ''"
+        [iTooltip]="showErrors ? getErrorMessage() || '' : ''"
         tooltipPosition="below"
         [tooltipDelay]="100"
       ></textarea>
       @if (useFloatLabel) {
-      <label
-        [for]="id || componentId"
-        class="i-textarea-label"
-        [class.floated]="forceFloated || hasValue"
-        >{{ label }}</label
-      >
+        <label
+          [for]="id || componentId"
+          class="i-textarea-label"
+          [class.floated]="forceFloated || hasValue"
+          >{{ label }}</label
+        >
       }
       <ng-content></ng-content>
     </div>
@@ -43,16 +43,16 @@
 
   <div class="i-textarea-footer">
     @if (showErrors && getErrorMessage()) {
-    <span class="i-error">{{ getErrorMessage() }}</span>
+      <span class="i-error">{{ getErrorMessage() }}</span>
     }
     @if (maxLength) {
-    <span
-      class="i-char-count"
-      [class.i-char-count--warn]="charCountWarning"
-      [class.i-char-count--over]="charCountOver"
-    >
-      {{ currentLength }}/{{ maxLength }}
-    </span>
+      <span
+        class="i-char-count"
+        [class.i-char-count--warn]="charCountWarning"
+        [class.i-char-count--over]="charCountOver"
+      >
+        {{ currentLength }}/{{ maxLength }}
+      </span>
     }
   </div>
 </div>

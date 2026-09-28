@@ -1,23 +1,72 @@
-@use './rule-editor.component.theme.scss' as theme;
+@use "./rule-editor.component.theme.scss" as theme;
 @include theme.i-rule-editor-theme();
-:host { display: block; }
+:host {
+  display: block;
+}
 .i-rule-editor {
-  &__toolbar { display: flex; justify-content: flex-end; margin-bottom: .75rem; }
-  &__rules { display: grid; gap: .75rem; }
-  &__row { display: grid; grid-template-columns: auto minmax(9rem, 1fr) minmax(9rem, 1fr) minmax(9rem, 1fr) auto; align-items: end; gap: .75rem; padding: 1rem; border: 1px solid var(--surface-border); border-radius: .5rem; }
-  &__number { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; margin-bottom: .25rem; border-radius: 50%; font-size: .8125rem; font-weight: 700; }
-  &__row > i-select, &__row > i-input-text { min-width: 0; }
-  &__row > i-button { grid-column: -1; }
+  &__toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+  &__rules {
+    display: grid;
+    gap: 0.75rem;
+  }
+  &__row {
+    display: grid;
+    grid-template-columns: auto minmax(9rem, 1fr) minmax(9rem, 1fr) minmax(
+        9rem,
+        1fr
+      ) auto;
+    align-items: end;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.5rem;
+  }
+  &__number {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-bottom: 0.25rem;
+    border-radius: 50%;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  &__row > i-select,
+  &__row > i-input-text {
+    min-width: 0;
+  }
+  &__row > i-button {
+    grid-column: -1;
+  }
 }
 
 @media (max-width: 48rem) {
-  .i-rule-editor__row { grid-template-columns: auto repeat(2, minmax(0, 1fr)); }
-  .i-rule-editor__row > i-input-text { grid-column: 2; }
-  .i-rule-editor__row > i-button { grid-column: 3; justify-self: end; }
+  .i-rule-editor__row {
+    grid-template-columns: auto repeat(2, minmax(0, 1fr));
+  }
+  .i-rule-editor__row > i-input-text {
+    grid-column: 2;
+  }
+  .i-rule-editor__row > i-button {
+    grid-column: 3;
+    justify-self: end;
+  }
 }
 
 @media (max-width: 34rem) {
-  .i-rule-editor__row { grid-template-columns: auto minmax(0, 1fr); }
-  .i-rule-editor__row > i-select, .i-rule-editor__row > i-input-text { grid-column: 2; }
-  .i-rule-editor__row > i-button { grid-column: 2; justify-self: end; }
+  .i-rule-editor__row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .i-rule-editor__row > i-select,
+  .i-rule-editor__row > i-input-text {
+    grid-column: 2;
+  }
+  .i-rule-editor__row > i-button {
+    grid-column: 2;
+    justify-self: end;
+  }
 }

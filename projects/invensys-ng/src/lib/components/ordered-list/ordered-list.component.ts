@@ -1,12 +1,26 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { IButton } from '../button/button.component';
 import { NoContentComponent } from '../no-content/no-content.component';
 
 /** Context supplied to an ordered list's custom row settings template. */
-export interface OrderedListItemContext<T> { $implicit: T; index: number; readonly: boolean; }
+export interface OrderedListItemContext<T> {
+  $implicit: T;
+  index: number;
+  readonly: boolean;
+}
 /** Describes a user-initiated reordering. */
-export interface OrderedListMoveEvent<T> { item: T; previousIndex: number; index: number; }
+export interface OrderedListMoveEvent<T> {
+  item: T;
+  previousIndex: number;
+  index: number;
+}
 
 /**
  * Controlled ordered list with accessible move/remove actions and optional row content.
@@ -30,9 +44,9 @@ export class IOrderedList<T> {
   /** Items in display order. Bind itemsChange or use two-way binding. */
   @Input() items: T[] = [];
   /** Accessible row labels. */
-  @Input() itemLabel: (item: T) => string = item => String(item);
+  @Input() itemLabel: (item: T) => string = (item) => String(item);
   /** Stable identity for rows, particularly when immutable item objects are used. */
-  @Input() itemKey: (item: T) => unknown = item => item;
+  @Input() itemKey: (item: T) => unknown = (item) => item;
   /** Optional content below each item's label. */
   @Input() itemTemplate?: TemplateRef<OrderedListItemContext<T>>;
   /** Accessible name of the ordered list. */
@@ -55,7 +69,15 @@ export class IOrderedList<T> {
 
   move(index: number, direction: -1 | 1): void {
     const target = index + direction;
-    if (this.readonly || this.disabled || index < 0 || index >= this.items.length || target < 0 || target >= this.items.length) return;
+    if (
+      this.readonly ||
+      this.disabled ||
+      index < 0 ||
+      index >= this.items.length ||
+      target < 0 ||
+      target >= this.items.length
+    )
+      return;
     const items = [...this.items];
     const item = items[index];
     [items[index], items[target]] = [items[target], items[index]];
@@ -65,7 +87,14 @@ export class IOrderedList<T> {
   }
 
   remove(index: number): void {
-    if (this.readonly || this.disabled || !this.removable || index < 0 || index >= this.items.length) return;
+    if (
+      this.readonly ||
+      this.disabled ||
+      !this.removable ||
+      index < 0 ||
+      index >= this.items.length
+    )
+      return;
     const item = this.items[index];
     this.announcement = `${this.itemLabel(item)} removed.`;
     this.itemsChange.emit(this.items.filter((_, i) => i !== index));

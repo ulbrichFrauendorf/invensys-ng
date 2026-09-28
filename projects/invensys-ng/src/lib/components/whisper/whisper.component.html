@@ -3,7 +3,7 @@
     [ngClass]="getContainerClass()"
     [ngStyle]="style"
     [attr.id]="componentId"
-    >
+  >
     @for (message of messages; track trackByMessage($index, message)) {
       <div
         [ngClass]="getMessageClass(message)"
@@ -11,7 +11,7 @@
         [attr.aria-live]="'polite'"
         [attr.aria-atomic]="'true'"
         role="alert"
-        >
+      >
         <div class="i-whisper-message-content">
           <div class="i-whisper-message-icon">
             <i [ngClass]="['pi', getMessageIcon(message.severity)]"> </i>
@@ -36,10 +36,10 @@
               icon="pi pi-times"
               (click)="onClose(message)"
               [attr.aria-label]="'Close'"
-              />
-            }
-          </div>
+            />
+          }
         </div>
-      }
-    </div>
-  }
+      </div>
+    }
+  </div>
+}

@@ -3,7 +3,9 @@
 
 @include theme.i-textarea-theme();
 
-$textarea-transition: border-color 0.15s ease, box-shadow 0.15s ease;
+$textarea-transition:
+  border-color 0.15s ease,
+  box-shadow 0.15s ease;
 
 .i-textarea-wrapper {
   display: flex;

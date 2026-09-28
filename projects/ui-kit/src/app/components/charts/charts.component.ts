@@ -48,17 +48,32 @@ export class ChartsComponent {
         {
           label: 'Product A',
           data: [50, 60, 70, 80],
-          backgroundColors: ['--blue-500', '--blue-500', '--blue-500', '--blue-500'],
+          backgroundColors: [
+            '--blue-500',
+            '--blue-500',
+            '--blue-500',
+            '--blue-500',
+          ],
         },
         {
           label: 'Product B',
           data: [30, 40, 35, 45],
-          backgroundColors: ['--green-500', '--green-500', '--green-500', '--green-500'],
+          backgroundColors: [
+            '--green-500',
+            '--green-500',
+            '--green-500',
+            '--green-500',
+          ],
         },
         {
           label: 'Product C',
           data: [20, 25, 30, 35],
-          backgroundColors: ['--orange-500', '--orange-500', '--orange-500', '--orange-500'],
+          backgroundColors: [
+            '--orange-500',
+            '--orange-500',
+            '--orange-500',
+            '--orange-500',
+          ],
         },
       ],
     },
@@ -150,7 +165,14 @@ export class ChartsComponent {
     {
       chartId: 'radar-chart',
       chartType: 'radar',
-      labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling'],
+      labels: [
+        'Eating',
+        'Drinking',
+        'Sleeping',
+        'Designing',
+        'Coding',
+        'Cycling',
+      ],
       dataSets: [
         {
           label: 'Person A',
@@ -396,7 +418,8 @@ export class SimpleChartComponent {
     },
     {
       title: 'Multiple Datasets',
-      description: 'Display multiple datasets with legends for comparison charts',
+      description:
+        'Display multiple datasets with legends for comparison charts',
     },
     {
       title: 'Responsive Layout',
@@ -414,8 +437,7 @@ export class SimpleChartComponent {
     },
     {
       title: 'Chart.js Powered',
-      description:
-        'Built on Chart.js for reliable, performant chart rendering',
+      description: 'Built on Chart.js for reliable, performant chart rendering',
     },
   ];
 }

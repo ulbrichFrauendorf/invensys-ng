@@ -154,7 +154,10 @@ export class IButton implements AfterViewInit {
    */
   componentId = UniqueComponentId('i-button-');
 
-  constructor(private cdr: ChangeDetectorRef, public el: ElementRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    public el: ElementRef,
+  ) {}
 
   ngAfterViewInit(): void {
     const text = this.projected?.nativeElement?.textContent;

@@ -157,7 +157,8 @@ export class ExampleComponent {
     },
     {
       title: 'Any Element Support',
-      description: 'Works with buttons, spans, divs, icons, and any HTML element',
+      description:
+        'Works with buttons, spans, divs, icons, and any HTML element',
     },
     {
       title: 'Custom Delays',
@@ -173,7 +174,8 @@ export class ExampleComponent {
     },
     {
       title: 'Hover & Focus',
-      description: 'Triggered by mouse hover and keyboard focus for accessibility',
+      description:
+        'Triggered by mouse hover and keyboard focus for accessibility',
     },
     {
       title: 'ARIA Compliant',

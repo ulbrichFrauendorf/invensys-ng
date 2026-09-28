@@ -1,0 +1,23 @@
+@use "../../themes/color-variables.scss" as colors;
+@mixin i-field-picker-theme() {
+  .i-field-picker {
+    color: colors.$color-text-primary;
+    &__catalog {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-surface-section;
+    }
+    &__group-header {
+      background: colors.$color-surface-section;
+      border-bottom: 1px solid colors.$color-surface-border;
+    }
+    &__group-header span {
+      color: colors.$color-text-secondary;
+    }
+    &__option:hover {
+      background: colors.$color-surface-hover;
+    }
+    small {
+      color: colors.$color-text-secondary;
+    }
+  }
+}

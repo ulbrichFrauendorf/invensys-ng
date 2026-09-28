@@ -1,4 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy, booleanAttribute } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  booleanAttribute,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ISeverity } from '../../enums/IButtonSeverity';
 

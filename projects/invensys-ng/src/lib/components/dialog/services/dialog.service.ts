@@ -116,7 +116,7 @@ export class DialogService {
    */
   open<T>(
     component: Type<T>,
-    config: IDynamicDialogConfig = {}
+    config: IDynamicDialogConfig = {},
   ): IDynamicDialogRef {
     // Create the dialog wrapper component
     const dialogRef = createComponent(IDialog, {
@@ -155,7 +155,7 @@ export class DialogService {
 
         if (dialogRef.location.nativeElement.parentNode) {
           dialogRef.location.nativeElement.parentNode.removeChild(
-            dialogRef.location.nativeElement
+            dialogRef.location.nativeElement,
           );
         }
         componentRef.destroy();

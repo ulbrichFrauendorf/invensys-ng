@@ -17,7 +17,10 @@
       <div class="accordion-examples">
         <i-accordion header="Basic Accordion">
           <p>This is the content of the accordion.</p>
-          <p>You can put any content here including text, images, forms, and more.</p>
+          <p>
+            You can put any content here including text, images, forms, and
+            more.
+          </p>
         </i-accordion>
       </div>
     </app-demo-card>
@@ -58,7 +61,11 @@
         <i-accordion header="Disabled Accordion" [disabled]="true">
           <p>This accordion is disabled and cannot be toggled.</p>
         </i-accordion>
-        <i-accordion header="Disabled Expanded" [disabled]="true" [expanded]="true">
+        <i-accordion
+          header="Disabled Expanded"
+          [disabled]="true"
+          [expanded]="true"
+        >
           <p>This accordion is disabled but expanded.</p>
         </i-accordion>
       </div>
@@ -73,9 +80,11 @@
       <div class="accordion-examples">
         <div class="control-buttons">
           <button class="demo-button" (click)="toggleProgrammatic()">
-            {{ programmaticExpanded ? 'Collapse' : 'Expand' }} Accordion
+            {{ programmaticExpanded ? "Collapse" : "Expand" }} Accordion
           </button>
-          <span class="status">Status: {{ programmaticExpanded ? 'Expanded' : 'Collapsed' }}</span>
+          <span class="status"
+            >Status: {{ programmaticExpanded ? "Expanded" : "Collapsed" }}</span
+          >
         </div>
         <i-accordion
           header="Programmatically Controlled"
@@ -84,7 +93,9 @@
           (expandedChange)="programmaticExpanded = $event"
           (onToggle)="onToggle($event)"
         >
-          <p>This accordion's state is controlled via the component's property.</p>
+          <p>
+            This accordion's state is controlled via the component's property.
+          </p>
           <p>Click the button above to toggle it programmatically.</p>
         </i-accordion>
       </div>
@@ -97,16 +108,24 @@
       [tsCode]="tsExamples.accordionList"
     >
       <div class="accordion-examples">
-        <p class="example-description">Only one accordion can be open at a time.</p>
+        <p class="example-description">
+          Only one accordion can be open at a time.
+        </p>
         <i-accordion-list [multiple]="false">
           <i-accordion header="Section 1" icon="pi pi-bookmark">
-            <p>Content for section 1. Opening this will close other sections.</p>
+            <p>
+              Content for section 1. Opening this will close other sections.
+            </p>
           </i-accordion>
           <i-accordion header="Section 2" icon="pi pi-star">
-            <p>Content for section 2. Opening this will close other sections.</p>
+            <p>
+              Content for section 2. Opening this will close other sections.
+            </p>
           </i-accordion>
           <i-accordion header="Section 3" icon="pi pi-heart">
-            <p>Content for section 3. Opening this will close other sections.</p>
+            <p>
+              Content for section 3. Opening this will close other sections.
+            </p>
           </i-accordion>
         </i-accordion-list>
       </div>
@@ -119,14 +138,18 @@
       [tsCode]="tsExamples.accordionList"
     >
       <div class="accordion-examples">
-        <p class="example-description">Multiple accordions can be open simultaneously.</p>
+        <p class="example-description">
+          Multiple accordions can be open simultaneously.
+        </p>
         <i-accordion-list [multiple]="true">
           <i-accordion header="Panel A" icon="pi pi-folder" [expanded]="true">
             <p>Panel A is initially expanded.</p>
             <p>Other panels can also be expanded without closing this one.</p>
           </i-accordion>
           <i-accordion header="Panel B" icon="pi pi-file">
-            <p>Panel B content. Click to expand without affecting other panels.</p>
+            <p>
+              Panel B content. Click to expand without affecting other panels.
+            </p>
           </i-accordion>
           <i-accordion header="Panel C" icon="pi pi-image" [expanded]="true">
             <p>Panel C is also initially expanded.</p>

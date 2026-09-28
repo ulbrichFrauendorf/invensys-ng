@@ -3,17 +3,17 @@
   <div class="i-card-header">
     <ng-content select="[slot=header]">
       @if (title) {
-      <span class="i-card-title">{{ title }}</span>
+        <span class="i-card-title">{{ title }}</span>
       }
     </ng-content>
     @if (closable) {
-    <i-button
-      [severity]="'contrast'"
-      [text]="true"
-      [icon]="'pi pi-times'"
-      [size]="'small'"
-      (click)="onCloseCard()"
-    />
+      <i-button
+        [severity]="'contrast'"
+        [text]="true"
+        [icon]="'pi pi-times'"
+        [size]="'small'"
+        (click)="onCloseCard()"
+      />
     }
   </div>
 

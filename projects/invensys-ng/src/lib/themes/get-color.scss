@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use './color-palette.scss' as colors;
+@use "sass:map";
+@use "./color-palette.scss" as colors;
 
 @function get-color($name, $shade) {
   $shades: map.get(colors.$colors, $name);

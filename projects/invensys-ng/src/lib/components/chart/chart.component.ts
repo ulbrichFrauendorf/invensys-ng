@@ -321,7 +321,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private initializeCharts(): void {
     this.chartDisplays = this.charts.map((chart, index) =>
-      this.transformToChartDisplay(chart, index)
+      this.transformToChartDisplay(chart, index),
     );
 
     // Cancel any pending initialization
@@ -347,7 +347,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
       if (chartDisplay && canvasRef?.nativeElement) {
         const chartInstance = this.createChartInstance(
           canvasRef.nativeElement,
-          chartDisplay
+          chartDisplay,
         );
         this.chartInstances.push(chartInstance);
         this.updateLegendItems(index);
@@ -374,7 +374,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private createChartInstance(
     canvas: HTMLCanvasElement,
-    display: IChartDisplay
+    display: IChartDisplay,
   ): Chart {
     const config: ChartConfiguration = {
       type: display.type,
@@ -391,7 +391,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private transformToChartDisplay(
     chart: IChartData,
-    index: number
+    index: number,
   ): IChartDisplay {
     // Read resolved CSS variables from the host element
     // This picks up the values defined in chart.component.scss which map to the global theme
@@ -414,13 +414,13 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
       chart.chartType,
       textColor,
       textColorSecondary,
-      surfaceBorder
+      surfaceBorder,
     );
 
     const data = {
       labels: chart.labels,
       datasets: chart.dataSets.map((dataset) =>
-        this.transformDataset(dataset, documentStyle)
+        this.transformDataset(dataset, documentStyle),
       ),
     };
 
@@ -474,7 +474,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     chartType: IChartTypeExtended,
     textColor: string,
     textColorSecondary: string,
-    surfaceBorder: string
+    surfaceBorder: string,
   ): unknown {
     const baseOptions = {
       maintainAspectRatio: false,
@@ -607,7 +607,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private getStackedBarScales(
     textColorSecondary: string,
-    surfaceBorder: string
+    surfaceBorder: string,
   ) {
     return {
       x: {
@@ -637,7 +637,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private transformDataset(
     dataset: IChartDataSet,
-    documentStyle: CSSStyleDeclaration
+    documentStyle: CSSStyleDeclaration,
   ) {
     return {
       label: dataset.label,
@@ -647,7 +647,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
         return this.addTransparency(resolvedColor);
       }),
       borderColor: dataset.backgroundColors.map((color) =>
-        this.resolveColor(color, documentStyle)
+        this.resolveColor(color, documentStyle),
       ),
       borderWidth: 1,
     };
@@ -663,7 +663,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private resolveColor(
     color: string,
-    documentStyle: CSSStyleDeclaration
+    documentStyle: CSSStyleDeclaration,
   ): string {
     // If it's already a hex color or rgb/rgba, return as-is
     if (
@@ -739,7 +739,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     if (color.startsWith('rgb(')) {
       // Extract the rgb values and convert to rgba
       const rgbMatch = color.match(
-        /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/
+        /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/,
       );
       if (rgbMatch) {
         return `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, 0.75)`;
@@ -773,7 +773,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     if (item.datasetIndex !== undefined) {
       chart.setDatasetVisibility(
         item.datasetIndex,
-        !chart.isDatasetVisible(item.datasetIndex)
+        !chart.isDatasetVisible(item.datasetIndex),
       );
     } else if (item.index !== undefined) {
       chart.toggleDataVisibility(item.index);
@@ -801,7 +801,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
       ...item,
       fillStyleText: String(item.fillStyle ?? 'transparent'),
       strokeStyleText: String(
-        item.strokeStyle ?? item.fillStyle ?? 'transparent'
+        item.strokeStyle ?? item.fillStyle ?? 'transparent',
       ),
     }));
     this.cdr.detectChanges();

@@ -439,7 +439,7 @@ describe('IListbox', () => {
     it('should fallback to label for search value', () => {
       component.filterBy = 'nonexistent';
       expect(component.getOptionSearchValue(mockOptions[0])).toBe(
-        'First Option'
+        'First Option',
       );
     });
   });

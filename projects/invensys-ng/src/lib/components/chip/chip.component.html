@@ -1,17 +1,19 @@
 <div class="i-chip" [class.i-chip-disabled]="disabled" [ngClass]="styleClass">
   @if (icon) {
-  <i [class]="icon" class="i-chip-icon"></i>
-  } @if (image) {
-  <img [src]="image" [alt]="label" class="i-chip-image" />
-  } @if (label) {
-  <span class="i-chip-text">{{ label }}</span>
+    <i [class]="icon" class="i-chip-icon"></i>
+  }
+  @if (image) {
+    <img [src]="image" [alt]="label" class="i-chip-image" />
+  }
+  @if (label) {
+    <span class="i-chip-text">{{ label }}</span>
   }
   <ng-content></ng-content>
   @if (removable && !disabled) {
-  <i
-    [class]="removeIcon"
-    class="i-chip-remove-icon"
-    (click)="onRemoveClick($event)"
-  ></i>
+    <i
+      [class]="removeIcon"
+      class="i-chip-remove-icon"
+      (click)="onRemoveClick($event)"
+    ></i>
   }
 </div>

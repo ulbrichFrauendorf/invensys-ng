@@ -13,5 +13,8 @@ import { IButton } from '../../button/button.component';
 export class SidebarComponent {
   @Input() menuModel: MenuModel[] = [];
 
-  constructor(public el: ElementRef, public layoutService: LayoutService) {}
+  constructor(
+    public el: ElementRef,
+    public layoutService: LayoutService,
+  ) {}
 }

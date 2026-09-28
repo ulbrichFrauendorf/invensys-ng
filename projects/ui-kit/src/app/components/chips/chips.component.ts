@@ -21,8 +21,8 @@ import { IMessage } from '@shared/components/message/message.component';
     IChipsComponent,
     DemoCardComponent,
     FeaturesListComponent,
-    IMessage
-],
+    IMessage,
+  ],
   templateUrl: './chips.component.html',
   styleUrls: ['./chips.component.scss'],
 })
@@ -177,25 +177,25 @@ export class ChipsComponent {
 
   onRemoveBasic(event: ChipRemoveEvent): void {
     this.basicChips = this.basicChips.filter(
-      (c) => c.value !== event.chip.value
+      (c) => c.value !== event.chip.value,
     );
   }
 
   onRemoveBoxed(event: ChipRemoveEvent): void {
     this.boxedChips = this.boxedChips.filter(
-      (c) => c.value !== event.chip.value
+      (c) => c.value !== event.chip.value,
     );
   }
 
   onRemoveCollapsible(event: ChipRemoveEvent): void {
     this.collapsibleChips = this.collapsibleChips.filter(
-      (c) => c.value !== event.chip.value
+      (c) => c.value !== event.chip.value,
     );
   }
 
   onRemoveCloseAll(event: ChipRemoveEvent): void {
     this.closeAllChips = this.closeAllChips.filter(
-      (c) => c.value !== event.chip.value
+      (c) => c.value !== event.chip.value,
     );
   }
 
@@ -205,7 +205,7 @@ export class ChipsComponent {
 
   onRemoveCombined(event: ChipRemoveEvent): void {
     this.combinedChips = this.combinedChips.filter(
-      (c) => c.value !== event.chip.value
+      (c) => c.value !== event.chip.value,
     );
   }
 

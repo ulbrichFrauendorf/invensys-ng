@@ -12,18 +12,20 @@
     <!-- Screenshot Preview -->
     <app-demo-card [title]="'Layout Preview'">
       <p class="section-description">
-        The layout component provides a complete application shell with
-        sidebar navigation, top bar with logo and actions, and a main content
-        area.
+        The layout component provides a complete application shell with sidebar
+        navigation, top bar with logo and actions, and a main content area.
       </p>
       <div class="layout-preview">
         <img
           src="assets/screenshots/layout-preview.png"
           alt="Layout Component Preview"
           class="preview-image"
-          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+          onerror="
+            this.style.display = 'none';
+            this.nextElementSibling.style.display = 'block';
+          "
         />
-        <div class="preview-placeholder" style="display: none;">
+        <div class="preview-placeholder" style="display: none">
           <div class="placeholder-layout">
             <div class="placeholder-topbar">
               <div class="placeholder-logo"></div>
@@ -122,8 +124,8 @@
     <!-- Claims-Based Access Control -->
     <app-demo-card [title]="'Claims-Based Access Control'">
       <p class="section-description">
-        Control menu visibility based on user permissions using claims.
-        Perfect for role-based access control in your application.
+        Control menu visibility based on user permissions using claims. Perfect
+        for role-based access control in your application.
       </p>
     </app-demo-card>
 
@@ -134,10 +136,11 @@
       [language]="'ts'"
     >
       <p class="section-description">
-        Create a service that implements the <code>ClaimsChecker</code> interface.
-        This service determines which claims the current user has.
+        Create a service that implements the
+        <code>ClaimsChecker</code> interface. This service determines which
+        claims the current user has.
       </p>
-      <div class="usage-notes" style="margin-top: 1rem;">
+      <div class="usage-notes" style="margin-top: 1rem">
         <div class="note-item">
           <i class="pi pi-lightbulb"></i>
           <div>
@@ -171,18 +174,21 @@
         Add <code>claim</code> properties to your menu items and groups. Items
         without claims are always visible.
       </p>
-      <div class="config-examples" style="margin-top: 1rem;">
+      <div class="config-examples" style="margin-top: 1rem">
         <div class="config-item">
-          <strong>Item Claim:</strong> Controls visibility of individual menu items
+          <strong>Item Claim:</strong> Controls visibility of individual menu
+          items
         </div>
         <div class="config-item">
-          <strong>Group Claim:</strong> Controls visibility of entire menu groups
+          <strong>Group Claim:</strong> Controls visibility of entire menu
+          groups
         </div>
         <div class="config-item">
           <strong>Nested Claims:</strong> Works with sub-menu items at any level
         </div>
         <div class="config-item">
-          <strong>Auto-Hide Empty Groups:</strong> Groups with no visible items are automatically hidden
+          <strong>Auto-Hide Empty Groups:</strong> Groups with no visible items
+          are automatically hidden
         </div>
       </div>
     </app-demo-card>
@@ -225,10 +231,10 @@
       </p>
       <div class="components-grid">
         @for (component of components; track component.name) {
-        <div class="component-item">
-          <code class="component-name">{{ component.name }}</code>
-          <p class="component-description">{{ component.description }}</p>
-        </div>
+          <div class="component-item">
+            <code class="component-name">{{ component.name }}</code>
+            <p class="component-description">{{ component.description }}</p>
+          </div>
         }
       </div>
     </app-demo-card>
@@ -251,8 +257,8 @@
         <div class="note-item">
           <i class="pi pi-info-circle"></i>
           <div>
-            <strong>Theme Persistence:</strong> Theme selection is
-            automatically saved to localStorage and restored on page reload.
+            <strong>Theme Persistence:</strong> Theme selection is automatically
+            saved to localStorage and restored on page reload.
           </div>
         </div>
         <div class="note-item">

@@ -54,7 +54,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     public layoutService: LayoutService,
-    public router: Router
+    public router: Router,
   ) {
     effect(() => {
       if (typeof document === 'undefined') {
@@ -142,10 +142,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.touchCurrentY = event.touches[0].clientY;
     const pullDistance = Math.max(
       0,
-      Math.min(
-        this.touchCurrentY - this.touchStartY,
-        this.MAX_PULL_DISTANCE
-      )
+      Math.min(this.touchCurrentY - this.touchStartY, this.MAX_PULL_DISTANCE),
     );
 
     if (pullDistance > 0) {
@@ -171,7 +168,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   private refresh(): void {
     this.isRefreshing.set(true);
     this.pullDistance.set(0);
-    
+
     // Delay reload slightly to show the refreshing state
     this.refreshTimeoutId = window.setTimeout(() => {
       if (typeof window !== 'undefined') {
@@ -222,7 +219,12 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     // Clean up event listeners
     if (this.isPullToRefreshInitialized) {
       const container = this.mainContainer?.nativeElement;
-      if (container && this.boundHandleTouchStart && this.boundHandleTouchMove && this.boundHandleTouchEnd) {
+      if (
+        container &&
+        this.boundHandleTouchStart &&
+        this.boundHandleTouchMove &&
+        this.boundHandleTouchEnd
+      ) {
         container.removeEventListener('touchstart', this.boundHandleTouchStart);
         container.removeEventListener('touchmove', this.boundHandleTouchMove);
         container.removeEventListener('touchend', this.boundHandleTouchEnd);

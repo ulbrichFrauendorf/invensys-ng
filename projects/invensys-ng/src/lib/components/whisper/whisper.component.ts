@@ -154,7 +154,7 @@ export class IWhisper implements OnInit, OnDestroy {
 
   constructor(
     private whisperService: WhisperService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -176,7 +176,7 @@ export class IWhisper implements OnInit, OnDestroy {
               (m) =>
                 m.summary === message.summary &&
                 m.detail === message.detail &&
-                m.severity === message.severity
+                m.severity === message.severity,
             );
             if (isDuplicate) return;
           }
@@ -188,7 +188,7 @@ export class IWhisper implements OnInit, OnDestroy {
                   m.summary === message.summary &&
                   m.detail === message.detail &&
                   m.severity === message.severity
-                )
+                ),
             );
           }
 
@@ -202,7 +202,7 @@ export class IWhisper implements OnInit, OnDestroy {
 
           this.cd.markForCheck();
         }
-      }
+      },
     );
 
     this.clearSubscription = this.whisperService.clearObserver.subscribe(
@@ -213,7 +213,7 @@ export class IWhisper implements OnInit, OnDestroy {
           this.messages = [];
         }
         this.cd.markForCheck();
-      }
+      },
     );
   }
 

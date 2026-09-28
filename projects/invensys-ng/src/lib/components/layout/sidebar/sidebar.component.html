@@ -1,17 +1,19 @@
 <div class="sidebar">
-  @if (layoutService.state().isMobileViewport &&
-  layoutService.state().isSidebarOpen) {
-  <div class="sidebar-mobile-header">
-    <div class="sidebar-mobile-header-inner">
-      <i-button
-        [size]="'xtra-small'"
-        [text]="true"
-        [severity]="'contrast'"
-        [icon]="'pi pi-times'"
-        (clicked)="layoutService.closeSidebar()"
-      ></i-button>
+  @if (
+    layoutService.state().isMobileViewport &&
+    layoutService.state().isSidebarOpen
+  ) {
+    <div class="sidebar-mobile-header">
+      <div class="sidebar-mobile-header-inner">
+        <i-button
+          [size]="'xtra-small'"
+          [text]="true"
+          [severity]="'contrast'"
+          [icon]="'pi pi-times'"
+          (clicked)="layoutService.closeSidebar()"
+        ></i-button>
+      </div>
     </div>
-  </div>
   }
 
   <div class="sidebar-menu-wrapper">

@@ -1,51 +1,52 @@
 <div class="i-tree-view-wrapper" [style.height]="scrollHeight">
   @if (filter) {
-  <div class="i-tree-view-filter-container">
-    <i-input-text
-      [(ngModel)]="filterValue"
-      [placeholder]="filterPlaceholder"
-      [icon]="'pi pi-search'"
-      [useFloatLabel]="false"
-      [fluid]="true"
-      (input)="onFilterKeyup($event)"
-      class="i-tree-view-filter"
-    >
-    </i-input-text>
-  </div>
-  } @if (selectAll && selectionMode === 'checkbox') {
-  <div class="i-tree-view-select-all-container">
-    <div class="select-box">
-      <i-checkbox
-        [(ngModel)]="selectAllChecked"
-        [id]="componentId + '-select-all'"
-        [label]="'Select All'"
-        (ngModelChange)="onSelectAllChange()"
-      />
+    <div class="i-tree-view-filter-container">
+      <i-input-text
+        [(ngModel)]="filterValue"
+        [placeholder]="filterPlaceholder"
+        [icon]="'pi pi-search'"
+        [useFloatLabel]="false"
+        [fluid]="true"
+        (input)="onFilterKeyup($event)"
+        class="i-tree-view-filter"
+      >
+      </i-input-text>
     </div>
-  </div>
+  }
+  @if (selectAll && selectionMode === "checkbox") {
+    <div class="i-tree-view-select-all-container">
+      <div class="select-box">
+        <i-checkbox
+          [(ngModel)]="selectAllChecked"
+          [id]="componentId + '-select-all'"
+          [label]="'Select All'"
+          (ngModelChange)="onSelectAllChange()"
+        />
+      </div>
+    </div>
   }
 
   <div class="i-tree-view-container">
     @if (loading) {
-    <div class="i-tree-view-loading">
-      <i class="pi pi-spin pi-spinner"></i>
-      <span>Loading...</span>
-    </div>
+      <div class="i-tree-view-loading">
+        <i class="pi pi-spin pi-spinner"></i>
+        <span>Loading...</span>
+      </div>
     } @else if (filteredValue.length === 0) {
-    <div class="i-tree-view-empty">
-      <span>{{ emptyMessage }}</span>
-    </div>
+      <div class="i-tree-view-empty">
+        <span>{{ emptyMessage }}</span>
+      </div>
     } @else {
-    <ul class="i-tree-view-root" [attr.id]="componentId" role="tree">
-      @for (node of filteredValue; track node.key || $index) {
-      <li>
-        <ng-container
-          [ngTemplateOutlet]="nodeTemplate"
-          [ngTemplateOutletContext]="{ $implicit: node, level: 0 }"
-        ></ng-container>
-      </li>
-      }
-    </ul>
+      <ul class="i-tree-view-root" [attr.id]="componentId" role="tree">
+        @for (node of filteredValue; track node.key || $index) {
+          <li>
+            <ng-container
+              [ngTemplateOutlet]="nodeTemplate"
+              [ngTemplateOutletContext]="{ $implicit: node, level: 0 }"
+            ></ng-container>
+          </li>
+        }
+      </ul>
     }
   </div>
 </div>
@@ -73,29 +74,30 @@
   >
     <div class="i-tree-view-node-content">
       @if (hasChildren(node)) {
-      <button
-        type="button"
-        class="i-tree-view-toggler"
-        (click)="$event.stopPropagation(); toggleNode($event, node)"
-        [attr.aria-label]="node.expanded ? 'Collapse' : 'Expand'"
-        tabindex="-1"
-      >
-        <i [class]="getToggleIcon(node)"></i>
-      </button>
-      } @else {
-      <span class="i-tree-view-toggler-spacer"></span>
-      } @if (selectionMode === 'checkbox') {
-      <div class="i-tree-view-checkbox-container">
-        <i-checkbox
-          [checked]="isSelected(node) && !isPartiallySelected(node)"
-          [indeterminate]="isPartiallySelected(node)"
-          (onChange)="onCheckboxChange($event, node)"
-          [id]="getCheckboxId(node)"
-          size="small"
+        <button
+          type="button"
+          class="i-tree-view-toggler"
+          (click)="$event.stopPropagation(); toggleNode($event, node)"
+          [attr.aria-label]="node.expanded ? 'Collapse' : 'Expand'"
           tabindex="-1"
         >
-        </i-checkbox>
-      </div>
+          <i [class]="getToggleIcon(node)"></i>
+        </button>
+      } @else {
+        <span class="i-tree-view-toggler-spacer"></span>
+      }
+      @if (selectionMode === "checkbox") {
+        <div class="i-tree-view-checkbox-container">
+          <i-checkbox
+            [checked]="isSelected(node) && !isPartiallySelected(node)"
+            [indeterminate]="isPartiallySelected(node)"
+            (onChange)="onCheckboxChange($event, node)"
+            [id]="getCheckboxId(node)"
+            size="small"
+            tabindex="-1"
+          >
+          </i-checkbox>
+        </div>
       }
 
       <i [class]="getNodeIcon(node)" class="i-tree-view-node-icon"></i>
@@ -105,15 +107,15 @@
   </div>
 
   @if (hasChildren(node) && node.expanded) {
-  <ul class="i-tree-view-children" role="group">
-    @for (child of node.children; track child.key || $index) {
-    <li>
-      <ng-container
-        [ngTemplateOutlet]="nodeTemplate"
-        [ngTemplateOutletContext]="{ $implicit: child, level: level + 1 }"
-      ></ng-container>
-    </li>
-    }
-  </ul>
+    <ul class="i-tree-view-children" role="group">
+      @for (child of node.children; track child.key || $index) {
+        <li>
+          <ng-container
+            [ngTemplateOutlet]="nodeTemplate"
+            [ngTemplateOutletContext]="{ $implicit: child, level: level + 1 }"
+          ></ng-container>
+        </li>
+      }
+    </ul>
   }
 </ng-template>

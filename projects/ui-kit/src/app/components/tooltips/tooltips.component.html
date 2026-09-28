@@ -72,10 +72,7 @@
     </app-demo-card>
 
     <!-- Icon Tooltips - Common UI Pattern -->
-    <app-demo-card
-      [title]="'Icon Tooltips'"
-      [sourceCode]="codeExamples.icons"
-    >
+    <app-demo-card [title]="'Icon Tooltips'" [sourceCode]="codeExamples.icons">
       <div class="icon-tooltips-section">
         <p class="section-description">
           Tooltips are perfect for icon-only buttons and informational icons.
@@ -136,7 +133,8 @@
     >
       <div class="form-help-section">
         <p class="section-description">
-          Use tooltips to provide contextual help without cluttering the interface.
+          Use tooltips to provide contextual help without cluttering the
+          interface.
         </p>
         <div class="form-field-demo">
           <label class="field-label">
@@ -149,7 +147,11 @@
               <i class="pi pi-question-circle"></i>
             </span>
           </label>
-          <input type="email" class="demo-input" placeholder="user@example.com" />
+          <input
+            type="email"
+            class="demo-input"
+            placeholder="user@example.com"
+          />
         </div>
         <div class="form-field-demo">
           <label class="field-label">
@@ -175,7 +177,11 @@
               <i class="pi pi-exclamation-triangle"></i>
             </span>
           </label>
-          <input type="text" class="demo-input" placeholder="sk-xxxx-xxxx-xxxx" />
+          <input
+            type="text"
+            class="demo-input"
+            placeholder="sk-xxxx-xxxx-xxxx"
+          />
         </div>
       </div>
     </app-demo-card>
@@ -245,7 +251,9 @@
             tooltipPosition="above"
           >
             <i class="pi pi-file-pdf file-icon"></i>
-            <span class="truncated-text">project-requirements-document-v2-final-reviewed.pdf</span>
+            <span class="truncated-text"
+              >project-requirements-document-v2-final-reviewed.pdf</span
+            >
           </div>
           <div
             class="truncated-item"
@@ -253,7 +261,10 @@
             tooltipPosition="above"
           >
             <i class="pi pi-file-excel file-icon excel"></i>
-            <span class="truncated-text">Annual Budget Report Q4 2024 - Consolidated Financial Summary</span>
+            <span class="truncated-text"
+              >Annual Budget Report Q4 2024 - Consolidated Financial
+              Summary</span
+            >
           </div>
           <div
             class="truncated-item"
@@ -261,7 +272,10 @@
             tooltipPosition="above"
           >
             <i class="pi pi-file file-icon"></i>
-            <span class="truncated-text">Team Meeting Notes - Sprint Planning and Retrospective Discussion</span>
+            <span class="truncated-text"
+              >Team Meeting Notes - Sprint Planning and Retrospective
+              Discussion</span
+            >
           </div>
         </div>
       </div>

@@ -13,30 +13,32 @@
       raised && !text ? 'i-button--raised' : '',
       iconOnly ? 'icon-only' : '',
       iconOnly && !text ? 'icon-only-text' : '',
-      loading ? 'i-button--loading' : ''
+      loading ? 'i-button--loading' : '',
     ]"
     [disabled]="disabled || loading"
     [attr.type]="type"
     (click)="clicked.emit($event)"
   >
     @if (loading) {
-    <div class="button-loading-spinner">
-      <i-progress-spinner
-        size="small"
-        [severity]="severity"
-        [colorMode]="outlined || text ? 'text' : 'accent'"
-      ></i-progress-spinner>
-    </div>
+      <div class="button-loading-spinner">
+        <i-progress-spinner
+          size="small"
+          [severity]="severity"
+          [colorMode]="outlined || text ? 'text' : 'accent'"
+        ></i-progress-spinner>
+      </div>
     }
     <div
       [ngClass]="[
         'button-content',
         iconOnly ? 'icon-only' : '',
-        loading ? 'button-content--hidden' : ''
+        loading ? 'button-content--hidden' : '',
       ]"
     >
       @if (icon) {
-      <i [ngClass]="[icon, 'i-button__icon', iconOnly ? 'icon-only' : '']"></i>
+        <i
+          [ngClass]="[icon, 'i-button__icon', iconOnly ? 'icon-only' : '']"
+        ></i>
       }
       <span class="projected-content" #projected>
         <ng-content></ng-content>

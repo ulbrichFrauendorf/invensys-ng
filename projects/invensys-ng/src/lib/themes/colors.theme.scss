@@ -30,9 +30,9 @@
       --color-border: #{color.get-color("gray", 300)};
 
       // Disabled state colors
-      --color-disabled-background: #f5f5f5;
+      --color-disabled-background: #f1f5f9;
       --color-disabled-border: #e2e8f0;
-      --color-text-disabled: #{color.get-color("gray", 700)};
+      --color-text-disabled: #94a3b8;
 
       // Surface colors
       --surface-ground: #f8fafc;
@@ -70,9 +70,9 @@
       --color-border: #5e564b;
 
       // Disabled state colors
-      --color-disabled-background: #1f2937;
-      --color-disabled-border: #4b4e50;
-      --color-text-disabled: #ffffffde;
+      --color-disabled-background: #1e293b;
+      --color-disabled-border: #334155;
+      --color-text-disabled: #94a3b8;
 
       // Surface colors
       --surface-ground: #000510;

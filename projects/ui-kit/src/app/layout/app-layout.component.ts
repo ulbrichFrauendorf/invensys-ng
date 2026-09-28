@@ -44,6 +44,11 @@ export class AppLayoutComponent {
       label: 'Form Controls',
       items: [
         {
+          label: 'Data Editors',
+          icon: 'pi pi-fw pi-sliders-h',
+          routerLink: ['/components/data-editors'],
+        },
+        {
           label: 'Input Texts',
           icon: 'pi pi-fw pi-pencil',
           routerLink: ['/components/input-texts'],

@@ -2,8 +2,9 @@
   <header class="demo-header">
     <h1>Toggle Components</h1>
     <p>
-      Toggle switch components that switch between true and false boolean values.
-      Compatible with ngModel and reactive forms with proper accessibility.
+      Toggle switch components that switch between true and false boolean
+      values. Compatible with ngModel and reactive forms with proper
+      accessibility.
     </p>
   </header>
 
@@ -20,9 +21,7 @@
             [(ngModel)]="basicToggled"
             (onChange)="onBasicChange($event)"
           />
-          <span class="status"
-            >Status: {{ basicToggled ? "On" : "Off" }}</span
-          >
+          <span class="status">Status: {{ basicToggled ? "On" : "Off" }}</span>
         </div>
       </div>
     </app-demo-card>
@@ -34,10 +33,7 @@
     >
       <div class="toggle-examples">
         <div class="example-row">
-          <i-toggle
-            [(ngModel)]="toggledWithLabel"
-            label="Enable dark mode"
-          />
+          <i-toggle [(ngModel)]="toggledWithLabel" label="Enable dark mode" />
         </div>
         <div class="example-row">
           <i-toggle
@@ -50,7 +46,10 @@
     </app-demo-card>
 
     <!-- States -->
-    <app-demo-card [title]="'Toggle States'" [sourceCode]="codeExamples.ngModel">
+    <app-demo-card
+      [title]="'Toggle States'"
+      [sourceCode]="codeExamples.ngModel"
+    >
       <div class="toggle-examples">
         <div class="example-row">
           <i-toggle

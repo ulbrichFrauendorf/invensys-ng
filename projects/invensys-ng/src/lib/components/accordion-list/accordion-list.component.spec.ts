@@ -44,7 +44,7 @@ describe('IAccordionList', () => {
 
   it('should create', () => {
     const accordionList = fixture.debugElement.query(
-      By.directive(IAccordionList)
+      By.directive(IAccordionList),
     );
     expect(accordionList).toBeTruthy();
   });
@@ -52,7 +52,7 @@ describe('IAccordionList', () => {
   describe('Component Inputs', () => {
     it('should have default multiple value of false', () => {
       const accordionList = fixture.debugElement.query(
-        By.directive(IAccordionList)
+        By.directive(IAccordionList),
       );
       expect(accordionList.componentInstance.multiple).toBe(false);
     });
@@ -61,7 +61,7 @@ describe('IAccordionList', () => {
       hostComponent.multiple = true;
       fixture.detectChanges();
       const accordionList = fixture.debugElement.query(
-        By.directive(IAccordionList)
+        By.directive(IAccordionList),
       );
       expect(accordionList.componentInstance.multiple).toBe(true);
     });
@@ -73,7 +73,7 @@ describe('IAccordionList', () => {
       fixture.detectChanges();
 
       const accordions = fixture.debugElement.queryAll(
-        By.directive(IAccordion)
+        By.directive(IAccordion),
       );
       const accordion1 = accordions[0].componentInstance as IAccordion;
       const accordion2 = accordions[1].componentInstance as IAccordion;
@@ -98,7 +98,7 @@ describe('IAccordionList', () => {
       fixture.detectChanges();
 
       const accordions = fixture.debugElement.queryAll(
-        By.directive(IAccordion)
+        By.directive(IAccordion),
       );
       const accordion1 = accordions[0].componentInstance as IAccordion;
       const accordion2 = accordions[1].componentInstance as IAccordion;
@@ -119,14 +119,14 @@ describe('IAccordionList', () => {
   describe('Content projection', () => {
     it('should project accordion children', () => {
       const accordions = fixture.debugElement.queryAll(
-        By.directive(IAccordion)
+        By.directive(IAccordion),
       );
       expect(accordions.length).toBe(3);
     });
 
     it('should display accordion headers', () => {
       const accordions = fixture.debugElement.queryAll(
-        By.directive(IAccordion)
+        By.directive(IAccordion),
       );
       expect(accordions[0].componentInstance.header).toBe('Section 1');
       expect(accordions[1].componentInstance.header).toBe('Section 2');
@@ -137,10 +137,10 @@ describe('IAccordionList', () => {
   describe('Accessibility', () => {
     it('should have a unique component id', () => {
       const accordionList = fixture.debugElement.query(
-        By.directive(IAccordionList)
+        By.directive(IAccordionList),
       );
       expect(accordionList.componentInstance.componentId).toContain(
-        'i-accordion-list-'
+        'i-accordion-list-',
       );
     });
   });

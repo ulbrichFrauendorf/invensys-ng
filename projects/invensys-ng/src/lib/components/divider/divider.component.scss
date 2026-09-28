@@ -1,5 +1,5 @@
-@use './divider.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
+@use "./divider.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
 
 @include theme.i-divider-theme();
 

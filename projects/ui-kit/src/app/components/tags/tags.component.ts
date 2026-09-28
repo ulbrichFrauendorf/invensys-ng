@@ -45,11 +45,21 @@ export class TagsComponent {
   // Icon examples
   iconExamples: TagExample[] = [
     { value: 'Saved', severity: 'success', icon: 'pi pi-check', rounded: true },
-    { value: 'Pending', severity: 'warning', icon: 'pi pi-clock', rounded: true },
+    {
+      value: 'Pending',
+      severity: 'warning',
+      icon: 'pi pi-clock',
+      rounded: true,
+    },
     { value: 'Error', severity: 'danger', icon: 'pi pi-times', rounded: true },
     { value: 'New', severity: 'info', icon: 'pi pi-sparkles', rounded: true },
     { value: 'Beta', severity: 'secondary', icon: 'pi pi-tag', rounded: true },
-    { value: 'Live', severity: 'primary', icon: 'pi pi-circle-fill', rounded: true },
+    {
+      value: 'Live',
+      severity: 'primary',
+      icon: 'pi pi-circle-fill',
+      rounded: true,
+    },
   ];
 
   codeExamples = {

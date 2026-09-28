@@ -4,7 +4,9 @@
 @include theme.i-input-theme();
 
 $input-icon-size: 16px;
-$input-transition: border-color 0.15s ease, box-shadow 0.15s ease;
+$input-transition:
+  border-color 0.15s ease,
+  box-shadow 0.15s ease;
 
 .i-input-wrapper {
   display: flex;
@@ -165,7 +167,9 @@ $input-transition: border-color 0.15s ease, box-shadow 0.15s ease;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
     padding: 0;
     font-size: 10px;
 

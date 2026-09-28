@@ -55,21 +55,21 @@ import { ZIndexUtils } from '../../utils/zindexutils';
         style({
           transform: 'scaleY(0.8)',
           opacity: 0,
-        })
+        }),
       ),
       state(
         'open',
         style({
           transform: 'scaleY(1)',
           opacity: 1,
-        })
+        }),
       ),
       state(
         'closed',
         style({
           transform: 'scaleY(0.8)',
           opacity: 0,
-        })
+        }),
       ),
       transition('void => open', animate('150ms ease-out')),
       transition('open => closed', animate('150ms ease-in')),
@@ -126,7 +126,7 @@ export class IOverlayPanel implements OnDestroy {
   constructor(
     public el: ElementRef,
     private renderer: Renderer2,
-    private zone: NgZone
+    private zone: NgZone,
   ) {}
 
   ngOnDestroy() {
@@ -136,7 +136,7 @@ export class IOverlayPanel implements OnDestroy {
     if (this.appendTo === 'body' && this.containerViewChild) {
       this.renderer.removeChild(
         document.body,
-        this.containerViewChild.nativeElement
+        this.containerViewChild.nativeElement,
       );
     }
     this.target = undefined;
@@ -175,7 +175,7 @@ export class IOverlayPanel implements OnDestroy {
       this.containerViewChild!.nativeElement.style.zIndex = String(
         this.autoZIndex
           ? this.baseZIndex + zIndexUtils.getCurrent() + 1
-          : this.baseZIndex
+          : this.baseZIndex,
       );
       this.appendContainer();
       this.align();
@@ -192,7 +192,7 @@ export class IOverlayPanel implements OnDestroy {
       if (this.appendTo === 'body' && this.containerViewChild) {
         this.renderer.removeChild(
           document.body,
-          this.containerViewChild.nativeElement
+          this.containerViewChild.nativeElement,
         );
       }
       this.unbindDocumentClickListener();
@@ -208,7 +208,7 @@ export class IOverlayPanel implements OnDestroy {
     if (this.appendTo === 'body') {
       this.renderer.appendChild(
         document.body,
-        this.containerViewChild!.nativeElement
+        this.containerViewChild!.nativeElement,
       );
     }
   }
@@ -302,7 +302,7 @@ export class IOverlayPanel implements OnDestroy {
             }
             this.selfClick = false;
             this.targetClick = false;
-          }
+          },
         );
       });
     }
@@ -347,7 +347,7 @@ export class IOverlayPanel implements OnDestroy {
                 this.align();
               });
             }
-          }
+          },
         );
       });
     }

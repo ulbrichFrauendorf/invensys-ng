@@ -2,8 +2,8 @@
   <header class="demo-header">
     <h1>Textarea Component</h1>
     <p>
-      Multi-line text input with floating labels, character counters,
-      validation support, and consistent theming including dark mode.
+      Multi-line text input with floating labels, character counters, validation
+      support, and consistent theming including dark mode.
     </p>
   </header>
 
@@ -16,15 +16,8 @@
     >
       <div class="demo-form">
         <div class="textarea-stack">
-          <i-textarea
-            label="Description"
-            [(ngModel)]="basicValue"
-          />
-          <i-textarea
-            label="Notes"
-            [(ngModel)]="notesValue"
-            [rows]="6"
-          />
+          <i-textarea label="Description" [(ngModel)]="basicValue" />
+          <i-textarea label="Notes" [(ngModel)]="notesValue" [rows]="6" />
           <i-textarea
             label="Comment (200 chars)"
             [(ngModel)]="commentValue"
@@ -56,11 +49,7 @@
             [rows]="3"
             [fluid]="true"
           />
-          <i-textarea
-            label="Notes"
-            formControlName="notes"
-            [fluid]="true"
-          />
+          <i-textarea label="Notes" formControlName="notes" [fluid]="true" />
         </div>
 
         <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
@@ -158,10 +147,7 @@
     </app-demo-card>
 
     <!-- Fluid Layout -->
-    <app-demo-card
-      [title]="'Fluid Layout'"
-      [sourceCode]="codeExamples.fluid"
-    >
+    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
       <form [formGroup]="basicForm" class="demo-form">
         <i-textarea
           label="Full Width Notes"

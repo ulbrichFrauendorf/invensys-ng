@@ -1,0 +1,83 @@
+<div class="i-rule-editor" role="group" [attr.aria-label]="ariaLabel">
+  <div class="i-rule-editor__toolbar">
+    <i-button
+      icon="pi pi-plus"
+      size="small"
+      [disabled]="!canAdd"
+      (clicked)="add()"
+      >{{ addLabel }}</i-button
+    >
+  </div>
+  <div class="i-rule-editor__rules">
+    @for (rule of rules; track $index; let index = $index) {
+      <div
+        class="i-rule-editor__row"
+        role="group"
+        [attr.aria-label]="'Rule ' + (index + 1)"
+      >
+        <span class="i-rule-editor__number" aria-hidden="true">{{
+          index + 1
+        }}</span>
+        <i-select
+          label="Field"
+          [options]="fields"
+          optionLabel="label"
+          [readonly]="readonly || disabled"
+          [fluid]="true"
+          [ngModel]="field(rule)"
+          (ngModelChange)="changeField(index, $event)"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <i-select
+          [label]="operatorLabel"
+          [options]="operatorsFor(field(rule))"
+          optionLabel="label"
+          [filter]="false"
+          [readonly]="readonly || disabled"
+          [fluid]="true"
+          [ngModel]="operator(rule)"
+          (ngModelChange)="changeOperator(index, $event)"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        @if (operator(rule)?.requiresValue !== false) {
+          @if (field(rule)?.type === "boolean") {
+            <i-select
+              label="Value"
+              [options]="booleanOptions"
+              optionLabel="label"
+              [filter]="false"
+              [readonly]="readonly || disabled"
+              [fluid]="true"
+              [ngModel]="booleanValue(rule)"
+              (ngModelChange)="update(index, { value: $event?.key ?? '' })"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          } @else {
+            <i-input-text
+              label="Value"
+              [type]="field(rule)?.type ?? 'text'"
+              [readonly]="readonly || disabled"
+              [fluid]="true"
+              [ngModel]="rule.value"
+              (ngModelChange)="
+                update(index, { value: $event == null ? '' : '' + $event })
+              "
+              [ngModelOptions]="{ standalone: true }"
+            />
+          }
+        }
+        <i-button
+          icon="pi pi-trash"
+          size="small"
+          severity="danger"
+          [text]="true"
+          [disabled]="readonly || disabled"
+          (clicked)="remove(index)"
+          >Remove</i-button
+        >
+      </div>
+    } @empty {
+      <i-no-content [message]="emptyMessage" />
+    }
+  </div>
+</div>

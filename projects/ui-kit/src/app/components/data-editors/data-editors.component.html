@@ -1,0 +1,87 @@
+<div class="data-editors-demo">
+  <header class="demo-header">
+    <h1>Data editors</h1>
+    <p>
+      Compose report views with grouped fields, ordered columns, filters and
+      sort rules. Each editor follows the same accessible form-control and card
+      conventions as the rest of the library.
+    </p>
+  </header>
+
+  <div class="cards-container">
+    <app-demo-card title="Field picker" [sourceCode]="codeExamples.fieldPicker">
+      <div class="editor-intro">
+        <div>
+          <h3>Choose fields</h3>
+          <p>Search and select the fields to include in a report.</p>
+        </div>
+        <i-toggle label="Read-only examples" [(ngModel)]="readonly" />
+      </div>
+      <i-field-picker
+        [options]="fields"
+        [(ngModel)]="selected"
+        [readonly]="readonly"
+      />
+    </app-demo-card>
+
+    <app-demo-card title="Column order" [sourceCode]="codeExamples.orderedList">
+      <div class="editor-intro">
+        <div>
+          <h3>Arrange selected fields</h3>
+          <p>Move a column to set its position in the finished report.</p>
+        </div>
+      </div>
+      <i-ordered-list
+        [(items)]="selected"
+        [itemLabel]="label"
+        [readonly]="readonly"
+        [itemTemplate]="settings"
+      />
+      <ng-template #settings let-key
+        ><small
+          >Settings for {{ label(key) }} can be projected here.</small
+        ></ng-template
+      >
+    </app-demo-card>
+
+    <app-demo-card title="Filter rules" [sourceCode]="codeExamples.filters">
+      <div class="editor-intro">
+        <div>
+          <h3>Refine the results</h3>
+          <p>Build a condition from a field, an operator and a typed value.</p>
+        </div>
+      </div>
+      <i-rule-editor
+        [fields]="ruleFields"
+        [operators]="operators"
+        [(rules)]="rules"
+        [readonly]="readonly"
+      />
+    </app-demo-card>
+
+    <app-demo-card title="Sort rules" [sourceCode]="codeExamples.sorts">
+      <div class="editor-intro">
+        <div>
+          <h3>Set the sort order</h3>
+          <p>
+            Prioritize rules from top to bottom and choose a direction for each
+            field.
+          </p>
+        </div>
+      </div>
+      <i-rule-editor
+        ariaLabel="Sort order"
+        operatorLabel="Direction"
+        addLabel="Add sort"
+        [fields]="ruleFields"
+        [operators]="directions"
+        [(rules)]="sorts"
+        [readonly]="readonly"
+      />
+    </app-demo-card>
+
+    <app-demo-card title="Features">
+      <app-features-list [features]="features" />
+    </app-demo-card>
+  </div>
+</div>

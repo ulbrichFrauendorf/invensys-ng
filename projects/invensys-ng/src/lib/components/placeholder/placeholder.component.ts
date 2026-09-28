@@ -1,15 +1,10 @@
 import { Component, Input } from '@angular/core';
 
-
 /**
  * Arrow direction options for the placeholder icon
  */
 export type PlaceholderArrowDirection =
-  | 'left'
-  | 'right'
-  | 'up'
-  | 'down'
-  | 'none';
+  'left' | 'right' | 'up' | 'down' | 'none';
 
 /**
  * Placeholder Component

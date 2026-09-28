@@ -16,12 +16,12 @@
     >
       <div class="chip-examples">
         @for (chip of chipExamples; track chip.label) {
-        <i-chip
-          [label]="chip.label"
-          [icon]="chip.icon"
-          [removable]="!!chip.removable"
-          (onRemove)="onChipRemove($event)"
-        />
+          <i-chip
+            [label]="chip.label"
+            [icon]="chip.icon"
+            [removable]="!!chip.removable"
+            (onRemove)="onChipRemove($event)"
+          />
         }
       </div>
     </app-demo-card>
@@ -39,7 +39,7 @@
         ></i-chips>
 
         @if (!basicChips.length) {
-        <p class="chips-container-empty">All chips removed.</p>
+          <p class="chips-container-empty">All chips removed.</p>
         }
       </div>
     </app-demo-card>
@@ -64,7 +64,7 @@
         >
 
         @if (!boxedChips.length) {
-        <p class="chips-container-empty">All chips removed.</p>
+          <p class="chips-container-empty">All chips removed.</p>
         }
       </div>
     </app-demo-card>
@@ -89,7 +89,7 @@
         >
 
         @if (!collapsibleChips.length) {
-        <p class="chips-container-empty">All filters removed.</p>
+          <p class="chips-container-empty">All filters removed.</p>
         }
       </div>
     </app-demo-card>
@@ -113,7 +113,7 @@
         >
 
         @if (!closeAllChips.length) {
-        <p class="chips-container-empty">All filters cleared.</p>
+          <p class="chips-container-empty">All filters cleared.</p>
         }
       </div>
     </app-demo-card>
@@ -155,7 +155,7 @@
         >
 
         @if (!combinedChips.length) {
-        <p class="chips-container-empty">All selections cleared.</p>
+          <p class="chips-container-empty">All selections cleared.</p>
         }
       </div>
     </app-demo-card>

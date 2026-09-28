@@ -19,10 +19,19 @@ describe('LayoutComponent', () => {
     ]);
     layoutServiceSpy.state = jasmine
       .createSpy('state')
-      .and.returnValue({ isSidebarOpen: false, isMobileViewport: false, profileSidebarVisible: false });
+      .and.returnValue({
+        isSidebarOpen: false,
+        isMobileViewport: false,
+        profileSidebarVisible: false,
+      });
     layoutServiceSpy.config = jasmine
       .createSpy('config')
-      .and.returnValue({ inputStyle: 'outlined', ripple: true, colorScheme: 'light', scale: 12 });
+      .and.returnValue({
+        inputStyle: 'outlined',
+        ripple: true,
+        colorScheme: 'light',
+        scale: 12,
+      });
 
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     routerSpy.events = of(new NavigationEnd(0, '/', '/'));
@@ -37,7 +46,9 @@ describe('LayoutComponent', () => {
 
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
-    layoutService = TestBed.inject(LayoutService) as jasmine.SpyObj<LayoutService>;
+    layoutService = TestBed.inject(
+      LayoutService,
+    ) as jasmine.SpyObj<LayoutService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
     // Set required inputs
@@ -87,7 +98,11 @@ describe('LayoutComponent', () => {
       // Set up mobile viewport
       layoutService.state = jasmine
         .createSpy('state')
-        .and.returnValue({ isSidebarOpen: false, isMobileViewport: true, profileSidebarVisible: false });
+        .and.returnValue({
+          isSidebarOpen: false,
+          isMobileViewport: true,
+          profileSidebarVisible: false,
+        });
 
       // Simulate touch events
       component['touchStartY'] = 100;
@@ -113,7 +128,7 @@ describe('LayoutComponent', () => {
         websiteName: 'Test App',
         enablePullToRefresh: false,
       };
-      
+
       expect(component.config.enablePullToRefresh).toBe(false);
     });
 
@@ -142,7 +157,11 @@ describe('LayoutComponent', () => {
 
       layoutService.state = jasmine
         .createSpy('state')
-        .and.returnValue({ isSidebarOpen: true, isMobileViewport: true, profileSidebarVisible: false });
+        .and.returnValue({
+          isSidebarOpen: true,
+          isMobileViewport: true,
+          profileSidebarVisible: false,
+        });
 
       // Create a new component instance with the modified router
       const newFixture = TestBed.createComponent(LayoutComponent);

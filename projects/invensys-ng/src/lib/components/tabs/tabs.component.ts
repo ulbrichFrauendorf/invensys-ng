@@ -208,7 +208,7 @@ export class ITabs implements AfterContentInit {
    */
   private focusTab(index: number): void {
     const tabElement = document.getElementById(
-      `${this.componentId}-tab-${index}`
+      `${this.componentId}-tab-${index}`,
     );
     tabElement?.focus();
   }

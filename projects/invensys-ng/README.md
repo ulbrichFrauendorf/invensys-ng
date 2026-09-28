@@ -46,3 +46,7 @@ body {
   @include scrollbar.themed-scrollbar();
 }
 ```
+
+## Data editors
+
+See [field picker, ordered list and rule editor documentation](src/lib/components/data-editors.md) and the UI kit Data Editors examples.

@@ -16,129 +16,132 @@
 
   <!-- Calendar Panel -->
   @if (isOpen) {
-  <div
-    #calendarPanel
-    class="i-calendar-panel"
-    (click)="$event.stopPropagation()"
-  >
-    <!-- Header -->
-    <div class="i-calendar-header">
-      <i-button
-        [size]="'small'"
-        [severity]="'primary'"
-        [text]="true"
-        icon="pi pi-chevron-left"
-        (clicked)="navigatePrevious()"
-        aria-label="Previous"
-      >
-      </i-button>
-
-      <div class="i-calendar-header-title">
-        @if (currentView === 'date') {
+    <div
+      #calendarPanel
+      class="i-calendar-panel"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="i-calendar-header">
         <i-button
-          [severity]="'contrast'"
+          [size]="'small'"
+          [severity]="'primary'"
           [text]="true"
-          (clicked)="showMonthView()"
+          icon="pi pi-chevron-left"
+          (clicked)="navigatePrevious()"
+          aria-label="Previous"
         >
-          {{ getHeaderTitle() }}
         </i-button>
-        } @else if (currentView === 'month') {
-        <i-button
-          [severity]="'contrast'"
-          [text]="true"
-          (clicked)="showYearView()"
-        >
-          {{ getHeaderTitle() }}
-        </i-button>
-        } @else {
-        <span class="i-calendar-title-text">{{ getHeaderTitle() }}</span>
-        }
-      </div>
 
-      <i-button
-        [size]="'small'"
-        [severity]="'primary'"
-        [text]="true"
-        icon="pi pi-chevron-right"
-        (clicked)="navigateNext()"
-        aria-label="Next"
-      >
-      </i-button>
-    </div>
-
-    <!-- Calendar Body -->
-    <div class="i-calendar-body">
-      <!-- Date View -->
-      @if (currentView === 'date') {
-      <div class="i-calendar-date-view">
-        <!-- Weekday headers -->
-        <div class="i-calendar-weekdays">
-          @for (day of weekDays; track day) {
-          <div class="i-calendar-weekday">{{ day }}</div>
+        <div class="i-calendar-header-title">
+          @if (currentView === "date") {
+            <i-button
+              [severity]="'contrast'"
+              [text]="true"
+              (clicked)="showMonthView()"
+            >
+              {{ getHeaderTitle() }}
+            </i-button>
+          } @else if (currentView === "month") {
+            <i-button
+              [severity]="'contrast'"
+              [text]="true"
+              (clicked)="showYearView()"
+            >
+              {{ getHeaderTitle() }}
+            </i-button>
+          } @else {
+            <span class="i-calendar-title-text">{{ getHeaderTitle() }}</span>
           }
         </div>
 
-        <!-- Calendar days -->
-        <div class="i-calendar-days">
-          @for (week of calendarDays; track week) { @for (date of week; track
-          date) { @if (date) {
-          <i-button
-            [size]="'small'"
-            [severity]="'contrast'"
-            [text]="true"
-            [fluid]="true"
-            class="i-calendar-selection"
-            [class.selected]="isSelectedDate(date)"
-            [class.today]="isToday(date)"
-            [disabled]="!isDateInCurrentMonth(date)"
-            (clicked)="selectDate(date)"
-          >
-            {{ date.getDate() }}
-          </i-button>
-          } } }
-        </div>
-      </div>
-      }
-
-      <!-- Month View -->
-      @if (currentView === 'month') {
-      <div class="i-calendar-month-view">
-        @for (month of months; track month; let i = $index) {
         <i-button
           [size]="'small'"
-          [severity]="'contrast'"
+          [severity]="'primary'"
           [text]="true"
-          [fluid]="true"
-          class="i-calendar-selection"
-          [class.selected]="isSelectedMonth(i)"
-          (clicked)="selectMonth(i)"
+          icon="pi pi-chevron-right"
+          (clicked)="navigateNext()"
+          aria-label="Next"
         >
-          {{ monthsShort[i] }}
         </i-button>
-        }
       </div>
-      }
 
-      <!-- Year View -->
-      @if (currentView === 'year') {
-      <div class="i-calendar-year-view">
-        @for (year of years; track year) {
-        <i-button
-          [size]="'small'"
-          [severity]="'contrast'"
-          [text]="true"
-          [fluid]="true"
-          class="i-calendar-selection"
-          [text]="true"
-          [class.selected]="isSelectedYear(year)"
-          (clicked)="selectYear(year)"
-        >
-          {{ year }}
-        </i-button>
+      <!-- Calendar Body -->
+      <div class="i-calendar-body">
+        <!-- Date View -->
+        @if (currentView === "date") {
+          <div class="i-calendar-date-view">
+            <!-- Weekday headers -->
+            <div class="i-calendar-weekdays">
+              @for (day of weekDays; track day) {
+                <div class="i-calendar-weekday">{{ day }}</div>
+              }
+            </div>
+
+            <!-- Calendar days -->
+            <div class="i-calendar-days">
+              @for (week of calendarDays; track week) {
+                @for (date of week; track date) {
+                  @if (date) {
+                    <i-button
+                      [size]="'small'"
+                      [severity]="'contrast'"
+                      [text]="true"
+                      [fluid]="true"
+                      class="i-calendar-selection"
+                      [class.selected]="isSelectedDate(date)"
+                      [class.today]="isToday(date)"
+                      [disabled]="!isDateInCurrentMonth(date)"
+                      (clicked)="selectDate(date)"
+                    >
+                      {{ date.getDate() }}
+                    </i-button>
+                  }
+                }
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Month View -->
+        @if (currentView === "month") {
+          <div class="i-calendar-month-view">
+            @for (month of months; track month; let i = $index) {
+              <i-button
+                [size]="'small'"
+                [severity]="'contrast'"
+                [text]="true"
+                [fluid]="true"
+                class="i-calendar-selection"
+                [class.selected]="isSelectedMonth(i)"
+                (clicked)="selectMonth(i)"
+              >
+                {{ monthsShort[i] }}
+              </i-button>
+            }
+          </div>
+        }
+
+        <!-- Year View -->
+        @if (currentView === "year") {
+          <div class="i-calendar-year-view">
+            @for (year of years; track year) {
+              <i-button
+                [size]="'small'"
+                [severity]="'contrast'"
+                [text]="true"
+                [fluid]="true"
+                class="i-calendar-selection"
+                [text]="true"
+                [class.selected]="isSelectedYear(year)"
+                (clicked)="selectYear(year)"
+              >
+                {{ year }}
+              </i-button>
+            }
+          </div>
         }
       </div>
-      }
     </div>
-  </div>
   }
 </div>

@@ -1,7 +1,17 @@
-import { Component, Input, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  inject,
+  signal,
+} from '@angular/core';
 import { MenuModel, MenuItem } from '../models/menu.model';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CLAIMS_CHECKER, ClaimsChecker } from '../services/claims-checker.token';
+import {
+  CLAIMS_CHECKER,
+  ClaimsChecker,
+} from '../services/claims-checker.token';
 import { Subject, BehaviorSubject, forkJoin, of, Observable } from 'rxjs';
 import { takeUntil, switchMap, map } from 'rxjs/operators';
 
@@ -15,7 +25,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private readonly claimsChecker = inject(CLAIMS_CHECKER, { optional: true });
   private readonly destroy$ = new Subject<void>();
   private readonly modelSubject$ = new BehaviorSubject<MenuModel[]>([]);
-  
+
   filteredModel = signal<MenuModel[]>([]);
 
   @Input() set model(value: MenuModel[]) {
@@ -26,7 +36,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.modelSubject$
       .pipe(
         takeUntil(this.destroy$),
-        switchMap((model) => this.filterModelByClaims(model))
+        switchMap((model) => this.filterModelByClaims(model)),
       )
       .subscribe((filteredModel) => {
         this.filteredModel.set(filteredModel);
@@ -46,7 +56,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     // Collect all unique claims from the model
     const claims = this.collectClaims(model);
-    
+
     if (claims.size === 0) {
       return of(model);
     }
@@ -62,7 +72,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
 
     return forkJoin(claimChecks).pipe(
-      map((claimsMap) => this.filterModel(model, claimsMap))
+      map((claimsMap) => this.filterModel(model, claimsMap)),
     );
   }
 
@@ -73,7 +83,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       if (group.claim) {
         claims.add(group.claim);
       }
-      
+
       group.items.forEach((item) => {
         this.collectItemClaims(item, claims);
       });
@@ -94,7 +104,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  private filterModel(model: MenuModel[], claimsMap: { [key: string]: boolean }): MenuModel[] {
+  private filterModel(
+    model: MenuModel[],
+    claimsMap: { [key: string]: boolean },
+  ): MenuModel[] {
     return model
       .filter((group) => {
         // If group has a claim, check if user has access
@@ -110,7 +123,10 @@ export class MenuComponent implements OnInit, OnDestroy {
       .filter((group) => group.items.length > 0); // Remove groups with no visible items
   }
 
-  private filterItems(items: MenuItem[], claimsMap: { [key: string]: boolean }): MenuItem[] {
+  private filterItems(
+    items: MenuItem[],
+    claimsMap: { [key: string]: boolean },
+  ): MenuItem[] {
     return items
       .filter((item) => {
         // If item has a claim, check if user has access

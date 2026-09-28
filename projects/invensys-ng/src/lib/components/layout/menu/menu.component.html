@@ -1,51 +1,51 @@
 <ul class="menu">
-  @for(group of filteredModel(); track $index) {
-  <li class="menu-group">
-    @if (group.label) {
-    <div class="menu-group-label">
-      {{ group.label }}
-    </div>
-    }
+  @for (group of filteredModel(); track $index) {
+    <li class="menu-group">
+      @if (group.label) {
+        <div class="menu-group-label">
+          {{ group.label }}
+        </div>
+      }
 
-    <ul class="menu-items">
-      @for(item of group.items; track $index) {
-      <li class="menu-item">
-        <a
-          [routerLink]="item.routerLink"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          @if (item.icon) {
-          <i class="{{ item.icon }}"></i>
-          }
-          <span>{{ item.label }}</span>
-        </a>
-
-        @if (item.items) {
-        <ul class="submenu">
-          @for(subItem of item.items; track $index) {
-          <li class="submenu-item">
+      <ul class="menu-items">
+        @for (item of group.items; track $index) {
+          <li class="menu-item">
             <a
-              [routerLink]="subItem.routerLink"
+              [routerLink]="item.routerLink"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
             >
-              @if (subItem.icon) {
-              <i class="{{ subItem.icon }}"></i>
+              @if (item.icon) {
+                <i class="{{ item.icon }}"></i>
               }
-              <span>{{ subItem.label }}</span>
+              <span>{{ item.label }}</span>
             </a>
-          </li>
-          }
-        </ul>
-        }
-      </li>
-      }
-    </ul>
 
-    @if (group.separator) {
-    <hr class="separator" />
-    }
-  </li>
+            @if (item.items) {
+              <ul class="submenu">
+                @for (subItem of item.items; track $index) {
+                  <li class="submenu-item">
+                    <a
+                      [routerLink]="subItem.routerLink"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      @if (subItem.icon) {
+                        <i class="{{ subItem.icon }}"></i>
+                      }
+                      <span>{{ subItem.label }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </li>
+        }
+      </ul>
+
+      @if (group.separator) {
+        <hr class="separator" />
+      }
+    </li>
   }
 </ul>

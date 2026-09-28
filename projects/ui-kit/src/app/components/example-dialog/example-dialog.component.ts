@@ -101,7 +101,7 @@ export class ExampleDialogComponent
     interval(5000)
       .pipe(
         takeWhile(() => this.isComponentActive),
-        map((index) => index % additionalDepartments.length)
+        map((index) => index % additionalDepartments.length),
       )
       .subscribe((index) => {
         const currentDepartments = this.departmentSubject.value;
@@ -115,7 +115,7 @@ export class ExampleDialogComponent
           this.departmentSubject.next(updatedDepartments);
 
           console.log(
-            'Dynamic dialog: Department updated, change detection should now work via ApplicationRef'
+            'Dynamic dialog: Department updated, change detection should now work via ApplicationRef',
           );
         }
       });

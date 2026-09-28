@@ -1,25 +1,25 @@
 @if (visible) {
-<div
-  class="i-message i-message-{{ severity }} i-message--{{ size }}"
-  role="alert"
->
-  <div class="i-message-content">
-    <div class="i-message-icon">
-      <i [class]="getDefaultIcon()"></i>
+  <div
+    class="i-message i-message-{{ severity }} i-message--{{ size }}"
+    role="alert"
+  >
+    <div class="i-message-content">
+      <div class="i-message-icon">
+        <i [class]="getDefaultIcon()"></i>
+      </div>
+      <div class="i-message-text">
+        <ng-content></ng-content>
+      </div>
+      @if (closable) {
+        <button
+          class="i-message-close"
+          type="button"
+          (click)="close()"
+          aria-label="Close"
+        >
+          <i class="pi pi-times"></i>
+        </button>
+      }
     </div>
-    <div class="i-message-text">
-      <ng-content></ng-content>
-    </div>
-    @if (closable) {
-    <button
-      class="i-message-close"
-      type="button"
-      (click)="close()"
-      aria-label="Close"
-    >
-      <i class="pi pi-times"></i>
-    </button>
-    }
   </div>
-</div>
 }

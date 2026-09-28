@@ -3,10 +3,14 @@
   flex-direction: column;
   user-select: none;
   min-height: 100%;
-  transition: transform 0.2s, left 0.2s;
+  transition:
+    transform 0.2s,
+    left 0.2s;
   background-color: var(--surface-overlay);
   padding: 24px 12px 40px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.02), 0 0 2px rgba(0, 0, 0, 0.05),
+  box-shadow:
+    0 3px 5px rgba(0, 0, 0, 0.02),
+    0 0 2px rgba(0, 0, 0, 0.05),
     0 1px 4px rgba(0, 0, 0, 0.08);
 
   .sidebar-mobile-header {

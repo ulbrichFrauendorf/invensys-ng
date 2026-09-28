@@ -396,7 +396,7 @@ export class ISelect implements ControlValueAccessor {
     }
 
     const selectedOption = currentOptions.find((option: SelectOption) =>
-      this.isOptionSelected(option)
+      this.isOptionSelected(option),
     );
 
     return selectedOption

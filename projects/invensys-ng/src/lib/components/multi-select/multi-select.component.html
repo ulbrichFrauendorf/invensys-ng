@@ -2,7 +2,7 @@
   class="i-multi-select-wrapper"
   [class.i-multi-select--fluid]="fluid"
   #dropdown
-  >
+>
   <!-- Input container with click handler -->
   <div class="i-multi-select-input-container" (click)="toggleDropdown()">
     <!-- Chips component with float label -->
@@ -51,7 +51,7 @@
             (ngModelChange)="filterValue.set($event)"
             [fluid]="true"
             [icon]="'pi pi-search'"
-            >
+          >
           </i-input-text>
         </div>
       }
@@ -62,7 +62,7 @@
             class="i-multi-select-option"
             [class.selected]="isOptionSelected(option)"
             (click)="toggleOption(option)"
-            >
+          >
             <i-checkbox
               [checked]="isOptionSelected(option)"
               [readonly]="true"

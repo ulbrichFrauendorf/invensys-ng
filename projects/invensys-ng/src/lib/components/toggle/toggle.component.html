@@ -23,12 +23,12 @@
     <span class="i-toggle-thumb"></span>
   </div>
   @if (label) {
-  <label
-    [id]="(id || componentId) + '-label'"
-    class="i-toggle-label"
-    (click)="toggle()"
-  >
-    {{ label }}
-  </label>
+    <label
+      [id]="(id || componentId) + '-label'"
+      class="i-toggle-label"
+      (click)="toggle()"
+    >
+      {{ label }}
+    </label>
   }
 </div>

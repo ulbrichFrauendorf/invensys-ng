@@ -297,14 +297,21 @@ export class ExampleComponent {
     this.basicForm = this.fb.group({
       skills: [[]],
       departments: [[]],
-      preselected: [[
-        { value: 'javascript', label: 'JavaScript' },
-        { value: 'angular', label: 'Angular' }
-      ]],
-      disabled: [{ value: [
-        { value: 1, label: 'Sales' },
-        { value: 2, label: 'Marketing' }
-      ], disabled: true }],
+      preselected: [
+        [
+          { value: 'javascript', label: 'JavaScript' },
+          { value: 'angular', label: 'Angular' },
+        ],
+      ],
+      disabled: [
+        {
+          value: [
+            { value: 1, label: 'Sales' },
+            { value: 2, label: 'Marketing' },
+          ],
+          disabled: true,
+        },
+      ],
       // Now all multi-selects store full objects by default
       fullObjectSkills: [[]],
     });
@@ -345,11 +352,11 @@ export class ExampleComponent {
     console.log('Array length:', values.length);
     console.log(
       'Types:',
-      values.map((v) => typeof v)
+      values.map((v) => typeof v),
     );
     console.log(
       'Object properties:',
-      values.map((v) => (v ? Object.keys(v) : 'null'))
+      values.map((v) => (v ? Object.keys(v) : 'null')),
     );
   }
 
@@ -357,16 +364,16 @@ export class ExampleComponent {
     console.log('Skills Objects Changed (full objects):', values);
     console.log(
       'Form control value:',
-      this.basicForm.get('fullObjectSkills')?.value
+      this.basicForm.get('fullObjectSkills')?.value,
     );
     console.log('Array length:', values.length);
     console.log(
       'Types:',
-      values.map((v) => typeof v)
+      values.map((v) => typeof v),
     );
     console.log(
       'Object properties:',
-      values.map((v) => (v ? Object.keys(v) : 'null'))
+      values.map((v) => (v ? Object.keys(v) : 'null')),
     );
   }
 

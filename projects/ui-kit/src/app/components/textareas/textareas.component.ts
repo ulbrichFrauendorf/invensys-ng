@@ -114,7 +114,8 @@ validationForm = this.fb.group({
     },
     {
       title: 'Character Counter',
-      description: 'Optional character count with warning and over-limit states',
+      description:
+        'Optional character count with warning and over-limit states',
     },
     {
       title: 'Validation Support',

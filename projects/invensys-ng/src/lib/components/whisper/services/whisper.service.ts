@@ -165,7 +165,7 @@ export class WhisperService {
    */
   addAll(messages: IWhisperMessage[]): void {
     if (messages && messages.length) {
-      messages.forEach(message => this.add(message));
+      messages.forEach((message) => this.add(message));
     }
   }
 

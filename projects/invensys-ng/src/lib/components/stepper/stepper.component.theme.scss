@@ -36,7 +36,7 @@
     &__item--completed > .i-stepper__connector {
       background: colors.$color-surface-border;
     }
-    &__item--active .i-stepper__chevron {
+    &__item--active:not(.i-stepper__item--completed) .i-stepper__chevron {
       color: colors.$color-primary;
     }
     &__item--completed .i-stepper__trigger {
@@ -45,10 +45,10 @@
     &__item--completed .i-stepper__indicator {
       color: colors.$color-success;
     }
-    &__item--active .i-stepper__trigger {
+    &__item--active:not(.i-stepper__item--completed) .i-stepper__trigger {
       border-bottom-color: colors.$color-primary;
     }
-    &__item--active .i-stepper__indicator {
+    &__item--active:not(.i-stepper__item--completed) .i-stepper__indicator {
       color: colors.$color-primary;
     }
     &__item--disabled {

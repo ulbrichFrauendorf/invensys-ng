@@ -6,6 +6,7 @@
   "include": [
     "src/lib/components/button/button.component.spec.ts",
     "src/lib/components/dialog/inner/dialog-actions/dialog-actions.component.spec.ts",
-    "src/lib/components/stepper/stepper.component.spec.ts"
+    "src/lib/components/stepper/stepper.component.spec.ts",
+    "src/lib/components/table/table-actions.component.spec.ts"
   ]
 }

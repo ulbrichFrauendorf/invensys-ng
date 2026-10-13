@@ -64,6 +64,22 @@ export class ReportingWorkflowsComponent {
     },
   };
   readonly sourceCode = '<i-stepper [(activeIndex)]="activeIndex" ariaLabel="Report setup">\n  <i-step label="Details" [completed]="!!name.trim()">…</i-step>\n  <i-step label="Columns" [disabled]="!name.trim()">…</i-step>\n  <i-step label="Refine" [optional]="true" [completed]="isSaved()">…</i-step>\n  <i-step label="Preview & save" [completed]="isSaved()">…</i-step>\n</i-step>';
+  readonly runProgress: GridData<{ name: string }, { name: string; status: string }> = {
+    columns: [{ field: 'name', header: 'Automation' }],
+    rows: [{ name: 'Month-end payroll pack' }],
+    details: {
+      columns: [{ field: 'name', header: 'Report' }, { field: 'status', header: 'Status' }],
+      actionsHeader: '',
+      rows: () => [{ name: 'Payroll summary', status: 'InProgress' }, { name: 'Payment register', status: 'Completed' }],
+      actions: [{
+        id: 'progress', tooltip: 'Report in progress', severity: 'info',
+        loading: step => step.status === 'InProgress',
+        visible: step => step.status === 'InProgress', handler: () => {},
+      }],
+    },
+  };
+  readonly progressTableCode = '<i-table [grid]="runProgress" dataKey="name" />';
+  readonly progressCode = 'details: { actionsHeader: "", actions: [{ id: "progress", loading: step => step.status === "InProgress", visible: step => step.status === "InProgress", tooltip: "Report in progress", handler: () => {} }] }';
   readonly actionsCode = '<i-dialog-actions submitLabel="Save automation"\n  [submitLoading]="saving" [submitDisabled]="form.invalid"\n  (submitEvent)="save()" (cancelEvent)="cancel()" />';
   readonly tableCode = '<i-table [grid]="automations" dataKey="id" [globalFilter]="true" />';
   next(): void { this.activeIndex = Math.min(3, this.activeIndex + 1); }

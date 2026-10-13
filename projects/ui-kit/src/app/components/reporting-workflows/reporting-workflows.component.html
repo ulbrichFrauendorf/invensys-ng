@@ -31,6 +31,10 @@
       <header class="section-heading"><h2>Your automations</h2><p>Expand a row to see the report sequence. Grouped data uses GridData.details, with a stable dataKey.</p></header>
       <i-table [grid]="automations" dataKey="id" [globalFilter]="true" />
     </app-demo-card>
+    <app-demo-card title="Run progress" [sourceCode]="progressTableCode" [tsCode]="progressCode">
+      <p>Expand the automation to see the shared spinner in the actions column while a report is in progress.</p>
+      <i-table [grid]="runProgress" dataKey="name" />
+    </app-demo-card>
     <app-demo-card title="Clear dialog actions" [sourceCode]="actionsCode">
       <p>Use a specific action label and a filled primary action. Loading prevents repeated submissions.</p>
       <div class="demo-tools">

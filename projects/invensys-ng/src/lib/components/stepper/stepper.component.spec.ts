@@ -112,7 +112,14 @@ describe('IStepper', () => {
     expect(fixture.debugElement.query(By.css('.i-stepper__panel--active')).nativeElement.textContent).toContain('Review content');
     host.reviewComplete = false;
     fixture.detectChanges();
-    expect(final.querySelector('.i-stepper__chevron')).not.toBeNull();
+    expect(final.querySelector('.i-stepper__chevron')).toBeNull();
+    expect(final.querySelector('.i-stepper__completion')).toBeNull();
+  });
+
+  it('does not show a next-step chevron or connector on the final step', () => {
+    const final = fixture.debugElement.queryAll(By.css('.i-stepper__item'))[2].nativeElement;
+    expect(final.querySelector('.i-stepper__chevron')).toBeNull();
+    expect(final.querySelector('.i-stepper__connector')).toBeNull();
   });
 
   it('exposes step progress semantics', () => {

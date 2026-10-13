@@ -130,7 +130,7 @@
             }
             <th class="i-table-detail-count-header"></th>
             @if (gridActions().length > 0) {
-              <th class="i-table-actions-header">Actions</th>
+              <th class="i-table-actions-header">{{ grid().actionsHeader ?? 'Actions' }}</th>
             }
           </tr>
         </thead>
@@ -223,6 +223,7 @@
                         size="small"
                         [icon]="action.icon || ''"
                         [disabled]="isActionDisabled(action, row)"
+                        [loading]="isActionLoading(action, row)"
                         [iTooltip]="getActionTooltip(action, row)"
                         [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                         [class.i-action-hidden]="!isActionVisible(action, row)"
@@ -366,7 +367,7 @@
           }
           @if (gridActions().length > 0) {
             <div class="i-table-virtual-cell i-table-actions-header">
-              Actions
+              {{ grid().actionsHeader ?? 'Actions' }}
             </div>
           }
         </div>
@@ -454,6 +455,7 @@
                     size="small"
                     [icon]="action.icon || ''"
                     [disabled]="isActionDisabled(action, row)"
+                        [loading]="isActionLoading(action, row)"
                     [iTooltip]="getActionTooltip(action, row)"
                         [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                     [class.i-action-hidden]="!isActionVisible(action, row)"
@@ -554,7 +556,7 @@
               </th>
             }
             @if (gridActions().length > 0) {
-              <th class="i-table-actions-header">Actions</th>
+              <th class="i-table-actions-header">{{ grid().actionsHeader ?? 'Actions' }}</th>
             }
           </tr>
         </thead>
@@ -627,6 +629,7 @@
                         size="small"
                         [icon]="action.icon || ''"
                         [disabled]="isActionDisabled(action, row)"
+                        [loading]="isActionLoading(action, row)"
                         [iTooltip]="getActionTooltip(action, row)"
                         [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                         [class.i-action-hidden]="!isActionVisible(action, row)"

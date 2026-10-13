@@ -73,6 +73,8 @@ export interface GridAction<T = any> {
   label?: string;
   /** Button severity/style */
   severity?: ISeverity;
+  /** Shows the shared progress spinner while this action is pending. */
+  loading?: boolean | ((row: T) => boolean);
   /** Whether the action is disabled */
   disabled?: boolean | ((row: T) => boolean);
   /** Tooltip text to display on hover */
@@ -96,6 +98,8 @@ export interface GridDetails<TRow = any, TDetail = any> {
   rows: (parentRow: TRow) => TDetail[];
   /** Optional actions on the detail rows */
   actions?: GridAction<TDetail>[];
+  /** Optional action column heading; an empty string hides the visible heading. */
+  actionsHeader?: string;
 }
 
 /**
@@ -141,6 +145,8 @@ export interface GridData<TRow = any, TDetail = any> {
   rows: TRow[];
   /** Per-row actions — each action carries its own click handler */
   actions?: GridAction<TRow>[];
+  /** Optional action column heading; defaults to Actions. */
+  actionsHeader?: string;
   /** Optional expandable detail sub-table rendered below each expanded row */
   details?: GridDetails<TRow, TDetail>;
 }
@@ -949,14 +955,19 @@ export class ITable {
    */
   triggerAction(action: GridAction, row: any, event: Event): void {
     event.stopPropagation();
-    action.handler(row);
+    if (!this.isActionDisabled(action, row)) action.handler(row);
   }
 
   /**
    * Checks if an action is disabled for a row.
    * @internal
    */
+  isActionLoading(action: GridAction, row: any): boolean {
+    return typeof action.loading === 'function' ? action.loading(row) : !!action.loading;
+  }
+
   isActionDisabled(action: GridAction, row: any): boolean {
+    if (this.isActionLoading(action, row)) return true;
     if (typeof action.disabled === 'function') {
       return action.disabled(row);
     }
@@ -1285,6 +1296,7 @@ export class ITable {
       columns: details.columns,
       rows: details.rows(row),
       actions: details.actions,
+      actionsHeader: details.actionsHeader,
     };
   }
 

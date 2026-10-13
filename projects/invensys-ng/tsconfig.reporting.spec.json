@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/reporting-spec"
+  },
+  "include": [
+    "src/lib/components/button/button.component.spec.ts",
+    "src/lib/components/dialog/inner/dialog-actions/dialog-actions.component.spec.ts",
+    "src/lib/components/stepper/stepper.component.spec.ts"
+  ]
+}

@@ -26,6 +26,8 @@ import { CodeDisplayComponent } from '../code-display/code-display.component';
   `,
   styles: [
     `
+      :host { display: block; min-width: 0; }
+
       .demo-card-content {
         padding: 20px 0;
       }

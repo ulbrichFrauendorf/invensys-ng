@@ -21,7 +21,7 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
         Details content
       </i-step>
       <i-step label="Columns">Columns content</i-step>
-      <i-step label="Review" [disabled]="reviewDisabled">Review content</i-step>
+      <i-step label="Review" [disabled]="reviewDisabled" [completed]="reviewComplete">Review content</i-step>
     </i-stepper>
   `,
 })
@@ -30,6 +30,7 @@ class TestHostComponent {
   linear = false;
   detailsComplete = false;
   reviewDisabled = true;
+  reviewComplete = false;
   lastChange: StepperChangeEvent | null = null;
 }
 
@@ -89,6 +90,31 @@ describe('IStepper', () => {
     expect(stepper.canSelect(1)).toBe(true);
   });
 
+  it('replaces the trailing chevron with a tick when a step is completed', () => {
+    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
+    expect(first.querySelector('.i-stepper__chevron')).not.toBeNull();
+    expect(first.querySelector('.i-stepper__completion')).toBeNull();
+    host.detailsComplete = true;
+    fixture.detectChanges();
+    expect(first.querySelector('.i-stepper__chevron')).toBeNull();
+    expect(first.querySelector('.i-stepper__completion')).not.toBeNull();
+  });
+
+  it('shows a completed final step while keeping its panel active', () => {
+    host.reviewDisabled = false;
+    host.activeIndex = 2;
+    host.reviewComplete = true;
+    fixture.detectChanges();
+    const final = fixture.debugElement.queryAll(By.css('.i-stepper__trigger'))[2].nativeElement;
+    expect(final.querySelector('.i-stepper__completion')).not.toBeNull();
+    expect(final.querySelector('.i-stepper__chevron')).toBeNull();
+    expect(final.getAttribute('aria-current')).toBe('step');
+    expect(fixture.debugElement.query(By.css('.i-stepper__panel--active')).nativeElement.textContent).toContain('Review content');
+    host.reviewComplete = false;
+    fixture.detectChanges();
+    expect(final.querySelector('.i-stepper__chevron')).not.toBeNull();
+  });
+
   it('exposes step progress semantics', () => {
     const first = fixture.debugElement.query(
       By.css('.i-stepper__trigger'),
@@ -98,9 +124,9 @@ describe('IStepper', () => {
     expect(first.textContent).toContain('Step 1 of 3');
   });
 
-  it('keeps the step number visible when a custom icon is used', () => {
-    const step = fixture.debugElement.query(By.directive(IStep))
-      .componentInstance as IStep;
+  it('keeps accessible step position when a custom icon is used', () => {
+    const stepper = fixture.debugElement.query(By.directive(IStepper)).componentInstance as IStepper;
+    const step = stepper.steps[0];
     step.icon = 'pi pi-file-edit';
     fixture.detectChanges();
 

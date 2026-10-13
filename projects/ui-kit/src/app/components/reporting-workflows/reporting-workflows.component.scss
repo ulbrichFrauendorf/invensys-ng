@@ -1,0 +1,15 @@
+@use '../shared-demo-styles.scss' as *;
+.workflow-demo { @extend .demo-component; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; min-width: 0; }
+.workspace--narrow { max-width: 390px; }
+.demo-tools { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.step-content { padding-block: 0.5rem; }
+h2 { margin: 0 0 0.5rem; font-size: 1.2rem; }
+p { color: var(--color-text-secondary); line-height: 1.6; }
+.editor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; align-items: start; }
+.workflow-footer { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--surface-border); }
+.workflow-footer span { color: var(--color-text-secondary); }
+.section-heading { margin-bottom: 1rem; }
+.saved-message { color: var(--color-success); }
+.workspace--narrow .editor-grid { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 900px) { .editor-grid { grid-template-columns: minmax(0, 1fr); } }

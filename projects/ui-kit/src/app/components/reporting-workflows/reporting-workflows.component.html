@@ -1,0 +1,44 @@
+<div class="workflow-demo">
+  <header class="demo-header"><h1>Reporting workflows</h1><p>Build focused workspaces from shared controls. These interactive examples use sample data and do not run or save real reports.</p></header>
+  <div class="demo-tools"><i-button severity="contrast" [outlined]="true" (clicked)="narrow = !narrow">{{ narrow ? 'Use full width' : 'Preview narrow workspace' }}</i-button></div>
+  <div class="workspace" [class.workspace--narrow]="narrow">
+    <app-demo-card title="Report builder" [sourceCode]="sourceCode">
+      <i-stepper [(activeIndex)]="activeIndex" ariaLabel="Report setup">
+        <i-step label="Report details" description="Name and layout" icon="pi pi-file-edit" [completed]="!!name.trim()">
+          <section class="step-content"><h2>Start with the essentials</h2><p>Give the report a clear name so your team can find it later.</p><i-input-text label="Report name" [(ngModel)]="name" [fluid]="true" /></section>
+        </i-step>
+        <i-step label="Choose columns" [description]="selected.length + ' selected'" icon="pi pi-table" [disabled]="!name.trim()" [completed]="selected.length > 0">
+          <section class="step-content"><h2>Make the spreadsheet yours</h2><p>Select fields, then arrange them in the order you want to see.</p>
+            <div class="editor-grid"><i-field-picker [options]="fields" [(ngModel)]="selected" /><i-ordered-list [(items)]="selected" [itemLabel]="label" ariaLabel="Spreadsheet columns" emptyMessage="Select fields from the catalog to start your spreadsheet." /></div>
+          </section>
+        </i-step>
+        <i-step label="Refine results" description="Filters and sorting" icon="pi pi-sliders-h" [optional]="true" [completed]="isSaved()" [disabled]="!name.trim() || !selected.length">
+          <section class="step-content"><h2>Focus on the results that matter</h2><p>Filters are optional. Continue if you need all results.</p><i-rule-editor [fields]="ruleFields" [operators]="operators" [(rules)]="rules" addLabel="Add filter" emptyMessage="All matching records are included." /></section>
+        </i-step>
+        <i-step label="Preview & save" description="Review final headings" icon="pi pi-eye" [completed]="isSaved()" [disabled]="!name.trim() || !selected.length">
+          <section class="step-content"><h2>{{ name }}</h2><p>{{ selected.length }} columns · {{ rules.length }} filters</p><i-ordered-list [(items)]="selected" [itemLabel]="label" [removable]="false" ariaLabel="Final headings" /></section>
+        </i-step>
+      </i-stepper>
+      <footer class="workflow-footer">
+        <i-button severity="contrast" [text]="true" [disabled]="activeIndex === 0" (clicked)="activeIndex = activeIndex - 1">Back</i-button>
+        <span>Step {{ activeIndex + 1 }} of 4</span>
+        @if (activeIndex < 3) { <i-button [disabled]="!name.trim() || (activeIndex > 0 && !selected.length)" (clicked)="next()">Continue</i-button> }
+        @else { <i-button icon="pi pi-check" [disabled]="!name.trim() || !selected.length" (clicked)="save()">Save example</i-button> }
+      </footer>
+      @if (isSaved()) { <p role="status" class="saved-message">Example saved for this session. No report was sent to a server.</p> }
+    </app-demo-card>
+    <app-demo-card title="Automation workspace" [sourceCode]="tableCode">
+      <header class="section-heading"><h2>Your automations</h2><p>Expand a row to see the report sequence. Grouped data uses GridData.details, with a stable dataKey.</p></header>
+      <i-table [grid]="automations" dataKey="id" [globalFilter]="true" />
+    </app-demo-card>
+    <app-demo-card title="Clear dialog actions" [sourceCode]="actionsCode">
+      <p>Use a specific action label and a filled primary action. Loading prevents repeated submissions.</p>
+      <div class="demo-tools">
+        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'ready'">Ready</i-button>
+        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'loading'">Loading</i-button>
+        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'disabled'">Invalid form</i-button>
+      </div>
+      <i-dialog-actions submitLabel="Save automation" [submitLoading]="actionState === 'loading'" [submitDisabled]="actionState === 'disabled'" (submitEvent)="actionState = 'loading'" (cancelEvent)="actionState = 'ready'" />
+    </app-demo-card>
+  </div>
+</div>

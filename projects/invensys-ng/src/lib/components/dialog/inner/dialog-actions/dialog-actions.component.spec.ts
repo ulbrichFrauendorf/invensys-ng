@@ -52,6 +52,22 @@ describe('IDialogActions', () => {
     });
   });
 
+  it('does not submit while disabled or loading, then submits once ready', () => {
+    const emit = spyOn(component.submitEvent, 'emit');
+    component.submitDisabled = true;
+    component.onSubmit();
+    component.submitDisabled = false;
+    component.submitLoading = true;
+    component.onSubmit();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('button[type="submit"]').disabled).toBeTrue();
+    expect(emit).not.toHaveBeenCalled();
+    component.submitLoading = false;
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('button[type="submit"]').click();
+    expect(emit).toHaveBeenCalledTimes(1);
+  });
+
   describe('Visibility', () => {
     it('should show cancel button by default', () => {
       const cancelButton = fixture.nativeElement.querySelectorAll('button');

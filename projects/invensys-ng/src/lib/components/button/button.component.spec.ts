@@ -23,6 +23,17 @@ describe('IButton', () => {
     expect(component).toBeTruthy();
   });
 
+  it('puts the accessible action name and expansion state on the native button', () => {
+    component.ariaLabel = 'Expand details';
+    component.ariaExpanded = false;
+    fixture.detectChanges();
+    expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe('Expand details');
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('false');
+    component.ariaExpanded = true;
+    fixture.detectChanges();
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('true');
+  });
+
   describe('Component Inputs', () => {
     it('should have default values', () => {
       expect(component.severity).toBe('primary');

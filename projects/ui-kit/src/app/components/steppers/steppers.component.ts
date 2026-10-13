@@ -19,6 +19,7 @@ export class SteppersComponent {
   activeIndex = 0;
   detailsComplete = false;
   columnsComplete = false;
+  resultsComplete = false;
 
   readonly sourceCode = `<i-stepper [(activeIndex)]="activeIndex" [linear]="true">
   <i-step
@@ -42,21 +43,23 @@ export class SteppersComponent {
     description="Optional filters and sorting"
     icon="pi pi-sliders-h"
     [optional]="true"
+    [completed]="resultsComplete"
   >
-    <!-- Third step content -->
+    <i-button (clicked)="resultsComplete = true">Save report</i-button>
   </i-step>
 </i-stepper>`;
 
-  readonly tsCode = `import { IStep, IStepper } from 'invensys-ng';
+  readonly tsCode = `import { IButton, IStep, IStepper } from 'invensys-ng';
 
 @Component({
-  imports: [IStep, IStepper],
+  imports: [IButton, IStep, IStepper],
   templateUrl: './report-wizard.component.html'
 })
 export class ReportWizardComponent {
   activeIndex = 0;
   detailsComplete = false;
   columnsComplete = false;
+  resultsComplete = false;
 }`;
 
   readonly features: Feature[] = [
@@ -68,12 +71,12 @@ export class ReportWizardComponent {
     {
       title: 'Progress states',
       description:
-        'Step counts remain visible alongside active, completed, optional, and disabled states.',
+        'Simple tiles show a title, supporting detail and completion check. Step position remains available to assistive technology.',
     },
     {
       title: 'Custom icons',
       description:
-        'Use the same PrimeIcons classes as tabs without losing step-number context.',
+        'Use the same small PrimeIcons as tabs, with accessible step-position context.',
     },
     {
       title: 'Accessible navigation',

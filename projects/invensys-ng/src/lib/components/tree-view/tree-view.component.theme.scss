@@ -3,7 +3,7 @@
 
 @mixin i-tree-view-theme() {
   .i-tree-view-wrapper {
-    background-color: colors.$color-surface-ground;
+    background-color: colors.$color-component-background-secondary;
     color: colors.$color-text-primary;
     border: 1px solid colors.$color-surface-border;
     border-radius: vars.$componentBorderRadius;

@@ -589,3 +589,13 @@ $table-transition: 0.15s ease;
     }
   }
 }
+
+
+// Keep search and projected actions usable in narrow cards and detail panels.
+:host { display: block; min-width: 0; }
+.i-table-wrapper .i-table-header {
+  flex-wrap: wrap;
+  .i-table-header-start { min-width: 0; flex-wrap: wrap; gap: 0.75rem; }
+  .i-table-header-end { min-width: 0; flex-wrap: wrap; }
+  .i-table-header-end .i-table-global-filter { width: min(250px, 100%); }
+}

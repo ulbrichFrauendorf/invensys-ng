@@ -46,7 +46,8 @@
         <i-input-text
           #searchInput
           [useFloatLabel]="false"
-          placeholder="Search..."
+          [label]="'Search ' + title"
+          placeholder="Search…"
           [ngModel]="filterValue()"
           (ngModelChange)="filterValue.set($event)"
           [fluid]="true"

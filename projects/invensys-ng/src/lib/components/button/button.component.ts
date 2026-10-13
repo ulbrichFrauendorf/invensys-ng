@@ -81,6 +81,12 @@ export class IButton implements AfterViewInit {
    */
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
+  /** Accessible name for icon-only actions. Visible text is used when omitted. */
+  @Input() ariaLabel?: string;
+
+  /** Expansion state for a button that reveals or hides content. */
+  @Input() ariaExpanded: boolean | null = null;
+
   /**
    * Whether the button is disabled
    * @default false

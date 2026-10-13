@@ -15,6 +15,10 @@ export class IDialogActions {
   @Input() showCancel = true;
   @Input() showSubmit = true;
   @Input() submitDisabled = false;
+  /** Show progress and prevent repeated submission while a request is pending. */
+  @Input() submitLoading = false;
+  /** Use an outlined action when the dialog is secondary to another workflow. */
+  @Input() submitOutlined = false;
   @Output() cancelEvent = new EventEmitter<void>();
   @Output() submitEvent = new EventEmitter<void>();
 
@@ -23,6 +27,6 @@ export class IDialogActions {
   }
 
   onSubmit() {
-    this.submitEvent.emit();
+    if (!this.submitDisabled && !this.submitLoading) this.submitEvent.emit();
   }
 }

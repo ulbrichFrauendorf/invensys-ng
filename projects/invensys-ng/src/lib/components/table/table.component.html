@@ -10,10 +10,11 @@
           <div class="i-table-global-filter">
             <i-input-text
               [useFloatLabel]="false"
-              placeholder="Search..."
+              label="Search table"
+              placeholder="Search…"
               [ngModel]="globalFilterValue()"
               (ngModelChange)="onGlobalFilterInput($event)"
-              [fluid]="false"
+              [fluid]="true"
               [icon]="'pi pi-search'"
             ></i-input-text>
           </div>
@@ -168,6 +169,8 @@
                       ? 'pi pi-chevron-down'
                       : 'pi pi-chevron-right'
                   "
+                  [ariaLabel]="isRowExpanded(row) ? 'Collapse details' : 'Expand details'"
+                  [ariaExpanded]="isRowExpanded(row)"
                   (clicked)="toggleRowExpansion(row, $event)"
                 ></i-button>
               </td>
@@ -221,6 +224,7 @@
                         [icon]="action.icon || ''"
                         [disabled]="isActionDisabled(action, row)"
                         [iTooltip]="getActionTooltip(action, row)"
+                        [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                         [class.i-action-hidden]="!isActionVisible(action, row)"
                         (clicked)="triggerAction(action, row, $event)"
                       >
@@ -451,6 +455,7 @@
                     [icon]="action.icon || ''"
                     [disabled]="isActionDisabled(action, row)"
                     [iTooltip]="getActionTooltip(action, row)"
+                        [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                     [class.i-action-hidden]="!isActionVisible(action, row)"
                     (clicked)="triggerAction(action, row, $event)"
                   >
@@ -623,6 +628,7 @@
                         [icon]="action.icon || ''"
                         [disabled]="isActionDisabled(action, row)"
                         [iTooltip]="getActionTooltip(action, row)"
+                        [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
                         [class.i-action-hidden]="!isActionVisible(action, row)"
                         (clicked)="triggerAction(action, row, $event)"
                       >

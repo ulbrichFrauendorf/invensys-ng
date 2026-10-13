@@ -20,6 +20,7 @@
         #inputElement
         [id]="id || componentId"
         [type]="type"
+        [attr.aria-label]="!useFloatLabel ? label : null"
         [disabled]="disabled"
         [readonly]="readonly"
         [value]="hideText ? '' : value || ''"

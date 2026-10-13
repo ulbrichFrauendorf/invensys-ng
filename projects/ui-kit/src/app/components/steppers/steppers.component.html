@@ -56,10 +56,13 @@
           description="Optional filters and sorting"
           icon="pi pi-sliders-h"
           [optional]="true"
+          [completed]="resultsComplete"
         >
           <div class="step-content">
             <h3>Refine results</h3>
             <p>Add optional filters and sorting before saving the report.</p>
+            <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
+            @if (resultsComplete) { <p role="status">Report saved. All steps are complete.</p> }
           </div>
         </i-step>
       </i-stepper>

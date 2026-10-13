@@ -17,6 +17,9 @@
     ]"
     [disabled]="disabled || loading"
     [attr.type]="type"
+    [attr.aria-label]="ariaLabel || null"
+    [attr.aria-expanded]="ariaExpanded"
+    [attr.aria-busy]="loading || null"
     (click)="clicked.emit($event)"
   >
     @if (loading) {
@@ -37,6 +40,7 @@
     >
       @if (icon) {
         <i
+          aria-hidden="true"
           [ngClass]="[icon, 'i-button__icon', iconOnly ? 'icon-only' : '']"
         ></i>
       }

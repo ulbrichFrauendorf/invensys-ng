@@ -233,6 +233,7 @@ export class AppLayoutComponent {
     {
       label: 'Examples',
       items: [
+        { label: 'Reporting Workflows', icon: 'pi pi-fw pi-file-excel', routerLink: ['/components/reporting-workflows'] },
         {
           label: 'Component Interactions',
           icon: 'pi pi-fw pi-sitemap',

@@ -44,6 +44,11 @@ export class AppLayoutComponent {
       label: 'Form Controls',
       items: [
         {
+          label: 'File Upload',
+          icon: 'pi pi-fw pi-cloud-upload',
+          routerLink: ['/components/file-uploads'],
+        },
+        {
           label: 'Data Editors',
           icon: 'pi pi-fw pi-sliders-h',
           routerLink: ['/components/data-editors'],

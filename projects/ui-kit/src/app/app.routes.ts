@@ -1,6 +1,7 @@
 import { DataEditorsComponent } from './components/data-editors/data-editors.component';
 import { ReportingWorkflowsComponent } from './components/reporting-workflows/reporting-workflows.component';
 import { Routes } from '@angular/router';
+import { FileUploadsComponent } from './components/file-uploads/file-uploads.component';
 import { AppLayoutComponent } from './layout/app-layout.component';
 import { AccordionsComponent } from './components/accordions/accordions.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
@@ -59,6 +60,7 @@ export const routes: Routes = [
         path: 'components',
         children: [
           { path: 'reporting-workflows', component: ReportingWorkflowsComponent },
+          { path: 'file-uploads', component: FileUploadsComponent },
           { path: 'data-editors', component: DataEditorsComponent },
           { path: 'accordions', component: AccordionsComponent },
           { path: 'buttons', component: ButtonsComponent },

@@ -1,0 +1,22 @@
+@use '../../themes/color-variables.scss' as colors;
+
+@mixin i-file-upload-theme() {
+  .i-file-upload {
+    color: colors.$color-text-primary;
+    &__drop-zone {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-component-background;
+      &--active, &:focus-within {
+        border-color: colors.$color-primary;
+        background: colors.$color-surface-hover;
+      }
+    }
+    &__icon, &__row > i { color: colors.$color-primary; }
+    &__description { color: colors.$color-text-secondary; }
+    &__row { border-color: colors.$color-surface-border; }
+    &--disabled &__drop-zone {
+      background: colors.$color-disabled-background;
+      border-color: colors.$color-disabled-border;
+    }
+  }
+}

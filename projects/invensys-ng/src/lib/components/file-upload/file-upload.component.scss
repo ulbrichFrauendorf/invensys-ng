@@ -1,0 +1,43 @@
+@use './file-upload.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
+
+@include theme.i-file-upload-theme();
+
+:host { display: block; }
+
+.i-file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .75rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border: 2px dashed;
+    border-radius: vars.$borderRadius;
+    transition: border-color vars.$transitionDuration, background vars.$transitionDuration;
+  }
+
+  &__icon { font-size: 2rem; }
+  &--disabled &__drop-zone { opacity: .65; }
+  &__list { display: flex; flex-direction: column; gap: .5rem; }
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .5rem;
+    border-bottom: 1px solid;
+    small { white-space: nowrap; }
+  }
+  &__name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

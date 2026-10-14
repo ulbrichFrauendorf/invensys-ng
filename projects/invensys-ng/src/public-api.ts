@@ -21,6 +21,8 @@ export * from './lib/components/dialog/services/dialog.service';
 export * from './lib/components/dialog/services/dialog.interfaces';
 export * from './lib/components/divider/divider.component';
 export * from './lib/components/empty-state/empty-state.component';
+export * from './lib/components/file-upload/file-upload.component';
+export * from './lib/components/file-upload/file-upload.types';
 export * from './lib/components/input-text/input-text.component';
 export * from './lib/components/textarea/textarea.component';
 export * from './lib/components/tag/tag.component';

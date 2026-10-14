@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": { "outDir": "../../out-tsc/file-upload-spec" },
+  "include": ["src/lib/components/file-upload/file-upload.component.spec.ts"]
+}

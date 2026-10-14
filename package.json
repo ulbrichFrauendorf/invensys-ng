@@ -11,6 +11,7 @@
     "build:mcp-catalog": "node tools/mcp/generate-catalog.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:file-upload": "ng test invensys-ng --watch=false --browsers=ChromeHeadless --ts-config=projects/invensys-ng/tsconfig.file-upload.spec.json --include=projects/invensys-ng/src/lib/components/file-upload/file-upload.component.spec.ts",
     "test:reporting": "ng test invensys-ng --watch=false --browsers=ChromeHeadless --ts-config=projects/invensys-ng/tsconfig.reporting.spec.json --include=projects/invensys-ng/src/lib/components/button/button.component.spec.ts --include=projects/invensys-ng/src/lib/components/dialog/inner/dialog-actions/dialog-actions.component.spec.ts --include=projects/invensys-ng/src/lib/components/stepper/stepper.component.spec.ts --include=projects/invensys-ng/src/lib/components/table/table-actions.component.spec.ts"
   },
   "private": true,

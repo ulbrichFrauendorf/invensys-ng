@@ -23,7 +23,6 @@ export class CardsComponent {
     throw new Error('Method not implemented.');
   }
   showClosableCard = true;
-
   // Code examples organized by category
   codeExamples = {
     basic: `<i-card [title]="'Card Title'">

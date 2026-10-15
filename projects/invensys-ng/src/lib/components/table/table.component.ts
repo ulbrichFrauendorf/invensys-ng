@@ -374,6 +374,12 @@ export class ITable {
    */
   @Input() bordered = false;
 
+  /** Show horizontal separators between body rows. @default true */
+  @Input() rowBorders = true;
+
+  /** Show bottom borders within expanded detail tables. @default true */
+  @Input() detailRowBorders = true;
+
   /**
    * Table size
    * @default 'medium'
@@ -1225,6 +1231,8 @@ export class ITable {
       'i-table--striped': this.striped,
       'i-table--hoverable': this.hoverable,
       'i-table--bordered': this.bordered,
+      'i-table--no-row-borders': !this.rowBorders,
+      'i-table--no-detail-row-borders': !this.detailRowBorders,
       'i-table--small': this.size === 'small',
       'i-table--medium': this.size === 'medium',
       'i-table--large': this.size === 'large',

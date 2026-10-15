@@ -33,7 +33,8 @@
     <app-demo-card [title]="'Checkbox Selection'">
       <p>
         Select nodes using checkboxes. Child selections propagate to parents.
-        The component includes an integrated "Select All" checkbox.
+        Search for a node, select it, then clear the search to keep working with
+        your selection. The component includes an integrated "Select All" checkbox.
       </p>
 
       <div class="demo-actions">
@@ -46,6 +47,7 @@
         [value]="organizationData"
         selectionMode="checkbox"
         [selectAll]="true"
+        filterPlaceholder="Search organization..."
         [(selection)]="checkboxSelection"
         (onNodeSelect)="onCheckboxNodeSelect($event)"
         (onNodeUnselect)="onCheckboxNodeUnselect($event)"
@@ -230,8 +232,8 @@
             <tr>
               <td>filter</td>
               <td>boolean</td>
-              <td>false</td>
-              <td>Whether to show filter input</td>
+              <td>true</td>
+              <td>Show the search bar; set false to hide it</td>
             </tr>
             <tr>
               <td>filterPlaceholder</td>

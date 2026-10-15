@@ -2,12 +2,13 @@
   @if (filter) {
     <div class="i-tree-view-filter-container">
       <i-input-text
-        [(ngModel)]="filterValue"
+        [ngModel]="filterValue"
+        (ngModelChange)="filterValue = $event; applyFilter()"
+        label="Search tree"
         [placeholder]="filterPlaceholder"
         [icon]="'pi pi-search'"
         [useFloatLabel]="false"
         [fluid]="true"
-        (input)="onFilterKeyup($event)"
         class="i-tree-view-filter"
       >
       </i-input-text>

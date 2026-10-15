@@ -109,6 +109,11 @@ export class AppLayoutComponent {
           routerLink: ['/components/buttons'],
         },
         {
+          label: 'Card Buttons',
+          icon: 'pi pi-fw pi-id-card',
+          routerLink: ['/components/card-buttons'],
+        },
+        {
           label: 'Chips',
           icon: 'pi pi-fw pi-tag',
           routerLink: ['/components/chips'],

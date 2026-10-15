@@ -137,10 +137,10 @@ export class ITreeView implements OnInit, OnChanges {
   @Input() togglerTemplate?: string;
 
   /**
-   * Enables filtering of tree nodes
-   * @default false
+   * Shows the search bar. Set to false to hide it.
+   * @default true
    */
-  @Input() filter = false;
+  @Input() filter = true;
 
   /**
    * Property name to use for filtering
@@ -257,6 +257,12 @@ export class ITreeView implements OnInit, OnChanges {
    */
   private temporaryHighlighted = new Set<ITreeNode>();
 
+  private filteredSources = new WeakMap<ITreeNode, ITreeNode>();
+
+  private sourceNode(node: ITreeNode): ITreeNode {
+    return this.filteredSources.get(node) || node;
+  }
+
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -265,7 +271,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['value']) {
+    if (changes['value'] || changes['filter'] || changes['filterBy'] || changes['filterMode']) {
       this.updateSerializedValue();
       this.updateSelectAllState();
     }
@@ -300,15 +306,18 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   applyFilter() {
+    this.filteredSources = new WeakMap<ITreeNode, ITreeNode>();
     if (!this.filterValue.trim()) {
       this.filteredValue = this.value;
+      this.updateSelectAllState();
       return;
     }
 
     this.filteredValue = this.filterNodes(
       this.value,
-      this.filterValue.toLowerCase(),
+      this.filterValue.trim().toLowerCase(),
     );
+    this.updateSelectAllState();
   }
 
   filterNodes(nodes: ITreeNode[], filterValue: string): ITreeNode[] {
@@ -322,6 +331,7 @@ export class ITreeView implements OnInit, OnChanges {
 
       if (nodeMatches || filteredChildren.length > 0) {
         const clonedNode = { ...node };
+        this.filteredSources.set(clonedNode, node);
         if (filteredChildren.length > 0) {
           clonedNode.children = filteredChildren;
           clonedNode.expanded = true;
@@ -339,6 +349,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   isSelected(node: ITreeNode): boolean {
+    node = this.sourceNode(node);
     if (this.selectionMode === 'single') {
       return this.selection === node;
     } else if (
@@ -353,6 +364,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   isNodeHighlighted(node: ITreeNode): boolean {
+    node = this.sourceNode(node);
     if (this.selectionMode === 'checkbox') {
       return this.temporaryHighlighted.has(node);
     }
@@ -360,10 +372,11 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   isTemporarilyHighlighted(node: ITreeNode): boolean {
-    return this.temporaryHighlighted.has(node);
+    return this.temporaryHighlighted.has(this.sourceNode(node));
   }
 
   private addTemporaryHighlight(node: ITreeNode) {
+    node = this.sourceNode(node);
     this.temporaryHighlighted.add(node);
     setTimeout(() => {
       this.temporaryHighlighted.delete(node);
@@ -372,6 +385,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   isPartiallySelected(node: ITreeNode): boolean {
+    node = this.sourceNode(node);
     if (this.selectionMode !== 'checkbox' || !node.children) {
       return false;
     }
@@ -404,6 +418,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   selectSingleNode(event: Event, node: ITreeNode) {
+    node = this.sourceNode(node);
     if (this.selection === node) {
       this.selection = null;
       this.onNodeUnselect.emit({ originalEvent: event, node });
@@ -415,6 +430,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   selectMultipleNode(event: Event, node: ITreeNode) {
+    node = this.sourceNode(node);
     const selection = Array.isArray(this.selection) ? [...this.selection] : [];
     this.selection = selection;
     const index = selection.indexOf(node);
@@ -430,6 +446,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   selectCheckboxNode(event: Event, node: ITreeNode) {
+    node = this.sourceNode(node);
     const selection = Array.isArray(this.selection) ? [...this.selection] : [];
     const selected = this.isSelected(node);
 
@@ -581,7 +598,7 @@ export class ITreeView implements OnInit, OnChanges {
   onSelectAllChange() {
     if (this.selectionMode !== 'checkbox') return;
 
-    const allNodes = this.flattenNodes(this.filteredValue);
+    const allNodes = this.flattenNodes(this.filteredValue).map(node => this.sourceNode(node));
     const previousSelection = Array.isArray(this.selection)
       ? this.selection
       : [];
@@ -592,7 +609,7 @@ export class ITreeView implements OnInit, OnChanges {
     });
 
     if (this.selectAllChecked) {
-      this.selection = allNodes;
+      this.selection = [...new Set([...previousSelection, ...allNodes])];
 
       allNodes.forEach((node) => {
         if (!previousSelection.includes(node)) {
@@ -600,9 +617,9 @@ export class ITreeView implements OnInit, OnChanges {
         }
       });
     } else {
-      this.selection = [];
+      this.selection = previousSelection.filter(node => !allNodes.includes(node));
 
-      previousSelection.forEach((node) => {
+      previousSelection.filter(node => allNodes.includes(node)).forEach((node) => {
         this.onNodeUnselect.emit({ originalEvent: fakeEvent, node });
       });
     }
@@ -624,9 +641,9 @@ export class ITreeView implements OnInit, OnChanges {
   updateSelectAllState() {
     if (this.selectionMode !== 'checkbox' || !this.selectAll) return;
 
-    const allNodes = this.flattenNodes(this.filteredValue);
+    const allNodes = this.flattenNodes(this.filteredValue).map(node => this.sourceNode(node));
     const selectedNodes = Array.isArray(this.selection) ? this.selection : [];
     this.selectAllChecked =
-      allNodes.length > 0 && selectedNodes.length === allNodes.length;
+      allNodes.length > 0 && allNodes.every(node => selectedNodes.includes(node));
   }
 }

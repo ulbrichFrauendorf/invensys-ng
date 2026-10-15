@@ -1,0 +1,28 @@
+<ng-template #card>
+  <i-card [title]="title()" [fullHeight]="fullHeight()">
+    <ng-content select="[slot=header]" ngProjectAs="[slot=header]">
+      @if (title()) { <span class="i-card-title">{{ title() }}</span> }
+    </ng-content>
+    <ng-content />
+    <ng-content select="[slot=footer]" ngProjectAs="[slot=footer]" />
+  </i-card>
+</ng-template>
+
+@if (routerLink() !== null) {
+  <a class="i-card-button" [class.i-card-button--selected]="selected()"
+    [routerLink]="disabled() ? null : routerLink()" [queryParams]="queryParams()"
+    [fragment]="fragment()" [target]="target()"
+    [attr.aria-label]="ariaLabel()" [attr.aria-controls]="ariaControls()"
+    [attr.aria-current]="selected() ? 'page' : null"
+    [attr.aria-disabled]="disabled() ? 'true' : null"
+    [attr.tabindex]="disabled() ? -1 : null" (click)="activate($event)">
+    <ng-container [ngTemplateOutlet]="card" />
+  </a>
+} @else {
+  <button type="button" class="i-card-button" [class.i-card-button--selected]="selected()"
+    [disabled]="disabled()" [attr.aria-label]="ariaLabel()"
+    [attr.aria-controls]="ariaControls()" [attr.aria-pressed]="selected()"
+    (click)="activate($event)">
+    <ng-container [ngTemplateOutlet]="card" />
+  </button>
+}

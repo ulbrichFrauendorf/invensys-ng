@@ -262,16 +262,42 @@ function parseInputsOutputs(source) {
     }
   }
 
+  // Inferred signal declarations are the standard form for new components.
+  const inferredInputRegex =
+    /^\s*(?:readonly\s+)?([A-Za-z0-9_$]+)\s*=\s*input(?:\.(required))?(?:<([^;\n]+?)>)?\(([^;]*)\);/gm;
+  for (const match of source.matchAll(inferredInputRegex)) {
+    const args = match[4]?.trim() || '';
+    const defaultValue = args.split(/,\s*\{/)[0].trim();
+    const alias = args.match(/alias\s*:\s*['"]([^'"]+)['"]/)?.[1];
+    if (!inputs.some((input) => input.name === match[1])) {
+      inputs.push({
+        name: match[1],
+        binding: alias || match[1],
+        type: match[3]?.trim() || (/^(true|false)$/.test(defaultValue) ? 'boolean' : undefined),
+        default: defaultValue || undefined,
+        required: Boolean(match[2]),
+        transform: args.match(/transform\s*:\s*([A-Za-z0-9_$]+)/)?.[1],
+      });
+    }
+  }
+
+  const signalOutputRegex =
+    /^\s*(?:readonly\s+)?([A-Za-z0-9_$]+)\s*=\s*output(?:<([^;\n]+?)>)?\(([^;]*)\);/gm;
+  for (const match of source.matchAll(signalOutputRegex)) {
+    const alias = match[3]?.match(/alias\s*:\s*['"]([^'"]+)['"]/)?.[1];
+    if (!outputs.some((output) => output.name === match[1])) {
+      outputs.push({ name: match[1], binding: alias || match[1], type: match[2]?.trim() || 'void' });
+    }
+  }
+
   return { inputs, outputs };
 }
 
 function parseTemplateSlots(templateText) {
   return [
-    ...templateText.matchAll(
-      /<ng-content(?:\s+select=["']([^"']+)["'])?\s*><\/ng-content>|<ng-content(?:\s+select=["']([^"']+)["'])?\s*\/>/g,
-    ),
+    ...templateText.matchAll(/<ng-content\b([^>]*)>/g),
   ]
-    .map((match) => match[1] || match[2] || "default")
+    .map((match) => match[1].match(/\bselect=["']([^"']+)["']/)?.[1] || "default")
     .filter(Boolean);
 }
 

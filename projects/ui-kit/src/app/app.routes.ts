@@ -9,6 +9,7 @@ import { InputTextsComponent } from './components/input-texts/input-texts.compon
 import { TextareasComponent } from './components/textareas/textareas.component';
 import { CalendarsComponent } from './components/calendars/calendars.component';
 import { CardsComponent } from './components/cards/cards.component';
+import { CardButtonsComponent } from './components/card-buttons/card-buttons.component';
 import { DialogsComponent } from './components/dialogs/dialogs.component';
 import { ConfirmationDialogsComponent } from './components/confirmation-dialogs/confirmation-dialogs.component';
 import { TooltipsComponent } from './components/tooltips/tooltips.component';
@@ -64,6 +65,7 @@ export const routes: Routes = [
           { path: 'data-editors', component: DataEditorsComponent },
           { path: 'accordions', component: AccordionsComponent },
           { path: 'buttons', component: ButtonsComponent },
+          { path: 'card-buttons', component: CardButtonsComponent },
           { path: 'calendars', component: CalendarsComponent },
           { path: 'cards', component: CardsComponent },
           { path: 'charts', component: ChartsComponent },

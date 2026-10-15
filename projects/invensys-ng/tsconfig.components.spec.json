@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": { "outDir": "../../out-tsc/components-spec" },
+  "include": [
+    "src/lib/components/card-button/card-button.component.spec.ts",
+    "src/lib/components/tree-view/tree-view.component.spec.ts",
+    "src/lib/components/table/table-detail-borders.component.spec.ts",
+    "src/lib/components/file-upload/file-upload.component.spec.ts"
+  ]
+}

@@ -207,6 +207,24 @@
     }
 
     // Hoverable variant
+    // Scope separators to this table so parent themes cannot reintroduce
+    // borders into a nested table that has disabled them.
+    &.i-table--no-row-borders > .i-table-container > table > tbody > tr {
+      border-bottom: none;
+      > td { border-bottom: none; }
+    }
+
+    &.i-table--no-row-borders > .i-table-container--virtual-scroll
+      .i-table-virtual-viewport .i-table-virtual-row {
+      border-bottom: none;
+    }
+
+    &.i-table--no-detail-row-borders > .i-table-container > table > tbody > .i-table-expanded-row {
+      border-bottom: none;
+      > td { border-bottom: none; }
+    }
+
+    // Hoverable variant
     &.i-table--hoverable {
       table
         tbody

@@ -48,7 +48,14 @@
       [sourceCode]="codeExamples.detail"
       [tsCode]="tsCodeExamples.detail"
     >
-      <i-table [grid]="detailGrid" [sortable]="true" [striped]="true"></i-table>
+      <p>Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide their bottom borders.</p>
+      <label>
+        <input type="checkbox" [checked]="showDetailRowBorders"
+          (change)="showDetailRowBorders = $any($event.target).checked" />
+        Show detail row borders
+      </label>
+      <i-table [grid]="detailGrid" [sortable]="true" [striped]="true"
+        [detailRowBorders]="showDetailRowBorders"></i-table>
     </app-demo-card>
 
     <!-- ── 4. Icon & Chip Columns ─────────────────────────────────── -->

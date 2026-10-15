@@ -5,7 +5,7 @@
     color: colors.$color-text-primary;
     &__drop-zone {
       border-color: colors.$color-surface-border;
-      background: colors.$color-component-background;
+      background: colors.$color-surface-card;
       &--active, &:focus-within {
         border-color: colors.$color-primary;
         background: colors.$color-surface-hover;

@@ -6,7 +6,7 @@ describe('ITreeView', () => {
   let component: ITreeView;
   let fixture: ComponentFixture<ITreeView>;
 
-  const mockTreeData: ITreeNode[] = [
+  const createTreeData = (): ITreeNode[] => [
     {
       key: '1',
       label: 'Parent 1',
@@ -22,6 +22,8 @@ describe('ITreeView', () => {
     },
   ];
 
+  const mockTreeData = createTreeData();
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ITreeView, FormsModule],
@@ -30,9 +32,7 @@ describe('ITreeView', () => {
     fixture = TestBed.createComponent(ITreeView);
     component = fixture.componentInstance;
 
-    // Use a deep clone of the mock data for each test to avoid shared mutable state
-    const clonedData: any = JSON.parse(JSON.stringify(mockTreeData));
-    component.value = clonedData;
+    component.value = createTreeData();
     fixture.detectChanges();
   });
 
@@ -45,7 +45,7 @@ describe('ITreeView', () => {
       expect(component.selectionMode).toBe('single');
       expect(component.loading).toBe(false);
       expect(component.emptyMessage).toBe('No data found');
-      expect(component.filter).toBe(false);
+      expect(component.filter).toBe(true);
       expect(component.propagateSelectionUp).toBe(true);
       expect(component.propagateSelectionDown).toBe(true);
       expect(component.selectAll).toBe(false);
@@ -217,6 +217,56 @@ describe('ITreeView', () => {
   describe('Filtering', () => {
     beforeEach(() => {
       component.filter = true;
+    });
+
+    it('shows search by default and filters from the input control', async () => {
+      await fixture.whenStable();
+      const input: HTMLInputElement = fixture.nativeElement.querySelector('i-input-text input');
+      expect(input.getAttribute('aria-label')).toBe('Search tree');
+      input.value = 'Child 1-1';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      fixture.detectChanges();
+      expect(component.filteredValue.length).toBe(1);
+      expect(component.filteredValue[0].children?.length).toBe(1);
+    });
+
+    it('keeps the original selected node after clearing a search', () => {
+      const original = component.value[0].children![0];
+      component.filterValue = 'Child 1-1';
+      component.applyFilter();
+      const result = component.filteredValue[0].children![0];
+      component.selectSingleNode(new MouseEvent('click'), result);
+      expect(component.selection).toBe(original);
+      expect(component.isSelected(result)).toBeTrue();
+      component.filterValue = '';
+      component.applyFilter();
+      expect(component.isSelected(original)).toBeTrue();
+    });
+
+    it('propagates checkbox selections through the original hierarchy while searching', () => {
+      component.selectionMode = 'checkbox';
+      component.filterValue = 'Child 1-1';
+      component.applyFilter();
+      component.selectCheckboxNode(new MouseEvent('click'), component.filteredValue[0].children![0]);
+      expect(component.selection).toContain(component.value[0].children![0]);
+      expect(component.selection).toContain(component.value[0]);
+      expect(component.isPartiallySelected(component.filteredValue[0])).toBeTrue();
+    });
+
+    it('keeps hidden selections when select all is toggled in search results', () => {
+      component.selectionMode = 'checkbox';
+      component.selectAll = true;
+      const hidden = component.value[1].children![0];
+      component.selection = [hidden];
+      component.filterValue = 'Child 1-1';
+      component.applyFilter();
+      component.selectAllChecked = true;
+      component.onSelectAllChange();
+      expect(component.selection).toContain(hidden);
+      expect(component.selection).toContain(component.value[0].children![0]);
+      component.selectAllChecked = false;
+      component.onSelectAllChange();
+      expect(component.selection).toEqual([hidden]);
     });
 
     it('should filter nodes by label', () => {

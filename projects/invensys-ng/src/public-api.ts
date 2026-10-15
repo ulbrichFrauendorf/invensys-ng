@@ -8,6 +8,7 @@ export * from './lib/components/accordion-list/accordion-list.component';
 export * from './lib/components/button/button.component';
 export * from './lib/components/calendar/calendar.component';
 export * from './lib/components/card/card.component';
+export * from './lib/components/card-button/card-button.component';
 export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/chip/chip.component';
 export * from './lib/components/chips/chips.component';

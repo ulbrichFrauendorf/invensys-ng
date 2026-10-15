@@ -50,6 +50,7 @@ interface CategorySummary {
   styleUrl: './tables.component.scss',
 })
 export class TablesComponent {
+  showDetailRowBorders = false;
   constructor(private whisperService: WhisperService) {}
 
   // ── Raw data ──────────────────────────────────────────────────────────────
@@ -449,6 +450,7 @@ export class TablesComponent {
 
     detail: `<i-table
   [grid]="detailGrid"
+  [detailRowBorders]="false"
   [sortable]="true"
   [striped]="true"
   [height]="'420px'"

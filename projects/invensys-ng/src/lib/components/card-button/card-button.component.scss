@@ -1,0 +1,40 @@
+@use '../../themes/color-variables.scss' as colors;
+@use '../../themes/variables' as vars;
+
+:host { display: block; min-width: 0; }
+:host(.i-card-button--full-height) { height: 100%; }
+:host(.i-card-button--full-height) .i-card-button { height: 100%; }
+
+.i-card-title { padding-left: 12px; font-size: 1.5em; font-weight: 600; }
+
+.i-card-button {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: vars.$borderRadius;
+  background: transparent;
+  color: colors.$color-text-primary;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+
+  &:hover:not(:disabled):not([aria-disabled='true']) {
+    transform: translateY(-4px);
+    box-shadow: colors.$color-box-shadow;
+    border-color: colors.$color-surface-border;
+    &.i-card-button--selected { border-color: colors.$color-primary; }
+  }
+
+  &.i-card-button--selected { border-color: colors.$color-primary; }
+  &:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: 3px; }
+  &:disabled, &[aria-disabled='true'] { cursor: default; opacity: .65; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .i-card-button { transition: none; }
+  .i-card-button:hover:not(:disabled):not([aria-disabled='true']) { transform: none; }
+}

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IFileUpload } from './file-upload.component';
+import { IPlaceholder } from '../placeholder/placeholder.component';
 
 describe('IFileUpload', () => {
   let fixture: ComponentFixture<IFileUpload>;
@@ -11,6 +12,28 @@ describe('IFileUpload', () => {
     fixture = TestBed.createComponent(IFileUpload);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('uses the placeholder dashed border colour and card surface', () => {
+    const placeholder = TestBed.createComponent(IPlaceholder);
+    placeholder.detectChanges();
+    // TestBed's renderer replaces the previous root when creating a second fixture.
+    document.body.appendChild(fixture.nativeElement);
+    for (const host of [fixture.nativeElement, placeholder.nativeElement]) {
+      host.style.setProperty('--surface-border', 'rgb(123, 124, 125)');
+      host.style.setProperty('--surface-card', 'rgb(240, 241, 242)');
+      host.style.setProperty('--color-component-background', 'rgb(10, 11, 12)');
+      host.style.setProperty('--color-text-primary', 'rgb(20, 21, 22)');
+    }
+    const uploadStyle = getComputedStyle(fixture.nativeElement.querySelector('.i-file-upload__drop-zone'));
+    const placeholderStyle = getComputedStyle(placeholder.nativeElement.querySelector('.i-placeholder'));
+    expect(uploadStyle.borderTopColor).toBe('rgb(123, 124, 125)');
+    expect(uploadStyle.borderTopColor).toBe(placeholderStyle.borderTopColor);
+    expect(uploadStyle.borderTopStyle).toBe(placeholderStyle.borderTopStyle);
+    expect(uploadStyle.borderTopWidth).toBe(placeholderStyle.borderTopWidth);
+    expect(uploadStyle.borderTopLeftRadius).toBe(placeholderStyle.borderTopLeftRadius);
+    expect(uploadStyle.backgroundColor).toBe(placeholderStyle.backgroundColor);
+    placeholder.destroy();
   });
 
   it('accepts arbitrary files by default and deduplicates against the selection and batch', () => {

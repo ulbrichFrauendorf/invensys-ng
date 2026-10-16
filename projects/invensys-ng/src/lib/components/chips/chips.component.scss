@@ -1,6 +1,7 @@
 @use "sass:math";
 @use "./chips.component.theme.scss" as theme;
 @use "../../themes/variables" as vars;
+@use "../../themes/floating-label" as floating;
 
 @include theme.i-chips-theme();
 
@@ -24,25 +25,22 @@ $chips-action-space: 40px;
   width: 100%;
 
   &--float {
-    margin-top: 20px;
+    margin-top: floating.$space;
 
     .i-chips-label {
       position: absolute;
       top: 14px;
       left: 12px;
-      padding: 0 4px;
+      @include floating.base;
       pointer-events: none;
-      transition: all 0.15s ease;
 
       &--floated {
-        top: -8px;
-        font-size: 0.85em;
+        @include floating.floated;
       }
     }
 
     .i-chips-container:focus-within + .i-chips-label {
-      top: -8px;
-      font-size: 0.85em;
+      @include floating.floated;
     }
   }
 }

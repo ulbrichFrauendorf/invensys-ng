@@ -1,5 +1,6 @@
 @use "./input-text.component.theme.scss" as theme;
 @use "../../themes/variables" as vars;
+@use "../../themes/floating-label" as floating;
 
 @include theme.i-input-theme();
 
@@ -13,7 +14,7 @@ $input-transition:
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  margin-top: 4px;
+  margin-top: floating.$space;
   font-size: 1em;
 
   &.i-input--fluid {
@@ -99,19 +100,18 @@ $input-transition:
     .i-label {
       position: absolute;
       top: 14px;
-      left: 8px;
-      padding: 0 4px;
+      left: 12px;
+      @include floating.base;
       pointer-events: none;
-      transition: all 0.15s ease;
     }
 
-    .i-input:focus + .i-label,
-    .i-input:not(:placeholder-shown) + .i-label,
+    .i-input-icon-wrapper:has(.i-input:focus) + .i-label,
+    .i-input-icon-wrapper:has(.i-input:not(:placeholder-shown)) + .i-label,
     .i-label.floated {
-      top: -8px;
+      @include floating.floated;
     }
 
-    &.has-icon .i-label:not(.floated) {
+    &.has-icon .i-input-icon-wrapper:not(:has(.i-input:focus)):not(:has(.i-input:not(:placeholder-shown))) + .i-label:not(.floated) {
       left: 34px;
     }
   }

@@ -31,3 +31,20 @@
     font-weight: 600;
   }
 }
+
+.label-surface {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+
+  h4 { margin: 0 0 12px; }
+
+  &--ground { background: var(--surface-ground); }
+  &--tinted {
+    background: color-mix(in srgb, var(--color-primary) 12%, var(--surface-ground));
+  }
+  &--gradient {
+    background: linear-gradient(120deg, var(--surface-ground), color-mix(in srgb, var(--color-primary) 18%, var(--surface-ground)));
+  }
+}

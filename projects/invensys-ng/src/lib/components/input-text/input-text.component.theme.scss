@@ -21,13 +21,6 @@
     color: colors.$color-text-secondary;
   }
 
-  /* Float when input has value or is focused */
-  .i-input:focus + .i-label,
-  .i-input:not(:placeholder-shown) + .i-label,
-  .i-label.floated {
-    background: colors.$color-component-background-secondary;
-  }
-
   .i-input[disabled] {
     background: colors.$color-disabled-background;
     border-color: colors.$color-disabled-border;

@@ -16,6 +16,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './panels.component.scss',
 })
 export class PanelsComponent {
+  labelSurfaces = ['ground', 'tinted', 'gradient'];
   // State for programmatic control example
   programmaticCollapsed = false;
 

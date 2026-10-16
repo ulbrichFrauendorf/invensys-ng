@@ -21,13 +21,6 @@
     color: colors.$color-text-secondary;
   }
 
-  /* Float when textarea has value or is focused */
-  .i-textarea:focus + .i-textarea-label,
-  .i-textarea:not(:placeholder-shown) + .i-textarea-label,
-  .i-textarea-label.floated {
-    background: colors.$color-component-background-secondary;
-  }
-
   .i-textarea[disabled] {
     background: colors.$color-disabled-background;
     border-color: colors.$color-disabled-border;

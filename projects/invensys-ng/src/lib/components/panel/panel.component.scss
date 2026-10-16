@@ -1,6 +1,5 @@
 @use "./panel.component.theme.scss" as theme;
 @use "../../themes/_variables.scss" as vars;
-@use "../../themes/color-variables.scss" as colors;
 
 @include theme.i-panel-theme();
 
@@ -8,8 +7,9 @@
   border-radius: vars.$borderRadius;
   overflow: visible;
   position: relative;
-  // keep the component's own border as the top line; pad so header can overlap it
-  padding-top: 14px;
+  // Reserve space for the header above the border, including its button padding.
+  margin-top: 2em;
+  padding-top: 0;
   min-height: 48px;
 
   .i-panel-header-wrap {
@@ -20,37 +20,36 @@
     height: 0;
     z-index: 1;
 
-    // ensure the header can overlap the top border of the panel
     .i-panel-header {
       display: inline-flex;
       flex-direction: row;
       align-items: center;
       gap: 8px;
       position: relative;
-      // position the header so it sits centered on the top border
-      top: 0;
-      transform: translateY(-50%);
-      // slightly indent to the right as requested
+      top: -4px;
+      transform: translateY(-100%);
+      max-width: calc(100% - 40px);
+      box-sizing: border-box;
       padding: 4px 12px;
       margin-left: 20px;
-      background: colors.$color-surface-card;
+      background: transparent;
       user-select: none;
-      transition: background-color vars.$transitionDuration ease;
+      transition: color vars.$transitionDuration ease;
 
       // reset native button styles when header is a button
       &.i-panel-header:where(button) {
         border: none;
-        background: colors.$color-surface-card;
+        background: transparent;
         cursor: pointer;
         padding: 4px 12px;
         font-family: inherit;
-        color: inherit;
       }
 
       .i-panel-toggle-icon {
         font-size: 12px;
         font-weight: 600;
         display: inline-block;
+        flex-shrink: 0;
       }
 
       .i-panel-title {
@@ -58,13 +57,12 @@
         font-size: 1em;
         line-height: 1;
         display: inline-block;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
       }
     }
-  }
-
-  &.i-panel--toggleable .i-panel-header:hover {
-    // Optional hover effect
   }
 
   .i-panel-content-wrapper {

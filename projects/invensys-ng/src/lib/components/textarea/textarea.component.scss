@@ -1,5 +1,6 @@
 @use "./textarea.component.theme.scss" as theme;
 @use "../../themes/variables" as vars;
+@use "../../themes/floating-label" as floating;
 
 @include theme.i-textarea-theme();
 
@@ -12,7 +13,7 @@ $textarea-transition:
   flex-direction: column;
   gap: 8px;
   width: 100%;
-  margin-top: 4px;
+  margin-top: floating.$space;
   font-size: 1em;
 
   &.i-textarea--fluid {
@@ -74,18 +75,16 @@ $textarea-transition:
     .i-textarea-label {
       position: absolute;
       top: 16px;
-      left: 8px;
-      padding: 0 4px;
+      left: 12px;
+      @include floating.base;
       pointer-events: none;
-      transition: all 0.15s ease;
       font-size: 1em;
     }
 
     .i-textarea:focus + .i-textarea-label,
     .i-textarea:not(:placeholder-shown) + .i-textarea-label,
     .i-textarea-label.floated {
-      top: -8px;
-      font-size: 0.78em;
+      @include floating.floated;
     }
   }
 

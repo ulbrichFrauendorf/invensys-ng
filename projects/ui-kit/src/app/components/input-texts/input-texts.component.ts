@@ -7,6 +7,10 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { IInputText } from '../../../../../invensys-ng/src/lib/components/input-text/input-text.component';
+import { ITextarea } from '../../../../../invensys-ng/src/lib/components/textarea/textarea.component';
+import { ISelect } from '../../../../../invensys-ng/src/lib/components/select/select.component';
+import { IMultiSelect } from '../../../../../invensys-ng/src/lib/components/multi-select/multi-select.component';
+import { ICalendar } from '../../../../../invensys-ng/src/lib/components/calendar/calendar.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 interface InputExample {
   label: string;
@@ -23,7 +27,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 @Component({
   selector: 'app-input-texts',
   imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IInputText,
+    IInputText, ITextarea, ISelect, IMultiSelect, ICalendar,
     IButton,
     ReactiveFormsModule,
     FormsModule,
@@ -32,6 +36,10 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './input-texts.component.scss',
 })
 export class InputTextsComponent implements OnInit {
+  labelSurfaces = ['ground', 'tinted', 'gradient'];
+  labelOptions = [{ label: 'Alpha', value: 'alpha' }, { label: 'Beta', value: 'beta' }];
+  labelDate = new Date(2026, 9, 16);
+
   basicForm: FormGroup;
   validationForm: FormGroup;
   fluidForm: FormGroup;

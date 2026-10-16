@@ -184,4 +184,25 @@
         </div>
       </form>
     </ng-template>
+  <ng-template appDemoOption="option-7" label="Floating Labels on Different Backgrounds">
+    <p>Focus and clear the fields to check floating labels. Use the theme toggle to compare light and dark surfaces.</p>
+    @for (surface of labelSurfaces; track surface) {
+      <div class="label-surface" [class]="'label-surface label-surface--' + surface">
+        <h4>{{ surface }} background</h4>
+        <div class="input-grid">
+          <i-input-text label="Empty field" icon="pi pi-search" />
+          <i-input-text label="Filled field" [ngModel]="'Example value'" />
+          <i-input-text label="Component background" backgroundStyle="component" [ngModel]="'Example value'" />
+          <i-input-text label="Disabled field" [disabled]="true" [ngModel]="'Disabled value'" />
+          <i-input-text label="Invalid field" [externalInvalid]="true" [ngModel]="'Invalid value'" />
+          <i-input-text label="Forced floating label" [forceFloated]="true" />
+          <i-select label="Select" [options]="labelOptions" optionLabel="label" [ngModel]="labelOptions[0]" />
+          <i-multi-select label="Multi select" [options]="labelOptions" optionLabel="label" [ngModel]="[labelOptions[0]]" />
+          <i-calendar label="Calendar" [ngModel]="labelDate" />
+          <i-textarea label="Textarea" [ngModel]="'Example text'" [rows]="2" />
+          <i-input-text label="Without floating label" [useFloatLabel]="false" />
+        </div>
+      </div>
+    }
+  </ng-template>
 </app-demo-playground>

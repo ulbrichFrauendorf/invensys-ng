@@ -82,4 +82,24 @@
         </i-panel>
       </div>
     </ng-template>
+  <ng-template appDemoOption="option-6" label="Headers on Different Backgrounds">
+    <p>Compare panel headers on different surfaces, including collapsed, fixed, nested, and long titles. Use the theme toggle to compare light and dark themes.</p>
+    @for (surface of labelSurfaces; track surface) {
+      <div [class]="'panel-surface panel-surface--' + surface">
+        <h4>{{ surface }} background</h4>
+        <i-panel header="Expandable panel">
+          <p>The header stays clear of the border without a background patch.</p>
+          <i-panel header="Nested panel" [toggleable]="false">
+            <p>A nested header sits on the parent panel's surface.</p>
+          </i-panel>
+        </i-panel>
+        <i-panel header="Initially collapsed" [collapsed]="true">
+          <p>Expand this panel to check the header and border.</p>
+        </i-panel>
+        <i-panel header="A long fixed panel title that should stay within the available width on smaller screens" [toggleable]="false">
+          <p>Long headers are truncated within the panel width.</p>
+        </i-panel>
+      </div>
+    }
+  </ng-template>
 </app-demo-playground>

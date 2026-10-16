@@ -6,27 +6,21 @@
     color: colors.$color-text-primary;
     border: 1px solid colors.$color-surface-border;
 
-    // Header will visually overlap the top border so it looks joined to the panel
     .i-panel-header {
       color: colors.$color-text-secondary;
-      // ensure header background matches the panel so it covers the top border
-      background: colors.$color-surface-card;
+      background: transparent;
 
       .i-panel-toggle-icon {
         color: colors.$color-primary;
       }
 
       .i-panel-title {
-        color: colors.$color-text-secondary;
+        color: inherit;
       }
     }
 
     &.i-panel--toggleable .i-panel-header:hover {
-      background: colors.$color-surface-hover;
-    }
-
-    &.i-panel--collapsed .i-panel-header {
-      // collapsed state keeps the header overlapping the top border
+      color: colors.$color-primary;
     }
 
     .i-panel-content {

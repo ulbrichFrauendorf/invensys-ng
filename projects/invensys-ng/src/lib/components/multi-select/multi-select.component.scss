@@ -1,6 +1,7 @@
 @use "./multi-select.component.theme.scss" as theme;
 @use "../../themes/scrollbar-mixins.scss" as scrollbar;
 @use "../../themes/variables" as vars;
+@use "../../themes/floating-label" as floating;
 
 @include theme.i-multi-select-theme();
 
@@ -17,18 +18,20 @@ $multi-select-dropdown-viewport-margin: 150px;
   }
 
   .i-multi-select-input-container {
+    // Contain the chips' label margin so the arrow uses the field as its reference.
+    display: flow-root;
     position: relative;
     cursor: pointer;
 
     .i-multi-select-chips {
       position: relative;
-      min-height: 56px;
       cursor: pointer;
     }
 
     .i-multi-select-icons-overlay {
       position: absolute;
-      top: 18%;
+      top: calc(#{floating.$space} + #{vars.$component-input-height} / 2);
+      transform: translateY(-50%);
       right: 4px;
       z-index: 3;
       display: flex;

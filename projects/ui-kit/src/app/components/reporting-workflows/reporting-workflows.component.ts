@@ -9,15 +9,16 @@ import { IStepper } from '@shared/components/stepper/stepper.component';
 import { IStep } from '@shared/components/stepper/step.component';
 import { ITable, GridData } from '@shared/components/table/table.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-
 interface AutomationExample { id: string; name: string; status: string; steps: number; }
 interface StepExample { order: number; name: string; }
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-reporting-workflows',
-  imports: [FormsModule, IButton, IInputText, IFieldPicker, IOrderedList,
-    IRuleEditor, IStepper, IStep, ITable, IDialogActions, DemoCardComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, FormsModule, IButton, IInputText, IFieldPicker, IOrderedList,
+    IRuleEditor, IStepper, IStep, ITable, IDialogActions],
   templateUrl: './reporting-workflows.component.html',
   styleUrl: './reporting-workflows.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

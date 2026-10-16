@@ -8,12 +8,6 @@ import {
 } from '@angular/forms';
 import { IInputText } from '../../../../../invensys-ng/src/lib/components/input-text/input-text.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
-
 interface InputExample {
   label: string;
   type: string;
@@ -23,16 +17,17 @@ interface InputExample {
   formControlName: string;
 }
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-input-texts',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IInputText,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './input-texts.component.html',
   styleUrl: './input-texts.component.scss',
 })
@@ -206,41 +201,6 @@ prefilledForm = this.fb.group({
 export class ExampleComponent {
   // Component is ready to use
 }`;
-
-  features: Feature[] = [
-    {
-      title: 'Input Types',
-      description: 'Text, email, password, number, tel, url, and search inputs',
-    },
-    {
-      title: 'Float Labels',
-      description: 'Animated floating labels for better UX',
-    },
-    {
-      title: 'Validation Support',
-      description: 'Built-in Angular reactive forms validation',
-    },
-    {
-      title: 'Custom Error Messages',
-      description: 'Configurable error message display',
-    },
-    {
-      title: 'Fluid Layout',
-      description: 'Full-width inputs for responsive designs',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Proper disabled styling and interaction handling',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and screen reader support',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Consistent styling with design system',
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     this.basicForm = this.fb.group({

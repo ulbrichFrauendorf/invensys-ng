@@ -1,24 +1,20 @@
 @use "../shared-demo-styles.scss" as *;
 
-.progress-spinners-demo {
-  @extend .demo-component;
-}
-
 .size-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  gap: 32px;
+  padding: 32px;
 }
 
 .size-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 
   span {
-    font-size: 0.875rem;
+    font-size: 14px;
     color: var(--color-text-secondary);
   }
 }
@@ -26,8 +22,8 @@
 .button-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: 16px;
+  padding: 16px 0;
 
   i-button {
     flex: 1 1 auto;
@@ -58,13 +54,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
   background: var(--surface-overlay);
   backdrop-filter: blur(2px);
-
-  p {
-    margin: 0;
-    color: var(--color-text-primary);
-    font-size: 1rem;
-  }
 }

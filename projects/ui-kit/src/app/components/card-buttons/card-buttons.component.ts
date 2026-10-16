@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ICardButton } from '@shared/components/card-button/card-button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-card-buttons',
-  imports: [ICardButton, DemoCardComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ICardButton],
   templateUrl: './card-buttons.component.html',
   styleUrl: './card-buttons.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,19 +1,5 @@
-<div class="selects-demo">
-  <header class="demo-header">
-    <h1>Select Components</h1>
-    <p>
-      Dropdown select components with filtering, form integration, and reactive
-      forms support. Perfect for option selection with search capabilities.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Select Examples -->
-    <app-demo-card
-      [title]="'Basic Select Options'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+<app-demo-playground class="selects-demo" title="Select Components" description="Dropdown select components with filtering, form integration, and reactive forms support. Perfect for option selection with search capabilities.">
+  <ng-template appDemoOption="option-1" label="Basic Select Options" [selected]="true" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <form [formGroup]="basicForm" class="demo-form">
         <div class="input-grid">
           <i-select
@@ -74,13 +60,9 @@
           Submit Basic Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Validation Example -->
-    <app-demo-card
-      [title]="'Required Validation'"
-      [sourceCode]="codeExamples.validation"
-    >
+  <ng-template appDemoOption="option-2" label="Required Validation" [sourceCode]="codeExamples.validation">
       <form [formGroup]="validationForm" class="demo-form">
         <i-select
           label="Status (Required)"
@@ -97,13 +79,9 @@
           Submit Validation Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Advanced Features -->
-    <app-demo-card
-      [title]="'Advanced Features (Filtering & Clear)'"
-      [sourceCode]="codeExamples.advanced"
-    >
+  <ng-template appDemoOption="option-3" label="Advanced Features (Filtering &amp; Clear)" [sourceCode]="codeExamples.advanced">
       <form [formGroup]="advancedForm" class="demo-form">
         <i-select
           [options]="selectData.reports"
@@ -124,10 +102,9 @@
           Submit Advanced Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <form [formGroup]="fluidForm" class="demo-form">
         <i-select
           label="Fluid Select"
@@ -146,11 +123,5 @@
           Submit Fluid Form
         </i-button>
       </form>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

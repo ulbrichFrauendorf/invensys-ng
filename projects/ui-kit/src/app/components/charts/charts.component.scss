@@ -1,13 +1,9 @@
 @use "../shared-demo-styles.scss" as *;
 
-.charts-demo {
-  @extend .demo-component;
-}
-
 .demo-description {
   margin-bottom: 16px;
   color: var(--text-color-secondary);
-  font-size: 0.9rem;
+  font-size: 14.4px;
 }
 
 .chart-container {

@@ -6,21 +6,17 @@ import {
   ChipItem,
   ChipRemoveEvent,
 } from '@shared/components/chips/chips.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { IMessage } from '@shared/components/message/message.component';
+
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-chips',
   standalone: true,
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IChip,
     IChipsComponent,
-    DemoCardComponent,
-    FeaturesListComponent,
     IMessage,
   ],
   templateUrl: './chips.component.html',
@@ -129,46 +125,6 @@ export class ChipsComponent {
     { label: 'Option 3', value: '3' },
     { label: 'Option 4', value: '4' },
     { label: 'Option 5', value: '5' },
-  ];
-
-  features: Feature[] = [
-    {
-      title: 'Basic Chips',
-      description: 'Display static information as compact chips',
-    },
-    {
-      title: 'Removable Chips',
-      description: 'Chips with close button to remove individual items',
-    },
-    {
-      title: 'Icon Support',
-      description: 'Chips can display icons (using PrimeIcons)',
-    },
-    {
-      title: 'Boxed Container',
-      description: 'Display chips inside an input-styled bounding box',
-    },
-    {
-      title: 'Collapsible Overflow',
-      description:
-        'Automatically collapse to summary text when chips overflow container',
-    },
-    {
-      title: 'Custom Overflow Label',
-      description: 'Customize the text shown when chips are collapsed',
-    },
-    {
-      title: 'Close All Button',
-      description: 'Built-in button to clear all chips at once',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Disable all chips for read-only display',
-    },
-    {
-      title: 'Individual Chip State',
-      description: 'Control removable and disabled state per chip',
-    },
   ];
 
   onChipRemove(event: Event): void {

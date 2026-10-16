@@ -1,23 +1,22 @@
 @use "../shared-demo-styles.scss" as *;
 
 .messages-demo {
-  @extend .demo-component;
 
   .message-examples {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
   }
 
   .reset-button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    margin-top: 16px;
+    padding: 8px 16px;
     background-color: var(--color-primary);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 14.4px;
     transition: background-color 0.2s;
 
     &:hover {

@@ -1,23 +1,11 @@
-<div class="progress-spinners-demo">
-  <header class="demo-header">
-    <h1>Progress Spinner Component</h1>
-    <p>
-      A loading indicator component with customizable sizes and stroke widths.
-      Perfect for showing loading states in buttons, overlays, and content
-      areas. Features smooth CSS animations and full theme integration.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Usage -->
-    <app-demo-card [title]="'Basic Usage'" [sourceCode]="codeExamples.basic">
+<app-demo-playground class="progress-spinners-demo" title="Progress Spinner Component" description="A loading indicator component with customizable sizes and stroke widths. Perfect for showing loading states in buttons, overlays, and content areas. Features smooth CSS animations and full theme integration.">
+  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
       <div class="demo-content centered">
         <i-progress-spinner></i-progress-spinner>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Size Variants -->
-    <app-demo-card [title]="'Size Variants'" [sourceCode]="codeExamples.sizes">
+  <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
       <div class="demo-content">
         <div class="size-grid">
           <div class="size-item">
@@ -34,13 +22,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Stroke Width -->
-    <app-demo-card
-      [title]="'Custom Stroke Width'"
-      [sourceCode]="codeExamples.strokeWidth"
-    >
+  <ng-template appDemoOption="option-3" label="Custom Stroke Width" [sourceCode]="codeExamples.strokeWidth">
       <div class="demo-content">
         <div class="size-grid">
           <div class="size-item">
@@ -57,26 +41,17 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- In Button -->
-    <app-demo-card
-      [title]="'Loading Button'"
-      [sourceCode]="codeExamples.withButton"
-      [tsCode]="tsExamples.withButton"
-    >
+  <ng-template appDemoOption="option-4" label="Loading Button" [sourceCode]="codeExamples.withButton" [tsCode]="tsExamples.withButton">
       <div class="demo-content centered">
         <i-button [loading]="isLoading" (clicked)="simulateLoading()">
           {{ isLoading ? "Loading..." : "Click Me" }}
         </i-button>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Loading Button Severities -->
-    <app-demo-card
-      [title]="'Loading States with Button Severities'"
-      [sourceCode]="codeExamples.severities"
-    >
+  <ng-template appDemoOption="option-5" label="Loading States with Button Severities" [sourceCode]="codeExamples.severities">
       <div class="demo-content">
         <div class="button-grid">
           <i-button severity="primary" [loading]="true">Primary</i-button>
@@ -107,13 +82,9 @@
           >
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- In Card/Overlay -->
-    <app-demo-card
-      [title]="'Loading Overlay'"
-      [sourceCode]="codeExamples.inCard"
-    >
+  <ng-template appDemoOption="option-6" label="Loading Overlay" [sourceCode]="codeExamples.inCard">
       <div class="demo-content">
         <div class="loading-card-demo">
           <div class="loading-overlay-demo">
@@ -122,11 +93,5 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

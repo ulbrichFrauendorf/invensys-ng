@@ -1,19 +1,5 @@
-<div class="input-texts-demo">
-  <header class="demo-header">
-    <h1>Input Text Components</h1>
-    <p>
-      Versatile input text components with floating labels, validation support,
-      and multiple input types for all your form needs.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- NgModel Binding (Template-driven) -->
-    <app-demo-card
-      [title]="'Template-driven Forms (NgModel)'"
-      [sourceCode]="codeExamples.ngModel"
-      [tsCode]="tsExamples.ngModel"
-    >
+<app-demo-playground class="input-texts-demo" title="Input Text Components" description="Versatile input text components with floating labels, validation support, and multiple input types for all your form needs.">
+  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
       <div class="demo-form">
         <div class="input-grid">
           <i-input-text
@@ -52,14 +38,9 @@
           <p><strong>Pre-filled Number:</strong> {{ prefilledNumberValue }}</p>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Reactive Forms -->
-    <app-demo-card
-      [title]="'Reactive Forms'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <form [formGroup]="basicForm" class="demo-form">
         <div class="input-grid">
           @for (input of inputExamples.basic; track input.formControlName) {
@@ -76,14 +57,9 @@
           Submit Basic Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Validation Examples -->
-    <app-demo-card
-      [title]="'Form Validation'"
-      [sourceCode]="codeExamples.validation"
-      [tsCode]="tsExamples.validation"
-    >
+  <ng-template appDemoOption="option-3" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
       <form [formGroup]="validationForm" class="demo-form">
         <div class="input-grid">
           @for (
@@ -105,10 +81,9 @@
           Submit Validation Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <form [formGroup]="fluidForm" class="demo-form">
         <div class="input-stack">
           @for (input of inputExamples.fluid; track input.formControlName) {
@@ -129,14 +104,9 @@
           Submit Fluid Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Pre-filled Values Demo -->
-    <app-demo-card
-      [title]="'Pre-filled Values (Float Label Test)'"
-      [sourceCode]="codeExamples.prefilled"
-      [tsCode]="tsExamples.prefilled"
-    >
+  <ng-template appDemoOption="option-5" label="Pre-filled Values (Float Label Test)" [sourceCode]="codeExamples.prefilled" [tsCode]="tsExamples.prefilled">
       <form [formGroup]="prefilledForm" class="demo-form">
         <div class="input-grid">
           <i-input-text
@@ -189,10 +159,9 @@
           Submit Pre-filled Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State Examples -->
-    <app-demo-card [title]="'Disabled Inputs'">
+  <ng-template appDemoOption="option-6" label="Disabled Inputs" sourceCodeEncoded="%3Cform%20class%3D%22demo-form%20disabled-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22input-grid%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Text%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Cannot%20edit%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20With%20Icon%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-search'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Search%20disabled%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Float%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BuseFloatLabel%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Floating%20label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fform%3E">
       <form class="demo-form disabled-examples">
         <div class="input-grid">
           <i-input-text
@@ -214,11 +183,5 @@
           />
         </div>
       </form>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

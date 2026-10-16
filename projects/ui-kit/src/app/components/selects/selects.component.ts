@@ -8,28 +8,23 @@ import {
 } from '@angular/forms';
 import { ISelect } from '@shared/components/select/select.component';
 import { IButton } from '@shared/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
-
 export interface SelectOption {
   value: any;
   label?: string;
   [key: string]: any;
 }
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-selects',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     ISelect,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './selects.component.html',
   styleUrl: './selects.component.scss',
 })
@@ -204,42 +199,6 @@ export class ExampleComponent {
     { value: 'option2', label: 'Option 2' }
   ];
 }`;
-
-  features: Feature[] = [
-    {
-      title: 'Option Configuration',
-      description:
-        'Flexible option labels and values with custom object properties',
-    },
-    {
-      title: 'Filtering',
-      description: 'Built-in search functionality for large option lists',
-    },
-    {
-      title: 'Clear Function',
-      description: 'Optional clear button to reset selection',
-    },
-    {
-      title: 'Form Integration',
-      description: 'Full reactive forms support with validation',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Support for disabled selects and individual options',
-    },
-    {
-      title: 'Fluid Layout',
-      description: 'Full-width selects for responsive designs',
-    },
-    {
-      title: 'Custom Templates',
-      description: 'Customizable option display and selection',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA support and keyboard navigation',
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     this.basicForm = this.fb.group({

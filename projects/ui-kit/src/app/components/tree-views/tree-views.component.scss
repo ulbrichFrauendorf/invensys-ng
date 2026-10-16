@@ -1,9 +1,5 @@
 @use "../shared-demo-styles.scss" as *;
 
-.tree-views-demo {
-  @extend .demo-component;
-}
-
 .demo-actions {
   display: flex;
   gap: 8px;

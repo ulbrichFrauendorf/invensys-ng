@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 import { IChart } from '../../../../../invensys-ng/src/lib/components/chart/chart.component';
 import { IChartData } from '../../../../../invensys-ng/src/lib/components/chart/chart.interfaces';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [IChart, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IChart],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss',
 })
@@ -399,45 +396,4 @@ export class SimpleChartComponent {
   ];
 }`;
 
-  // Features list
-  features: Feature[] = [
-    {
-      title: 'Multiple Chart Types',
-      description:
-        'Supports bar, line, pie, doughnut, radar, polarArea, scatter, and bubble charts',
-    },
-    {
-      title: 'Bar Chart Variants',
-      description:
-        'Standard, stacked, horizontal, and large bar chart configurations',
-    },
-    {
-      title: 'CSS Variable Colors',
-      description:
-        'Use CSS custom properties like --blue-500 for theme-aware colors',
-    },
-    {
-      title: 'Multiple Datasets',
-      description:
-        'Display multiple datasets with legends for comparison charts',
-    },
-    {
-      title: 'Responsive Layout',
-      description:
-        'Charts automatically adapt to container size with responsive grid',
-    },
-    {
-      title: 'Theme Integration',
-      description:
-        'Automatically uses theme colors for text, borders, and surfaces',
-    },
-    {
-      title: 'Configurable Height',
-      description: 'Set custom heights per chart or use the default 20rem',
-    },
-    {
-      title: 'Chart.js Powered',
-      description: 'Built on Chart.js for reliable, performant chart rendering',
-    },
-  ];
 }

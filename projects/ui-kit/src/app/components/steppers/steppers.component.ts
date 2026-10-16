@@ -2,16 +2,13 @@ import { Component } from '@angular/core';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { IStep } from '../../../../../invensys-ng/src/lib/components/stepper/step.component';
 import { IStepper } from '../../../../../invensys-ng/src/lib/components/stepper/stepper.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  Feature,
-  FeaturesListComponent,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-steppers',
   standalone: true,
-  imports: [IButton, IStep, IStepper, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IStep, IStepper],
   templateUrl: './steppers.component.html',
   styleUrl: './steppers.component.scss',
 })
@@ -61,43 +58,6 @@ export class ReportWizardComponent {
   columnsComplete = false;
   resultsComplete = false;
 }`;
-
-  readonly features: Feature[] = [
-    {
-      title: 'Guided workflows',
-      description:
-        'Linear mode prevents users from skipping incomplete required steps.',
-    },
-    {
-      title: 'Progress states',
-      description:
-        'Simple tiles show a title, supporting detail and completion check. Step position remains available to assistive technology.',
-    },
-    {
-      title: 'Custom icons',
-      description:
-        'Use the same small PrimeIcons as tabs, with accessible step-position context.',
-    },
-    {
-      title: 'Accessible navigation',
-      description:
-        'Includes progress semantics, panel relationships, and keyboard navigation.',
-    },
-    {
-      title: 'Responsive layouts',
-      description:
-        'Supports horizontal and vertical layouts and adapts on small screens.',
-    },
-    {
-      title: 'Projected content',
-      description:
-        'Each step accepts forms, tables, or any other Angular content.',
-    },
-    {
-      title: 'Two-way binding',
-      description: 'The active step is controlled with [(activeIndex)].',
-    },
-  ];
 
   completeDetails(): void {
     this.detailsComplete = true;

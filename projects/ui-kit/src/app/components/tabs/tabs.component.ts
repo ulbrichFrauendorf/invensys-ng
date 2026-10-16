@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { ITabs } from '@shared/components/tabs/tabs.component';
 import { ITabPanel } from '@shared/components/tabs/tab-panel.component';
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-tabs',
-  imports: [ITabs, ITabPanel, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ITabs, ITabPanel],
   templateUrl: './tabs.component.html',
   styleUrl: './tabs.component.scss',
 })
@@ -99,43 +97,6 @@ export class ExampleComponent {
   }
 }`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Text-Only Tabs',
-      description: 'Display tabs with text labels only',
-    },
-    {
-      title: 'Icon-Only Tabs',
-      description: 'Display compact tabs with icons only',
-    },
-    {
-      title: 'Icon + Text Tabs',
-      description: 'Combine icons and text for enhanced clarity',
-    },
-    {
-      title: 'Disabled Tabs',
-      description: 'Support for disabling individual tabs',
-    },
-    {
-      title: 'Closable Tabs',
-      description: 'Allow users to close tabs dynamically',
-    },
-    {
-      title: 'Two-Way Binding',
-      description: 'Support for [(activeIndex)] two-way binding',
-    },
-    {
-      title: 'Keyboard Navigation',
-      description:
-        'Full keyboard support with Arrow keys, Home, End, Enter, and Space',
-    },
-    {
-      title: 'Accessibility',
-      description:
-        'ARIA attributes for screen readers (role, aria-selected, etc.)',
-    },
-  ];
 
   onTabClose(event: { originalEvent: Event; index: number }): void {
     this.closableTabs.splice(event.index, 1);

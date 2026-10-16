@@ -1,9 +1,5 @@
 @use "../shared-demo-styles.scss" as *;
 
-.tags-demo {
-  @extend .demo-component;
-}
-
 .tag-row {
   display: flex;
   flex-wrap: wrap;

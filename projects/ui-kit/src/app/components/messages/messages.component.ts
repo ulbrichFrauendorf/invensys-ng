@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
 
 import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/message.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [IMessage, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IMessage],
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
 })
@@ -41,35 +38,6 @@ export class MessagesComponent {
   before <em>December 1st</em> to avoid service interruption.
 </i-message>`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Multiple Severities',
-      description:
-        'Success, info, warning, danger, and primary message types with semantic colors',
-    },
-    {
-      title: 'Three Sizes',
-      description:
-        'Small, medium (default), and large sizes for different contexts',
-    },
-    {
-      title: 'Closable Messages',
-      description: 'Optional close button with two-way binding support',
-    },
-    {
-      title: 'Custom Icons',
-      description: 'Override default severity icons with any PrimeIcon',
-    },
-    {
-      title: 'Rich Content',
-      description: 'Supports HTML content including bold, italic, and links',
-    },
-    {
-      title: 'Accessible',
-      description: 'ARIA role="alert" for screen reader announcements',
-    },
-  ];
 
   resetClosableMessages(): void {
     this.showClosableInfo = true;

@@ -1,0 +1,76 @@
+<div class="demo-playground">
+  <div class="playground">
+    <section class="preview-panel" aria-labelledby="demo-preview-heading">
+      <div class="panel-heading preview-heading">
+        <div>
+          <h3 id="demo-preview-heading">{{ title }}</h3>
+          <p>{{ showCode() ? 'Code' : 'Preview' }}</p>
+        </div>
+        <i-button
+          size="small"
+          severity="secondary"
+          [text]="true"
+          [icon]="showCode() ? 'pi pi-eye' : 'pi pi-code'"
+          [ariaLabel]="showCode() ? 'View preview' : 'View code'"
+          [title]="showCode() ? 'View preview' : 'View code'"
+          (clicked)="showCode.set(!showCode())"
+        />
+      </div>
+
+      <div class="panel-content">
+        @if (showCode()) {
+          <app-code-display
+            class="code-view"
+            [sourceCode]="htmlCode"
+            [tsCode]="typescriptCode"
+            [scssCode]="stylesheetCode"
+            [language]="language"
+            [embedded]="true"
+          />
+        } @else if (customPreview) {
+          <ng-container [ngTemplateOutlet]="customPreview.templateRef" />
+        } @else if (selectedOptions.length) {
+          <div class="preview-stage">
+            @for (option of selectedOptions; track option.key) {
+              <ng-container [ngTemplateOutlet]="option.templateRef" />
+            }
+          </div>
+        } @else {
+          <div class="preview-stage empty-preview">
+            <p>Select an option to preview the component.</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="options-panel" aria-labelledby="demo-options-heading">
+      <div class="panel-heading">
+        <h2 id="demo-options-heading">Options</h2>
+        <p>{{ description || 'Choose the examples to include in the preview.' }}</p>
+      </div>
+      @if (customOptions) {
+        <ng-container [ngTemplateOutlet]="customOptions.templateRef" />
+      } @else {
+        <div class="options-list">
+          @for (option of options(); track option.key) {
+            <div class="option-row">
+              <i-checkbox
+                [id]="'demo-option-' + option.key"
+                [label]="option.label"
+                [checked]="isSelected(option.key)"
+                (onChange)="setSelected(option.key, $event)"
+              />
+            </div>
+          }
+        </div>
+      }
+    </section>
+  </div>
+
+  @if (usageNotes) {
+    <section class="usage-notes" aria-labelledby="demo-usage-heading">
+      <h2 id="demo-usage-heading">Usage Notes</h2>
+      <ng-container [ngTemplateOutlet]="usageNotes.templateRef" />
+    </section>
+  }
+</div>

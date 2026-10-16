@@ -102,6 +102,8 @@ export class ConfirmationDialogComponent implements OnInit {
     this.message.set(this.config.data?.message || '');
     this.header.set(this.config.data?.header || 'Are you sure?');
     this.severity.set(this.config.data?.severity || 'primary');
+    this.acceptLabel = this.config.data?.acceptLabel || 'Confirm';
+    this.rejectLabel = this.config.data?.rejectLabel || 'Cancel';
   }
 
   /**

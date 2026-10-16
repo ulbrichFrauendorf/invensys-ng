@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { IButton } from '@shared/components/button/button.component';
 import { IOverlayPanel } from '@shared/components/overlay-panel/overlay-panel.component';
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-overlay-panels',
-  imports: [IButton, IOverlayPanel, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IOverlayPanel],
   templateUrl: './overlay-panels.component.html',
   styleUrls: ['./overlay-panels.component.scss', '../shared-demo-styles.scss'],
 })
@@ -130,43 +128,4 @@ export class OverlayPanelsComponent {
 </i-overlay-panel>`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Intelligent Auto-Positioning',
-      description:
-        'Automatically calculates the best position (bottom, top, left, right) based on available viewport space with collision detection',
-    },
-    {
-      title: 'Scroll & Resize Tracking',
-      description:
-        'Repositions automatically when scrolling or resizing to stay attached to trigger element',
-    },
-    {
-      title: 'Arrow Indicator',
-      description:
-        'Visual arrow pointer that dynamically adjusts to connect panel with its trigger element',
-    },
-    {
-      title: 'Dismissable Behavior',
-      description: 'Click outside or press Escape to close (configurable)',
-    },
-    {
-      title: 'Body Append',
-      description:
-        'Optionally appends to document body for proper z-index stacking and positioning',
-    },
-    {
-      title: 'Rich Content Support',
-      description:
-        'Supports any content including forms, menus, lists, and nested components',
-    },
-    {
-      title: 'Animation Support',
-      description: 'Smooth show/hide animations with Angular animation system',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Seamlessly integrates with light and dark themes',
-    },
-  ];
 }

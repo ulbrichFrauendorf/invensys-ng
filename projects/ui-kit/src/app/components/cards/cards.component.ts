@@ -1,15 +1,12 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { ICard } from '../../../../../invensys-ng/src/lib/components/card/card.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'i-cards',
-  imports: [ICard, IDialogActions, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ICard, IDialogActions],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss',
 })
@@ -111,7 +108,7 @@ export class ExampleComponent {
     padding-right: 8px;
 
     p {
-      margin-bottom: 1rem;
+      margin-bottom: 16px;
       line-height: 1.6;
 
       &:last-child {
@@ -134,47 +131,6 @@ export class ExampleComponent {
     'Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis.',
     'Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet.',
     'Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit.',
-  ];
-
-  features: Feature[] = [
-    {
-      title: 'Flexible Content',
-      description:
-        'Support for title, subtitle, body, header, and footer slots',
-    },
-    {
-      title: 'Full Height Mode',
-      description:
-        'Set fullHeight to fill parent container height with scrollable body',
-    },
-    {
-      title: 'Closable Cards',
-      description: 'Optional close button with custom close event handling',
-    },
-    {
-      title: 'Custom Headers',
-      description: 'Use header slot for custom header content and layouts',
-    },
-    {
-      title: 'Footer Actions',
-      description: 'Footer slot for buttons and action elements',
-    },
-    {
-      title: 'Minimal Design',
-      description: 'Clean card design that fits any content',
-    },
-    {
-      title: 'Responsive',
-      description: 'Adapts to different screen sizes and containers',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Consistent styling with design system',
-    },
-    {
-      title: 'Accessibility',
-      description: 'Proper semantic structure and ARIA support',
-    },
   ];
 
   onCardClosed() {

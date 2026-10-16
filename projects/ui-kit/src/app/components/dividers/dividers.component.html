@@ -1,46 +1,24 @@
-<div class="dividers-demo">
-  <header class="demo-header">
-    <h1>Divider Component</h1>
-    <p>
-      Visual separators for grouping content. Supports horizontal and vertical
-      layouts, optional labels, and label alignment.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Usage -->
-    <app-demo-card [title]="'Basic Divider'" [sourceCode]="codeExamples.basic">
+<app-demo-playground class="dividers-demo" title="Divider Component" description="Visual separators for grouping content. Supports horizontal and vertical layouts, optional labels, and label alignment.">
+  <ng-template appDemoOption="option-1" label="Basic Divider" [selected]="true" [sourceCode]="codeExamples.basic">
       <i-divider />
-    </app-demo-card>
+    </ng-template>
 
-    <!-- With Content -->
-    <app-demo-card
-      [title]="'Dividers with Labels'"
-      [sourceCode]="codeExamples.withContent"
-    >
+  <ng-template appDemoOption="option-2" label="Dividers with Labels" [sourceCode]="codeExamples.withContent">
       <i-divider>Details</i-divider>
       <i-divider align="start">Start aligned</i-divider>
       <i-divider align="center">Center aligned</i-divider>
       <i-divider align="end">End aligned</i-divider>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Vertical -->
-    <app-demo-card
-      [title]="'Vertical Divider'"
-      [sourceCode]="codeExamples.vertical"
-    >
+  <ng-template appDemoOption="option-3" label="Vertical Divider" [sourceCode]="codeExamples.vertical">
       <div class="vertical-example">
         <span>Left content</span>
         <i-divider layout="vertical" />
         <span>Right content</span>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Practical Usage -->
-    <app-demo-card
-      [title]="'Practical Usage'"
-      [sourceCode]="codeExamples.usage"
-    >
+  <ng-template appDemoOption="option-4" label="Practical Usage" [sourceCode]="codeExamples.usage">
       <div class="usage-example">
         <section>
           <h3>Profile</h3>
@@ -54,11 +32,5 @@
           <p>Role, claims, and data access settings.</p>
         </section>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

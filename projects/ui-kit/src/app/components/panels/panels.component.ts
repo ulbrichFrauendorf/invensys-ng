@@ -2,21 +2,16 @@ import { Component } from '@angular/core';
 import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
 import { IRadioButton } from '../../../../../invensys-ng/src/lib/components/radio-button/radio-button.component';
 import { FormsModule } from '@angular/forms';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-panels',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IPanel,
     IRadioButton,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './panels.component.html',
   styleUrl: './panels.component.scss',
 })
@@ -44,8 +39,8 @@ export class PanelsComponent {
   <p>It will always be visible.</p>
 </i-panel>`,
 
-    programmatic: `<i-panel 
-  header="Programmatic Control" 
+    programmatic: `<i-panel
+  header="Programmatic Control"
   [collapsed]="programmaticCollapsed"
   (collapsedChange)="programmaticCollapsed = $event">
   <p>This panel is controlled programmatically.</p>
@@ -121,40 +116,6 @@ export class ExampleComponent {
   splitOption = 'none';
 }`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Collapsible Content',
-      description:
-        'Smooth collapse/expand animations with customizable content',
-    },
-    {
-      title: 'Toggle Icons',
-      description: 'Minus icon when expanded, plus icon when collapsed',
-    },
-    {
-      title: 'Non-toggleable Mode',
-      description:
-        'Option to keep panel always visible without toggle functionality',
-    },
-    {
-      title: 'Programmatic Control',
-      description: 'Two-way binding for collapsed state control',
-    },
-    {
-      title: 'Content Projection',
-      description:
-        'Supports any content including forms, text, and other components',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and keyboard navigation support',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Seamless integration with light and dark themes',
-    },
-  ];
 
   // Event handlers
   onToggle(collapsed: boolean) {

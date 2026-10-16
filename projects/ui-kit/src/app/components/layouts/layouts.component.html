@@ -1,16 +1,5 @@
-<div class="layouts-demo">
-  <header class="demo-header">
-    <h1>Layout Component</h1>
-    <p>
-      Complete application layout system with responsive sidebar navigation,
-      customizable topbar, and built-in theme switching. Perfect for building
-      admin dashboards and multi-page applications.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Screenshot Preview -->
-    <app-demo-card [title]="'Layout Preview'">
+<app-demo-playground class="layouts-demo" title="Layout Component" description="Complete application layout system with responsive sidebar navigation, customizable topbar, and built-in theme switching. Perfect for building admin dashboards and multi-page applications.">
+  <ng-template appDemoOption="option-1" label="Layout Preview" [selected]="true" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20component%20provides%20a%20complete%20application%20shell%20with%20sidebar%0A%20%20%20%20%20%20%20%20navigation%2C%20top%20bar%20with%20logo%20and%20actions%2C%20and%20a%20main%20content%20area.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22layout-preview%22%3E%0A%20%20%20%20%20%20%20%20%3Cimg%0A%20%20%20%20%20%20%20%20%20%20src%3D%22assets%2Fscreenshots%2Flayout-preview.png%22%0A%20%20%20%20%20%20%20%20%20%20alt%3D%22Layout%20Component%20Preview%22%0A%20%20%20%20%20%20%20%20%20%20class%3D%22preview-image%22%0A%20%20%20%20%20%20%20%20%20%20onerror%3D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20this.style.display%20%3D%20'none'%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20this.nextElementSibling.style.display%20%3D%20'block'%3B%0A%20%20%20%20%20%20%20%20%20%20%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22preview-placeholder%22%20style%3D%22display%3A%20none%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-layout%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-topbar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-logo%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-actions%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-body%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-sidebar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-content%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22placeholder-text-label%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20This%20is%20the%20current%20layout%20you're%20viewing!%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
       <p class="section-description">
         The layout component provides a complete application shell with sidebar
         navigation, top bar with logo and actions, and a main content area.
@@ -48,38 +37,23 @@
           </p>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Installation -->
-    <app-demo-card
-      [title]="'Installation'"
-      [sourceCode]="codeExamples.installation"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-2" label="Installation" [sourceCode]="codeExamples.installation">
       <p class="section-description">
         Install the Invensys-NG library and import the layout components.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Basic Usage -->
-    <app-demo-card
-      [title]="'Basic Usage'"
-      [sourceCode]="codeExamples.basic"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-3" label="Basic Usage" [sourceCode]="codeExamples.basic">
       <p class="section-description">
         Set up a basic layout with configuration and menu structure. The layout
         component wraps your application and provides routing through
         router-outlet.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Layout Configuration -->
-    <app-demo-card
-      [title]="'Layout Configuration'"
-      [sourceCode]="codeExamples.config"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-4" label="Layout Configuration" [sourceCode]="codeExamples.config">
       <p class="section-description">
         Configure your application name, logos for light and dark themes, and
         toggle the theme switcher.
@@ -96,51 +70,35 @@
           <strong>Theme Toggle:</strong> Built-in light/dark mode switcher
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Menu Configuration -->
-    <app-demo-card
-      [title]="'Menu Configuration'"
-      [sourceCode]="codeExamples.menu"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-5" label="Menu Configuration" [sourceCode]="codeExamples.menu">
       <p class="section-description">
         Define your navigation menu with groups, items, icons, and nested
         sub-menus.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Nested Menu Example -->
-    <app-demo-card
-      [title]="'Nested Menu Example'"
-      [sourceCode]="codeExamples.nestedMenu"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-6" label="Nested Menu Example" [sourceCode]="codeExamples.nestedMenu">
       <p class="section-description">
         Create multi-level navigation menus with separators between groups.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Claims-Based Access Control -->
-    <app-demo-card [title]="'Claims-Based Access Control'">
+  <ng-template appDemoOption="option-7" label="Claims-Based Access Control" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Control%20menu%20visibility%20based%20on%20user%20permissions%20using%20claims.%20Perfect%0A%20%20%20%20%20%20%20%20for%20role-based%20access%20control%20in%20your%20application.%0A%20%20%20%20%20%20%3C%2Fp%3E">
       <p class="section-description">
         Control menu visibility based on user permissions using claims. Perfect
         for role-based access control in your application.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Step 1: Create Claims Service -->
-    <app-demo-card
-      [title]="'Step 1: Create Claims Service'"
-      [sourceCode]="codeExamples.claimsService"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-8" label="Step 1: Create Claims Service" [sourceCode]="codeExamples.claimsService">
       <p class="section-description">
         Create a service that implements the
         <code>ClaimsChecker</code> interface. This service determines which
         claims the current user has.
       </p>
-      <div class="usage-notes" style="margin-top: 1rem">
+      <div class="usage-notes" style="margin-top: 16px">
         <div class="note-item">
           <i class="pi pi-lightbulb"></i>
           <div>
@@ -149,32 +107,22 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Step 2: Configure Provider -->
-    <app-demo-card
-      [title]="'Step 2: Configure Provider'"
-      [sourceCode]="codeExamples.claimsProvider"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-9" label="Step 2: Configure Provider" [sourceCode]="codeExamples.claimsProvider">
       <p class="section-description">
         Use the <code>provideMenuClaimsChecker()</code> function in your app
         configuration. This is the recommended approach following Angular's
         modern provider pattern.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Step 3: Add Claims to Menu -->
-    <app-demo-card
-      [title]="'Step 3: Add Claims to Menu'"
-      [sourceCode]="codeExamples.claimsMenu"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-10" label="Step 3: Add Claims to Menu" [sourceCode]="codeExamples.claimsMenu">
       <p class="section-description">
         Add <code>claim</code> properties to your menu items and groups. Items
         without claims are always visible.
       </p>
-      <div class="config-examples" style="margin-top: 1rem">
+      <div class="config-examples" style="margin-top: 16px">
         <div class="config-item">
           <strong>Item Claim:</strong> Controls visibility of individual menu
           items
@@ -191,41 +139,30 @@
           are automatically hidden
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Claims Features -->
-    <app-demo-card [title]="'Claims Checker Features'">
+  <ng-template appDemoOption="option-11" label="Claims Checker Features" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20%3Ccode%3E%7B%7B%20codeExamples.claimsFeatures%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%3C%2Fp%3E">
       <p class="section-description">
         <code>{{ codeExamples.claimsFeatures }}</code>
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Alternative Configuration -->
-    <app-demo-card
-      [title]="'Alternative: Manual Configuration'"
-      [sourceCode]="codeExamples.claimsManual"
-      [language]="'ts'"
-    >
+  <ng-template appDemoOption="option-12" label="Alternative: Manual Configuration" [sourceCode]="codeExamples.claimsManual">
       <p class="section-description">
         If you prefer manual provider configuration instead of using
         <code>provideMenuClaimsChecker()</code>, you can configure the
         <code>CLAIMS_CHECKER</code> token directly.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Custom Topbar Actions -->
-    <app-demo-card
-      [title]="'Custom Topbar Actions'"
-      [sourceCode]="codeExamples.customTopbar"
-    >
+  <ng-template appDemoOption="option-13" label="Custom Topbar Actions" [sourceCode]="codeExamples.customTopbar">
       <p class="section-description">
         Add custom buttons and actions to the top-right section of the topbar
         using the <code>topbarActions</code> content projection.
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Components -->
-    <app-demo-card [title]="'Available Components'">
+  <ng-template appDemoOption="option-14" label="Available Components" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20system%20is%20composed%20of%20the%20following%20components%3A%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22components-grid%22%3E%0A%20%20%20%20%20%20%20%20%40for%20(component%20of%20components%3B%20track%20component.name)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22component-item%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ccode%20class%3D%22component-name%22%3E%7B%7B%20component.name%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22component-description%22%3E%7B%7B%20component.description%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
       <p class="section-description">
         The layout system is composed of the following components:
       </p>
@@ -237,16 +174,8 @@
           </div>
         }
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-
-    <!-- Usage Notes -->
-    <app-demo-card [title]="'Usage Notes'">
-      <div class="usage-notes">
+    </ng-template>
+  <ng-template appDemoUsage><div class="usage-notes">
         <div class="note-item">
           <i class="pi pi-info-circle"></i>
           <div>
@@ -275,7 +204,5 @@
             when their route is active using Angular's routerLinkActive.
           </div>
         </div>
-      </div>
-    </app-demo-card>
-  </div>
-</div>
+      </div></ng-template>
+</app-demo-playground>

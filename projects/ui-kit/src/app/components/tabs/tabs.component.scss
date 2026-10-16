@@ -1,25 +1,7 @@
 @use "../shared-demo-styles.scss" as *;
 
-.tabs-demo {
-  @extend .demo-component;
-}
-
 .tab-examples {
   margin-bottom: 20px;
-}
-
-.tab-content {
-  h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    color: var(--color-text-primary);
-  }
-
-  p {
-    margin: 0;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-  }
 }
 
 .empty-state {
@@ -38,10 +20,5 @@
     font-size: 48px;
     margin-bottom: 16px;
     opacity: 0.5;
-  }
-
-  p {
-    margin: 0;
-    font-size: 1em;
   }
 }

@@ -1,10 +1,5 @@
-<div class="card-buttons-demo">
-  <header class="demo-header">
-    <h1>Card Buttons</h1>
-    <p>Interactive cards for actions, tool selection, and navigation, with keyboard and disabled state support.</p>
-  </header>
-  <div class="cards-container">
-    <app-demo-card title="Card buttons — select a tool" [sourceCode]="codeExamples.cardButton">
+<app-demo-playground class="card-buttons-demo" title="Card Buttons" description="Interactive cards for actions, tool selection, and navigation, with keyboard and disabled state support.">
+  <ng-template appDemoOption="option-1" label="Card buttons — select a tool" [selected]="true" [sourceCode]="codeExamples.cardButton">
       <p>Use a card button for an action or selection. Try Tab, Enter and Space.</p>
       <div class="interactive-card-grid">
         @for (tool of cardTools; track tool.key) {
@@ -19,9 +14,9 @@
       <p id="card-tool-panel" aria-live="polite">
         Selected tool: {{ activeTool() === 'password' ? 'Add password' : 'Add watermark' }}
       </p>
-    </app-demo-card>
+    </ng-template>
 
-    <app-demo-card title="Card links and disabled cards" [sourceCode]="codeExamples.cardLink">
+  <ng-template appDemoOption="option-2" label="Card links and disabled cards" [sourceCode]="codeExamples.cardLink">
       <p>Routes render as links, including open in a new tab. Disabled cards cannot be activated.</p>
       <div class="interactive-card-grid">
         <i-card-button routerLink="/components/file-uploads" [fullHeight]="true">
@@ -32,7 +27,5 @@
           <h3>Coming soon</h3><p>This action is unavailable.</p>
         </i-card-button>
       </div>
-    </app-demo-card>
-
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

@@ -12,24 +12,19 @@ import {
   RuleEditorField,
   RuleEditorOperator,
 } from '@shared/components/rule-editor/rule-editor.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  Feature,
-  FeaturesListComponent,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-data-editors',
   standalone: true,
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     FormsModule,
     IToggle,
     IFieldPicker,
     IOrderedList,
     IRuleEditor,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './data-editors.component.html',
   styleUrl: './data-editors.component.scss',
 })
@@ -69,33 +64,4 @@ export class DataEditorsComponent {
   [fields]="fields" [operators]="directions" [(rules)]="sorts" />`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Form-ready',
-      description: 'Supports ngModel and predictable immutable change events.',
-    },
-    {
-      title: 'Typed rules',
-      description:
-        'Fields control the appropriate editor and compatible operators.',
-    },
-    {
-      title: 'Keyboard-friendly',
-      description:
-        'Controls preserve visible labels and accessible action groups.',
-    },
-    {
-      title: 'Responsive layout',
-      description:
-        'Rule rows and item actions adapt cleanly to narrow screens.',
-    },
-    {
-      title: 'Read-only state',
-      description: 'Keep selections and rules visible while preventing edits.',
-    },
-    {
-      title: 'Composable',
-      description: 'Project item-specific settings into ordered list entries.',
-    },
-  ];
 }

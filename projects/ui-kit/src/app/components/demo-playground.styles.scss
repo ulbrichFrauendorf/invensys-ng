@@ -1,0 +1,112 @@
+// Shared layout for component demos. Typography comes from the application theme.
+@mixin demo-playground-layout() {
+  :host {
+    display: block;
+    min-width: 0;
+  }
+
+  .demo-playground {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .playground {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    align-items: start;
+    gap: 24px;
+  }
+
+  .preview-panel,
+  .options-panel {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid;
+    border-radius: 12px;
+  }
+
+  .preview-panel {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 48px);
+  }
+
+  .panel-heading {
+    padding: 20px 24px;
+    border-bottom: 1px solid;
+  }
+
+  .preview-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .panel-content {
+    display: grid;
+    height: 480px;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .code-view {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .options-list { padding: 0 24px; }
+
+  .option-row {
+    padding: 16px 0;
+
+    & + & { border-top: 1px solid; }
+  }
+
+  .options-panel {
+    input,
+    textarea,
+    select {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid;
+      border-radius: 6px;
+      font: inherit;
+
+      &:focus-visible {
+        outline: 2px solid;
+        outline-offset: 2px;
+      }
+    }
+
+    textarea { resize: vertical; }
+  }
+
+  .usage-notes {
+    margin-top: 28px;
+    ul { padding-left: 20px; }
+    li + li { margin-top: 6px; }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 800px) {
+    .demo-playground { padding: 16px; }
+    .playground { grid-template-columns: minmax(0, 1fr); }
+    .preview-panel { top: 16px; z-index: 1; }
+    .panel-content { height: 240px; }
+  }
+}

@@ -7,24 +7,19 @@ import {
 } from '@angular/forms';
 import { ICheckbox } from '../../../../../invensys-ng/src/lib/components/checkbox/checkbox.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { JsonPipe } from '@angular/common';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-checkboxes',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     ICheckbox,
     IButton,
-    DemoCardComponent,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './checkboxes.component.html',
   styleUrl: './checkboxes.component.scss',
 })
@@ -133,41 +128,6 @@ console.log(this.formControlExample.value);`,
 export class ExampleComponent {
   checked = false;
 }`;
-
-  features: Feature[] = [
-    {
-      title: 'Two-way Data Binding',
-      description: 'Full support for ngModel and reactive forms',
-    },
-    {
-      title: 'Size Variants',
-      description: 'Small, medium, and large checkbox sizes',
-    },
-    {
-      title: 'Label Support',
-      description: 'Optional labels with proper accessibility',
-    },
-    {
-      title: 'State Management',
-      description: 'Disabled and readonly states',
-    },
-    {
-      title: 'Form Integration',
-      description: 'Works seamlessly with Angular forms',
-    },
-    {
-      title: 'Custom Events',
-      description: 'onChange event for custom handling',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and keyboard navigation',
-    },
-    {
-      title: 'Custom Styling',
-      description: 'Theme-aware styling with CSS custom properties',
-    },
-  ];
 
   // Event handlers
   onBasicChange(checked: boolean) {

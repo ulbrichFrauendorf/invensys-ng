@@ -1,9 +1,5 @@
 @use "../shared-demo-styles.scss" as *;
 
-.placeholders-demo {
-  @extend .demo-component;
-}
-
 .demo-placeholder-container {
   height: 300px;
 }
@@ -19,7 +15,7 @@
 .demo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 16px;
 
   &.two-columns {
     grid-template-columns: repeat(2, 1fr);
@@ -47,7 +43,7 @@
 }
 
 .list-item-demo {
-  padding: 1rem;
+  padding: 16px;
   border-bottom: 1px solid var(--surface-border);
   cursor: pointer;
   color: var(--color-text-primary);
@@ -64,28 +60,12 @@
 
 .detail-panel-demo {
   flex: 1;
-  padding: 1rem;
+  padding: 16px;
 }
 
 // Placeholder content styling (caller's responsibility)
 i-placeholder {
-  h3 {
-    margin: 0 0 0.5rem 0;
-    color: var(--color-text-primary);
-    font-weight: 600;
-  }
-
-  p {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    line-height: 1.6;
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-
   i-button {
-    margin-top: 1rem;
+    margin-top: 16px;
   }
 }

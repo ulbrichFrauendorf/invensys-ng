@@ -1,20 +1,5 @@
-<div class="tooltips-demo">
-  <header class="demo-header">
-    <h1>Tooltip Components</h1>
-    <p>
-      Contextual tooltip directive that can be applied to any HTML element.
-      Provides helpful information on hover or focus with customizable
-      positioning and timing.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Tooltip Positions - Visual Compass Layout -->
-    <app-demo-card
-      [title]="'Tooltip Positions'"
-      [sourceCode]="codeExamples.basic"
-      [tsCode]="tsExamples.basic"
-    >
+<app-demo-playground class="tooltips-demo" title="Tooltip Components" description="Contextual tooltip directive that can be applied to any HTML element. Provides helpful information on hover or focus with customizable positioning and timing.">
+  <ng-template appDemoOption="option-1" label="Tooltip Positions" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
       <div class="position-showcase">
         <div class="position-grid">
           <div class="position-cell top">
@@ -69,10 +54,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Icon Tooltips - Common UI Pattern -->
-    <app-demo-card [title]="'Icon Tooltips'" [sourceCode]="codeExamples.icons">
+  <ng-template appDemoOption="option-2" label="Icon Tooltips" [sourceCode]="codeExamples.icons">
       <div class="icon-tooltips-section">
         <p class="section-description">
           Tooltips are perfect for icon-only buttons and informational icons.
@@ -124,13 +108,9 @@
           </button>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Form Field Help -->
-    <app-demo-card
-      [title]="'Form Field Helpers'"
-      [sourceCode]="codeExamples.formHelp"
-    >
+  <ng-template appDemoOption="option-3" label="Form Field Helpers" [sourceCode]="codeExamples.formHelp">
       <div class="form-help-section">
         <p class="section-description">
           Use tooltips to provide contextual help without cluttering the
@@ -184,10 +164,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Timing Demonstrations -->
-    <app-demo-card [title]="'Custom Timing'" [sourceCode]="codeExamples.timing">
+  <ng-template appDemoOption="option-4" label="Custom Timing" [sourceCode]="codeExamples.timing">
       <div class="timing-section">
         <p class="section-description">
           Adjust tooltip delay for different use cases.
@@ -233,13 +212,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Truncated Text -->
-    <app-demo-card
-      [title]="'Truncated Text Tooltips'"
-      [sourceCode]="codeExamples.truncated"
-    >
+  <ng-template appDemoOption="option-5" label="Truncated Text Tooltips" [sourceCode]="codeExamples.truncated">
       <div class="truncated-section">
         <p class="section-description">
           Show full content when text is truncated due to space constraints.
@@ -279,13 +254,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Status Indicators -->
-    <app-demo-card
-      [title]="'Status Indicators'"
-      [sourceCode]="codeExamples.status"
-    >
+  <ng-template appDemoOption="option-6" label="Status Indicators" [sourceCode]="codeExamples.status">
       <div class="status-section">
         <p class="section-description">
           Tooltips provide additional context for status badges and indicators.
@@ -333,11 +304,5 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features Overview -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

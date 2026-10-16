@@ -1,15 +1,5 @@
-<div class="data-editors-demo">
-  <header class="demo-header">
-    <h1>Data editors</h1>
-    <p>
-      Compose report views with grouped fields, ordered columns, filters and
-      sort rules. Each editor follows the same accessible form-control and card
-      conventions as the rest of the library.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <app-demo-card title="Field picker" [sourceCode]="codeExamples.fieldPicker">
+<app-demo-playground class="data-editors-demo" title="Data editors" description="Compose report views with grouped fields, ordered columns, filters and sort rules. Each editor follows the same accessible form-control and card conventions as the rest of the library.">
+  <ng-template appDemoOption="option-1" label="Field picker" [selected]="true" [sourceCode]="codeExamples.fieldPicker">
       <div class="editor-intro">
         <div>
           <h3>Choose fields</h3>
@@ -22,9 +12,9 @@
         [(ngModel)]="selected"
         [readonly]="readonly"
       />
-    </app-demo-card>
+    </ng-template>
 
-    <app-demo-card title="Column order" [sourceCode]="codeExamples.orderedList">
+  <ng-template appDemoOption="option-2" label="Column order" [sourceCode]="codeExamples.orderedList">
       <div class="editor-intro">
         <div>
           <h3>Arrange selected fields</h3>
@@ -42,9 +32,9 @@
           >Settings for {{ label(key) }} can be projected here.</small
         ></ng-template
       >
-    </app-demo-card>
+    </ng-template>
 
-    <app-demo-card title="Filter rules" [sourceCode]="codeExamples.filters">
+  <ng-template appDemoOption="option-3" label="Filter rules" [sourceCode]="codeExamples.filters">
       <div class="editor-intro">
         <div>
           <h3>Refine the results</h3>
@@ -57,9 +47,9 @@
         [(rules)]="rules"
         [readonly]="readonly"
       />
-    </app-demo-card>
+    </ng-template>
 
-    <app-demo-card title="Sort rules" [sourceCode]="codeExamples.sorts">
+  <ng-template appDemoOption="option-4" label="Sort rules" [sourceCode]="codeExamples.sorts">
       <div class="editor-intro">
         <div>
           <h3>Set the sort order</h3>
@@ -78,10 +68,5 @@
         [(rules)]="sorts"
         [readonly]="readonly"
       />
-    </app-demo-card>
-
-    <app-demo-card title="Features">
-      <app-features-list [features]="features" />
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

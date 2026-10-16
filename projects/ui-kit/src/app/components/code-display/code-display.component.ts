@@ -5,7 +5,7 @@ import {
   ViewChild,
   OnDestroy,
   Input,
-  OnInit,
+  OnChanges,
   ViewEncapsulation,
 } from '@angular/core';
 
@@ -15,7 +15,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
   selector: 'app-code-display',
   imports: [IButton],
   template: `
-    <div class="code-display-container">
+    <div class="code-display-container" [class.code-display--embedded]="embedded">
       <div class="code-section">
         <div class="code-header">
           @if (showTabs && (tsCode || scssCode)) {
@@ -97,12 +97,13 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
   styleUrls: ['./code-display.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() sourceCode: string = '';
   @Input() tsCode: string = '';
   @Input() scssCode: string = '';
   @Input() language: 'html' | 'ts' | 'scss' = 'html';
   @Input() showTabs: boolean = false;
+  @Input() embedded = false;
   @ViewChild('uiContent', { static: false }) uiContent!: ElementRef;
 
   formattedCode: string = '';
@@ -115,9 +116,17 @@ export class CodeDisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   hasFluidComponents: boolean = false;
   private observer: MutationObserver | null = null;
 
-  ngOnInit() {
+  ngOnChanges() {
     // Set activeTab based on language input
     this.activeTab = this.language;
+    this.formattedCode = '';
+    this.formattedTsCode = '';
+    this.formattedScssCode = '';
+    this.rawSourceCode = '';
+    this.rawTsCode = '';
+    this.rawScssCode = '';
+    this.showTabs = false;
+    this.hasFluidComponents = false;
 
     if (this.sourceCode) {
       this.rawSourceCode = this.sourceCode;

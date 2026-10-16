@@ -1,0 +1,69 @@
+{
+  "name": "Approved confirmation dialog demo reference",
+  "createdAt": "2026-10-15T23:08:54+02:00",
+  "baseCommit": "5e1dc620122e1aa1006a9c99fcf003452a889883",
+  "previewUrl": "http://localhost:4200/components/confirmation-dialogs",
+  "validation": {
+    "browser": "Approved header and layout visually verified",
+    "build": "ui-kit development build passed",
+    "tests": "3 focused ChromeHeadless tests passed"
+  },
+  "files": [
+    {
+      "path": "projects/ui-kit/src/app/components/demo-playground.styles.scss",
+      "sha256": "a4fb5fe8a0dfd73765e97627608cdd7999d6c930124ebd2ab42b1812c2c03d21"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/demo-playground.theme.scss",
+      "sha256": "6900ef804a4980cce71fd80ca7c2c188f34b522cd60c66f1b6d95874da9ce1db"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/confirmation-dialogs/confirmation-dialogs.component.html",
+      "sha256": "74ef0043053764dcb4bb388d232ca14d9703f58bb42aae9548d45aa0c0a3641a"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/confirmation-dialogs/confirmation-dialogs.component.scss",
+      "sha256": "5589fce77e645c89a61e3d0bdf2340f8b3fd41f2489dfccb3f3645bb05539234"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/confirmation-dialogs/confirmation-dialogs.component.theme.scss",
+      "sha256": "7f36103bf7f1a401f18c5bf03853e100e8e4b8f91ff21d4951245eef314c64d5"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/confirmation-dialogs/confirmation-dialogs.component.ts",
+      "sha256": "74ed05f401600c6203ad10cc45fa0c11ef2bf73489bdd5bdb1f6fbb853c3cd5a"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/confirmation-dialogs/confirmation-dialogs.component.spec.ts",
+      "sha256": "2b509e25646c03b0c2e14566a08fa05b11f0205e888830764f4f19572ec520d7"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/code-display/code-display.component.ts",
+      "sha256": "4216bbbd6422d5be2ef0e5e67f98cd4addb08985ff0bb171f4e66146876a2acf"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/code-display/code-display.component.scss",
+      "sha256": "0524d3d44b2455bc6c99c7280fb25ce929eb830a336cb5d6d543c75903dd2e15"
+    },
+    {
+      "path": "projects/ui-kit/src/app/components/code-display/code-display.component.theme.scss",
+      "sha256": "a8ce1c897cfef778202175e27350c9a4ef84066191722c7f28d1035e4adaf72d"
+    },
+    {
+      "path": "projects/invensys-ng/src/lib/components/confirmation-dialog/confirmation-dialog.component.ts",
+      "sha256": "e5589c0dda0eaf35f5e6742186d1c92d85fed9c4643158687d429b60bb7b366d"
+    },
+    {
+      "path": "projects/invensys-ng/src/lib/components/confirmation-dialog/confirmation-dialog.component.spec.ts",
+      "sha256": "233365ae130118a9e136c8a1783d5d5c4b575e3f6a54e5f7e5b37b7064aa90df"
+    },
+    {
+      "path": "projects/invensys-ng/src/lib/components/confirmation-dialog/services/confirmation-dialog.service.ts",
+      "sha256": "e681f5f96356fad2f8fd46f0e0f4cad48a761e4102aae1d8fe8a6c6b1008ba10"
+    },
+    {
+      "path": "docs/component-demo-reference.md",
+      "sha256": "1a8c160c13abdbb6f09334ea0e70e2d25540c12abf1b33e9b6c38e974748434e"
+    }
+  ]
+}

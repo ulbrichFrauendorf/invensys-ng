@@ -1,29 +1,6 @@
 .layouts-demo {
-  .demo-header {
-    margin-bottom: 2rem;
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-color);
-    }
-
-    p {
-      font-size: 1rem;
-      color: var(--text-color-secondary);
-      line-height: 1.6;
-    }
-  }
-
-  .cards-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
   .section-description {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
     color: var(--text-color-secondary);
     line-height: 1.6;
   }
@@ -52,7 +29,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 1.5rem;
+          padding: 0 24px;
 
           .placeholder-logo {
             width: 120px;
@@ -78,26 +55,26 @@
             width: 250px;
             background: var(--surface-overlay);
             border-right: 1px solid var(--surface-border);
-            padding: 1rem;
+            padding: 16px;
 
             .placeholder-menu-item {
               height: 40px;
               background: var(--surface-border);
               border-radius: 4px;
-              margin-bottom: 0.5rem;
+              margin-bottom: 8px;
               opacity: 0.5;
             }
           }
 
           .placeholder-content {
             flex: 1;
-            padding: 2rem;
+            padding: 32px;
 
             .placeholder-text {
               height: 20px;
               background: var(--surface-border);
               border-radius: 4px;
-              margin-bottom: 1rem;
+              margin-bottom: 16px;
               opacity: 0.3;
 
               &:first-child {
@@ -114,7 +91,7 @@
 
       .placeholder-text-label {
         text-align: center;
-        margin-top: 1rem;
+        margin-top: 16px;
         color: var(--text-color-secondary);
         font-style: italic;
       }
@@ -124,17 +101,17 @@
   .config-examples {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
 
     .config-item {
-      padding: 1rem;
+      padding: 16px;
       background: var(--surface-ground);
       border-left: 3px solid var(--primary-color);
       border-radius: 4px;
 
       strong {
         color: var(--primary-color);
-        margin-right: 0.5rem;
+        margin-right: 8px;
       }
     }
   }
@@ -142,27 +119,27 @@
   .components-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 16px;
+    margin-top: 16px;
 
     .component-item {
-      padding: 1.5rem;
+      padding: 24px;
       background: var(--surface-ground);
       border-radius: 8px;
       border: 1px solid var(--surface-border);
 
       .component-name {
         display: block;
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 600;
         color: var(--primary-color);
-        margin-bottom: 0.5rem;
+        margin-bottom: 8px;
         font-family: "Courier New", monospace;
       }
 
       .component-description {
         color: var(--text-color-secondary);
-        font-size: 0.9rem;
+        font-size: 14.4px;
         line-height: 1.5;
         margin: 0;
       }
@@ -172,21 +149,21 @@
   .usage-notes {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
 
     .note-item {
       display: flex;
-      gap: 1rem;
-      padding: 1rem;
+      gap: 16px;
+      padding: 16px;
       background: var(--highlight-bg);
       border-radius: 6px;
       border-left: 3px solid var(--primary-color);
 
       i {
-        font-size: 1.25rem;
+        font-size: 20px;
         color: var(--primary-color);
         flex-shrink: 0;
-        margin-top: 0.125rem;
+        margin-top: 2px;
       }
 
       div {
@@ -194,7 +171,7 @@
 
         strong {
           display: block;
-          margin-bottom: 0.25rem;
+          margin-bottom: 4px;
           color: var(--text-color);
         }
 
@@ -206,7 +183,7 @@
 
   code {
     background: var(--surface-ground);
-    padding: 0.2rem 0.4rem;
+    padding: 3.2px 6.4px;
     border-radius: 4px;
     font-family: "Courier New", monospace;
     font-size: 0.9em;

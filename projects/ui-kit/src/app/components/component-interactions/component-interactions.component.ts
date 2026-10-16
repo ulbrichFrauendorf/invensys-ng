@@ -12,15 +12,12 @@ import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/pane
 import { ISelect } from '@shared/components/select/select.component';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
 import { IButton } from '@shared/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-component-interactions',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     JsonPipe,
     IAccordion,
     IAccordionList,
@@ -30,9 +27,7 @@ import {
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './component-interactions.component.html',
   styleUrl: './component-interactions.component.scss',
 })
@@ -197,39 +192,6 @@ export class ExampleComponent {
   constructor(private fb: FormBuilder) {}
 }`,
   };
-
-  componentFeatures: Feature[] = [
-    {
-      title: 'Dropdown in Accordion',
-      description:
-        'Demonstrates how dropdowns properly function inside accordion panels without z-index issues',
-    },
-    {
-      title: 'Multi-Select in Accordion',
-      description:
-        'Shows multi-select dropdowns expanding correctly beyond accordion boundaries',
-    },
-    {
-      title: 'Dropdown in Panel',
-      description:
-        'Ensures select and multi-select components work correctly inside panel containers with proper overlay visibility',
-    },
-    {
-      title: 'Form Integration',
-      description:
-        'Shows reactive forms working seamlessly across accordion panels',
-    },
-    {
-      title: 'Multiple Interactions',
-      description:
-        'Test how multiple accordions with dropdowns behave when opened simultaneously',
-    },
-    {
-      title: 'State Management',
-      description:
-        'Form state is preserved when accordion panels are collapsed and expanded',
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     this.interactionForm = this.fb.group({

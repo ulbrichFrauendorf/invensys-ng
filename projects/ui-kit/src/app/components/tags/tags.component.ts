@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
 import { ITag } from '@shared/components/tag/tag.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { ISeverity } from '@shared/enums/IButtonSeverity';
 
 interface TagExample {
@@ -25,10 +20,13 @@ const ALL_SEVERITIES: ISeverity[] = [
   'contrast',
 ];
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-tags',
   standalone: true,
-  imports: [ITag, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ITag],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss'],
 })
@@ -95,31 +93,4 @@ export class TagsComponent {
 <i-tag value="Saved" severity="success" icon="pi pi-check" [rounded]="true" />`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Severity Colours',
-      description:
-        'All 8 design-system severities: primary, secondary, tertiary, success, info, warning, danger, contrast',
-    },
-    {
-      title: 'Rounded Pill',
-      description: 'Optional pill shape for a softer look',
-    },
-    {
-      title: 'Icon Support',
-      description: 'Optional PrimeNg icon displayed before the value text',
-    },
-    {
-      title: 'Three Sizes',
-      description: 'sm, md (default), and lg sizes',
-    },
-    {
-      title: 'Dark Mode',
-      description: 'Translucent severity backgrounds adapt automatically',
-    },
-    {
-      title: 'Lightweight',
-      description: 'Pure CSS, no animations or dependencies beyond the theme',
-    },
-  ];
 }

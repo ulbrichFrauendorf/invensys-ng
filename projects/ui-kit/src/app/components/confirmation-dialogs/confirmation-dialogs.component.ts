@@ -1,285 +1,151 @@
-import { Component, inject } from '@angular/core';
-import { ConfirmationDialogService } from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
-import { IButton } from '@shared/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
+import { Component, computed, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+  ConfirmationDialogConfig,
+  ConfirmationDialogService,
+} from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
+import { IButton } from '@shared/components/button/button.component';
+import { ICheckbox } from '@shared/components/checkbox/checkbox.component';
+import { ISeverity } from '@shared/enums/IButtonSeverity';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import {
+  DemoOptionsDirective,
+  DemoPreviewDirective,
+  DemoUsageDirective,
+} from '../demo-playground/demo-option.directive';
+
+type DialogOption = keyof ConfirmationDialogConfig;
 
 @Component({
   selector: 'app-confirmation-dialogs',
-  imports: [IButton, DemoCardComponent, FeaturesListComponent],
+  imports: [
+    FormsModule,
+    IButton,
+    ICheckbox,
+    DemoPlaygroundComponent,
+    DemoOptionsDirective,
+    DemoPreviewDirective,
+    DemoUsageDirective,
+  ],
   templateUrl: './confirmation-dialogs.component.html',
   styleUrl: './confirmation-dialogs.component.scss',
 })
 export class ConfirmationDialogsComponent {
-  private confirmationService = inject(ConfirmationDialogService);
+  private readonly confirmationService = inject(ConfirmationDialogService);
 
-  // Code examples organized by category
-  codeExamples = {
-    basic: `import { Component, inject } from '@angular/core';
-import { ConfirmationDialogService } from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
-
-@Component({
-  selector: 'app-my-component',
-  template: \`
-    <i-button 
-      severity="danger" 
-      (click)="deleteItem()">
-      Delete Item
-    </i-button>
-  \`
-})
-export class MyComponent {
-  private confirmationService = inject(ConfirmationDialogService);
-
-  async deleteItem() {
-    await this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this item?',
-      header: 'Confirm Delete',
-      accept: () => {
-        console.log('Item deleted');
-        // Add your delete logic here
-      },
-      reject: () => {
-        console.log('Delete cancelled');
-      },
-    });
-  }
-}`,
-
-    custom: `import { Component, inject } from '@angular/core';
-import { ConfirmationDialogService } from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
-
-@Component({
-  selector: 'app-my-component',
-  template: \`
-    <i-button 
-      severity="warning" 
-      (click)="unlinkReport()">
-      Unlink Report
-    </i-button>
-  \`
-})
-export class MyComponent {
-  private confirmationService = inject(ConfirmationDialogService);
-
-  async unlinkReport() {
-    await this.confirmationService.confirm({
-      message: 'Please confirm if you would like to unlink the report.',
-      header: 'Are you sure?',
-      acceptLabel: 'Unlink',
-      rejectLabel: 'Cancel',
-      accept: () => {
-        console.log('Unlink confirmed');
-        // Add your unlink logic here
-      },
-      reject: () => {
-        console.log('Unlink cancelled');
-      },
-    });
-  }
-}`,
-
-    discard: `import { Component, inject } from '@angular/core';
-import { ConfirmationDialogService } from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
-
-@Component({
-  selector: 'app-my-component',
-  template: \`
-    <i-button 
-      severity="secondary" 
-      [outlined]="true" 
-      (click)="discardChanges()">
-      Discard Changes
-    </i-button>
-  \`
-})
-export class MyComponent {
-  private confirmationService = inject(ConfirmationDialogService);
-
-  async discardChanges() {
-    await this.confirmationService.confirm({
-      message: 'You have unsaved changes. Are you sure you want to discard them?',
-      header: 'Discard Changes',
-      acceptLabel: 'Discard',
-      rejectLabel: 'Keep Editing',
-      accept: () => {
-        console.log('Changes discarded');
-        // Add your discard logic here
-      },
-      reject: () => {
-        console.log('Continue editing');
-      },
-    });
-  }
-}`,
-
-    dangerous: `import { Component, inject } from '@angular/core';
-import { ConfirmationDialogService } from '@shared/components/confirmation-dialog/services/confirmation-dialog.service';
-
-@Component({
-  selector: 'app-my-component',
-  template: \`
-    <i-button 
-      severity="danger" 
-      [raised]="true" 
-      (click)="permanentDelete()">
-      Delete Forever
-    </i-button>
-  \`
-})
-export class MyComponent {
-  private confirmationService = inject(ConfirmationDialogService);
-
-  async permanentDelete() {
-    await this.confirmationService.confirm({
-      message: 'This action cannot be undone. All data will be permanently deleted.',
-      header: 'Permanent Deletion',
-      acceptLabel: 'Delete Forever',
-      rejectLabel: 'Cancel',
-      accept: () => {
-        console.log('Permanent deletion confirmed');
-        // Add your permanent delete logic here
-      },
-      reject: () => {
-        console.log('Deletion cancelled');
-      },
-    });
-  }
-}`,
-  };
-
-  // HTML template examples
-  htmlExamples = {
-    basic: `<i-button 
-  severity="danger" 
-  (click)="deleteItem()">
-  Delete Item
-</i-button>`,
-
-    custom: `<i-button 
-  severity="warning" 
-  (click)="unlinkReport()">
-  Unlink Report
-</i-button>`,
-
-    discard: `<i-button 
-  severity="secondary" 
-  [outlined]="true" 
-  (click)="discardChanges()">
-  Discard Changes
-</i-button>`,
-
-    dangerous: `<i-button 
-  severity="danger" 
-  [raised]="true" 
-  (click)="permanentDelete()">
-  Delete Forever
-</i-button>`,
-  };
-
-  features: Feature[] = [
-    {
-      title: 'Service-Based',
-      description: 'Use ConfirmationDialogService for programmatic dialogs',
-    },
-    {
-      title: 'Custom Labels',
-      description: 'Customize accept and reject button text',
-    },
-    {
-      title: 'Action Callbacks',
-      description: 'Handle user responses with accept/reject functions',
-    },
-    {
-      title: 'Modal Behavior',
-      description: 'Blocks user interaction until decision is made',
-    },
-    {
-      title: 'Keyboard Support',
-      description: 'ESC to cancel, Enter to confirm',
-    },
-    {
-      title: 'Consistent Styling',
-      description: 'Matches your application theme automatically',
-    },
-    {
-      title: 'Promise-Based',
-      description: 'Async/await support for modern JavaScript patterns',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA compliant with screen reader support',
-    },
+  readonly options: { key: DialogOption; label: string; hint?: string }[] = [
+    { key: 'message', label: 'Message', hint: 'Required confirmation message.' },
+    { key: 'header', label: 'Custom header', hint: 'Omit to use the default dialog heading.' },
+    { key: 'severity', label: 'Severity', hint: 'Defaults to primary.' },
+    { key: 'acceptLabel', label: 'Accept label', hint: 'Defaults to Confirm.' },
+    { key: 'rejectLabel', label: 'Reject label', hint: 'Defaults to Cancel.' },
+    { key: 'accept', label: 'Accept callback', hint: 'Run a callback when the user confirms.' },
+    { key: 'reject', label: 'Reject callback', hint: 'Run a callback when the user cancels.' },
   ];
+  readonly severities: ISeverity[] = [
+    'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'contrast',
+  ];
+  readonly enabled = signal<Record<DialogOption, boolean>>({
+    message: true,
+    header: true,
+    severity: false,
+    acceptLabel: false,
+    rejectLabel: false,
+    accept: false,
+    reject: false,
+  });
+  readonly values = signal({
+    message: 'Are you sure you want to delete this item?',
+    header: 'Confirm Delete',
+    severity: 'danger' as ISeverity,
+    acceptLabel: 'Delete item',
+    rejectLabel: 'Keep item',
+  });
+  readonly result = signal('Open the dialog to try your selected options.');
+  readonly opening = signal(false);
+  readonly showCode = signal(false);
 
-  async showBasicConfirmation() {
+  readonly configuration = computed<ConfirmationDialogConfig>(() => {
+    const enabled = this.enabled();
+    const values = this.values();
+    return {
+      message: values.message,
+      ...(enabled.header && { header: values.header }),
+      ...(enabled.severity && { severity: values.severity }),
+      ...(enabled.acceptLabel && { acceptLabel: values.acceptLabel }),
+      ...(enabled.rejectLabel && { rejectLabel: values.rejectLabel }),
+      ...(enabled.accept && { accept: () => this.result.set('Accepted. Accept callback executed.') }),
+      ...(enabled.reject && { reject: () => this.result.set('Cancelled. Reject callback executed.') }),
+    };
+  });
+
+  readonly code = computed(() => {
+    const config = this.configuration();
+    const properties = this.options
+      .filter(option => this.enabled()[option.key])
+      .map(({ key }) => {
+        if (key === 'accept' || key === 'reject') {
+          const message = key === 'accept' ? 'Accepted' : 'Cancelled';
+          return `      ${key}: () => console.log('${message}'),`;
+        }
+        return `      ${key}: ${JSON.stringify(config[key])},`;
+      })
+      .join('\n');
+
+    return `import { Component, inject } from '@angular/core';
+import { ConfirmationDialogService, IButton } from 'invensys-ng';
+
+@Component({
+  selector: 'app-confirmation-example',
+  imports: [IButton],
+  template: \`<i-button (clicked)="openConfirmation()">Open confirmation</i-button>\`,
+})
+export class ConfirmationExampleComponent {
+  private readonly confirmationService = inject(ConfirmationDialogService);
+
+  async openConfirmation() {
     await this.confirmationService.confirm({
-      message: 'Are you sure you want to delete this item?',
-      header: 'Confirm Delete',
-      accept: () => {
-        console.log('Item deleted');
-        // Add your delete logic here
-      },
-      reject: () => {
-        console.log('Delete cancelled');
-      },
+${properties}
     });
   }
+}`;
+  });
 
-  async showCustomConfirmation() {
-    await this.confirmationService.confirm({
-      severity: 'warning',
-      message:
-        'Please confirm if you would like to unlink the report from the organization.',
-      header: 'Are you sure?',
-      acceptLabel: 'Unlink',
-      rejectLabel: 'Cancel',
-      accept: () => {
-        const reportId = '12345';
-        console.log('Unlink report with id:', reportId);
-        // Add your unlink logic here
-      },
-      reject: () => {
-        console.log('Report unlink cancelled');
-      },
-    });
+  setEnabled(key: DialogOption, enabled: boolean): void {
+    if (key === 'message') return;
+    this.enabled.update(options => ({ ...options, [key]: enabled }));
   }
 
-  async showDiscardChanges() {
-    await this.confirmationService.confirm({
-      message:
-        'You have unsaved changes. Are you sure you want to discard them?',
-      header: 'Discard Changes',
-      acceptLabel: 'Discard',
-      rejectLabel: 'Keep Editing',
-      accept: () => {
-        console.log('Changes discarded');
-        // Add your discard logic here
-      },
-      reject: () => {
-        console.log('Continue editing');
-      },
-    });
+  optionValue(key: DialogOption): string {
+    return key === 'accept' || key === 'reject' ? '' : this.values()[key];
   }
 
-  async showDangerousAction() {
-    await this.confirmationService.confirm({
-      severity: 'danger',
-      message:
-        'This action cannot be undone. All data will be permanently deleted.',
-      header: 'Permanent Deletion',
-      acceptLabel: 'Delete Forever',
-      rejectLabel: 'Cancel',
-      accept: () => {
-        console.log('Permanent deletion confirmed');
-        // Add your permanent delete logic here
-      },
-      reject: () => {
-        console.log('Deletion cancelled');
-      },
-    });
+  setValue(key: DialogOption, value: string): void {
+    if (key === 'accept' || key === 'reject') return;
+    if (key === 'severity') {
+      const severity = this.severities.find(item => item === value);
+      if (severity) this.values.update(values => ({ ...values, severity }));
+      return;
+    }
+    this.values.update(values => ({ ...values, [key]: value }));
+  }
+
+  async openConfirmation(): Promise<void> {
+    if (this.opening() || !this.values().message.trim()) return;
+    this.opening.set(true);
+    this.result.set('Waiting for a response…');
+    const config = this.configuration();
+    try {
+      const ref = await this.confirmationService.confirm(config);
+      ref.onClose.subscribe(result => {
+        this.opening.set(false);
+        if (result === true && !config.accept) this.result.set('Accepted. No accept callback selected.');
+        else if (result === false && !config.reject) this.result.set('Cancelled. No reject callback selected.');
+        else if (result !== true && result !== false) this.result.set('Dismissed without a decision.');
+      });
+    } catch {
+      this.opening.set(false);
+      this.result.set('The dialog could not be opened. Please try again.');
+    }
   }
 }

@@ -58,6 +58,20 @@ describe('ConfirmationDialogComponent', () => {
       expect(component.header()).toBe('Are you sure?');
       expect(component.severity()).toBe('primary');
     });
+
+    it('should render custom action labels from the dialog configuration', () => {
+      component.config = {
+        data: { acceptLabel: 'Delete item', rejectLabel: 'Keep item' },
+      };
+      component.ngOnInit();
+      fixture.detectChanges();
+
+      const buttons = Array.from(
+        fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>,
+      ).map(button => button.textContent?.trim());
+      expect(buttons).toContain('Delete item');
+      expect(buttons).toContain('Keep item');
+    });
   });
 
   describe('User actions', () => {

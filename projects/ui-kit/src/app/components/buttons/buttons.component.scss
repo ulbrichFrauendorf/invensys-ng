@@ -1,13 +1,9 @@
 @use "../shared-demo-styles.scss" as *;
 
-.buttons-demo {
-  @extend .demo-component;
-}
-
 .section-description {
   color: var(--text-color-secondary);
   margin-bottom: 16px;
-  font-size: 0.95rem;
+  font-size: 15.2px;
 }
 
 .button-grid {
@@ -22,7 +18,7 @@
     font-weight: 600;
     color: var(--text-color);
     margin-bottom: 12px;
-    font-size: 0.9rem;
+    font-size: 14.4px;
   }
 }
 

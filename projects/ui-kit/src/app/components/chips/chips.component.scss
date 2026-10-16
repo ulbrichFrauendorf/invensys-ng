@@ -1,9 +1,5 @@
 @use "../shared-demo-styles.scss" as *;
 
-.chips-demo {
-  @extend .demo-component;
-}
-
 .chip-examples {
   @extend .demo-examples;
 }
@@ -17,18 +13,18 @@
 }
 
 .chips-container-empty {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin-top: 8px;
+  font-size: 14.4px;
   color: var(--i-color-text-secondary, #6c757d);
 }
 
 .reset-button {
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
   border: 1px solid var(--i-color-primary, #3b82f6);
-  border-radius: 0.375rem;
+  border-radius: 6px;
   background-color: var(--i-color-primary, #3b82f6);
   color: white;
-  font-size: 0.875rem;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 

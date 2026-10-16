@@ -12,25 +12,20 @@ import {
   IListbox,
   ListboxOption,
 } from '@shared/components/listbox/listbox.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-listboxes',
   standalone: true,
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     CommonModule,
     AsyncPipe,
     JsonPipe,
     FormsModule,
     ReactiveFormsModule,
     IListbox,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './listboxes.component.html',
   styleUrls: ['./listboxes.component.scss', '../shared-demo-styles.scss'],
 })
@@ -206,55 +201,6 @@ export class ListboxesComponent implements OnInit, OnDestroy {
     console.log('Add user action clicked');
     alert('Add User action triggered!');
   }
-
-  // Features list for the component
-  features: Feature[] = [
-    {
-      title: 'Modern Header',
-      description:
-        'Fixed header with title property and optional action button for quick actions.',
-    },
-    {
-      title: 'Single & Multiple Selection',
-      description:
-        'Configure with [multiple] property. Checkboxes are hidden in single-select mode.',
-    },
-    {
-      title: 'Chip Display',
-      description:
-        'Selected items in multiselect mode display as removable chips in the header area.',
-    },
-    {
-      title: 'Option Icons',
-      description:
-        'Add icons to options using the optionIcon property for enhanced visual clarity.',
-    },
-    {
-      title: 'Display as Menu',
-      description:
-        'Style listbox as a menu with larger text, chevron indicators, and menu-style selection highlighting.',
-    },
-    {
-      title: 'Action Button',
-      description:
-        'Add an action button in the header using actionIcon, actionTooltip, and (onAction) output.',
-    },
-    {
-      title: 'Built-in Filtering',
-      description:
-        'Optional search functionality to filter through large option lists.',
-    },
-    {
-      title: 'Form Integration',
-      description:
-        'Full support for Angular reactive forms and template-driven forms.',
-    },
-    {
-      title: 'Observable Data Support',
-      description:
-        'Real-time data updates through RxJS observables with automatic change detection.',
-    },
-  ];
 
   // Code examples for demo cards
   codeExamples = {

@@ -1,18 +1,5 @@
-<div class="steppers-demo">
-  <header class="demo-header">
-    <h1>Stepper Components</h1>
-    <p>
-      Guide users through ordered, multi-stage workflows with clear progress and
-      validation states.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <app-demo-card
-      title="Linear workflow"
-      [sourceCode]="sourceCode"
-      [tsCode]="tsCode"
-    >
+<app-demo-playground class="steppers-demo" title="Stepper Components" description="Guide users through ordered, multi-stage workflows with clear progress and validation states.">
+  <ng-template appDemoOption="option-1" label="Linear workflow" [selected]="true" [sourceCode]="sourceCode" [tsCode]="tsCode">
       <i-stepper
         [(activeIndex)]="activeIndex"
         [linear]="true"
@@ -66,10 +53,5 @@
           </div>
         </i-step>
       </i-stepper>
-    </app-demo-card>
-
-    <app-demo-card title="Features">
-      <app-features-list [features]="features" />
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

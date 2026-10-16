@@ -4,11 +4,6 @@ import { IDialog } from '@shared/components/dialog/dialog.component';
 import { IButton } from '@shared/components/button/button.component';
 import { IDynamicDialogRef } from '@shared/components/dialog/services/dialog.interfaces';
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { CommonModule } from '@angular/common';
 import {
@@ -27,16 +22,17 @@ import { TooltipDirective } from '@shared/directives/tooltip/tooltip.directive';
 import { ISelect } from '@shared/components/select/select.component';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-dialogs',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     CommonModule,
     ReactiveFormsModule,
     AsyncPipe,
     IDialog,
     IButton,
-    DemoCardComponent,
-    FeaturesListComponent,
     IDialogActions,
     IListbox,
     TooltipDirective,
@@ -307,7 +303,7 @@ export class DialogsComponent {
   [(visible)]="showSingleButtonDialog"
   [closable]="true"
   header="Notification"
-  width="24rem"
+  width="384px"
   [breakpoints]="{
     '640px': { width: '576px' },
   }">
@@ -389,41 +385,6 @@ export class DialogsComponent {
   ></i-dialog-actions>
 </i-dialog>`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Dynamic Dialog Service',
-      description: 'Programmatically open dialogs with the DialogService',
-    },
-    {
-      title: 'Template Dialogs',
-      description: 'Declarative dialogs using the i-dialog component',
-    },
-    {
-      title: 'Modal & Non-Modal',
-      description: 'Support for both modal and non-modal dialog behaviors',
-    },
-    {
-      title: 'Responsive Design',
-      description: 'Breakpoint-based responsive sizing for mobile devices',
-    },
-    {
-      title: 'Large Dialogs',
-      description: 'Support for large viewport dimensions',
-    },
-    {
-      title: 'Header & Footer',
-      description: 'Customizable header and footer content areas',
-    },
-    {
-      title: 'Keyboard Support',
-      description: 'ESC key to close and focus management',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA compliant with proper focus trapping',
-    },
-  ];
 
   displayExampleDialog() {
     this.ref = this.dialogService.open(ExampleDialogComponent, {

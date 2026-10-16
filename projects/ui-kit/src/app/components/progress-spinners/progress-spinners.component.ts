@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { IProgressSpinner } from '@shared/components/progress-spinner/progress-spinner.component';
 import { IButton } from '@shared/components/button/button.component';
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-progress-spinners',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IProgressSpinner,
     IButton,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './progress-spinners.component.html',
   styleUrls: [
     './progress-spinners.component.scss',
@@ -95,43 +91,6 @@ export class ProgressSpinnersComponent {
   }
 }`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Size Variants',
-      description:
-        'Three size options: small (2rem), medium (4rem), and large (6rem)',
-    },
-    {
-      title: 'Customizable Stroke',
-      description: 'Adjustable stroke width for different visual weights',
-    },
-    {
-      title: 'Smooth Animation',
-      description: 'CSS-based rotating animation with consistent speed',
-    },
-    {
-      title: 'Accessibility',
-      description:
-        'Includes role="status" and customizable aria-label for screen readers',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Uses theme primary color and adapts to light/dark themes',
-    },
-    {
-      title: 'Inline Usage',
-      description: 'Can be used inline with buttons, text, or other components',
-    },
-    {
-      title: 'Overlay Support',
-      description: 'Works well in loading overlays and full-page loaders',
-    },
-    {
-      title: 'Lightweight',
-      description: 'SVG-based with minimal markup and CSS',
-    },
-  ];
 
   // Simulate loading for button example
   simulateLoading() {

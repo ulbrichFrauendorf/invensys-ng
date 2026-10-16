@@ -8,28 +8,23 @@ import {
 } from '@angular/forms';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
 import { IButton } from '@shared/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
-
 export interface MultiSelectOption {
   value: any;
   label?: string;
   [key: string]: any;
 }
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-multi-selects',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IMultiSelect,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './multi-selects.component.html',
   styleUrl: './multi-selects.component.scss',
 })
@@ -256,42 +251,6 @@ export class ExampleComponent {
     { value: 'option2', label: 'Option 2' }
   ];
 }`;
-
-  features: Feature[] = [
-    {
-      title: 'Multiple Selection',
-      description: 'Select multiple options with chip-based display',
-    },
-    {
-      title: 'Filtering',
-      description: 'Built-in search functionality for large option lists',
-    },
-    {
-      title: 'Clear Function',
-      description: 'Optional clear button to reset all selections',
-    },
-    {
-      title: 'Max Display Labels',
-      description:
-        'Configure how many selected items to show before truncation',
-    },
-    {
-      title: 'Form Integration',
-      description: 'Full reactive forms support with validation',
-    },
-    {
-      title: 'Individual Removal',
-      description: 'Remove individual selections via chip close buttons',
-    },
-    {
-      title: 'Fluid Layout',
-      description: 'Full-width multi-selects for responsive designs',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA support and keyboard navigation',
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     this.basicForm = this.fb.group({

@@ -1,19 +1,5 @@
-<div class="checkboxes-demo">
-  <header class="demo-header">
-    <h1>Checkbox Components</h1>
-    <p>
-      Versatile checkbox components with full form integration support.
-      Compatible with ngModel and reactive forms with proper accessibility.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Usage -->
-    <app-demo-card
-      [title]="'Basic ngModel Usage'"
-      [sourceCode]="codeExamples.ngModel"
-      [tsCode]="tsExamples.ngModel"
-    >
+<app-demo-playground class="checkboxes-demo" title="Checkbox Components" description="Versatile checkbox components with full form integration support. Compatible with ngModel and reactive forms with proper accessibility.">
+  <ng-template appDemoOption="option-1" label="Basic ngModel Usage" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
       <div class="checkbox-examples">
         <div class="example-row">
           <i-checkbox
@@ -25,13 +11,9 @@
           >
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- With Labels -->
-    <app-demo-card
-      [title]="'Checkboxes with Labels'"
-      [sourceCode]="codeExamples.ngModel"
-    >
+  <ng-template appDemoOption="option-2" label="Checkboxes with Labels" [sourceCode]="codeExamples.ngModel">
       <div class="checkbox-examples">
         <div class="example-row">
           <i-checkbox
@@ -47,13 +29,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- States -->
-    <app-demo-card
-      [title]="'Checkbox States'"
-      [sourceCode]="codeExamples.ngModel"
-    >
+  <ng-template appDemoOption="option-3" label="Checkbox States" [sourceCode]="codeExamples.ngModel">
       <div class="checkbox-examples">
         <div class="example-row">
           <i-checkbox
@@ -70,14 +48,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Sizes -->
-    <app-demo-card
-      [title]="'Checkbox Sizes'"
-      [sourceCode]="codeExamples.sizes"
-      [tsCode]="tsExamples.ngModel"
-    >
+  <ng-template appDemoOption="option-4" label="Checkbox Sizes" [sourceCode]="codeExamples.sizes" [tsCode]="tsExamples.ngModel">
       <div class="checkbox-examples">
         <div class="example-row">
           <i-checkbox
@@ -101,14 +74,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- FormControl -->
-    <app-demo-card
-      [title]="'Reactive Forms - FormControl'"
-      [sourceCode]="codeExamples.formControl"
-      [tsCode]="tsExamples.formControl"
-    >
+  <ng-template appDemoOption="option-5" label="Reactive Forms - FormControl" [sourceCode]="codeExamples.formControl" [tsCode]="tsExamples.formControl">
       <div class="checkbox-examples">
         <div class="example-row">
           <i-checkbox
@@ -141,14 +109,9 @@
           </i-button>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- FormGroup -->
-    <app-demo-card
-      [title]="'Reactive Forms - FormGroup'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+  <ng-template appDemoOption="option-6" label="Reactive Forms - FormGroup" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <div class="checkbox-examples">
         <form [formGroup]="userPreferencesForm" (ngSubmit)="onFormSubmit()">
           <div class="form-section">
@@ -194,11 +157,5 @@
           <pre>{{ userPreferencesForm.status }}</pre>
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

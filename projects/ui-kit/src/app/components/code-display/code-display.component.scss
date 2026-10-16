@@ -1,21 +1,5 @@
-@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
-  scrollbar;
-
-// Rider Dark (Darcula-like) palette
-$rider-bg: #2b2b2b;
-$rider-panel: #3c3f41;
-$rider-border: #4b4e50;
-$rider-text: #a9b7c6;
-$rider-comment: #808080;
-$rider-keyword: #cc7832;
-$rider-string: #6a8759;
-$rider-number: #6897bb;
-$rider-function: #ffc66d;
-$rider-tag: #e8bf6a;
-$rider-attr-name: #bababa; // neutral attr name
-$rider-interpolation: #e8bf6a;
-$rider-binding: #9876aa; // annotations / angular bindings (purple tone)
-$rider-event: #cc7832; // reuse keyword color for events
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
+@use './code-display.component.theme.scss' as theme;
 
 .code-display-container {
   padding: 20px 0;
@@ -24,45 +8,33 @@ $rider-event: #cc7832; // reuse keyword color for events
   .code-section {
     width: 100%;
     position: relative;
-    border: 1px solid $rider-border;
-    background-color: $rider-bg;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    border: 1px solid;
 
     .code-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem 0.75rem;
-      background-color: $rider-panel;
-      border-bottom: 1px solid $rider-border;
+      padding: 8px 12px;
+      border-bottom: 1px solid;
 
-      .tab-container {
-        display: flex;
-        gap: 2px;
-      }
+      .tab-container { display: flex; gap: 2px; }
 
       .code-title {
-        font-size: 1em;
+        font-size: 16px;
         font-weight: 600;
-        color: $rider-text;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
     }
 
     .code-block {
-      background: $rider-bg;
-
       @include scrollbar.dropdown-scrollbar();
 
       pre {
         margin: 0;
-        padding: 0.75rem 1rem 1rem 1rem;
-        background: transparent;
-        color: $rider-text;
-        font-family:
-          "Consolas", "JetBrains Mono", "Monaco", "Courier New", monospace;
-        font-size: 0.9em;
+        padding: 12px 16px 16px;
+        font-family: 'Consolas', 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+        font-size: 14px;
         line-height: 1.6;
         white-space: pre;
         tab-size: 2;
@@ -71,84 +43,54 @@ $rider-event: #cc7832; // reuse keyword color for events
         min-width: 100%;
 
         code {
-          background: transparent;
           padding: 0;
           border: none;
           font-family: inherit;
           font-size: inherit;
-          color: inherit;
-
-          .html-tag {
-            color: $rider-tag;
-          }
-          .html-attr-name {
-            color: $rider-attr-name;
-          }
-          .html-attr-value,
-          .code-string {
-            color: $rider-string;
-          }
-          .angular-binding {
-            color: $rider-binding;
-            font-weight: 600;
-          }
-          .angular-event {
-            color: $rider-event;
-            font-weight: 600;
-          }
-          .angular-interpolation {
-            color: $rider-interpolation;
-          }
-          .code-keyword {
-            color: $rider-keyword;
-          }
-          .code-number {
-            color: $rider-number;
-          }
-          .code-function {
-            color: $rider-function;
-          }
-          .code-comment {
-            color: $rider-comment;
-            font-style: italic;
-          }
-          .scss-property {
-            color: #9876aa; // Purple for CSS properties
-          }
-          .scss-selector {
-            color: $rider-tag; // Yellow for class/id selectors
-          }
-          .scss-pseudo {
-            color: $rider-keyword; // Orange for pseudo-classes/elements
-          }
-          .scss-variable {
-            color: $rider-binding; // Purple for CSS variables
-          }
+          .angular-binding, .angular-event { font-weight: 600; }
+          .code-comment { font-style: italic; }
         }
       }
     }
   }
 }
 
+.code-display-container.code-display--embedded {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+
+  .code-section {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .code-header { flex-shrink: 0; }
+
+  .code-block {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+
+    .code-scroll {
+      width: 100%;
+      overflow: auto;
+      @include scrollbar.dropdown-scrollbar();
+    }
+
+    pre { width: max-content; overflow: visible; }
+  }
+}
+
 @media (max-width: 768px) {
   .code-display-container {
     padding: 20px 16px;
-
-    .code-section {
-      max-width: 100%;
-    }
+    .code-section { max-width: 100%; }
   }
 }
 
-/* Optional light mode fallback if user switches themes */
-@media (prefers-color-scheme: light) {
-  .code-display-container .code-section {
-    background: #fafafa;
-    .code-header {
-      background: #f0f0f0;
-    }
-    .code-block pre {
-      color: #333;
-    }
-  }
-}
+@include theme.code-display-theme();

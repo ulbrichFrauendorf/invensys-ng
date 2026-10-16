@@ -1,14 +1,10 @@
 @use "../shared-demo-styles.scss" as *;
 
-.tooltips-demo {
-  @extend .demo-component;
-}
-
 // Section descriptions
 .section-description {
   color: var(--text-color-secondary);
   margin-bottom: 16px;
-  font-size: 0.95rem;
+  font-size: 15.2px;
 }
 
 // Position Showcase - Compass Style Layout
@@ -71,11 +67,11 @@
   border-radius: 12px;
   background: var(--surface-50);
   color: var(--text-color-secondary);
-  font-size: 0.85rem;
+  font-size: 13.6px;
   gap: 8px;
 
   i {
-    font-size: 1.5rem;
+    font-size: 24px;
     color: var(--primary-color);
   }
 }
@@ -110,7 +106,7 @@
   transition: all 0.2s ease;
 
   i {
-    font-size: 1rem;
+    font-size: 16px;
   }
 
   &:hover {
@@ -151,7 +147,7 @@
   font-weight: 500;
   color: var(--text-color);
   margin-bottom: 8px;
-  font-size: 0.9rem;
+  font-size: 14.4px;
 }
 
 .help-icon {
@@ -163,7 +159,7 @@
   transition: color 0.2s ease;
 
   i {
-    font-size: 0.9rem;
+    font-size: 14.4px;
   }
 
   &:hover {
@@ -185,7 +181,7 @@
   padding: 10px 14px;
   border: 1px solid var(--surface-300);
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 15.2px;
   color: var(--text-color);
   background: var(--surface-0);
   transition:
@@ -224,7 +220,7 @@
 }
 
 .timing-label {
-  font-size: 0.8rem;
+  font-size: 12.8px;
   color: var(--text-color-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -260,7 +256,7 @@
 }
 
 .file-icon {
-  font-size: 1.25rem;
+  font-size: 20px;
   color: var(--danger-500, #ef4444);
   flex-shrink: 0;
 
@@ -273,7 +269,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 14.4px;
   color: var(--text-color);
 }
 
@@ -299,13 +295,13 @@
   gap: 6px;
   padding: 8px 14px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 13.6px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 
   i {
-    font-size: 0.9rem;
+    font-size: 14.4px;
   }
 
   &.success {
@@ -358,7 +354,7 @@
   .center-element {
     width: 80px;
     height: 80px;
-    font-size: 0.75rem;
+    font-size: 12px;
   }
 
   .icon-toolbar {

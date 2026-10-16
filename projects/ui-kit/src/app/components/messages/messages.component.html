@@ -1,18 +1,5 @@
-<div class="messages-demo">
-  <header class="demo-header">
-    <h1>Message</h1>
-    <p>
-      Inline message component for displaying alerts, notifications, and
-      contextual feedback.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Severities -->
-    <app-demo-card
-      [title]="'Severities'"
-      [sourceCode]="codeExamples.severities"
-    >
+<app-demo-playground class="messages-demo" title="Message" description="Inline message component for displaying alerts, notifications, and contextual feedback.">
+  <ng-template appDemoOption="option-1" label="Severities" [selected]="true" [sourceCode]="codeExamples.severities">
       <div class="message-examples">
         <i-message severity="success">
           <strong>Success!</strong> Your changes have been saved.
@@ -27,10 +14,9 @@
           <strong>Error:</strong> Failed to connect. Please check your network.
         </i-message>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Sizes -->
-    <app-demo-card [title]="'Sizes'" [sourceCode]="codeExamples.sizes">
+  <ng-template appDemoOption="option-2" label="Sizes" [sourceCode]="codeExamples.sizes">
       <div class="message-examples">
         <i-message severity="info" size="small">
           <strong>Small:</strong> Compact message for inline hints.
@@ -42,13 +28,9 @@
           <strong>Large:</strong> Prominent message for important announcements.
         </i-message>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Closable -->
-    <app-demo-card
-      [title]="'Closable Messages'"
-      [sourceCode]="codeExamples.closable"
-    >
+  <ng-template appDemoOption="option-3" label="Closable Messages" [sourceCode]="codeExamples.closable">
       <div class="message-examples">
         <i-message
           severity="info"
@@ -77,13 +59,9 @@
           </button>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Custom Icons -->
-    <app-demo-card
-      [title]="'Custom Icons'"
-      [sourceCode]="codeExamples.customIcon"
-    >
+  <ng-template appDemoOption="option-4" label="Custom Icons" [sourceCode]="codeExamples.customIcon">
       <div class="message-examples">
         <i-message severity="primary" icon="pi pi-star">
           <strong>Featured:</strong> Check out our new premium features.
@@ -96,13 +74,9 @@
           <strong>Great job!</strong> You've completed all tasks.
         </i-message>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Rich Content -->
-    <app-demo-card
-      [title]="'Rich Content'"
-      [sourceCode]="codeExamples.richContent"
-    >
+  <ng-template appDemoOption="option-5" label="Rich Content" [sourceCode]="codeExamples.richContent">
       <div class="message-examples">
         <i-message severity="warning">
           <strong>Action Required:</strong> Please update your payment method
@@ -113,11 +87,5 @@
           <em>support&#64;example.com</em> for assistance.
         </i-message>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

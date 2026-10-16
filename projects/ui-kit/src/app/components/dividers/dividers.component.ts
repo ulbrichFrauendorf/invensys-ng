@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { IDivider } from '@shared/components/divider/divider.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-dividers',
   standalone: true,
-  imports: [IDivider, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IDivider],
   templateUrl: './dividers.component.html',
   styleUrl: './dividers.component.scss',
 })
@@ -38,30 +35,4 @@ export class DividersComponent {
 </section>`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Horizontal Divider',
-      description: 'Separates sections with a full-width horizontal rule',
-    },
-    {
-      title: 'Content Projection',
-      description: 'Optional label content can be projected into the divider',
-    },
-    {
-      title: 'Alignment Options',
-      description: 'Supports start, center, and end label alignment',
-    },
-    {
-      title: 'Vertical Divider',
-      description: 'Separates inline or flex content vertically',
-    },
-    {
-      title: 'Accessible Separator',
-      description: 'Uses separator semantics with matching aria orientation',
-    },
-    {
-      title: 'Theme Aware',
-      description: 'Uses design-system text and border colour variables',
-    },
-  ];
 }

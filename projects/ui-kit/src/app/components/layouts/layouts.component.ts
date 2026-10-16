@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-layouts',
-  imports: [DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective],
   templateUrl: './layouts.component.html',
   styleUrl: './layouts.component.scss',
 })
@@ -153,7 +150,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     // Use the provider function (recommended)
     provideMenuClaimsChecker(ClaimsService),
-    
+
     // ... other providers
     provideRouter(routes),
     provideAnimationsAsync()
@@ -221,46 +218,6 @@ export const appConfig: ApplicationConfig = {
 • Automatic cleanup - proper RxJS subscription management
 • Smart filtering - empty groups automatically hidden`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Responsive Design',
-      description:
-        'Automatically adapts to mobile and desktop with collapsible sidebar',
-    },
-    {
-      title: 'Theme Support',
-      description:
-        'Built-in light/dark theme toggle with localStorage persistence',
-    },
-    {
-      title: 'Router Integration',
-      description: 'Full Angular router support with active state highlighting',
-    },
-    {
-      title: 'Customizable Topbar',
-      description: 'Add custom actions to the top-right section via ng-content',
-    },
-    {
-      title: 'Nested Menus',
-      description: 'Support for multi-level menu items with icons',
-    },
-    {
-      title: 'Logo Theming',
-      description:
-        'Different logos for light and dark themes automatically switch',
-    },
-    {
-      title: 'Mobile-Friendly',
-      description:
-        'Touch-optimized sidebar with overlay mode on mobile devices',
-    },
-    {
-      title: 'State Management',
-      description:
-        'Built-in LayoutService for managing sidebar and viewport state',
-    },
-  ];
 
   components = [
     {

@@ -2,17 +2,14 @@ import { Component } from '@angular/core';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { WhisperService } from '../../../../../invensys-ng/src/lib/components/whisper/services/whisper.service';
 import { IWhisper } from '../../../../../invensys-ng/src/lib/components/whisper/whisper.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { IWhisperMessage } from '../../../../../invensys-ng/src/lib/components/whisper/services/whisper.interfaces';
 import { ISeverity } from '@shared/enums/IButtonSeverity';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-whispers',
-  imports: [IButton, IWhisper, DemoCardComponent, FeaturesListComponent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IWhisper],
   templateUrl: './whispers.component.html',
   styleUrl: './whispers.component.scss',
 })
@@ -303,39 +300,4 @@ export class ExampleComponent {
   }
 }`;
 
-  features: Feature[] = [
-    {
-      title: 'Multiple Severities',
-      description: 'Success, info, warning, error, and custom message types',
-    },
-    {
-      title: 'Auto-dismiss',
-      description: 'Configurable auto-dismiss timing with life property',
-    },
-    {
-      title: 'Sticky Messages',
-      description: 'Messages that stay until manually closed',
-    },
-    {
-      title: 'Positioning',
-      description: 'Six different positioning options around the screen',
-    },
-    {
-      title: 'Keyed Messages',
-      description:
-        'Route messages to specific whisper containers using keys. Keyed containers show only matching messages, unkeyed containers show only unkeyed messages',
-    },
-    {
-      title: 'Custom Icons',
-      description: 'Override default icons with Material Icons',
-    },
-    {
-      title: 'Animations',
-      description: 'Smooth slide-in and slide-out animations',
-    },
-    {
-      title: 'Responsive',
-      description: 'Mobile-friendly responsive design',
-    },
-  ];
 }

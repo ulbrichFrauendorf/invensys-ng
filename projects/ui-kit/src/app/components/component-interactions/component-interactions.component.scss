@@ -1,12 +1,12 @@
 .component-demo {
   .lead {
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
+    font-size: 18px;
+    margin-bottom: 32px;
     color: var(--text-secondary);
   }
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     &:last-child {
       margin-bottom: 0;
@@ -14,49 +14,49 @@
   }
 
   .info-text {
-    margin-top: 1rem;
-    padding: 0.75rem;
+    margin-top: 16px;
+    padding: 12px;
     background-color: var(--surface-100);
     border-left: 3px solid var(--primary-color);
     border-radius: 4px;
-    font-size: 0.875rem;
+    font-size: 14px;
     color: var(--text-secondary);
   }
 
   .form-values {
-    margin-top: 1rem;
-    padding: 1rem;
+    margin-top: 16px;
+    padding: 16px;
     background-color: var(--surface-50);
     border-radius: 4px;
 
     strong {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
       color: var(--text-primary);
     }
 
     pre {
       margin: 0;
-      padding: 0.5rem;
+      padding: 8px;
       background-color: var(--surface-0);
       border-radius: 4px;
-      font-size: 0.875rem;
+      font-size: 14px;
       overflow-x: auto;
     }
   }
 
   .actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    gap: 16px;
+    margin-top: 32px;
+    padding-top: 24px;
     border-top: 1px solid var(--surface-border);
   }
 
   .panel-demo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 24px;
 
     i-panel {
       height: fit-content;

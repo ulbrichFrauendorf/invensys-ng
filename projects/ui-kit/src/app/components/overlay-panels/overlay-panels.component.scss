@@ -1,14 +1,10 @@
 @use "../shared-demo-styles.scss" as *;
 
-.overlay-panels-demo {
-  @extend .demo-component;
-}
-
 .position-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  gap: 32px;
+  padding: 32px;
 }
 
 .position-item {
@@ -33,12 +29,6 @@
     margin-bottom: 12px;
     color: var(--color-text-primary);
   }
-
-  p {
-    margin: 8px 0;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-  }
 }
 
 // User menu styling
@@ -54,7 +44,7 @@
     margin-bottom: 8px;
 
     i {
-      font-size: 2rem;
+      font-size: 32px;
       color: var(--color-primary);
     }
 
@@ -65,7 +55,7 @@
     }
 
     .user-email {
-      font-size: 0.875rem;
+      font-size: 14px;
       color: var(--color-text-secondary);
     }
   }
@@ -99,7 +89,7 @@
     }
 
     i {
-      font-size: 1.5rem;
+      font-size: 24px;
       color: var(--color-primary);
       margin-top: 2px;
     }
@@ -110,15 +100,9 @@
       margin-bottom: 4px;
     }
 
-    p {
-      margin: 0 0 4px 0;
-      color: var(--color-text-secondary);
-      font-size: 0.875rem;
-    }
-
     small {
       color: var(--color-text-tertiary);
-      font-size: 0.75rem;
+      font-size: 12px;
     }
   }
 }
@@ -137,7 +121,7 @@
   text-align: center;
 
   i {
-    font-size: 3rem;
+    font-size: 48px;
     color: var(--color-warning);
     display: block;
     margin-bottom: 12px;
@@ -146,12 +130,6 @@
   h4 {
     margin: 0 0 12px 0;
     color: var(--color-text-primary);
-  }
-
-  p {
-    margin: 8px 0;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
   }
 
   i-button {
@@ -170,7 +148,7 @@
   border-radius: 10px;
   background-color: var(--color-danger);
   color: white;
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 600;
   margin-left: 8px;
 }

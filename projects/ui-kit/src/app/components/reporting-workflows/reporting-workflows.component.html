@@ -1,8 +1,5 @@
-<div class="workflow-demo">
-  <header class="demo-header"><h1>Reporting workflows</h1><p>Build focused workspaces from shared controls. These interactive examples use sample data and do not run or save real reports.</p></header>
-  <div class="demo-tools"><i-button severity="contrast" [outlined]="true" (clicked)="narrow = !narrow">{{ narrow ? 'Use full width' : 'Preview narrow workspace' }}</i-button></div>
-  <div class="workspace" [class.workspace--narrow]="narrow">
-    <app-demo-card title="Report builder" [sourceCode]="sourceCode">
+<app-demo-playground class="workflow-demo" title="Reporting workflows" description="Build focused workspaces from shared controls. These interactive examples use sample data and do not run or save real reports.">
+  <ng-template appDemoOption="option-1" label="Report builder" [selected]="true" [sourceCode]="sourceCode">
       <i-stepper [(activeIndex)]="activeIndex" ariaLabel="Report setup">
         <i-step label="Report details" description="Name and layout" icon="pi pi-file-edit" [completed]="!!name.trim()">
           <section class="step-content"><h2>Start with the essentials</h2><p>Give the report a clear name so your team can find it later.</p><i-input-text label="Report name" [(ngModel)]="name" [fluid]="true" /></section>
@@ -26,16 +23,19 @@
         @else { <i-button icon="pi pi-check" [disabled]="!name.trim() || !selected.length" (clicked)="save()">Save example</i-button> }
       </footer>
       @if (isSaved()) { <p role="status" class="saved-message">Example saved for this session. No report was sent to a server.</p> }
-    </app-demo-card>
-    <app-demo-card title="Automation workspace" [sourceCode]="tableCode">
+    </ng-template>
+
+  <ng-template appDemoOption="option-2" label="Automation workspace" [sourceCode]="tableCode">
       <header class="section-heading"><h2>Your automations</h2><p>Expand a row to see the report sequence. Grouped data uses GridData.details, with a stable dataKey.</p></header>
       <i-table [grid]="automations" dataKey="id" [globalFilter]="true" />
-    </app-demo-card>
-    <app-demo-card title="Run progress" [sourceCode]="progressTableCode" [tsCode]="progressCode">
+    </ng-template>
+
+  <ng-template appDemoOption="option-3" label="Run progress" [sourceCode]="progressTableCode" [tsCode]="progressCode">
       <p>Expand the automation to see the shared spinner in the actions column while a report is in progress.</p>
       <i-table [grid]="runProgress" dataKey="name" />
-    </app-demo-card>
-    <app-demo-card title="Clear dialog actions" [sourceCode]="actionsCode">
+    </ng-template>
+
+  <ng-template appDemoOption="option-4" label="Clear dialog actions" [sourceCode]="actionsCode">
       <p>Use a specific action label and a filled primary action. Loading prevents repeated submissions.</p>
       <div class="demo-tools">
         <i-button severity="contrast" [text]="true" (clicked)="actionState = 'ready'">Ready</i-button>
@@ -43,6 +43,5 @@
         <i-button severity="contrast" [text]="true" (clicked)="actionState = 'disabled'">Invalid form</i-button>
       </div>
       <i-dialog-actions submitLabel="Save automation" [submitLoading]="actionState === 'loading'" [submitDisabled]="actionState === 'disabled'" (submitEvent)="actionState = 'loading'" (cancelEvent)="actionState = 'ready'" />
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

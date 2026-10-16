@@ -28,17 +28,6 @@
       font-weight: 600;
     }
 
-    p {
-      margin: 8px 0;
-      color: var(--color-text-secondary);
-      font-size: 13px;
-
-      strong {
-        color: var(--color-text-primary);
-        font-weight: 600;
-      }
-    }
-
     .hint {
       margin-top: 16px;
       padding-top: 16px;
@@ -54,17 +43,6 @@
     background: var(--color-component-background-secondary);
     border-radius: 6px;
     border-left: 3px solid var(--color-primary);
-
-    p {
-      margin: 4px 0;
-      color: var(--color-text-secondary);
-      font-size: 13px;
-
-      strong {
-        color: var(--color-text-primary);
-        font-weight: 600;
-      }
-    }
   }
 
   // Responsive adjustments

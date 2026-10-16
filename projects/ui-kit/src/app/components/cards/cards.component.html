@@ -1,27 +1,13 @@
-<div class="cards-demo">
-  <header class="demo-header">
-    <h1>Card Components</h1>
-    <p>
-      Flexible card components for organizing content with headers, footers, and
-      customizable layouts. Perfect for dashboards and content display.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Card -->
-    <app-demo-card [title]="'Basic Card'" [sourceCode]="codeExamples.basic">
+<app-demo-playground class="cards-demo" title="Card Components" description="Flexible card components for organizing content with headers, footers, and customizable layouts. Perfect for dashboards and content display.">
+  <ng-template appDemoOption="option-1" label="Basic Card" [selected]="true" [sourceCode]="codeExamples.basic">
       <div class="card-example">
         <i-card [title]="'Card Title'">
           <p>This is the card content in the body section.</p>
         </i-card>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Card with Footer -->
-    <app-demo-card
-      [title]="'Card with Actions'"
-      [sourceCode]="codeExamples.withFooter"
-    >
+  <ng-template appDemoOption="option-2" label="Card with Actions" [sourceCode]="codeExamples.withFooter">
       <div class="card-example">
         <i-card [title]="'Card with Actions'">
           <p>This card includes footer content with action buttons.</p>
@@ -33,13 +19,9 @@
           </div>
         </i-card>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Custom Header -->
-    <app-demo-card
-      [title]="'Custom Header'"
-      [sourceCode]="codeExamples.customHeader"
-    >
+  <ng-template appDemoOption="option-3" label="Custom Header" [sourceCode]="codeExamples.customHeader">
       <div class="card-example">
         <i-card>
           <div slot="header">
@@ -53,13 +35,9 @@
           </p>
         </i-card>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Content Only -->
-    <app-demo-card
-      [title]="'Content Only'"
-      [sourceCode]="codeExamples.contentOnly"
-    >
+  <ng-template appDemoOption="option-4" label="Content Only" [sourceCode]="codeExamples.contentOnly">
       <div class="card-example">
         <i-card>
           <p>Simple card with just content, no title or footer.</p>
@@ -69,14 +47,9 @@
           </p>
         </i-card>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Full Height Card -->
-    <app-demo-card
-      [title]="'Full Height Card'"
-      [sourceCode]="codeExamples.fullHeight"
-      [scssCode]="scssExamples.fullHeight"
-    >
+  <ng-template appDemoOption="option-5" label="Full Height Card" [sourceCode]="codeExamples.fullHeight" [scssCode]="scssExamples.fullHeight">
       <div class="card-example">
         <div class="full-height-container">
           <i-card [title]="'Full Height Card'" [fullHeight]="true">
@@ -91,14 +64,9 @@
           </i-card>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Closable Card -->
-    <app-demo-card
-      [title]="'Closable Card'"
-      [sourceCode]="codeExamples.closable"
-      [tsCode]="tsExamples.closable"
-    >
+  <ng-template appDemoOption="option-6" label="Closable Card" [sourceCode]="codeExamples.closable" [tsCode]="tsExamples.closable">
       <div class="card-example">
         @if (showClosableCard) {
           <i-card
@@ -117,14 +85,9 @@
           </div>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Scrollable Content Card -->
-    <app-demo-card
-      [title]="'Scrollable Content'"
-      [sourceCode]="codeExamples.scrollable"
-      [scssCode]="scssExamples.scrollable"
-    >
+  <ng-template appDemoOption="option-7" label="Scrollable Content" [sourceCode]="codeExamples.scrollable" [scssCode]="scssExamples.scrollable">
       <div class="card-example">
         <div class="full-height-container">
           <i-card [title]="'Scrollable Content'" [fullHeight]="true">
@@ -136,11 +99,5 @@
           </i-card>
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

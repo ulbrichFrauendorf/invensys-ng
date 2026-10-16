@@ -8,22 +8,17 @@ import {
 } from '@angular/forms';
 import { ITextarea } from '../../../../../invensys-ng/src/lib/components/textarea/textarea.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-textareas',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     ITextarea,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './textareas.component.html',
   styleUrl: './textareas.component.scss',
 })
@@ -106,42 +101,6 @@ validationForm = this.fb.group({
   maxLengthField: ['', [Validators.maxLength(100)]]
 });`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Float Labels',
-      description: 'Animated floating labels consistent with i-input-text',
-    },
-    {
-      title: 'Character Counter',
-      description:
-        'Optional character count with warning and over-limit states',
-    },
-    {
-      title: 'Validation Support',
-      description: 'Full Angular reactive forms and template-driven validation',
-    },
-    {
-      title: 'Resizable',
-      description: 'User-resizable with option to lock resize',
-    },
-    {
-      title: 'Fluid Layout',
-      description: 'Full-width for responsive form designs',
-    },
-    {
-      title: 'Disabled & Readonly',
-      description: 'Proper disabled and readonly styling in both themes',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Light and dark mode support via CSS variables',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and label association via htmlFor',
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     this.basicForm = this.fb.group({

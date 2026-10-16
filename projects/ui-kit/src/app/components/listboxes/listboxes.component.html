@@ -1,21 +1,5 @@
-<div class="listboxes-demo">
-  <header class="demo-header">
-    <h1>Listbox Components</h1>
-    <p>
-      Always visible option lists with single and multiple selection modes.
-      Features a modern header with title and action button, option icons, chip
-      display in multiselect mode, built-in filtering, and full reactive forms
-      support.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Multiple Selection with Action Button -->
-    <app-demo-card
-      [title]="'Multiple Selection with Action Button'"
-      [sourceCode]="codeExamples.multiple"
-      [tsCode]="tsExamples.multiple"
-    >
+<app-demo-playground class="listboxes-demo" title="Listbox Components" description="Always visible option lists with single and multiple selection modes. Features a modern header with title and action button, option icons, chip display in multiselect mode, built-in filtering, and full reactive forms support.">
+  <ng-template appDemoOption="option-1" label="Multiple Selection with Action Button" [selected]="true" [sourceCode]="codeExamples.multiple" [tsCode]="tsExamples.multiple">
       <i-listbox
         title="Countries"
         [options]="countries"
@@ -29,13 +13,9 @@
         (onChange)="onMultipleSelectionChange($event)"
         (onClear)="onClear()"
       ></i-listbox>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Single Selection (No Checkboxes) -->
-    <app-demo-card
-      [title]="'Single Selection (No Checkboxes)'"
-      [sourceCode]="codeExamples.single"
-    >
+  <ng-template appDemoOption="option-2" label="Single Selection (No Checkboxes)" [sourceCode]="codeExamples.single">
       <i-listbox
         title="Select Country"
         [options]="countries"
@@ -46,13 +26,9 @@
         (onChange)="onSingleSelectionChange($event)"
         (onClear)="onClear()"
       ></i-listbox>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Options with Icons -->
-    <app-demo-card
-      [title]="'Options with Icons'"
-      [sourceCode]="codeExamples.withIcons"
-    >
+  <ng-template appDemoOption="option-3" label="Options with Icons" [sourceCode]="codeExamples.withIcons">
       <i-listbox
         title="Tasks"
         [options]="tasks"
@@ -64,13 +40,9 @@
         (onAction)="onManageTasks()"
         [(ngModel)]="selectedTasks"
       ></i-listbox>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Display as Menu -->
-    <app-demo-card
-      [title]="'Display as Menu'"
-      [sourceCode]="codeExamples.displayAsMenu"
-    >
+  <ng-template appDemoOption="option-4" label="Display as Menu" [sourceCode]="codeExamples.displayAsMenu">
       <i-listbox
         title="Navigation"
         [options]="menuItems"
@@ -80,13 +52,9 @@
         [filter]="false"
         [(ngModel)]="selectedMenuItem"
       ></i-listbox>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- With Filtering -->
-    <app-demo-card
-      [title]="'With Filtering'"
-      [sourceCode]="codeExamples.filter"
-    >
+  <ng-template appDemoOption="option-5" label="With Filtering" [sourceCode]="codeExamples.filter">
       <div class="demo-form">
         <i-listbox
           title="Searchable Countries"
@@ -98,10 +66,9 @@
           [showClear]="true"
         ></i-listbox>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-6" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <div class="demo-form">
         <i-listbox
           title="Full Width Listbox"
@@ -112,13 +79,9 @@
           [showClear]="true"
         ></i-listbox>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State -->
-    <app-demo-card
-      [title]="'Disabled State'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-7" label="Disabled State" [sourceCode]="codeExamples.disabled">
       <div class="demo-form">
         <i-listbox
           title="Disabled Listbox"
@@ -132,14 +95,9 @@
           ]"
         ></i-listbox>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Reactive Forms with Observable Data -->
-    <app-demo-card
-      [title]="'Reactive Forms + Observable Data'"
-      [sourceCode]="codeExamples.reactive"
-      [tsCode]="tsExamples.reactive"
-    >
+  <ng-template appDemoOption="option-8" label="Reactive Forms + Observable Data" [sourceCode]="codeExamples.reactive" [tsCode]="tsExamples.reactive">
       <div class="demo-form">
         <form [formGroup]="departmentsForm">
           <i-listbox
@@ -158,11 +116,11 @@
         <div
           class="demo-info"
           style="
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 16px;
+            padding: 16px;
             background: #f5f5f5;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 14.4px;
           "
         >
           <strong>Dynamic Data Demo:</strong> New departments are added every 5
@@ -175,15 +133,9 @@
           {{ (departmentOptions$ | async)?.length || 0 }}
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Constrained Height -->
-    <app-demo-card
-      class="constrained-demo-card"
-      [title]="'Constrained Height Container (500px)'"
-      [sourceCode]="codeExamples.constrained"
-      [scssCode]="scssExamples.constrained"
-    >
+  <ng-template appDemoOption="option-9" label="Constrained Height Container (500px)" [sourceCode]="codeExamples.constrained" [scssCode]="scssExamples.constrained">
       <div class="wrapper">
         <i-listbox
           title="Items (50 total)"
@@ -195,11 +147,5 @@
           [(ngModel)]="selectedLargeItems"
         ></i-listbox>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

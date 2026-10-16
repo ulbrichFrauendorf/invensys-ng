@@ -1,19 +1,5 @@
-<div class="chips-demo">
-  <header class="demo-header">
-    <h1>Chip Components</h1>
-    <p>
-      Chip components for displaying tags, selections, and other compact
-      information. The i-chips component provides a flexible container with
-      overflow handling, boxed styling, and close-all functionality.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Single Chip Examples -->
-    <app-demo-card
-      [title]="'Basic Chips (i-chip)'"
-      [sourceCode]="codeExamples.basicChips"
-    >
+<app-demo-playground class="chips-demo" title="Chip Components" description="Chip components for displaying tags, selections, and other compact information. The i-chips component provides a flexible container with overflow handling, boxed styling, and close-all functionality.">
+  <ng-template appDemoOption="option-1" label="Basic Chips (i-chip)" [selected]="true" [sourceCode]="codeExamples.basicChips">
       <div class="chip-examples">
         @for (chip of chipExamples; track chip.label) {
           <i-chip
@@ -24,13 +10,9 @@
           />
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Basic Chips Container -->
-    <app-demo-card
-      [title]="'Chips Container (i-chips)'"
-      [sourceCode]="codeExamples.chipsContainer"
-    >
+  <ng-template appDemoOption="option-2" label="Chips Container (i-chips)" [sourceCode]="codeExamples.chipsContainer">
       <div class="chips-container-demo">
         <i-chips
           [chips]="basicChips"
@@ -42,13 +24,9 @@
           <p class="chips-container-empty">All chips removed.</p>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Boxed Container -->
-    <app-demo-card
-      [title]="'Boxed Container'"
-      [sourceCode]="codeExamples.boxed"
-    >
+  <ng-template appDemoOption="option-3" label="Boxed Container" [sourceCode]="codeExamples.boxed">
       <div class="chips-container-demo">
         <i-chips
           [label]="'Boxed Chips'"
@@ -67,13 +45,9 @@
           <p class="chips-container-empty">All chips removed.</p>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Collapsible Overflow -->
-    <app-demo-card
-      [title]="'Collapsible Overflow'"
-      [sourceCode]="codeExamples.collapse"
-    >
+  <ng-template appDemoOption="option-4" label="Collapsible Overflow" [sourceCode]="codeExamples.collapse">
       <div class="chips-container-demo">
         <i-chips
           [chips]="collapsibleChips"
@@ -92,13 +66,9 @@
           <p class="chips-container-empty">All filters removed.</p>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Close All Button -->
-    <app-demo-card
-      [title]="'Close All Button'"
-      [sourceCode]="codeExamples.closeAll"
-    >
+  <ng-template appDemoOption="option-5" label="Close All Button" [sourceCode]="codeExamples.closeAll">
       <div class="chips-container-demo">
         <i-chips
           [chips]="closeAllChips"
@@ -116,13 +86,9 @@
           <p class="chips-container-empty">All filters cleared.</p>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State -->
-    <app-demo-card
-      [title]="'Disabled State'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-6" label="Disabled State" [sourceCode]="codeExamples.disabled">
       <div class="chips-container-demo">
         <i-chips [chips]="disabledChips" [disabled]="true"></i-chips>
 
@@ -130,13 +96,9 @@
           >Disabled chips are read-only and cannot be removed</i-message
         >
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Combined Features -->
-    <app-demo-card
-      [title]="'Combined Features'"
-      [sourceCode]="codeExamples.combined"
-    >
+  <ng-template appDemoOption="option-7" label="Combined Features" [sourceCode]="codeExamples.combined">
       <div class="chips-container-demo">
         <i-chips
           [chips]="combinedChips"
@@ -158,10 +120,9 @@
           <p class="chips-container-empty">All selections cleared.</p>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Reset Button -->
-    <app-demo-card [title]="'Reset Demo'">
+  <ng-template appDemoOption="option-8" label="Reset Demo" sourceCodeEncoded="%3Cdiv%20class%3D%22chips-container-demo%22%3E%0A%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22reset-button%22%20(click)%3D%22onResetAll()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Reset%20All%20Demos%0A%20%20%20%20%20%20%20%20%3C%2Fbutton%3E%0A%20%20%20%20%20%20%20%20%3Ci-message%20%5Bseverity%5D%3D%22'warning'%22%0A%20%20%20%20%20%20%20%20%20%20%3EClick%20to%20restore%20all%20chip%20examples%20to%20their%20original%20state%3C%2Fi-message%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
       <div class="chips-container-demo">
         <button class="reset-button" (click)="onResetAll()">
           Reset All Demos
@@ -170,11 +131,5 @@
           >Click to restore all chip examples to their original state</i-message
         >
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

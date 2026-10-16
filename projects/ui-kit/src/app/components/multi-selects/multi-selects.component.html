@@ -1,20 +1,5 @@
-<div class="multi-selects-demo">
-  <header class="demo-header">
-    <h1>Multi-Select Components</h1>
-    <p>
-      Multi-selection dropdown components with filtering, chips display, and
-      reactive forms support. Perfect for handling multiple option selections
-      with a clean, user-friendly interface.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Multi-Select Examples -->
-    <app-demo-card
-      [title]="'Basic Multi-Select'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+<app-demo-playground class="multi-selects-demo" title="Multi-Select Components" description="Multi-selection dropdown components with filtering, chips display, and reactive forms support. Perfect for handling multiple option selections with a clean, user-friendly interface.">
+  <ng-template appDemoOption="option-1" label="Basic Multi-Select" [selected]="true" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <form
         [formGroup]="basicForm"
         (ngSubmit)="onSubmit(basicForm, 'basic')"
@@ -82,14 +67,9 @@
 
         <i-button type="submit" severity="primary">Submit Basic Form</i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Validation Example -->
-    <app-demo-card
-      [title]="'Required Validation'"
-      [sourceCode]="codeExamples.validation"
-      [tsCode]="tsExamples.validation"
-    >
+  <ng-template appDemoOption="option-2" label="Required Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
       <form
         [formGroup]="validationForm"
         (ngSubmit)="onSubmit(validationForm, 'validation')"
@@ -119,13 +99,9 @@
           >Submit Validation Form</i-button
         >
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Advanced Configuration -->
-    <app-demo-card
-      [title]="'Advanced Features'"
-      [sourceCode]="codeExamples.advanced"
-    >
+  <ng-template appDemoOption="option-3" label="Advanced Features" [sourceCode]="codeExamples.advanced">
       <form
         [formGroup]="advancedForm"
         (ngSubmit)="onSubmit(advancedForm, 'advanced')"
@@ -148,10 +124,9 @@
           >Submit Advanced Form</i-button
         >
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout Example -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <form
         [formGroup]="fluidForm"
         (ngSubmit)="onSubmit(fluidForm, 'fluid')"
@@ -169,11 +144,5 @@
 
         <i-button type="submit" severity="primary">Submit Fluid Form</i-button>
       </form>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

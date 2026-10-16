@@ -8,24 +8,19 @@ import {
 } from '@angular/forms';
 import { IRadioButton } from '../../../../../invensys-ng/src/lib/components/radio-button/radio-button.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { JsonPipe } from '@angular/common';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-radio-buttons',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IRadioButton,
     IButton,
-    DemoCardComponent,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './radio-buttons.component.html',
   styleUrl: './radio-buttons.component.scss',
 })
@@ -46,53 +41,53 @@ export class RadioButtonsComponent {
 
   // HTML Code examples
   codeExamples = {
-    basic: `<i-radio-button 
-  label="Option 1" 
-  value="option1" 
+    basic: `<i-radio-button
+  label="Option 1"
+  value="option1"
   name="options"
   [(ngModel)]="selectedOption">
 </i-radio-button>
-<i-radio-button 
-  label="Option 2" 
-  value="option2" 
+<i-radio-button
+  label="Option 2"
+  value="option2"
   name="options"
   [(ngModel)]="selectedOption">
 </i-radio-button>
-<i-radio-button 
-  label="Option 3" 
-  value="option3" 
+<i-radio-button
+  label="Option 3"
+  value="option3"
   name="options"
   [(ngModel)]="selectedOption">
 </i-radio-button>`,
 
-    gender: `<i-radio-button 
-  label="Male" 
-  value="male" 
+    gender: `<i-radio-button
+  label="Male"
+  value="male"
   name="gender"
   [(ngModel)]="selectedGender">
 </i-radio-button>
-<i-radio-button 
-  label="Female" 
-  value="female" 
+<i-radio-button
+  label="Female"
+  value="female"
   name="gender"
   [(ngModel)]="selectedGender">
 </i-radio-button>
-<i-radio-button 
-  label="Other" 
-  value="other" 
+<i-radio-button
+  label="Other"
+  value="other"
   name="gender"
   [(ngModel)]="selectedGender">
 </i-radio-button>`,
 
-    disabled: `<i-radio-button 
-  label="Available" 
-  value="available" 
+    disabled: `<i-radio-button
+  label="Available"
+  value="available"
   name="availability"
   [(ngModel)]="selectedPlan">
 </i-radio-button>
-<i-radio-button 
-  label="Unavailable (Disabled)" 
-  value="unavailable" 
+<i-radio-button
+  label="Unavailable (Disabled)"
+  value="unavailable"
   name="availability"
   [disabled]="true"
   [(ngModel)]="selectedPlan">
@@ -158,41 +153,6 @@ colorControl = new FormControl('red');
 // Access value
 console.log(this.colorControl.value);`,
   };
-
-  features: Feature[] = [
-    {
-      title: 'Two-way Data Binding',
-      description: 'Full support for ngModel and reactive forms',
-    },
-    {
-      title: 'Group Selection',
-      description: 'Radio buttons with same name work as a group',
-    },
-    {
-      title: 'Label Support',
-      description: 'Optional labels with proper accessibility',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Support for disabled styling and interaction prevention',
-    },
-    {
-      title: 'Form Integration',
-      description: 'Works seamlessly with Angular forms',
-    },
-    {
-      title: 'Custom Events',
-      description: 'onChange event for custom handling',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and keyboard navigation',
-    },
-    {
-      title: 'Custom Styling',
-      description: 'Theme-aware styling with CSS custom properties',
-    },
-  ];
 
   // Event handlers
   onOptionChange(value: any) {

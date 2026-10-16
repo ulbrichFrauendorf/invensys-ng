@@ -1,18 +1,5 @@
-<div class="tables-demo">
-  <!-- Whisper container for toast messages from demo actions -->
-  <i-whisper [position]="'top-right'" [key]="'global'"></i-whisper>
-
-  <header class="demo-header">
-    <h1>Table Component</h1>
-  </header>
-
-  <div class="cards-container">
-    <!-- ── 1. Sorting & Filtering ─────────────────────────────────── -->
-    <app-demo-card
-      [title]="'Sorting & Filtering'"
-      [sourceCode]="codeExamples.flat"
-      [tsCode]="tsCodeExamples.flat"
-    >
+<app-demo-playground class="tables-demo" title="Table Component" description="Expand a category to view its detail rows. Use [detailRowBorders]=&quot;false&quot; to hide their bottom borders.">
+  <ng-template appDemoOption="option-1" label="Sorting &amp; Filtering" [selected]="true" [sourceCode]="codeExamples.flat" [tsCode]="tsCodeExamples.flat">
       <i-table
         [grid]="flatGrid"
         [sortable]="true"
@@ -23,14 +10,9 @@
         (onSort)="onSort($event)"
         (onFilter)="onFilter($event)"
       ></i-table>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- ── 2. Selection & Row Actions ────────────────────────────── -->
-    <app-demo-card
-      [title]="'Selection & Row Actions'"
-      [sourceCode]="codeExamples.actions"
-      [tsCode]="tsCodeExamples.actions"
-    >
+  <ng-template appDemoOption="option-2" label="Selection &amp; Row Actions" [sourceCode]="codeExamples.actions" [tsCode]="tsCodeExamples.actions">
       <i-table
         [grid]="actionsGrid"
         selectionMode="multiple"
@@ -40,14 +22,9 @@
         [height]="'360px'"
         (onSelectionChange)="onSelectionChange($event)"
       ></i-table>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- ── 3. Expandable Detail Sub-Table ────────────────────────── -->
-    <app-demo-card
-      [title]="'Expandable Detail Sub-Table'"
-      [sourceCode]="codeExamples.detail"
-      [tsCode]="tsCodeExamples.detail"
-    >
+  <ng-template appDemoOption="option-3" label="Expandable Detail Sub-Table" [sourceCode]="codeExamples.detail" [tsCode]="tsCodeExamples.detail">
       <p>Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide their bottom borders.</p>
       <label>
         <input type="checkbox" [checked]="showDetailRowBorders"
@@ -56,28 +33,18 @@
       </label>
       <i-table [grid]="detailGrid" [sortable]="true" [striped]="true"
         [detailRowBorders]="showDetailRowBorders"></i-table>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- ── 4. Icon & Chip Columns ─────────────────────────────────── -->
-    <app-demo-card
-      [title]="'Icon & Chip Columns'"
-      [sourceCode]="codeExamples.icons"
-      [tsCode]="tsCodeExamples.icons"
-    >
+  <ng-template appDemoOption="option-4" label="Icon &amp; Chip Columns" [sourceCode]="codeExamples.icons" [tsCode]="tsCodeExamples.icons">
       <i-table
         [grid]="iconGrid"
         [sortable]="true"
         [height]="'360px'"
         [hoverable]="true"
       ></i-table>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- ── 5. Large Dataset + Download ───────────────────────────── -->
-    <app-demo-card
-      [title]="'Large Dataset — Virtual Scroll & Download'"
-      [sourceCode]="codeExamples.large"
-      [tsCode]="tsCodeExamples.large"
-    >
+  <ng-template appDemoOption="option-5" label="Large Dataset — Virtual Scroll &amp; Download" [sourceCode]="codeExamples.large" [tsCode]="tsCodeExamples.large">
       <i-table
         [grid]="largeGrid"
         [sortable]="true"
@@ -88,9 +55,5 @@
         [height]="'400px'"
         (onDownload)="onDownload($event)"
       ></i-table>
-    </app-demo-card>
-  </div>
-
-  <!-- Features list -->
-  <app-features-list [features]="features"></app-features-list>
-</div>
+    </ng-template>
+</app-demo-playground>

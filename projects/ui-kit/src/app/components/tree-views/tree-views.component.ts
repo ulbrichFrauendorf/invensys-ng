@@ -11,23 +11,18 @@ import {
   ITreeNode,
   IButton,
 } from '../../../../../invensys-ng/src/public-api';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-tree-views',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     ITreeView,
     IButton,
-    DemoCardComponent,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './tree-views.component.html',
   styleUrl: './tree-views.component.scss',
 })
@@ -226,68 +221,32 @@ export class TreeViewsComponent {
   // Filter example
   filteredTreeData = [...this.basicTreeData];
 
-  // Features list
-  features: Feature[] = [
-    {
-      title: 'Multiple Selection Modes',
-      description: 'Single, multiple, and checkbox selection modes',
-    },
-    {
-      title: 'Node Expansion',
-      description: 'Expand/collapse nodes with children',
-    },
-    {
-      title: 'Filtering',
-      description: 'Built-in filtering with customizable filter function',
-    },
-    {
-      title: 'Custom Icons',
-      description: 'Support for custom icons per node',
-    },
-    {
-      title: 'Event Handling',
-      description: 'Rich set of events for selection, expansion, and filtering',
-    },
-    {
-      title: 'Hierarchical Data',
-      description: 'Support for deep nested tree structures',
-    },
-    {
-      title: 'Accessibility',
-      description: 'Full keyboard navigation and ARIA support',
-    },
-    {
-      title: 'Scrollable Content',
-      description: 'Configurable scroll height for large trees',
-    },
-  ];
-
   // HTML Code examples
   codeExamples = {
     basic: `<i-tree-view [value]="treeData"></i-tree-view>`,
 
     selection: `<!-- Single selection -->
-<i-tree-view 
-  [value]="treeData" 
+<i-tree-view
+  [value]="treeData"
   selectionMode="single"
   [(selection)]="singleSelection">
 </i-tree-view>
 
 <!-- Multiple selection -->
-<i-tree-view 
-  [value]="treeData" 
+<i-tree-view
+  [value]="treeData"
   selectionMode="multiple"
   [(selection)]="multipleSelection">
 </i-tree-view>
 
 <!-- Checkbox selection -->
-<i-tree-view 
-  [value]="treeData" 
+<i-tree-view
+  [value]="treeData"
   selectionMode="checkbox"
   [(selection)]="checkboxSelection">
 </i-tree-view>`,
 
-    events: `<i-tree-view 
+    events: `<i-tree-view
   [value]="treeData"
   (onNodeSelect)="onNodeSelect($event)"
   (onNodeUnselect)="onNodeUnselect($event)"
@@ -295,19 +254,19 @@ export class TreeViewsComponent {
   (onNodeCollapse)="onNodeCollapse($event)">
 </i-tree-view>`,
 
-    filtering: `<i-tree-view 
+    filtering: `<i-tree-view
   [value]="treeData"
   [filter]="true"
   filterPlaceholder="Search nodes..."
   filterBy="label">
 </i-tree-view>`,
 
-    scrollable: `<i-tree-view 
+    scrollable: `<i-tree-view
   [value]="treeData"
   scrollHeight="400px">
 </i-tree-view>`,
 
-    customization: `<i-tree-view 
+    customization: `<i-tree-view
   [value]="customTreeData"
   [scrollHeight]="'400px'">
 </i-tree-view>`,

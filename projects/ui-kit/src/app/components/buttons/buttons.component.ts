@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { ISeverity } from '../../../../../invensys-ng/src/lib/enums/IButtonSeverity';
+
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-buttons',
-  imports: [IButton, DemoCardComponent, FeaturesListComponent, TitleCasePipe],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, TitleCasePipe],
   templateUrl: './buttons.component.html',
   styleUrl: './buttons.component.scss',
 })
@@ -80,36 +78,4 @@ export class ButtonsComponent {
 export class ExampleComponent {}`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Multiple Severities',
-      description:
-        'Primary, secondary, success, info, warning, danger, and contrast variants',
-    },
-    {
-      title: 'Size Variants',
-      description: 'Small, medium, and large button sizes',
-    },
-    {
-      title: 'Button Styles',
-      description: 'Filled, outlined, text, and raised button styles',
-    },
-    { title: 'Icon Support', description: 'Leading icons using PrimeIcons' },
-    {
-      title: 'Fluid Layout',
-      description: 'Full-width buttons for responsive designs',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Proper disabled styling and interaction handling',
-    },
-    {
-      title: 'Loading State',
-      description: 'Built-in loading indicator support',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA attributes and keyboard navigation',
-    },
-  ];
 }

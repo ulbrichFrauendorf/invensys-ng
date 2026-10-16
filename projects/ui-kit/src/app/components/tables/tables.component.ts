@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
 
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import {
   FilterEvent,
   GridAction,
@@ -42,10 +37,13 @@ interface CategorySummary {
 
 // ─── Component ─────────────────────────────────────────────────────────────────
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-tables',
   standalone: true,
-  imports: [ITable, DemoCardComponent, FeaturesListComponent, IWhisper],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ITable, IWhisper],
   templateUrl: './tables.component.html',
   styleUrl: './tables.component.scss',
 })
@@ -373,56 +371,6 @@ export class TablesComponent {
   }
 
   // ── Features list ─────────────────────────────────────────────────────────
-
-  features: Feature[] = [
-    {
-      title: 'Single input',
-      description:
-        '[grid] bundles columns, rows, actions, and optional detail sub-table',
-    },
-    {
-      title: 'Virtual scroll',
-      description:
-        'Opt-in CDK virtual scroll via [virtualScroll]="true"; recommended for ≥ 500 rows',
-    },
-    {
-      title: 'Detail sub-tables',
-      description:
-        'GridData.details replaces grouped mode; each row expands to a nested <i-table>',
-    },
-    {
-      title: 'Embedded handlers',
-      description: 'Per-action handler(row) — no shared dispatcher needed',
-    },
-    {
-      title: 'Selection',
-      description:
-        'Single or multiple-row selection with dataKey deduplication',
-    },
-    {
-      title: 'Filtering',
-      description:
-        'Global search bar and per-column filter inputs with debounce',
-    },
-    {
-      title: 'Download',
-      description: 'Client-side CSV / JSON / Excel export of filtered data',
-    },
-    {
-      title: 'Column types',
-      description: 'Text, number, currency, date, boolean, icon, list (chips)',
-    },
-    {
-      title: 'Resize & sticky',
-      description:
-        'Draggable column resize handles; sticky headers outside scroll viewport',
-    },
-    {
-      title: 'OnPush + signals',
-      description:
-        'ChangeDetectionStrategy.OnPush with Angular signal-based state',
-    },
-  ];
 
   // ── Code snippets ─────────────────────────────────────────────────────────
 

@@ -1,19 +1,5 @@
-<div class="component-demo">
-  <h1>Component Interactions</h1>
-  <p class="lead">
-    This page demonstrates how different UI components interact with each other.
-    These examples help ensure components work correctly when combined in
-    real-world scenarios.
-  </p>
-
-  <app-features-list [features]="componentFeatures"></app-features-list>
-
-  <!-- Dropdown in Accordion Demo -->
-  <app-demo-card
-    title="Dropdown in Accordion"
-    [sourceCode]="codeExamples.dropdownInAccordion"
-    [tsCode]="tsExamples.setup"
-  >
+<app-demo-playground class="component-demo" title="Component Interactions" description="This page demonstrates how different UI components interact with each other. These examples help ensure components work correctly when combined in real-world scenarios.">
+  <ng-template appDemoOption="option-1" label="Dropdown in Accordion" [selected]="true" [sourceCode]="codeExamples.dropdownInAccordion" [tsCode]="tsExamples.setup">
     <form [formGroup]="interactionForm">
       <i-accordion-list [multiple]="true">
         <i-accordion header="User Settings" icon="pi pi-user" [expanded]="true">
@@ -129,14 +115,9 @@
         ></i-button>
       </div>
     </form>
-  </app-demo-card>
+  </ng-template>
 
-  <!-- Dropdown in Panel Demo -->
-  <app-demo-card
-    title="Dropdown in Panel"
-    [sourceCode]="codeExamples.selectInPanel"
-    [tsCode]="tsExamples.setup"
-  >
+  <ng-template appDemoOption="option-2" label="Dropdown in Panel" [sourceCode]="codeExamples.selectInPanel" [tsCode]="tsExamples.setup">
     <form [formGroup]="interactionForm">
       <div class="panel-demo-grid">
         <i-panel header="User Preferences" [toggleable]="true">
@@ -205,5 +186,5 @@
         </i-panel>
       </div>
     </form>
-  </app-demo-card>
-</div>
+  </ng-template>
+</app-demo-playground>

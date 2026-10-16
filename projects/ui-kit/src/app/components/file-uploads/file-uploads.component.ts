@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { IFileUpload } from '@shared/components/file-upload/file-upload.component';
 import { FileUploadOptions } from '@shared/components/file-upload/file-upload.types';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { IPlaceholder } from '@shared/components/placeholder/placeholder.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-file-uploads',
-  imports: [IFileUpload, IPlaceholder, DemoCardComponent],
+  imports: [IFileUpload, IPlaceholder, DemoPlaygroundComponent, DemoOptionDirective],
   template: `
-    <h1>File Upload</h1>
-    <p>Select files with drag and drop or the file picker. Each example keeps its own selection.</p>
-    <app-demo-card title="Any file type" [sourceCode]="genericCode">
+    <app-demo-playground class="file-uploads-demo" title="File Upload" description="Select files with drag and drop or the file picker. Each example keeps its own selection.">
+    <ng-template appDemoOption="any-file" label="Any file type" [sourceCode]="genericCode" [selected]="true">
       <i-file-upload [(files)]="files" />
-    </app-demo-card>
-    <app-demo-card title="PDF documents" [sourceCode]="pdfCode">
+    </ng-template>
+    <ng-template appDemoOption="pdf" label="PDF documents" [sourceCode]="pdfCode">
       <i-file-upload [(files)]="pdfs" [options]="pdfOptions" dropLabel="Drop your PDFs here"
         chooseLabel="Choose PDFs" ariaLabel="Choose PDF files" fileIcon="pi pi-file-pdf" />
-    </app-demo-card>
-    <app-demo-card title="Single image (2 MB)" [sourceCode]="imageCode">
+    </ng-template>
+    <ng-template appDemoOption="image" label="Single image (2 MB)" [sourceCode]="imageCode">
       <i-file-upload [(files)]="images" [options]="imageOptions" fileIcon="pi pi-image" />
-    </app-demo-card>
-    <app-demo-card title="Disabled" [sourceCode]="disabledCode">
+    </ng-template>
+    <ng-template appDemoOption="disabled" label="Disabled" [sourceCode]="disabledCode">
       <i-file-upload [disabled]="true" />
-    </app-demo-card>
-    <app-demo-card title="Upload and placeholder borders" [sourceCode]="borderCode">
+    </ng-template>
+    <ng-template appDemoOption="border-comparison" label="Upload and placeholder borders" [sourceCode]="borderCode">
       <p>Both components use the same dashed border, radius, and card surface. Focus the upload button or drag a file over it to see the active border.</p>
       <div class="border-comparison">
         <i-file-upload [(files)]="comparisonFiles" />
@@ -32,10 +32,11 @@ import { IPlaceholder } from '@shared/components/placeholder/placeholder.compone
           <p>Upload files to get started.</p>
         </i-placeholder>
       </div>
-    </app-demo-card>
+    </ng-template>
+    </app-demo-playground>
   `,
   styles: `
-    .border-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .border-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     @media (max-width: 700px) { .border-comparison { grid-template-columns: minmax(0, 1fr); } }
   `,
 })
@@ -58,4 +59,3 @@ export class FileUploadsComponent {
   readonly imageCode = '<i-file-upload [(files)]="images" [options]="imageOptions" />';
   readonly disabledCode = '<i-file-upload [disabled]="true" />';
 }
-

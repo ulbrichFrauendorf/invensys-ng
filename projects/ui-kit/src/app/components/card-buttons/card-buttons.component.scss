@@ -1,17 +1,10 @@
 @use "../shared-demo-styles.scss" as *;
 
-.card-buttons-demo {
-  @extend .demo-component;
-}
-
 .interactive-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  gap: 16px;
   text-align: center;
-
-  p { color: var(--color-text-secondary); }
 }
 
-.card-tool-icon { display: inline-block; margin-top: 1rem; font-size: 1.5rem; color: var(--color-primary); }
-
+.card-tool-icon { display: inline-block; margin-top: 16px; font-size: 24px; color: var(--color-primary); }

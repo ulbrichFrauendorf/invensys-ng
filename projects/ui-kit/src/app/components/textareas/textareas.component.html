@@ -1,19 +1,5 @@
-<div class="textareas-demo">
-  <header class="demo-header">
-    <h1>Textarea Component</h1>
-    <p>
-      Multi-line text input with floating labels, character counters, validation
-      support, and consistent theming including dark mode.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- NgModel Binding -->
-    <app-demo-card
-      [title]="'Template-driven Forms (NgModel)'"
-      [sourceCode]="codeExamples.ngModel"
-      [tsCode]="tsExamples.ngModel"
-    >
+<app-demo-playground class="textareas-demo" title="Textarea Component" description="Multi-line text input with floating labels, character counters, validation support, and consistent theming including dark mode.">
+  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
       <div class="demo-form">
         <div class="textarea-stack">
           <i-textarea label="Description" [(ngModel)]="basicValue" />
@@ -32,14 +18,9 @@
           <p><strong>Comment:</strong> {{ commentValue || "(empty)" }}</p>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Reactive Forms -->
-    <app-demo-card
-      [title]="'Reactive Forms'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <form [formGroup]="basicForm" class="demo-form">
         <div class="textarea-stack">
           <i-textarea label="Bio" formControlName="bio" [fluid]="true" />
@@ -56,14 +37,9 @@
           Submit Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Validation -->
-    <app-demo-card
-      [title]="'Form Validation'"
-      [sourceCode]="codeExamples.validation"
-      [tsCode]="tsExamples.validation"
-    >
+  <ng-template appDemoOption="option-3" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
       <form [formGroup]="validationForm" class="demo-form">
         <div class="textarea-stack">
           <i-textarea
@@ -91,13 +67,9 @@
           Validate Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Character Counter -->
-    <app-demo-card
-      [title]="'Character Counter'"
-      [sourceCode]="codeExamples.charCount"
-    >
+  <ng-template appDemoOption="option-4" label="Character Counter" [sourceCode]="codeExamples.charCount">
       <div class="demo-form">
         <div class="textarea-stack">
           <i-textarea
@@ -115,13 +87,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled & Readonly -->
-    <app-demo-card
-      [title]="'Disabled &amp; Readonly States'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-5" label="Disabled &amp;amp; Readonly States" [sourceCode]="codeExamples.disabled">
       <div class="demo-form">
         <div class="textarea-stack">
           <i-textarea
@@ -144,10 +112,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-6" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <form [formGroup]="basicForm" class="demo-form">
         <i-textarea
           label="Full Width Notes"
@@ -163,11 +130,5 @@
           Submit
         </i-button>
       </form>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

@@ -1,23 +1,5 @@
-<div class="whispers-demo">
-  <i-whisper [position]="'top-left'" [key]="'left'" />
-  <i-whisper [position]="'top-right'" [key]="'right'" />
-  <i-whisper [position]="'top-center'" [key]="'global'" />
-
-  <header class="demo-header">
-    <h1>Whisper Notifications</h1>
-    <p>
-      Toast-style notifications for user feedback and status updates. Similar to
-      PrimeNG MessageService but with a creative whisper theme.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Message Types -->
-    <app-demo-card
-      [title]="'Message Types'"
-      [sourceCode]="codeExamples.buttons"
-      [tsCode]="tsExamples.usage"
-    >
+<app-demo-playground class="whispers-demo" title="Whisper Notifications" description="Toast-style notifications for user feedback and status updates. Similar to PrimeNG MessageService but with a creative whisper theme.">
+  <ng-template appDemoOption="option-1" label="Message Types" [selected]="true" [sourceCode]="codeExamples.buttons" [tsCode]="tsExamples.usage">
       <div class="button-grid">
         <i-button
           severity="success"
@@ -48,14 +30,9 @@
           Test Stacking
         </i-button>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Key-based Messages -->
-    <app-demo-card
-      [title]="'Key-based Messages'"
-      [sourceCode]="codeExamples.keyed"
-      [tsCode]="tsExamples.advanced"
-    >
+  <ng-template appDemoOption="option-2" label="Key-based Messages" [sourceCode]="codeExamples.keyed" [tsCode]="tsExamples.advanced">
       <div class="demo-section">
         <p class="section-description">
           Messages with keys will show in specific whisper containers:
@@ -99,14 +76,9 @@
           </i-button>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Real-world Example -->
-    <app-demo-card
-      [title]="'Real-world Example'"
-      [sourceCode]="codeExamples.basic"
-      [tsCode]="tsExamples.basic"
-    >
+  <ng-template appDemoOption="option-3" label="Real-world Example" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
       <div class="demo-section">
         <p class="section-description">
           Simulate a user link action like the one in your request:
@@ -120,18 +92,9 @@
           Link Users (Simulated)
         </i-button>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-
-    <!-- Positioning Setup -->
-    <app-demo-card
-      [title]="'Setup & Positioning'"
-      [sourceCode]="codeExamples.basic"
-    >
+  <ng-template appDemoOption="option-5" label="Setup &amp; Positioning" [sourceCode]="codeExamples.basic">
       <div class="setup-info">
         <p>
           Add the whisper component to your app.component.html template for
@@ -139,6 +102,5 @@
         </p>
         <code>&lt;i-whisper position="top-right"&gt;&lt;/i-whisper&gt;</code>
       </div>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

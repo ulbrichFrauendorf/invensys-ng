@@ -146,6 +146,8 @@ export class ConfirmationDialogService {
         message: config.message,
         header: config.header,
         severity: config.severity || 'primary',
+        acceptLabel: this.acceptLabel,
+        rejectLabel: this.rejectLabel,
       },
     });
 

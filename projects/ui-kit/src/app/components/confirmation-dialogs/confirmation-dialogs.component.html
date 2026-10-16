@@ -1,79 +1,96 @@
-<div class="confirmation-dialogs-demo">
-  <header class="demo-header">
-    <h1>Confirmation Dialog Components</h1>
-    <p>
-      Service-based confirmation dialogs for user actions that require explicit
-      confirmation. Perfect for delete operations, unsaved changes, and other
-      critical user decisions.
-    </p>
-  </header>
+<app-demo-playground
+  class="confirmation-dialogs-demo"
+  title="Confirmation Dialog"
+  description="Choose the confirmation dialog options to include."
+  [sourceCode]="code()"
+  language="ts"
+>
+  <ng-template appDemoPreview>
+    <div class="preview-stage">
+      <i class="pi pi-comments preview-icon" aria-hidden="true"></i>
+      <i-button
+        [disabled]="opening() || !values().message.trim()"
+        (clicked)="openConfirmation()"
+        >Open confirmation</i-button
+      >
+      <p class="preview-result" role="status">{{ result() }}</p>
+    </div>
+  </ng-template>
 
-  <div class="cards-container">
-    <!-- Basic Confirmation -->
-    <app-demo-card
-      [title]="'Basic Confirmation'"
-      [sourceCode]="htmlExamples.basic"
-      [tsCode]="codeExamples.basic"
-    >
-      <div class="demo-content">
-        <p>Simple confirmation dialog with standard accept/reject options.</p>
-        <i-button severity="danger" (click)="showBasicConfirmation()"
-          >Delete Item</i-button
-        >
-      </div>
-    </app-demo-card>
+  <ng-template appDemoOptions>
+    <div class="options-list">
+      @for (option of options; track option.key) {
+        <div class="option-row">
+          <i-checkbox
+            [id]="'enable-' + option.key"
+            [label]="option.label"
+            [checked]="enabled()[option.key]"
+            [disabled]="option.key === 'message'"
+            (onChange)="setEnabled(option.key, $event)"
+          />
+          <p class="option-hint" [id]="option.key + '-hint'">
+            {{ option.hint }}
+          </p>
+          @if (enabled()[option.key]) {
+            @switch (option.key) {
+              @case ("accept") {}
+              @case ("reject") {}
+              @case ("message") {
+                <label class="visually-hidden" for="value-message">Message</label>
+                <textarea
+                  id="value-message"
+                  rows="3"
+                  required
+                  aria-describedby="message-hint"
+                  [ngModel]="values().message"
+                  (ngModelChange)="setValue('message', $event)"
+                ></textarea>
+              }
+              @case ("severity") {
+                <label class="visually-hidden" for="value-severity">Severity</label>
+                <select
+                  id="value-severity"
+                  aria-describedby="severity-hint"
+                  [ngModel]="values().severity"
+                  (ngModelChange)="setValue('severity', $event)"
+                >
+                  @for (severity of severities; track severity) {
+                    <option [value]="severity">{{ severity }}</option>
+                  }
+                </select>
+              }
+              @default {
+                <label class="visually-hidden" [for]="'value-' + option.key">{{ option.label }}</label>
+                <input
+                  type="text"
+                  [id]="'value-' + option.key"
+                  [attr.aria-describedby]="option.key + '-hint'"
+                  [ngModel]="optionValue(option.key)"
+                  (ngModelChange)="setValue(option.key, $event)"
+                />
+              }
+            }
+          }
+        </div>
+      }
+    </div>
+  </ng-template>
 
-    <!-- Custom Labels -->
-    <app-demo-card
-      [title]="'Custom Button Labels'"
-      [sourceCode]="htmlExamples.custom"
-      [tsCode]="codeExamples.custom"
-    >
-      <div class="demo-content">
-        <p>Customize the accept and reject button text for specific actions.</p>
-        <i-button severity="warning" (click)="showCustomConfirmation()"
-          >Unlink Report</i-button
-        >
-      </div>
-    </app-demo-card>
-
-    <!-- Discard Changes -->
-    <app-demo-card
-      [title]="'Discard Changes Dialog'"
-      [sourceCode]="htmlExamples.discard"
-      [tsCode]="codeExamples.discard"
-    >
-      <div class="demo-content">
-        <p>Common pattern for handling unsaved changes before navigation.</p>
-        <i-button
-          severity="secondary"
-          [outlined]="true"
-          (click)="showDiscardChanges()"
-          >Discard Changes</i-button
-        >
-      </div>
-    </app-demo-card>
-
-    <!-- Dangerous Action -->
-    <app-demo-card
-      [title]="'Dangerous Action Warning'"
-      [sourceCode]="htmlExamples.dangerous"
-      [tsCode]="codeExamples.dangerous"
-    >
-      <div class="demo-content">
-        <p>Strong warning for irreversible actions with clear consequences.</p>
-        <i-button
-          severity="danger"
-          [raised]="true"
-          (click)="showDangerousAction()"
-          >Delete Forever</i-button
-        >
-      </div>
-    </app-demo-card>
-
-    <!-- Features Overview -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+  <ng-template appDemoUsage>
+    <ul>
+      <li>
+        The message is required. Unchecked options are omitted so the service
+        uses its defaults.
+      </li>
+      <li>Replace the callback examples with your own action handlers.</li>
+      <li>
+        <code>confirm()</code> resolves to a dialog reference when it opens. Use
+        callbacks or <code>ref.onClose</code> to handle the user's decision.
+      </li>
+      <li>
+        Closing the dialog with its close button or Escape dismisses it without
+        running either callback.
+      </li>
+    </ul>
+  </ng-template>
+</app-demo-playground>

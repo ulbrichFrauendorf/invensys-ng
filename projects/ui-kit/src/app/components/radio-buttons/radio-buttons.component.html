@@ -1,19 +1,5 @@
-<div class="radio-buttons-demo">
-  <header class="demo-header">
-    <h1>Radio Button Components</h1>
-    <p>
-      Radio button components for single selection within a group. Compatible
-      with ngModel and reactive forms with proper accessibility.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Usage -->
-    <app-demo-card
-      [title]="'Basic ngModel Usage'"
-      [sourceCode]="codeExamples.basic"
-      [tsCode]="tsExamples.basic"
-    >
+<app-demo-playground class="radio-buttons-demo" title="Radio Button Components" description="Radio button components for single selection within a group. Compatible with ngModel and reactive forms with proper accessibility.">
+  <ng-template appDemoOption="option-1" label="Basic ngModel Usage" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
       <div class="radio-examples">
         <div class="example-row">
           <i-radio-button
@@ -42,13 +28,9 @@
         </div>
         <div class="status">Selected: {{ selectedOption }}</div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Gender Selection -->
-    <app-demo-card
-      [title]="'Radio Group Example'"
-      [sourceCode]="codeExamples.gender"
-    >
+  <ng-template appDemoOption="option-2" label="Radio Group Example" [sourceCode]="codeExamples.gender">
       <div class="radio-examples">
         <div class="example-row">
           <i-radio-button
@@ -76,13 +58,9 @@
         </div>
         <div class="status">Selected: {{ selectedGender }}</div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State -->
-    <app-demo-card
-      [title]="'Disabled State'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-3" label="Disabled State" [sourceCode]="codeExamples.disabled">
       <div class="radio-examples">
         <div class="example-row">
           <i-radio-button
@@ -103,14 +81,9 @@
         </div>
         <div class="status">Selected: {{ selectedPlan || "None" }}</div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- FormControl -->
-    <app-demo-card
-      [title]="'Reactive Forms - FormControl'"
-      [sourceCode]="codeExamples.formControl"
-      [tsCode]="tsExamples.formControl"
-    >
+  <ng-template appDemoOption="option-4" label="Reactive Forms - FormControl" [sourceCode]="codeExamples.formControl" [tsCode]="tsExamples.formControl">
       <div class="radio-examples">
         <div class="example-row">
           <i-radio-button
@@ -161,14 +134,9 @@
           </i-button>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- FormGroup -->
-    <app-demo-card
-      [title]="'Reactive Forms - FormGroup'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+  <ng-template appDemoOption="option-5" label="Reactive Forms - FormGroup" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <div class="radio-examples">
         <form [formGroup]="surveyForm" (ngSubmit)="onFormSubmit()">
           <div class="form-section">
@@ -246,11 +214,5 @@
           <pre>{{ surveyForm.status }}</pre>
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

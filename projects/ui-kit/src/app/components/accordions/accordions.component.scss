@@ -1,34 +1,33 @@
 @use "../shared-demo-styles.scss" as *;
 
 .accordions-demo {
-  @extend .demo-component;
 
   .accordion-examples {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
 
     .example-description {
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 8px 0;
       color: var(--text-color-secondary);
-      font-size: 0.875rem;
+      font-size: 14px;
     }
 
     .control-buttons {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 16px;
+      margin-bottom: 16px;
       flex-wrap: wrap;
 
       .demo-button {
-        padding: 0.5rem 1rem;
+        padding: 8px 16px;
         border: 1px solid var(--surface-border);
         border-radius: 6px;
         background: var(--color-primary);
         color: var(--color-text-contrast);
         cursor: pointer;
-        font-size: 0.875rem;
+        font-size: 14px;
         font-weight: 500;
         transition: all 0.2s ease;
 
@@ -42,29 +41,19 @@
       }
 
       .status {
-        font-size: 0.875rem;
+        font-size: 14px;
         color: var(--text-color-secondary);
         font-weight: 500;
       }
     }
 
     ul {
-      margin: 0.5rem 0;
-      padding-left: 1.5rem;
+      margin: 8px 0;
+      padding-left: 24px;
 
       li {
-        margin-bottom: 0.25rem;
+        margin-bottom: 4px;
         color: var(--color-text-secondary);
-      }
-    }
-
-    p {
-      margin: 0 0 0.5rem 0;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-
-      &:last-child {
-        margin-bottom: 0;
       }
     }
   }

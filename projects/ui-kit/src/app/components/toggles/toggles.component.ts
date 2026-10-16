@@ -7,24 +7,19 @@ import {
 } from '@angular/forms';
 import { IToggle } from '../../../../../invensys-ng/src/lib/components/toggle/toggle.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { JsonPipe } from '@angular/common';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-toggles',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     IToggle,
     IButton,
-    DemoCardComponent,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './toggles.component.html',
   styleUrl: './toggles.component.scss',
 })
@@ -133,41 +128,6 @@ console.log(this.formControlExample.value);`,
 export class ExampleComponent {
   toggled = false;
 }`;
-
-  features: Feature[] = [
-    {
-      title: 'Two-way Data Binding',
-      description: 'Full support for ngModel and reactive forms',
-    },
-    {
-      title: 'Size Variants',
-      description: 'Small, medium, and large toggle sizes',
-    },
-    {
-      title: 'Label Support',
-      description: 'Optional labels with proper accessibility',
-    },
-    {
-      title: 'State Management',
-      description: 'Disabled and readonly states',
-    },
-    {
-      title: 'Form Integration',
-      description: 'Works seamlessly with Angular forms',
-    },
-    {
-      title: 'Custom Events',
-      description: 'onChange event for custom handling',
-    },
-    {
-      title: 'Accessibility',
-      description: 'ARIA role="switch" with keyboard navigation',
-    },
-    {
-      title: 'Custom Styling',
-      description: 'Theme-aware styling with CSS custom properties',
-    },
-  ];
 
   // Event handlers
   onBasicChange(toggled: boolean) {

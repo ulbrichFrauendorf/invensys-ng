@@ -1,0 +1,17 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin confirmation-dialogs-theme() {
+  .preview-icon { color: colors.$color-primary; }
+  .preview-stage { background: colors.$color-surface-ground; }
+  .option-row + .option-row { border-color: colors.$color-surface-border; }
+
+  input,
+  textarea,
+  select {
+    border-color: colors.$color-surface-border;
+    background: colors.$color-surface-ground;
+    color: colors.$color-text-primary;
+
+    &:focus-visible { outline-color: colors.$color-primary; }
+  }
+}

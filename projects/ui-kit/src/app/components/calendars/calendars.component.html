@@ -1,19 +1,5 @@
-<div class="calendars-demo">
-  <header class="demo-header">
-    <h1>Calendar Components</h1>
-    <p>
-      Versatile date picker components with support for date, month, and year
-      selection. Customizable formats and full Angular Forms integration.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Template-driven Forms (NgModel) -->
-    <app-demo-card
-      [title]="'Template-driven Forms (NgModel)'"
-      [sourceCode]="codeExamples.ngModel"
-      [tsCode]="tsExamples.ngModel"
-    >
+<app-demo-playground class="calendars-demo" title="Calendar Components" description="Versatile date picker components with support for date, month, and year selection. Customizable formats and full Angular Forms integration.">
+  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
       <div class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -46,14 +32,9 @@
           <p><strong>Year:</strong> {{ formatYear(selectedYear) }}</p>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Reactive Forms -->
-    <app-demo-card
-      [title]="'Reactive Forms'"
-      [sourceCode]="codeExamples.reactiveForm"
-      [tsCode]="tsExamples.reactiveForm"
-    >
+  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
       <form [formGroup]="basicForm" class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -75,14 +56,9 @@
           Submit Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Month Picker Examples -->
-    <app-demo-card
-      [title]="'Month Picker'"
-      [sourceCode]="codeExamples.monthPicker"
-      [tsCode]="tsExamples.monthPicker"
-    >
+  <ng-template appDemoOption="option-3" label="Month Picker" [sourceCode]="codeExamples.monthPicker" [tsCode]="tsExamples.monthPicker">
       <form [formGroup]="monthPickerForm" class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -112,14 +88,9 @@
           Generate Report
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Year Picker Examples -->
-    <app-demo-card
-      [title]="'Year Picker'"
-      [sourceCode]="codeExamples.yearPicker"
-      [tsCode]="tsExamples.yearPicker"
-    >
+  <ng-template appDemoOption="option-4" label="Year Picker" [sourceCode]="codeExamples.yearPicker" [tsCode]="tsExamples.yearPicker">
       <form [formGroup]="yearPickerForm" class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -148,14 +119,9 @@
           Load Year Data
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Date Range Picker -->
-    <app-demo-card
-      [title]="'Date Range Picker'"
-      [sourceCode]="codeExamples.dateRange"
-      [tsCode]="tsExamples.dateRange"
-    >
+  <ng-template appDemoOption="option-5" label="Date Range Picker" [sourceCode]="codeExamples.dateRange" [tsCode]="tsExamples.dateRange">
       <form [formGroup]="dateRangeForm" class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -187,14 +153,9 @@
           Apply Date Range
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Form Validation -->
-    <app-demo-card
-      [title]="'Form Validation'"
-      [sourceCode]="codeExamples.validation"
-      [tsCode]="tsExamples.validation"
-    >
+  <ng-template appDemoOption="option-6" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
       <form [formGroup]="validationForm" class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -217,13 +178,9 @@
           Submit Form
         </i-button>
       </form>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Custom Date Formats -->
-    <app-demo-card
-      [title]="'Custom Date Formats'"
-      [sourceCode]="codeExamples.customFormats"
-    >
+  <ng-template appDemoOption="option-7" label="Custom Date Formats" [sourceCode]="codeExamples.customFormats">
       <div class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -272,14 +229,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Event Handling -->
-    <app-demo-card
-      [title]="'Event Handling'"
-      [sourceCode]="codeExamples.events"
-      [tsCode]="tsExamples.events"
-    >
+  <ng-template appDemoOption="option-8" label="Event Handling" [sourceCode]="codeExamples.events" [tsCode]="tsExamples.events">
       <div class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -307,13 +259,9 @@
           </p>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State -->
-    <app-demo-card
-      [title]="'Disabled & Readonly States'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-9" label="Disabled &amp; Readonly States" [sourceCode]="codeExamples.disabled">
       <div class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -338,13 +286,9 @@
           />
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Floating Label Options -->
-    <app-demo-card
-      [title]="'Floating Label Options'"
-      [sourceCode]="codeExamples.floating"
-    >
+  <ng-template appDemoOption="option-10" label="Floating Label Options" [sourceCode]="codeExamples.floating">
       <div class="demo-form">
         <div class="calendar-grid">
           <i-calendar
@@ -369,11 +313,5 @@
           />
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

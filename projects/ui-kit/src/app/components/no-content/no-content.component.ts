@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import { NoContentComponent as INoContent } from '../../../../../invensys-ng/src/lib/components/no-content/no-content.component';
+
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-no-content',
   standalone: true,
-  imports: [DemoCardComponent, FeaturesListComponent, INoContent],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, INoContent],
   templateUrl: './no-content.component.html',
   styleUrl: './no-content.component.scss',
 })
@@ -80,35 +78,4 @@ export class ExampleComponent {
   items: any[] = [];
 }`;
 
-  // Features list
-  features: Feature[] = [
-    {
-      title: 'Customizable Icon',
-      description:
-        'Choose from any PrimeIcons to match your content type (default: pi-inbox)',
-    },
-    {
-      title: 'Custom Message',
-      description:
-        'Provide a contextual message to guide users (default: "No content available")',
-    },
-    {
-      title: 'Versatile Usage',
-      description:
-        'Can be used in tables, lists, search results, or any empty state scenario',
-    },
-    {
-      title: 'Consistent Design',
-      description:
-        'Maintains a consistent empty state experience across your application',
-    },
-    {
-      title: 'Lightweight',
-      description: 'Simple, focused component with minimal overhead',
-    },
-    {
-      title: 'Responsive',
-      description: 'Adapts to different container sizes and layouts',
-    },
-  ];
 }

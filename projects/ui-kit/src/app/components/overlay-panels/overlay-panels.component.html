@@ -1,16 +1,5 @@
-<div class="overlay-panels-demo">
-  <header class="demo-header">
-    <h1>Overlay Panel Component</h1>
-    <p>
-      A floating panel that positions itself relative to a trigger element with
-      intelligent auto-positioning and collision detection. Perfect for user
-      menus, notifications, actions, filters, and contextual information.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Usage -->
-    <app-demo-card [title]="'Basic Usage'" [sourceCode]="codeExamples.basic">
+<app-demo-playground class="overlay-panels-demo" title="Overlay Panel Component" description="A floating panel that positions itself relative to a trigger element with intelligent auto-positioning and collision detection. Perfect for user menus, notifications, actions, filters, and contextual information.">
+  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
       <div class="demo-content centered">
         <i-button (clicked)="basicPanel.toggle($event)">Show Info</i-button>
         <i-overlay-panel #basicPanel>
@@ -24,13 +13,9 @@
           </div>
         </i-overlay-panel>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- User Menu -->
-    <app-demo-card
-      [title]="'User Account Menu'"
-      [sourceCode]="codeExamples.userMenu"
-    >
+  <ng-template appDemoOption="option-2" label="User Account Menu" [sourceCode]="codeExamples.userMenu">
       <div class="demo-content centered">
         <i-button
           (clicked)="userPanel.toggle($event)"
@@ -66,13 +51,9 @@
           </div>
         </i-overlay-panel>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Notifications -->
-    <app-demo-card
-      [title]="'Notifications Panel'"
-      [sourceCode]="codeExamples.notifications"
-    >
+  <ng-template appDemoOption="option-3" label="Notifications Panel" [sourceCode]="codeExamples.notifications">
       <div class="demo-content centered">
         <i-button
           (clicked)="notifPanel.toggle($event)"
@@ -114,10 +95,9 @@
           </div>
         </i-overlay-panel>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Action Menu -->
-    <app-demo-card [title]="'Action Menu'" [sourceCode]="codeExamples.actions">
+  <ng-template appDemoOption="option-4" label="Action Menu" [sourceCode]="codeExamples.actions">
       <div class="demo-content centered">
         <i-button
           (clicked)="actionsPanel.toggle($event)"
@@ -145,13 +125,9 @@
           </div>
         </i-overlay-panel>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Persistent Panel -->
-    <app-demo-card
-      [title]="'Persistent Panel'"
-      [sourceCode]="codeExamples.persistent"
-    >
+  <ng-template appDemoOption="option-5" label="Persistent Panel" [sourceCode]="codeExamples.persistent">
       <div class="demo-content centered">
         <i-button (clicked)="persistentPanel.toggle($event)"
           >Important Info</i-button
@@ -168,11 +144,5 @@
           </div>
         </i-overlay-panel>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

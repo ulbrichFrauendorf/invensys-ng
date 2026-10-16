@@ -8,22 +8,17 @@ import {
 } from '@angular/forms';
 import { ICalendar } from '../../../../../invensys-ng/src/lib/components/calendar/calendar.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-calendars',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     ICalendar,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './calendars.component.html',
   styleUrl: './calendars.component.scss',
 })
@@ -296,59 +291,6 @@ onEndDateChange(date: Date): void {
   this.checkAvailability(date);
 }`,
   };
-
-  // Features
-  features: Feature[] = [
-    {
-      title: 'Multiple View Modes',
-      description: 'Date, Month, and Year picker modes for different use cases',
-    },
-    {
-      title: 'Customizable Date Formats',
-      description:
-        'Support for various date format patterns (dd/mm/yy, MMM yy, etc.)',
-    },
-    {
-      title: 'Angular Forms Integration',
-      description: 'Full support for both template-driven and reactive forms',
-    },
-    {
-      title: 'Event Handling',
-      description: 'onSelect event emitter for custom date selection logic',
-    },
-    {
-      title: 'Readonly Input',
-      description: 'Force users to use calendar picker instead of manual input',
-    },
-    {
-      title: 'Floating Labels',
-      description: 'Optional animated floating labels for better UX',
-    },
-    {
-      title: 'Custom Icons',
-      description: 'Configurable calendar icon using PrimeIcons',
-    },
-    {
-      title: 'Accessibility',
-      description: 'Keyboard navigation and screen reader support',
-    },
-    {
-      title: 'Disabled State',
-      description: 'Proper disabled styling and interaction handling',
-    },
-    {
-      title: 'Theme Integration',
-      description: 'Consistent styling with design system',
-    },
-    {
-      title: 'Click Outside to Close',
-      description: 'Calendar panel closes when clicking outside',
-    },
-    {
-      title: 'Today Highlighting',
-      description: "Today's date is highlighted in the calendar",
-    },
-  ];
 
   constructor(private fb: FormBuilder) {
     // Basic form

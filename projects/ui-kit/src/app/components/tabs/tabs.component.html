@@ -1,19 +1,5 @@
-<div class="tabs-demo">
-  <header class="demo-header">
-    <h1>Tabs Components</h1>
-    <p>
-      Flexible tabs component with support for icons, text, or both. Built with
-      accessibility and keyboard navigation in mind.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Text Only Tabs -->
-    <app-demo-card
-      [title]="'Text Only Tabs'"
-      [sourceCode]="codeExamples.textOnly"
-      [tsCode]="tsExamples.basic"
-    >
+<app-demo-playground class="tabs-demo" title="Tabs Components" description="Flexible tabs component with support for icons, text, or both. Built with accessibility and keyboard navigation in mind.">
+  <ng-template appDemoOption="option-1" label="Text Only Tabs" [selected]="true" [sourceCode]="codeExamples.textOnly" [tsCode]="tsExamples.basic">
       <div class="tab-examples">
         <i-tabs [(activeIndex)]="textOnlyActiveIndex">
           <i-tab-panel header="Home">
@@ -39,13 +25,9 @@
           </i-tab-panel>
         </i-tabs>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Icon Only Tabs -->
-    <app-demo-card
-      [title]="'Icon Only Tabs'"
-      [sourceCode]="codeExamples.iconOnly"
-    >
+  <ng-template appDemoOption="option-2" label="Icon Only Tabs" [sourceCode]="codeExamples.iconOnly">
       <div class="tab-examples">
         <i-tabs [(activeIndex)]="iconOnlyActiveIndex">
           <i-tab-panel icon="pi pi-home">
@@ -68,13 +50,9 @@
           </i-tab-panel>
         </i-tabs>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Icon + Text Tabs -->
-    <app-demo-card
-      [title]="'Icon and Text Tabs'"
-      [sourceCode]="codeExamples.iconText"
-    >
+  <ng-template appDemoOption="option-3" label="Icon and Text Tabs" [sourceCode]="codeExamples.iconText">
       <div class="tab-examples">
         <i-tabs [(activeIndex)]="iconTextActiveIndex">
           <i-tab-panel header="Home" icon="pi pi-home">
@@ -103,13 +81,9 @@
           </i-tab-panel>
         </i-tabs>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled Tabs -->
-    <app-demo-card
-      [title]="'Disabled Tabs'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-4" label="Disabled Tabs" [sourceCode]="codeExamples.disabled">
       <div class="tab-examples">
         <i-tabs [(activeIndex)]="disabledActiveIndex">
           <i-tab-panel header="Active" icon="pi pi-check">
@@ -132,14 +106,9 @@
           </i-tab-panel>
         </i-tabs>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Closable Tabs -->
-    <app-demo-card
-      [title]="'Closable Tabs'"
-      [sourceCode]="codeExamples.closable"
-      [tsCode]="tsExamples.closable"
-    >
+  <ng-template appDemoOption="option-5" label="Closable Tabs" [sourceCode]="codeExamples.closable" [tsCode]="tsExamples.closable">
       <div class="tab-examples">
         @if (closableTabs.length > 0) {
           <i-tabs
@@ -166,11 +135,5 @@
           </div>
         }
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

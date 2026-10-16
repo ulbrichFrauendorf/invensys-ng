@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
 import { TooltipDirective } from '@shared/directives/tooltip/tooltip.directive';
 import { IButton } from '@shared/components/button/button.component';
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-tooltips',
-  imports: [
+  imports: [DemoPlaygroundComponent, DemoOptionDirective,
     TooltipDirective,
     IButton,
-    DemoCardComponent,
-    FeaturesListComponent,
-  ],
+    ],
   templateUrl: './tooltips.component.html',
   styleUrl: './tooltips.component.scss',
 })
@@ -150,40 +145,4 @@ export class ExampleComponent {
 }`,
   };
 
-  features: Feature[] = [
-    {
-      title: 'Positioning Options',
-      description: 'Four directional positions: above, below, left, right',
-    },
-    {
-      title: 'Any Element Support',
-      description:
-        'Works with buttons, spans, divs, icons, and any HTML element',
-    },
-    {
-      title: 'Custom Delays',
-      description: 'Configurable show timing from instant to delayed',
-    },
-    {
-      title: 'Auto Text Wrapping',
-      description: 'Long content automatically wraps to multiple lines',
-    },
-    {
-      title: 'Viewport Awareness',
-      description: 'Automatically adjusts position to stay within viewport',
-    },
-    {
-      title: 'Hover & Focus',
-      description:
-        'Triggered by mouse hover and keyboard focus for accessibility',
-    },
-    {
-      title: 'ARIA Compliant',
-      description: 'Built-in accessibility support for screen readers',
-    },
-    {
-      title: 'Lightweight',
-      description: 'Minimal performance impact with efficient DOM management',
-    },
-  ];
 }

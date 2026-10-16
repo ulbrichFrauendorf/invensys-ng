@@ -1,20 +1,10 @@
 @use "../shared-demo-styles.scss" as *;
 
-.dialogs-demo {
-  @extend .demo-component;
-}
-
 .dialog-content {
   h4 {
     margin-bottom: 16px;
-    font-size: 1.1rem;
+    font-size: 17.6px;
     color: var(--text-color);
-  }
-
-  p {
-    margin-bottom: 16px;
-    line-height: 1.6;
-    color: var(--text-color-secondary);
   }
 
   ul {
@@ -31,13 +21,13 @@
 // Basic Dialog Styles
 .basic-dialog {
   text-align: center;
-  padding: 0.5rem 0;
+  padding: 8px 0;
 
   .dialog-icon {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
     i {
-      font-size: 3rem;
+      font-size: 48px;
       color: var(--color-success);
     }
 
@@ -47,42 +37,42 @@
   }
 
   h4 {
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 12px;
     color: var(--text-color);
   }
 
   .dialog-description {
-    font-size: 0.95rem;
+    font-size: 15.2px;
     color: var(--text-color-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
     line-height: 1.6;
   }
 
   .feature-highlights {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 16px;
     justify-content: center;
-    padding: 1rem;
+    padding: 16px;
     background: var(--surface-100);
     border-radius: 8px;
 
     .highlight-item {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
+      gap: 8px;
+      padding: 8px 16px;
       background: var(--surface-0);
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 13.6px;
       color: var(--text-color);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
       i {
         color: var(--color-primary);
-        font-size: 1rem;
+        font-size: 16px;
       }
     }
   }
@@ -97,30 +87,30 @@
       var(--color-primary-dark) 100%
     );
     color: white;
-    padding: 1.25rem;
+    padding: 20px;
     border-radius: 12px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     .info-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.5rem;
+      gap: 12px;
+      margin-bottom: 8px;
 
       i {
-        font-size: 1.5rem;
+        font-size: 24px;
       }
 
       h5 {
         margin: 0;
-        font-size: 1rem;
+        font-size: 16px;
         font-weight: 600;
       }
     }
 
     .breakpoint-indicator {
       margin: 0;
-      font-size: 0.9rem;
+      font-size: 14.4px;
       opacity: 0.9;
     }
   }
@@ -128,15 +118,15 @@
   .breakpoints-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 
   .breakpoint-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: 16px;
     background: var(--surface-100);
     border-radius: 8px;
     text-align: center;
@@ -158,31 +148,31 @@
       background: var(--color-primary);
       color: white;
       border-radius: 50%;
-      margin-bottom: 0.75rem;
+      margin-bottom: 12px;
 
       i {
-        font-size: 1.25rem;
+        font-size: 20px;
       }
     }
 
     .breakpoint-details {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 4px;
 
       strong {
-        font-size: 0.9rem;
+        font-size: 14.4px;
         color: var(--text-color);
       }
 
       .breakpoint-value {
-        font-size: 1.1rem;
+        font-size: 17.6px;
         font-weight: 700;
         color: var(--color-primary);
       }
 
       small {
-        font-size: 0.75rem;
+        font-size: 12px;
         color: var(--text-color-secondary);
       }
     }
@@ -191,12 +181,12 @@
   .responsive-tip {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
+    gap: 8px;
+    padding: 12px 16px;
     background: var(--surface-100);
     border-left: 3px solid var(--color-info);
     border-radius: 0 8px 8px 0;
-    font-size: 0.85rem;
+    font-size: 13.6px;
     color: var(--text-color-secondary);
     margin: 0;
 
@@ -211,37 +201,32 @@
   .dialog-intro {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 16px;
+    padding: 16px;
     background: var(--surface-100);
     border-radius: 8px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     > i {
-      font-size: 2rem;
+      font-size: 32px;
       color: var(--color-warning);
       flex-shrink: 0;
     }
 
     h4 {
-      margin: 0 0 0.25rem 0;
-      font-size: 1.1rem;
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.9rem;
+      margin: 0 0 4px 0;
+      font-size: 17.6px;
     }
   }
 
   .listbox-demo-form {
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 
     .form-field {
       label {
         display: block;
         font-weight: 500;
-        margin-bottom: 0.5rem;
+        margin-bottom: 8px;
         color: var(--text-color);
       }
     }
@@ -249,13 +234,13 @@
     .error-message {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 4px;
       color: var(--color-danger);
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
+      font-size: 13.6px;
+      margin-top: 8px;
 
       i {
-        font-size: 0.9rem;
+        font-size: 14.4px;
       }
     }
   }
@@ -263,14 +248,14 @@
   .selection-summary {
     background: var(--surface-100);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 16px;
 
     .summary-header {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--surface-300);
 
       i {
@@ -285,24 +270,24 @@
 
     .summary-stats {
       display: flex;
-      gap: 1.5rem;
+      gap: 24px;
       flex-wrap: wrap;
 
       .stat-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.25rem;
+        gap: 4px;
         min-width: 60px;
 
         .stat-value {
-          font-size: 1.5rem;
+          font-size: 24px;
           font-weight: 700;
           color: var(--color-primary);
         }
 
         .stat-label {
-          font-size: 0.75rem;
+          font-size: 12px;
           color: var(--text-color-secondary);
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -310,7 +295,7 @@
 
         &.status {
           i {
-            font-size: 1.5rem;
+            font-size: 24px;
             color: var(--color-danger);
           }
 
@@ -342,12 +327,6 @@
   padding: 12px;
   background: var(--surface-0);
   border-radius: 4px;
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: var(--text-color);
-  }
 }
 
 // Mobile responsiveness for dialog content
@@ -376,7 +355,7 @@
         width: 40px;
         height: 40px;
         margin-bottom: 0;
-        margin-right: 1rem;
+        margin-right: 16px;
       }
 
       .breakpoint-details {
@@ -391,7 +370,7 @@
       text-align: center;
 
       > i {
-        font-size: 2.5rem;
+        font-size: 40px;
       }
     }
 

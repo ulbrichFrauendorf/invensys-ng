@@ -1,15 +1,5 @@
-<div class="tags-demo">
-  <header class="demo-header">
-    <h1>Tag Component</h1>
-    <p>
-      Compact badges for status indicators, labels, and categorisation. Supports
-      all severity colours, optional icons, pill shape, and three sizes.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Severities -->
-    <app-demo-card [title]="'Severities'" [sourceCode]="codeExamples.basic">
+<app-demo-playground class="tags-demo" title="Tag Component" description="Compact badges for status indicators, labels, and categorisation. Supports all severity colours, optional icons, pill shape, and three sizes.">
+  <ng-template appDemoOption="option-1" label="Severities" [selected]="true" [sourceCode]="codeExamples.basic">
       <div class="tag-row">
         <i-tag value="Default" />
         @for (s of severities; track s) {
@@ -19,13 +9,9 @@
           />
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Rounded -->
-    <app-demo-card
-      [title]="'Rounded (Pill)'"
-      [sourceCode]="codeExamples.rounded"
-    >
+  <ng-template appDemoOption="option-2" label="Rounded (Pill)" [sourceCode]="codeExamples.rounded">
       <div class="tag-row">
         <i-tag value="Default" [rounded]="true" />
         @for (tag of roundedExamples; track tag.value) {
@@ -36,10 +22,9 @@
           />
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- With Icons -->
-    <app-demo-card [title]="'With Icons'" [sourceCode]="codeExamples.withIcon">
+  <ng-template appDemoOption="option-3" label="With Icons" [sourceCode]="codeExamples.withIcon">
       <div class="tag-row">
         @for (tag of iconExamples; track tag.value) {
           <i-tag
@@ -50,10 +35,9 @@
           />
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Sizes -->
-    <app-demo-card [title]="'Sizes'" [sourceCode]="codeExamples.sizes">
+  <ng-template appDemoOption="option-4" label="Sizes" [sourceCode]="codeExamples.sizes">
       <div class="tag-row tag-row--align-center">
         <i-tag value="Small" severity="primary" size="sm" />
         <i-tag value="Medium" severity="primary" />
@@ -62,13 +46,9 @@
         <i-tag value="Medium" severity="success" [rounded]="true" />
         <i-tag value="Large" severity="success" [rounded]="true" size="lg" />
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Practical Usage -->
-    <app-demo-card
-      [title]="'Practical Usage'"
-      [sourceCode]="codeExamples.usage"
-    >
+  <ng-template appDemoOption="option-5" label="Practical Usage" [sourceCode]="codeExamples.usage">
       <div class="usage-examples">
         <!-- Table-like rows -->
         <div class="usage-row">
@@ -106,11 +86,5 @@
           />
         </div>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

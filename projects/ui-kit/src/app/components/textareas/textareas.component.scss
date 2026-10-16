@@ -1,9 +1,5 @@
 @use "../shared-demo-styles.scss" as *;
 
-.textareas-demo {
-  @extend .demo-component;
-}
-
 .textarea-stack {
   display: flex;
   flex-direction: column;
@@ -23,15 +19,5 @@
     color: var(--text-color);
     font-size: 1em;
     font-weight: 600;
-  }
-
-  p {
-    margin: 4px 0;
-    font-size: 13px;
-    color: var(--text-color-secondary);
-
-    strong {
-      color: var(--text-color);
-    }
   }
 }

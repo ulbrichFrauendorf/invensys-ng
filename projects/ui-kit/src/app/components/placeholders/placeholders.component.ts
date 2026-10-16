@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 
-import { DemoCardComponent } from '../demo-card/demo-card.component';
-import {
-  FeaturesListComponent,
-  Feature,
-} from '../features-list/features-list.component';
 import {
   IPlaceholder,
   PlaceholderArrowDirection,
 } from '@shared/components/placeholder/placeholder.component';
 import { IButton } from '@shared/components/button/button.component';
 
+import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
+import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+
 @Component({
   selector: 'app-placeholders',
   standalone: true,
-  imports: [DemoCardComponent, FeaturesListComponent, IPlaceholder, IButton],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IPlaceholder, IButton],
   templateUrl: './placeholders.component.html',
   styleUrls: ['./placeholders.component.scss', '../shared-demo-styles.scss'],
 })
@@ -29,38 +27,6 @@ export class PlaceholdersComponent {
   ];
 
   selectedDirection: PlaceholderArrowDirection = 'left';
-
-  // Features list for the component
-  features: Feature[] = [
-    {
-      title: 'Arrow Icons',
-      description:
-        'Built-in support for directional arrows (left, right, up, down) to guide users.',
-    },
-    {
-      title: 'Custom Icons',
-      description:
-        'Use any PrimeIcons icon instead of arrows using the customIcon property.',
-    },
-    {
-      title: 'Flexible Content',
-      description:
-        'Accepts any content via ng-content - text, HTML, or other components.',
-    },
-    {
-      title: 'Pattern Background',
-      description: 'Optional dotted pattern background for visual distinction.',
-    },
-    {
-      title: 'Theme Integration',
-      description:
-        'Fully integrated with light and dark themes using CSS variables.',
-    },
-    {
-      title: 'Smooth Animation',
-      description: 'Subtle fade-in animation when the placeholder appears.',
-    },
-  ];
 
   // Code examples for demo cards
   codeExamples = {

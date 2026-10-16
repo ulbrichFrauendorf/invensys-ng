@@ -1,19 +1,5 @@
-<div class="buttons-demo">
-  <header class="demo-header">
-    <h1>Button Components</h1>
-    <p>
-      Versatile button components with multiple styles, sizes, and variants.
-      Built for consistency and accessibility across your application.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Severity Variants -->
-    <app-demo-card
-      [title]="'Severity Variants'"
-      [sourceCode]="codeExamples.severities"
-      [tsCode]="tsExamples.basic"
-    >
+<app-demo-playground class="buttons-demo" title="Button Components" description="Versatile button components with multiple styles, sizes, and variants. Built for consistency and accessibility across your application.">
+  <ng-template appDemoOption="option-1" label="Severity Variants" [selected]="true" [sourceCode]="codeExamples.severities" [tsCode]="tsExamples.basic">
       <p class="section-description">
         Buttons come in 7 severity levels for different use cases.
       </p>
@@ -22,10 +8,9 @@
           <i-button [severity]="severity">{{ severity | titlecase }}</i-button>
         }
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Size Variants -->
-    <app-demo-card [title]="'Size Variants'" [sourceCode]="codeExamples.sizes">
+  <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
       <p class="section-description">
         Available in small, medium (default), and large sizes.
       </p>
@@ -34,10 +19,9 @@
         <i-button size="medium">Medium</i-button>
         <i-button size="large">Large</i-button>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Button Styles -->
-    <app-demo-card [title]="'Button Styles'" [sourceCode]="codeExamples.styles">
+  <ng-template appDemoOption="option-3" label="Button Styles" [sourceCode]="codeExamples.styles">
       <p class="section-description">
         Choose from filled (default), outlined, text, and raised styles.
       </p>
@@ -75,13 +59,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Buttons with Icons -->
-    <app-demo-card
-      [title]="'Buttons with Icons'"
-      [sourceCode]="codeExamples.icons"
-    >
+  <ng-template appDemoOption="option-4" label="Buttons with Icons" [sourceCode]="codeExamples.icons">
       <p class="section-description">
         Add icons to buttons using PrimeIcons. Icon-only buttons are
         automatically styled.
@@ -109,10 +89,9 @@
           </div>
         </div>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Fluid Layout -->
-    <app-demo-card [title]="'Fluid Layout'" [sourceCode]="codeExamples.fluid">
+  <ng-template appDemoOption="option-5" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
       <p class="section-description">
         Fluid buttons expand to fill the full width of their container.
       </p>
@@ -129,10 +108,9 @@
           >Download Report</i-button
         >
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled State -->
-    <app-demo-card [title]="'Disabled State'">
+  <ng-template appDemoOption="option-6" label="Disabled State" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Disabled%20buttons%20prevent%20user%20interaction%20and%20display%20a%20muted%0A%20%20%20%20%20%20%20%20appearance.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22button-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22primary%22%20%5Bdisabled%5D%3D%22true%22%3EPrimary%3C%2Fi-button%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22success%22%20%5Boutlined%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EOutlined%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22info%22%20%5Btext%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EText%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22warning%22%20%5Braised%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3ERaised%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20icon%3D%22pi%20pi-trash%22%20%5Bdisabled%5D%3D%22true%22%20%2F%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
       <p class="section-description">
         Disabled buttons prevent user interaction and display a muted
         appearance.
@@ -150,11 +128,5 @@
         >
         <i-button severity="danger" icon="pi pi-trash" [disabled]="true" />
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

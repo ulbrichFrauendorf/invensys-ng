@@ -1,19 +1,5 @@
-<div class="accordions-demo">
-  <header class="demo-header">
-    <h1>Accordion Components</h1>
-    <p>
-      Expandable and collapsible content containers with smooth animations.
-      Supports individual accordions and grouped accordion lists.
-    </p>
-  </header>
-
-  <div class="cards-container">
-    <!-- Basic Accordion -->
-    <app-demo-card
-      [title]="'Basic Accordion'"
-      [sourceCode]="codeExamples.basic"
-      [tsCode]="tsExamples.basic"
-    >
+<app-demo-playground class="accordions-demo" title="Accordion Components" description="Expandable and collapsible content containers with smooth animations. Supports individual accordions and grouped accordion lists.">
+  <ng-template appDemoOption="option-1" label="Basic Accordion" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
       <div class="accordion-examples">
         <i-accordion header="Basic Accordion">
           <p>This is the content of the accordion.</p>
@@ -23,13 +9,9 @@
           </p>
         </i-accordion>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Accordion with Icon -->
-    <app-demo-card
-      [title]="'Accordion with Icon'"
-      [sourceCode]="codeExamples.withIcon"
-    >
+  <ng-template appDemoOption="option-2" label="Accordion with Icon" [sourceCode]="codeExamples.withIcon">
       <div class="accordion-examples">
         <i-accordion header="Information" icon="pi pi-info-circle">
           <p>This accordion has an informational icon in the header.</p>
@@ -47,13 +29,9 @@
           <p>Manage your user profile information.</p>
         </i-accordion>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Disabled Accordion -->
-    <app-demo-card
-      [title]="'Disabled Accordion'"
-      [sourceCode]="codeExamples.disabled"
-    >
+  <ng-template appDemoOption="option-3" label="Disabled Accordion" [sourceCode]="codeExamples.disabled">
       <div class="accordion-examples">
         <i-accordion header="Active Accordion" [expanded]="true">
           <p>This accordion is active and can be toggled.</p>
@@ -69,14 +47,9 @@
           <p>This accordion is disabled but expanded.</p>
         </i-accordion>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Programmatic Control -->
-    <app-demo-card
-      [title]="'Programmatic Control'"
-      [sourceCode]="codeExamples.programmatic"
-      [tsCode]="tsExamples.programmatic"
-    >
+  <ng-template appDemoOption="option-4" label="Programmatic Control" [sourceCode]="codeExamples.programmatic" [tsCode]="tsExamples.programmatic">
       <div class="accordion-examples">
         <div class="control-buttons">
           <button class="demo-button" (click)="toggleProgrammatic()">
@@ -99,14 +72,9 @@
           <p>Click the button above to toggle it programmatically.</p>
         </i-accordion>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Single Expansion Mode -->
-    <app-demo-card
-      [title]="'Accordion List - Single Mode'"
-      [sourceCode]="codeExamples.singleMode"
-      [tsCode]="tsExamples.accordionList"
-    >
+  <ng-template appDemoOption="option-5" label="Accordion List - Single Mode" [sourceCode]="codeExamples.singleMode" [tsCode]="tsExamples.accordionList">
       <div class="accordion-examples">
         <p class="example-description">
           Only one accordion can be open at a time.
@@ -129,14 +97,9 @@
           </i-accordion>
         </i-accordion-list>
       </div>
-    </app-demo-card>
+    </ng-template>
 
-    <!-- Multiple Expansion Mode -->
-    <app-demo-card
-      [title]="'Accordion List - Multiple Mode'"
-      [sourceCode]="codeExamples.multipleMode"
-      [tsCode]="tsExamples.accordionList"
-    >
+  <ng-template appDemoOption="option-6" label="Accordion List - Multiple Mode" [sourceCode]="codeExamples.multipleMode" [tsCode]="tsExamples.accordionList">
       <div class="accordion-examples">
         <p class="example-description">
           Multiple accordions can be open simultaneously.
@@ -157,11 +120,5 @@
           </i-accordion>
         </i-accordion-list>
       </div>
-    </app-demo-card>
-
-    <!-- Features -->
-    <app-demo-card [title]="'Features'">
-      <app-features-list [features]="features"></app-features-list>
-    </app-demo-card>
-  </div>
-</div>
+    </ng-template>
+</app-demo-playground>

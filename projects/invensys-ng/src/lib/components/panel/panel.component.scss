@@ -7,31 +7,25 @@
   border-radius: vars.$borderRadius;
   overflow: visible;
   position: relative;
-  // Reserve space for the header above the border, including its button padding.
-  margin-top: 2em;
-  padding-top: 0;
+  // The native legend creates a real gap in the border without a painted mask.
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
   min-height: 48px;
 
   .i-panel-header-wrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 0;
-    z-index: 1;
+    padding: 0;
+    margin-left: 20px;
+    max-width: calc(100% - 40px);
 
     .i-panel-header {
       display: inline-flex;
       flex-direction: row;
       align-items: center;
       gap: 8px;
-      position: relative;
-      top: -4px;
-      transform: translateY(-100%);
-      max-width: calc(100% - 40px);
+      max-width: 100%;
       box-sizing: border-box;
       padding: 4px 12px;
-      margin-left: 20px;
       background: transparent;
       user-select: none;
       transition: color vars.$transitionDuration ease;

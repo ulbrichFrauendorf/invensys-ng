@@ -1,10 +1,10 @@
-<div
+<fieldset
   class="i-panel"
   [class.i-panel--collapsed]="collapsed"
   [class.i-panel--toggleable]="toggleable"
   [attr.id]="componentId"
 >
-  <div class="i-panel-header-wrap">
+  <legend class="i-panel-header-wrap">
     @if (toggleable) {
       <button
         class="i-panel-header"
@@ -27,7 +27,7 @@
         <span class="i-panel-title">{{ header }}</span>
       </div>
     }
-  </div>
+  </legend>
   <div
     class="i-panel-content-wrapper"
     [class.i-panel-content-wrapper--collapsed]="collapsed"
@@ -36,4 +36,4 @@
       <ng-content></ng-content>
     </div>
   </div>
-</div>
+</fieldset>

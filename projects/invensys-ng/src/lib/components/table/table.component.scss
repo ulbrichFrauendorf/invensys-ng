@@ -581,7 +581,11 @@ $table-transition: 0.15s ease;
     }
 
     .i-table-container--virtual-scroll {
-      min-width: 600px;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+
+      .i-table-virtual-header, .i-table-virtual-viewport { min-width: 600px; }
 
       .i-table-virtual-cell {
         min-width: 80px;

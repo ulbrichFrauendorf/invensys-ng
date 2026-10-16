@@ -18,3 +18,7 @@
     }
   }
 }
+
+@media (max-width: 640px) {
+  :host, .confirmation-dialog { min-width: 0; max-width: 100%; }
+}

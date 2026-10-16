@@ -1,6 +1,9 @@
 @use "./select.component.theme.scss" as theme;
 @use "../../themes/scrollbar-mixins.scss" as scrollbar;
 @use "../../themes/variables" as vars;
+@use "../../themes/native-select" as native;
+
+@include native.mobile-picker('i-select');
 
 @include theme.i-select-theme();
 
@@ -35,6 +38,10 @@ $select-dropdown-viewport-margin: 150px;
       transform: translateY(-50%);
 
       .i-select-clear {
+        border: 0;
+        padding: 4px;
+        background: transparent;
+        color: inherit;
         font-size: 12px;
         opacity: 0.6;
         cursor: pointer;

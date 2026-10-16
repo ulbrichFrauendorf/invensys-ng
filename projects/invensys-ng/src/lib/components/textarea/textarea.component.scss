@@ -113,3 +113,7 @@ $textarea-transition:
     flex: 1;
   }
 }
+
+@media (pointer: coarse) {
+  .i-textarea-wrapper .i-textarea { font-size: 16px; min-height: 88px; }
+}

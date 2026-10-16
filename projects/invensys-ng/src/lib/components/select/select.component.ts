@@ -167,6 +167,25 @@ export class ISelect implements ControlValueAccessor {
    */
   @Input() readonly = true;
 
+  @Input() disabled = false;
+
+  /** Use the platform option picker on small touch screens. */
+  @Input() nativeOnMobile = true;
+
+  get nativeSelectedIndex(): string {
+    return String((this.options() || []).findIndex(option => this.isOptionSelected(option)));
+  }
+
+  onNativeChange(event: Event): void {
+    const index = Number((event.target as HTMLSelectElement).value);
+    const option = (this.options() || [])[index];
+    if (option !== undefined) this.selectOption(option);
+  }
+
+  touch(): void {
+    this.onTouchedCallback();
+  }
+
   /**
    * Event emitted when selection changes
    */
@@ -302,6 +321,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   toggleDropdown() {
+    if (this.disabled) return;
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       this.filterValue.set('');
@@ -322,6 +342,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   selectOption(option: SelectOption) {
+    if (this.disabled) return;
     const newValue = this.getOptionValue(option);
     this.value = newValue;
     this.onChange.emit(newValue);
@@ -336,6 +357,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   clearSelection() {
+    if (this.disabled) return;
     this.value = null;
     this.onClear.emit();
     this.onChangeCallback(null);
@@ -452,7 +474,8 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   setDisabledState?(isDisabled: boolean): void {
-    // Not implemented - can be added if needed
+    this.disabled = isDisabled;
+    if (isDisabled) this.isOpen = false;
   }
 
   /**

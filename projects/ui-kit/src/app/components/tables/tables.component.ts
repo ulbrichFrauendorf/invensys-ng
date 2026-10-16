@@ -43,7 +43,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 @Component({
   selector: 'app-tables',
   standalone: true,
-  imports: [DemoPlaygroundComponent, DemoOptionDirective, ITable, IWhisper],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, ITable],
   templateUrl: './tables.component.html',
   styleUrl: './tables.component.scss',
 })

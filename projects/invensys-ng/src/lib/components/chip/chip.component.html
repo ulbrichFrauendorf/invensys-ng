@@ -10,10 +10,11 @@
   }
   <ng-content></ng-content>
   @if (removable && !disabled) {
-    <i
+    <button type="button"
       [class]="removeIcon"
       class="i-chip-remove-icon"
+      [attr.aria-label]="'Remove ' + label"
       (click)="onRemoveClick($event)"
-    ></i>
+    ></button>
   }
 </div>

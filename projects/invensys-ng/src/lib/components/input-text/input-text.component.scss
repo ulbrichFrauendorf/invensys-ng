@@ -183,3 +183,8 @@ $input-transition:
     }
   }
 }
+
+@media (pointer: coarse) {
+  .i-input-wrapper .i-input { min-height: 44px; font-size: 16px; }
+  .i-input-wrapper .i-input-spinners { display: none; }
+}

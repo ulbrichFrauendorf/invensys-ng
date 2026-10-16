@@ -3,6 +3,10 @@
 
 @include theme.i-panel-theme();
 
+@media (pointer: coarse) {
+  .i-panel .i-panel-header-wrap .i-panel-header:where(button) { min-height: 44px; }
+}
+
 .i-panel {
   border-radius: vars.$borderRadius;
   overflow: visible;

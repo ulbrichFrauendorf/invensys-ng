@@ -141,3 +141,9 @@
     white-space: nowrap;
   }
 }
+
+@media (pointer: coarse) {
+  .i-tree-view-node .i-tree-view-node-content { min-height: 44px; }
+  .i-tree-view-node .i-tree-view-toggler { width: 44px; height: 44px; flex-shrink: 0; }
+  .i-tree-view-node .i-tree-view-toggler-spacer { width: 44px; }
+}

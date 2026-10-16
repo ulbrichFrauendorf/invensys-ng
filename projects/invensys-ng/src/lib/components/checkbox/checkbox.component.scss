@@ -97,3 +97,10 @@
     line-height: 1.4;
   }
 }
+
+@media (pointer: coarse) {
+  .i-checkbox-wrapper { min-height: 44px; }
+  .i-checkbox-wrapper .i-checkbox { position: relative; flex-shrink: 0; }
+  .i-checkbox-wrapper .i-checkbox::after { content: ''; position: absolute; inset: -14px; }
+  .i-checkbox-label { display: inline-flex; align-items: center; min-height: 44px; }
+}

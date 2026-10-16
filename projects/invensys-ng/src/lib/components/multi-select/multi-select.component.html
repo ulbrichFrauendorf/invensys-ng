@@ -1,10 +1,42 @@
 <div
   class="i-multi-select-wrapper"
   [class.i-multi-select--fluid]="fluid"
+  [class.native-on-mobile]="nativeOnMobile"
   #dropdown
 >
   <!-- Input container with click handler -->
+  @if (nativeOnMobile) {
+    <div class="i-native-field">
+      <label [for]="(id || componentId) + '-native'">{{ label }}</label>
+      <div class="i-native-row">
+        <select
+          class="i-native-select"
+          [id]="(id || componentId) + '-native'"
+          [disabled]="disabled"
+          [attr.aria-invalid]="showErrors"
+          [attr.aria-describedby]="showErrors ? componentId + '-native-error' : null"
+          multiple size="1"
+          (change)="onNativeChange($event)"
+          (blur)="touch()"
+        >
+          @for (option of options() || []; track $index) {
+            <option [value]="$index" [selected]="isOptionSelected(option)">{{ getOptionLabel(option) }}</option>
+          }
+        </select>
+        @if (showClear && value.length > 0) {
+          <button class="i-native-clear" type="button" [disabled]="disabled"
+            aria-label="Clear selection" (click)="clearSelection()">
+            <i class="pi pi-times" aria-hidden="true"></i>
+          </button>
+        }
+      </div>
+      @if (showErrors) {
+        <span class="i-native-error" [id]="componentId + '-native-error'" role="alert">{{ getErrorMessage() }}</span>
+      }
+    </div>
+  }
   <div class="i-multi-select-input-container" (click)="toggleDropdown()">
+
     <!-- Chips component with float label -->
     <i-chips
       [chips]="selectedChips()"

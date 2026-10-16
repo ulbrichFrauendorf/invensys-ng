@@ -118,3 +118,10 @@
     line-height: 1.4;
   }
 }
+
+@media (pointer: coarse) {
+  .i-toggle-wrapper { min-height: 44px; }
+  .i-toggle-wrapper .i-toggle { position: relative; flex-shrink: 0; }
+  .i-toggle-wrapper .i-toggle::after { content: ''; position: absolute; inset: -14px 0; }
+  .i-toggle-label { display: inline-flex; align-items: center; min-height: 44px; }
+}

@@ -65,3 +65,7 @@
     }
   }
 }
+
+:host { min-width: 0; max-width: 100%; }
+:host.i-card--full-height .i-card .i-card-body { min-height: 0; overscroll-behavior: contain; }
+.i-card-title { min-width: 0; overflow-wrap: anywhere; }

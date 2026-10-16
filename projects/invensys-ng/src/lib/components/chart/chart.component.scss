@@ -91,3 +91,8 @@
     width: 100%;
   }
 }
+
+@media (max-width: 768px) {
+  .i-charts-container { gap: 1.5rem; }
+  .i-chart-panel { min-width: 0; flex-basis: auto; max-width: 100%; }
+}

@@ -184,6 +184,23 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   @Input() readonly = true;
 
+  /** Use the platform multiple-option picker on small touch screens. */
+  @Input() nativeOnMobile = true;
+
+  onNativeChange(event: Event): void {
+    if (this.disabled) return;
+    const options = this.options() || [];
+    this.value = Array.from((event.target as HTMLSelectElement).selectedOptions)
+      .map(option => this.getOptionValue(options[Number(option.value)]));
+    this.onChange.emit(this.value);
+    this.onChangeCallback(this.value);
+    this.onTouchedCallback();
+  }
+
+  touch(): void {
+    this.onTouchedCallback();
+  }
+
   /**
    * Event emitted when selection changes
    */
@@ -316,6 +333,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   toggleDropdown() {
+    if (this.disabled) return;
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       this.filterValue.set('');
@@ -336,6 +354,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   toggleOption(option: MultiSelectOption) {
+    if (this.disabled) return;
     const currentValues = [...this.value];
     const optionValue = this.getOptionValue(option);
 
@@ -371,6 +390,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   clearSelection() {
+    if (this.disabled) return;
     this.value = [];
     this.onClear.emit();
     this.onChangeCallback([]);
@@ -518,6 +538,7 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    if (isDisabled) this.isOpen = false;
   }
 
   /**

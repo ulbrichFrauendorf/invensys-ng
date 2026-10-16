@@ -43,3 +43,8 @@
     white-space: nowrap;
   }
 }
+
+@media (max-width: 480px) {
+  .i-file-upload__row { flex-wrap: wrap; }
+  .i-file-upload__name { flex-basis: calc(100% - 4rem); }
+}

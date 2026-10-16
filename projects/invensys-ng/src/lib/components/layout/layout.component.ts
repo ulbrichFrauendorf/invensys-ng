@@ -35,6 +35,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private routerSubscription: Subscription;
   private touchStartY = 0;
+  private touchStartX = 0;
   private touchCurrentY = 0;
   private isPulling = false;
   pullDistance = signal(0);
@@ -113,6 +114,8 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private handleTouchStart(event: TouchEvent): void {
+    this.isPulling = false;
+    this.pullDistance.set(0);
     const state = this.layoutService.state();
     if (!state.isMobileViewport || event.touches.length === 0) {
       return;
@@ -123,6 +126,17 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    // Let controls and nested scroll areas own their gestures.
+    let target = event.target instanceof Element ? event.target : null;
+    if (target?.closest('input, textarea, select, button, [role="slider"], [contenteditable="true"]')) return;
+    while (target && target !== container) {
+      const style = window.getComputedStyle(target);
+      if ((target.scrollHeight > target.clientHeight && /auto|scroll/.test(style.overflowY)) ||
+          (target.scrollWidth > target.clientWidth && /auto|scroll/.test(style.overflowX))) return;
+      target = target.parentElement;
+    }
+
+    this.touchStartX = event.touches[0].clientX;
     this.touchStartY = event.touches[0].clientY;
     this.isPulling = true;
   }
@@ -140,6 +154,11 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.touchCurrentY = event.touches[0].clientY;
+    if (Math.abs(event.touches[0].clientX - this.touchStartX) > Math.abs(this.touchCurrentY - this.touchStartY)) {
+      this.isPulling = false;
+      this.pullDistance.set(0);
+      return;
+    }
     const pullDistance = Math.max(
       0,
       Math.min(this.touchCurrentY - this.touchStartY, this.MAX_PULL_DISTANCE),

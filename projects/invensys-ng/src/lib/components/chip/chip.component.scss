@@ -40,6 +40,10 @@
   }
 
   .i-chip-remove-icon {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0;
     cursor: pointer;
     opacity: 0.7;
     transition: opacity 0.2s ease;
@@ -50,4 +54,9 @@
       opacity: 1;
     }
   }
+}
+
+@media (pointer: coarse) {
+  .i-chip { min-height: 44px; box-sizing: border-box; padding-block: 0; }
+  .i-chip .i-chip-remove-icon { min-width: 44px; min-height: 44px; margin-right: -12px; }
 }

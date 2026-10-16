@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": { "outDir": "../../out-tsc/mobile-spec" },
+  "include": ["src/lib/components/mobile-controls.spec.ts"]
+}

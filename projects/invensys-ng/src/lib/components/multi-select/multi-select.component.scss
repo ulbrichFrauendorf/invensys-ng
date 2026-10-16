@@ -1,7 +1,11 @@
 @use "./multi-select.component.theme.scss" as theme;
+@use "../../themes/native-select" as native;
+
 @use "../../themes/scrollbar-mixins.scss" as scrollbar;
 @use "../../themes/variables" as vars;
 @use "../../themes/floating-label" as floating;
+
+@include native.mobile-picker('i-multi-select');
 
 @include theme.i-multi-select-theme();
 

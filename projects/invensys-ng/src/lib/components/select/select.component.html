@@ -1,6 +1,37 @@
-<div class="i-select-wrapper" [class.i-select--fluid]="fluid" #dropdown>
+<div class="i-select-wrapper" [class.i-select--fluid]="fluid" [class.native-on-mobile]="nativeOnMobile" #dropdown>
   <!-- Reuse the input-text component for consistent styling and form integration -->
+  @if (nativeOnMobile) {
+    <div class="i-native-field">
+      <label [for]="(id || componentId) + '-native'">{{ label }}</label>
+      <div class="i-native-row">
+        <select
+          class="i-native-select"
+          [id]="(id || componentId) + '-native'"
+          [disabled]="disabled"
+          [attr.aria-invalid]="showErrors"
+          [attr.aria-describedby]="showErrors ? componentId + '-native-error' : null"
+          (change)="onNativeChange($event)"
+          (blur)="touch()"
+        >
+          <option value="-1" disabled [selected]="nativeSelectedIndex === '-1'">{{ placeholder }}</option>
+          @for (option of options() || []; track $index) {
+            <option [value]="$index" [selected]="isOptionSelected(option)">{{ getOptionLabel(option) }}</option>
+          }
+        </select>
+        @if (showClear && value != null) {
+          <button class="i-native-clear" type="button" [disabled]="disabled"
+            aria-label="Clear selection" (click)="clearSelection()">
+            <i class="pi pi-times" aria-hidden="true"></i>
+          </button>
+        }
+      </div>
+      @if (showErrors) {
+        <span class="i-native-error" [id]="componentId + '-native-error'" role="alert">{{ getErrorMessage() }}</span>
+      }
+    </div>
+  }
   <div class="i-select-input-container" (click)="toggleDropdown()">
+
     <i-input-text
       #inputText
       [label]="label"
@@ -13,14 +44,15 @@
       [externalInvalid]="showErrors"
       [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
       [readonly]="readonly"
+      [disabled]="disabled"
     >
       <!-- Icons overlay on the input -->
       <div class="i-select-icons">
         @if (showClear && value !== null && value !== undefined) {
-          <i
+          <button type="button" [disabled]="disabled" aria-label="Clear selection"
             class="pi pi-times i-select-clear"
             (click)="clearSelection(); $event.stopPropagation()"
-          ></i>
+          ></button>
         }
         <i
           class="pi pi-chevron-down i-multi-select-arrow"

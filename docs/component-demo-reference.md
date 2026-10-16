@@ -41,3 +41,16 @@ Keep example-specific preview rules in the demo stylesheet, put colors in theme 
 [`snapshots/confirmation-dialog-demo-2026-10-15.zip`](snapshots/confirmation-dialog-demo-2026-10-15.zip) preserves the original approved page and theme with repository-relative paths. Its JSON manifest records SHA-256 hashes. This source checkpoint does not change Git history.
 
 The live wrapper-based reference is `/components/confirmation-dialogs` in the UI kit.
+
+
+## Mobile behavior
+
+Single and multiple selects use HTML `select` controls on touch devices at widths up to 991px. The browser supplies the option picker; native searching and multiple-selection presentation depend on the platform. Object values, Angular form updates, disabled states, blur handling, clear buttons, and validation messages are retained. Set `[nativeOnMobile]="false"` to retain the custom searchable popup on mobile, for example when a long option list requires the library's filter.
+
+Use the Selects and Multi Selects demos to check selection, clearing, external form resets, and disabled controls on a phone. Also check a short landscape viewport for dialog scrolling and calendar visibility. The demo preview is in normal document flow on narrow screens so it does not cover the options beneath it. Touch controls have larger targets and editable text uses at least 16px to avoid mobile focus zoom.
+
+Run the focused form integration checks with:
+
+```sh
+npx ng test invensys-ng --watch=false --browsers=ChromeHeadless --ts-config=projects/invensys-ng/tsconfig.mobile.spec.json --include=projects/invensys-ng/src/lib/components/mobile-controls.spec.ts
+```

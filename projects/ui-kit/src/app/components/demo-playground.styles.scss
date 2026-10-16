@@ -106,7 +106,11 @@
   @media (max-width: 800px) {
     .demo-playground { padding: 16px; }
     .playground { grid-template-columns: minmax(0, 1fr); }
-    .preview-panel { top: 16px; z-index: 1; }
+    .preview-panel { position: static; max-height: none; }
     .panel-content { height: 240px; }
+    .panel-heading { padding: 16px; }
+    .preview-heading { flex-wrap: wrap; }
+    .options-list { padding: 0 16px; }
+    .options-panel input, .options-panel textarea, .options-panel select { font-size: 16px; min-height: 44px; }
   }
 }

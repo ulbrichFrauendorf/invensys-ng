@@ -9,7 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-whispers',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IWhisper],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton],
   templateUrl: './whispers.component.html',
   styleUrl: './whispers.component.scss',
 })
@@ -299,5 +299,4 @@ export class ExampleComponent {
     });
   }
 }`;
-
 }

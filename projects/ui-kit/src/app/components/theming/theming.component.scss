@@ -1,8 +1,4 @@
-@use "../shared-demo-styles.scss" as *;
-
 .theming-demo {
-  @extend .demo-component;
-
   .theming-content {
     p {
       margin-bottom: 1rem;

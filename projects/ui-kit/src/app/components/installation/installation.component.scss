@@ -1,8 +1,4 @@
-@use "../shared-demo-styles.scss" as *;
-
 .installation-demo {
-  @extend .demo-component;
-
   .installation-content {
     p {
       margin-bottom: 1rem;

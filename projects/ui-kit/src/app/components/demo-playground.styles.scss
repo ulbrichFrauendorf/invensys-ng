@@ -107,7 +107,8 @@
     .demo-playground { padding: 16px; }
     .playground { grid-template-columns: minmax(0, 1fr); }
     .preview-panel { position: static; max-height: none; }
-    .panel-content { height: 240px; }
+    .panel-content { height: auto; min-height: 160px; overflow: visible; }
+    .code-view { max-height: 65dvh; overflow: auto; }
     .panel-heading { padding: 16px; }
     .preview-heading { flex-wrap: wrap; }
     .options-list { padding: 0 16px; }

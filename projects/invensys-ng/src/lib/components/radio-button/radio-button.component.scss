@@ -63,9 +63,13 @@
   }
 }
 
+.i-radio-button-wrapper {
+  cursor: pointer;
+  border-radius: 4px;
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  &.i-radio-button--disabled { cursor: not-allowed; }
+}
 @media (pointer: coarse) {
-  .i-radio-button-wrapper { min-height: 44px; }
-  .i-radio-button-wrapper .i-radio-button { position: relative; flex-shrink: 0; }
-  .i-radio-button-wrapper .i-radio-button::after { content: ''; position: absolute; inset: -13px; }
-  .i-radio-button-label { display: inline-flex; align-items: center; min-height: 44px; }
+  .i-radio-button-wrapper { min-height: 44px; min-width: 44px; justify-content: center; }
+  .i-radio-button-wrapper .i-radio-button { flex-shrink: 0; }
 }

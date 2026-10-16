@@ -1,0 +1,99 @@
+@use './color-variables.scss' as colors;
+@use './variables' as vars;
+@use './floating-label' as floating;
+
+@mixin option-field() {
+  :host { display: block; min-width: 0; max-width: 100%; }
+  .i-option-field { position: relative; width: 100%; }
+  .i-option-field--float { margin-top: floating.$space; }
+  .i-option-control {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: vars.$component-input-height;
+    box-sizing: border-box;
+    border: 1px solid colors.$color-surface-border;
+    border-radius: vars.$componentBorderRadius;
+    color: colors.$color-text-primary;
+    background: colors.$color-component-background;
+    &:focus-within { border-color: colors.$color-primary; box-shadow: colors.$color-box-shadow; }
+  }
+  .i-option-value { flex: 1; min-width: 0; padding: 4px 0 4px 12px; pointer-events: none; }
+  .i-option-text { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .i-option-placeholder { color: colors.$color-text-secondary; }
+  .i-option-trigger, .i-native-select {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .i-option-trigger:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: 2px; }
+  .i-native-select { display: none; opacity: 0; font-size: 16px; }
+  .i-option-actions { display: flex; align-items: center; flex-shrink: 0; pointer-events: none; }
+  .i-option-clear {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    border-radius: vars.$componentBorderRadius;
+    background: transparent;
+    color: colors.$color-text-secondary;
+    cursor: pointer;
+    &:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: -2px; }
+  }
+  .i-option-arrow { width: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+  .i-option-arrow i { transition: transform 0.15s ease; }
+  .i-option-arrow .flipped { transform: rotate(180deg); }
+  .i-option-label { @include floating.base; position: absolute; top: 21px; left: 12px; transform: translateY(-50%); pointer-events: none; color: colors.$color-text-secondary; }
+  .i-option-field--open .i-option-label, .i-option-field--filled .i-option-label, .i-option-field:focus-within .i-option-label { @include floating.floated; }
+  .i-option-field--invalid {
+    .i-option-control { border-color: colors.$color-danger; }
+    .i-option-label { color: colors.$color-danger; }
+  }
+  .i-option-field--disabled {
+    .i-option-control { background: colors.$color-disabled-background; color: colors.$color-text-disabled; }
+    .i-option-trigger, .i-native-select { cursor: not-allowed; }
+  }
+  .i-option-error { margin-top: 4px; font-size: 12px; color: colors.$color-danger; }
+  .i-option-panel {
+    width: 100%; min-width: 0; box-sizing: border-box;
+    max-height: min(360px, calc(100dvh - 24px));
+    display: flex; flex-direction: column; overflow: hidden;
+    border: 1px solid colors.$color-surface-border; border-radius: vars.$componentBorderRadius;
+    background: colors.$color-component-background; color: colors.$color-text-primary;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  .i-option-filter { padding: 8px; flex-shrink: 0; }
+  .i-option-search { box-sizing: border-box; width: 100%; min-width: 0; min-height: 40px; padding: 8px; font: inherit; border: 1px solid colors.$color-surface-border; border-radius: vars.$componentBorderRadius; color: inherit; background: colors.$color-component-background; }
+  .i-option-search:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: -2px; }
+  .i-option-list { overflow: auto; min-height: 0; overscroll-behavior: contain; }
+  .i-option { display: flex; align-items: center; gap: 8px; width: 100%; box-sizing: border-box; min-height: 40px; padding: 8px 12px; border: 0; font: inherit; text-align: left; overflow-wrap: anywhere; background: transparent; color: inherit; cursor: pointer; }
+  .i-option:hover, .i-option.selected { background: colors.$color-surface-hover; }
+  .i-option:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: -2px; }
+  .i-option-check { flex-shrink: 0; color: colors.$color-primary; }
+  .i-option-empty { padding: 12px; color: colors.$color-text-secondary; }
+  @media (pointer: coarse) {
+    .i-option-control, .i-option { min-height: 44px; }
+    .i-option-clear { width: 44px; height: 44px; }
+    .i-option-search { min-height: 44px; font-size: 16px; }
+  }
+  @media (max-width: 991px) and (pointer: coarse) {
+    .native-on-mobile .i-option-trigger { display: none; }
+    .native-on-mobile .i-native-select { display: block; }
+  }
+}

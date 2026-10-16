@@ -5,20 +5,21 @@
   [class.i-checkbox--small]="size === 'small'"
   [class.i-checkbox--medium]="size === 'medium'"
   [class.i-checkbox--large]="size === 'large'"
+  (click)="toggle()"
+  [attr.id]="id || componentId"
+  role="checkbox"
+  [attr.aria-checked]="indeterminate ? 'mixed' : checked"
+  [attr.aria-disabled]="disabled"
+  [attr.aria-readonly]="readonly"
+  [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
+  [attr.tabindex]="disabled || readonly ? -1 : 0"
+  (keydown.space)="$event.preventDefault(); toggle()"
+  (keydown.enter)="$event.preventDefault(); toggle()"
 >
   <div
     class="i-checkbox"
     [class.i-checkbox--checked]="checked"
-    (click)="toggle()"
-    [attr.id]="id || componentId"
-    role="checkbox"
-    [attr.aria-checked]="indeterminate ? 'mixed' : checked"
-    [attr.aria-disabled]="disabled"
-    [attr.aria-readonly]="readonly"
-    [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
-    tabindex="0"
-    (keydown.space)="$event.preventDefault(); toggle()"
-    (keydown.enter)="$event.preventDefault(); toggle()"
+    aria-hidden="true"
   >
     @if (!checked && indeterminate) {
       <i class="pi pi-minus i-checkbox-icon"></i>
@@ -34,7 +35,6 @@
     <label
       [id]="(id || componentId) + '-label'"
       class="i-checkbox-label"
-      (click)="toggle()"
     >
       {{ label }}
     </label>

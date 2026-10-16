@@ -1,3 +1,5 @@
+import { OverlayModule } from '@angular/cdk/overlay';
+import { OPTION_OVERLAY_POSITIONS, handleOptionKeys } from '../../utils/option-picker';
 import {
   Component,
   Input,
@@ -23,8 +25,6 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { IChipsComponent, ChipItem } from '../chips/chips.component';
-import { ICheckbox } from '../checkbox/checkbox.component';
-import { IInputText } from '../input-text/input-text.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 /**
@@ -89,7 +89,7 @@ export interface MultiSelectOption {
 @Component({
   selector: 'i-multi-select',
   standalone: true,
-  imports: [FormsModule, IChipsComponent, ICheckbox, IInputText],
+  imports: [FormsModule, IChipsComponent, OverlayModule],
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
   providers: [
@@ -184,6 +184,8 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   @Input() readonly = true;
 
+  @Input() useFloatLabel = true;
+
   /** Use the platform multiple-option picker on small touch screens. */
   @Input() nativeOnMobile = true;
 
@@ -228,6 +230,40 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   isOpen = false;
+  readonly overlayPositions = OPTION_OVERLAY_POSITIONS;
+  @ViewChild('trigger') triggerRef?: ElementRef<HTMLButtonElement>;
+  @ViewChild('optionsPanel') panelRef?: ElementRef<HTMLDivElement>;
+
+  openDropdown(): void {
+    if (this.disabled) return;
+    this.filterValue.set('');
+    this.isOpen = true;
+  }
+
+  @HostListener('window:resize')
+  closeDropdown(restoreFocus = false): void {
+    this.isOpen = false;
+    this.filterValue.set('');
+    if (restoreFocus) this.focusControl();
+  }
+
+  focusControl(): void {
+    const native = this.dropdownRef?.nativeElement.querySelector('.i-native-select') as HTMLSelectElement | null;
+    if (native?.getClientRects().length) native.focus();
+    else this.triggerRef?.nativeElement.focus();
+  }
+
+  focusOptions(): void {
+    setTimeout(() => {
+      if (!this.isOpen) return;
+      if (this.filter) this.searchInputRef?.nativeElement.focus();
+      else this.panelRef?.nativeElement.querySelector<HTMLButtonElement>('[role="option"]')?.focus();
+    });
+  }
+
+  onPanelKeydown(event: KeyboardEvent): void {
+    handleOptionKeys(event, this.panelRef?.nativeElement, restore => this.closeDropdown(restore));
+  }
 
   /**
    * Current filter/search value
@@ -271,7 +307,6 @@ export class IMultiSelect implements ControlValueAccessor {
       return {
         label,
         value: val,
-        removable: !this.disabled,
       };
     });
   });
@@ -334,19 +369,8 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   toggleDropdown() {
     if (this.disabled) return;
-    this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.filterValue.set('');
-      setTimeout(() => {
-        if (
-          this.filter &&
-          this.searchInputRef &&
-          this.searchInputRef.nativeElement
-        ) {
-          this.searchInputRef.nativeElement.focus();
-        }
-      });
-    }
+    if (this.isOpen) this.closeDropdown();
+    else this.openDropdown();
   }
 
   /**
@@ -392,9 +416,11 @@ export class IMultiSelect implements ControlValueAccessor {
   clearSelection() {
     if (this.disabled) return;
     this.value = [];
+    this.onChange.emit([]);
     this.onClear.emit();
     this.onChangeCallback([]);
     this.onTouchedCallback();
+    this.focusControl();
   }
 
   /**
@@ -403,6 +429,7 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   onChipRemove(event: { chip: ChipItem; originalEvent: Event }) {
     event.originalEvent.stopPropagation();
+    if (this.disabled) return;
     const currentValues = [...this.value];
 
     const index = currentValues.findIndex(
@@ -496,12 +523,12 @@ export class IMultiSelect implements ControlValueAccessor {
    * Handles clicks outside the dropdown to close it
    * @internal
    */
-  @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (
       this.isOpen &&
       this.dropdownRef &&
-      !this.dropdownRef.nativeElement.contains(event.target as Node)
+      !this.dropdownRef.nativeElement.contains(event.target as Node) &&
+      !this.panelRef?.nativeElement.contains(event.target as Node)
     ) {
       this.isOpen = false;
       this.filterValue.set('');
@@ -555,7 +582,7 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   get showErrors(): boolean {
     const c = this.control;
-    return !!(c && c.invalid && c.dirty);
+    return !!(c && c.invalid && (c.dirty || c.touched));
   }
 
   /**

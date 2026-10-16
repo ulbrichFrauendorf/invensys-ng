@@ -5,20 +5,21 @@
   [class.i-toggle--small]="size === 'small'"
   [class.i-toggle--medium]="size === 'medium'"
   [class.i-toggle--large]="size === 'large'"
+  (click)="toggle()"
+  [attr.id]="id || componentId"
+  role="switch"
+  [attr.aria-checked]="checked"
+  [attr.aria-disabled]="disabled"
+  [attr.aria-readonly]="readonly"
+  [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
+  [attr.tabindex]="disabled || readonly ? -1 : 0"
+  (keydown.space)="handleKeydown($event)"
+  (keydown.enter)="handleKeydown($event)"
 >
   <div
     class="i-toggle"
     [class.i-toggle--checked]="checked"
-    (click)="toggle()"
-    [attr.id]="id || componentId"
-    role="switch"
-    [attr.aria-checked]="checked"
-    [attr.aria-disabled]="disabled"
-    [attr.aria-readonly]="readonly"
-    [attr.aria-labelledby]="label ? (id || componentId) + '-label' : null"
-    tabindex="0"
-    (keydown.space)="handleKeydown($event)"
-    (keydown.enter)="handleKeydown($event)"
+    aria-hidden="true"
   >
     <span class="i-toggle-thumb"></span>
   </div>
@@ -26,7 +27,6 @@
     <label
       [id]="(id || componentId) + '-label'"
       class="i-toggle-label"
-      (click)="toggle()"
     >
       {{ label }}
     </label>

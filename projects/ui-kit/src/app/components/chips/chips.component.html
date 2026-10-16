@@ -29,8 +29,6 @@
   <ng-template appDemoOption="option-3" label="Boxed Container" [sourceCode]="codeExamples.boxed">
       <div class="chips-container-demo">
         <i-chips
-          [label]="'Boxed Chips'"
-          [useFloatLabel]="true"
           [chips]="boxedChips"
           [boxed]="true"
           [removable]="true"
@@ -38,7 +36,7 @@
         ></i-chips>
 
         <i-message [severity]="'info'"
-          >Boxed mode displays chips inside an input-styled container</i-message
+          >Boxed mode groups chips in a bordered collection without a label or dropdown arrow</i-message
         >
 
         @if (!boxedChips.length) {

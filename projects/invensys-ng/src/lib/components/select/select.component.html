@@ -1,100 +1,66 @@
-<div class="i-select-wrapper" [class.i-select--fluid]="fluid" [class.native-on-mobile]="nativeOnMobile" #dropdown>
-  <!-- Reuse the input-text component for consistent styling and form integration -->
-  @if (nativeOnMobile) {
-    <div class="i-native-field">
-      <label [for]="(id || componentId) + '-native'">{{ label }}</label>
-      <div class="i-native-row">
-        <select
-          class="i-native-select"
-          [id]="(id || componentId) + '-native'"
-          [disabled]="disabled"
-          [attr.aria-invalid]="showErrors"
-          [attr.aria-describedby]="showErrors ? componentId + '-native-error' : null"
-          (change)="onNativeChange($event)"
-          (blur)="touch()"
-        >
-          <option value="-1" disabled [selected]="nativeSelectedIndex === '-1'">{{ placeholder }}</option>
-          @for (option of options() || []; track $index) {
-            <option [value]="$index" [selected]="isOptionSelected(option)">{{ getOptionLabel(option) }}</option>
-          }
-        </select>
-        @if (showClear && value != null) {
-          <button class="i-native-clear" type="button" [disabled]="disabled"
-            aria-label="Clear selection" (click)="clearSelection()">
-            <i class="pi pi-times" aria-hidden="true"></i>
-          </button>
-        }
-      </div>
-      @if (showErrors) {
-        <span class="i-native-error" [id]="componentId + '-native-error'" role="alert">{{ getErrorMessage() }}</span>
-      }
+<div class="i-option-field" [class.i-option-field--open]="isOpen" [class.native-on-mobile]="nativeOnMobile"
+  [class.i-option-field--float]="useFloatLabel" [class.i-option-field--filled]="value != null"
+  [class.i-option-field--disabled]="disabled" [class.i-option-field--invalid]="showErrors" #dropdown>
+  <div class="i-option-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+    <div class="i-option-value">
+      <span class="i-option-text" [class.i-option-placeholder]="value == null">{{ getSelectedLabel() || (useFloatLabel ? '' : placeholder) }}</span>
     </div>
-  }
-  <div class="i-select-input-container" (click)="toggleDropdown()">
-
-    <i-input-text
-      #inputText
-      [label]="label"
-      [useFloatLabel]="useFloatLabel"
-      [id]="id"
-      [fluid]="fluid"
-      [errorMessages]="errorMessages"
-      [(ngModel)]="inputValue"
-      [type]="'text'"
-      [externalInvalid]="showErrors"
-      [externalErrorMessage]="showErrors ? getErrorMessage() || '' : ''"
-      [readonly]="readonly"
-      [disabled]="disabled"
-    >
-      <!-- Icons overlay on the input -->
-      <div class="i-select-icons">
-        @if (showClear && value !== null && value !== undefined) {
-          <button type="button" [disabled]="disabled" aria-label="Clear selection"
-            class="pi pi-times i-select-clear"
-            (click)="clearSelection(); $event.stopPropagation()"
-          ></button>
+    <button #trigger type="button" class="i-option-trigger" [id]="id || componentId"
+      [disabled]="disabled" [attr.aria-label]="label + ': ' + (getSelectedLabel() || placeholder)"
+      aria-haspopup="listbox" [attr.aria-expanded]="isOpen"
+      [attr.aria-controls]="isOpen ? componentId + '-options' : null"
+      [attr.aria-invalid]="showErrors" [attr.aria-describedby]="showErrors ? componentId + '-error' : null"
+      (click)="toggleDropdown()" (keydown.arrowdown)="$event.preventDefault(); openDropdown()" (blur)="touch()">
+    </button>
+    @if (nativeOnMobile) {
+      <select class="i-native-select" [id]="(id || componentId) + '-native'"
+        [disabled]="disabled" [attr.aria-label]="label" [attr.aria-invalid]="showErrors"
+        [attr.aria-describedby]="showErrors ? componentId + '-error' : null"
+        (pointerdown)="closeDropdown()" (change)="onNativeChange($event)" (blur)="touch()">
+        <option value="-1" disabled [selected]="nativeSelectedIndex === '-1'">{{ placeholder }}</option>
+        @for (option of options() || []; track $index) {
+          <option [value]="$index" [selected]="isOptionSelected(option)">{{ getOptionLabel(option) }}</option>
         }
-        <i
-          class="pi pi-chevron-down i-multi-select-arrow"
-          [class.flipped]="isOpen"
-        ></i>
-      </div>
-    </i-input-text>
+      </select>
+    }
+    <div class="i-option-actions">
+      @if (showClear && value != null) {
+        <button type="button" class="i-option-clear" [disabled]="disabled" [attr.aria-label]="'Clear ' + label"
+          (click)="clearSelection(); $event.stopPropagation()">
+          <i class="pi pi-times" aria-hidden="true"></i>
+        </button>
+      }
+      <span class="i-option-arrow" aria-hidden="true"><i class="pi pi-chevron-down" [class.flipped]="isOpen"></i></span>
+    </div>
   </div>
-
-  <!-- Dropdown overlay -->
-  @if (isOpen) {
-    <div class="i-select-dropdown">
-      @if (filter) {
-        <div class="i-select-filter">
-          <i-input-text
-            #searchInput
-            [useFloatLabel]="false"
-            placeholder="Search..."
-            [ngModel]="filterValue()"
-            (ngModelChange)="filterValue.set($event)"
-            [fluid]="true"
-            [icon]="'pi pi-search'"
-          >
-          </i-input-text>
-        </div>
-      }
-
-      <div class="i-select-options">
-        @for (option of filteredOptions(); track option) {
-          <div
-            class="i-select-option"
-            [class.selected]="isOptionSelected(option)"
-            (click)="selectOption(option)"
-          >
-            {{ getOptionLabel(option) }}
-          </div>
-        }
-
-        @if (filteredOptions().length === 0) {
-          <div class="i-select-no-options">No options found</div>
-        }
-      </div>
-    </div>
+  @if (label && useFloatLabel) {
+    <label class="i-option-label" [for]="id || componentId">{{ label }}</label>
+  }
+  @if (showErrors) {
+    <div class="i-option-error" [id]="componentId + '-error'" role="alert">{{ getErrorMessage() }}</div>
   }
 </div>
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="isOpen && !disabled" [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayWidth]="origin.elementRef.nativeElement.getBoundingClientRect().width"
+  [cdkConnectedOverlayViewportMargin]="12" [cdkConnectedOverlayPush]="true"
+  (overlayOutsideClick)="onDocumentClick($event)" (attach)="focusOptions()" (detach)="closeDropdown()">
+  <div class="i-option-panel" #optionsPanel (keydown)="onPanelKeydown($event)">
+    @if (filter) {
+      <div class="i-option-filter">
+        <input #searchInput type="search" class="i-option-search" placeholder="Search..."
+          [attr.aria-label]="'Search ' + label" [ngModel]="filterValue()" (ngModelChange)="filterValue.set($event)" />
+      </div>
+    }
+    <div class="i-option-list" role="listbox" [id]="componentId + '-options'" [attr.aria-label]="label">
+      @for (option of filteredOptions(); track $index) {
+        <button type="button" class="i-option" role="option" [class.selected]="isOptionSelected(option)"
+          [attr.aria-selected]="isOptionSelected(option)" (click)="selectOption(option)">
+          <span>{{ getOptionLabel(option) }}</span>
+        </button>
+      }
+      @if (!filteredOptions().length) { <div class="i-option-empty">No options found</div> }
+    </div>
+  </div>
+</ng-template>

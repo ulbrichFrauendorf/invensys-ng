@@ -98,9 +98,13 @@
   }
 }
 
+.i-checkbox-wrapper {
+  cursor: pointer;
+  border-radius: 4px;
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  &.i-checkbox--disabled { cursor: not-allowed; }
+}
 @media (pointer: coarse) {
-  .i-checkbox-wrapper { min-height: 44px; }
-  .i-checkbox-wrapper .i-checkbox { position: relative; flex-shrink: 0; }
-  .i-checkbox-wrapper .i-checkbox::after { content: ''; position: absolute; inset: -14px; }
-  .i-checkbox-label { display: inline-flex; align-items: center; min-height: 44px; }
+  .i-checkbox-wrapper:not(.i-checkbox--readonly) { min-height: 44px; min-width: 44px; justify-content: center; }
+  .i-checkbox-wrapper .i-checkbox { flex-shrink: 0; }
 }

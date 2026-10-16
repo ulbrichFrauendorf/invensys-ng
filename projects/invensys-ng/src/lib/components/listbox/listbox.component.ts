@@ -26,7 +26,6 @@ import {
   ChipItem,
   ChipRemoveEvent,
 } from '../chips/chips.component';
-import { ICheckbox } from '../checkbox/checkbox.component';
 import { IInputText } from '../input-text/input-text.component';
 import { IButton } from '../button/button.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -107,7 +106,7 @@ export interface ListboxOption {
 @Component({
   selector: 'i-listbox',
   standalone: true,
-  imports: [FormsModule, IChipsComponent, ICheckbox, IInputText, IButton],
+  imports: [FormsModule, IChipsComponent, IInputText, IButton],
   templateUrl: './listbox.component.html',
   styleUrls: ['./listbox.component.scss'],
   providers: [
@@ -280,6 +279,7 @@ export class IListbox implements ControlValueAccessor {
   }
 
   toggleOption(option: ListboxOption) {
+    if (this.disabled) return;
     const optionValue = this.getOptionValue(option);
 
     if (this.multiple) {
@@ -476,6 +476,7 @@ export class IListbox implements ControlValueAccessor {
   }
 
   onChipRemove(event: ChipRemoveEvent): void {
+    if (this.disabled) return;
     this.removeSelectedItem(event.chip.value, event.originalEvent);
   }
 

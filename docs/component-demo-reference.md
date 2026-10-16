@@ -49,8 +49,12 @@ Single and multiple selects use HTML `select` controls on touch devices at width
 
 Use the Selects and Multi Selects demos to check selection, clearing, external form resets, and disabled controls on a phone. Also check a short landscape viewport for dialog scrolling and calendar visibility. The demo preview is in normal document flow on narrow screens so it does not cover the options beneath it. Touch controls have larger targets and editable text uses at least 16px to avoid mobile focus zoom.
 
-Run the focused form integration checks with:
+Selects share the same visible field in desktop and touch modes. Custom option panels use connected overlays to avoid clipping inside scrolling cards. Chips are plain collections: `label` supplies an accessible name, and the legacy `useFloatLabel` input no longer renders a visible label. Clear actions stay inside their own containers.
+
+Run the form, layout, focus, and hit-target regression checks in desktop and coarse-pointer Chrome with:
 
 ```sh
-npx ng test invensys-ng --watch=false --browsers=ChromeHeadless --ts-config=projects/invensys-ng/tsconfig.mobile.spec.json --include=projects/invensys-ng/src/lib/components/mobile-controls.spec.ts
+npm run test:frontend
 ```
+
+This checks native control wiring and touch CSS; verify the operating system picker itself on physical iOS and Android devices before release.

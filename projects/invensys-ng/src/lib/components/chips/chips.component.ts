@@ -15,7 +15,6 @@ import {
 } from '@angular/core';
 
 import { IChip } from '../chip/chip.component';
-import { IButton } from '../button/button.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 export interface ChipItem {
@@ -34,7 +33,7 @@ export interface ChipRemoveEvent {
 @Component({
   selector: 'i-chips',
   standalone: true,
-  imports: [IChip, IButton],
+  imports: [IChip],
   templateUrl: './chips.component.html',
   styleUrls: ['./chips.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -49,9 +48,9 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() boxed = false;
   @Input() allowCloseAll = false;
 
-  /** Label text for float label */
+  /** Accessible name for the chip collection (not a visible field label). */
   @Input() label?: string;
-  /** Whether to use floating label style */
+  /** @deprecated Chips are a collection, so no floating label is rendered. */
   @Input() useFloatLabel = false;
   /** Show error state styling */
   @Input() showError = false;
@@ -87,7 +86,7 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
       }
     }
 
-    if (changes['chips']) {
+    if (changes['chips'] || changes['allowCloseAll'] || changes['boxed'] || changes['removable'] || changes['disabled']) {
       this.queueOverflowCheck();
     }
   }
@@ -156,9 +155,7 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.collapseOnOverflow) return;
     if (!this.chipsViewportRef?.nativeElement) return;
 
-    if (this.overflowRafId) {
-      cancelAnimationFrame(this.overflowRafId);
-    }
+    if (this.overflowRafId) return;
 
     this.ngZone.runOutsideAngular(() => {
       this.overflowRafId = requestAnimationFrame(() => {
@@ -192,6 +189,7 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
   /** Handle click on the internal close-all button. */
   onCloseAllClicked(event: Event): void {
     event.stopPropagation();
+    if (this.disabled) return;
     // Emit a single event for parents to clear their data source
     this.closedAll.emit();
   }

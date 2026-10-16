@@ -216,3 +216,8 @@ $listbox-transition: 0.15s ease;
 
 @media (max-width: 768px) { .i-listbox-wrapper .i-listbox-options { max-height: min(320px, 50dvh); } }
 @media (pointer: coarse) { .i-listbox-wrapper .i-listbox-options .i-listbox-option { min-height: 44px; box-sizing: border-box; } }
+
+.i-listbox-wrapper .i-listbox-options .i-listbox-option {
+  width: 100%; box-sizing: border-box; text-align: left; font-family: inherit; color: inherit; background: transparent; border: 0;
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+}

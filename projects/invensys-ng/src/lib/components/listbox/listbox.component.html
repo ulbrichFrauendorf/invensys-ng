@@ -59,20 +59,18 @@
 
     <div class="i-listbox-options">
       @for (option of filteredOptions(); track getOptionValue(option)) {
-        <div
+        <button type="button" [disabled]="disabled"
           class="i-listbox-option"
+          [attr.aria-pressed]="isOptionSelected(option)"
           [class.selected]="isOptionSelected(option)"
           [class.has-icon]="!multiple && getOptionIcon(option)"
           (click)="toggleOption(option)"
         >
           <!-- Checkbox only in multiple mode -->
           @if (multiple) {
-            <i-checkbox
-              [checked]="isOptionSelected(option)"
-              [readonly]="true"
-              size="small"
-              class="i-listbox-checkbox"
-            ></i-checkbox>
+            <span aria-hidden="true" class="pi i-listbox-checkbox"
+              [class.pi-check-square]="isOptionSelected(option)"
+              [class.pi-stop]="!isOptionSelected(option)"></span>
           }
 
           <!-- Left icon -->
@@ -93,7 +91,7 @@
               class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"
             ></i>
           }
-        </div>
+        </button>
       }
       @if (filteredOptions().length === 0) {
         <div class="i-listbox-no-options">No options found</div>

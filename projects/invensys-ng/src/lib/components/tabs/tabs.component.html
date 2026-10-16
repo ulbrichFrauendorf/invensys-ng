@@ -2,7 +2,8 @@
   <!-- Tab Headers -->
   <div class="i-tabs__header" role="tablist">
     @for (tab of tabs; track $index) {
-      <button
+      <div class="i-tabs__tab-item" role="presentation">
+      <button type="button"
         [attr.id]="componentId + '-tab-' + $index"
         class="i-tabs__tab"
         [ngClass]="{
@@ -24,6 +25,7 @@
         @if (tab.header) {
           <span class="i-tabs__tab-label">{{ tab.header }}</span>
         }
+      </button>
         @if (tab.closable && !tab.disabled) {
           <button
             class="i-tabs__tab-close"
@@ -34,7 +36,7 @@
             <i class="pi pi-times"></i>
           </button>
         }
-      </button>
+      </div>
     }
   </div>
 

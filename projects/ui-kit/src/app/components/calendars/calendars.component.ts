@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,6 +20,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     FormsModule,
     ],
   templateUrl: './calendars.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './calendars.component.scss',
 })
 export class CalendarsComponent implements OnInit {

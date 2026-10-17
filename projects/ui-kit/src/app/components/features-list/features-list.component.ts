@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 export interface Feature {
   title: string;
@@ -18,6 +18,7 @@ export interface Feature {
       }
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./features-list.component.scss'],
 })
 export class FeaturesListComponent {

@@ -1,4 +1,4 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   IDynamicDialogConfig,
   IDynamicDialogRef,
@@ -46,6 +46,7 @@ import { ISeverity } from '@shared/enums/IButtonSeverity';
   standalone: true,
   imports: [IDialogActions],
   templateUrl: './confirmation-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './confirmation-dialog.component.scss',
 })
 export class ConfirmationDialogComponent implements OnInit {

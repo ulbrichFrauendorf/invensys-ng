@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from '../../../button/button.component';
 import { ISeverity } from '../../../../enums/IButtonSeverity';
 
@@ -6,6 +6,7 @@ import { ISeverity } from '../../../../enums/IButtonSeverity';
   selector: 'i-dialog-actions',
   imports: [IButton],
   templateUrl: './dialog-actions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog-actions.component.scss',
 })
 export class IDialogActions {

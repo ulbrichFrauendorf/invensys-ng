@@ -8,6 +8,7 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -71,6 +72,7 @@ export type CalendarView = 'date' | 'month' | 'year';
   imports: [FormsModule, IInputText, IButton],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

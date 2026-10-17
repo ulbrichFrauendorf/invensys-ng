@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IPlaceholder } from '../placeholder/placeholder.component';
 
 /**
@@ -43,6 +43,7 @@ import { IPlaceholder } from '../placeholder/placeholder.component';
   standalone: true,
   imports: [IPlaceholder],
   templateUrl: './no-content.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './no-content.component.scss',
 })
 export class NoContentComponent {

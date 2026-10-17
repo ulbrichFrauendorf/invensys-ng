@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LayoutComponent } from '@shared/components/layout/layout.component';
 import { LayoutConfig } from '@shared/components/layout/models/layout-config.model';
 import { MenuModel } from '@shared/components/layout/models/menu.model';
@@ -7,6 +7,7 @@ import { MenuModel } from '@shared/components/layout/models/menu.model';
   selector: 'app-layout',
   standalone: true,
   imports: [LayoutComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <i-layout [config]="layoutConfig" [menuModel]="menuModel">
       <ng-container topbarActions>

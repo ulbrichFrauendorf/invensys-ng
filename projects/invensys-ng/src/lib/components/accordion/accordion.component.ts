@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 /**
@@ -37,6 +37,7 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
 @Component({
   selector: 'i-accordion',
   templateUrl: './accordion.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './accordion.component.scss',
 })
 export class IAccordion {

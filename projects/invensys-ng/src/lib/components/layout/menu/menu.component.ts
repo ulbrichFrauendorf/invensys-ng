@@ -5,6 +5,7 @@ import {
   OnInit,
   inject,
   signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { MenuModel, MenuItem } from '../models/menu.model';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -19,6 +20,7 @@ import { takeUntil, switchMap, map } from 'rxjs/operators';
   selector: 'i-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink, RouterLinkActive],
 })
 export class MenuComponent implements OnInit, OnDestroy {

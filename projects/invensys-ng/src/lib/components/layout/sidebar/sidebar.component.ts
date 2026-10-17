@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, ChangeDetectionStrategy } from '@angular/core';
 import { MenuComponent } from '../menu/menu.component';
 import { MenuModel } from '../models/menu.model';
 import { LayoutService } from '../services/layout.service';
@@ -8,6 +8,7 @@ import { IButton } from '../../button/button.component';
   selector: 'i-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MenuComponent, IButton],
 })
 export class SidebarComponent {

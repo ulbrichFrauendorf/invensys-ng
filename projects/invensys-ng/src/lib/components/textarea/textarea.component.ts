@@ -1,4 +1,4 @@
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, Input, Optional, Self, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
@@ -57,6 +57,7 @@ export type ITextareaBackgroundStyle = 'surface' | 'component';
   standalone: true,
   imports: [CommonModule, TooltipDirective],
   templateUrl: './textarea.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./textarea.component.scss'],
 })
 export class ITextarea implements ControlValueAccessor {

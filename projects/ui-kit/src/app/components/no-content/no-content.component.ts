@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NoContentComponent as INoContent } from '../../../../../invensys-ng/src/lib/components/no-content/no-content.component';
 
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -9,6 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, INoContent],
   templateUrl: './no-content.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './no-content.component.scss',
 })
 export class NoContentComponent {

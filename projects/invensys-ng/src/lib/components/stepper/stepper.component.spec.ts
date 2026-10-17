@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { IStep } from './step.component';
@@ -7,6 +7,7 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
 @Component({
   standalone: true,
   imports: [IStepper, IStep],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <i-stepper
       [(activeIndex)]="activeIndex"
@@ -21,7 +22,12 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
         Details content
       </i-step>
       <i-step label="Columns">Columns content</i-step>
-      <i-step label="Review" [disabled]="reviewDisabled" [completed]="reviewComplete">Review content</i-step>
+      <i-step
+        label="Review"
+        [disabled]="reviewDisabled"
+        [completed]="reviewComplete"
+        >Review content</i-step
+      >
     </i-stepper>
   `,
 })
@@ -91,7 +97,9 @@ describe('IStepper', () => {
   });
 
   it('replaces the trailing chevron with a tick when a step is completed', () => {
-    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
+    const first = fixture.debugElement.query(
+      By.css('.i-stepper__trigger'),
+    ).nativeElement;
     expect(first.querySelector('.i-stepper__chevron')).not.toBeNull();
     expect(first.querySelector('.i-stepper__completion')).toBeNull();
     host.detailsComplete = true;
@@ -105,11 +113,16 @@ describe('IStepper', () => {
     host.activeIndex = 2;
     host.reviewComplete = true;
     fixture.detectChanges();
-    const final = fixture.debugElement.queryAll(By.css('.i-stepper__trigger'))[2].nativeElement;
+    const final = fixture.debugElement.queryAll(
+      By.css('.i-stepper__trigger'),
+    )[2].nativeElement;
     expect(final.querySelector('.i-stepper__completion')).not.toBeNull();
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
     expect(final.getAttribute('aria-current')).toBe('step');
-    expect(fixture.debugElement.query(By.css('.i-stepper__panel--active')).nativeElement.textContent).toContain('Review content');
+    expect(
+      fixture.debugElement.query(By.css('.i-stepper__panel--active'))
+        .nativeElement.textContent,
+    ).toContain('Review content');
     host.reviewComplete = false;
     fixture.detectChanges();
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
@@ -117,7 +130,8 @@ describe('IStepper', () => {
   });
 
   it('does not show a next-step chevron or connector on the final step', () => {
-    const final = fixture.debugElement.queryAll(By.css('.i-stepper__item'))[2].nativeElement;
+    const final = fixture.debugElement.queryAll(By.css('.i-stepper__item'))[2]
+      .nativeElement;
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
     expect(final.querySelector('.i-stepper__connector')).toBeNull();
   });
@@ -132,7 +146,8 @@ describe('IStepper', () => {
   });
 
   it('keeps accessible step position when a custom icon is used', () => {
-    const stepper = fixture.debugElement.query(By.directive(IStepper)).componentInstance as IStepper;
+    const stepper = fixture.debugElement.query(By.directive(IStepper))
+      .componentInstance as IStepper;
     const step = stepper.steps[0];
     step.icon = 'pi pi-file-edit';
     fixture.detectChanges();

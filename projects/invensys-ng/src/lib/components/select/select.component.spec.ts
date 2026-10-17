@@ -79,7 +79,7 @@ describe('ISelect', () => {
     });
 
     it('should emit onChange event on selection', () => {
-      spyOn(component.onChange, 'emit');
+      vi.spyOn(component.onChange, 'emit').mockReturnValue(undefined);
       const option = mockOptions[0];
       component.selectOption(option);
       expect(component.onChange.emit).toHaveBeenCalledWith(option['id']);
@@ -101,7 +101,7 @@ describe('ISelect', () => {
     });
 
     it('should emit onClear event', () => {
-      spyOn(component.onClear, 'emit');
+      vi.spyOn(component.onClear, 'emit').mockReturnValue(undefined);
       component.clearSelection();
       expect(component.onClear.emit).toHaveBeenCalled();
     });
@@ -175,14 +175,14 @@ describe('ISelect', () => {
     });
 
     it('should register onChange callback', () => {
-      const fn = jasmine.createSpy('onChange');
+      const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
       component.selectOption(mockOptions[0]);
       expect(fn).toHaveBeenCalled();
     });
 
     it('should register onTouched callback', () => {
-      const fn = jasmine.createSpy('onTouched');
+      const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
       component.selectOption(mockOptions[0]);
       expect(fn).toHaveBeenCalled();

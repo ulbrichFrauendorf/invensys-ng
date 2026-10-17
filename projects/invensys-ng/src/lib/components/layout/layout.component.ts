@@ -10,6 +10,7 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -24,6 +25,7 @@ import { MenuModel } from './models/menu.model';
   selector: 'i-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, TopbarComponent, SidebarComponent, RouterOutlet],
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {

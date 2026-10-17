@@ -1,4 +1,4 @@
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, Input, Optional, Self, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
@@ -69,6 +69,7 @@ export type IInputBackgroundStyle = 'surface' | 'component';
   standalone: true,
   imports: [CommonModule, TooltipDirective],
   templateUrl: './input-text.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./input-text.component.scss'],
 })
 export class IInputText implements ControlValueAccessor {

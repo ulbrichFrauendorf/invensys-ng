@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 export type TooltipPosition = 'above' | 'below' | 'left' | 'right';
 
@@ -18,6 +18,7 @@ export type TooltipPosition = 'above' | 'below' | 'left' | 'right';
       <div class="i-tooltip__arrow"></div>
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tooltip.component.scss',
 })
 export class TooltipComponent {

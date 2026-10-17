@@ -203,7 +203,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         expect(dataset.datasets[0].borderColor[0]).toBe('#ff0000');
       }, 100);
@@ -222,7 +224,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         expect(dataset.datasets[0].borderColor[0]).toBe('#3b82f6');
       }, 100);
@@ -241,7 +245,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         expect(dataset.datasets[0].borderColor[0]).toBe('#4cd07d');
       }, 100);
@@ -260,7 +266,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         expect(dataset.datasets[0].borderColor[0]).toBe('rgb(255, 0, 0)');
       }, 100);
@@ -283,7 +291,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         expect(dataset.datasets[0].borderColor[0]).toBe('rgba(255, 0, 0, 0.5)');
       }, 100);
@@ -302,7 +312,9 @@ describe('IChart', () => {
 
       setTimeout(() => {
         const dataset = component.chartDisplays[0].data as {
-          datasets: { borderColor: string[] }[];
+          datasets: {
+            borderColor: string[];
+          }[];
         };
         // Falls back to gray-500 for unknown colors
         expect(dataset.datasets[0].borderColor[0]).toBe('#64748b');
@@ -335,40 +347,44 @@ describe('IChart', () => {
   });
 
   describe('Lifecycle', () => {
-    it('should initialize charts after view init', (done) => {
-      const chart: IChartData = {
-        chartType: 'bar',
-        labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
-      };
-      component.charts = [chart];
-      fixture.detectChanges();
+    it('should initialize charts after view init', async () => {
+      await new Promise<void>((done) => {
+        const chart: IChartData = {
+          chartType: 'bar',
+          labels: ['A'],
+          dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
+        };
+        component.charts = [chart];
+        fixture.detectChanges();
 
-      // Wait for requestAnimationFrame to complete
-      requestAnimationFrame(() => {
-        expect(component.getChartInstanceCount()).toBe(1);
-        done();
+        // Wait for requestAnimationFrame to complete
+        requestAnimationFrame(() => {
+          expect(component.getChartInstanceCount()).toBe(1);
+          done();
+        });
       });
     });
 
-    it('should have zero chart instances after destroy', (done) => {
-      const chart: IChartData = {
-        chartType: 'bar',
-        labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
-      };
-      component.charts = [chart];
-      fixture.detectChanges();
+    it('should have zero chart instances after destroy', async () => {
+      await new Promise<void>((done) => {
+        const chart: IChartData = {
+          chartType: 'bar',
+          labels: ['A'],
+          dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
+        };
+        component.charts = [chart];
+        fixture.detectChanges();
 
-      // Wait for charts to initialize
-      requestAnimationFrame(() => {
-        expect(component.getChartInstanceCount()).toBeGreaterThan(0);
+        // Wait for charts to initialize
+        requestAnimationFrame(() => {
+          expect(component.getChartInstanceCount()).toBeGreaterThan(0);
 
-        // Destroy the component
-        fixture.destroy();
+          // Destroy the component
+          fixture.destroy();
 
-        // After destroy, the component should clean up (can't verify count after destroy)
-        done();
+          // After destroy, the component should clean up (can't verify count after destroy)
+          done();
+        });
       });
     });
   });

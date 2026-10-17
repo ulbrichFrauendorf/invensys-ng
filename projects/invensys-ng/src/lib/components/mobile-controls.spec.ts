@@ -3,16 +3,25 @@ import { ISelect } from './select/select.component';
 import { IMultiSelect } from './multi-select/multi-select.component';
 
 describe('Native mobile option controls', () => {
-  const options = [{ id: 1, label: 'Same label' }, { id: 2, label: 'Same label' }];
+  const options = [
+    { id: 1, label: 'Same label' },
+    { id: 2, label: 'Same label' },
+  ];
 
-  beforeEach(() => TestBed.configureTestingModule({ imports: [ISelect, IMultiSelect] }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({ imports: [ISelect, IMultiSelect] }),
+  );
 
-  function setup<T extends ISelect | IMultiSelect>(type: new (...args: any[]) => T) {
+  function setup<T extends ISelect | IMultiSelect>(
+    type: new (...args: any[]) => T,
+  ) {
     const fixture = TestBed.createComponent(type);
     fixture.componentRef.setInput('options', options);
     fixture.componentRef.setInput('optionLabel', 'label');
     fixture.detectChanges();
-    const picker = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
+    const picker = fixture.nativeElement.querySelector(
+      'select',
+    ) as HTMLSelectElement;
     return { fixture, component: fixture.componentInstance, picker };
   }
 
@@ -23,17 +32,18 @@ describe('Native mobile option controls', () => {
 
   it('preserves object values even when labels are identical', () => {
     const { picker, component } = setup(ISelect);
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.registerOnChange(changed);
     picker.value = '1';
     picker.dispatchEvent(new Event('change'));
     expect(component.value).toBe(options[1]);
-    expect(changed).toHaveBeenCalledOnceWith(options[1]);
+    expect(changed).toHaveBeenCalledTimes(1);
+    expect(changed).toHaveBeenCalledWith(options[1]);
   });
 
   it('reflects external form writes and resets without emitting a change', () => {
     const { picker, component, fixture } = setup(ISelect);
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.registerOnChange(changed);
     component.writeValue({ ...options[1] });
     fixture.detectChanges();
@@ -46,7 +56,7 @@ describe('Native mobile option controls', () => {
 
   it('marks native controls touched on blur', () => {
     const { picker, component } = setup(ISelect);
-    const touched = jasmine.createSpy('touched');
+    const touched = vi.fn().mockName('touched');
     component.registerOnTouched(touched);
     picker.dispatchEvent(new Event('blur'));
     expect(touched).toHaveBeenCalled();
@@ -58,14 +68,14 @@ describe('Native mobile option controls', () => {
     fixture.detectChanges();
     component.toggleDropdown();
     component.selectOption(options[0]);
-    expect(picker.disabled).toBeTrue();
-    expect(component.isOpen).toBeFalse();
+    expect(picker.disabled).toBe(true);
+    expect(component.isOpen).toBe(false);
     expect(component.value).toBeNull();
   });
 
   it('writes multiple native selections to the form and supports clearing', () => {
     const { picker, component } = setup(IMultiSelect);
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.registerOnChange(changed);
     picker.options[0].selected = true;
     picker.options[1].selected = true;
@@ -81,12 +91,14 @@ describe('Native mobile option controls', () => {
     component.writeValue([options[1]]);
     component.setDisabledState!(true);
     fixture.detectChanges();
-    expect(Array.from(picker.selectedOptions).map(option => option.value)).toEqual(['1']);
+    expect(
+      Array.from(picker.selectedOptions).map((option) => option.value),
+    ).toEqual(['1']);
     component.toggleDropdown();
     component.toggleOption(options[0]);
     component.clearSelection();
-    expect(picker.disabled).toBeTrue();
-    expect(component.isOpen).toBeFalse();
+    expect(picker.disabled).toBe(true);
+    expect(component.isOpen).toBe(false);
     expect(component.value).toEqual([options[1]]);
   });
 

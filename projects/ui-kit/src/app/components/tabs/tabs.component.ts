@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { ITabs } from '@shared/components/tabs/tabs.component';
 import { ITabPanel } from '@shared/components/tabs/tab-panel.component';
@@ -10,6 +10,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'app-tabs',
   imports: [DemoPlaygroundComponent, DemoOptionDirective, ITabs, ITabPanel],
   templateUrl: './tabs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tabs.component.scss',
 })
 export class TabsComponent {

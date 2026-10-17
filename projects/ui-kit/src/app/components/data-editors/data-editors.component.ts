@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IToggle } from '@shared/components/toggle/toggle.component';
 import {
@@ -26,6 +26,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IRuleEditor,
     ],
   templateUrl: './data-editors.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-editors.component.scss',
 })
 export class DataEditorsComponent {

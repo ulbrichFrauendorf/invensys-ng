@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Empty State Component
@@ -26,6 +26,7 @@ import { Component, Input, signal } from '@angular/core';
   selector: 'i-empty-state',
   standalone: true,
   templateUrl: './empty-state.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './empty-state.component.scss',
 })
 export class EmptyStateComponent {

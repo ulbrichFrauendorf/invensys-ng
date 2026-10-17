@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import {
   FilterEvent,
@@ -45,6 +45,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, ITable],
   templateUrl: './tables.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tables.component.scss',
 })
 export class TablesComponent {

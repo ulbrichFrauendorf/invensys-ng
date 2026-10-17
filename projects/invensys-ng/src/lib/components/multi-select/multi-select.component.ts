@@ -15,6 +15,7 @@ import {
   InputSignal,
   input,
   WritableSignal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -92,6 +93,7 @@ export interface MultiSelectOption {
   imports: [FormsModule, IChipsComponent, OverlayModule],
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

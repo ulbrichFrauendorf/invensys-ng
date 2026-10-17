@@ -119,7 +119,7 @@ describe('IInputText', () => {
     });
 
     it('should register onChange callback', () => {
-      const fn = jasmine.createSpy('onChange');
+      const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
 
       const mockEvent = { target: { value: 'new value' } } as any;
@@ -129,7 +129,7 @@ describe('IInputText', () => {
     });
 
     it('should register onTouched callback', () => {
-      const fn = jasmine.createSpy('onTouched');
+      const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
       component.touch();
       expect(fn).toHaveBeenCalled();

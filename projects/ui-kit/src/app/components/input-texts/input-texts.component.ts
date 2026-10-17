@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -33,6 +33,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     FormsModule,
     ],
   templateUrl: './input-texts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './input-texts.component.scss',
 })
 export class InputTextsComponent implements OnInit {

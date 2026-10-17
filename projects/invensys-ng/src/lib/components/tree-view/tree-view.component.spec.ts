@@ -97,7 +97,7 @@ describe('ITreeView', () => {
     it('should emit onNodeExpand event', () => {
       const node = mockTreeData[0];
       const mockEvent = new Event('click');
-      spyOn(component.onNodeExpand, 'emit');
+      vi.spyOn(component.onNodeExpand, 'emit').mockReturnValue(undefined);
 
       component.expandNode(mockEvent, node);
       expect(component.onNodeExpand.emit).toHaveBeenCalledWith({
@@ -132,7 +132,7 @@ describe('ITreeView', () => {
     it('should emit selectionChange event', () => {
       const node = mockTreeData[0];
       const mockEvent = new Event('click');
-      spyOn(component.selectionChange, 'emit');
+      vi.spyOn(component.selectionChange, 'emit').mockReturnValue(undefined);
 
       component.selectSingleNode(mockEvent, node);
       expect(component.selectionChange.emit).toHaveBeenCalled();
@@ -221,7 +221,8 @@ describe('ITreeView', () => {
 
     it('shows search by default and filters from the input control', async () => {
       await fixture.whenStable();
-      const input: HTMLInputElement = fixture.nativeElement.querySelector('i-input-text input');
+      const input: HTMLInputElement =
+        fixture.nativeElement.querySelector('i-input-text input');
       expect(input.getAttribute('aria-label')).toBe('Search tree');
       input.value = 'Child 1-1';
       input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -237,20 +238,25 @@ describe('ITreeView', () => {
       const result = component.filteredValue[0].children![0];
       component.selectSingleNode(new MouseEvent('click'), result);
       expect(component.selection).toBe(original);
-      expect(component.isSelected(result)).toBeTrue();
+      expect(component.isSelected(result)).toBe(true);
       component.filterValue = '';
       component.applyFilter();
-      expect(component.isSelected(original)).toBeTrue();
+      expect(component.isSelected(original)).toBe(true);
     });
 
     it('propagates checkbox selections through the original hierarchy while searching', () => {
       component.selectionMode = 'checkbox';
       component.filterValue = 'Child 1-1';
       component.applyFilter();
-      component.selectCheckboxNode(new MouseEvent('click'), component.filteredValue[0].children![0]);
+      component.selectCheckboxNode(
+        new MouseEvent('click'),
+        component.filteredValue[0].children![0],
+      );
       expect(component.selection).toContain(component.value[0].children![0]);
       expect(component.selection).toContain(component.value[0]);
-      expect(component.isPartiallySelected(component.filteredValue[0])).toBeTrue();
+      expect(component.isPartiallySelected(component.filteredValue[0])).toBe(
+        true,
+      );
     });
 
     it('keeps hidden selections when select all is toggled in search results', () => {
@@ -381,17 +387,21 @@ describe('ITreeView', () => {
   });
 
   describe('Checkbox change handling', () => {
-    it('should handle checkbox change', (done) => {
-      component.selectionMode = 'checkbox';
-      component.selection = [];
-      const node = mockTreeData[0].children![0];
+    it('should handle checkbox change', async () => {
+      await new Promise<void>((done) => {
+        component.selectionMode = 'checkbox';
+        component.selection = [];
+        const node = mockTreeData[0].children![0];
 
-      component.onCheckboxChange(true, node);
+        component.onCheckboxChange(true, node);
 
-      setTimeout(() => {
-        expect((component.selection as ITreeNode[]).includes(node)).toBe(true);
-        done();
-      }, 100);
+        setTimeout(() => {
+          expect((component.selection as ITreeNode[]).includes(node)).toBe(
+            true,
+          );
+          done();
+        }, 100);
+      });
     });
   });
 
@@ -535,38 +545,42 @@ describe('ITreeView', () => {
   });
 
   describe('Event emissions', () => {
-    it('should emit onNodeSelect event', (done) => {
-      const node = mockTreeData[0].children![0];
-      const mockEvent = new Event('click');
+    it('should emit onNodeSelect event', async () => {
+      await new Promise<void>((done) => {
+        const node = mockTreeData[0].children![0];
+        const mockEvent = new Event('click');
 
-      component.onNodeSelect.subscribe((event) => {
-        expect(event.node).toBe(node);
-        expect(event.originalEvent).toBe(mockEvent);
-        done();
+        component.onNodeSelect.subscribe((event) => {
+          expect(event.node).toBe(node);
+          expect(event.originalEvent).toBe(mockEvent);
+          done();
+        });
+
+        component.selectCheckboxNode(mockEvent, node);
       });
-
-      component.selectCheckboxNode(mockEvent, node);
     });
 
-    it('should emit onNodeUnselect event', (done) => {
-      component.selectionMode = 'checkbox';
-      const node = mockTreeData[0].children![0];
-      component.selection = [node];
-      const mockEvent = new Event('click');
+    it('should emit onNodeUnselect event', async () => {
+      await new Promise<void>((done) => {
+        component.selectionMode = 'checkbox';
+        const node = mockTreeData[0].children![0];
+        component.selection = [node];
+        const mockEvent = new Event('click');
 
-      component.onNodeUnselect.subscribe((event) => {
-        expect(event.node).toBe(node);
-        done();
+        component.onNodeUnselect.subscribe((event) => {
+          expect(event.node).toBe(node);
+          done();
+        });
+
+        component.selectCheckboxNode(mockEvent, node);
       });
-
-      component.selectCheckboxNode(mockEvent, node);
     });
 
     it('should emit onNodeCollapse event', () => {
       const node = mockTreeData[0];
       node.expanded = true;
       const mockEvent = new Event('click');
-      spyOn(component.onNodeCollapse, 'emit');
+      vi.spyOn(component.onNodeCollapse, 'emit').mockReturnValue(undefined);
 
       component.collapseNode(mockEvent, node);
       expect(component.onNodeCollapse.emit).toHaveBeenCalledWith({
@@ -600,8 +614,8 @@ describe('ITreeView', () => {
 
   describe('Lifecycle hooks', () => {
     it('should initialize on ngOnInit', () => {
-      spyOn(component, 'updateSerializedValue');
-      spyOn(component, 'updateSelectAllState');
+      vi.spyOn(component, 'updateSerializedValue').mockReturnValue(undefined);
+      vi.spyOn(component, 'updateSelectAllState').mockReturnValue(undefined);
 
       component.ngOnInit();
 
@@ -610,8 +624,8 @@ describe('ITreeView', () => {
     });
 
     it('should update on value changes', () => {
-      spyOn(component, 'updateSerializedValue');
-      spyOn(component, 'updateSelectAllState');
+      vi.spyOn(component, 'updateSerializedValue').mockReturnValue(undefined);
+      vi.spyOn(component, 'updateSelectAllState').mockReturnValue(undefined);
 
       component.ngOnChanges({
         value: {
@@ -627,7 +641,7 @@ describe('ITreeView', () => {
     });
 
     it('should update on selection changes', () => {
-      spyOn(component, 'updateSelectAllState');
+      vi.spyOn(component, 'updateSelectAllState').mockReturnValue(undefined);
 
       component.ngOnChanges({
         selection: {

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 
 @Component({
   selector: 'app-installation',
   imports: [DemoCardComponent],
   templateUrl: './installation.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './installation.component.scss',
 })
 export class InstallationComponent {

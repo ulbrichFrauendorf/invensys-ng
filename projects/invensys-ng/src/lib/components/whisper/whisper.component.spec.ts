@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IWhisper } from './whisper.component';
 import { WhisperService } from './services/whisper.service';
@@ -7,7 +8,7 @@ import { IWhisperMessage } from './services/whisper.interfaces';
 describe('IWhisper', () => {
   let component: IWhisper;
   let fixture: ComponentFixture<IWhisper>;
-  let whisperService: jasmine.SpyObj<WhisperService>;
+  let whisperService: MockedObject<WhisperService>;
   let messageSubject: Subject<IWhisperMessage | null>;
   let clearSubject: Subject<string | undefined>;
 
@@ -15,10 +16,10 @@ describe('IWhisper', () => {
     messageSubject = new Subject<IWhisperMessage | null>();
     clearSubject = new Subject<string | undefined>();
 
-    const whisperServiceSpy = jasmine.createSpyObj('WhisperService', [], {
+    const whisperServiceSpy = {
       messageObserver: messageSubject.asObservable(),
       clearObserver: clearSubject.asObservable(),
-    });
+    };
 
     await TestBed.configureTestingModule({
       imports: [IWhisper],
@@ -29,7 +30,7 @@ describe('IWhisper', () => {
     component = fixture.componentInstance;
     whisperService = TestBed.inject(
       WhisperService,
-    ) as jasmine.SpyObj<WhisperService>;
+    ) as MockedObject<WhisperService>;
     fixture.detectChanges();
   });
 
@@ -138,22 +139,24 @@ describe('IWhisper', () => {
       expect(component.messages[0].id).toBe('2');
     });
 
-    it('should auto-remove message after life duration', (done) => {
-      const mockMessage: IWhisperMessage = {
-        id: '1',
-        severity: 'info',
-        summary: 'Test',
-        detail: 'Test message',
-        life: 100,
-      };
+    it('should auto-remove message after life duration', async () => {
+      await new Promise<void>((done) => {
+        const mockMessage: IWhisperMessage = {
+          id: '1',
+          severity: 'info',
+          summary: 'Test',
+          detail: 'Test message',
+          life: 100,
+        };
 
-      messageSubject.next(mockMessage);
-      expect(component.messages.length).toBe(1);
+        messageSubject.next(mockMessage);
+        expect(component.messages.length).toBe(1);
 
-      setTimeout(() => {
-        expect(component.messages.length).toBe(0);
-        done();
-      }, 150);
+        setTimeout(() => {
+          expect(component.messages.length).toBe(0);
+          done();
+        }, 150);
+      });
     });
   });
 
@@ -195,7 +198,7 @@ describe('IWhisper', () => {
       };
 
       component.messages = [mockMessage];
-      spyOn(component, 'remove');
+      vi.spyOn(component, 'remove').mockReturnValue(undefined);
       component.onClose(mockMessage);
       expect(component.remove).toHaveBeenCalledWith(mockMessage);
     });
@@ -273,8 +276,12 @@ describe('IWhisper', () => {
 
   describe('Lifecycle', () => {
     it('should unsubscribe on destroy', () => {
-      spyOn(component.messageSubscription!, 'unsubscribe');
-      spyOn(component.clearSubscription!, 'unsubscribe');
+      vi.spyOn(component.messageSubscription!, 'unsubscribe').mockReturnValue(
+        undefined,
+      );
+      vi.spyOn(component.clearSubscription!, 'unsubscribe').mockReturnValue(
+        undefined,
+      );
 
       component.ngOnDestroy();
 

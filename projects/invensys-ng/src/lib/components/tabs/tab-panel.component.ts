@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Tab Panel Component
@@ -21,6 +21,7 @@ import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 @Component({
   selector: 'i-tab-panel',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <ng-template #contentTemplate>
       <ng-content></ng-content>

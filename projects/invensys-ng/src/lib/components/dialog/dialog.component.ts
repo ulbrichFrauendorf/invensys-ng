@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectorRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICard } from '../card/card.component';
@@ -62,6 +63,7 @@ import { AbstractDialog } from './dialog-base';
   selector: 'i-dialog',
   imports: [CommonModule, ICard],
   templateUrl: './dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog.component.scss',
 })
 export class IDialog extends AbstractDialog implements OnInit, OnDestroy {

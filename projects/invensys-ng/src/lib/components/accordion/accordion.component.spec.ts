@@ -97,21 +97,21 @@ describe('IAccordion', () => {
     });
 
     it('should emit expandedChange when toggled', () => {
-      spyOn(component.expandedChange, 'emit');
+      vi.spyOn(component.expandedChange, 'emit').mockReturnValue(undefined);
       component.toggle();
       expect(component.expandedChange.emit).toHaveBeenCalledWith(true);
     });
 
     it('should emit onToggle when toggled', () => {
-      spyOn(component.onToggle, 'emit');
+      vi.spyOn(component.onToggle, 'emit').mockReturnValue(undefined);
       component.toggle();
       expect(component.onToggle.emit).toHaveBeenCalledWith(true);
     });
 
     it('should not emit events when disabled', () => {
       component.disabled = true;
-      spyOn(component.expandedChange, 'emit');
-      spyOn(component.onToggle, 'emit');
+      vi.spyOn(component.expandedChange, 'emit').mockReturnValue(undefined);
+      vi.spyOn(component.onToggle, 'emit').mockReturnValue(undefined);
       component.toggle();
       expect(component.expandedChange.emit).not.toHaveBeenCalled();
       expect(component.onToggle.emit).not.toHaveBeenCalled();

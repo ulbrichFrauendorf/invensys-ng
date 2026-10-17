@@ -9,6 +9,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   HostBinding,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { ISeverity } from '@shared/enums/IButtonSeverity';
@@ -57,6 +58,7 @@ export type IButtonSize = 'xtra-small' | 'small' | 'medium' | 'large';
   standalone: true,
   imports: [NgClass, IProgressSpinner],
   templateUrl: './button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './button.component.scss',
 })
 export class IButton implements AfterViewInit {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
@@ -6,6 +6,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'app-layouts',
   imports: [DemoPlaygroundComponent, DemoOptionDirective],
   templateUrl: './layouts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layouts.component.scss',
 })
 export class LayoutsComponent {

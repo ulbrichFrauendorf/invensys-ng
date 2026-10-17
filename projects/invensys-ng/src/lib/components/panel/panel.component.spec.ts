@@ -62,14 +62,14 @@ describe('IPanel', () => {
     });
 
     it('should emit collapsedChange event', () => {
-      const spy = jasmine.createSpy('collapsedChange');
+      const spy = vi.fn().mockName('collapsedChange');
       component.collapsedChange.subscribe(spy);
       component.toggle();
       expect(spy).toHaveBeenCalledWith(true);
     });
 
     it('should emit onToggle event', () => {
-      const spy = jasmine.createSpy('onToggle');
+      const spy = vi.fn().mockName('onToggle');
       component.onToggle.subscribe(spy);
       component.toggle();
       expect(spy).toHaveBeenCalledWith(true);

@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import {
   ComponentFixture,
   TestBed,
@@ -81,10 +82,12 @@ describe('MenuComponent', () => {
   });
 
   describe('With Claims Checker', () => {
-    let mockClaimsChecker: jasmine.SpyObj<ClaimsChecker>;
+    let mockClaimsChecker: MockedObject<ClaimsChecker>;
 
     beforeEach(async () => {
-      mockClaimsChecker = jasmine.createSpyObj('ClaimsChecker', ['hasClaim']);
+      mockClaimsChecker = {
+        hasClaim: vi.fn().mockName('ClaimsChecker.hasClaim'),
+      };
 
       await TestBed.configureTestingModule({
         imports: [MenuComponent],
@@ -100,7 +103,7 @@ describe('MenuComponent', () => {
 
     it('should filter menu items based on claims', fakeAsync(() => {
       // Setup: User has view-item2 claim but not view-group2 or view-sub2
-      mockClaimsChecker.hasClaim.and.callFake((claim: string) => {
+      mockClaimsChecker.hasClaim.mockImplementation((claim: string) => {
         if (claim === 'view-item2') return of(true);
         if (claim === 'view-group2') return of(false);
         if (claim === 'view-sub2') return of(false);
@@ -127,7 +130,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should show all items when all claims are granted', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(true));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
       component.model = mockMenuModel;
       fixture.detectChanges();
@@ -142,7 +145,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should hide all items when no claims are granted', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(false));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
       component.model = mockMenuModel;
       fixture.detectChanges();
@@ -163,7 +166,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should hide groups with no visible items', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(false));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
       const modelWithClaimsOnAllItems: MenuModel[] = [
         {
@@ -186,7 +189,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should handle nested items with claims', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.callFake((claim: string) => {
+      mockClaimsChecker.hasClaim.mockImplementation((claim: string) => {
         return of(claim === 'view-sub2');
       });
 
@@ -203,7 +206,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should hide parent items with no visible sub-items', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(false));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
       const modelWithNestedClaims: MenuModel[] = [
         {
@@ -232,7 +235,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should update filtered model when model input changes', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(true));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
       // Set initial model
       component.model = [mockMenuModel[0]];
@@ -250,7 +253,7 @@ describe('MenuComponent', () => {
     }));
 
     it('should call hasClaim only once per unique claim', fakeAsync(() => {
-      mockClaimsChecker.hasClaim.and.returnValue(of(true));
+      mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
       const modelWithDuplicateClaims: MenuModel[] = [
         {
@@ -284,7 +287,7 @@ describe('MenuComponent', () => {
 
   describe('Cleanup', () => {
     it('should cleanup subscriptions on destroy', () => {
-      const destroySpy = jasmine.createSpy('destroy');
+      const destroySpy = vi.fn().mockName('destroy');
       (component as any).destroy$.subscribe({
         next: destroySpy,
       });

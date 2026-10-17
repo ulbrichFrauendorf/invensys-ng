@@ -75,12 +75,14 @@ describe('IToggle', () => {
       expect(component.checked).toBe(false);
     });
 
-    it('should emit onChange event', (done) => {
-      component.onChange.subscribe((value: boolean) => {
-        expect(value).toBe(true);
-        done();
+    it('should emit onChange event', async () => {
+      await new Promise<void>((done) => {
+        component.onChange.subscribe((value: boolean) => {
+          expect(value).toBe(true);
+          done();
+        });
+        component.toggle();
       });
-      component.toggle();
     });
   });
 
@@ -91,14 +93,14 @@ describe('IToggle', () => {
     });
 
     it('should register onChange callback', () => {
-      const fn = jasmine.createSpy('onChange');
+      const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
       component.toggle();
       expect(fn).toHaveBeenCalledWith(true);
     });
 
     it('should register onTouched callback', () => {
-      const fn = jasmine.createSpy('onTouched');
+      const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
       component.toggle();
       expect(fn).toHaveBeenCalled();

@@ -152,7 +152,7 @@ describe('ITable', () => {
     });
 
     it('should emit onSort event', () => {
-      spyOn(component.onSort, 'emit');
+      vi.spyOn(component.onSort, 'emit').mockReturnValue(undefined);
       const column = mockColumns[0];
       component.onSortColumn(column);
       expect(component.onSort.emit).toHaveBeenCalledWith({
@@ -182,39 +182,45 @@ describe('ITable', () => {
   });
 
   describe('Filtering', () => {
-    it('should filter by global filter', (done) => {
-      component.filterDelay = 0;
-      component.onGlobalFilterInput('Product A');
+    it('should filter by global filter', async () => {
+      await new Promise<void>((done) => {
+        component.filterDelay = 0;
+        component.onGlobalFilterInput('Product A');
 
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(component.processedData().length).toBe(1);
-        expect(component.processedData()[0].name).toBe('Product A');
-        done();
-      }, 10);
+        setTimeout(() => {
+          fixture.detectChanges();
+          expect(component.processedData().length).toBe(1);
+          expect(component.processedData()[0].name).toBe('Product A');
+          done();
+        }, 10);
+      });
     });
 
-    it('should filter by column filter', (done) => {
-      component.filterDelay = 0;
-      component.onColumnFilterInput('name', 'Product B');
+    it('should filter by column filter', async () => {
+      await new Promise<void>((done) => {
+        component.filterDelay = 0;
+        component.onColumnFilterInput('name', 'Product B');
 
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(component.processedData().length).toBe(1);
-        expect(component.processedData()[0].name).toBe('Product B');
-        done();
-      }, 10);
+        setTimeout(() => {
+          fixture.detectChanges();
+          expect(component.processedData().length).toBe(1);
+          expect(component.processedData()[0].name).toBe('Product B');
+          done();
+        }, 10);
+      });
     });
 
-    it('should emit onFilter event', (done) => {
-      spyOn(component.onFilter, 'emit');
-      component.filterDelay = 0;
-      component.onGlobalFilterInput('test');
+    it('should emit onFilter event', async () => {
+      await new Promise<void>((done) => {
+        vi.spyOn(component.onFilter, 'emit').mockReturnValue(undefined);
+        component.filterDelay = 0;
+        component.onGlobalFilterInput('test');
 
-      setTimeout(() => {
-        expect(component.onFilter.emit).toHaveBeenCalled();
-        done();
-      }, 10);
+        setTimeout(() => {
+          expect(component.onFilter.emit).toHaveBeenCalled();
+          done();
+        }, 10);
+      });
     });
   });
 
@@ -282,13 +288,13 @@ describe('ITable', () => {
     });
 
     it('should emit onPage event', () => {
-      spyOn(component.onPage, 'emit');
+      vi.spyOn(component.onPage, 'emit').mockReturnValue(undefined);
       component.goToPage(1);
       expect(component.onPage.emit).toHaveBeenCalled();
     });
 
     it('should change rows per page', () => {
-      spyOn(component.onPage, 'emit');
+      vi.spyOn(component.onPage, 'emit').mockReturnValue(undefined);
       component.onRowsPerPageChange(5);
       expect(component.rows).toBe(5);
       expect(component.first).toBe(0);
@@ -326,9 +332,11 @@ describe('ITable', () => {
       });
 
       it('should emit selection events', () => {
-        spyOn(component.onRowSelect, 'emit');
-        spyOn(component.selectionChange, 'emit');
-        spyOn(component.onSelectionChange, 'emit');
+        vi.spyOn(component.onRowSelect, 'emit').mockReturnValue(undefined);
+        vi.spyOn(component.selectionChange, 'emit').mockReturnValue(undefined);
+        vi.spyOn(component.onSelectionChange, 'emit').mockReturnValue(
+          undefined,
+        );
 
         component.toggleRowSelection(mockData[0]);
 
@@ -403,7 +411,7 @@ describe('ITable', () => {
     });
 
     it('should emit onAction event', () => {
-      spyOn(component.onAction, 'emit');
+      vi.spyOn(component.onAction, 'emit').mockReturnValue(undefined);
       const mockEvent = new MouseEvent('click');
 
       component.onActionClick(mockActions[0], mockData[0], mockEvent);
@@ -454,8 +462,8 @@ describe('ITable', () => {
     });
 
     it('should emit expand/collapse events', () => {
-      spyOn(component.onRowExpand, 'emit');
-      spyOn(component.onRowCollapse, 'emit');
+      vi.spyOn(component.onRowExpand, 'emit').mockReturnValue(undefined);
+      vi.spyOn(component.onRowCollapse, 'emit').mockReturnValue(undefined);
       const mockEvent = new MouseEvent('click');
 
       component.toggleRowExpansion(mockData[0], mockEvent);

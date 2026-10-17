@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   TemplateRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { IButton } from '../button/button.component';
 import { NoContentComponent } from '../no-content/no-content.component';
@@ -38,6 +39,7 @@ export interface OrderedListMoveEvent<T> {
   standalone: true,
   imports: [NgTemplateOutlet, IButton, NoContentComponent],
   templateUrl: './ordered-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ordered-list.component.scss',
 })
 export class IOrderedList<T> {

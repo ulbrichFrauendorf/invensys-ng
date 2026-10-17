@@ -127,7 +127,7 @@
           seconds to showcase observable data updates. <br /><strong
             >Form Value:</strong
           >
-          {{ departmentsForm.get("selectedDepartments")?.value | json }}
+          {{ $safeNavigationMigration(departmentsForm.get("selectedDepartments")?.value) | json }}
           <br /><strong>Form Valid:</strong> {{ departmentsForm.valid }}
           <br /><strong>Available Options:</strong>
           {{ (departmentOptions$ | async)?.length || 0 }}

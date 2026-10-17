@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IDivider } from '@shared/components/divider/divider.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
@@ -8,6 +8,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IDivider],
   templateUrl: './dividers.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dividers.component.scss',
 })
 export class DividersComponent {

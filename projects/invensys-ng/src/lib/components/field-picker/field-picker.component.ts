@@ -4,6 +4,7 @@ import {
   forwardRef,
   Input,
   Output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -45,6 +46,7 @@ export interface FieldPickerOption {
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { '(focusout)': 'markTouched()' },
 })
 export class IFieldPicker implements ControlValueAccessor {

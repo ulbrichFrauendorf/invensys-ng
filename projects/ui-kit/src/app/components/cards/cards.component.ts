@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ICard } from '../../../../../invensys-ng/src/lib/components/card/card.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -8,6 +8,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'i-cards',
   imports: [DemoPlaygroundComponent, DemoOptionDirective, ICard, IDialogActions],
   templateUrl: './cards.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cards.component.scss',
 })
 export class CardsComponent {

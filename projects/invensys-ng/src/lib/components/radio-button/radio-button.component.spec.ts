@@ -76,19 +76,21 @@ describe('IRadioButton', () => {
       expect(component.checked).toBe(false);
     });
 
-    it('should emit onChange event', (done) => {
-      component.value = 'test';
-      component.onChange.subscribe((value: any) => {
-        expect(value).toBe('test');
-        done();
+    it('should emit onChange event', async () => {
+      await new Promise<void>((done) => {
+        component.value = 'test';
+        component.onChange.subscribe((value: any) => {
+          expect(value).toBe('test');
+          done();
+        });
+        component.select();
       });
-      component.select();
     });
 
     it('should not emit onChange when already selected', () => {
       component.value = 'test';
       component.writeValue('test');
-      const spy = jasmine.createSpy('onChange');
+      const spy = vi.fn().mockName('onChange');
       component.onChange.subscribe(spy);
       component.select();
       expect(spy).not.toHaveBeenCalled();
@@ -109,7 +111,7 @@ describe('IRadioButton', () => {
     });
 
     it('should register onChange callback', () => {
-      const fn = jasmine.createSpy('onChange');
+      const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
       component.value = 'test';
       component.select();
@@ -117,7 +119,7 @@ describe('IRadioButton', () => {
     });
 
     it('should register onTouched callback', () => {
-      const fn = jasmine.createSpy('onTouched');
+      const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
       component.value = 'test';
       component.select();

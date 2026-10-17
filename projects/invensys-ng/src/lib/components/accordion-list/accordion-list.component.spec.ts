@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { IAccordionList } from './accordion-list.component';
 import { IAccordion } from '../accordion/accordion.component';
@@ -19,6 +19,7 @@ import { IAccordion } from '../accordion/accordion.component';
       </i-accordion>
     </i-accordion-list>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IAccordionList, IAccordion],
 })
 class TestHostComponent {

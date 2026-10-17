@@ -1,4 +1,6 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EMPTY } from 'rxjs';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import {
   IDynamicDialogConfig,
@@ -8,10 +10,14 @@ import {
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
-  let mockDialogRef: jasmine.SpyObj<IDynamicDialogRef>;
+  let mockDialogRef: MockedObject<IDynamicDialogRef>;
 
   beforeEach(async () => {
-    mockDialogRef = jasmine.createSpyObj('IDynamicDialogRef', ['close']);
+    mockDialogRef = {
+      close: vi.fn().mockName('IDynamicDialogRef.close'),
+      onClose: EMPTY,
+      instance: undefined,
+    };
 
     await TestBed.configureTestingModule({
       imports: [ConfirmationDialogComponent],
@@ -67,8 +73,10 @@ describe('ConfirmationDialogComponent', () => {
       fixture.detectChanges();
 
       const buttons = Array.from(
-        fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>,
-      ).map(button => button.textContent?.trim());
+        fixture.nativeElement.querySelectorAll(
+          'button',
+        ) as NodeListOf<HTMLButtonElement>,
+      ).map((button) => button.textContent?.trim());
       expect(buttons).toContain('Delete item');
       expect(buttons).toContain('Keep item');
     });

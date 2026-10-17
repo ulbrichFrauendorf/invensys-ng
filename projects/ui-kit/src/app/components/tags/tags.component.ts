@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ITag } from '@shared/components/tag/tag.component';
 import { ISeverity } from '@shared/enums/IButtonSeverity';
 
@@ -28,6 +28,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, ITag],
   templateUrl: './tags.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./tags.component.scss'],
 })
 export class TagsComponent {

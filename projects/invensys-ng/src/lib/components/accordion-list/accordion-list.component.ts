@@ -5,6 +5,7 @@ import {
   QueryList,
   AfterContentInit,
   OnDestroy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IAccordion } from '../accordion/accordion.component';
@@ -46,6 +47,7 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
 @Component({
   selector: 'i-accordion-list',
   templateUrl: './accordion-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './accordion-list.component.scss',
 })
 export class IAccordionList implements AfterContentInit, OnDestroy {

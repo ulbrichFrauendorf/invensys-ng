@@ -7,6 +7,7 @@ import {
   Input,
   Output,
   QueryList,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IStep } from './step.component';
@@ -39,6 +40,7 @@ export interface StepperChangeEvent {
   standalone: true,
   imports: [NgClass, NgTemplateOutlet],
   templateUrl: './stepper.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './stepper.component.scss',
 })
 export class IStepper implements AfterContentInit {

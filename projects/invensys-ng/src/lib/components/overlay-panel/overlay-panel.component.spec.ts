@@ -37,8 +37,8 @@ describe('IOverlayPanel', () => {
 
   it('should show panel when show() is called', () => {
     const mockEvent = new MouseEvent('click');
-    spyOn(mockEvent, 'preventDefault');
-    spyOn(mockEvent, 'stopPropagation');
+    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
+    vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
 
     component.show(mockEvent);
 
@@ -56,8 +56,8 @@ describe('IOverlayPanel', () => {
 
   it('should toggle panel visibility', () => {
     const mockEvent = new MouseEvent('click');
-    spyOn(mockEvent, 'preventDefault');
-    spyOn(mockEvent, 'stopPropagation');
+    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
+    vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
 
     expect(component.visible).toBe(false);
 
@@ -68,26 +68,30 @@ describe('IOverlayPanel', () => {
     expect(component.visible).toBe(false);
   });
 
-  it('should emit visibleChange when show is called', (done) => {
-    const mockEvent = new MouseEvent('click');
+  it('should emit visibleChange when show is called', async () => {
+    await new Promise<void>((done) => {
+      const mockEvent = new MouseEvent('click');
 
-    component.visibleChange.subscribe((visible: boolean) => {
-      expect(visible).toBe(true);
-      done();
+      component.visibleChange.subscribe((visible: boolean) => {
+        expect(visible).toBe(true);
+        done();
+      });
+
+      component.show(mockEvent);
     });
-
-    component.show(mockEvent);
   });
 
-  it('should emit visibleChange when hide is called', (done) => {
-    component.visible = true;
+  it('should emit visibleChange when hide is called', async () => {
+    await new Promise<void>((done) => {
+      component.visible = true;
 
-    component.visibleChange.subscribe((visible: boolean) => {
-      expect(visible).toBe(false);
-      done();
+      component.visibleChange.subscribe((visible: boolean) => {
+        expect(visible).toBe(false);
+        done();
+      });
+
+      component.hide();
     });
-
-    component.hide();
   });
 
   it('should hide on escape key when dismissable', () => {
@@ -95,7 +99,7 @@ describe('IOverlayPanel', () => {
     component.dismissable = true;
 
     const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
-    spyOn(mockEvent, 'preventDefault');
+    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
 
     component.onEscapeKey(mockEvent);
 

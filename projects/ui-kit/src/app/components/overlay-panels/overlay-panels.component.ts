@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from '@shared/components/button/button.component';
 import { IOverlayPanel } from '@shared/components/overlay-panel/overlay-panel.component';
 
@@ -9,6 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'app-overlay-panels',
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IOverlayPanel],
   templateUrl: './overlay-panels.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./overlay-panels.component.scss', '../shared-demo-styles.scss'],
 })
 export class OverlayPanelsComponent {

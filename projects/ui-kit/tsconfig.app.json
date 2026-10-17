@@ -10,5 +10,16 @@
     "rootDir": "../../"
   },
   "include": ["src/**/*.ts", "../invensys-ng/src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "../invensys-ng/src/**/*.spec.ts"]
+  "exclude": [
+    "src/**/*.spec.ts",
+    "../invensys-ng/src/**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

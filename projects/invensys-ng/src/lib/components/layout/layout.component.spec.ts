@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from './services/layout.service';
@@ -9,31 +10,34 @@ import { MenuModel } from './models/menu.model';
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
-  let layoutService: jasmine.SpyObj<LayoutService>;
-  let router: jasmine.SpyObj<Router>;
+  let layoutService: Pick<LayoutService, 'closeSidebar' | 'syncViewport'> & {
+    state: () => ReturnType<LayoutService['state']>;
+  };
+  let router: MockedObject<Router>;
 
   beforeEach(async () => {
-    const layoutServiceSpy = jasmine.createSpyObj('LayoutService', [
-      'closeSidebar',
-      'syncViewport',
-    ]);
-    layoutServiceSpy.state = jasmine
-      .createSpy('state')
-      .and.returnValue({
-        isSidebarOpen: false,
-        isMobileViewport: false,
-        profileSidebarVisible: false,
-      });
-    layoutServiceSpy.config = jasmine
-      .createSpy('config')
-      .and.returnValue({
-        inputStyle: 'outlined',
-        ripple: true,
-        colorScheme: 'light',
-        scale: 12,
-      });
+    const layoutServiceSpy = {
+      closeSidebar: vi.fn().mockName('LayoutService.closeSidebar'),
+      syncViewport: vi.fn().mockName('LayoutService.syncViewport'),
+      state: vi.fn(),
+      config: vi.fn(),
+    };
+    layoutServiceSpy.state = vi.fn().mockName('state').mockReturnValue({
+      isSidebarOpen: false,
+      isMobileViewport: false,
+      profileSidebarVisible: false,
+    });
+    layoutServiceSpy.config = vi.fn().mockName('config').mockReturnValue({
+      inputStyle: 'outlined',
+      ripple: true,
+      colorScheme: 'light',
+      scale: 12,
+    });
 
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    const routerSpy = {
+      navigate: vi.fn().mockName('Router.navigate'),
+      events: of(new NavigationEnd(0, '/', '/')),
+    };
     routerSpy.events = of(new NavigationEnd(0, '/', '/'));
 
     await TestBed.configureTestingModule({
@@ -48,8 +52,8 @@ describe('LayoutComponent', () => {
     component = fixture.componentInstance;
     layoutService = TestBed.inject(
       LayoutService,
-    ) as jasmine.SpyObj<LayoutService>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    ) as unknown as typeof layoutService;
+    router = TestBed.inject(Router) as MockedObject<Router>;
 
     // Set required inputs
     component.config = {
@@ -62,6 +66,8 @@ describe('LayoutComponent', () => {
 
     fixture.detectChanges();
   });
+
+  afterEach(() => vi.unstubAllGlobals());
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -96,13 +102,11 @@ describe('LayoutComponent', () => {
 
     it('should track pull distance when pulling down', () => {
       // Set up mobile viewport
-      layoutService.state = jasmine
-        .createSpy('state')
-        .and.returnValue({
-          isSidebarOpen: false,
-          isMobileViewport: true,
-          profileSidebarVisible: false,
-        });
+      layoutService.state = vi.fn().mockName('state').mockReturnValue({
+        isSidebarOpen: false,
+        isMobileViewport: true,
+        profileSidebarVisible: false,
+      });
 
       // Simulate touch events
       component['touchStartY'] = 100;
@@ -144,38 +148,38 @@ describe('LayoutComponent', () => {
     });
 
     it('should sync viewport on window resize', () => {
-      spyOn(window as any, 'innerWidth').and.returnValue(1200);
+      vi.stubGlobal('innerWidth', 1200);
       component.onWindowResize();
       expect(layoutService.syncViewport).toHaveBeenCalled();
     });
   });
 
   describe('Mobile Navigation', () => {
-    it('should close sidebar on navigation in mobile viewport', (done) => {
-      const routerEvents = new Subject();
-      (router as any).events = routerEvents.asObservable();
+    it('should close sidebar on navigation in mobile viewport', async () => {
+      await new Promise<void>((done) => {
+        const routerEvents = new Subject();
+        (router as any).events = routerEvents.asObservable();
 
-      layoutService.state = jasmine
-        .createSpy('state')
-        .and.returnValue({
+        layoutService.state = vi.fn().mockName('state').mockReturnValue({
           isSidebarOpen: true,
           isMobileViewport: true,
           profileSidebarVisible: false,
         });
 
-      // Create a new component instance with the modified router
-      const newFixture = TestBed.createComponent(LayoutComponent);
-      const newComponent = newFixture.componentInstance;
-      newComponent.config = component.config;
-      newComponent.menuModel = [];
-      newFixture.detectChanges();
+        // Create a new component instance with the modified router
+        const newFixture = TestBed.createComponent(LayoutComponent);
+        const newComponent = newFixture.componentInstance;
+        newComponent.config = component.config;
+        newComponent.menuModel = [];
+        newFixture.detectChanges();
 
-      routerEvents.next(new NavigationEnd(1, '/test', '/test'));
+        routerEvents.next(new NavigationEnd(1, '/test', '/test'));
 
-      setTimeout(() => {
-        expect(layoutService.closeSidebar).toHaveBeenCalled();
-        done();
-      }, 100);
+        setTimeout(() => {
+          expect(layoutService.closeSidebar).toHaveBeenCalled();
+          done();
+        }, 100);
+      });
     });
   });
 });

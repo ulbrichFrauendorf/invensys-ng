@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   IDynamicDialogConfig,
   IDynamicDialogRef,
 } from './services/dialog.interfaces';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '',
 })
 export abstract class IDialogBase implements OnInit, AfterViewInit {

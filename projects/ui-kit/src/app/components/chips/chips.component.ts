@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { IChip } from '@shared/components/chip/chip.component';
 import {
@@ -20,6 +20,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IMessage,
   ],
   templateUrl: './chips.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./chips.component.scss'],
 })
 export class ChipsComponent {

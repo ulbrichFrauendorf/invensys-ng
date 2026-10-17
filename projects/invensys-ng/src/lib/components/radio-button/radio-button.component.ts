@@ -9,6 +9,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   Injector,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -75,6 +76,7 @@ import { Subject, Subscription } from 'rxjs';
   imports: [],
   templateUrl: './radio-button.component.html',
   styleUrls: ['./radio-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

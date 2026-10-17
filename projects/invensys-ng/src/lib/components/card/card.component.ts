@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   HostBinding,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { IButton } from '../button/button.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -43,6 +44,7 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
   selector: 'i-card',
   imports: [IButton],
   templateUrl: './card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './card.component.scss',
 })
 export class ICard {

@@ -65,13 +65,13 @@ describe('IDialog', () => {
     });
 
     it('should emit visibleChange event on show', () => {
-      spyOn(component.visibleChange, 'emit');
+      vi.spyOn(component.visibleChange, 'emit').mockReturnValue(undefined);
       component.show();
       expect(component.visibleChange.emit).toHaveBeenCalledWith(true);
     });
 
     it('should emit visibleChange event on hide', () => {
-      spyOn(component.visibleChange, 'emit');
+      vi.spyOn(component.visibleChange, 'emit').mockReturnValue(undefined);
       component.hide();
       expect(component.visibleChange.emit).toHaveBeenCalledWith(false);
     });
@@ -82,13 +82,13 @@ describe('IDialog', () => {
       const testFixture = TestBed.createComponent(IDialog);
       const testComponent = testFixture.componentInstance;
       testComponent.visible = true;
-      spyOn(testComponent, 'show');
+      vi.spyOn(testComponent, 'show').mockReturnValue(undefined);
       testComponent.ngOnInit();
       expect(testComponent.show).toHaveBeenCalled();
     });
 
     it('should hide dialog on destroy', () => {
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.ngOnDestroy();
       expect(component.hide).toHaveBeenCalled();
     });
@@ -98,7 +98,7 @@ describe('IDialog', () => {
     it('should close dialog on escape key if closable', () => {
       component.closable = true;
       component.visible = true;
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.onEscapeKey();
       expect(component.hide).toHaveBeenCalled();
     });
@@ -106,7 +106,7 @@ describe('IDialog', () => {
     it('should not close dialog on escape key if not closable', () => {
       component.closable = false;
       component.visible = true;
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.onEscapeKey();
       expect(component.hide).not.toHaveBeenCalled();
     });
@@ -124,7 +124,7 @@ describe('IDialog', () => {
       };
       mockEvent.target = mockEvent.currentTarget;
 
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.onOverlayClick(mockEvent as any);
       expect(component.hide).toHaveBeenCalled();
     });
@@ -139,7 +139,7 @@ describe('IDialog', () => {
       };
       mockEvent.target = mockEvent.currentTarget;
 
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.onOverlayClick(mockEvent as any);
       expect(component.hide).not.toHaveBeenCalled();
     });
@@ -148,7 +148,7 @@ describe('IDialog', () => {
   describe('Close button', () => {
     it('should close dialog on close button click', () => {
       component.closable = true;
-      spyOn(component, 'hide');
+      vi.spyOn(component, 'hide').mockReturnValue(undefined);
       component.onCloseClick();
       expect(component.hide).toHaveBeenCalled();
     });

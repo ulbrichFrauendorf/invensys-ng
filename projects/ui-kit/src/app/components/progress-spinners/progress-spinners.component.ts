@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IProgressSpinner } from '@shared/components/progress-spinner/progress-spinner.component';
 import { IButton } from '@shared/components/button/button.component';
 
@@ -12,6 +12,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IButton,
     ],
   templateUrl: './progress-spinners.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: [
     './progress-spinners.component.scss',
     '../shared-demo-styles.scss',

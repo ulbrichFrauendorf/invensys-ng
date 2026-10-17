@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IAccordion } from '../../../../../invensys-ng/src/lib/components/accordion/accordion.component';
 import { IAccordionList } from '../../../../../invensys-ng/src/lib/components/accordion-list/accordion-list.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -11,6 +11,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IAccordionList,
     ],
   templateUrl: './accordions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './accordions.component.scss',
 })
 export class AccordionsComponent {

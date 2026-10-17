@@ -40,27 +40,31 @@ describe('IDialogActions', () => {
 
   describe('Events', () => {
     it('should emit cancelEvent when onCancel is called', () => {
-      spyOn(component.cancelEvent, 'emit');
+      vi.spyOn(component.cancelEvent, 'emit').mockReturnValue(undefined);
       component.onCancel();
       expect(component.cancelEvent.emit).toHaveBeenCalled();
     });
 
     it('should emit submitEvent when onSubmit is called', () => {
-      spyOn(component.submitEvent, 'emit');
+      vi.spyOn(component.submitEvent, 'emit').mockReturnValue(undefined);
       component.onSubmit();
       expect(component.submitEvent.emit).toHaveBeenCalled();
     });
   });
 
   it('does not submit while disabled or loading, then submits once ready', () => {
-    const emit = spyOn(component.submitEvent, 'emit');
+    const emit = vi
+      .spyOn(component.submitEvent, 'emit')
+      .mockReturnValue(undefined);
     component.submitDisabled = true;
     component.onSubmit();
     component.submitDisabled = false;
     component.submitLoading = true;
     component.onSubmit();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('button[type="submit"]').disabled).toBeTrue();
+    expect(
+      fixture.nativeElement.querySelector('button[type="submit"]').disabled,
+    ).toBe(true);
     expect(emit).not.toHaveBeenCalled();
     component.submitLoading = false;
     fixture.detectChanges();

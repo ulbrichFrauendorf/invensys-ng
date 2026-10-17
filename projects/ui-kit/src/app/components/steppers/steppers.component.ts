@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { IStep } from '../../../../../invensys-ng/src/lib/components/stepper/step.component';
 import { IStepper } from '../../../../../invensys-ng/src/lib/components/stepper/stepper.component';
@@ -10,6 +10,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IStep, IStepper],
   templateUrl: './steppers.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './steppers.component.scss',
 })
 export class SteppersComponent {

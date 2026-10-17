@@ -7,6 +7,7 @@ import {
   OnChanges,
   SimpleChanges,
   ChangeDetectorRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -94,6 +95,7 @@ export type TreeSelectionMode = 'single' | 'multiple' | 'checkbox';
   standalone: true,
   imports: [CommonModule, FormsModule, ICheckbox, IInputText],
   templateUrl: './tree-view.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tree-view.component.scss',
 })
 export class ITreeView implements OnInit, OnChanges {

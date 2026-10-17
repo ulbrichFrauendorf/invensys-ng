@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IChart } from '../../../../../invensys-ng/src/lib/components/chart/chart.component';
 import { IChartData } from '../../../../../invensys-ng/src/lib/components/chart/chart.interfaces';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -9,6 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IChart],
   templateUrl: './charts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './charts.component.scss',
 })
 export class ChartsComponent {

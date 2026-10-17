@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
 import { IDialog } from '@shared/components/dialog/dialog.component';
 import { IButton } from '@shared/components/button/button.component';
@@ -40,6 +40,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IMultiSelect,
   ],
   templateUrl: './dialogs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialogs.component.scss',
 })
 export class DialogsComponent implements OnInit, OnDestroy {

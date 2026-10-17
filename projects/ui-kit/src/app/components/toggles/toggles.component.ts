@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -21,6 +21,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     JsonPipe,
     ],
   templateUrl: './toggles.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './toggles.component.scss',
 })
 export class TogglesComponent {

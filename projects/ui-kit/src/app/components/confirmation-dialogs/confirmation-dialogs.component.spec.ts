@@ -16,7 +16,7 @@ describe('Confirmation dialog playground', () => {
 
   it('updates displayed code when options are enabled, edited, and removed', () => {
     const component = fixture.componentInstance;
-    component.showCode.set(true);
+    fixture.nativeElement.querySelector('button[aria-label="View code"]').click();
     fixture.detectChanges();
     const displayedCode = () => fixture.nativeElement.querySelector('pre code').textContent as string;
     expect(displayedCode()).not.toContain('acceptLabel:');

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   ConfirmationDialogConfig,
@@ -28,6 +28,7 @@ type DialogOption = keyof ConfirmationDialogConfig;
     DemoUsageDirective,
   ],
   templateUrl: './confirmation-dialogs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './confirmation-dialogs.component.scss',
 })
 export class ConfirmationDialogsComponent {

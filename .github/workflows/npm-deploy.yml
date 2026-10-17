@@ -45,7 +45,10 @@ jobs:
           # Keep registry-url unset so npm can authenticate with OIDC trusted publishing.
 
       - name: Install root dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=low
 
       - name: Update version in package.json
         run: |

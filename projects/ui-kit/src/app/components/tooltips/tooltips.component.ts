@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TooltipDirective } from '@shared/directives/tooltip/tooltip.directive';
 import { IButton } from '@shared/components/button/button.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -11,6 +11,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IButton,
     ],
   templateUrl: './tooltips.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tooltips.component.scss',
 })
 export class TooltipsComponent {

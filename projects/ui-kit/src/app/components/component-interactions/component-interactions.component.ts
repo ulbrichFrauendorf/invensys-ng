@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import {
   FormBuilder,
@@ -29,6 +29,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     FormsModule,
     ],
   templateUrl: './component-interactions.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './component-interactions.component.scss',
 })
 export class ComponentInteractionsComponent implements OnInit {

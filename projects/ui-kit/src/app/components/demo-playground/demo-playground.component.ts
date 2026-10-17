@@ -6,6 +6,7 @@ import {
   Input,
   QueryList,
   signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { IButton } from '@shared/components/button/button.component';
@@ -23,6 +24,7 @@ import {
   standalone: true,
   imports: [NgTemplateOutlet, IButton, ICheckbox, CodeDisplayComponent],
   templateUrl: './demo-playground.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './demo-playground.component.scss',
 })
 export class DemoPlaygroundComponent implements AfterContentInit {

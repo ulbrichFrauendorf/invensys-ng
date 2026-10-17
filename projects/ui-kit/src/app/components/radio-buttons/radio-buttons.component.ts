@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -22,6 +22,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     JsonPipe,
     ],
   templateUrl: './radio-buttons.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './radio-buttons.component.scss',
 })
 export class RadioButtonsComponent {

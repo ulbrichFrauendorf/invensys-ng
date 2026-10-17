@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { ISeverity } from '../../../../../invensys-ng/src/lib/enums/IButtonSeverity';
@@ -10,6 +10,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'app-buttons',
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, TitleCasePipe],
   templateUrl: './buttons.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './buttons.component.scss',
 })
 export class ButtonsComponent {

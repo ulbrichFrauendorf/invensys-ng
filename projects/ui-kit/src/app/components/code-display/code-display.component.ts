@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   ViewEncapsulation,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
@@ -95,6 +96,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
     </div>
   `,
   styleUrls: ['./code-display.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy {

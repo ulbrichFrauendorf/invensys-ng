@@ -6,10 +6,16 @@
     "url": "https://github.com/ulbrichFrauendorf/invensys-ng"
   },
   "peerDependencies": {
-    "@angular/common": "^21.2.12",
-    "@angular/core": "^21.2.12",
+    "@angular/animations": "^22.2.3",
+    "@angular/cdk": "^22.2.3",
+    "@angular/common": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/forms": "^22.2.3",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/router": "^22.2.3",
     "chart.js": "^4.5.1",
-    "primeicons": "^7.0.0"
+    "primeicons": "^7.0.0",
+    "rxjs": "^7.8.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

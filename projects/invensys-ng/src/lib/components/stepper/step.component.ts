@@ -1,9 +1,10 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 /** A single step rendered inside an {@link IStepper}. */
 @Component({
   selector: 'i-step',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <ng-template #contentTemplate>
       <ng-content></ng-content>

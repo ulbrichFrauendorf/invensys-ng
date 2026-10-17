@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DemoCardComponent } from '../demo-card/demo-card.component';
 import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/message.component';
 
@@ -6,6 +6,7 @@ import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/
   selector: 'app-theming',
   imports: [DemoCardComponent, IMessage],
   templateUrl: './theming.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './theming.component.scss',
 })
 export class ThemingComponent {

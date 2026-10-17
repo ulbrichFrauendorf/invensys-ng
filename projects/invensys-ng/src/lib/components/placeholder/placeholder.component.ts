@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Arrow direction options for the placeholder icon
@@ -36,6 +36,7 @@ export type PlaceholderArrowDirection =
   standalone: true,
   imports: [],
   templateUrl: './placeholder.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './placeholder.component.scss',
 })
 export class IPlaceholder {

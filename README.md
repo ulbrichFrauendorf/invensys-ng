@@ -2,7 +2,7 @@
 
 A comprehensive Angular component library containing reusable UI components, directives, services, and themes.
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
+Built with [Angular](https://angular.dev/) 22 and Angular CLI 22.
 
 ## Components
 
@@ -28,15 +28,21 @@ The library includes the following components:
 
 ### Development
 
+Use Node.js 24.22.0 (see `.nvmrc`), or another Node.js version supported by Angular 22:
+`^22.22.3 || ^24.15.0 || ^26.0.0`.
+
 To view and test the components in the UI Kit showcase:
 
 ```bash
-npm install
+npm ci
 
 npm run start
 ```
 
 This will launch the ui-kit project at `http://localhost:4200/` where you can see all available components and their usage examples.
+
+Run `npm audit --audit-level=low` to check all locked dependencies, including development tools.
+The publishing workflow runs this audit before building and publishing.
 
 ### Code Scaffolding
 
@@ -75,11 +81,16 @@ npm publish
 
 ## Running Unit Tests
 
-To execute the unit tests via [Karma](https://karma-runner.github.io):
+To execute the unit tests via [Vitest](https://vitest.dev/):
 
 ```bash
-ng test invensys-ng
+npm test -- --watch=false
 ```
+
+Browser regression suites (`npm run test:frontend`, `npm run test:file-upload`, and
+`npm run test:reporting`) use Playwright Chromium. Install it once with
+`npx playwright install chromium`, or set `CHROME_BIN` to an installed Chrome executable.
+The frontend suite runs both desktop and mobile touch profiles.
 
 ## Further Help
 

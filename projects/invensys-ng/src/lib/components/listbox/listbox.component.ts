@@ -12,6 +12,7 @@ import {
   computed,
   InputSignal,
   input,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -109,6 +110,7 @@ export interface ListboxOption {
   imports: [FormsModule, IChipsComponent, IInputText, IButton],
   templateUrl: './listbox.component.html',
   styleUrls: ['./listbox.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

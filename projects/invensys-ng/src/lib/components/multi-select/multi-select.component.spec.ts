@@ -77,7 +77,7 @@ describe('IMultiSelect', () => {
     });
 
     it('should emit onChange event on toggle', () => {
-      spyOn(component.onChange, 'emit');
+      vi.spyOn(component.onChange, 'emit').mockReturnValue(undefined);
       component.toggleOption(mockOptions[0]);
       expect(component.onChange.emit).toHaveBeenCalledWith([
         mockOptions[0]['id'],
@@ -124,7 +124,7 @@ describe('IMultiSelect', () => {
     });
 
     it('should emit onClear event', () => {
-      spyOn(component.onClear, 'emit');
+      vi.spyOn(component.onClear, 'emit').mockReturnValue(undefined);
       component.clearSelection();
       expect(component.onClear.emit).toHaveBeenCalled();
     });
@@ -134,7 +134,7 @@ describe('IMultiSelect', () => {
     it('should remove specific item from selection', () => {
       component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
       const mockEvent = new Event('click');
-      spyOn(mockEvent, 'stopPropagation');
+      vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
 
       component.removeSelectedItem(mockOptions[0]['id'], mockEvent);
 
@@ -181,14 +181,14 @@ describe('IMultiSelect', () => {
     });
 
     it('should register onChange callback', () => {
-      const fn = jasmine.createSpy('onChange');
+      const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
       component.toggleOption(mockOptions[0]);
       expect(fn).toHaveBeenCalled();
     });
 
     it('should register onTouched callback', () => {
-      const fn = jasmine.createSpy('onTouched');
+      const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
       component.toggleOption(mockOptions[0]);
       expect(fn).toHaveBeenCalled();

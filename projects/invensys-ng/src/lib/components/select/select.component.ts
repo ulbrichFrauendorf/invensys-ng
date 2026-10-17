@@ -14,6 +14,7 @@ import {
   computed,
   InputSignal,
   input,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -89,6 +90,7 @@ export interface SelectOption {
   imports: [FormsModule, OverlayModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

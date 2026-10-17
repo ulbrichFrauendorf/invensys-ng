@@ -65,7 +65,7 @@ describe('ICard', () => {
     });
 
     it('should emit closeCard event when close button is clicked', () => {
-      spyOn(component.closeCard, 'emit');
+      vi.spyOn(component.closeCard, 'emit').mockReturnValue(undefined);
       component.onCloseCard();
       expect(component.closeCard.emit).toHaveBeenCalled();
     });

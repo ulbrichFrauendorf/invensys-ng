@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { ICard } from '@shared/components/card/card.component';
 import { CodeDisplayComponent } from '../code-display/code-display.component';
@@ -24,6 +24,7 @@ import { CodeDisplayComponent } from '../code-display/code-display.component';
       ></app-code-display>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host { display: block; min-width: 0; }

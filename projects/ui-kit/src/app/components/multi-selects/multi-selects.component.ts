@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -26,6 +26,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     FormsModule,
     ],
   templateUrl: './multi-selects.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './multi-selects.component.scss',
 })
 export class MultiSelectsComponent implements OnInit {

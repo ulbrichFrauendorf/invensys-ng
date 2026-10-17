@@ -7,7 +7,7 @@ describe('IOrderedList', () => {
     const component = fixture.componentInstance;
     const original = ['A', 'B'];
     component.items = original;
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.itemsChange.subscribe(changed);
     component.move(0, 1);
     expect(changed).toHaveBeenCalledWith(['B', 'A']);
@@ -23,7 +23,7 @@ describe('IOrderedList', () => {
       IOrderedList<string>,
     ).componentInstance;
     component.items = ['A'];
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.itemsChange.subscribe(changed);
     component.move(0, -1);
     component.move(0, 1);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/message.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -9,6 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IMessage],
   templateUrl: './messages.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent {

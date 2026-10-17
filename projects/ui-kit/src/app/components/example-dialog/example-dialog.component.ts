@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import {
   FormBuilder,
@@ -26,6 +26,7 @@ import {
     IListbox,
   ],
   templateUrl: './example-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './example-dialog.component.scss',
 })
 export class ExampleDialogComponent

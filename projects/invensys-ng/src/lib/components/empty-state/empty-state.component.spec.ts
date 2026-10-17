@@ -41,27 +41,31 @@ describe('EmptyStateComponent', () => {
   });
 
   describe('Image loading', () => {
-    it('should set imageLoaded to true after delay', (done) => {
-      expect(component.imageLoaded).toBe(false);
-      component.onImageLoad();
+    it('should set imageLoaded to true after delay', async () => {
+      await new Promise<void>((done) => {
+        expect(component.imageLoaded).toBe(false);
+        component.onImageLoad();
 
-      setTimeout(() => {
-        expect(component.imageLoaded).toBe(true);
-        done();
-      }, 250);
+        setTimeout(() => {
+          expect(component.imageLoaded).toBe(true);
+          done();
+        }, 250);
+      });
     });
 
-    it('should have a 200ms delay before marking image as loaded', (done) => {
-      component.onImageLoad();
+    it('should have a 200ms delay before marking image as loaded', async () => {
+      await new Promise<void>((done) => {
+        component.onImageLoad();
 
-      setTimeout(() => {
-        expect(component.imageLoaded).toBe(false);
-      }, 100);
+        setTimeout(() => {
+          expect(component.imageLoaded).toBe(false);
+        }, 100);
 
-      setTimeout(() => {
-        expect(component.imageLoaded).toBe(true);
-        done();
-      }, 250);
+        setTimeout(() => {
+          expect(component.imageLoaded).toBe(true);
+          done();
+        }, 250);
+      });
     });
   });
 });

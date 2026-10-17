@@ -66,7 +66,7 @@ describe('IChip', () => {
   describe('Remove functionality', () => {
     it('should emit onRemove event when remove is clicked', () => {
       const mockEvent = new Event('click');
-      spyOn(component.onRemove, 'emit');
+      vi.spyOn(component.onRemove, 'emit').mockReturnValue(undefined);
       component.onRemoveClick(mockEvent);
       expect(component.onRemove.emit).toHaveBeenCalledWith(mockEvent);
     });
@@ -74,7 +74,7 @@ describe('IChip', () => {
     it('should not emit onRemove event when disabled', () => {
       component.disabled = true;
       const mockEvent = new Event('click');
-      spyOn(component.onRemove, 'emit');
+      vi.spyOn(component.onRemove, 'emit').mockReturnValue(undefined);
       component.onRemoveClick(mockEvent);
       expect(component.onRemove.emit).not.toHaveBeenCalled();
     });

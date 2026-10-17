@@ -7,6 +7,7 @@ import {
   Output,
   QueryList,
   AfterContentInit,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ITabPanel } from './tab-panel.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -43,6 +44,7 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
   standalone: true,
   imports: [NgClass, NgTemplateOutlet],
   templateUrl: './tabs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tabs.component.scss',
 })
 export class ITabs implements AfterContentInit {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 export type IDividerAlign = 'start' | 'center' | 'end';
 export type IDividerLayout = 'horizontal' | 'vertical';
@@ -29,6 +29,7 @@ export type IDividerLayout = 'horizontal' | 'vertical';
   standalone: true,
   imports: [],
   templateUrl: './divider.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './divider.component.scss',
 })
 export class IDivider {

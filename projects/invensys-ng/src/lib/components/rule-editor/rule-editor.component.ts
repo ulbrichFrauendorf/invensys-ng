@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IButton } from '../button/button.component';
 import { IInputText } from '../input-text/input-text.component';
@@ -41,6 +41,7 @@ export interface EditorRule {
   standalone: true,
   imports: [FormsModule, IButton, IInputText, ISelect, NoContentComponent],
   templateUrl: './rule-editor.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './rule-editor.component.scss',
 })
 export class IRuleEditor {

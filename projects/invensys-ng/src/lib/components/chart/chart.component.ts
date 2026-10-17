@@ -10,6 +10,7 @@ import {
   QueryList,
   ChangeDetectorRef,
   inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import type { LegendItem } from 'chart.js';
@@ -218,6 +219,7 @@ interface IChartLegendItem extends LegendItem {
   standalone: true,
   imports: [],
   templateUrl: './chart.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './chart.component.scss',
 })
 export class IChart implements AfterViewInit, OnDestroy, OnChanges {

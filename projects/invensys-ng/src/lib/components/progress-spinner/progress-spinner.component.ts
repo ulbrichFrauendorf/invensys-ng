@@ -1,11 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ISeverity } from '../../enums/IButtonSeverity';
 
 @Component({
   selector: 'i-progress-spinner',
   imports: [NgClass],
   templateUrl: './progress-spinner.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./progress-spinner.component.scss'],
 })
 export class IProgressSpinner {

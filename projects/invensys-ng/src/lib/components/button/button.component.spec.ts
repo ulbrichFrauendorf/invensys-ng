@@ -27,11 +27,17 @@ describe('IButton', () => {
     component.ariaLabel = 'Expand details';
     component.ariaExpanded = false;
     fixture.detectChanges();
-    expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe('Expand details');
-    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('false');
+    expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe(
+      'Expand details',
+    );
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
+      'false',
+    );
     component.ariaExpanded = true;
     fixture.detectChanges();
-    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('true');
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
+      'true',
+    );
   });
 
   describe('Component Inputs', () => {
@@ -112,20 +118,22 @@ describe('IButton', () => {
   });
 
   describe('Icon Only Detection', () => {
-    it('should not be icon-only with text content', (done) => {
-      component.icon = 'pi pi-check';
-      fixture.detectChanges();
+    it('should not be icon-only with text content', async () => {
+      await new Promise<void>((done) => {
+        component.icon = 'pi pi-check';
+        fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.iconOnly).toBe(false);
-        done();
-      }, 100);
+        setTimeout(() => {
+          expect(component.iconOnly).toBe(false);
+          done();
+        }, 100);
+      });
     });
   });
 
   describe('Event Emissions', () => {
     it('should emit clicked event when button is clicked', () => {
-      spyOn(component.clicked, 'emit');
+      vi.spyOn(component.clicked, 'emit').mockReturnValue(undefined);
       buttonElement.nativeElement.click();
       expect(component.clicked.emit).toHaveBeenCalled();
     });
@@ -133,7 +141,7 @@ describe('IButton', () => {
     it('should not emit clicked event when button is disabled', () => {
       component.disabled = true;
       fixture.detectChanges();
-      spyOn(component.clicked, 'emit');
+      vi.spyOn(component.clicked, 'emit').mockReturnValue(undefined);
 
       buttonElement.nativeElement.click();
       expect(component.clicked.emit).not.toHaveBeenCalled();

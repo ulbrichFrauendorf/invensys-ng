@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, AsyncPipe, JsonPipe } from '@angular/common';
 import {
   FormsModule,
@@ -27,6 +27,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IListbox,
     ],
   templateUrl: './listboxes.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./listboxes.component.scss', '../shared-demo-styles.scss'],
 })
 export class ListboxesComponent implements OnInit, OnDestroy {

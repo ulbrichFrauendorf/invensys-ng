@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   LayoutService,
   LocalStorageColorSchemeKey,
@@ -12,6 +12,7 @@ import { LayoutConfig } from '../models/layout-config.model';
   selector: 'i-topbar',
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink, NgClass, IButton],
 })
 export class TopbarComponent implements OnInit {

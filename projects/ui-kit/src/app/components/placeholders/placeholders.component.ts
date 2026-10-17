@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import {
   IPlaceholder,
@@ -14,6 +14,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   standalone: true,
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IPlaceholder, IButton],
   templateUrl: './placeholders.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./placeholders.component.scss', '../shared-demo-styles.scss'],
 })
 export class PlaceholdersComponent {

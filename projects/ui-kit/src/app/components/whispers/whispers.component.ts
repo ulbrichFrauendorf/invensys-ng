@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { WhisperService } from '../../../../../invensys-ng/src/lib/components/whisper/services/whisper.service';
 import { IWhisper } from '../../../../../invensys-ng/src/lib/components/whisper/whisper.component';
@@ -11,6 +11,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   selector: 'app-whispers',
   imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton],
   templateUrl: './whispers.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './whispers.component.scss',
 })
 export class WhispersComponent {

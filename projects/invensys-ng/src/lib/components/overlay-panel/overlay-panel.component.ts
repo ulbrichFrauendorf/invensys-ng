@@ -8,6 +8,7 @@
   OnDestroy,
   Renderer2,
   NgZone,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import {
   trigger,
@@ -48,6 +49,7 @@ import { ZIndexUtils } from '../../utils/zindexutils';
   imports: [CommonModule, IButton],
   templateUrl: './overlay-panel.component.html',
   styleUrls: ['./overlay-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   animations: [
     trigger('animation', [
       state(

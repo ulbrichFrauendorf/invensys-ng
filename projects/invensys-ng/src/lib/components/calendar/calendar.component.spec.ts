@@ -55,37 +55,37 @@ describe('ICalendar', () => {
   });
 
   it('should toggle calendar panel', () => {
-    expect(component.isOpen).toBeFalse();
+    expect(component.isOpen).toBe(false);
     component.toggleCalendar();
-    expect(component.isOpen).toBeTrue();
+    expect(component.isOpen).toBe(true);
     component.toggleCalendar();
-    expect(component.isOpen).toBeFalse();
+    expect(component.isOpen).toBe(false);
   });
 
   it('should not toggle calendar when disabled', () => {
     component.disabled = true;
     component.isOpen = false;
     component.toggleCalendar();
-    expect(component.isOpen).toBeFalse();
+    expect(component.isOpen).toBe(false);
   });
 
   it('should detect today correctly', () => {
     const today = new Date();
-    expect(component.isToday(today)).toBeTrue();
+    expect(component.isToday(today)).toBe(true);
 
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    expect(component.isToday(yesterday)).toBeFalse();
+    expect(component.isToday(yesterday)).toBe(false);
   });
 
   it('should detect selected date correctly', () => {
     const date = new Date(2024, 0, 15);
     component.value = date;
     component.view = 'date';
-    expect(component.isSelectedDate(date)).toBeTrue();
+    expect(component.isSelectedDate(date)).toBe(true);
 
     const otherDate = new Date(2024, 0, 16);
-    expect(component.isSelectedDate(otherDate)).toBeFalse();
+    expect(component.isSelectedDate(otherDate)).toBe(false);
   });
 
   it('should generate calendar days correctly', () => {
@@ -109,47 +109,53 @@ describe('ICalendar', () => {
     expect(component.viewDate.getMonth()).toBe(1); // February
   });
 
-  it('should emit onSelect when date is selected', (done) => {
-    const date = new Date(2024, 0, 15);
-    component.view = 'date';
-    component.viewDate = new Date(2024, 0, 1);
+  it('should emit onSelect when date is selected', async () => {
+    await new Promise<void>((done) => {
+      const date = new Date(2024, 0, 15);
+      component.view = 'date';
+      component.viewDate = new Date(2024, 0, 1);
 
-    component.onSelect.subscribe((selectedDate: Date) => {
-      expect(selectedDate).toEqual(date);
-      done();
+      component.onSelect.subscribe((selectedDate: Date) => {
+        expect(selectedDate).toEqual(date);
+        done();
+      });
+
+      component.selectDate(date);
     });
-
-    component.selectDate(date);
   });
 
-  it('should select month correctly', (done) => {
-    component.view = 'month';
-    component.viewDate = new Date(2024, 0, 1);
+  it('should select month correctly', async () => {
+    await new Promise<void>((done) => {
+      component.view = 'month';
+      component.viewDate = new Date(2024, 0, 1);
 
-    component.onSelect.subscribe((selectedDate: Date) => {
-      expect(selectedDate.getMonth()).toBe(5); // June
-      done();
+      component.onSelect.subscribe((selectedDate: Date) => {
+        expect(selectedDate.getMonth()).toBe(5); // June
+        done();
+      });
+
+      component.selectMonth(5); // June
     });
-
-    component.selectMonth(5); // June
   });
 
-  it('should select year correctly', (done) => {
-    component.view = 'year';
+  it('should select year correctly', async () => {
+    await new Promise<void>((done) => {
+      component.view = 'year';
 
-    component.onSelect.subscribe((selectedDate: Date) => {
-      expect(selectedDate.getFullYear()).toBe(2025);
-      done();
+      component.onSelect.subscribe((selectedDate: Date) => {
+        expect(selectedDate.getFullYear()).toBe(2025);
+        done();
+      });
+
+      component.selectYear(2025);
     });
-
-    component.selectYear(2025);
   });
 
   it('should set disabled state', () => {
     component.setDisabledState(true);
-    expect(component.disabled).toBeTrue();
+    expect(component.disabled).toBe(true);
 
     component.setDisabledState(false);
-    expect(component.disabled).toBeFalse();
+    expect(component.disabled).toBe(false);
   });
 });

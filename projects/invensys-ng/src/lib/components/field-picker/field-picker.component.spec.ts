@@ -10,8 +10,8 @@ describe('IFieldPicker', () => {
       { key: 'amount', label: 'Amount', group: 'Pay' },
     ];
     const original = ['name'];
-    const change = jasmine.createSpy('change');
-    const touched = jasmine.createSpy('touched');
+    const change = vi.fn().mockName('change');
+    const touched = vi.fn().mockName('touched');
     component.registerOnChange(change);
     component.registerOnTouched(touched);
     component.writeValue(original);
@@ -31,7 +31,7 @@ describe('IFieldPicker', () => {
   it('honors readonly, disabled, and disabled options and handles form reset', () => {
     const component = TestBed.createComponent(IFieldPicker).componentInstance;
     const option = { key: 'a', label: 'A' };
-    const change = jasmine.createSpy('change');
+    const change = vi.fn().mockName('change');
     component.registerOnChange(change);
     component.readonly = true;
     component.select(option, true);

@@ -28,23 +28,23 @@ describe('ITextarea', () => {
     it('should have default values', () => {
       expect(component.label).toBe('Label');
       expect(component.rows).toBe(4);
-      expect(component.disabled).toBeFalse();
-      expect(component.readonly).toBeFalse();
-      expect(component.fluid).toBeFalse();
-      expect(component.useFloatLabel).toBeTrue();
-      expect(component.resizable).toBeTrue();
+      expect(component.disabled).toBe(false);
+      expect(component.readonly).toBe(false);
+      expect(component.fluid).toBe(false);
+      expect(component.useFloatLabel).toBe(true);
+      expect(component.resizable).toBe(true);
     });
 
     it('should apply disabled attribute', () => {
       component.disabled = true;
       fixture.detectChanges();
-      expect(textareaElement.nativeElement.disabled).toBeTrue();
+      expect(textareaElement.nativeElement.disabled).toBe(true);
     });
 
     it('should apply readonly attribute', () => {
       component.readonly = true;
       fixture.detectChanges();
-      expect(textareaElement.nativeElement.readOnly).toBeTrue();
+      expect(textareaElement.nativeElement.readOnly).toBe(true);
     });
 
     it('should apply rows attribute', () => {
@@ -80,7 +80,7 @@ describe('ITextarea', () => {
     it('should set disabled state', () => {
       component.setDisabledState(true);
       fixture.detectChanges();
-      expect(component.disabled).toBeTrue();
+      expect(component.disabled).toBe(true);
     });
   });
 
@@ -94,31 +94,31 @@ describe('ITextarea', () => {
       component.maxLength = 100;
       component.charCountWarnAt = 80;
       component.writeValue('a'.repeat(85));
-      expect(component.charCountWarning).toBeTrue();
-      expect(component.charCountOver).toBeFalse();
+      expect(component.charCountWarning).toBe(true);
+      expect(component.charCountOver).toBe(false);
     });
 
     it('should detect over state at limit', () => {
       component.maxLength = 10;
       component.writeValue('a'.repeat(10));
-      expect(component.charCountOver).toBeTrue();
+      expect(component.charCountOver).toBe(true);
     });
   });
 
   describe('hasValue', () => {
     it('should return false for null value', () => {
       component.value = null;
-      expect(component.hasValue).toBeFalse();
+      expect(component.hasValue).toBe(false);
     });
 
     it('should return false for empty string', () => {
       component.value = '';
-      expect(component.hasValue).toBeFalse();
+      expect(component.hasValue).toBe(false);
     });
 
     it('should return true for non-empty string', () => {
       component.value = 'text';
-      expect(component.hasValue).toBeTrue();
+      expect(component.hasValue).toBe(true);
     });
   });
 });

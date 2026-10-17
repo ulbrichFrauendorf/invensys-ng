@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
 import { IRadioButton } from '../../../../../invensys-ng/src/lib/components/radio-button/radio-button.component';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     FormsModule,
     ],
   templateUrl: './panels.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './panels.component.scss',
 })
 export class PanelsComponent {

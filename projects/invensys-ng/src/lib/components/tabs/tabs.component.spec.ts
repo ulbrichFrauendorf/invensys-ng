@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ITabs } from './tabs.component';
 import { ITabPanel } from './tab-panel.component';
@@ -17,6 +21,7 @@ import { ITabPanel } from './tab-panel.component';
     </i-tabs>
   `,
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ITabs, ITabPanel],
 })
 class TestHostComponent {

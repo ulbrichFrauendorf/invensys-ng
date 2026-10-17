@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IFileUpload } from '@shared/components/file-upload/file-upload.component';
 import { FileUploadOptions } from '@shared/components/file-upload/file-upload.types';
 import { IPlaceholder } from '@shared/components/placeholder/placeholder.component';
@@ -35,6 +35,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     </ng-template>
     </app-demo-playground>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: `
     .border-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     @media (max-width: 700px) { .border-comparison { grid-template-columns: minmax(0, 1fr); } }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 
 /**
@@ -37,6 +37,7 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
 @Component({
   selector: 'i-panel',
   templateUrl: './panel.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './panel.component.scss',
 })
 export class IPanel {

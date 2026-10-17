@@ -16,7 +16,7 @@ describe('IRuleEditor', () => {
       { fieldKey: 'name', operator: 'contains', value: 'Alice' },
     ];
     component.rules = original;
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.rulesChange.subscribe(changed);
     component.changeField(0, component.fields[1]);
     expect(changed).toHaveBeenCalledWith([
@@ -37,7 +37,7 @@ describe('IRuleEditor', () => {
     expect(
       fixture.nativeElement.querySelector('.i-rule-editor__row > i-input-text'),
     ).toBeNull();
-    const changed = jasmine.createSpy('changed');
+    const changed = vi.fn().mockName('changed');
     component.rulesChange.subscribe(changed);
     component.readonly = true;
     component.add();

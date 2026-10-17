@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": { "outDir": "../../out-tsc/page-layout-spec" },
+  "include": [
+    "src/lib/components/page-layout/page-layout.component.spec.ts",
+    "src/lib/components/layout/layout.component.spec.ts"
+  ]
+}

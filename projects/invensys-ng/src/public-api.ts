@@ -30,6 +30,8 @@ export * from './lib/components/tag/tag.component';
 export * from './lib/components/placeholder/placeholder.component';
 export * from './lib/components/no-content/no-content.component';
 export * from './lib/components/layout/layout.component';
+export * from './lib/components/page-layout/page-layout.component';
+export * from './lib/components/page-layout/page-layout-slots.directive';
 export * from './lib/components/layout/topbar/topbar.component';
 export * from './lib/components/layout/sidebar/sidebar.component';
 export * from './lib/components/layout/menu/menu.component';

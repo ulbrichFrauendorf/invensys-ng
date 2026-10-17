@@ -1,12 +1,53 @@
 @use "../../themes/scrollbar-mixins.scss" as scrollbar;
 
 .layout {
+  --layout-topbar-height: 5rem;
   .layout-wrapper {
     display: flex;
     flex-direction: column;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
+
+    // Page layouts share the shell scrollport; other routed pages retain normal shell scrolling.
+    &:has(i-page-layout) {
+      @media (max-width: 991px) {
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+        overscroll-behavior-y: contain;
+      }
+
+      > i-topbar {
+        @media (max-width: 991px) {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          flex: 0 0 auto;
+        }
+
+        &:has(.layout-topbar-menu-mobile-active) {
+          @media (max-width: 991px) {
+            z-index: 11;
+          }
+        }
+      }
+
+      .layout-body {
+        @media (max-width: 991px) {
+          flex: 1 0 auto;
+        }
+
+        .layout-main-container {
+          container-type: size;
+          --layout-content-height: 100cqh;
+
+          @media (max-width: 991px) {
+            container-type: normal;
+            overflow: visible;
+          }
+        }
+      }
+    }
 
     .layout-body {
       display: flex;
@@ -23,6 +64,18 @@
           opacity 0.3s ease;
         opacity: 1;
         @include scrollbar.themed-scrollbar();
+
+        @media (max-width: 991px) {
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100vh;
+          height: 100dvh;
+          z-index: 999;
+          transition: transform 0.2s ease;
+          background: var(--surface-overlay);
+          overflow-y: auto;
+        }
 
         &.sidebar-open {
           transform: translateX(0);
@@ -41,10 +94,15 @@
         flex: 1 1 auto;
         min-width: 0;
         overflow-y: auto;
-        padding: 2rem;
+        padding: 0;
         transition: margin-left 0.3s ease;
         position: relative;
         @include scrollbar.dropdown-scrollbar();
+
+        @media (max-width: 991px) {
+          margin-left: 0;
+          width: 100%;
+        }
 
         .pull-to-refresh-indicator {
           position: absolute;
@@ -128,32 +186,5 @@
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media (max-width: 991px) {
-  .layout {
-    .layout-wrapper {
-      .layout-body {
-        .layout-sidebar-container {
-          position: fixed;
-          left: 0;
-          top: 0;
-          height: 100vh;
-          height: 100dvh;
-          z-index: 999;
-          transition: transform 0.2s ease;
-          background: var(--surface-overlay);
-          overflow-y: auto;
-        }
-
-        .layout-main-container {
-          margin-left: 0;
-          width: 100%;
-          padding: 16px 12px;
-          padding-bottom: max(16px, env(safe-area-inset-bottom));
-        }
-      }
-    }
   }
 }

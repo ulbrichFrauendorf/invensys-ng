@@ -1,0 +1,28 @@
+<div class="page-layout" [class.with-sidebar]="sidebar()">
+  @if (sidebar()) {
+    <aside class="sidebar">
+      <ng-content select="[iPageSidebar]" />
+    </aside>
+  }
+  <div class="page-body">
+    @if (showHeader()) {
+      <header class="page-header">
+        <div class="page-heading">
+          @if (eyebrowText()) {
+            <p class="eyebrow">{{ eyebrowText() }}</p>
+          }
+          <h1>{{ headerText() }}</h1>
+          <ng-content select="[iPageHeaderContent]" />
+        </div>
+        @if (headerActions()) {
+          <div class="header-actions">
+            <ng-content select="[iPageHeaderActions]" />
+          </div>
+        }
+      </header>
+    }
+    <div class="page-content">
+      <ng-content />
+    </div>
+  </div>
+</div>

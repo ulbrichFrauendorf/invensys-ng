@@ -1,6 +1,7 @@
 import { DataEditorsComponent } from './components/data-editors/data-editors.component';
 import { ReportingWorkflowsComponent } from './components/reporting-workflows/reporting-workflows.component';
 import { Routes } from '@angular/router';
+import { PageLayoutsComponent } from './components/page-layouts/page-layouts.component';
 import { FileUploadsComponent } from './components/file-uploads/file-uploads.component';
 import { AppLayoutComponent } from './layout/app-layout.component';
 import { AccordionsComponent } from './components/accordions/accordions.component';
@@ -81,6 +82,7 @@ export const routes: Routes = [
           { path: 'input-texts', component: InputTextsComponent },
           { path: 'textareas', component: TextareasComponent },
           { path: 'layouts', component: LayoutsComponent },
+          { path: 'page-layouts', component: PageLayoutsComponent },
           { path: 'listboxes', component: ListboxesComponent },
           { path: 'messages', component: MessagesComponent },
           { path: 'multi-selects', component: MultiSelectsComponent },

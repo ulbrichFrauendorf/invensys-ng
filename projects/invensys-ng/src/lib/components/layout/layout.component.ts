@@ -115,6 +115,13 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isPullToRefreshInitialized = true;
   }
 
+  private getScrollContainer(container: HTMLElement): HTMLElement {
+    if (window.matchMedia('(max-width: 991px)').matches && container.querySelector('i-page-layout')) {
+      return container.closest<HTMLElement>('.layout-wrapper') ?? container;
+    }
+    return container;
+  }
+
   private handleTouchStart(event: TouchEvent): void {
     this.isPulling = false;
     this.pullDistance.set(0);
@@ -124,7 +131,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const container = this.mainContainer?.nativeElement;
-    if (!container || container.scrollTop > 0) {
+    if (!container || this.getScrollContainer(container).scrollTop > 0) {
       return;
     }
 
@@ -149,7 +156,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const container = this.mainContainer?.nativeElement;
-    if (!container || container.scrollTop > 0) {
+    if (!container || this.getScrollContainer(container).scrollTop > 0) {
       this.isPulling = false;
       this.pullDistance.set(0);
       return;

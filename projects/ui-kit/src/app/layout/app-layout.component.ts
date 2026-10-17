@@ -135,6 +135,11 @@ export class AppLayoutComponent {
           routerLink: ['/components/layouts'],
         },
         {
+          label: 'Page Layouts',
+          icon: 'pi pi-fw pi-align-left',
+          routerLink: ['/components/page-layouts'],
+        },
+        {
           label: 'Cards',
           icon: 'pi pi-fw pi-id-card',
           routerLink: ['/components/cards'],

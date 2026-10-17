@@ -12,6 +12,7 @@ describe('IDialogActions', () => {
 
     fixture = TestBed.createComponent(IDialogActions);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -56,17 +57,19 @@ describe('IDialogActions', () => {
     const emit = vi
       .spyOn(component.submitEvent, 'emit')
       .mockReturnValue(undefined);
-    component.submitDisabled = true;
+    fixture.componentRef.setInput('submitDisabled', true);
     component.onSubmit();
-    component.submitDisabled = false;
-    component.submitLoading = true;
+    fixture.componentRef.setInput('submitDisabled', false);
+    fixture.componentRef.setInput('submitLoading', true);
     component.onSubmit();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('button[type="submit"]').disabled,
     ).toBe(true);
     expect(emit).not.toHaveBeenCalled();
-    component.submitLoading = false;
+    fixture.componentRef.setInput('submitLoading', false);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     fixture.nativeElement.querySelector('button[type="submit"]').click();
     expect(emit).toHaveBeenCalledTimes(1);
@@ -79,7 +82,8 @@ describe('IDialogActions', () => {
     });
 
     it('should hide cancel button when showCancel is false', () => {
-      component.showCancel = false;
+      fixture.componentRef.setInput('showCancel', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const buttons: NodeListOf<HTMLButtonElement> =
         fixture.nativeElement.querySelectorAll('button');
@@ -87,7 +91,8 @@ describe('IDialogActions', () => {
     });
 
     it('should hide submit button when showSubmit is false', () => {
-      component.showSubmit = false;
+      fixture.componentRef.setInput('showSubmit', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const buttons: NodeListOf<HTMLButtonElement> =
         fixture.nativeElement.querySelectorAll('button');

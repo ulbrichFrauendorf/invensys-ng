@@ -20,8 +20,10 @@ describe('IMultiSelect', () => {
     fixture = TestBed.createComponent(IMultiSelect);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('options', mockOptions);
-    component.optionLabel = 'label';
-    component.optionValue = 'id';
+    fixture.componentRef.setInput('optionLabel', 'label');
+
+    fixture.changeDetectorRef.markForCheck();
+
     fixture.detectChanges();
   });
 
@@ -45,6 +47,7 @@ describe('IMultiSelect', () => {
     it('should accept options signal', () => {
       const newOptions = [{ id: 4, label: 'New Option' }];
       fixture.componentRef.setInput('options', newOptions);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.options()).toEqual(newOptions);
     });
@@ -65,27 +68,24 @@ describe('IMultiSelect', () => {
       component.toggleOption(mockOptions[0]);
       component.toggleOption(mockOptions[1]);
       expect(component.value.length).toBe(2);
-      expect(component.value).toContain(mockOptions[0]['id']);
-      expect(component.value).toContain(mockOptions[1]['id']);
+      expect(component.value).toContain(mockOptions[0]);
+      expect(component.value).toContain(mockOptions[1]);
     });
 
     it('should deselect an option', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       component.toggleOption(mockOptions[0]);
       expect(component.value.length).toBe(1);
-      expect(component.value).not.toContain(mockOptions[0]['id']);
+      expect(component.value).not.toContain(mockOptions[0]);
     });
 
     it('should emit onChange event on toggle', () => {
       vi.spyOn(component.onChange, 'emit').mockReturnValue(undefined);
       component.toggleOption(mockOptions[0]);
-      expect(component.onChange.emit).toHaveBeenCalledWith([
-        mockOptions[0]['id'],
-      ]);
+      expect(component.onChange.emit).toHaveBeenCalledWith([mockOptions[0]]);
     });
 
-    it('should store full objects when optionValue is not provided', () => {
-      component.optionValue = undefined;
+    it('should store full objects as the selected value', () => {
       component.toggleOption(mockOptions[0]);
       expect(component.value[0]).toEqual(mockOptions[0]);
     });
@@ -93,19 +93,15 @@ describe('IMultiSelect', () => {
 
   describe('Selected item display', () => {
     it('should display comma-separated labels when under maxSelectedLabels', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       const display = component.getDisplayLabel();
       expect(display).toContain('First Option');
       expect(display).toContain('Second Option');
     });
 
     it('should display item count when exceeding maxSelectedLabels', () => {
-      component.maxSelectedLabels = 2;
-      component.value = [
-        mockOptions[0]['id'],
-        mockOptions[1]['id'],
-        mockOptions[2]['id'],
-      ];
+      fixture.componentRef.setInput('maxSelectedLabels', 2);
+      component.value = [mockOptions[0], mockOptions[1], mockOptions[2]];
       const display = component.getDisplayLabel();
       expect(display).toBe('3 items selected');
     });
@@ -118,7 +114,7 @@ describe('IMultiSelect', () => {
 
   describe('Clear functionality', () => {
     it('should clear all selections', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       component.clearSelection();
       expect(component.value).toEqual([]);
     });
@@ -132,21 +128,24 @@ describe('IMultiSelect', () => {
 
   describe('Remove selected item', () => {
     it('should remove specific item from selection', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       const mockEvent = new Event('click');
       vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
 
-      component.removeSelectedItem(mockOptions[0]['id'], mockEvent);
+      component.onChipRemove({
+        chip: { label: 'First Option', value: mockOptions[0] },
+        originalEvent: mockEvent,
+      });
 
       expect(component.value.length).toBe(1);
-      expect(component.value).not.toContain(mockOptions[0]['id']);
+      expect(component.value).not.toContain(mockOptions[0]);
       expect(mockEvent.stopPropagation).toHaveBeenCalled();
     });
   });
 
   describe('Option state', () => {
     it('should identify selected options', () => {
-      component.value = [mockOptions[0]['id']];
+      component.value = [mockOptions[0]];
       expect(component.isOptionSelected(mockOptions[0])).toBe(true);
       expect(component.isOptionSelected(mockOptions[1])).toBe(false);
     });
@@ -155,6 +154,7 @@ describe('IMultiSelect', () => {
   describe('Filtering', () => {
     it('should filter options by search text', () => {
       component.filterValue.set('first');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const filtered = component.filteredOptions();
       expect(filtered.length).toBe(1);
@@ -163,6 +163,7 @@ describe('IMultiSelect', () => {
 
     it('should show all options when filter is empty', () => {
       component.filterValue.set('');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions().length).toBe(mockOptions.length);
     });
@@ -170,7 +171,7 @@ describe('IMultiSelect', () => {
 
   describe('ControlValueAccessor implementation', () => {
     it('should write value', () => {
-      const values = [mockOptions[0]['id'], mockOptions[1]['id']];
+      const values = [mockOptions[0], mockOptions[1]];
       component.writeValue(values);
       expect(component.value).toEqual(values);
     });
@@ -208,7 +209,7 @@ describe('IMultiSelect', () => {
     });
 
     it('should get error message for required field', () => {
-      component.label = 'Tags';
+      fixture.componentRef.setInput('label', 'Tags');
       component.ngControl = {
         control: {
           invalid: true,
@@ -223,18 +224,21 @@ describe('IMultiSelect', () => {
   describe('Edge cases', () => {
     it('should handle null options array', () => {
       fixture.componentRef.setInput('options', null);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle undefined options array', () => {
       fixture.componentRef.setInput('options', undefined);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle non-array options', () => {
       fixture.componentRef.setInput('options', 'not an array' as any);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
@@ -246,7 +250,8 @@ describe('IMultiSelect', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-multi-select';
+      fixture.componentRef.setInput('id', 'custom-multi-select');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-multi-select');
     });
@@ -254,7 +259,7 @@ describe('IMultiSelect', () => {
 
   describe('Selected labels', () => {
     it('should get labels for selected items', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       const labels = component.getSelectedLabels();
       expect(labels).toEqual(['First Option', 'Second Option']);
     });
@@ -266,7 +271,6 @@ describe('IMultiSelect', () => {
     });
 
     it('should handle full object values', () => {
-      component.optionValue = undefined;
       component.value = [mockOptions[0], mockOptions[1]];
       const labels = component.getSelectedLabels();
       expect(labels).toEqual(['First Option', 'Second Option']);
@@ -275,9 +279,9 @@ describe('IMultiSelect', () => {
 
   describe('Custom error messages', () => {
     it('should use custom error messages', () => {
-      component.errorMessages = {
+      fixture.componentRef.setInput('errorMessages', {
         required: 'Please select at least one option',
-      };
+      });
       component.ngControl = {
         control: {
           invalid: true,
@@ -348,7 +352,7 @@ describe('IMultiSelect', () => {
 
   describe('TrackBy functionality', () => {
     it('should track by value', () => {
-      const value = mockOptions[0]['id'];
+      const value = mockOptions[0];
       expect(component.trackByValue(0, value)).toBe(value);
     });
   });
@@ -358,22 +362,21 @@ describe('IMultiSelect', () => {
       expect(component.getOptionLabel(mockOptions[0])).toBe('First Option');
     });
 
-    it('should get option value with optionValue set', () => {
-      expect(component.getOptionValue(mockOptions[0])).toBe(1);
+    it('should get option value as a full object', () => {
+      expect(component.getOptionValue(mockOptions[0])).toBe(mockOptions[0]);
     });
 
-    it('should get option value without optionValue', () => {
-      component.optionValue = undefined;
+    it('should get option value without projecting a property', () => {
       expect(component.getOptionValue(mockOptions[0])).toEqual(mockOptions[0]);
     });
 
     it('should get option search value', () => {
-      component.filterBy = 'name';
+      fixture.componentRef.setInput('filterBy', 'name');
       expect(component.getOptionSearchValue(mockOptions[0])).toBe('Option 1');
     });
 
     it('should fallback to label for search value', () => {
-      component.filterBy = 'nonexistent';
+      fixture.componentRef.setInput('filterBy', 'nonexistent');
       expect(component.getOptionSearchValue(mockOptions[0])).toBe(
         'First Option',
       );

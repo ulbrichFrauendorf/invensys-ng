@@ -13,6 +13,7 @@ describe('ITag', () => {
 
     fixture = TestBed.createComponent(ITag);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -21,56 +22,64 @@ describe('ITag', () => {
   });
 
   it('should display the value', () => {
-    component.value = 'Active';
+    fixture.componentRef.setInput('value', 'Active');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const span = fixture.debugElement.query(By.css('.i-tag-value'));
     expect(span.nativeElement.textContent.trim()).toBe('Active');
   });
 
   it('should apply severity class', () => {
-    component.severity = 'success';
+    fixture.componentRef.setInput('severity', 'success');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.i-tag'));
     expect(el.nativeElement.classList).toContain('i-tag-success');
   });
 
   it('should apply rounded class when rounded=true', () => {
-    component.rounded = true;
+    fixture.componentRef.setInput('rounded', true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.i-tag'));
     expect(el.nativeElement.classList).toContain('i-tag-rounded');
   });
 
   it('should not apply rounded class when rounded=false', () => {
-    component.rounded = false;
+    fixture.componentRef.setInput('rounded', false);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.i-tag'));
     expect(el.nativeElement.classList).not.toContain('i-tag-rounded');
   });
 
   it('should render icon when provided', () => {
-    component.icon = 'pi pi-check';
+    fixture.componentRef.setInput('icon', 'pi pi-check');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const icon = fixture.debugElement.query(By.css('.i-tag-icon'));
     expect(icon).toBeTruthy();
   });
 
   it('should not render icon element when icon is absent', () => {
-    component.icon = undefined;
+    fixture.componentRef.setInput('icon', undefined);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const icon = fixture.debugElement.query(By.css('.i-tag-icon'));
     expect(icon).toBeNull();
   });
 
   it('should apply sm size class', () => {
-    component.size = 'sm';
+    fixture.componentRef.setInput('size', 'sm');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.i-tag'));
     expect(el.nativeElement.classList).toContain('i-tag-sm');
   });
 
   it('should apply lg size class', () => {
-    component.size = 'lg';
+    fixture.componentRef.setInput('size', 'lg');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const el = fixture.debugElement.query(By.css('.i-tag'));
     expect(el.nativeElement.classList).toContain('i-tag-lg');

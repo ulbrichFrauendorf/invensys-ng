@@ -42,6 +42,7 @@ describe('ICardButton', () => {
 
   it('renders projected content in a native non-submit button and emits once', () => {
     const fixture = TestBed.createComponent(Host);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const button: HTMLButtonElement =
       fixture.nativeElement.querySelector('button');
@@ -57,6 +58,7 @@ describe('ICardButton', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.selected = true;
     fixture.componentInstance.disabled = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const button: HTMLButtonElement =
       fixture.nativeElement.querySelector('button');
@@ -70,6 +72,7 @@ describe('ICardButton', () => {
     const fixture = TestBed.createComponent(ICardButton);
     fixture.componentRef.setInput('title', 'Card title');
     fixture.componentRef.setInput('fullHeight', true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('.i-card-title')?.textContent,
@@ -86,6 +89,7 @@ describe('ICardButton', () => {
 
   it('projects header and footer into the card slots and replaces the default title', () => {
     const fixture = TestBed.createComponent(SlotsHost);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('.i-card-header').textContent,
@@ -102,11 +106,13 @@ describe('ICardButton', () => {
   it('renders routes as real links and removes navigation when disabled', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.route = '/reports';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const anchor: HTMLAnchorElement = fixture.nativeElement.querySelector('a');
     expect(anchor.getAttribute('href')).toBe('/reports');
     expect(fixture.nativeElement.querySelector('button')).toBeNull();
     fixture.componentInstance.disabled = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(anchor.hasAttribute('href')).toBe(false);
     expect(anchor.tabIndex).toBe(-1);

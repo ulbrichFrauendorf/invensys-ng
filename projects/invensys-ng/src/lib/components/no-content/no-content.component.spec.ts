@@ -12,6 +12,7 @@ describe('NoContentComponent', () => {
 
     fixture = TestBed.createComponent(NoContentComponent);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -28,19 +29,22 @@ describe('NoContentComponent', () => {
   });
 
   it('should accept custom icon', () => {
-    component.icon = 'pi pi-search';
+    fixture.componentRef.setInput('icon', 'pi pi-search');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(component.icon).toBe('pi pi-search');
   });
 
   it('should accept custom message', () => {
-    component.message = 'Custom message';
+    fixture.componentRef.setInput('message', 'Custom message');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(component.message).toBe('Custom message');
   });
 
   it('should render icon with correct class', () => {
-    component.icon = 'pi pi-test';
+    fixture.componentRef.setInput('icon', 'pi pi-test');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const icon = compiled.querySelector('i');
@@ -48,7 +52,8 @@ describe('NoContentComponent', () => {
   });
 
   it('should render message text', () => {
-    component.message = 'Test message';
+    fixture.componentRef.setInput('message', 'Test message');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const message = compiled.querySelector('.no-content-message');

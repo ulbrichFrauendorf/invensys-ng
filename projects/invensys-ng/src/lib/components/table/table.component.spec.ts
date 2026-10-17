@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { ITable, TableColumn, TableAction } from './table.component';
+import { ITable, TableColumn, GridAction } from './table.component';
 
 describe('ITable', () => {
   let component: ITable;
@@ -28,8 +28,11 @@ describe('ITable', () => {
 
     fixture = TestBed.createComponent(ITable);
     component = fixture.componentInstance;
-    fixture.componentRef.setInput('data', mockData);
-    fixture.componentRef.setInput('columns', mockColumns);
+    fixture.componentRef.setInput('grid', {
+      rows: mockData,
+      columns: mockColumns,
+    });
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -43,10 +46,9 @@ describe('ITable', () => {
       expect(component.sortable).toBe(false);
       expect(component.filterable).toBe(false);
       expect(component.globalFilter).toBe(false);
-      expect(component.paginator).toBe(false);
-      expect(component.rows).toBe(10);
+
       expect(component.selectionMode).toBeNull();
-      expect(component.showActions).toBe(false);
+
       expect(component.striped).toBe(false);
       expect(component.hoverable).toBe(true);
       expect(component.bordered).toBe(false);
@@ -54,24 +56,32 @@ describe('ITable', () => {
       expect(component.loading).toBe(false);
     });
 
-    it('should accept data signal input', () => {
+    it('updates rows through the grid input', () => {
       const newData = [{ id: 10, name: 'New Product' }];
-      fixture.componentRef.setInput('data', newData);
+      fixture.componentRef.setInput('grid', {
+        rows: newData,
+        columns: mockColumns,
+      });
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(component.data()).toEqual(newData);
+      expect(component.gridRows()).toEqual(newData);
     });
 
-    it('should accept columns signal input', () => {
+    it('updates columns through the grid input', () => {
       const newColumns: TableColumn[] = [{ field: 'test', header: 'Test' }];
-      fixture.componentRef.setInput('columns', newColumns);
+      fixture.componentRef.setInput('grid', {
+        rows: mockData,
+        columns: newColumns,
+      });
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(component.columns()).toEqual(newColumns);
+      expect(component.gridColumns()).toEqual(newColumns);
     });
   });
 
   describe('Data Display', () => {
-    it('should display all data when pagination is disabled', () => {
-      expect(component.paginatedData().length).toBe(mockData.length);
+    it('provides every row for display', () => {
+      expect(component.processedData().length).toBe(mockData.length);
     });
 
     it('should get cell value from row', () => {
@@ -133,7 +143,7 @@ describe('ITable', () => {
 
   describe('Sorting', () => {
     beforeEach(() => {
-      component.sortable = true;
+      fixture.componentRef.setInput('sortable', true);
     });
 
     it('should sort by column', () => {
@@ -162,7 +172,7 @@ describe('ITable', () => {
     });
 
     it('should not sort when sortable is false', () => {
-      component.sortable = false;
+      fixture.componentRef.setInput('sortable', false);
       const column = mockColumns[0];
       component.onSortColumn(column);
       expect(component.sortField).toBe('');
@@ -172,146 +182,95 @@ describe('ITable', () => {
       const column = mockColumns[0];
       expect(component.getSortIcon(column)).toBe('pi pi-sort-alt');
 
-      component.sortField = 'id';
-      component.sortOrder = 'asc';
+      fixture.componentRef.setInput('sortField', 'id');
+      fixture.componentRef.setInput('sortOrder', 'asc');
       expect(component.getSortIcon(column)).toBe('pi pi-sort-amount-up');
 
-      component.sortOrder = 'desc';
+      fixture.componentRef.setInput('sortOrder', 'desc');
       expect(component.getSortIcon(column)).toBe('pi pi-sort-amount-down');
     });
   });
 
   describe('Filtering', () => {
     it('should filter by global filter', async () => {
-      await new Promise<void>((done) => {
-        component.filterDelay = 0;
-        component.onGlobalFilterInput('Product A');
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('filterDelay', 0);
+      component.onGlobalFilterInput('Product A');
 
-        setTimeout(() => {
-          fixture.detectChanges();
-          expect(component.processedData().length).toBe(1);
-          expect(component.processedData()[0].name).toBe('Product A');
-          done();
-        }, 10);
-      });
+      await vi.advanceTimersByTimeAsync(10);
+
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(component.processedData().length).toBe(1);
+      expect(component.processedData()[0].name).toBe('Product A');
     });
 
     it('should filter by column filter', async () => {
-      await new Promise<void>((done) => {
-        component.filterDelay = 0;
-        component.onColumnFilterInput('name', 'Product B');
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('filterDelay', 0);
+      component.onColumnFilterInput('name', 'Product B');
 
-        setTimeout(() => {
-          fixture.detectChanges();
-          expect(component.processedData().length).toBe(1);
-          expect(component.processedData()[0].name).toBe('Product B');
-          done();
-        }, 10);
-      });
+      await vi.advanceTimersByTimeAsync(10);
+
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(component.processedData().length).toBe(1);
+      expect(component.processedData()[0].name).toBe('Product B');
     });
 
     it('should emit onFilter event', async () => {
-      await new Promise<void>((done) => {
-        vi.spyOn(component.onFilter, 'emit').mockReturnValue(undefined);
-        component.filterDelay = 0;
-        component.onGlobalFilterInput('test');
+      vi.useFakeTimers();
+      vi.spyOn(component.onFilter, 'emit').mockReturnValue(undefined);
+      fixture.componentRef.setInput('filterDelay', 0);
+      component.onGlobalFilterInput('test');
 
-        setTimeout(() => {
-          expect(component.onFilter.emit).toHaveBeenCalled();
-          done();
-        }, 10);
-      });
+      await vi.advanceTimersByTimeAsync(10);
+
+      expect(component.onFilter.emit).toHaveBeenCalled();
     });
   });
 
-  describe('Pagination', () => {
-    beforeEach(() => {
-      component.paginator = true;
-      component.rows = 2;
-      component.first = 0;
-      fixture.detectChanges();
+  describe('Grid data updates', () => {
+    it('renders replacement rows and columns through the grid input', async () => {
+      fixture.componentRef.setInput('grid', {
+        columns: [{ field: 'name', header: 'Updated name' }],
+        rows: [mockData[1]],
+      });
+      await fixture.whenStable();
+      expect(
+        fixture.nativeElement.querySelector('thead')?.textContent,
+      ).toContain('Updated name');
+      expect(
+        fixture.nativeElement.querySelector('tbody')?.textContent,
+      ).toContain('Product B');
+      expect(
+        fixture.nativeElement.querySelector('tbody')?.textContent,
+      ).not.toContain('Product A');
     });
-
-    it('should paginate data', () => {
-      expect(component.paginatedData().length).toBe(2);
+    it('sorts the rows without mutating the caller data', () => {
+      fixture.componentRef.setInput('sortable', true);
+      component.onSortColumn(mockColumns[2]);
+      expect(component.processedData().map((row) => row.price)).toEqual([
+        100, 150, 200, 250, 300,
+      ]);
+      expect(mockData.map((row) => row.price)).toEqual([
+        100, 200, 150, 300, 250,
+      ]);
     });
-
-    it('should calculate total records', () => {
-      expect(component.totalRecordsCount).toBe(mockData.length);
-    });
-
-    it('should calculate page count', () => {
-      expect(component.pageCount).toBe(3); // 5 items / 2 per page = 3 pages
-    });
-
-    it('should calculate current page', () => {
-      expect(component.currentPage).toBe(0);
-      component.first = 2;
-      expect(component.currentPage).toBe(1);
-    });
-
-    it('should navigate to specific page', () => {
-      component.goToPage(1);
-      expect(component.first).toBe(2);
-    });
-
-    it('should navigate to first page', () => {
-      component.first = 4;
-      component.goToFirstPage();
-      expect(component.first).toBe(0);
-    });
-
-    it('should navigate to last page', () => {
-      component.goToLastPage();
-      expect(component.currentPage).toBe(2);
-    });
-
-    it('should navigate to previous page', () => {
-      component.first = 2;
-      component.goToPreviousPage();
-      expect(component.first).toBe(0);
-    });
-
-    it('should navigate to next page', () => {
-      component.goToNextPage();
-      expect(component.first).toBe(2);
-    });
-
-    it('should not navigate beyond bounds', () => {
-      component.goToPreviousPage();
-      expect(component.first).toBe(0);
-
-      component.goToLastPage();
-      const lastFirst = component.first;
-      component.goToNextPage();
-      expect(component.first).toBe(lastFirst);
-    });
-
-    it('should emit onPage event', () => {
-      vi.spyOn(component.onPage, 'emit').mockReturnValue(undefined);
-      component.goToPage(1);
-      expect(component.onPage.emit).toHaveBeenCalled();
-    });
-
-    it('should change rows per page', () => {
-      vi.spyOn(component.onPage, 'emit').mockReturnValue(undefined);
-      component.onRowsPerPageChange(5);
-      expect(component.rows).toBe(5);
-      expect(component.first).toBe(0);
-      expect(component.onPage.emit).toHaveBeenCalled();
-    });
-
-    it('should generate page numbers', () => {
-      const pages = component.getPageNumbers();
-      expect(pages).toEqual([0, 1, 2]);
+    it('renders the empty state when a replacement grid has no rows', async () => {
+      fixture.componentRef.setInput('grid', { columns: mockColumns, rows: [] });
+      await fixture.whenStable();
+      expect(
+        fixture.nativeElement.querySelector('i-no-content'),
+      ).not.toBeNull();
     });
   });
 
   describe('Selection', () => {
     describe('Single Selection', () => {
       beforeEach(() => {
-        component.selectionMode = 'single';
-        component.selection = [];
+        fixture.componentRef.setInput('selectionMode', 'single');
+        fixture.componentRef.setInput('selection', []);
       });
 
       it('should select a row', () => {
@@ -348,8 +307,8 @@ describe('ITable', () => {
 
     describe('Multiple Selection', () => {
       beforeEach(() => {
-        component.selectionMode = 'multiple';
-        component.selection = [];
+        fixture.componentRef.setInput('selectionMode', 'multiple');
+        fixture.componentRef.setInput('selection', []);
       });
 
       it('should add to selection', () => {
@@ -378,14 +337,14 @@ describe('ITable', () => {
       });
 
       it('should deselect all when all selected', () => {
-        component.selection = [...mockData];
+        fixture.componentRef.setInput('selection', [...mockData]);
         component.toggleAllSelection();
         expect(component.selection.length).toBe(0);
       });
 
       it('should check if all rows selected', () => {
         expect(component.areAllRowsSelected()).toBe(false);
-        component.selection = [...mockData];
+        fixture.componentRef.setInput('selection', [...mockData]);
         expect(component.areAllRowsSelected()).toBe(true);
       });
 
@@ -393,45 +352,54 @@ describe('ITable', () => {
         expect(component.areSomeRowsSelected()).toBe(false);
         component.toggleRowSelection(mockData[0]);
         expect(component.areSomeRowsSelected()).toBe(true);
-        component.selection = [...mockData];
+        fixture.componentRef.setInput('selection', [...mockData]);
         expect(component.areSomeRowsSelected()).toBe(false);
       });
     });
   });
 
   describe('Row Actions', () => {
-    const mockActions: TableAction[] = [
-      { id: 'edit', icon: 'pi pi-pencil', label: 'Edit' },
-      { id: 'delete', icon: 'pi pi-trash', severity: 'danger' },
+    const mockActions: GridAction[] = [
+      { id: 'edit', icon: 'pi pi-pencil', label: 'Edit', handler: vi.fn() },
+      {
+        id: 'delete',
+        icon: 'pi pi-trash',
+        severity: 'danger',
+        handler: vi.fn(),
+      },
     ];
 
     beforeEach(() => {
-      component.showActions = true;
-      component.actions = mockActions;
-    });
-
-    it('should emit onAction event', () => {
-      vi.spyOn(component.onAction, 'emit').mockReturnValue(undefined);
-      const mockEvent = new MouseEvent('click');
-
-      component.onActionClick(mockActions[0], mockData[0], mockEvent);
-
-      expect(component.onAction.emit).toHaveBeenCalledWith({
-        action: 'edit',
-        row: mockData[0],
+      fixture.componentRef.setInput('grid', {
+        rows: mockData,
+        columns: mockColumns,
+        actions: mockActions,
       });
     });
 
+    it('calls the action handler with the row and stops row selection', () => {
+      const event = new MouseEvent('click');
+      const stop = vi.spyOn(event, 'stopPropagation');
+      component.triggerAction(mockActions[0], mockData[0], event);
+      expect(mockActions[0].handler).toHaveBeenCalledWith(mockData[0]);
+      expect(stop).toHaveBeenCalledOnce();
+    });
+
     it('should check if action is disabled', () => {
-      const disabledAction: TableAction = { id: 'test', disabled: true };
+      const disabledAction: GridAction = {
+        id: 'test',
+        disabled: true,
+        handler: vi.fn(),
+      };
       expect(component.isActionDisabled(disabledAction, mockData[0])).toBe(
         true,
       );
     });
 
     it('should evaluate function-based disabled', () => {
-      const conditionalAction: TableAction = {
+      const conditionalAction: GridAction = {
         id: 'test',
+        handler: vi.fn(),
         disabled: (row) => row.id === 1,
       };
       expect(component.isActionDisabled(conditionalAction, mockData[0])).toBe(
@@ -445,7 +413,11 @@ describe('ITable', () => {
 
   describe('Row Expansion', () => {
     beforeEach(() => {
-      component.rowExpandable = true;
+      fixture.componentRef.setInput('grid', {
+        rows: mockData,
+        columns: mockColumns,
+        details: { columns: mockColumns, rows: () => [mockData[0]] },
+      });
     });
 
     it('should expand row', () => {
@@ -483,28 +455,28 @@ describe('ITable', () => {
     });
 
     it('should include striped class when enabled', () => {
-      component.striped = true;
+      fixture.componentRef.setInput('striped', true);
       const classes = component.getTableClasses();
       expect(classes['i-table--striped']).toBe(true);
     });
 
     it('should include bordered class when enabled', () => {
-      component.bordered = true;
+      fixture.componentRef.setInput('bordered', true);
       const classes = component.getTableClasses();
       expect(classes['i-table--bordered']).toBe(true);
     });
 
     it('should include loading class when loading', () => {
-      component.loading = true;
+      fixture.componentRef.setInput('loading', true);
       const classes = component.getTableClasses();
       expect(classes['i-table--loading']).toBe(true);
     });
 
     it('should include size class', () => {
-      component.size = 'small';
+      fixture.componentRef.setInput('size', 'small');
       expect(component.getTableClasses()['i-table--small']).toBe(true);
 
-      component.size = 'large';
+      fixture.componentRef.setInput('size', 'large');
       expect(component.getTableClasses()['i-table--large']).toBe(true);
     });
   });
@@ -526,3 +498,5 @@ describe('ITable', () => {
     });
   });
 });
+
+afterEach(() => vi.useRealTimers());

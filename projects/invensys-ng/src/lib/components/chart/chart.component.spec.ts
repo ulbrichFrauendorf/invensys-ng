@@ -13,6 +13,7 @@ describe('IChart', () => {
 
     fixture = TestBed.createComponent(IChart);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -42,19 +43,22 @@ describe('IChart', () => {
           ],
         },
       ];
-      component.charts = testCharts;
+      fixture.componentRef.setInput('charts', testCharts);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.charts).toEqual(testCharts);
     });
 
     it('should accept height input', () => {
-      component.height = '30rem';
+      fixture.componentRef.setInput('height', '30rem');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.height).toBe('30rem');
     });
 
     it('should accept responsive input', () => {
-      component.responsive = false;
+      fixture.componentRef.setInput('responsive', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.responsive).toBe(false);
     });
@@ -67,13 +71,13 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       // Give time for chart initialization
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('bar');
-      }, 100);
+
+      expect(component.chartDisplays[0].type).toBe('bar');
     });
 
     it('should map bar-stack type to bar', () => {
@@ -82,12 +86,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('bar');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('bar');
     });
 
     it('should map bar-horizontal type to bar', () => {
@@ -96,12 +99,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('bar');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('bar');
     });
 
     it('should map pie type correctly', () => {
@@ -110,12 +112,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('pie');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('pie');
     });
 
     it('should map doughnut type correctly', () => {
@@ -124,12 +125,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('doughnut');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('doughnut');
     });
 
     it('should map line type correctly', () => {
@@ -138,12 +138,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('line');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('line');
     });
 
     it('should handle all extended chart types', () => {
@@ -152,12 +151,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].type).toBe('bar');
-      }, 100);
+      expect(component.chartDisplays[0].type).toBe('bar');
     });
   });
 
@@ -168,12 +166,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].height).toBe('40rem');
-      }, 100);
+      expect(component.chartDisplays[0].height).toBe('40rem');
     });
 
     it('should use default height for regular bar', () => {
@@ -182,12 +179,11 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        expect(component.chartDisplays[0].height).toBe('20rem');
-      }, 100);
+      expect(component.chartDisplays[0].height).toBe('20rem');
     });
   });
 
@@ -198,17 +194,16 @@ describe('IChart', () => {
         labels: ['A'],
         dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#ff0000'] }],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        expect(dataset.datasets[0].borderColor[0]).toBe('#ff0000');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      expect(dataset.datasets[0].borderColor[0]).toBe('#ff0000');
     });
 
     it('should resolve built-in palette colors like --blue-500', () => {
@@ -219,17 +214,16 @@ describe('IChart', () => {
           { label: 'Test', data: [1], backgroundColors: ['--blue-500'] },
         ],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        expect(dataset.datasets[0].borderColor[0]).toBe('#3b82f6');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      expect(dataset.datasets[0].borderColor[0]).toBe('#3b82f6');
     });
 
     it('should resolve built-in palette colors like --green-400', () => {
@@ -240,17 +234,16 @@ describe('IChart', () => {
           { label: 'Test', data: [1], backgroundColors: ['--green-400'] },
         ],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        expect(dataset.datasets[0].borderColor[0]).toBe('#4cd07d');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      expect(dataset.datasets[0].borderColor[0]).toBe('#4cd07d');
     });
 
     it('should resolve rgb colors as-is', () => {
@@ -261,17 +254,16 @@ describe('IChart', () => {
           { label: 'Test', data: [1], backgroundColors: ['rgb(255, 0, 0)'] },
         ],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        expect(dataset.datasets[0].borderColor[0]).toBe('rgb(255, 0, 0)');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      expect(dataset.datasets[0].borderColor[0]).toBe('rgb(255, 0, 0)');
     });
 
     it('should resolve rgba colors as-is', () => {
@@ -286,17 +278,16 @@ describe('IChart', () => {
           },
         ],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        expect(dataset.datasets[0].borderColor[0]).toBe('rgba(255, 0, 0, 0.5)');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      expect(dataset.datasets[0].borderColor[0]).toBe('rgba(255, 0, 0, 0.5)');
     });
 
     it('should fall back to gray for unknown CSS variables', () => {
@@ -307,18 +298,17 @@ describe('IChart', () => {
           { label: 'Test', data: [1], backgroundColors: ['--unknown-color'] },
         ],
       };
-      component.charts = [chart];
+      fixture.componentRef.setInput('charts', [chart]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      setTimeout(() => {
-        const dataset = component.chartDisplays[0].data as {
-          datasets: {
-            borderColor: string[];
-          }[];
-        };
-        // Falls back to gray-500 for unknown colors
-        expect(dataset.datasets[0].borderColor[0]).toBe('#64748b');
-      }, 100);
+      const dataset = component.chartDisplays[0].data as {
+        datasets: {
+          borderColor: string[];
+        }[];
+      };
+      // Falls back to gray-500 for unknown colors
+      expect(dataset.datasets[0].borderColor[0]).toBe('#64748b');
     });
   });
 
@@ -335,7 +325,7 @@ describe('IChart', () => {
     });
 
     it('should return component height when display height is not set', () => {
-      component.height = '25rem';
+      fixture.componentRef.setInput('height', '25rem');
       const display = {
         id: 'test-2',
         type: 'bar' as const,
@@ -347,45 +337,30 @@ describe('IChart', () => {
   });
 
   describe('Lifecycle', () => {
-    it('should initialize charts after view init', async () => {
-      await new Promise<void>((done) => {
-        const chart: IChartData = {
+    it('initializes a chart after its input is rendered', async () => {
+      fixture.componentRef.setInput('charts', [
+        {
           chartType: 'bar',
           labels: ['A'],
           dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
-        };
-        component.charts = [chart];
-        fixture.detectChanges();
-
-        // Wait for requestAnimationFrame to complete
-        requestAnimationFrame(() => {
-          expect(component.getChartInstanceCount()).toBe(1);
-          done();
-        });
-      });
+        },
+      ]);
+      await fixture.whenStable();
+      await expect.poll(() => component.getChartInstanceCount()).toBe(1);
     });
 
-    it('should have zero chart instances after destroy', async () => {
-      await new Promise<void>((done) => {
-        const chart: IChartData = {
+    it('destroys its chart instances with the fixture', async () => {
+      fixture.componentRef.setInput('charts', [
+        {
           chartType: 'bar',
           labels: ['A'],
           dataSets: [{ label: 'Test', data: [1], backgroundColors: ['#000'] }],
-        };
-        component.charts = [chart];
-        fixture.detectChanges();
-
-        // Wait for charts to initialize
-        requestAnimationFrame(() => {
-          expect(component.getChartInstanceCount()).toBeGreaterThan(0);
-
-          // Destroy the component
-          fixture.destroy();
-
-          // After destroy, the component should clean up (can't verify count after destroy)
-          done();
-        });
-      });
+        },
+      ]);
+      await fixture.whenStable();
+      await expect.poll(() => component.getChartInstanceCount()).toBe(1);
+      fixture.destroy();
+      expect(component.getChartInstanceCount()).toBe(0);
     });
   });
 });

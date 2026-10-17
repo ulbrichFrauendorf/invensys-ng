@@ -13,6 +13,7 @@ describe('EmptyStateComponent', () => {
 
     fixture = TestBed.createComponent(EmptyStateComponent);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -27,14 +28,16 @@ describe('EmptyStateComponent', () => {
     });
 
     it('should accept fixed input', () => {
-      component.fixed = true;
+      fixture.componentRef.setInput('fixed', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.fixed).toBe(true);
     });
 
     it('should accept colorScheme signal input', () => {
       const colorScheme = signal('dark');
-      component.colorScheme = colorScheme;
+      fixture.componentRef.setInput('colorScheme', colorScheme);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.colorScheme()).toBe('dark');
     });
@@ -42,30 +45,28 @@ describe('EmptyStateComponent', () => {
 
   describe('Image loading', () => {
     it('should set imageLoaded to true after delay', async () => {
-      await new Promise<void>((done) => {
-        expect(component.imageLoaded).toBe(false);
-        component.onImageLoad();
+      vi.useFakeTimers();
+      expect(component.imageLoaded).toBe(false);
+      component.onImageLoad();
 
-        setTimeout(() => {
-          expect(component.imageLoaded).toBe(true);
-          done();
-        }, 250);
-      });
+      await vi.advanceTimersByTimeAsync(250);
+
+      expect(component.imageLoaded).toBe(true);
     });
 
     it('should have a 200ms delay before marking image as loaded', async () => {
-      await new Promise<void>((done) => {
-        component.onImageLoad();
+      vi.useFakeTimers();
+      component.onImageLoad();
 
-        setTimeout(() => {
-          expect(component.imageLoaded).toBe(false);
-        }, 100);
+      await vi.advanceTimersByTimeAsync(100);
 
-        setTimeout(() => {
-          expect(component.imageLoaded).toBe(true);
-          done();
-        }, 250);
-      });
+      expect(component.imageLoaded).toBe(false);
+
+      await vi.advanceTimersByTimeAsync(150);
+
+      expect(component.imageLoaded).toBe(true);
     });
   });
 });
+
+afterEach(() => vi.useRealTimers());

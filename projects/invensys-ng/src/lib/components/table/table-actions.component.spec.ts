@@ -35,10 +35,12 @@ class Host {
 describe('ITable action progress', () => {
   it('renders the shared spinner in detail actions, leaves that heading blank, and stops after completion', () => {
     const fixture = TestBed.createComponent(Host);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     fixture.debugElement
       .query(By.css('.i-table-expand-cell button'))
       .nativeElement.click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const tables = fixture.debugElement.queryAll(By.directive(ITable));
     const child = tables[1];
@@ -63,6 +65,7 @@ describe('ITable action progress', () => {
     expect(fixture.componentInstance.handler).not.toHaveBeenCalled();
     fixture.componentInstance.step = { status: 'Completed' };
     fixture.componentInstance.grid = { ...fixture.componentInstance.grid };
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(child.query(By.directive(IProgressSpinner))).toBeNull();
   });

@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ICheckbox } from './checkbox.component';
@@ -13,6 +14,7 @@ describe('ICheckbox', () => {
 
     fixture = TestBed.createComponent(ICheckbox);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -30,25 +32,28 @@ describe('ICheckbox', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Test Label';
+      fixture.componentRef.setInput('label', 'Test Label');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Test Label');
     });
 
     it('should accept size input', () => {
-      component.size = 'large';
+      fixture.componentRef.setInput('size', 'large');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.size).toBe('large');
     });
 
     it('should accept checked input', () => {
-      component.checked = true;
+      fixture.componentRef.setInput('checked', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.checked).toBe(true);
     });
 
     it('should convert truthy values to boolean for checked', () => {
-      component.checked = 'true' as any;
+      fixture.componentRef.setInput('checked', 'true' as any);
       expect(component.checked).toBe(true);
     });
   });
@@ -63,34 +68,33 @@ describe('ICheckbox', () => {
     });
 
     it('should not toggle when disabled', () => {
-      component.disabled = true;
-      component.checked = false;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('checked', false);
       component.toggle();
       expect(component.checked).toBe(false);
     });
 
     it('should not toggle when readonly', () => {
-      component.readonly = true;
-      component.checked = false;
+      fixture.componentRef.setInput('readonly', true);
+      fixture.componentRef.setInput('checked', false);
       component.toggle();
       expect(component.checked).toBe(false);
     });
 
     it('should clear indeterminate state on toggle', () => {
-      component.indeterminate = true;
+      fixture.componentRef.setInput('indeterminate', true);
       component.toggle();
       expect(component.indeterminate).toBe(false);
       expect(component.checked).toBe(false);
     });
 
     it('should emit onChange event', async () => {
-      await new Promise<void>((done) => {
-        component.onChange.subscribe((value: boolean) => {
-          expect(value).toBe(true);
-          done();
-        });
-        component.toggle();
-      });
+      const emittedValue = firstValueFrom(component.onChange);
+      component.toggle();
+
+      const value = await emittedValue;
+
+      expect(value).toBe(true);
     });
   });
 
@@ -122,14 +126,15 @@ describe('ICheckbox', () => {
 
   describe('Indeterminate state', () => {
     it('should support indeterminate state', () => {
-      component.indeterminate = true;
+      fixture.componentRef.setInput('indeterminate', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.indeterminate).toBe(true);
     });
 
     it('should uncheck when toggling from indeterminate', () => {
-      component.indeterminate = true;
-      component.checked = true;
+      fixture.componentRef.setInput('indeterminate', true);
+      fixture.componentRef.setInput('checked', true);
       component.toggle();
       expect(component.indeterminate).toBe(false);
       expect(component.checked).toBe(false);
@@ -142,7 +147,8 @@ describe('ICheckbox', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-checkbox';
+      fixture.componentRef.setInput('id', 'custom-checkbox');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-checkbox');
     });

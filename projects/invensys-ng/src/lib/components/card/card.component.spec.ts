@@ -14,6 +14,7 @@ describe('ICard', () => {
 
     fixture = TestBed.createComponent(ICard);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -28,19 +29,22 @@ describe('ICard', () => {
     });
 
     it('should accept title input', () => {
-      component.title = 'Test Card';
+      fixture.componentRef.setInput('title', 'Test Card');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.title).toBe('Test Card');
     });
 
     it('should accept closable input', () => {
-      component.closable = true;
+      fixture.componentRef.setInput('closable', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.closable).toBe(true);
     });
 
     it('should display title when provided', () => {
-      component.title = 'My Card Title';
+      fixture.componentRef.setInput('title', 'My Card Title');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const titleElement = fixture.debugElement.query(By.css('.i-card-header'));
       expect(titleElement).toBeTruthy();
@@ -49,16 +53,18 @@ describe('ICard', () => {
 
   describe('Close functionality', () => {
     it('should show close button when closable is true', () => {
-      component.closable = true;
-      component.title = 'Closable Card';
+      fixture.componentRef.setInput('closable', true);
+      fixture.componentRef.setInput('title', 'Closable Card');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const closeButton = fixture.debugElement.query(By.css('i-button'));
       expect(closeButton).toBeTruthy();
     });
 
     it('should not show close button when closable is false', () => {
-      component.closable = false;
-      component.title = 'Non-closable Card';
+      fixture.componentRef.setInput('closable', false);
+      fixture.componentRef.setInput('title', 'Non-closable Card');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const closeButton = fixture.debugElement.query(By.css('i-button'));
       expect(closeButton).toBeFalsy();
@@ -77,6 +83,7 @@ describe('ICard', () => {
       const testFixture = TestBed.createComponent(ICard);
       const cardElement = testFixture.nativeElement;
       cardElement.innerHTML = testContent;
+      testFixture.changeDetectorRef.markForCheck();
       testFixture.detectChanges();
 
       expect(cardElement.textContent).toContain(testContent);

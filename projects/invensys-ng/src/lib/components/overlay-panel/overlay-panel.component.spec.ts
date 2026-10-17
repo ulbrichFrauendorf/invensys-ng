@@ -1,120 +1,120 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { IOverlayPanel } from './overlay-panel.component';
 
+@Component({
+  imports: [IOverlayPanel],
+  template: `
+    <button #trigger (click)="panel.toggle($event, trigger)">
+      Toggle panel
+    </button>
+    <i-overlay-panel #panel [dismissable]="dismissable"
+      ><p>Panel content</p></i-overlay-panel
+    >
+  `,
+})
+class OverlayHost {
+  dismissable = true;
+}
+
 describe('IOverlayPanel', () => {
-  let component: IOverlayPanel;
-  let fixture: ComponentFixture<IOverlayPanel>;
+  let fixture: ComponentFixture<OverlayHost>;
+  let panel: IOverlayPanel;
+  let trigger: HTMLButtonElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [IOverlayPanel],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(IOverlayPanel);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should be hidden by default', () => {
-    expect(component.visible).toBe(false);
-  });
-
-  it('should have default position as auto', () => {
-    expect(component.position).toBe('auto');
-  });
-
-  it('should have dismissable as true by default', () => {
-    expect(component.dismissable).toBe(true);
-  });
-
-  it('should have showCloseButton as false by default', () => {
-    expect(component.showCloseButton).toBe(false);
-  });
-
-  it('should show panel when show() is called', () => {
-    const mockEvent = new MouseEvent('click');
-    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
-    vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
-
-    component.show(mockEvent);
-
-    expect(component.visible).toBe(true);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
-    expect(mockEvent.stopPropagation).toHaveBeenCalled();
-  });
-
-  it('should hide panel when hide() is called', () => {
-    component.visible = true;
-    component.hide();
-
-    expect(component.visible).toBe(false);
-  });
-
-  it('should toggle panel visibility', () => {
-    const mockEvent = new MouseEvent('click');
-    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
-    vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
-
-    expect(component.visible).toBe(false);
-
-    component.toggle(mockEvent);
-    expect(component.visible).toBe(true);
-
-    component.toggle(mockEvent);
-    expect(component.visible).toBe(false);
-  });
-
-  it('should emit visibleChange when show is called', async () => {
-    await new Promise<void>((done) => {
-      const mockEvent = new MouseEvent('click');
-
-      component.visibleChange.subscribe((visible: boolean) => {
-        expect(visible).toBe(true);
-        done();
-      });
-
-      component.show(mockEvent);
+    TestBed.configureTestingModule({
+      imports: [OverlayHost],
+      providers: [provideNoopAnimations()],
     });
+    fixture = TestBed.createComponent(OverlayHost);
+    await fixture.whenStable();
+    panel = fixture.debugElement.query(
+      By.directive(IOverlayPanel),
+    ).componentInstance;
+    trigger = fixture.nativeElement.querySelector('button');
   });
 
-  it('should emit visibleChange when hide is called', async () => {
-    await new Promise<void>((done) => {
-      component.visible = true;
+  async function open() {
+    trigger.click();
+    await fixture.whenStable();
+    return document.querySelector<HTMLElement>(
+      '.overlay-panel[role="dialog"]',
+    )!;
+  }
 
-      component.visibleChange.subscribe((visible: boolean) => {
-        expect(visible).toBe(false);
-        done();
-      });
-
-      component.hide();
-    });
+  it('starts hidden and dismissable', () => {
+    expect(panel.visible).toBe(false);
+    expect(panel.dismissable).toBe(true);
+    expect(document.querySelector('.overlay-panel[role="dialog"]')).toBeNull();
   });
 
-  it('should hide on escape key when dismissable', () => {
-    component.visible = true;
-    component.dismissable = true;
-
-    const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
-    vi.spyOn(mockEvent, 'preventDefault').mockReturnValue(undefined);
-
-    component.onEscapeKey(mockEvent);
-
-    expect(component.visible).toBe(false);
-    expect(mockEvent.preventDefault).toHaveBeenCalled();
+  it('opens from its trigger and projects content into a dialog', async () => {
+    const dialog = await open();
+    expect(panel.visible).toBe(true);
+    expect(dialog.textContent).toContain('Panel content');
+    expect(dialog.getAttribute('aria-hidden')).toBe('false');
+    expect(dialog.parentElement).toBe(document.body);
   });
 
-  it('should not hide on escape key when not dismissable', () => {
-    component.visible = true;
-    component.dismissable = false;
+  it('emits lifecycle events after showing and hiding', async () => {
+    const shown = vi.fn();
+    const hidden = vi.fn();
+    panel.onShow.subscribe(shown);
+    panel.onHide.subscribe(hidden);
+    await open();
+    expect(shown).toHaveBeenCalledOnce();
+    trigger.click();
+    await fixture.whenStable();
+    expect(hidden).toHaveBeenCalledOnce();
+    expect(panel.visible).toBe(false);
+    expect(document.querySelector('.overlay-panel[role="dialog"]')).toBeNull();
+  });
 
-    const mockEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+  it('closes through the close button', async () => {
+    const dialog = await open();
+    dialog
+      .querySelector<HTMLButtonElement>('.overlay-panel-close button')!
+      .click();
+    await fixture.whenStable();
+    expect(panel.visible).toBe(false);
+  });
 
-    component.onEscapeKey(mockEvent);
+  it('closes on Escape when dismissable', async () => {
+    const dialog = await open();
+    dialog.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+    );
+    await fixture.whenStable();
+    expect(panel.visible).toBe(false);
+  });
 
-    expect(component.visible).toBe(true);
+  it('keeps the panel open on Escape when dismissal is disabled', async () => {
+    fixture.componentInstance.dismissable = false;
+    fixture.changeDetectorRef.markForCheck();
+    const dialog = await open();
+    dialog.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+    );
+    await fixture.whenStable();
+    expect(panel.visible).toBe(true);
+  });
+
+  it('ignores inside clicks and dismisses on outside clicks', async () => {
+    const dialog = await open();
+    dialog.querySelector('p')!.click();
+    await fixture.whenStable();
+    expect(panel.visible).toBe(true);
+    document.body.click();
+    await fixture.whenStable();
+    expect(panel.visible).toBe(false);
+  });
+
+  it('removes its body overlay when the host is destroyed', async () => {
+    await open();
+    fixture.destroy();
+    expect(document.querySelector('.overlay-panel[role="dialog"]')).toBeNull();
   });
 });

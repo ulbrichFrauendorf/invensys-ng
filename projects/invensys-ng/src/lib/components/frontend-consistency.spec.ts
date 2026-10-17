@@ -35,6 +35,7 @@ describe('Frontend layout and interaction consistency', () => {
     fixture.nativeElement.style.cssText = 'display:block;width:220px;';
     for (const [key, value] of Object.entries(inputs))
       fixture.componentRef.setInput(key, value);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     return fixture;
   }
@@ -83,6 +84,7 @@ describe('Frontend layout and interaction consistency', () => {
     const clear = vi.fn().mockName('clear');
     fixture.componentInstance.closedAll.subscribe(clear);
     fixture.componentRef.setInput('disabled', true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     button.click();
     fixture.componentInstance.onCloseAllClicked(new Event('click'));
@@ -97,6 +99,7 @@ describe('Frontend layout and interaction consistency', () => {
     });
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(fixture.componentInstance.chipsOverflow).toBe(false);
     fixture.componentRef.setInput(
@@ -106,9 +109,11 @@ describe('Frontend layout and interaction consistency', () => {
         value: i,
       })),
     );
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(fixture.componentInstance.chipsOverflow).toBe(true);
     expect(
@@ -131,6 +136,7 @@ describe('Frontend layout and interaction consistency', () => {
       fixture.componentInstance.writeValue(
         type === ISelect ? options[0] : [options[0]],
       );
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const field = fixture.nativeElement.querySelector(
         '.i-option-control',
@@ -169,9 +175,11 @@ describe('Frontend layout and interaction consistency', () => {
   it('removes a chip without opening the picker or changing other selections', async () => {
     const fixture = setup(IMultiSelect, { options, optionLabel: 'label' });
     fixture.componentInstance.writeValue([options[0]]);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const remove = fixture.nativeElement.querySelector(
       '.i-chip-remove-icon',
@@ -197,6 +205,7 @@ describe('Frontend layout and interaction consistency', () => {
       '.i-option-trigger',
     ) as HTMLButtonElement;
     trigger.click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
     const panel = document.querySelector('.i-option-panel') as HTMLElement;
@@ -205,14 +214,17 @@ describe('Frontend layout and interaction consistency', () => {
     const buttons =
       panel.querySelectorAll<HTMLButtonElement>('[role="option"]');
     buttons[0].click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     buttons[1].click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(fixture.componentInstance.value).toEqual(options);
     expect(fixture.componentInstance.isOpen).toBe(true);
     buttons[1].dispatchEvent(
       new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
     );
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(fixture.componentInstance.isOpen).toBe(false);
     expect(document.activeElement).toBe(trigger);

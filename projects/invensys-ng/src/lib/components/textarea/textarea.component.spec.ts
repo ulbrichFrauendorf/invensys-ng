@@ -16,6 +16,7 @@ describe('ITextarea', () => {
 
     fixture = TestBed.createComponent(ITextarea);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     textareaElement = fixture.debugElement.query(By.css('textarea'));
   });
@@ -36,25 +37,29 @@ describe('ITextarea', () => {
     });
 
     it('should apply disabled attribute', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(textareaElement.nativeElement.disabled).toBe(true);
     });
 
     it('should apply readonly attribute', () => {
-      component.readonly = true;
+      fixture.componentRef.setInput('readonly', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(textareaElement.nativeElement.readOnly).toBe(true);
     });
 
     it('should apply rows attribute', () => {
-      component.rows = 6;
+      fixture.componentRef.setInput('rows', 6);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(textareaElement.nativeElement.rows).toBe(6);
     });
 
     it('should apply maxlength attribute when provided', () => {
-      component.maxLength = 100;
+      fixture.componentRef.setInput('maxLength', 100);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(textareaElement.nativeElement.getAttribute('maxlength')).toBe(
         '100',
@@ -67,18 +72,21 @@ describe('ITextarea', () => {
       const nativeEl = textareaElement.nativeElement as HTMLTextAreaElement;
       nativeEl.value = 'Hello world';
       nativeEl.dispatchEvent(new Event('input'));
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.value).toBe('Hello world');
     });
 
     it('should write value via writeValue', () => {
       component.writeValue('Test value');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.value).toBe('Test value');
     });
 
     it('should set disabled state', () => {
       component.setDisabledState(true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
@@ -91,15 +99,15 @@ describe('ITextarea', () => {
     });
 
     it('should detect warning state at threshold', () => {
-      component.maxLength = 100;
-      component.charCountWarnAt = 80;
+      fixture.componentRef.setInput('maxLength', 100);
+      fixture.componentRef.setInput('charCountWarnAt', 80);
       component.writeValue('a'.repeat(85));
       expect(component.charCountWarning).toBe(true);
       expect(component.charCountOver).toBe(false);
     });
 
     it('should detect over state at limit', () => {
-      component.maxLength = 10;
+      fixture.componentRef.setInput('maxLength', 10);
       component.writeValue('a'.repeat(10));
       expect(component.charCountOver).toBe(true);
     });

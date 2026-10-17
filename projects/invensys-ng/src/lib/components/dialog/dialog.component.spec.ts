@@ -12,6 +12,7 @@ describe('IDialog', () => {
 
     fixture = TestBed.createComponent(IDialog);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -28,23 +29,26 @@ describe('IDialog', () => {
       expect(component.closable).toBe(true);
       expect(component.modal).toBe(true);
       expect(component.visible).toBe(false);
-      expect(component.width).toBe('50rem');
+      expect(component.width).toBe('800px');
     });
 
     it('should accept header input', () => {
       component.header = 'Dialog Title';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.header).toBe('Dialog Title');
     });
 
     it('should accept width input', () => {
       component.width = '30rem';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.width).toBe('30rem');
     });
 
     it('should accept closable input', () => {
       component.closable = false;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.closable).toBe(false);
     });
@@ -113,7 +117,8 @@ describe('IDialog', () => {
   });
 
   describe('Modal overlay interactions', () => {
-    it('should close on overlay click if modal and closable', () => {
+    it('closes on overlay click when dismissableMask is enabled', () => {
+      fixture.componentRef.setInput('dismissableMask', true);
       component.modal = true;
       component.closable = true;
       component.visible = true;

@@ -50,6 +50,7 @@ describe('IStepper', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -67,6 +68,7 @@ describe('IStepper', () => {
     fixture.debugElement
       .queryAll(By.css('.i-stepper__trigger'))[1]
       .nativeElement.click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     expect(host.activeIndex).toBe(1);
@@ -78,6 +80,7 @@ describe('IStepper', () => {
     fixture.debugElement
       .queryAll(By.css('.i-stepper__trigger'))[2]
       .nativeElement.click();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(host.activeIndex).toBe(0);
   });
@@ -85,6 +88,7 @@ describe('IStepper', () => {
   it('does not skip an incomplete step in linear mode', () => {
     host.linear = true;
     host.reviewDisabled = false;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     const stepper = fixture.debugElement.query(By.directive(IStepper))
@@ -92,6 +96,7 @@ describe('IStepper', () => {
     expect(stepper.canSelect(1)).toBe(false);
 
     host.detailsComplete = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(stepper.canSelect(1)).toBe(true);
   });
@@ -103,6 +108,7 @@ describe('IStepper', () => {
     expect(first.querySelector('.i-stepper__chevron')).not.toBeNull();
     expect(first.querySelector('.i-stepper__completion')).toBeNull();
     host.detailsComplete = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(first.querySelector('.i-stepper__chevron')).toBeNull();
     expect(first.querySelector('.i-stepper__completion')).not.toBeNull();
@@ -112,6 +118,7 @@ describe('IStepper', () => {
     host.reviewDisabled = false;
     host.activeIndex = 2;
     host.reviewComplete = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const final = fixture.debugElement.queryAll(
       By.css('.i-stepper__trigger'),
@@ -124,6 +131,7 @@ describe('IStepper', () => {
         .nativeElement.textContent,
     ).toContain('Review content');
     host.reviewComplete = false;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
     expect(final.querySelector('.i-stepper__completion')).toBeNull();
@@ -150,6 +158,7 @@ describe('IStepper', () => {
       .componentInstance as IStepper;
     const step = stepper.steps[0];
     step.icon = 'pi pi-file-edit';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     const first = fixture.debugElement.query(

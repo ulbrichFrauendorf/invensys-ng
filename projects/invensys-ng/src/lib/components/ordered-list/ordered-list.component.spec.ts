@@ -6,12 +6,13 @@ describe('IOrderedList', () => {
     const fixture = TestBed.createComponent(IOrderedList<string>);
     const component = fixture.componentInstance;
     const original = ['A', 'B'];
-    component.items = original;
+    fixture.componentRef.setInput('items', original);
     const changed = vi.fn().mockName('changed');
     component.itemsChange.subscribe(changed);
     component.move(0, 1);
     expect(changed).toHaveBeenCalledWith(['B', 'A']);
     expect(original).toEqual(['A', 'B']);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('[role="status"]').textContent,
@@ -19,19 +20,18 @@ describe('IOrderedList', () => {
   });
 
   it('blocks out-of-range and readonly actions', () => {
-    const component = TestBed.createComponent(
-      IOrderedList<string>,
-    ).componentInstance;
-    component.items = ['A'];
+    const fixture = TestBed.createComponent(IOrderedList<string>);
+    const component = fixture.componentInstance;
+    fixture.componentRef.setInput('items', ['A']);
     const changed = vi.fn().mockName('changed');
     component.itemsChange.subscribe(changed);
     component.move(0, -1);
     component.move(0, 1);
     component.remove(2);
-    component.readonly = true;
+    fixture.componentRef.setInput('readonly', true);
     component.remove(0);
     expect(changed).not.toHaveBeenCalled();
-    component.readonly = false;
+    fixture.componentRef.setInput('readonly', false);
     component.remove(0);
     expect(changed).toHaveBeenCalledWith([]);
   });

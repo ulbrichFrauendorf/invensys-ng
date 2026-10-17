@@ -12,6 +12,7 @@ describe('IProgressSpinner', () => {
 
     fixture = TestBed.createComponent(IProgressSpinner);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -25,12 +26,12 @@ describe('IProgressSpinner', () => {
   });
 
   it('should apply small size class', () => {
-    component.size = 'small';
+    fixture.componentRef.setInput('size', 'small');
     expect(component.sizeClass).toBe('spinner-small');
   });
 
   it('should apply large size class', () => {
-    component.size = 'large';
+    fixture.componentRef.setInput('size', 'large');
     expect(component.sizeClass).toBe('spinner-large');
   });
 

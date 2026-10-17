@@ -17,6 +17,7 @@ describe('IInputText', () => {
 
     fixture = TestBed.createComponent(IInputText);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     inputElement = fixture.debugElement.query(By.css('input'));
   });
@@ -41,67 +42,78 @@ describe('IInputText', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Username';
+      fixture.componentRef.setInput('label', 'Username');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Username');
     });
 
     it('should accept type input', () => {
-      component.type = 'password';
+      fixture.componentRef.setInput('type', 'password');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.type).toBe('password');
     });
 
     it('should accept icon input', () => {
-      component.icon = 'pi pi-search';
+      fixture.componentRef.setInput('icon', 'pi pi-search');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.icon).toBe('pi pi-search');
     });
 
     it('should accept readonly input', () => {
-      component.readonly = true;
+      fixture.componentRef.setInput('readonly', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.readonly).toBe(true);
     });
 
     it('should accept backgroundStyle input', () => {
-      component.backgroundStyle = 'component';
+      fixture.componentRef.setInput('backgroundStyle', 'component');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.backgroundStyle).toBe('component');
     });
 
     it('should accept fluid input', () => {
-      component.fluid = true;
+      fixture.componentRef.setInput('fluid', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.fluid).toBe(true);
     });
 
     it('should accept forceFloated input', () => {
-      component.forceFloated = true;
+      fixture.componentRef.setInput('forceFloated', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.forceFloated).toBe(true);
     });
 
     it('should accept hideText input', () => {
-      component.hideText = true;
+      fixture.componentRef.setInput('hideText', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.hideText).toBe(true);
     });
 
     it('should accept useFloatLabel input', () => {
-      component.useFloatLabel = false;
+      fixture.componentRef.setInput('useFloatLabel', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.useFloatLabel).toBe(false);
     });
 
     it('should accept placeholder input', () => {
-      component.placeholder = 'Enter text';
+      fixture.componentRef.setInput('placeholder', 'Enter text');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.placeholder).toBe('Enter text');
     });
 
     it('should accept disabled input', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
@@ -151,7 +163,7 @@ describe('IInputText', () => {
 
   describe('Validation and errors', () => {
     it('should show errors when externalInvalid is true', () => {
-      component.externalInvalid = true;
+      fixture.componentRef.setInput('externalInvalid', true);
       expect(component.showErrors).toBe(true);
     });
 
@@ -180,13 +192,13 @@ describe('IInputText', () => {
     });
 
     it('should display external error message', () => {
-      component.externalInvalid = true;
-      component.externalErrorMessage = 'Custom error';
+      fixture.componentRef.setInput('externalInvalid', true);
+      fixture.componentRef.setInput('externalErrorMessage', 'Custom error');
       expect(component.getErrorMessage()).toBe('Custom error');
     });
 
     it('should generate default required error message', () => {
-      component.label = 'Email';
+      fixture.componentRef.setInput('label', 'Email');
       component.ngControl = {
         control: {
           invalid: true,
@@ -223,7 +235,7 @@ describe('IInputText', () => {
     });
 
     it('should generate pattern error message', () => {
-      component.label = 'Phone';
+      fixture.componentRef.setInput('label', 'Phone');
       component.ngControl = {
         control: {
           invalid: true,
@@ -238,7 +250,9 @@ describe('IInputText', () => {
     });
 
     it('should handle custom error messages', () => {
-      component.errorMessages = { required: 'This field cannot be empty' };
+      fixture.componentRef.setInput('errorMessages', {
+        required: 'This field cannot be empty',
+      });
       component.ngControl = {
         control: {
           invalid: true,
@@ -313,19 +327,22 @@ describe('IInputText', () => {
     });
 
     it('should render password input', () => {
-      component.type = 'password';
+      fixture.componentRef.setInput('type', 'password');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(inputElement.nativeElement.type).toBe('password');
     });
 
     it('should render email input', () => {
-      component.type = 'email';
+      fixture.componentRef.setInput('type', 'email');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(inputElement.nativeElement.type).toBe('email');
     });
 
     it('should render number input', () => {
-      component.type = 'number';
+      fixture.componentRef.setInput('type', 'number');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(inputElement.nativeElement.type).toBe('number');
     });
@@ -351,14 +368,16 @@ describe('IInputText', () => {
 
   describe('State Management', () => {
     it('should handle disabled state in DOM', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(inputElement.nativeElement.disabled).toBe(true);
     });
 
     it('should handle readonly state in DOM', () => {
-      component.readonly = true;
+      fixture.componentRef.setInput('readonly', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(inputElement.nativeElement.readOnly).toBe(true);
@@ -371,7 +390,8 @@ describe('IInputText', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-input';
+      fixture.componentRef.setInput('id', 'custom-input');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-input');
     });

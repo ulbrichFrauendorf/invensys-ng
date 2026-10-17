@@ -40,6 +40,7 @@ describe('IAccordionList', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -60,6 +61,7 @@ describe('IAccordionList', () => {
 
     it('should accept multiple input', () => {
       hostComponent.multiple = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const accordionList = fixture.debugElement.query(
         By.directive(IAccordionList),
@@ -71,6 +73,7 @@ describe('IAccordionList', () => {
   describe('Single expansion mode', () => {
     it('should collapse other accordions when one is expanded', async () => {
       hostComponent.multiple = false;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       const accordions = fixture.debugElement.queryAll(
@@ -81,12 +84,14 @@ describe('IAccordionList', () => {
 
       // Expand first accordion
       accordion1.toggle();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(accordion1.expanded).toBe(true);
       expect(accordion2.expanded).toBe(false);
 
       // Expand second accordion - first should collapse
       accordion2.toggle();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(accordion1.expanded).toBe(false);
       expect(accordion2.expanded).toBe(true);
@@ -96,6 +101,7 @@ describe('IAccordionList', () => {
   describe('Multiple expansion mode', () => {
     it('should allow multiple accordions to be expanded', () => {
       hostComponent.multiple = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       const accordions = fixture.debugElement.queryAll(
@@ -106,11 +112,13 @@ describe('IAccordionList', () => {
 
       // Expand first accordion
       accordion1.toggle();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(accordion1.expanded).toBe(true);
 
       // Expand second accordion - first should remain expanded
       accordion2.toggle();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(accordion1.expanded).toBe(true);
       expect(accordion2.expanded).toBe(true);

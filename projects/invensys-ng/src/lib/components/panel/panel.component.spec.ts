@@ -12,6 +12,7 @@ describe('IPanel', () => {
 
     fixture = TestBed.createComponent(IPanel);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -27,19 +28,22 @@ describe('IPanel', () => {
     });
 
     it('should accept header input', () => {
-      component.header = 'Test Header';
+      fixture.componentRef.setInput('header', 'Test Header');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.header).toBe('Test Header');
     });
 
     it('should accept collapsed input', () => {
-      component.collapsed = true;
+      fixture.componentRef.setInput('collapsed', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.collapsed).toBe(true);
     });
 
     it('should accept toggleable input', () => {
-      component.toggleable = false;
+      fixture.componentRef.setInput('toggleable', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.toggleable).toBe(false);
     });
@@ -55,8 +59,8 @@ describe('IPanel', () => {
     });
 
     it('should not toggle when toggleable is false', () => {
-      component.toggleable = false;
-      component.collapsed = false;
+      fixture.componentRef.setInput('toggleable', false);
+      fixture.componentRef.setInput('collapsed', false);
       component.toggle();
       expect(component.collapsed).toBe(false);
     });

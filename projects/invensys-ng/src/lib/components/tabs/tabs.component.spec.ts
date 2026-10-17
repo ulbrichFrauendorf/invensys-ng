@@ -44,6 +44,7 @@ describe('ITabs', () => {
 
     fixture = TestBed.createComponent(ITabs);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -74,6 +75,7 @@ describe('ITabs with host', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     tabsElement = fixture.debugElement.query(By.directive(ITabs));
   });
@@ -131,6 +133,7 @@ describe('ITabs with host', () => {
     it('should change active tab on click', () => {
       const tabs = fixture.debugElement.queryAll(By.css('.i-tabs__tab'));
       tabs[1].nativeElement.click();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(hostComponent.activeIndex).toBe(1);
@@ -142,6 +145,7 @@ describe('ITabs with host', () => {
     it('should emit onChange event when tab is clicked', () => {
       const tabs = fixture.debugElement.queryAll(By.css('.i-tabs__tab'));
       tabs[1].nativeElement.click();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(hostComponent.lastChangeEvent).toBeTruthy();
@@ -151,6 +155,7 @@ describe('ITabs with host', () => {
     it('should not change tab when disabled tab is clicked', () => {
       const tabs = fixture.debugElement.queryAll(By.css('.i-tabs__tab'));
       tabs[3].nativeElement.click();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(hostComponent.activeIndex).toBe(0);
@@ -169,6 +174,7 @@ describe('ITabs with host', () => {
     it('should switch content when tab changes', () => {
       const tabs = fixture.debugElement.queryAll(By.css('.i-tabs__tab'));
       tabs[1].nativeElement.click();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       const panels = fixture.debugElement.queryAll(By.css('.i-tabs__panel'));
@@ -238,6 +244,7 @@ describe('ITabPanel', () => {
 
     fixture = TestBed.createComponent(ITabPanel);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -266,24 +273,28 @@ describe('ITabPanel', () => {
   describe('Inputs', () => {
     it('should accept header input', () => {
       component.header = 'Test Header';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.header).toBe('Test Header');
     });
 
     it('should accept icon input', () => {
       component.icon = 'pi pi-home';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.icon).toBe('pi pi-home');
     });
 
     it('should accept disabled input', () => {
       component.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
 
     it('should accept closable input', () => {
       component.closable = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.closable).toBe(true);
     });

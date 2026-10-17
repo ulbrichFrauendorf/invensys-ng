@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { IToggle } from './toggle.component';
@@ -13,6 +14,7 @@ describe('IToggle', () => {
 
     fixture = TestBed.createComponent(IToggle);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -29,25 +31,28 @@ describe('IToggle', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Test Label';
+      fixture.componentRef.setInput('label', 'Test Label');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Test Label');
     });
 
     it('should accept size input', () => {
-      component.size = 'large';
+      fixture.componentRef.setInput('size', 'large');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.size).toBe('large');
     });
 
     it('should accept checked input', () => {
-      component.checked = true;
+      fixture.componentRef.setInput('checked', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.checked).toBe(true);
     });
 
     it('should convert truthy values to boolean for checked', () => {
-      component.checked = 'true' as any;
+      fixture.componentRef.setInput('checked', 'true' as any);
       expect(component.checked).toBe(true);
     });
   });
@@ -62,27 +67,26 @@ describe('IToggle', () => {
     });
 
     it('should not toggle when disabled', () => {
-      component.disabled = true;
-      component.checked = false;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('checked', false);
       component.toggle();
       expect(component.checked).toBe(false);
     });
 
     it('should not toggle when readonly', () => {
-      component.readonly = true;
-      component.checked = false;
+      fixture.componentRef.setInput('readonly', true);
+      fixture.componentRef.setInput('checked', false);
       component.toggle();
       expect(component.checked).toBe(false);
     });
 
     it('should emit onChange event', async () => {
-      await new Promise<void>((done) => {
-        component.onChange.subscribe((value: boolean) => {
-          expect(value).toBe(true);
-          done();
-        });
-        component.toggle();
-      });
+      const emittedValue = firstValueFrom(component.onChange);
+      component.toggle();
+
+      const value = await emittedValue;
+
+      expect(value).toBe(true);
     });
   });
 
@@ -118,7 +122,8 @@ describe('IToggle', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-toggle';
+      fixture.componentRef.setInput('id', 'custom-toggle');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-toggle');
     });

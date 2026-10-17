@@ -1,6 +1,7 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OPTION_OVERLAY_POSITIONS, handleOptionKeys } from '../../utils/option-picker';
 import {
+  afterNextRender,
   Component,
   Input,
   ElementRef,
@@ -177,7 +178,8 @@ export class ISelect implements ControlValueAccessor {
   @Input() nativeOnMobile = true;
 
   get nativeSelectedIndex(): string {
-    return String((this.options() || []).findIndex(option => this.isOptionSelected(option)));
+    const options = this.options();
+    return String(Array.isArray(options) ? options.findIndex(option => this.isOptionSelected(option)) : -1);
   }
 
   onNativeChange(event: Event): void {
@@ -349,7 +351,7 @@ export class ISelect implements ControlValueAccessor {
   componentId = UniqueComponentId('i-select-');
 
   constructor(private injector: Injector) {
-    setTimeout(() => {
+    afterNextRender(() => {
       this.ngControl = this.injector.get(NgControl, null);
     });
   }

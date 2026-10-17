@@ -81,16 +81,32 @@ npm publish
 
 ## Running Unit Tests
 
-To execute the unit tests via [Vitest](https://vitest.dev/):
+Unit tests use [Vitest](https://vitest.dev/), standalone Angular test components,
+and zoneless change detection. The library suite runs in Playwright Chromium so
+layout, focus, animations, and native controls are tested in a real browser.
+The showcase suite uses jsdom.
+
+Use the Node.js version in `.nvmrc`, then install the browser once:
+
+```bash
+npx --no-install playwright install chromium
+```
+
+Alternatively, set `CHROME_BIN` to an installed Chrome executable. Run both projects:
 
 ```bash
 npm test -- --watch=false
 ```
 
-Browser regression suites (`npm run test:frontend`, `npm run test:file-upload`, and
-`npm run test:reporting`) use Playwright Chromium. Install it once with
-`npx playwright install chromium`, or set `CHROME_BIN` to an installed Chrome executable.
-The frontend suite runs both desktop and mobile touch profiles.
+`npm run test:frontend` additionally runs desktop and mobile touch profiles.
+`npm run test:file-upload` and `npm run test:reporting` run focused browser suites.
+
+When adding tests, update inputs with `fixture.componentRef.setInput`, use
+`await fixture.whenStable()` for scheduled rendering, and test user interactions
+through the DOM. Await observable outputs with `firstValueFrom` and use Vitest fake
+timers for debounce and delay behavior. Avoid unawaited timer callbacks and
+Zone.js `fakeAsync`/`tick` helpers. CI builds both projects, runs the full suite and
+the desktop/touch regressions, and audits dependencies.
 
 ## Further Help
 

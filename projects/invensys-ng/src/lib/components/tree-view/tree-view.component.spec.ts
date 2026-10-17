@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ITreeView, ITreeNode } from './tree-view.component';
@@ -32,7 +33,8 @@ describe('ITreeView', () => {
     fixture = TestBed.createComponent(ITreeView);
     component = fixture.componentInstance;
 
-    component.value = createTreeData();
+    fixture.componentRef.setInput('value', createTreeData());
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -53,13 +55,15 @@ describe('ITreeView', () => {
 
     it('should accept value input', () => {
       const newData: ITreeNode[] = [{ key: '3', label: 'Test Node' }];
-      component.value = newData;
+      fixture.componentRef.setInput('value', newData);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.value).toEqual(newData);
     });
 
     it('should accept selectionMode input', () => {
-      component.selectionMode = 'checkbox';
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.selectionMode).toBe('checkbox');
     });
@@ -109,7 +113,7 @@ describe('ITreeView', () => {
 
   describe('Single selection mode', () => {
     beforeEach(() => {
-      component.selectionMode = 'single';
+      fixture.componentRef.setInput('selectionMode', 'single');
     });
 
     it('should select a node', () => {
@@ -122,7 +126,7 @@ describe('ITreeView', () => {
 
     it('should deselect a selected node', () => {
       const node = mockTreeData[0];
-      component.selection = node;
+      fixture.componentRef.setInput('selection', node);
       const mockEvent = new Event('click');
 
       component.selectSingleNode(mockEvent, node);
@@ -141,8 +145,8 @@ describe('ITreeView', () => {
 
   describe('Multiple selection mode', () => {
     beforeEach(() => {
-      component.selectionMode = 'multiple';
-      component.selection = [];
+      fixture.componentRef.setInput('selectionMode', 'multiple');
+      fixture.componentRef.setInput('selection', []);
     });
 
     it('should select multiple nodes', () => {
@@ -159,7 +163,7 @@ describe('ITreeView', () => {
 
     it('should deselect a selected node', () => {
       const node = mockTreeData[0];
-      component.selection = [node];
+      fixture.componentRef.setInput('selection', [node]);
       const mockEvent = new Event('click');
 
       component.selectMultipleNode(mockEvent, node);
@@ -169,8 +173,8 @@ describe('ITreeView', () => {
 
   describe('Checkbox selection mode', () => {
     beforeEach(() => {
-      component.selectionMode = 'checkbox';
-      component.selection = [];
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selection', []);
     });
 
     it('should select node with checkbox', () => {
@@ -182,7 +186,7 @@ describe('ITreeView', () => {
     });
 
     it('should propagate selection down to children', () => {
-      component.propagateSelectionDown = true;
+      fixture.componentRef.setInput('propagateSelectionDown', true);
       const parentNode = mockTreeData[0];
       const mockEvent = new Event('click');
 
@@ -194,7 +198,7 @@ describe('ITreeView', () => {
     });
 
     it('should propagate selection up to parent', () => {
-      component.propagateSelectionUp = true;
+      fixture.componentRef.setInput('propagateSelectionUp', true);
       const childNode = component.value[0].children![0];
       const parentNode = component.value[0];
       const mockEvent = new Event('click');
@@ -208,7 +212,7 @@ describe('ITreeView', () => {
     it('should detect partial selection', () => {
       const parentNode = mockTreeData[0];
       const child1 = parentNode.children![0];
-      component.selection = [child1];
+      fixture.componentRef.setInput('selection', [child1]);
 
       expect(component.isPartiallySelected(parentNode)).toBe(true);
     });
@@ -216,7 +220,7 @@ describe('ITreeView', () => {
 
   describe('Filtering', () => {
     beforeEach(() => {
-      component.filter = true;
+      fixture.componentRef.setInput('filter', true);
     });
 
     it('shows search by default and filters from the input control', async () => {
@@ -226,6 +230,7 @@ describe('ITreeView', () => {
       expect(input.getAttribute('aria-label')).toBe('Search tree');
       input.value = 'Child 1-1';
       input.dispatchEvent(new Event('input', { bubbles: true }));
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredValue.length).toBe(1);
       expect(component.filteredValue[0].children?.length).toBe(1);
@@ -245,7 +250,7 @@ describe('ITreeView', () => {
     });
 
     it('propagates checkbox selections through the original hierarchy while searching', () => {
-      component.selectionMode = 'checkbox';
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
       component.filterValue = 'Child 1-1';
       component.applyFilter();
       component.selectCheckboxNode(
@@ -260,10 +265,10 @@ describe('ITreeView', () => {
     });
 
     it('keeps hidden selections when select all is toggled in search results', () => {
-      component.selectionMode = 'checkbox';
-      component.selectAll = true;
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selectAll', true);
       const hidden = component.value[1].children![0];
-      component.selection = [hidden];
+      fixture.componentRef.setInput('selection', [hidden]);
       component.filterValue = 'Child 1-1';
       component.applyFilter();
       component.selectAllChecked = true;
@@ -328,8 +333,8 @@ describe('ITreeView', () => {
 
   describe('Select All functionality', () => {
     beforeEach(() => {
-      component.selectionMode = 'checkbox';
-      component.selectAll = true;
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selectAll', true);
     });
 
     it('should select all nodes', () => {
@@ -343,8 +348,9 @@ describe('ITreeView', () => {
     });
 
     it('should deselect all nodes', () => {
-      component.selection = (component as any).flattenNodes(
-        component.filteredValue,
+      fixture.componentRef.setInput(
+        'selection',
+        (component as any).flattenNodes(component.filteredValue),
       );
       component.selectAllChecked = false;
       component.onSelectAllChange();
@@ -376,7 +382,7 @@ describe('ITreeView', () => {
     });
 
     it('should not handle click in checkbox mode', () => {
-      component.selectionMode = 'checkbox';
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
       const node = mockTreeData[0];
       const mockEvent = new Event('click');
       const initialSelection = component.selection;
@@ -388,46 +394,42 @@ describe('ITreeView', () => {
 
   describe('Checkbox change handling', () => {
     it('should handle checkbox change', async () => {
-      await new Promise<void>((done) => {
-        component.selectionMode = 'checkbox';
-        component.selection = [];
-        const node = mockTreeData[0].children![0];
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selection', []);
+      const node = mockTreeData[0].children![0];
 
-        component.onCheckboxChange(true, node);
+      component.onCheckboxChange(true, node);
 
-        setTimeout(() => {
-          expect((component.selection as ITreeNode[]).includes(node)).toBe(
-            true,
-          );
-          done();
-        }, 100);
-      });
+      await vi.advanceTimersByTimeAsync(100);
+
+      expect((component.selection as ITreeNode[]).includes(node)).toBe(true);
     });
   });
 
   describe('Selection state', () => {
     it('should identify selected node in single mode', () => {
-      component.selectionMode = 'single';
+      fixture.componentRef.setInput('selectionMode', 'single');
       const node = mockTreeData[0];
-      component.selection = node;
+      fixture.componentRef.setInput('selection', node);
 
       expect(component.isSelected(node)).toBe(true);
       expect(component.isSelected(mockTreeData[1])).toBe(false);
     });
 
     it('should identify selected nodes in multiple mode', () => {
-      component.selectionMode = 'multiple';
+      fixture.componentRef.setInput('selectionMode', 'multiple');
       const node = mockTreeData[0];
-      component.selection = [node];
+      fixture.componentRef.setInput('selection', [node]);
 
       expect(component.isSelected(node)).toBe(true);
       expect(component.isSelected(mockTreeData[1])).toBe(false);
     });
 
     it('should identify selected nodes in checkbox mode', () => {
-      component.selectionMode = 'checkbox';
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
       const node = mockTreeData[0];
-      component.selection = [node];
+      fixture.componentRef.setInput('selection', [node]);
 
       expect(component.isSelected(node)).toBe(true);
       expect(component.isSelected(mockTreeData[1])).toBe(false);
@@ -436,9 +438,9 @@ describe('ITreeView', () => {
 
   describe('Node highlighting', () => {
     it('should highlight selected node in non-checkbox mode', () => {
-      component.selectionMode = 'single';
+      fixture.componentRef.setInput('selectionMode', 'single');
       const node = mockTreeData[0];
-      component.selection = node;
+      fixture.componentRef.setInput('selection', node);
 
       expect(component.isNodeHighlighted(node)).toBe(true);
     });
@@ -454,7 +456,7 @@ describe('ITreeView', () => {
         },
       ];
 
-      component.value = nodes;
+      fixture.componentRef.setInput('value', nodes);
       component.ngOnInit();
 
       expect(nodes[0].children![0].parent).toBe(nodes[0]);
@@ -463,7 +465,7 @@ describe('ITreeView', () => {
 
   describe('Filter keyup handling', () => {
     it('should update filter value on keyup', () => {
-      component.filter = true;
+      fixture.componentRef.setInput('filter', true);
       const mockEvent = {
         target: { value: 'test filter' },
       } as any;
@@ -488,19 +490,19 @@ describe('ITreeView', () => {
 
   describe('Select all state update', () => {
     it('should update select all checked state', () => {
-      component.selectionMode = 'checkbox';
-      component.selectAll = true;
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selectAll', true);
       const allNodes = (component as any).flattenNodes(component.filteredValue);
-      component.selection = allNodes;
+      fixture.componentRef.setInput('selection', allNodes);
 
       component.updateSelectAllState();
       expect(component.selectAllChecked).toBe(true);
     });
 
     it('should uncheck select all when not all selected', () => {
-      component.selectionMode = 'checkbox';
-      component.selectAll = true;
-      component.selection = [mockTreeData[0]];
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selectAll', true);
+      fixture.componentRef.setInput('selection', [mockTreeData[0]]);
 
       component.updateSelectAllState();
       expect(component.selectAllChecked).toBe(false);
@@ -546,34 +548,32 @@ describe('ITreeView', () => {
 
   describe('Event emissions', () => {
     it('should emit onNodeSelect event', async () => {
-      await new Promise<void>((done) => {
-        const node = mockTreeData[0].children![0];
-        const mockEvent = new Event('click');
+      const node = mockTreeData[0].children![0];
+      const mockEvent = new Event('click');
 
-        component.onNodeSelect.subscribe((event) => {
-          expect(event.node).toBe(node);
-          expect(event.originalEvent).toBe(mockEvent);
-          done();
-        });
+      const emittedValue = firstValueFrom(component.onNodeSelect);
 
-        component.selectCheckboxNode(mockEvent, node);
-      });
+      component.selectCheckboxNode(mockEvent, node);
+
+      const event = await emittedValue;
+
+      expect(event.node).toBe(node);
+      expect(event.originalEvent).toBe(mockEvent);
     });
 
     it('should emit onNodeUnselect event', async () => {
-      await new Promise<void>((done) => {
-        component.selectionMode = 'checkbox';
-        const node = mockTreeData[0].children![0];
-        component.selection = [node];
-        const mockEvent = new Event('click');
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      const node = mockTreeData[0].children![0];
+      fixture.componentRef.setInput('selection', [node]);
+      const mockEvent = new Event('click');
 
-        component.onNodeUnselect.subscribe((event) => {
-          expect(event.node).toBe(node);
-          done();
-        });
+      const emittedValue = firstValueFrom(component.onNodeUnselect);
 
-        component.selectCheckboxNode(mockEvent, node);
-      });
+      component.selectCheckboxNode(mockEvent, node);
+
+      const event = await emittedValue;
+
+      expect(event.node).toBe(node);
     });
 
     it('should emit onNodeCollapse event', () => {
@@ -592,7 +592,7 @@ describe('ITreeView', () => {
 
   describe('Edge cases', () => {
     it('should handle empty tree data', () => {
-      component.value = [];
+      fixture.componentRef.setInput('value', []);
       component.ngOnInit();
       expect(component.filteredValue).toEqual([]);
     });
@@ -603,7 +603,7 @@ describe('ITreeView', () => {
     });
 
     it('should handle propagation without parent', () => {
-      component.selectionMode = 'checkbox';
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
       const selection: ITreeNode[] = [];
       const node: ITreeNode = { key: '1', label: 'Test' };
 
@@ -656,3 +656,5 @@ describe('ITreeView', () => {
     });
   });
 });
+
+afterEach(() => vi.useRealTimers());

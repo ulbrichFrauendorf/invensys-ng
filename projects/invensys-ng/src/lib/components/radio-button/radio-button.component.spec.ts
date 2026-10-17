@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { IRadioButton } from './radio-button.component';
@@ -17,6 +18,8 @@ describe('IRadioButton', () => {
 
     fixture = TestBed.createComponent(IRadioButton);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('value', 'initial-option');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -32,31 +35,36 @@ describe('IRadioButton', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Test Label';
+      fixture.componentRef.setInput('label', 'Test Label');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Test Label');
     });
 
     it('should accept value input', () => {
-      component.value = 'option1';
+      fixture.componentRef.setInput('value', 'option1');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.value).toBe('option1');
     });
 
     it('should accept name input', () => {
-      component.name = 'testGroup';
+      fixture.componentRef.setInput('name', 'testGroup');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.name).toBe('testGroup');
     });
 
     it('should accept disabled input', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
 
     it('should accept fluid input', () => {
-      component.fluid = true;
+      fixture.componentRef.setInput('fluid', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.fluid).toBe(true);
     });
@@ -64,31 +72,30 @@ describe('IRadioButton', () => {
 
   describe('Selection functionality', () => {
     it('should select when clicked and not disabled', () => {
-      component.value = 'test';
+      fixture.componentRef.setInput('value', 'test');
       component.select();
       expect(component.checked).toBe(true);
     });
 
     it('should not select when disabled', () => {
-      component.disabled = true;
-      component.value = 'test';
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('value', 'test');
       component.select();
       expect(component.checked).toBe(false);
     });
 
     it('should emit onChange event', async () => {
-      await new Promise<void>((done) => {
-        component.value = 'test';
-        component.onChange.subscribe((value: any) => {
-          expect(value).toBe('test');
-          done();
-        });
-        component.select();
-      });
+      fixture.componentRef.setInput('value', 'test');
+      const emittedValue = firstValueFrom(component.onChange);
+      component.select();
+
+      const value = await emittedValue;
+
+      expect(value).toBe('test');
     });
 
     it('should not emit onChange when already selected', () => {
-      component.value = 'test';
+      fixture.componentRef.setInput('value', 'test');
       component.writeValue('test');
       const spy = vi.fn().mockName('onChange');
       component.onChange.subscribe(spy);
@@ -99,13 +106,13 @@ describe('IRadioButton', () => {
 
   describe('ControlValueAccessor implementation', () => {
     it('should write value and update checked state', () => {
-      component.value = 'option1';
+      fixture.componentRef.setInput('value', 'option1');
       component.writeValue('option1');
       expect(component.checked).toBe(true);
     });
 
     it('should not be checked when writeValue does not match', () => {
-      component.value = 'option1';
+      fixture.componentRef.setInput('value', 'option1');
       component.writeValue('option2');
       expect(component.checked).toBe(false);
     });
@@ -113,7 +120,7 @@ describe('IRadioButton', () => {
     it('should register onChange callback', () => {
       const fn = vi.fn().mockName('onChange');
       component.registerOnChange(fn);
-      component.value = 'test';
+      fixture.componentRef.setInput('value', 'test');
       component.select();
       expect(fn).toHaveBeenCalledWith('test');
     });
@@ -121,7 +128,7 @@ describe('IRadioButton', () => {
     it('should register onTouched callback', () => {
       const fn = vi.fn().mockName('onTouched');
       component.registerOnTouched(fn);
-      component.value = 'test';
+      fixture.componentRef.setInput('value', 'test');
       component.select();
       expect(fn).toHaveBeenCalled();
     });
@@ -138,13 +145,14 @@ describe('IRadioButton', () => {
     });
 
     it('should use custom inputId when provided', () => {
-      component.inputId = 'custom-radio';
+      fixture.componentRef.setInput('inputId', 'custom-radio');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.effectiveInputId).toBe('custom-radio');
     });
 
     it('should use componentId when inputId is not provided', () => {
-      component.inputId = undefined;
+      fixture.componentRef.setInput('inputId', undefined);
       expect(component.effectiveInputId).toBe(component.componentId);
     });
   });
@@ -164,11 +172,8 @@ describe('IRadioButton', () => {
     let radioButtons: IRadioButton[];
 
     beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        declarations: [GroupTestHost],
-        imports: [IRadioButton],
-      }).compileComponents();
       hostFixture = TestBed.createComponent(GroupTestHost);
+      hostFixture.changeDetectorRef.markForCheck();
       hostFixture.detectChanges();
 
       const debugEls = hostFixture.debugElement.queryAll(
@@ -214,12 +219,8 @@ describe('IRadioButton', () => {
       class SharedControlHost {
         control = sharedControl;
       }
-
-      TestBed.configureTestingModule({
-        declarations: [SharedControlHost],
-        imports: [IRadioButton, ReactiveFormsModule],
-      });
       const sharedFixture = TestBed.createComponent(SharedControlHost);
+      sharedFixture.changeDetectorRef.markForCheck();
       sharedFixture.detectChanges();
 
       const debugEls = sharedFixture.debugElement.queryAll(
@@ -233,6 +234,7 @@ describe('IRadioButton', () => {
 
       // Change control value to 'two'
       sharedFixture.componentInstance.control.setValue('two');
+      sharedFixture.changeDetectorRef.markForCheck();
       sharedFixture.detectChanges();
       expect(radios[0].checked).toBe(false);
       expect(radios[1].checked).toBe(true);
@@ -260,12 +262,8 @@ describe('IRadioButton', () => {
       class FormGroupHost {
         form = new FormGroup({ choice: new FormControl('first') });
       }
-
-      TestBed.configureTestingModule({
-        declarations: [FormGroupHost],
-        imports: [IRadioButton, ReactiveFormsModule],
-      });
       const fgFixture = TestBed.createComponent(FormGroupHost);
+      fgFixture.changeDetectorRef.markForCheck();
       fgFixture.detectChanges();
 
       const debugEls = fgFixture.debugElement.queryAll(
@@ -278,6 +276,7 @@ describe('IRadioButton', () => {
 
       // change form value
       fgFixture.componentInstance.form.controls['choice'].setValue('second');
+      fgFixture.changeDetectorRef.markForCheck();
       fgFixture.detectChanges();
       expect(radios[0].checked).toBe(false);
       expect(radios[1].checked).toBe(true);

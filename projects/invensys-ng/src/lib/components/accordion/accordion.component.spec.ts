@@ -13,6 +13,7 @@ describe('IAccordion', () => {
 
     fixture = TestBed.createComponent(IAccordion);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -29,31 +30,36 @@ describe('IAccordion', () => {
     });
 
     it('should accept header input', () => {
-      component.header = 'Test Header';
+      fixture.componentRef.setInput('header', 'Test Header');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.header).toBe('Test Header');
     });
 
     it('should accept expanded input', () => {
-      component.expanded = true;
+      fixture.componentRef.setInput('expanded', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.expanded).toBe(true);
     });
 
     it('should accept disabled input', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
 
     it('should accept icon input', () => {
-      component.icon = 'pi pi-info-circle';
+      fixture.componentRef.setInput('icon', 'pi pi-info-circle');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.icon).toBe('pi pi-info-circle');
     });
 
     it('should display header when provided', () => {
-      component.header = 'My Accordion Title';
+      fixture.componentRef.setInput('header', 'My Accordion Title');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const titleElement = fixture.debugElement.query(
         By.css('.i-accordion-title'),
@@ -62,7 +68,8 @@ describe('IAccordion', () => {
     });
 
     it('should display icon when provided', () => {
-      component.icon = 'pi pi-info-circle';
+      fixture.componentRef.setInput('icon', 'pi pi-info-circle');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const iconElement = fixture.debugElement.query(
         By.css('.i-accordion-icon'),
@@ -72,6 +79,7 @@ describe('IAccordion', () => {
     });
 
     it('should not display icon when not provided', () => {
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const iconElement = fixture.debugElement.query(
         By.css('.i-accordion-icon'),
@@ -90,8 +98,8 @@ describe('IAccordion', () => {
     });
 
     it('should not toggle when disabled', () => {
-      component.disabled = true;
-      component.expanded = false;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('expanded', false);
       component.toggle();
       expect(component.expanded).toBe(false);
     });
@@ -109,7 +117,7 @@ describe('IAccordion', () => {
     });
 
     it('should not emit events when disabled', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
       vi.spyOn(component.expandedChange, 'emit').mockReturnValue(undefined);
       vi.spyOn(component.onToggle, 'emit').mockReturnValue(undefined);
       component.toggle();
@@ -127,21 +135,24 @@ describe('IAccordion', () => {
 
   describe('CSS Classes', () => {
     it('should add expanded class when expanded', () => {
-      component.expanded = true;
+      fixture.componentRef.setInput('expanded', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const accordion = fixture.debugElement.query(By.css('.i-accordion'));
       expect(accordion.nativeElement.classList).toContain('expanded');
     });
 
     it('should add disabled class when disabled', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const accordion = fixture.debugElement.query(By.css('.i-accordion'));
       expect(accordion.nativeElement.classList).toContain('disabled');
     });
 
     it('should add collapsed class to content wrapper when not expanded', () => {
-      component.expanded = false;
+      fixture.componentRef.setInput('expanded', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const contentWrapper = fixture.debugElement.query(
         By.css('.i-accordion-content-wrapper'),
@@ -150,7 +161,8 @@ describe('IAccordion', () => {
     });
 
     it('should remove collapsed class from content wrapper when expanded', () => {
-      component.expanded = true;
+      fixture.componentRef.setInput('expanded', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const contentWrapper = fixture.debugElement.query(
         By.css('.i-accordion-content-wrapper'),
@@ -168,7 +180,8 @@ describe('IAccordion', () => {
       const header = fixture.debugElement.query(By.css('.i-accordion-header'));
       expect(header.attributes['aria-expanded']).toBe('false');
 
-      component.expanded = true;
+      fixture.componentRef.setInput('expanded', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(header.attributes['aria-expanded']).toBe('true');
     });
@@ -177,7 +190,8 @@ describe('IAccordion', () => {
       const header = fixture.debugElement.query(By.css('.i-accordion-header'));
       expect(header.attributes['aria-disabled']).toBe('false');
 
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(header.attributes['aria-disabled']).toBe('true');
     });

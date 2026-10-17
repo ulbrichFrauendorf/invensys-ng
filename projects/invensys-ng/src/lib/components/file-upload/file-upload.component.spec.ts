@@ -14,11 +14,13 @@ describe('IFileUpload', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(IFileUpload);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
   it('uses the placeholder dashed border colour and card surface', () => {
     const placeholder = TestBed.createComponent(IPlaceholder);
+    placeholder.changeDetectorRef.markForCheck();
     placeholder.detectChanges();
     // TestBed's renderer replaces the previous root when creating a second fixture.
     document.body.appendChild(fixture.nativeElement);
@@ -47,7 +49,7 @@ describe('IFileUpload', () => {
 
   it('accepts arbitrary files by default and deduplicates against the selection and batch', () => {
     const first = file('first.txt');
-    component.files = [first];
+    fixture.componentRef.setInput('files', [first]);
     const emit = vi
       .spyOn(component.filesChange, 'emit')
       .mockReturnValue(undefined);
@@ -62,7 +64,9 @@ describe('IFileUpload', () => {
   });
 
   it('matches extensions, exact MIME types and wildcard MIME types', () => {
-    component.options = { fileTypes: ['.pdf', 'text/plain', 'image/*'] };
+    fixture.componentRef.setInput('options', {
+      fileTypes: ['.pdf', 'text/plain', 'image/*'],
+    });
     const files = [
       file('A.PDF'),
       file('no-extension', 3, 'text/plain'),
@@ -87,15 +91,19 @@ describe('IFileUpload', () => {
     component.addFiles([empty]);
     expect(component.error?.code).toBe('emptyFile');
     expect(emit).not.toHaveBeenCalled();
-    component.options = { allowEmptyFiles: true };
+    fixture.componentRef.setInput('options', { allowEmptyFiles: true });
     component.addFiles([empty]);
     expect(emit).toHaveBeenCalledTimes(1);
     expect(emit).toHaveBeenCalledWith([empty]);
   });
 
   it('enforces per-file, count and total limits including existing files', () => {
-    component.options = { maxFiles: 2, maxFileSize: 4, maxTotalSize: 6 };
-    component.files = [file('existing.txt')];
+    fixture.componentRef.setInput('options', {
+      maxFiles: 2,
+      maxFileSize: 4,
+      maxTotalSize: 6,
+    });
+    fixture.componentRef.setInput('files', [file('existing.txt')]);
     const emit = vi
       .spyOn(component.filesChange, 'emit')
       .mockReturnValue(undefined);
@@ -118,8 +126,8 @@ describe('IFileUpload', () => {
   });
 
   it('replaces the selection in single-file mode and rejects multiple dropped files', () => {
-    component.options = { multiple: false };
-    component.files = [file('old.txt')];
+    fixture.componentRef.setInput('options', { multiple: false });
+    fixture.componentRef.setInput('files', [file('old.txt')]);
     const replacement = file('new.txt');
     const emit = vi
       .spyOn(component.filesChange, 'emit')
@@ -133,8 +141,8 @@ describe('IFileUpload', () => {
   });
 
   it('blocks selection, drops and removal while disabled', () => {
-    component.files = [file('old.txt')];
-    component.disabled = true;
+    fixture.componentRef.setInput('files', [file('old.txt')]);
+    fixture.componentRef.setInput('disabled', true);
     const emit = vi
       .spyOn(component.filesChange, 'emit')
       .mockReturnValue(undefined);
@@ -151,7 +159,7 @@ describe('IFileUpload', () => {
 
   it('removes selected files and clears validation errors', () => {
     const retained = file('keep.txt');
-    component.files = [file('remove.txt'), retained];
+    fixture.componentRef.setInput('files', [file('remove.txt'), retained]);
     component.error = { code: 'fileCount', message: 'error' };
     const emit = vi
       .spyOn(component.filesChange, 'emit')
@@ -169,6 +177,7 @@ describe('IFileUpload', () => {
       maxFileSize: 1024,
     });
     fixture.componentRef.setInput('chooseLabel', 'Choose PDF');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const input: HTMLInputElement =
       fixture.nativeElement.querySelector('input');
@@ -182,6 +191,7 @@ describe('IFileUpload', () => {
     fixture.nativeElement
       .querySelector('.i-file-upload__drop-zone')
       .dispatchEvent(drop);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       fixture.nativeElement.querySelector('[role="alert"]').textContent,
@@ -189,7 +199,7 @@ describe('IFileUpload', () => {
   });
 
   it('uses the same validation for picker and drop and resets the picker', () => {
-    component.options = { fileTypes: ['.pdf'] };
+    fixture.componentRef.setInput('options', { fileTypes: ['.pdf'] });
     const selected = file('selected.pdf');
     const target = { files: [selected], value: 'selected.pdf' };
     const emit = vi

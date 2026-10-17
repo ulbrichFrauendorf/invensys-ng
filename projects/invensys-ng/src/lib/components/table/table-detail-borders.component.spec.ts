@@ -20,8 +20,10 @@ describe('ITable detail row borders', () => {
       '--surface-border',
       'rgb(123, 124, 125)',
     );
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     fixture.componentInstance.toggleRowExpansion(row, new MouseEvent('click'));
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const nested = fixture.debugElement.query(By.directive(ITable));
     const detailSelector =
@@ -30,6 +32,7 @@ describe('ITable detail row borders', () => {
     expect(getComputedStyle(detailRow).borderBottomStyle).toBe('solid');
 
     fixture.componentRef.setInput('detailRowBorders', false);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     detailRow = nested.nativeElement.querySelector(detailSelector);
     expect(nested.componentInstance.rowBorders).toBe(false);
@@ -45,6 +48,7 @@ describe('ITable detail row borders', () => {
     expect(getComputedStyle(parentRow).borderBottomStyle).toBe('solid');
 
     fixture.componentRef.setInput('detailRowBorders', true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     detailRow = nested.nativeElement.querySelector(detailSelector);
     expect(getComputedStyle(detailRow).borderBottomStyle).toBe('solid');

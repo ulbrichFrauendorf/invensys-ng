@@ -18,6 +18,7 @@ describe('Native mobile option controls', () => {
     const fixture = TestBed.createComponent(type);
     fixture.componentRef.setInput('options', options);
     fixture.componentRef.setInput('optionLabel', 'label');
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const picker = fixture.nativeElement.querySelector(
       'select',
@@ -46,9 +47,11 @@ describe('Native mobile option controls', () => {
     const changed = vi.fn().mockName('changed');
     component.registerOnChange(changed);
     component.writeValue({ ...options[1] });
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(picker.value).toBe('1');
     component.writeValue(null);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(picker.value).toBe('-1');
     expect(changed).not.toHaveBeenCalled();
@@ -65,6 +68,7 @@ describe('Native mobile option controls', () => {
   it('disables both picker and custom interactions', () => {
     const { picker, component, fixture } = setup(ISelect);
     component.setDisabledState!(true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     component.toggleDropdown();
     component.selectOption(options[0]);
@@ -90,6 +94,7 @@ describe('Native mobile option controls', () => {
     const { picker, component, fixture } = setup(IMultiSelect);
     component.writeValue([options[1]]);
     component.setDisabledState!(true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
       Array.from(picker.selectedOptions).map((option) => option.value),
@@ -105,6 +110,7 @@ describe('Native mobile option controls', () => {
   it('allows consumers to opt out of native controls', () => {
     const { fixture } = setup(ISelect);
     fixture.componentRef.setInput('nativeOnMobile', false);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('select')).toBeNull();
   });

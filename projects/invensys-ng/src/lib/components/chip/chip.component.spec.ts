@@ -12,6 +12,7 @@ describe('IChip', () => {
 
     fixture = TestBed.createComponent(IChip);
     component = fixture.componentInstance;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -27,37 +28,43 @@ describe('IChip', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Test Chip';
+      fixture.componentRef.setInput('label', 'Test Chip');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Test Chip');
     });
 
     it('should accept icon input', () => {
-      component.icon = 'pi pi-user';
+      fixture.componentRef.setInput('icon', 'pi pi-user');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.icon).toBe('pi pi-user');
     });
 
     it('should accept image input', () => {
-      component.image = 'avatar.png';
+      fixture.componentRef.setInput('image', 'avatar.png');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.image).toBe('avatar.png');
     });
 
     it('should accept removable input', () => {
-      component.removable = true;
+      fixture.componentRef.setInput('removable', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.removable).toBe(true);
     });
 
     it('should accept styleClass input', () => {
-      component.styleClass = 'custom-chip';
+      fixture.componentRef.setInput('styleClass', 'custom-chip');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.styleClass).toBe('custom-chip');
     });
 
     it('should accept disabled input', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.disabled).toBe(true);
     });
@@ -72,7 +79,7 @@ describe('IChip', () => {
     });
 
     it('should not emit onRemove event when disabled', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
       const mockEvent = new Event('click');
       vi.spyOn(component.onRemove, 'emit').mockReturnValue(undefined);
       component.onRemoveClick(mockEvent);
@@ -80,10 +87,11 @@ describe('IChip', () => {
     });
   });
 
-  describe('OnPush change detection', () => {
-    it('should use OnPush change detection strategy', () => {
-      const metadata = (component.constructor as any).__annotations__[0];
-      expect(metadata.changeDetection).toBeDefined();
+  describe('Input rendering', () => {
+    it('updates the rendered label through the public input', async () => {
+      fixture.componentRef.setInput('label', 'Updated label');
+      await fixture.whenStable();
+      expect(fixture.nativeElement.textContent).toContain('Updated label');
     });
   });
 });

@@ -12,8 +12,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:frontend": "ng test invensys-ng --watch=false --runner-config=projects/invensys-ng/vitest.frontend.config.mts --ts-config=projects/invensys-ng/tsconfig.mobile.spec.json --include=lib/components/mobile-controls.spec.ts --include=lib/components/frontend-consistency.spec.ts",
-    "test:file-upload": "ng test invensys-ng --watch=false --browsers=chromiumHeadless --ts-config=projects/invensys-ng/tsconfig.file-upload.spec.json --include=lib/components/file-upload/file-upload.component.spec.ts",
-    "test:reporting": "ng test invensys-ng --watch=false --browsers=chromiumHeadless --ts-config=projects/invensys-ng/tsconfig.reporting.spec.json --include=lib/components/button/button.component.spec.ts --include=lib/components/dialog/inner/dialog-actions/dialog-actions.component.spec.ts --include=lib/components/stepper/stepper.component.spec.ts --include=lib/components/table/table-actions.component.spec.ts"
+    "test:file-upload": "ng test invensys-ng --watch=false --ts-config=projects/invensys-ng/tsconfig.file-upload.spec.json --include=lib/components/file-upload/file-upload.component.spec.ts",
+    "test:reporting": "ng test invensys-ng --watch=false --ts-config=projects/invensys-ng/tsconfig.reporting.spec.json --include=lib/components/button/button.component.spec.ts --include=lib/components/dialog/inner/dialog-actions/dialog-actions.component.spec.ts --include=lib/components/stepper/stepper.component.spec.ts --include=lib/components/table/table-actions.component.spec.ts"
   },
   "private": true,
   "dependencies": {

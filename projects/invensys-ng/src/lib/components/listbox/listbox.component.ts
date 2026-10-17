@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   Component,
   Input,
   ElementRef,
@@ -259,7 +260,7 @@ export class IListbox implements ControlValueAccessor {
   componentId = UniqueComponentId('i-listbox-');
 
   constructor(private injector: Injector) {
-    setTimeout(() => {
+    afterNextRender(() => {
       this.ngControl = this.injector.get(NgControl, null);
     });
   }

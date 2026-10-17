@@ -20,8 +20,10 @@ describe('IListbox', () => {
     fixture = TestBed.createComponent(IListbox);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('options', mockOptions);
-    component.optionLabel = 'label';
-    component.optionValue = 'id';
+    fixture.componentRef.setInput('optionLabel', 'label');
+
+    fixture.changeDetectorRef.markForCheck();
+
     fixture.detectChanges();
   });
 
@@ -31,7 +33,8 @@ describe('IListbox', () => {
 
   describe('Component Inputs', () => {
     it('should have default values', () => {
-      expect(component.label).toBe('List Box');
+      expect(component.title).toBe('List Box');
+      expect(component.label).toBe('');
       expect(component.fluid).toBe(false);
       expect(component.showClear).toBe(false);
       expect(component.filter).toBe(true);
@@ -42,7 +45,8 @@ describe('IListbox', () => {
     });
 
     it('should accept multiple input', () => {
-      component.multiple = false;
+      fixture.componentRef.setInput('multiple', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.multiple).toBe(false);
     });
@@ -50,7 +54,7 @@ describe('IListbox', () => {
 
   describe('Multiple selection mode', () => {
     beforeEach(() => {
-      component.multiple = true;
+      fixture.componentRef.setInput('multiple', true);
     });
 
     it('should select multiple options', () => {
@@ -61,14 +65,14 @@ describe('IListbox', () => {
     });
 
     it('should deselect an option', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       component.toggleOption(mockOptions[0]);
       expect(component.value.length).toBe(1);
-      expect(component.value).not.toContain(mockOptions[0]['id']);
+      expect(component.value).not.toContain(mockOptions[0]);
     });
 
     it('should clear all selections', () => {
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      component.value = [mockOptions[0], mockOptions[1]];
       component.clearSelection();
       expect(component.value).toEqual([]);
     });
@@ -76,22 +80,22 @@ describe('IListbox', () => {
 
   describe('Single selection mode', () => {
     beforeEach(() => {
-      component.multiple = false;
+      fixture.componentRef.setInput('multiple', false);
     });
 
     it('should select single option', () => {
       component.toggleOption(mockOptions[0]);
-      expect(component.value).toBe(mockOptions[0]['id']);
+      expect(component.value).toBe(mockOptions[0]);
     });
 
     it('should deselect option on second click', () => {
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       component.toggleOption(mockOptions[0]);
       expect(component.value).toBeNull();
     });
 
     it('should clear selection', () => {
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       component.clearSelection();
       expect(component.value).toBeNull();
     });
@@ -99,34 +103,30 @@ describe('IListbox', () => {
 
   describe('Display functionality', () => {
     it('should show comma-separated labels in multiple mode', () => {
-      component.multiple = true;
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      component.value = [mockOptions[0], mockOptions[1]];
       const display = component.getDisplayLabel();
       expect(display).toContain('First Option');
       expect(display).toContain('Second Option');
     });
 
     it('should show item count when exceeding maxSelectedLabels', () => {
-      component.multiple = true;
-      component.maxSelectedLabels = 2;
-      component.value = [
-        mockOptions[0]['id'],
-        mockOptions[1]['id'],
-        mockOptions[2]['id'],
-      ];
+      fixture.componentRef.setInput('multiple', true);
+      fixture.componentRef.setInput('maxSelectedLabels', 2);
+      component.value = [mockOptions[0], mockOptions[1], mockOptions[2]];
       const display = component.getDisplayLabel();
       expect(display).toBe('3 items selected');
     });
 
     it('should show single label in single mode', () => {
-      component.multiple = false;
-      component.value = mockOptions[0]['id'];
+      fixture.componentRef.setInput('multiple', false);
+      component.value = mockOptions[0];
       const display = component.getDisplayLabel();
       expect(display).toBe('First Option');
     });
 
     it('should return empty string when no selection', () => {
-      component.multiple = true;
+      fixture.componentRef.setInput('multiple', true);
       component.value = [];
       expect(component.getDisplayLabel()).toBe('');
     });
@@ -134,38 +134,38 @@ describe('IListbox', () => {
 
   describe('Remove selected item', () => {
     it('should remove item in multiple mode', () => {
-      component.multiple = true;
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      component.value = [mockOptions[0], mockOptions[1]];
       const mockEvent = new Event('click');
       vi.spyOn(mockEvent, 'stopPropagation').mockReturnValue(undefined);
 
-      component.removeSelectedItem(mockOptions[0]['id'], mockEvent);
+      component.removeSelectedItem(mockOptions[0], mockEvent);
 
       expect(component.value.length).toBe(1);
       expect(mockEvent.stopPropagation).toHaveBeenCalled();
     });
 
     it('should clear value in single mode', () => {
-      component.multiple = false;
-      component.value = mockOptions[0]['id'];
+      fixture.componentRef.setInput('multiple', false);
+      component.value = mockOptions[0];
       const mockEvent = new Event('click');
 
-      component.removeSelectedItem(mockOptions[0]['id'], mockEvent);
+      component.removeSelectedItem(mockOptions[0], mockEvent);
       expect(component.value).toBeNull();
     });
   });
 
   describe('Option state', () => {
     it('should identify selected options in multiple mode', () => {
-      component.multiple = true;
-      component.value = [mockOptions[0]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      component.value = [mockOptions[0]];
       expect(component.isOptionSelected(mockOptions[0])).toBe(true);
       expect(component.isOptionSelected(mockOptions[1])).toBe(false);
     });
 
     it('should identify selected option in single mode', () => {
-      component.multiple = false;
-      component.value = mockOptions[0]['id'];
+      fixture.componentRef.setInput('multiple', false);
+      component.value = mockOptions[0];
       expect(component.isOptionSelected(mockOptions[0])).toBe(true);
       expect(component.isOptionSelected(mockOptions[1])).toBe(false);
     });
@@ -173,25 +173,25 @@ describe('IListbox', () => {
 
   describe('Helper methods', () => {
     it('should detect if has value in multiple mode', () => {
-      component.multiple = true;
+      fixture.componentRef.setInput('multiple', true);
       component.value = [];
       expect(component.hasValue()).toBe(false);
-      component.value = [mockOptions[0]['id']];
+      component.value = [mockOptions[0]];
       expect(component.hasValue()).toBe(true);
     });
 
     it('should detect if has value in single mode', () => {
-      component.multiple = false;
+      fixture.componentRef.setInput('multiple', false);
       component.value = null;
       expect(component.hasValue()).toBe(false);
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       expect(component.hasValue()).toBe(true);
     });
 
     it('should get correct placeholder', () => {
-      component.multiple = true;
+      fixture.componentRef.setInput('multiple', true);
       expect(component.getPlaceholder()).toBe('Select options');
-      component.multiple = false;
+      fixture.componentRef.setInput('multiple', false);
       expect(component.getPlaceholder()).toBe('Select an option');
     });
   });
@@ -199,6 +199,7 @@ describe('IListbox', () => {
   describe('Filtering', () => {
     it('should filter options by search text', () => {
       component.filterValue.set('first');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const filtered = component.filteredOptions();
       expect(filtered.length).toBe(1);
@@ -206,6 +207,7 @@ describe('IListbox', () => {
 
     it('should show all options when filter is empty', () => {
       component.filterValue.set('');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions().length).toBe(mockOptions.length);
     });
@@ -213,16 +215,16 @@ describe('IListbox', () => {
 
   describe('ControlValueAccessor implementation', () => {
     it('should write value in multiple mode', () => {
-      component.multiple = true;
-      const values = [mockOptions[0]['id'], mockOptions[1]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      const values = [mockOptions[0], mockOptions[1]];
       component.writeValue(values);
       expect(component.value).toEqual(values);
     });
 
     it('should write value in single mode', () => {
-      component.multiple = false;
-      component.writeValue(mockOptions[0]['id']);
-      expect(component.value).toBe(mockOptions[0]['id']);
+      fixture.componentRef.setInput('multiple', false);
+      component.writeValue(mockOptions[0]);
+      expect(component.value).toBe(mockOptions[0]);
     });
 
     it('should register onChange callback', () => {
@@ -249,18 +251,21 @@ describe('IListbox', () => {
   describe('Edge cases', () => {
     it('should handle null options array', () => {
       fixture.componentRef.setInput('options', null);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle undefined options array', () => {
       fixture.componentRef.setInput('options', undefined);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle non-array options', () => {
       fixture.componentRef.setInput('options', 'not an array' as any);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
@@ -272,7 +277,8 @@ describe('IListbox', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-listbox';
+      fixture.componentRef.setInput('id', 'custom-listbox');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-listbox');
     });
@@ -280,7 +286,9 @@ describe('IListbox', () => {
 
   describe('Custom error messages', () => {
     it('should use custom error messages', () => {
-      component.errorMessages = { required: 'Please select an option' };
+      fixture.componentRef.setInput('errorMessages', {
+        required: 'Please select an option',
+      });
       component.ngControl = {
         control: {
           invalid: true,
@@ -292,7 +300,7 @@ describe('IListbox', () => {
     });
 
     it('should handle minlength error', () => {
-      component.label = 'Items';
+      fixture.componentRef.setInput('label', 'Items');
       component.ngControl = {
         control: {
           invalid: true,
@@ -364,21 +372,21 @@ describe('IListbox', () => {
 
   describe('Selected labels', () => {
     it('should get labels for selected items in multiple mode', () => {
-      component.multiple = true;
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      component.value = [mockOptions[0], mockOptions[1]];
       const labels = component.getSelectedLabels();
       expect(labels).toEqual(['First Option', 'Second Option']);
     });
 
     it('should get label for selected item in single mode', () => {
-      component.multiple = false;
-      component.value = mockOptions[0]['id'];
+      fixture.componentRef.setInput('multiple', false);
+      component.value = mockOptions[0];
       const labels = component.getSelectedLabels();
       expect(labels).toEqual(['First Option']);
     });
 
     it('should handle empty selection', () => {
-      component.multiple = true;
+      fixture.componentRef.setInput('multiple', true);
       component.value = [];
       const labels = component.getSelectedLabels();
       expect(labels).toEqual([]);
@@ -387,36 +395,38 @@ describe('IListbox', () => {
 
   describe('TrackBy functionality', () => {
     it('should track by value', () => {
-      const value = mockOptions[0]['id'];
+      const value = mockOptions[0];
       expect(component.trackByValue(0, value)).toBe(value);
     });
   });
 
   describe('Helper methods for UI', () => {
-    it('should determine if text should be hidden', () => {
-      component.multiple = true;
-      component.maxSelectedLabels = 3;
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
-      expect(component.shouldHideText()).toBe(true);
+    it('renders selected objects as labelled chips', async () => {
+      fixture.componentRef.setInput('multiple', true);
+      component.writeValue([mockOptions[0]]);
+      await fixture.whenStable();
+      expect(
+        fixture.nativeElement.querySelector('i-chips')?.textContent,
+      ).toContain('First Option');
     });
 
     it('should get value array in multiple mode', () => {
-      component.multiple = true;
-      component.value = [mockOptions[0]['id'], mockOptions[1]['id']];
+      fixture.componentRef.setInput('multiple', true);
+      component.value = [mockOptions[0], mockOptions[1]];
       expect(component.getValueArray()).toEqual([
-        mockOptions[0]['id'],
-        mockOptions[1]['id'],
+        mockOptions[0],
+        mockOptions[1],
       ]);
     });
 
     it('should get value array in single mode', () => {
-      component.multiple = false;
-      component.value = mockOptions[0]['id'];
-      expect(component.getValueArray()).toEqual([mockOptions[0]['id']]);
+      fixture.componentRef.setInput('multiple', false);
+      component.value = mockOptions[0];
+      expect(component.getValueArray()).toEqual([mockOptions[0]]);
     });
 
     it('should return empty array when no value', () => {
-      component.multiple = false;
+      fixture.componentRef.setInput('multiple', false);
       component.value = null;
       expect(component.getValueArray()).toEqual([]);
     });
@@ -428,16 +438,16 @@ describe('IListbox', () => {
     });
 
     it('should get option value', () => {
-      expect(component.getOptionValue(mockOptions[0])).toBe(1);
+      expect(component.getOptionValue(mockOptions[0])).toBe(mockOptions[0]);
     });
 
     it('should get option search value', () => {
-      component.filterBy = 'name';
+      fixture.componentRef.setInput('filterBy', 'name');
       expect(component.getOptionSearchValue(mockOptions[0])).toBe('Option 1');
     });
 
     it('should fallback to label for search value', () => {
-      component.filterBy = 'nonexistent';
+      fixture.componentRef.setInput('filterBy', 'nonexistent');
       expect(component.getOptionSearchValue(mockOptions[0])).toBe(
         'First Option',
       );

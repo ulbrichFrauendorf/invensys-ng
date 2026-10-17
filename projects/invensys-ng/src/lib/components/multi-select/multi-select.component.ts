@@ -1,6 +1,7 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OPTION_OVERLAY_POSITIONS, handleOptionKeys } from '../../utils/option-picker';
 import {
+  afterNextRender,
   Component,
   Input,
   ElementRef,
@@ -360,7 +361,7 @@ export class IMultiSelect implements ControlValueAccessor {
   componentId = UniqueComponentId('i-multi-select-');
 
   constructor(private injector: Injector) {
-    setTimeout(() => {
+    afterNextRender(() => {
       this.ngControl = this.injector.get(NgControl, null);
     });
   }

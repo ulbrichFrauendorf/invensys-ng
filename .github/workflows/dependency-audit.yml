@@ -1,4 +1,4 @@
-name: Dependency audit
+name: Build, tests, and dependency audit
 
 on: [push, pull_request]
 
@@ -16,3 +16,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm audit --audit-level=low
+      - name: Install test browser
+        run: npx --no-install playwright install --with-deps chromium
+      - run: npm run build
+      - name: Run all unit tests
+        run: npm test -- --watch=false
+      - name: Run desktop and touch regressions
+        run: npm run test:frontend

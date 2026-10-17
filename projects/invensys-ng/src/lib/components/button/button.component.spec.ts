@@ -16,6 +16,7 @@ describe('IButton', () => {
     fixture = TestBed.createComponent(IButton);
     component = fixture.componentInstance;
     buttonElement = fixture.debugElement.query(By.css('button'));
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -24,8 +25,9 @@ describe('IButton', () => {
   });
 
   it('puts the accessible action name and expansion state on the native button', () => {
-    component.ariaLabel = 'Expand details';
-    component.ariaExpanded = false;
+    fixture.componentRef.setInput('ariaLabel', 'Expand details');
+    fixture.componentRef.setInput('ariaExpanded', false);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe(
       'Expand details',
@@ -33,7 +35,8 @@ describe('IButton', () => {
     expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
       'false',
     );
-    component.ariaExpanded = true;
+    fixture.componentRef.setInput('ariaExpanded', true);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
       'true',
@@ -53,31 +56,36 @@ describe('IButton', () => {
     });
 
     it('should accept severity input', () => {
-      component.severity = 'danger';
+      fixture.componentRef.setInput('severity', 'danger');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.severity).toBe('danger');
     });
 
     it('should accept size input', () => {
-      component.size = 'large';
+      fixture.componentRef.setInput('size', 'large');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.size).toBe('large');
     });
 
     it('should accept disabled input', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(buttonElement.nativeElement.disabled).toBe(true);
     });
 
     it('should accept icon input', () => {
-      component.icon = 'pi pi-check';
+      fixture.componentRef.setInput('icon', 'pi pi-check');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.icon).toBe('pi pi-check');
     });
 
     it('should accept fluid input', () => {
-      component.fluid = true;
+      fixture.componentRef.setInput('fluid', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.fluid).toBe(true);
     });
@@ -85,13 +93,15 @@ describe('IButton', () => {
 
   describe('Button Types', () => {
     it('should set button type to submit', () => {
-      component.type = 'submit';
+      fixture.componentRef.setInput('type', 'submit');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(buttonElement.nativeElement.type).toBe('submit');
     });
 
     it('should set button type to reset', () => {
-      component.type = 'reset';
+      fixture.componentRef.setInput('type', 'reset');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(buttonElement.nativeElement.type).toBe('reset');
     });
@@ -99,19 +109,22 @@ describe('IButton', () => {
 
   describe('Button Styles', () => {
     it('should apply outlined style', () => {
-      component.outlined = true;
+      fixture.componentRef.setInput('outlined', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.outlined).toBe(true);
     });
 
     it('should apply raised style', () => {
-      component.raised = true;
+      fixture.componentRef.setInput('raised', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.raised).toBe(true);
     });
 
     it('should apply text style', () => {
-      component.text = true;
+      fixture.componentRef.setInput('text', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.text).toBe(true);
     });
@@ -119,15 +132,14 @@ describe('IButton', () => {
 
   describe('Icon Only Detection', () => {
     it('should not be icon-only with text content', async () => {
-      await new Promise<void>((done) => {
-        component.icon = 'pi pi-check';
-        fixture.detectChanges();
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('icon', 'pi pi-check');
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
-        setTimeout(() => {
-          expect(component.iconOnly).toBe(false);
-          done();
-        }, 100);
-      });
+      await vi.advanceTimersByTimeAsync(100);
+
+      expect(component.iconOnly).toBe(false);
     });
   });
 
@@ -139,7 +151,8 @@ describe('IButton', () => {
     });
 
     it('should not emit clicked event when button is disabled', () => {
-      component.disabled = true;
+      fixture.componentRef.setInput('disabled', true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       vi.spyOn(component.clicked, 'emit').mockReturnValue(undefined);
 
@@ -158,3 +171,5 @@ describe('IButton', () => {
     });
   });
 });
+
+afterEach(() => vi.useRealTimers());

@@ -27,7 +27,9 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/invensys-ng/tsconfig.spec.json"
+            "tsConfig": "projects/invensys-ng/tsconfig.spec.json",
+            "providersFile": "projects/invensys-ng/src/test-providers.ts",
+            "runnerConfig": "projects/invensys-ng/vitest.config.mts"
           }
         }
       }

@@ -36,6 +36,7 @@
 ## Testing ##
 /coverage/
 /.karma-coverage/
+/.vitest/
 
 ## Miscellaneous ##
 /.DS_Store

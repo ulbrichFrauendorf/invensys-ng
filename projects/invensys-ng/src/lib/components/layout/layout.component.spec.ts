@@ -1,185 +1,156 @@
-import type { MockedObject } from 'vitest';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { LayoutService } from './services/layout.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { of, Subject } from 'rxjs';
-import { LayoutConfig } from './models/layout-config.model';
-import { MenuModel } from './models/menu.model';
+
+@Component({ template: '' })
+class TestPage {}
 
 describe('LayoutComponent', () => {
-  let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
-  let layoutService: Pick<LayoutService, 'closeSidebar' | 'syncViewport'> & {
-    state: () => ReturnType<LayoutService['state']>;
-  };
-  let router: MockedObject<Router>;
+  let component: LayoutComponent;
+  let service: LayoutService;
+  let container: HTMLElement;
+  let previousFontSize: string;
 
   beforeEach(async () => {
-    const layoutServiceSpy = {
-      closeSidebar: vi.fn().mockName('LayoutService.closeSidebar'),
-      syncViewport: vi.fn().mockName('LayoutService.syncViewport'),
-      state: vi.fn(),
-      config: vi.fn(),
-    };
-    layoutServiceSpy.state = vi.fn().mockName('state').mockReturnValue({
-      isSidebarOpen: false,
-      isMobileViewport: false,
-      profileSidebarVisible: false,
-    });
-    layoutServiceSpy.config = vi.fn().mockName('config').mockReturnValue({
-      inputStyle: 'outlined',
-      ripple: true,
-      colorScheme: 'light',
-      scale: 12,
-    });
-
-    const routerSpy = {
-      navigate: vi.fn().mockName('Router.navigate'),
-      events: of(new NavigationEnd(0, '/', '/')),
-    };
-    routerSpy.events = of(new NavigationEnd(0, '/', '/'));
-
-    await TestBed.configureTestingModule({
+    previousFontSize = document.documentElement.style.fontSize;
+    vi.stubGlobal('innerWidth', 390);
+    TestBed.configureTestingModule({
       imports: [LayoutComponent],
-      providers: [
-        { provide: LayoutService, useValue: layoutServiceSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
-    }).compileComponents();
-
+      providers: [provideRouter([{ path: 'test', component: TestPage }])],
+    });
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
-    layoutService = TestBed.inject(
-      LayoutService,
-    ) as unknown as typeof layoutService;
-    router = TestBed.inject(Router) as MockedObject<Router>;
-
-    // Set required inputs
-    component.config = {
+    service = TestBed.inject(LayoutService);
+    fixture.componentRef.setInput('config', {
       websiteName: 'Test App',
-      logoLight: 'test-logo-light.png',
-      logoDark: 'test-logo-dark.png',
-      showThemeToggle: true,
-    };
-    component.menuModel = [];
-
-    fixture.detectChanges();
+      enablePullToRefresh: true,
+    });
+    fixture.componentRef.setInput('menuModel', []);
+    await fixture.whenStable();
+    container = fixture.nativeElement.querySelector('.layout-main-container');
   });
 
-  afterEach(() => vi.unstubAllGlobals());
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => {
+    fixture.destroy();
+    vi.clearAllTimers();
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+    document.body.classList.remove('blocked-scroll');
+    document.documentElement.style.fontSize = previousFontSize;
   });
 
-  describe('Pull to Refresh', () => {
-    let mockConfig: LayoutConfig;
+  function touch(
+    type: string,
+    x: number,
+    y: number,
+    target: HTMLElement = container,
+  ) {
+    const touches =
+      type === 'touchend'
+        ? []
+        : [new Touch({ identifier: 1, target, clientX: x, clientY: y })];
+    target.dispatchEvent(
+      new TouchEvent(type, { touches, bubbles: true, cancelable: true }),
+    );
+  }
 
-    beforeEach(() => {
-      mockConfig = {
-        websiteName: 'Test App',
-        logoLight: 'test-logo-light.png',
-        logoDark: 'test-logo-dark.png',
-        showThemeToggle: true,
-        enablePullToRefresh: true,
-      };
-      component.config = mockConfig;
-    });
-
-    it('should initialize pull distance and refreshing signals', () => {
-      expect(component.pullDistance()).toBe(0);
-      expect(component.isRefreshing()).toBe(false);
-    });
-
-    it('should have pull threshold set to 80', () => {
-      expect(component['PULL_THRESHOLD']).toBe(80);
-    });
-
-    it('should have indicator offset set to 60', () => {
-      expect(component['INDICATOR_OFFSET']).toBe(60);
-    });
-
-    it('should track pull distance when pulling down', () => {
-      // Set up mobile viewport
-      layoutService.state = vi.fn().mockName('state').mockReturnValue({
-        isSidebarOpen: false,
-        isMobileViewport: true,
-        profileSidebarVisible: false,
-      });
-
-      // Simulate touch events
-      component['touchStartY'] = 100;
-      component['isPulling'] = true;
-      component['touchCurrentY'] = 150;
-
-      // Calculate expected pull distance
-      const pullDistance = Math.max(0, Math.min(50, 150));
-      component.pullDistance.set(pullDistance);
-
-      expect(component.pullDistance()).toBe(50);
-    });
-
-    it('should set refreshing state when pull threshold is met', () => {
-      component.pullDistance.set(85);
-      component['refresh']();
-
-      expect(component.isRefreshing()).toBe(true);
-    });
-
-    it('should not activate pull-to-refresh when disabled in config', () => {
-      component.config = {
-        websiteName: 'Test App',
-        enablePullToRefresh: false,
-      };
-
-      expect(component.config.enablePullToRefresh).toBe(false);
-    });
-
-    it('should expose Math to template', () => {
-      expect(component['Math']).toBe(Math);
-    });
+  it('renders the configured title and mobile layout', () => {
+    expect(fixture.nativeElement.textContent).toContain('Test App');
+    expect(service.state().isMobileViewport).toBe(true);
+    expect(component.pullDistance()).toBe(0);
+    expect(component.isRefreshing()).toBe(false);
   });
 
-  describe('Layout State', () => {
-    it('should close sidebar when hideMenu is called', () => {
-      component.hideMenu();
-      expect(layoutService.closeSidebar).toHaveBeenCalled();
-    });
-
-    it('should sync viewport on window resize', () => {
-      vi.stubGlobal('innerWidth', 1200);
-      component.onWindowResize();
-      expect(layoutService.syncViewport).toHaveBeenCalled();
-    });
+  it('closes the sidebar through its mask', async () => {
+    service.toggleSidebar();
+    await fixture.whenStable();
+    expect(document.body.classList.contains('blocked-scroll')).toBe(true);
+    fixture.nativeElement.querySelector('.layout-mask').click();
+    await fixture.whenStable();
+    expect(service.state().isSidebarOpen).toBe(false);
+    expect(document.body.classList.contains('blocked-scroll')).toBe(false);
   });
 
-  describe('Mobile Navigation', () => {
-    it('should close sidebar on navigation in mobile viewport', async () => {
-      await new Promise<void>((done) => {
-        const routerEvents = new Subject();
-        (router as any).events = routerEvents.asObservable();
+  it('updates the viewport state on resize', async () => {
+    vi.stubGlobal('innerWidth', 1280);
+    window.dispatchEvent(new Event('resize'));
+    await fixture.whenStable();
+    expect(service.state().isMobileViewport).toBe(false);
+    expect(service.state().isSidebarOpen).toBe(true);
+  });
 
-        layoutService.state = vi.fn().mockName('state').mockReturnValue({
-          isSidebarOpen: true,
-          isMobileViewport: true,
-          profileSidebarVisible: false,
-        });
+  it('closes mobile navigation after a real router navigation', async () => {
+    service.toggleSidebar();
+    await TestBed.inject(Router).navigateByUrl('/test');
+    await fixture.whenStable();
+    expect(service.state().isSidebarOpen).toBe(false);
+  });
 
-        // Create a new component instance with the modified router
-        const newFixture = TestBed.createComponent(LayoutComponent);
-        const newComponent = newFixture.componentInstance;
-        newComponent.config = component.config;
-        newComponent.menuModel = [];
-        newFixture.detectChanges();
+  it('tracks a downward pull and resets when released below the threshold', () => {
+    touch('touchstart', 50, 100);
+    touch('touchmove', 50, 150);
+    expect(component.pullDistance()).toBe(50);
+    touch('touchend', 50, 150);
+    expect(component.pullDistance()).toBe(0);
+    expect(component.isRefreshing()).toBe(false);
+  });
 
-        routerEvents.next(new NavigationEnd(1, '/test', '/test'));
+  it('caps pull distance and shows the refreshing state after release', async () => {
+    vi.useFakeTimers();
+    touch('touchstart', 50, 100);
+    touch('touchmove', 50, 500);
+    expect(component.pullDistance()).toBe(150);
+    touch('touchend', 50, 500);
+    expect(component.isRefreshing()).toBe(true);
+    expect(component.pullDistance()).toBe(0);
+    await vi.advanceTimersByTimeAsync(16);
+    expect(fixture.nativeElement.textContent).toContain('Refreshing...');
+    fixture.destroy();
+    expect(vi.getTimerCount()).toBe(0);
+  });
 
-        setTimeout(() => {
-          expect(layoutService.closeSidebar).toHaveBeenCalled();
-          done();
-        }, 100);
-      });
+  it('leaves horizontal gestures to the content', () => {
+    touch('touchstart', 50, 100);
+    touch('touchmove', 200, 120);
+    expect(component.pullDistance()).toBe(0);
+    touch('touchend', 200, 120);
+    expect(component.isRefreshing()).toBe(false);
+  });
+
+  it('leaves form control gestures to the control', () => {
+    const button = document.createElement('button');
+    container.appendChild(button);
+    touch('touchstart', 50, 100, button);
+    touch('touchmove', 50, 200, button);
+    expect(component.pullDistance()).toBe(0);
+  });
+
+  it('does not pull while the content is scrolled', () => {
+    Object.defineProperty(container, 'scrollTop', {
+      value: 20,
+      configurable: true,
     });
+    touch('touchstart', 50, 100);
+    touch('touchmove', 50, 200);
+    expect(component.pullDistance()).toBe(0);
+  });
+
+  it('does not activate pull to refresh on desktop', async () => {
+    vi.stubGlobal('innerWidth', 1280);
+    window.dispatchEvent(new Event('resize'));
+    await fixture.whenStable();
+    touch('touchstart', 50, 100);
+    touch('touchmove', 50, 200);
+    expect(component.pullDistance()).toBe(0);
+  });
+
+  it('removes gesture listeners when destroyed', () => {
+    fixture.destroy();
+    touch('touchstart', 50, 100);
+    touch('touchmove', 50, 200);
+    expect(component.pullDistance()).toBe(0);
   });
 });

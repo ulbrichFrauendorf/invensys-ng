@@ -136,9 +136,12 @@ export class IOverlayPanel implements OnDestroy {
     this.unbindScrollListener();
     this.unbindResizeListener();
     if (this.appendTo === 'body' && this.containerViewChild) {
+      // The animation renderer is also being destroyed, so removal cannot wait for it.
       this.renderer.removeChild(
         document.body,
         this.containerViewChild.nativeElement,
+        false,
+        true,
       );
     }
     this.target = undefined;

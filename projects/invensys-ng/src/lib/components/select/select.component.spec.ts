@@ -20,8 +20,10 @@ describe('ISelect', () => {
     fixture = TestBed.createComponent(ISelect);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('options', mockOptions);
-    component.optionLabel = 'label';
-    component.optionValue = 'id';
+    fixture.componentRef.setInput('optionLabel', 'label');
+
+    fixture.changeDetectorRef.markForCheck();
+
     fixture.detectChanges();
   });
 
@@ -41,7 +43,8 @@ describe('ISelect', () => {
     });
 
     it('should accept label input', () => {
-      component.label = 'Choose Item';
+      fixture.componentRef.setInput('label', 'Choose Item');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.label).toBe('Choose Item');
     });
@@ -49,6 +52,7 @@ describe('ISelect', () => {
     it('should accept options signal', () => {
       const newOptions = [{ id: 4, label: 'New Option' }];
       fixture.componentRef.setInput('options', newOptions);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.options()).toEqual(newOptions);
     });
@@ -74,7 +78,7 @@ describe('ISelect', () => {
     it('should select an option', () => {
       const option = mockOptions[0];
       component.selectOption(option);
-      expect(component.value).toBe(option['id']);
+      expect(component.value).toBe(option);
       expect(component.isOpen).toBe(false);
     });
 
@@ -82,11 +86,10 @@ describe('ISelect', () => {
       vi.spyOn(component.onChange, 'emit').mockReturnValue(undefined);
       const option = mockOptions[0];
       component.selectOption(option);
-      expect(component.onChange.emit).toHaveBeenCalledWith(option['id']);
+      expect(component.onChange.emit).toHaveBeenCalledWith(option);
     });
 
-    it('should store full object when optionValue is not provided', () => {
-      component.optionValue = undefined;
+    it('should store full object as the selected value', () => {
       const option = mockOptions[0];
       component.selectOption(option);
       expect(component.value).toEqual(option);
@@ -95,7 +98,7 @@ describe('ISelect', () => {
 
   describe('Clear functionality', () => {
     it('should clear selection', () => {
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       component.clearSelection();
       expect(component.value).toBeNull();
     });
@@ -115,11 +118,11 @@ describe('ISelect', () => {
 
     it('should get option value', () => {
       const option = mockOptions[0];
-      expect(component.getOptionValue(option)).toBe(1);
+      expect(component.getOptionValue(option)).toBe(option);
     });
 
     it('should get selected label', () => {
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       expect(component.getSelectedLabel()).toBe('First Option');
     });
 
@@ -131,13 +134,12 @@ describe('ISelect', () => {
 
   describe('Option selection state', () => {
     it('should identify selected option with value', () => {
-      component.value = mockOptions[0]['id'];
+      component.value = mockOptions[0];
       expect(component.isOptionSelected(mockOptions[0])).toBe(true);
       expect(component.isOptionSelected(mockOptions[1])).toBe(false);
     });
 
     it('should identify selected option with full object', () => {
-      component.optionValue = undefined;
       component.value = mockOptions[0];
       expect(component.isOptionSelected(mockOptions[0])).toBe(true);
     });
@@ -146,6 +148,7 @@ describe('ISelect', () => {
   describe('Filtering', () => {
     it('should filter options by search text', () => {
       component.filterValue.set('first');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const filtered = component.filteredOptions();
       expect(filtered.length).toBe(1);
@@ -154,13 +157,15 @@ describe('ISelect', () => {
 
     it('should show all options when filter is empty', () => {
       component.filterValue.set('');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions().length).toBe(mockOptions.length);
     });
 
     it('should use custom filterBy property', () => {
-      component.filterBy = 'name';
+      fixture.componentRef.setInput('filterBy', 'name');
       component.filterValue.set('Option 2');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const filtered = component.filteredOptions();
       expect(filtered.length).toBe(1);
@@ -170,8 +175,8 @@ describe('ISelect', () => {
 
   describe('ControlValueAccessor implementation', () => {
     it('should write value', () => {
-      component.writeValue(mockOptions[0]['id']);
-      expect(component.value).toBe(mockOptions[0]['id']);
+      component.writeValue(mockOptions[0]);
+      expect(component.value).toBe(mockOptions[0]);
     });
 
     it('should register onChange callback', () => {
@@ -202,7 +207,7 @@ describe('ISelect', () => {
     });
 
     it('should get error message for required field', () => {
-      component.label = 'Country';
+      fixture.componentRef.setInput('label', 'Country');
       component.ngControl = {
         control: {
           invalid: true,
@@ -217,18 +222,21 @@ describe('ISelect', () => {
   describe('Edge cases', () => {
     it('should handle null options array', () => {
       fixture.componentRef.setInput('options', null);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle undefined options array', () => {
       fixture.componentRef.setInput('options', undefined);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
 
     it('should handle non-array options', () => {
       fixture.componentRef.setInput('options', 'not an array' as any);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.filteredOptions()).toEqual([]);
     });
@@ -240,7 +248,8 @@ describe('ISelect', () => {
     });
 
     it('should use custom id when provided', () => {
-      component.id = 'custom-select';
+      fixture.componentRef.setInput('id', 'custom-select');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.id).toBe('custom-select');
     });
@@ -248,7 +257,9 @@ describe('ISelect', () => {
 
   describe('Custom error messages', () => {
     it('should use custom error messages', () => {
-      component.errorMessages = { required: 'Please select an option' };
+      fixture.componentRef.setInput('errorMessages', {
+        required: 'Please select an option',
+      });
       component.ngControl = {
         control: {
           invalid: true,
@@ -284,13 +295,13 @@ describe('ISelect', () => {
 
   describe('Option search value', () => {
     it('should get search value from filterBy property', () => {
-      component.filterBy = 'name';
+      fixture.componentRef.setInput('filterBy', 'name');
       const option = mockOptions[0];
       expect(component.getOptionSearchValue(option)).toBe(option['name']);
     });
 
     it('should fallback to label when filterBy property not found', () => {
-      component.filterBy = 'nonexistent';
+      fixture.componentRef.setInput('filterBy', 'nonexistent');
       const option = mockOptions[0];
       expect(component.getOptionSearchValue(option)).toBe(option['label']);
     });

@@ -31,6 +31,7 @@ describe('IWhisper', () => {
     whisperService = TestBed.inject(
       WhisperService,
     ) as MockedObject<WhisperService>;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -48,13 +49,15 @@ describe('IWhisper', () => {
     });
 
     it('should accept position input', () => {
-      component.position = 'bottom-left';
+      fixture.componentRef.setInput('position', 'bottom-left');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.position).toBe('bottom-left');
     });
 
     it('should accept key input', () => {
-      component.key = 'custom-key';
+      fixture.componentRef.setInput('key', 'custom-key');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.key).toBe('custom-key');
     });
@@ -75,7 +78,7 @@ describe('IWhisper', () => {
     });
 
     it('should filter messages by key', () => {
-      component.key = 'app';
+      fixture.componentRef.setInput('key', 'app');
       const mockMessage: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -89,7 +92,7 @@ describe('IWhisper', () => {
     });
 
     it('should not show messages with different key', () => {
-      component.key = 'app';
+      fixture.componentRef.setInput('key', 'app');
       const mockMessage: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -103,7 +106,7 @@ describe('IWhisper', () => {
     });
 
     it('should prevent duplicate messages when preventDuplicates is true', () => {
-      component.preventDuplicates = true;
+      fixture.componentRef.setInput('preventDuplicates', true);
       const mockMessage: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -118,7 +121,7 @@ describe('IWhisper', () => {
     });
 
     it('should remove existing duplicate when preventOpenDuplicates is true', () => {
-      component.preventOpenDuplicates = true;
+      fixture.componentRef.setInput('preventOpenDuplicates', true);
       const mockMessage1: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -140,23 +143,21 @@ describe('IWhisper', () => {
     });
 
     it('should auto-remove message after life duration', async () => {
-      await new Promise<void>((done) => {
-        const mockMessage: IWhisperMessage = {
-          id: '1',
-          severity: 'info',
-          summary: 'Test',
-          detail: 'Test message',
-          life: 100,
-        };
+      vi.useFakeTimers();
+      const mockMessage: IWhisperMessage = {
+        id: '1',
+        severity: 'info',
+        summary: 'Test',
+        detail: 'Test message',
+        life: 100,
+      };
 
-        messageSubject.next(mockMessage);
-        expect(component.messages.length).toBe(1);
+      messageSubject.next(mockMessage);
+      expect(component.messages.length).toBe(1);
 
-        setTimeout(() => {
-          expect(component.messages.length).toBe(0);
-          done();
-        }, 150);
-      });
+      await vi.advanceTimersByTimeAsync(150);
+
+      expect(component.messages.length).toBe(0);
     });
   });
 
@@ -255,7 +256,7 @@ describe('IWhisper', () => {
     });
 
     it('should get correct container class', () => {
-      component.position = 'bottom-right';
+      fixture.componentRef.setInput('position', 'bottom-right');
       expect(component.getContainerClass()).toBe(
         'i-whisper i-whisper-bottom-right',
       );
@@ -308,28 +309,28 @@ describe('IWhisper', () => {
 
   describe('Position variants', () => {
     it('should apply top-left position class', () => {
-      component.position = 'top-left';
+      fixture.componentRef.setInput('position', 'top-left');
       expect(component.getContainerClass()).toBe(
         'i-whisper i-whisper-top-left',
       );
     });
 
     it('should apply top-center position class', () => {
-      component.position = 'top-center';
+      fixture.componentRef.setInput('position', 'top-center');
       expect(component.getContainerClass()).toBe(
         'i-whisper i-whisper-top-center',
       );
     });
 
     it('should apply bottom-center position class', () => {
-      component.position = 'bottom-center';
+      fixture.componentRef.setInput('position', 'bottom-center');
       expect(component.getContainerClass()).toBe(
         'i-whisper i-whisper-bottom-center',
       );
     });
 
     it('should apply bottom-left position class', () => {
-      component.position = 'bottom-left';
+      fixture.componentRef.setInput('position', 'bottom-left');
       expect(component.getContainerClass()).toBe(
         'i-whisper i-whisper-bottom-left',
       );
@@ -363,7 +364,7 @@ describe('IWhisper', () => {
     });
 
     it('should not show messages without key when component has key', () => {
-      component.key = 'app';
+      fixture.componentRef.setInput('key', 'app');
       const mockMessage: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -376,7 +377,7 @@ describe('IWhisper', () => {
     });
 
     it('should show messages without key when component has no key', () => {
-      component.key = undefined;
+      fixture.componentRef.setInput('key', undefined);
       const mockMessage: IWhisperMessage = {
         id: '1',
         severity: 'info',
@@ -409,21 +410,26 @@ describe('IWhisper', () => {
 
   describe('Custom styles', () => {
     it('should accept custom style input', () => {
-      component.style = { marginTop: '10px' };
+      fixture.componentRef.setInput('style', { marginTop: '10px' });
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.style).toEqual({ marginTop: '10px' });
     });
 
     it('should accept custom baseZIndex', () => {
-      component.baseZIndex = 1000;
+      fixture.componentRef.setInput('baseZIndex', 1000);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.baseZIndex).toBe(1000);
     });
 
     it('should accept autoZIndex input', () => {
-      component.autoZIndex = false;
+      fixture.componentRef.setInput('autoZIndex', false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(component.autoZIndex).toBe(false);
     });
   });
 });
+
+afterEach(() => vi.useRealTimers());

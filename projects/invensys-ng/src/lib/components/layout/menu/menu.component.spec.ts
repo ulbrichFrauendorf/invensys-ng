@@ -1,10 +1,5 @@
 import type { MockedObject } from 'vitest';
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
 import {
   CLAIMS_CHECKER,
@@ -51,34 +46,40 @@ describe('MenuComponent', () => {
       imports: [MenuComponent],
       providers: [provideRouter([])],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(MenuComponent);
-    component = fixture.componentInstance;
   });
 
+  function createComponent() {
+    fixture = TestBed.createComponent(MenuComponent);
+    component = fixture.componentInstance;
+  }
+
   it('should create', () => {
+    createComponent();
     expect(component).toBeTruthy();
   });
 
   describe('Without Claims Checker', () => {
-    it('should show all menu items when no claims checker is provided', fakeAsync(() => {
-      component.model = mockMenuModel;
+    beforeEach(() => createComponent());
+    it('should show all menu items when no claims checker is provided', async () => {
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       expect(component.filteredModel().length).toBe(3);
       expect(component.filteredModel()[0].items.length).toBe(2);
       expect(component.filteredModel()[1].items.length).toBe(1);
       expect(component.filteredModel()[2].items.length).toBe(1);
-    }));
+    });
 
-    it('should handle empty model', fakeAsync(() => {
-      component.model = [];
+    it('should handle empty model', async () => {
+      fixture.componentRef.setInput('model', []);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       expect(component.filteredModel().length).toBe(0);
-    }));
+    });
   });
 
   describe('With Claims Checker', () => {
@@ -101,7 +102,7 @@ describe('MenuComponent', () => {
       component = fixture.componentInstance;
     });
 
-    it('should filter menu items based on claims', fakeAsync(() => {
+    it('should filter menu items based on claims', async () => {
       // Setup: User has view-item2 claim but not view-group2 or view-sub2
       mockClaimsChecker.hasClaim.mockImplementation((claim: string) => {
         if (claim === 'view-item2') return of(true);
@@ -110,9 +111,10 @@ describe('MenuComponent', () => {
         return of(false);
       });
 
-      component.model = mockMenuModel;
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
 
@@ -127,14 +129,15 @@ describe('MenuComponent', () => {
       expect(filtered[1].label).toBe('Group 3');
       expect(filtered[1].items[0].items?.length).toBe(1);
       expect(filtered[1].items[0].items?.[0].label).toBe('Sub Item 1');
-    }));
+    });
 
-    it('should show all items when all claims are granted', fakeAsync(() => {
+    it('should show all items when all claims are granted', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
-      component.model = mockMenuModel;
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
 
@@ -142,14 +145,15 @@ describe('MenuComponent', () => {
       expect(filtered[0].items.length).toBe(2);
       expect(filtered[1].items.length).toBe(1);
       expect(filtered[2].items[0].items?.length).toBe(2);
-    }));
+    });
 
-    it('should hide all items when no claims are granted', fakeAsync(() => {
+    it('should hide all items when no claims are granted', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
-      component.model = mockMenuModel;
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
 
@@ -163,9 +167,9 @@ describe('MenuComponent', () => {
       // Group 3 should have parent with only Sub Item 1
       expect(filtered[1].items[0].items?.length).toBe(1);
       expect(filtered[1].items[0].items?.[0].label).toBe('Sub Item 1');
-    }));
+    });
 
-    it('should hide groups with no visible items', fakeAsync(() => {
+    it('should hide groups with no visible items', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
       const modelWithClaimsOnAllItems: MenuModel[] = [
@@ -178,34 +182,38 @@ describe('MenuComponent', () => {
         },
       ];
 
-      component.model = modelWithClaimsOnAllItems;
+      fixture.componentRef.setInput('model', modelWithClaimsOnAllItems);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
 
       // Group should be completely hidden since no items are visible
       expect(filtered.length).toBe(0);
-    }));
+    });
 
-    it('should handle nested items with claims', fakeAsync(() => {
+    it('keeps unrestricted children alongside children with granted claims', async () => {
       mockClaimsChecker.hasClaim.mockImplementation((claim: string) => {
         return of(claim === 'view-sub2');
       });
 
-      component.model = mockMenuModel;
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
       const group3 = filtered.find((g) => g.label === 'Group 3');
 
       expect(group3).toBeDefined();
-      expect(group3?.items[0].items?.length).toBe(1);
-      expect(group3?.items[0].items?.[0].label).toBe('Sub Item 2');
-    }));
+      expect(group3?.items[0].items?.map((item) => item.label)).toEqual([
+        'Sub Item 1',
+        'Sub Item 2',
+      ]);
+    });
 
-    it('should hide parent items with no visible sub-items', fakeAsync(() => {
+    it('should hide parent items with no visible sub-items', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(false));
 
       const modelWithNestedClaims: MenuModel[] = [
@@ -224,35 +232,38 @@ describe('MenuComponent', () => {
         },
       ];
 
-      component.model = modelWithNestedClaims;
+      fixture.componentRef.setInput('model', modelWithNestedClaims);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       const filtered = component.filteredModel();
 
       // Parent should be hidden since all sub-items are filtered out
       expect(filtered.length).toBe(0);
-    }));
+    });
 
-    it('should update filtered model when model input changes', fakeAsync(() => {
+    it('should update filtered model when model input changes', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
       // Set initial model
-      component.model = [mockMenuModel[0]];
+      fixture.componentRef.setInput('model', [mockMenuModel[0]]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       expect(component.filteredModel().length).toBe(1);
 
       // Update model
-      component.model = mockMenuModel;
+      fixture.componentRef.setInput('model', mockMenuModel);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       expect(component.filteredModel().length).toBe(3);
-    }));
+    });
 
-    it('should call hasClaim only once per unique claim', fakeAsync(() => {
+    it('should call hasClaim only once per unique claim', async () => {
       mockClaimsChecker.hasClaim.mockReturnValue(of(true));
 
       const modelWithDuplicateClaims: MenuModel[] = [
@@ -273,20 +284,22 @@ describe('MenuComponent', () => {
         },
       ];
 
-      component.model = modelWithDuplicateClaims;
+      fixture.componentRef.setInput('model', modelWithDuplicateClaims);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
 
       // Should only check 'duplicate-claim' once
       expect(mockClaimsChecker.hasClaim).toHaveBeenCalledTimes(1);
       expect(mockClaimsChecker.hasClaim).toHaveBeenCalledWith(
         'duplicate-claim',
       );
-    }));
+    });
   });
 
   describe('Cleanup', () => {
     it('should cleanup subscriptions on destroy', () => {
+      createComponent();
       const destroySpy = vi.fn().mockName('destroy');
       (component as any).destroy$.subscribe({
         next: destroySpy,

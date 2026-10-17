@@ -43,7 +43,7 @@
 
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="origin"
   [cdkConnectedOverlayOpen]="isOpen && !disabled" [cdkConnectedOverlayPositions]="overlayPositions"
-  [cdkConnectedOverlayWidth]="origin.elementRef.nativeElement.getBoundingClientRect().width"
+  [cdkConnectedOverlayWidth]="isOpen ? origin.elementRef.nativeElement.getBoundingClientRect().width : undefined"
   [cdkConnectedOverlayViewportMargin]="12" [cdkConnectedOverlayPush]="true"
   (overlayOutsideClick)="onDocumentClick($event)" (attach)="focusOptions()" (detach)="closeDropdown()">
   <div class="i-option-panel" #optionsPanel (keydown)="onPanelKeydown($event)">

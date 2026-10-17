@@ -26,6 +26,7 @@ describe('ConfirmationDialogComponent', () => {
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;
     component.dialogRef = mockDialogRef;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
 
@@ -70,6 +71,7 @@ describe('ConfirmationDialogComponent', () => {
         data: { acceptLabel: 'Delete item', rejectLabel: 'Keep item' },
       };
       component.ngOnInit();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       const buttons = Array.from(

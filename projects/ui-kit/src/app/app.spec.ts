@@ -18,6 +18,7 @@ describe('App', () => {
 
   it('should render the router outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('router-outlet')).toBeTruthy();

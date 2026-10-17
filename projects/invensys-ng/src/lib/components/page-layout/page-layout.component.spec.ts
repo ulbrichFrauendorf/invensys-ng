@@ -68,7 +68,7 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelector('.test-content')).not.toBeNull();
   });
 
-  it('owns its padding while the real shell remains unpadded and scrolls back to the sidebar', async () => {
+  it.each([true, false])('owns its padding and snaps across the mobile app bar (sidebar: %s)', async (showSidebar) => {
     const previousFontSize = document.documentElement.style.fontSize;
     TestBed.configureTestingModule({
       imports: [TestShell],
@@ -79,9 +79,12 @@ describe('PageLayoutComponent', () => {
       await TestBed.inject(Router).navigateByUrl('/page');
       await fixture.whenStable();
       const root: HTMLElement = fixture.nativeElement;
+      const pageComponent = fixture.debugElement.query(By.directive(TestPage)).componentInstance as TestPage;
+      pageComponent.showSidebar.set(showSidebar);
+      await fixture.whenStable();
       const shell = root.querySelector<HTMLElement>('.layout-main-container')!;
       const wrapper = root.querySelector<HTMLElement>('.layout-wrapper')!;
-      const sidebar = root.querySelector<HTMLElement>('i-page-layout .sidebar')!;
+      const sidebar = root.querySelector<HTMLElement>('i-page-layout .sidebar');
       const header = root.querySelector<HTMLElement>('.page-header')!;
       const page = root.querySelector<HTMLElement>('i-page-layout')!;
       const mobile = matchMedia('(max-width: 991px)').matches;
@@ -91,14 +94,33 @@ describe('PageLayoutComponent', () => {
       page.style.setProperty('--page-layout-padding', '8px');
       expect(getComputedStyle(header).paddingLeft).toBe('8px');
       expect(getComputedStyle(shell).paddingLeft).toBe('0px');
-      const initialSidebarTop = sidebar.getBoundingClientRect().top;
+      const initialSidebarTop = sidebar?.getBoundingClientRect().top;
       const bodyTop = root.querySelector('.page-body')!.getBoundingClientRect().top;
+      if (mobile) {
+        const topbar = root.querySelector<HTMLElement>('i-topbar')!;
+        const edge = wrapper.getBoundingClientRect().top;
+        const barBottom = topbar.getBoundingClientRect().bottom;
+        const waitForScroll = async () => {
+          await new Promise(requestAnimationFrame);
+          await new Promise(requestAnimationFrame);
+        };
+        // Both directions must skip every partially overlapping position.
+        for (const remaining of [barBottom - edge - 1, 1, (barBottom - edge) / 2]) {
+          wrapper.scrollTop = bodyTop - edge - remaining;
+          await waitForScroll();
+          expect(Math.abs(header.getBoundingClientRect().top - edge)).toBeLessThan(2);
+          expect(header.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(barBottom);
+        }
+        wrapper.scrollTop = 0;
+        await waitForScroll();
+        expect(Math.abs(header.getBoundingClientRect().top - bodyTop)).toBeLessThan(2);
+      }
       scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
       await new Promise(requestAnimationFrame);
       expect(Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top)).toBeLessThan(2);
-      if (mobile) {
+      if (mobile && sidebar) {
         expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(header.getBoundingClientRect().top);
-      } else {
+      } else if (sidebar) {
         expect(sidebar.scrollHeight).toBeGreaterThan(sidebar.clientHeight);
         expect(Math.abs(sidebar.getBoundingClientRect().top - shell.getBoundingClientRect().top)).toBeLessThan(2);
       }
@@ -118,7 +140,9 @@ describe('PageLayoutComponent', () => {
       }
       scrollOwner.scrollTop = 0;
       await new Promise(requestAnimationFrame);
-      expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
+      if (sidebar && initialSidebarTop !== undefined) {
+        expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
+      }
     } finally {
       fixture.destroy();
       document.documentElement.style.fontSize = previousFontSize;

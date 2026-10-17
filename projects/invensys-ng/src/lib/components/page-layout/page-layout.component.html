@@ -4,9 +4,9 @@
       <ng-content select="[iPageSidebar]" />
     </aside>
   }
-  <div class="page-body">
+  <div class="page-body" #body>
     @if (showHeader()) {
-      <header class="page-header">
+      <header class="page-header" #header>
         <div class="page-heading">
           @if (eyebrowText()) {
             <p class="eyebrow">{{ eyebrowText() }}</p>

@@ -1,4 +1,4 @@
-<app-demo-playground class="tables-demo" title="Table Component" description="Expand a category to view its detail rows. Use [detailRowBorders]=&quot;false&quot; to hide their bottom borders.">
+<app-demo-playground class="tables-demo" title="Table Component" description="Expand a category to view its detail rows. Use [detailRowBorders]=&quot;false&quot; to hide their bottom borders and condense their height.">
   <ng-template appDemoOption="option-1" label="Sorting &amp; Filtering" [selected]="true" [sourceCode]="codeExamples.flat" [tsCode]="tsCodeExamples.flat">
       <i-table
         [grid]="flatGrid"
@@ -25,7 +25,7 @@
     </ng-template>
 
   <ng-template appDemoOption="option-3" label="Expandable Detail Sub-Table" [sourceCode]="codeExamples.detail" [tsCode]="tsCodeExamples.detail">
-      <p>Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide their bottom borders.</p>
+      <p>Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide their bottom borders and condense their height for easier viewing on mobile.</p>
       <label>
         <input type="checkbox" [checked]="showDetailRowBorders"
           (change)="showDetailRowBorders = $any($event.target).checked" />

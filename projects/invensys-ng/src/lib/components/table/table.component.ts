@@ -377,7 +377,7 @@ export class ITable {
   /** Show horizontal separators between body rows. @default true */
   @Input() rowBorders = true;
 
-  /** Show bottom borders within expanded detail tables. @default true */
+  /** Show bottom borders within expanded detail tables; false also condenses their rows. @default true */
   @Input() detailRowBorders = true;
 
   /**

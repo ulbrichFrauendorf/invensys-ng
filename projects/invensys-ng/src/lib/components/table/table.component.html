@@ -248,6 +248,7 @@
                 >
                   <div class="i-table-expanded-content">
                     <i-table
+                      [class.i-table-compact-details]="!detailRowBorders"
                       [grid]="getDetailGrid(row)"
                       [rowBorders]="detailRowBorders"
                       [sortable]="sortable"

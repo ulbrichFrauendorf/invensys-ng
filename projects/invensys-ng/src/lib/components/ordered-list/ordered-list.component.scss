@@ -2,6 +2,7 @@
 @include theme.i-ordered-list-theme();
 :host {
   display: block;
+  container-type: inline-size;
 }
 .i-ordered-list {
   display: grid;
@@ -10,9 +11,9 @@
   padding: 0;
   margin: 0;
   &__item {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
     gap: 1rem;
     padding: 1rem;
     border: 1px solid var(--surface-border);
@@ -20,7 +21,6 @@
   }
   &__drag-handle {
     display: grid;
-    flex: 0 0 2rem;
     place-items: center;
     width: 2rem;
     height: 2rem;
@@ -37,8 +37,8 @@
     &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
   }
   &__content {
-    flex: 1 1 15rem;
     min-width: 0;
+    overflow-wrap: anywhere;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -46,8 +46,7 @@
   }
   &__actions {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.25rem;
   }
   &__announcement {
@@ -66,9 +65,8 @@
 }
 .i-ordered-list__item.cdk-drag-placeholder { opacity: 0.25; }
 
-@media (max-width: 34rem) {
+@container (max-width: 34rem) {
   .i-ordered-list__actions {
-    flex-basis: 100%;
-    margin-left: 3rem;
+    flex-direction: column;
   }
 }

@@ -1,11 +1,44 @@
 import { TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { cdp } from 'vitest/browser';
 import type { CDPSession } from '@vitest/browser-playwright';
 import { IOrderedList } from './ordered-list.component';
 
+@Component({
+  imports: [IOrderedList],
+  template: `
+    <i-ordered-list [items]="items" [itemTemplate]="settings" />
+    <ng-template #settings><div style="height: 180px">Additional row settings</div></ng-template>
+  `,
+})
+class TallRowHost {
+  items = ['A long column label that wraps on narrow screens'];
+}
+
 describe('IOrderedList', () => {
+  it('centers the handle across tall rows and keeps actions to the right at narrow widths', () => {
+    const fixture = TestBed.createComponent(TallRowHost);
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    for (const width of [260, 360, 900]) {
+      root.style.width = `${width}px`;
+      const row = root.querySelector('.i-ordered-list__item')!.getBoundingClientRect();
+      const handle = root.querySelector('.i-ordered-list__drag-handle')!.getBoundingClientRect();
+      const content = root.querySelector('.i-ordered-list__content')!.getBoundingClientRect();
+      const buttons = Array.from(root.querySelectorAll('.i-ordered-list__actions button'), button => button.getBoundingClientRect());
+      expect(Math.abs(handle.y + handle.height / 2 - row.y - row.height / 2)).toBeLessThan(1);
+      expect(buttons.every(button => button.left >= content.right && button.right <= row.right)).toBe(true);
+      if (width <= 360) {
+        expect(buttons[1].top).toBeGreaterThanOrEqual(buttons[0].bottom);
+        expect(buttons[2].top).toBeGreaterThanOrEqual(buttons[1].bottom);
+      } else {
+        expect(buttons[1].left).toBeGreaterThanOrEqual(buttons[0].right);
+      }
+    }
+  });
+
   it('drags a row by its handle to a non-adjacent position', async () => {
     const fixture = TestBed.createComponent(IOrderedList<string>);
     fixture.componentRef.setInput('items', ['A', 'B', 'C']);

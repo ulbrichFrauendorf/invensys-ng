@@ -2,6 +2,7 @@
 @include theme.i-rule-editor-theme();
 :host {
   display: block;
+  container-type: inline-size;
 }
 .i-rule-editor {
   &__toolbar {
@@ -15,11 +16,8 @@
   }
   &__row {
     display: grid;
-    grid-template-columns: auto minmax(9rem, 1fr) minmax(9rem, 1fr) minmax(
-        9rem,
-        1fr
-      ) auto;
-    align-items: end;
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    align-items: center;
     gap: 0.75rem;
     padding: 1rem;
     border: 1px solid var(--surface-border);
@@ -31,7 +29,6 @@
     width: 2rem;
     height: 2rem;
     padding: 0;
-    margin-bottom: 0.125rem;
     border: 0;
     border-radius: 0.25rem;
     color: inherit;
@@ -43,12 +40,19 @@
     &:disabled { cursor: default; opacity: 0.4; }
     &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
   }
-  &__row > i-select,
-  &__row > i-input-text {
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 0.75rem;
     min-width: 0;
   }
-  &__row > i-button {
-    grid-column: 5;
+  &__fields--valueless {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  &__fields > i-select,
+  &__fields > i-input-text {
+    min-width: 0;
   }
   &__announcement {
     position: absolute;
@@ -65,29 +69,15 @@
 }
 .i-rule-editor__row.cdk-drag-placeholder { opacity: 0.25; }
 
-@media (max-width: 48rem) {
-  .i-rule-editor__row {
-    grid-template-columns: auto repeat(2, minmax(0, 1fr));
+@container (max-width: 48rem) {
+  .i-rule-editor__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .i-rule-editor__row > i-input-text {
-    grid-column: 2;
-  }
-  .i-rule-editor__row > i-button {
-    grid-column: 3;
-    justify-self: end;
-  }
+  .i-rule-editor__fields > :nth-child(3) { grid-column: 1 / -1; }
 }
 
-@media (max-width: 34rem) {
-  .i-rule-editor__row {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-  .i-rule-editor__row > i-select,
-  .i-rule-editor__row > i-input-text {
-    grid-column: 2;
-  }
-  .i-rule-editor__row > i-button {
-    grid-column: 2;
-    justify-self: end;
+@container (max-width: 34rem) {
+  .i-rule-editor__fields {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

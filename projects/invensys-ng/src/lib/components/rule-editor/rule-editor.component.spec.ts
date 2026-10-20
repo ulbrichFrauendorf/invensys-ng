@@ -4,6 +4,38 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { EditorRule, IRuleEditor } from './rule-editor.component';
 
 describe('IRuleEditor', () => {
+  it('centers the drag handle and keeps removal beside stacked fields at narrow widths', () => {
+    const fixture = TestBed.createComponent(IRuleEditor);
+    fixture.componentRef.setInput('fields', [
+      { key: 'name', label: 'Name', type: 'text' },
+      { key: 'active', label: 'Active', type: 'boolean' },
+    ]);
+    fixture.componentRef.setInput('operators', [{ key: 'eq', label: 'Equals' }]);
+    fixture.componentRef.setInput('rules', [
+      { fieldKey: 'name', operator: 'eq', value: 'Alice' },
+      { fieldKey: 'active', operator: 'eq', value: 'true' },
+    ]);
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    for (const width of [260, 360, 900]) {
+      root.style.width = `${width}px`;
+      for (const row of root.querySelectorAll('.i-rule-editor__row')) {
+        const bounds = row.getBoundingClientRect();
+        const handle = row.querySelector('.i-rule-editor__drag-handle')!.getBoundingClientRect();
+        const fields = row.querySelector('.i-rule-editor__fields')!;
+        const remove = row.querySelector('i-button')!.getBoundingClientRect();
+        expect(Math.abs(handle.y + handle.height / 2 - bounds.y - bounds.height / 2)).toBeLessThan(1);
+        expect(remove.left).toBeGreaterThanOrEqual(fields.getBoundingClientRect().right);
+        expect(remove.right).toBeLessThanOrEqual(bounds.right);
+        if (width <= 360) {
+          const controls = Array.from(fields.children, field => field.getBoundingClientRect());
+          expect(controls[1].top).toBeGreaterThanOrEqual(controls[0].bottom);
+          expect(controls[2].top).toBeGreaterThanOrEqual(controls[1].bottom);
+        }
+      }
+    }
+  });
+
   it('reorders complete rules through dragging and keyboard input without changing caller data', () => {
     const fixture = TestBed.createComponent(IRuleEditor);
     const original: EditorRule[] = [
@@ -73,7 +105,7 @@ describe('IRuleEditor', () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(
-      fixture.nativeElement.querySelector('.i-rule-editor__row > i-input-text'),
+      fixture.nativeElement.querySelector('.i-rule-editor__fields > i-input-text'),
     ).toBeNull();
     const changed = vi.fn().mockName('changed');
     component.rulesChange.subscribe(changed);

@@ -4,7 +4,7 @@
 .demo-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .step-content { padding-block: 8px; }
 .editor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
-.workflow-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--surface-border); }
+.workflow-footer { display: flex; flex-wrap: wrap; width: 100%; justify-content: space-between; align-items: center; gap: 8px; padding-top: 16px; border-top: 1px solid var(--surface-border); }
 .workflow-footer span { color: var(--color-text-secondary); }
 .section-heading { margin-bottom: 16px; }
 .saved-message { color: var(--color-success); }

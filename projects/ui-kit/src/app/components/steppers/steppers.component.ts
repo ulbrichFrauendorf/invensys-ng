@@ -43,8 +43,17 @@ export class SteppersComponent {
     [optional]="true"
     [completed]="resultsComplete"
   >
-    <i-button (clicked)="resultsComplete = true">Save report</i-button>
+    <!-- Final step content -->
   </i-step>
+  <div stepperActions>
+    @if (activeIndex === 0) {
+      <i-button (clicked)="completeDetails()">Complete and continue</i-button>
+    } @else if (activeIndex === 1) {
+      <i-button (clicked)="completeColumns()">Complete and continue</i-button>
+    } @else {
+      <i-button (clicked)="resultsComplete = true">Save report</i-button>
+    }
+  </div>
 </i-stepper>`;
 
   readonly tsCode = `import { IButton, IStep, IStepper } from 'invensys-ng';
@@ -58,6 +67,16 @@ export class ReportWizardComponent {
   detailsComplete = false;
   columnsComplete = false;
   resultsComplete = false;
+
+  completeDetails(): void {
+    this.detailsComplete = true;
+    this.activeIndex = 1;
+  }
+
+  completeColumns(): void {
+    this.columnsComplete = true;
+    this.activeIndex = 2;
+  }
 }`;
 
   completeDetails(): void {

@@ -23,6 +23,8 @@ Import `IOrderedList`. Use `[(items)]`, or handle `itemsChange`, to apply change
 
 ## Rule editor
 
+Editor rows show no visible numbering. Ordered items and rules can be dragged by their handles or reordered using the handle's up/down arrow keys. Move and remove actions use icons with accessible labels. Read-only and disabled editors prevent dragging as well as button actions.
+
 Import `IRuleEditor`. Supply `RuleEditorField[]`, `RuleEditorOperator[]` and bind `[(rules)]` to `EditorRule[]`. Field keys and operator keys must be unique. Operators can restrict fieldTypes; changing a field clears its old value and chooses the first compatible operator. Date/number fields render typed inputs and boolean fields render a true/false selector. Values are strings; this control does not perform domain validation or execute rules. Use `requiresValue: false` for empty checks or sort directions. Sorting uses the same component with `operatorLabel="Direction"` and caller-defined ascending/descending operators. The order of the rules is significant and remains caller-controlled.
 
 ```html

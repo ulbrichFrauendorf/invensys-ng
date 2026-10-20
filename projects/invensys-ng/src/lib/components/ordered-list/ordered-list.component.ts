@@ -1,4 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
+import { CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   Component,
   EventEmitter,
@@ -37,7 +38,7 @@ export interface OrderedListMoveEvent<T> {
 @Component({
   selector: 'i-ordered-list',
   standalone: true,
-  imports: [NgTemplateOutlet, IButton, NoContentComponent],
+  imports: [NgTemplateOutlet, CdkDrag, CdkDragHandle, CdkDropList, IButton, NoContentComponent],
   templateUrl: './ordered-list.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ordered-list.component.scss',
@@ -70,10 +71,14 @@ export class IOrderedList<T> {
   announcement = '';
 
   move(index: number, direction: -1 | 1): void {
-    const target = index + direction;
+    this.reorder(index, index + direction);
+  }
+
+  reorder(index: number, target: number): void {
     if (
       this.readonly ||
       this.disabled ||
+      index === target ||
       index < 0 ||
       index >= this.items.length ||
       target < 0 ||
@@ -82,7 +87,7 @@ export class IOrderedList<T> {
       return;
     const items = [...this.items];
     const item = items[index];
-    [items[index], items[target]] = [items[target], items[index]];
+    moveItemInArray(items, index, target);
     this.announcement = `${this.itemLabel(item)} moved to position ${target + 1}.`;
     this.itemsChange.emit(items);
     this.onMove.emit({ item, previousIndex: index, index: target });

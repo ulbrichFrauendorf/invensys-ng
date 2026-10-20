@@ -8,3 +8,11 @@
   background: var(--surface-card);
 
 }
+
+.step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+}

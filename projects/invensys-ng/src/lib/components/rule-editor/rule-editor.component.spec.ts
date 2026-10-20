@@ -1,7 +1,39 @@
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { EditorRule, IRuleEditor } from './rule-editor.component';
 
 describe('IRuleEditor', () => {
+  it('reorders complete rules through dragging and keyboard input without changing caller data', () => {
+    const fixture = TestBed.createComponent(IRuleEditor);
+    const original: EditorRule[] = [
+      { fieldKey: 'name', operator: 'eq', value: 'Alice' },
+      { fieldKey: 'amount', operator: 'gt', value: '10' },
+      { fieldKey: 'date', operator: 'after', value: '2026-01-01' },
+    ];
+    fixture.componentRef.setInput('rules', original);
+    fixture.detectChanges();
+    const changed = vi.fn();
+    fixture.componentInstance.rulesChange.subscribe(changed);
+    const list = fixture.debugElement.query(By.directive(CdkDropList));
+    list.triggerEventHandler('cdkDropListDropped', { previousIndex: 2, currentIndex: 0 });
+    expect(changed).toHaveBeenCalledWith([original[2], original[0], original[1]]);
+    expect(original.map(rule => rule.fieldKey)).toEqual(['name', 'amount', 'date']);
+    fixture.nativeElement.querySelector('.i-rule-editor__drag-handle').dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+    );
+    expect(changed).toHaveBeenLastCalledWith([original[1], original[0], original[2]]);
+    changed.mockClear();
+    for (const state of ['readonly', 'disabled']) {
+      fixture.componentRef.setInput(state, true);
+      fixture.detectChanges();
+      expect(fixture.debugElement.queryAll(By.directive(CdkDrag)).every(row => row.injector.get(CdkDrag).disabled)).toBe(true);
+      list.triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 2 });
+      expect(changed).not.toHaveBeenCalled();
+      fixture.componentRef.setInput(state, false);
+    }
+  });
+
   it('resets values and incompatible operators when the field changes', () => {
     const fixture = TestBed.createComponent(IRuleEditor);
     const component = fixture.componentInstance;

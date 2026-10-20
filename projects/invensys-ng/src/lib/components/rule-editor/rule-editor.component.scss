@@ -25,24 +25,45 @@
     border: 1px solid var(--surface-border);
     border-radius: 0.5rem;
   }
-  &__number {
+  &__drag-handle {
     display: grid;
     place-items: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    margin-bottom: 0.25rem;
-    border-radius: 50%;
-    font-size: 0.8125rem;
-    font-weight: 700;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    margin-bottom: 0.125rem;
+    border: 0;
+    border-radius: 0.25rem;
+    color: inherit;
+    background: transparent;
+    cursor: grab;
+    touch-action: none;
+
+    &:active { cursor: grabbing; }
+    &:disabled { cursor: default; opacity: 0.4; }
+    &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
   }
   &__row > i-select,
   &__row > i-input-text {
     min-width: 0;
   }
   &__row > i-button {
-    grid-column: -1;
+    grid-column: 5;
+  }
+  &__announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
   }
 }
+
+.i-rule-editor__row.cdk-drag-preview {
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
+}
+.i-rule-editor__row.cdk-drag-placeholder { opacity: 0.25; }
 
 @media (max-width: 48rem) {
   .i-rule-editor__row {

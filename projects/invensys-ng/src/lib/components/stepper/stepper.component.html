@@ -1,4 +1,5 @@
 <div class="i-stepper" [ngClass]="'i-stepper--' + orientation" [attr.id]="componentId">
+  <div class="i-stepper__body">
   <ol class="i-stepper__navigation" [attr.aria-label]="ariaLabel">
     @for (step of steps; track step; let index = $index; let last = $last) {
       <li class="i-stepper__item"
@@ -45,4 +46,6 @@
       @if (activeIndex === index) { <ng-container [ngTemplateOutlet]="step.contentTemplate" /> }
     </section>
   }
+  </div>
+  <div class="i-stepper__actions"><ng-content select="[stepperActions]" /></div>
 </div>

@@ -32,6 +32,9 @@ export interface StepperChangeEvent {
  *   <i-step label="Columns" [disabled]="!detailsValid">
  *     Column selection
  *   </i-step>
+ *   <div stepperActions>
+ *     <!-- Shared Back, Continue or Save buttons appear below all step content. -->
+ *   </div>
  * </i-stepper>
  * ```
  */

@@ -15,13 +15,13 @@
         <i-step label="Preview & save" description="Review final headings" icon="pi pi-eye" [completed]="isSaved()" [disabled]="!name.trim() || !selected.length">
           <section class="step-content"><h2>{{ name }}</h2><p>{{ selected.length }} columns · {{ rules.length }} filters</p><i-ordered-list [(items)]="selected" [itemLabel]="label" [removable]="false" ariaLabel="Final headings" /></section>
         </i-step>
-      </i-stepper>
-      <footer class="workflow-footer">
+      <footer stepperActions class="workflow-footer">
         <i-button severity="contrast" [text]="true" [disabled]="activeIndex === 0" (clicked)="activeIndex = activeIndex - 1">Back</i-button>
         <span>Step {{ activeIndex + 1 }} of 4</span>
         @if (activeIndex < 3) { <i-button [disabled]="!name.trim() || (activeIndex > 0 && !selected.length)" (clicked)="next()">Continue</i-button> }
         @else { <i-button icon="pi pi-check" [disabled]="!name.trim() || !selected.length" (clicked)="save()">Save example</i-button> }
       </footer>
+      </i-stepper>
       @if (isSaved()) { <p role="status" class="saved-message">Example saved for this session. No report was sent to a server.</p> }
     </ng-template>
 

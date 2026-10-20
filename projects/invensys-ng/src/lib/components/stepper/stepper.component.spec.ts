@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { IStep } from './step.component';
-import { IStepper, StepperChangeEvent } from './stepper.component';
+import { IStepper, StepperChangeEvent, StepperOrientation } from './stepper.component';
 
 @Component({
   standalone: true,
@@ -12,6 +12,7 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
     <i-stepper
       [(activeIndex)]="activeIndex"
       [linear]="linear"
+      [orientation]="orientation"
       (onChange)="lastChange = $event"
     >
       <i-step
@@ -20,6 +21,7 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
         [completed]="detailsComplete"
       >
         Details content
+        <div class="tall-content" [style.height.px]="contentHeight" style="float: left; width: 100%">Form fields</div>
       </i-step>
       <i-step label="Columns">Columns content</i-step>
       <i-step
@@ -28,10 +30,13 @@ import { IStepper, StepperChangeEvent } from './stepper.component';
         [completed]="reviewComplete"
         >Review content</i-step
       >
+      <footer stepperActions><button type="button">Continue</button></footer>
     </i-stepper>
   `,
 })
 class TestHostComponent {
+  orientation: StepperOrientation = 'horizontal';
+  contentHeight = 100;
   activeIndex = 0;
   linear = false;
   detailsComplete = false;
@@ -63,6 +68,35 @@ describe('IStepper', () => {
         .nativeElement.textContent,
     ).toContain('Details content');
   });
+
+  for (const orientation of ['horizontal', 'vertical'] as const) {
+    for (const width of [360, 1100]) {
+      it(`keeps shared actions below all content in ${orientation} layout at ${width}px`, () => {
+        host.orientation = orientation;
+        fixture.nativeElement.style.width = `${width}px`;
+        for (const height of [100, 700]) {
+          host.contentHeight = height;
+          fixture.changeDetectorRef.markForCheck();
+          fixture.detectChanges();
+          const root: HTMLElement = fixture.nativeElement;
+          const actions = root.querySelector('.i-stepper__actions')!;
+          const navigation = root.querySelector('.i-stepper__navigation')!;
+          const content = root.querySelector('.tall-content')!;
+          expect(actions.textContent).toContain('Continue');
+          expect(content.getBoundingClientRect().height).toBe(height);
+          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(content.getBoundingClientRect().bottom);
+          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(navigation.getBoundingClientRect().bottom);
+        }
+        host.activeIndex = 1;
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+        const panel = fixture.nativeElement.querySelector('.i-stepper__panel--active');
+        const actions = fixture.nativeElement.querySelector('.i-stepper__actions');
+        expect(actions.textContent).toContain('Continue');
+        expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(panel.getBoundingClientRect().bottom);
+      });
+    }
+  }
 
   it('updates the active index and emits change details', () => {
     fixture.debugElement

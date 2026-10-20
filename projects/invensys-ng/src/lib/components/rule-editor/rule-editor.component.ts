@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { IButton } from '../button/button.component';
 import { IInputText } from '../input-text/input-text.component';
 import { ISelect } from '../select/select.component';
@@ -39,7 +40,7 @@ export interface EditorRule {
 @Component({
   selector: 'i-rule-editor',
   standalone: true,
-  imports: [FormsModule, IButton, IInputText, ISelect, NoContentComponent],
+  imports: [FormsModule, CdkDrag, CdkDragHandle, CdkDropList, IButton, IInputText, ISelect, NoContentComponent],
   templateUrl: './rule-editor.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './rule-editor.component.scss',
@@ -65,6 +66,7 @@ export class IRuleEditor {
   @Input() disabled = false;
   /** Immutable replacement emitted after a user action. */
   @Output() rulesChange = new EventEmitter<EditorRule[]>();
+  announcement = '';
   readonly booleanOptions = [
     { key: 'true', label: 'True' },
     { key: 'false', label: 'False' },
@@ -146,6 +148,18 @@ export class IRuleEditor {
         i === index ? { ...rule, ...changes } : rule,
       ),
     );
+  }
+
+  reorder(index: number, target: number): void {
+    if (
+      this.readonly || this.disabled || index === target ||
+      index < 0 || index >= this.rules.length ||
+      target < 0 || target >= this.rules.length
+    ) return;
+    const rules = [...this.rules];
+    moveItemInArray(rules, index, target);
+    this.announcement = `${this.field(this.rules[index])?.label ?? 'Rule'} moved to position ${target + 1}.`;
+    this.rulesChange.emit(rules);
   }
 
   remove(index: number): void {

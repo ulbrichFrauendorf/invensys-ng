@@ -43,6 +43,8 @@ This will launch the ui-kit project at `http://localhost:4200/` where you can se
 
 Run `npm audit --audit-level=low` to check all locked dependencies, including development tools.
 The publishing workflow runs this audit before building and publishing.
+The root `overrides.vite` pins the build and test tooling to patched Vite 8.3.5
+while Angular 22.2.3 still pins Vite 8.3.0. Recheck this override when upgrading Angular.
 
 ### Code Scaffolding
 

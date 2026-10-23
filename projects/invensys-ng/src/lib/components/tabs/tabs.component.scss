@@ -7,11 +7,16 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  box-sizing: border-box;
+  border-radius: vars.$borderRadius;
 
   .i-tabs__header {
     display: flex;
     overflow-x: auto;
     scrollbar-width: none;
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
     &::-webkit-scrollbar {
       display: none;
@@ -86,6 +91,9 @@
 
   .i-tabs__panels {
     flex: 1;
+    border-radius: inherit;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     .i-tabs__panel {
       display: none;

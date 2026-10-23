@@ -2,8 +2,10 @@
 
 @mixin i-tabs-theme() {
   .i-tabs {
+    border: 1px solid colors.$color-surface-border;
+
     &__header {
-      border-bottom: 1px solid colors.$color-border;
+      border-bottom: 1px solid colors.$color-surface-border;
       background: colors.$color-surface-card;
 
       &::-webkit-scrollbar-thumb {

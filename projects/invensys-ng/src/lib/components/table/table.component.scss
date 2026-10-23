@@ -15,8 +15,25 @@ $table-transition: 0.15s ease;
 .i-table-wrapper {
   position: relative;
   display: block;
-  border-radius: vars.$componentBorderRadius;
+  border-radius: vars.$borderRadius;
   overflow: visible;
+
+  // Round the painted surfaces while allowing projected content to overflow.
+  > .i-table-header {
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  > .i-table-container,
+  > .i-table-loading-overlay {
+    border-radius: inherit;
+  }
+
+  > .i-table-header ~ .i-table-container {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 
   &.i-table--small table {
     thead th {

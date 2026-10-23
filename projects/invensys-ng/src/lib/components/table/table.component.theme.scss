@@ -4,6 +4,7 @@
   .i-table-wrapper {
     color: colors.$color-text-primary;
     background: colors.$color-component-background;
+    border: 1px solid colors.$color-surface-border;
 
     .i-table-header {
       background: colors.$color-surface-section;

@@ -57,7 +57,11 @@ describe('IOrderedList', () => {
     const x = start.x + start.width / 2;
     const y = start.y + start.height / 2;
     const session: CDPSession = cdp();
-    await session.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
+    await session.send('Input.dispatchMouseEvent', {
+      type: 'mouseMoved',
+      x,
+      y,
+    });
     await session.send('Input.dispatchMouseEvent', {
       type: 'mousePressed',
       x,
@@ -96,10 +100,17 @@ describe('IOrderedList', () => {
 
     fixture.debugElement
       .query(By.directive(CdkDropList))
-      .triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 3 });
+      .triggerEventHandler('cdkDropListDropped', {
+        previousIndex: 0,
+        currentIndex: 3,
+      });
 
     expect(changed).toHaveBeenCalledWith(['B', 'C', 'D', 'A']);
-    expect(moved).toHaveBeenCalledWith({ item: 'A', previousIndex: 0, index: 3 });
+    expect(moved).toHaveBeenCalledWith({
+      item: 'A',
+      previousIndex: 0,
+      index: 3,
+    });
     expect(original).toEqual(['A', 'B', 'C', 'D']);
   });
 
@@ -132,7 +143,10 @@ describe('IOrderedList', () => {
       ).toBe(true);
       fixture.debugElement
         .query(By.directive(CdkDropList))
-        .triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 2 });
+        .triggerEventHandler('cdkDropListDropped', {
+          previousIndex: 0,
+          currentIndex: 2,
+        });
       expect(changed).not.toHaveBeenCalled();
       fixture.componentRef.setInput(state, false);
     }

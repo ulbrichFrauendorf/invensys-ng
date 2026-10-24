@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="tables-demo"
   title="Tables"
   eyebrow="Data Display"
@@ -20,6 +22,7 @@
       Show outer border and rounded corners
     </label>
     <i-table
+      [loading]="loading()"
       [grid]="flatGrid"
       [showBorder]="showBorder"
       [sortable]="true"
@@ -39,6 +42,7 @@
     [tsCode]="tsCodeExamples.actions"
   >
     <i-table
+      [loading]="loading()"
       [grid]="actionsGrid"
       selectionMode="multiple"
       dataKey="id"
@@ -68,6 +72,7 @@
       Show detail row borders
     </label>
     <i-table
+      [loading]="loading()"
       [grid]="detailGrid"
       [sortable]="true"
       [striped]="true"
@@ -81,7 +86,13 @@
     [sourceCode]="codeExamples.icons"
     [tsCode]="tsCodeExamples.icons"
   >
-    <i-table [grid]="iconGrid" [sortable]="true" [height]="'360px'" [hoverable]="true"></i-table>
+    <i-table
+      [loading]="loading()"
+      [grid]="iconGrid"
+      [sortable]="true"
+      [height]="'360px'"
+      [hoverable]="true"
+    ></i-table>
   </ng-template>
 
   <ng-template
@@ -91,6 +102,7 @@
     [tsCode]="tsCodeExamples.large"
   >
     <i-table
+      [loading]="loading()"
       [grid]="largeGrid"
       [sortable]="true"
       [globalFilter]="true"

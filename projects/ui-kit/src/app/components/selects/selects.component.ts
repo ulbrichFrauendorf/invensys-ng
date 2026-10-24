@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
@@ -32,6 +33,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './selects.component.scss',
 })
 export class SelectsComponent implements OnInit {
+  readonly loading = loadingSignal(false);
+
   basicForm: FormGroup;
   validationForm: FormGroup;
   advancedForm: FormGroup;
@@ -83,14 +86,14 @@ export class SelectsComponent implements OnInit {
 
   // HTML Code examples organized by category
   codeExamples = {
-    ngModel: `<i-select
+    ngModel: `<i-select [loading]="loading()"
   label="Country"
   [options]="countries"
   optionLabel="label"
   [(ngModel)]="countryValue"
   placeholder="Select country" />
 
-<i-select
+<i-select [loading]="loading()"
   label="Status"
   [options]="statuses"
   optionLabel="label"
@@ -98,14 +101,14 @@ export class SelectsComponent implements OnInit {
   placeholder="Select status" />`,
 
     reactiveForm: `<form [formGroup]="basicForm">
-  <i-select
+  <i-select [loading]="loading()"
     label="Country"
     [options]="countries"
     optionLabel="label"
     formControlName="country"
     placeholder="Select country" />
 
-  <i-select
+  <i-select [loading]="loading()"
     label="Status"
     [options]="statuses"
     optionLabel="label"
@@ -114,7 +117,7 @@ export class SelectsComponent implements OnInit {
 </form>`,
 
     validation: `<form [formGroup]="validationForm">
-  <i-select
+  <i-select [loading]="loading()"
     label="Status (Required)"
     [options]="statuses"
     optionLabel="label"
@@ -122,7 +125,7 @@ export class SelectsComponent implements OnInit {
     formControlName="status" />
 </form>`,
 
-    advanced: `<i-select
+    advanced: `<i-select [loading]="loading()"
   [options]="reports"
   [filter]="true"
   [showClear]="true"
@@ -131,7 +134,7 @@ export class SelectsComponent implements OnInit {
   placeholder="Select Report"
   formControlName="selectedReport" />`,
 
-    fluid: `<i-select
+    fluid: `<i-select [loading]="loading()"
   label="Fluid Select"
   [options]="countries"
   optionLabel="label"

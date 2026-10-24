@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IChart } from '../../../../../invensys-ng/src/lib/components/chart/chart.component';
 import { IChartData } from '../../../../../invensys-ng/src/lib/components/chart/chart.interfaces';
@@ -13,6 +14,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './charts.component.scss',
 })
 export class ChartsComponent {
+  readonly loading = loadingSignal(false);
+
   // Bar Chart Data
   barChartData: IChartData[] = [
     {
@@ -194,7 +197,7 @@ export class ChartsComponent {
 
   // Code examples
   codeExamples = {
-    bar: `<i-chart [charts]="barChartData"></i-chart>`,
+    bar: `<i-chart [loading]="loading()" [charts]="barChartData"></i-chart>`,
 
     barTs: `barChartData: IChartData[] = [
   {
@@ -209,7 +212,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    stacked: `<i-chart [charts]="stackedBarChartData"></i-chart>`,
+    stacked: `<i-chart [loading]="loading()" [charts]="stackedBarChartData"></i-chart>`,
 
     stackedTs: `stackedBarChartData: IChartData[] = [
   {
@@ -224,7 +227,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    horizontal: `<i-chart [charts]="horizontalBarChartData"></i-chart>`,
+    horizontal: `<i-chart [loading]="loading()" [charts]="horizontalBarChartData"></i-chart>`,
 
     horizontalTs: `horizontalBarChartData: IChartData[] = [
   {
@@ -239,7 +242,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    line: `<i-chart [charts]="lineChartData"></i-chart>`,
+    line: `<i-chart [loading]="loading()" [charts]="lineChartData"></i-chart>`,
 
     lineTs: `lineChartData: IChartData[] = [
   {
@@ -253,7 +256,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    pie: `<i-chart [charts]="pieChartData"></i-chart>`,
+    pie: `<i-chart [loading]="loading()" [charts]="pieChartData"></i-chart>`,
 
     pieTs: `pieChartData: IChartData[] = [
   {
@@ -268,7 +271,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    doughnut: `<i-chart [charts]="doughnutChartData"></i-chart>`,
+    doughnut: `<i-chart [loading]="loading()" [charts]="doughnutChartData"></i-chart>`,
 
     doughnutTs: `doughnutChartData: IChartData[] = [
   {
@@ -283,7 +286,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    radar: `<i-chart [charts]="radarChartData"></i-chart>`,
+    radar: `<i-chart [loading]="loading()" [charts]="radarChartData"></i-chart>`,
 
     radarTs: `radarChartData: IChartData[] = [
   {
@@ -297,7 +300,7 @@ export class ChartsComponent {
   }
 ];`,
 
-    multiple: `<i-chart [charts]="multipleChartsData" [responsive]="true"></i-chart>`,
+    multiple: `<i-chart [loading]="loading()" [charts]="multipleChartsData" [responsive]="true"></i-chart>`,
 
     multipleTs: `multipleChartsData: IChartData[] = [
   {
@@ -349,7 +352,7 @@ export class DashboardChartComponent {
 
   // Template example
   templateCode = `<!-- dashboard-chart.component.html -->
-<i-chart [charts]="chartData"></i-chart>`;
+<i-chart [loading]="loading()" [charts]="chartData"></i-chart>`;
 
   // Simple direct usage example
   simpleUsageCode = `import { Component } from '@angular/core';
@@ -358,7 +361,7 @@ import { IChart, IChartData } from 'invensys-ng';
 @Component({
   selector: 'app-simple-chart',
   imports: [IChart],
-  template: '<i-chart [charts]="chartData"></i-chart>',
+  template: '<i-chart [loading]="loading()" [charts]="chartData"></i-chart>',
 })
 export class SimpleChartComponent {
   chartData: IChartData[] = [

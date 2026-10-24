@@ -530,14 +530,14 @@ describe('ITreeView', () => {
       expect(component.getNodeIcon(node)).toBe('pi pi-star');
     });
 
-    it('should show loading icon when node is loading', () => {
+    it('keeps node loading out of the legacy spinner icon', () => {
       const node: ITreeNode = {
         key: '1',
         label: 'Test',
         loading: true,
       };
 
-      expect(component.getToggleIcon(node)).toBe('pi pi-spin pi-spinner');
+      expect(component.getToggleIcon(node)).toBe('pi pi-chevron-right');
     });
   });
 

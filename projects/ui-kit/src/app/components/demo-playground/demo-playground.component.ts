@@ -1,3 +1,5 @@
+import { model } from '@angular/core';
+import { IToggle } from '@shared/components/toggle/toggle.component';
 import {
   AfterContentInit,
   Component,
@@ -31,6 +33,7 @@ import {
   selector: 'app-demo-playground',
   standalone: true,
   imports: [
+    IToggle,
     NgTemplateOutlet,
     IButton,
     FormsModule,
@@ -45,6 +48,8 @@ import {
   styleUrl: './demo-playground.component.scss',
 })
 export class DemoPlaygroundComponent implements AfterContentInit {
+  @Input() showLoadingControl = false;
+  readonly loading = model(false);
   @Input() title = 'Component';
   @Input() eyebrow = '';
   @Input() description = '';

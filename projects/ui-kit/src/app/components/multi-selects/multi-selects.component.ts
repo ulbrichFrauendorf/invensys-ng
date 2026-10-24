@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
@@ -32,6 +33,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './multi-selects.component.scss',
 })
 export class MultiSelectsComponent implements OnInit {
+  readonly loading = loadingSignal(false);
+
   basicForm: FormGroup;
   validationForm: FormGroup;
   advancedForm: FormGroup;
@@ -106,14 +109,14 @@ export class MultiSelectsComponent implements OnInit {
   // HTML Code examples organized by category
   codeExamples = {
     ngModel: `// ngModel now stores full objects
-<i-multi-select
+<i-multi-select [loading]="loading()"
   label="Skills"
   [options]="skills"
   optionLabel="label"
   [(ngModel)]="skillsValue"
   placeholder="Select your skills" />
 
-<i-multi-select
+<i-multi-select [loading]="loading()"
   label="Departments"
   [options]="departments"
   optionLabel="label"
@@ -122,14 +125,14 @@ export class MultiSelectsComponent implements OnInit {
 
     reactiveForm: `// Form controls now store full objects
 <form [formGroup]="basicForm">
-  <i-multi-select
+  <i-multi-select [loading]="loading()"
     label="Skills"
     [options]="skills"
     optionLabel="label"
     formControlName="skills"
     placeholder="Select your skills" />
 
-  <i-multi-select
+  <i-multi-select [loading]="loading()"
     label="Departments"
     [options]="departments"
     optionLabel="label"
@@ -138,14 +141,14 @@ export class MultiSelectsComponent implements OnInit {
 </form>`,
 
     validation: `<form [formGroup]="validationForm">
-  <i-multi-select
+  <i-multi-select [loading]="loading()"
     label="Required Skills (At least 1)"
     [options]="skills"
     optionLabel="label"
     placeholder="Select at least 1 skill"
     formControlName="requiredSkills" />
 
-  <i-multi-select
+  <i-multi-select [loading]="loading()"
     label="Minimum Skills (At least 2)"
     [options]="skills"
     optionLabel="label"
@@ -154,7 +157,7 @@ export class MultiSelectsComponent implements OnInit {
 </form>`,
 
     advanced: `// Advanced multi-select - stores full objects
-<i-multi-select
+<i-multi-select [loading]="loading()"
   [options]="categories"
   [filter]="true"
   [showClear]="true"
@@ -164,7 +167,7 @@ export class MultiSelectsComponent implements OnInit {
   [maxSelectedLabels]="3"
   formControlName="selectedCategories" />`,
 
-    fluid: `<i-multi-select
+    fluid: `<i-multi-select [loading]="loading()"
   label="Fluid Multi-Select"
   [options]="skills"
   optionLabel="label"

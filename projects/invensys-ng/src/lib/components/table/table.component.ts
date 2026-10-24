@@ -1,3 +1,4 @@
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -216,6 +217,7 @@ export interface TableDownloadEvent {
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    LoadingSurfaceComponent,
     CommonModule,
     FormsModule,
     CdkVirtualScrollViewport,
@@ -393,7 +395,14 @@ export class ITable {
    * Show loading state
    * @default false
    */
-  @Input() loading = false;
+  readonly loadingState = signal(false);
+  @Input()
+  get loading(): boolean {
+    return this.loadingState();
+  }
+  set loading(value: boolean) {
+    this.loadingState.set(value);
+  }
 
   /**
    * Enable horizontal scrolling
@@ -764,6 +773,7 @@ export class ITable {
    * @internal
    */
   onSortColumn(column: TableColumn): void {
+    if (this.loading) return;
     if (!this.sortable || !column.sortable) return;
 
     if (this.sortField === column.field) {
@@ -797,6 +807,7 @@ export class ITable {
    * @internal
    */
   onGlobalFilterInput(value: string): void {
+    if (this.loading) return;
     if (this.filterTimer) {
       clearTimeout(this.filterTimer);
     }
@@ -812,6 +823,7 @@ export class ITable {
    * @internal
    */
   onColumnFilterInput(field: string, value: string): void {
+    if (this.loading) return;
     if (this.filterTimer) {
       clearTimeout(this.filterTimer);
     }
@@ -852,6 +864,7 @@ export class ITable {
    * @internal
    */
   toggleRowSelection(row: any, event?: Event): void {
+    if (this.loading) return;
     if (!this.selectionMode) return;
 
     // Prevent checkbox from triggering twice
@@ -888,6 +901,7 @@ export class ITable {
    * @internal
    */
   toggleAllSelection(): void {
+    if (this.loading) return;
     if (this.selectionMode !== 'multiple') return;
 
     const data = this.processedData();
@@ -964,7 +978,7 @@ export class ITable {
   }
 
   isActionDisabled(action: GridAction, row: any): boolean {
-    if (this.isActionLoading(action, row)) return true;
+    if (this.loading || this.isActionLoading(action, row)) return true;
     if (typeof action.disabled === 'function') {
       return action.disabled(row);
     }
@@ -1002,6 +1016,7 @@ export class ITable {
    * @internal
    */
   toggleRowExpansion(row: any, event: Event): void {
+    if (this.loading) return;
     event.stopPropagation();
     if (!this.hasDetails()) return;
 
@@ -1034,6 +1049,7 @@ export class ITable {
    * @internal
    */
   handleDownload(): void {
+    if (this.loading) return;
     if (this.downloadMode === 'api') {
       this.onDownload.emit({
         format: this.downloadFormat,
@@ -1141,6 +1157,7 @@ export class ITable {
    * @internal
    */
   onColumnResizeStart(event: MouseEvent, column: TableColumn): void {
+    if (this.loading) return;
     if (!this.resizableColumns) return;
 
     event.preventDefault();

@@ -1,3 +1,5 @@
+import { effect as loadingEffect } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OPTION_OVERLAY_POSITIONS, handleOptionKeys } from '../../utils/option-picker';
 import {
@@ -91,7 +93,7 @@ export interface MultiSelectOption {
 @Component({
   selector: 'i-multi-select',
   standalone: true,
-  imports: [FormsModule, IChipsComponent, OverlayModule],
+  imports: [LoadingSurfaceComponent, FormsModule, IChipsComponent, OverlayModule],
   templateUrl: './multi-select.component.html',
   styleUrls: ['./multi-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -104,6 +106,9 @@ export interface MultiSelectOption {
   ],
 })
 export class IMultiSelect implements ControlValueAccessor {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /**
    * Label text displayed for the multi-select
    * @default 'Multi Select'
@@ -193,7 +198,7 @@ export class IMultiSelect implements ControlValueAccessor {
   @Input() nativeOnMobile = true;
 
   onNativeChange(event: Event): void {
-    if (this.disabled) return;
+    if (this.loading() || this.disabled) return;
     const options = this.options() || [];
     this.value = Array.from((event.target as HTMLSelectElement).selectedOptions).map((option) =>
       this.getOptionValue(options[Number(option.value)]),
@@ -239,7 +244,7 @@ export class IMultiSelect implements ControlValueAccessor {
   @ViewChild('optionsPanel') panelRef?: ElementRef<HTMLDivElement>;
 
   openDropdown(): void {
-    if (this.disabled) return;
+    if (this.loading() || this.disabled) return;
     this.filterValue.set('');
     this.isOpen = true;
   }
@@ -365,6 +370,9 @@ export class IMultiSelect implements ControlValueAccessor {
   componentId = UniqueComponentId('i-multi-select-');
 
   constructor(private injector: Injector) {
+    loadingEffect(() => {
+      if (this.loading()) this.closeDropdown();
+    });
     afterNextRender(() => {
       this.ngControl = this.injector.get(NgControl, null);
     });
@@ -375,7 +383,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   toggleDropdown() {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     if (this.isOpen) this.closeDropdown();
     else this.openDropdown();
   }
@@ -385,7 +393,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   toggleOption(option: MultiSelectOption) {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     const currentValues = [...this.value];
     const optionValue = this.getOptionValue(option);
 
@@ -419,7 +427,7 @@ export class IMultiSelect implements ControlValueAccessor {
    * @internal
    */
   clearSelection() {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     this.value = [];
     this.onChange.emit([]);
     this.onClear.emit();
@@ -434,7 +442,7 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   onChipRemove(event: { chip: ChipItem; originalEvent: Event }) {
     event.originalEvent.stopPropagation();
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     const currentValues = [...this.value];
 
     const index = currentValues.findIndex(

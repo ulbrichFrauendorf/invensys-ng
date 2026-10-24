@@ -1,0 +1,9 @@
+@use '../../themes/color-variables.scss' as colors;
+@mixin loading-surface-theme() {
+  .loading-placeholder {
+    background: colors.$color-surface-card;
+    .loading-shape {
+      background: colors.$color-surface-border;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<div
+  class="loading-shell"
+  [class.loading-shell-active]="loading()"
+  [style.min-height]="loading() ? minimumHeight() : null"
+  [attr.aria-busy]="loading()"
+>
+  <div
+    class="loading-content"
+    [class.loading-content-hidden]="loading()"
+    [attr.inert]="loading() ? '' : null"
+  >
+    <ng-content />
+  </div>
+  @if (loading()) {
+    <div
+      class="loading-placeholder"
+      [class.loading-placeholder-field]="variant() === 'field' || variant() === 'inline'"
+      [class.loading-placeholder-chart]="variant() === 'chart'"
+      role="status"
+      [attr.aria-label]="ariaLabel()"
+    >
+      <div class="loading-shapes" aria-hidden="true">
+        @for (row of rows; track row) {
+          <span class="loading-shape"></span>
+        }
+      </div>
+    </div>
+  }
+</div>

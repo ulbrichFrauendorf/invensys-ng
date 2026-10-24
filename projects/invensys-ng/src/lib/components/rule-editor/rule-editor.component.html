@@ -1,104 +1,111 @@
-<div class="i-rule-editor" role="group" [attr.aria-label]="ariaLabel">
-  <div class="i-rule-editor__toolbar">
-    <i-button icon="pi pi-plus" size="small" [disabled]="!canAdd" (clicked)="add()">{{
-      addLabel
-    }}</i-button>
-  </div>
-  <div
-    class="i-rule-editor__rules"
-    cdkDropList
-    [cdkDropListDisabled]="readonly || disabled"
-    (cdkDropListDropped)="reorder($event.previousIndex, $event.currentIndex)"
-  >
-    @for (rule of rules; track $index; let index = $index) {
-      <div
-        class="i-rule-editor__row"
-        cdkDrag
-        cdkDragLockAxis="y"
-        cdkDragPreviewContainer="parent"
-        [cdkDragDisabled]="readonly || disabled"
-        role="group"
-        [attr.aria-label]="'Rule ' + (index + 1)"
-      >
-        <button
-          type="button"
-          class="i-rule-editor__drag-handle"
-          cdkDragHandle
-          [disabled]="readonly || disabled"
-          [attr.aria-label]="'Reorder rule ' + (index + 1) + '. Use up and down arrow keys.'"
-          title="Drag to reorder"
-          (keydown.arrowup)="reorder(index, index - 1); $event.preventDefault()"
-          (keydown.arrowdown)="reorder(index, index + 1); $event.preventDefault()"
-        >
-          <i class="pi pi-bars" aria-hidden="true"></i>
-        </button>
+<i-loading-surface
+  [loading]="loading()"
+  variant="list"
+  [minimumHeight]="'160px'"
+  ariaLabel="Loading rules"
+>
+  <div class="i-rule-editor" role="group" [attr.aria-label]="ariaLabel">
+    <div class="i-rule-editor__toolbar">
+      <i-button icon="pi pi-plus" size="small" [disabled]="!canAdd" (clicked)="add()">{{
+        addLabel
+      }}</i-button>
+    </div>
+    <div
+      class="i-rule-editor__rules"
+      cdkDropList
+      [cdkDropListDisabled]="readonly || disabled"
+      (cdkDropListDropped)="reorder($event.previousIndex, $event.currentIndex)"
+    >
+      @for (rule of rules; track $index; let index = $index) {
         <div
-          class="i-rule-editor__fields"
-          [class.i-rule-editor__fields--valueless]="operator(rule)?.requiresValue === false"
+          class="i-rule-editor__row"
+          cdkDrag
+          cdkDragLockAxis="y"
+          cdkDragPreviewContainer="parent"
+          [cdkDragDisabled]="readonly || disabled"
+          role="group"
+          [attr.aria-label]="'Rule ' + (index + 1)"
         >
-          <i-select
-            label="Field"
-            [options]="fields"
-            optionLabel="label"
-            [readonly]="readonly || disabled"
-            [fluid]="true"
-            [ngModel]="field(rule)"
-            (ngModelChange)="changeField(index, $event)"
-            [ngModelOptions]="{ standalone: true }"
-          />
-          <i-select
-            [label]="operatorLabel"
-            [options]="operatorsFor(field(rule))"
-            optionLabel="label"
-            [filter]="false"
-            [readonly]="readonly || disabled"
-            [fluid]="true"
-            [ngModel]="operator(rule)"
-            (ngModelChange)="changeOperator(index, $event)"
-            [ngModelOptions]="{ standalone: true }"
-          />
-          @if (operator(rule)?.requiresValue !== false) {
-            @if (field(rule)?.type === 'boolean') {
-              <i-select
-                label="Value"
-                [options]="booleanOptions"
-                optionLabel="label"
-                [filter]="false"
-                [readonly]="readonly || disabled"
-                [fluid]="true"
-                [ngModel]="booleanValue(rule)"
-                (ngModelChange)="update(index, { value: $event?.key ?? '' })"
-                [ngModelOptions]="{ standalone: true }"
-              />
-            } @else {
-              <i-input-text
-                label="Value"
-                [type]="field(rule)?.type ?? 'text'"
-                [readonly]="readonly || disabled"
-                [fluid]="true"
-                [ngModel]="rule.value"
-                (ngModelChange)="update(index, { value: $event == null ? '' : '' + $event })"
-                [ngModelOptions]="{ standalone: true }"
-              />
+          <button
+            type="button"
+            class="i-rule-editor__drag-handle"
+            cdkDragHandle
+            [disabled]="readonly || disabled"
+            [attr.aria-label]="'Reorder rule ' + (index + 1) + '. Use up and down arrow keys.'"
+            title="Drag to reorder"
+            (keydown.arrowup)="reorder(index, index - 1); $event.preventDefault()"
+            (keydown.arrowdown)="reorder(index, index + 1); $event.preventDefault()"
+          >
+            <i class="pi pi-bars" aria-hidden="true"></i>
+          </button>
+          <div
+            class="i-rule-editor__fields"
+            [class.i-rule-editor__fields--valueless]="operator(rule)?.requiresValue === false"
+          >
+            <i-select
+              label="Field"
+              [options]="fields"
+              optionLabel="label"
+              [readonly]="readonly || disabled"
+              [fluid]="true"
+              [ngModel]="field(rule)"
+              (ngModelChange)="changeField(index, $event)"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <i-select
+              [label]="operatorLabel"
+              [options]="operatorsFor(field(rule))"
+              optionLabel="label"
+              [filter]="false"
+              [readonly]="readonly || disabled"
+              [fluid]="true"
+              [ngModel]="operator(rule)"
+              (ngModelChange)="changeOperator(index, $event)"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            @if (operator(rule)?.requiresValue !== false) {
+              @if (field(rule)?.type === 'boolean') {
+                <i-select
+                  label="Value"
+                  [options]="booleanOptions"
+                  optionLabel="label"
+                  [filter]="false"
+                  [readonly]="readonly || disabled"
+                  [fluid]="true"
+                  [ngModel]="booleanValue(rule)"
+                  (ngModelChange)="update(index, { value: $event?.key ?? '' })"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              } @else {
+                <i-input-text
+                  label="Value"
+                  [type]="field(rule)?.type ?? 'text'"
+                  [readonly]="readonly || disabled"
+                  [fluid]="true"
+                  [ngModel]="rule.value"
+                  (ngModelChange)="update(index, { value: $event == null ? '' : '' + $event })"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              }
             }
-          }
+          </div>
+          <i-button
+            icon="pi pi-trash"
+            size="small"
+            severity="danger"
+            [text]="true"
+            [ariaLabel]="'Remove rule ' + (index + 1)"
+            title="Remove"
+            [disabled]="readonly || disabled"
+            (clicked)="remove(index)"
+          />
         </div>
-        <i-button
-          icon="pi pi-trash"
-          size="small"
-          severity="danger"
-          [text]="true"
-          [ariaLabel]="'Remove rule ' + (index + 1)"
-          title="Remove"
-          [disabled]="readonly || disabled"
-          (clicked)="remove(index)"
-        />
-      </div>
-    } @empty {
-      <i-no-content [message]="emptyMessage" />
-    }
+      } @empty {
+        <i-no-content [message]="emptyMessage" />
+      }
+    </div>
+    <span class="i-rule-editor__announcement" role="status" aria-live="polite">{{
+      announcement
+    }}</span>
   </div>
-  <span class="i-rule-editor__announcement" role="status" aria-live="polite">{{
-    announcement
-  }}</span>
-</div>
+</i-loading-surface>

@@ -1,3 +1,5 @@
+import { input } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -33,12 +35,15 @@ export interface ChipRemoveEvent {
 @Component({
   selector: 'i-chips',
   standalone: true,
-  imports: [IChip],
+  imports: [LoadingSurfaceComponent, IChip],
   templateUrl: './chips.component.html',
   styleUrls: ['./chips.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   @Input() chips: ChipItem[] = [];
   @Input() removable = true;
   @Input() disabled = false;
@@ -112,7 +117,7 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onChipRemove(chip: ChipItem, event: Event): void {
-    if (this.disabled || chip.disabled || !(chip.removable ?? this.removable)) {
+    if (this.loading() || this.disabled || chip.disabled || !(chip.removable ?? this.removable)) {
       return;
     }
 
@@ -195,7 +200,7 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
   /** Handle click on the internal close-all button. */
   onCloseAllClicked(event: Event): void {
     event.stopPropagation();
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     // Emit a single event for parents to clear their data source
     this.closedAll.emit();
   }

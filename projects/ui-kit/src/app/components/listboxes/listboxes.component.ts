@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, AsyncPipe, JsonPipe } from '@angular/common';
 import {
@@ -30,6 +31,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrls: ['./listboxes.component.scss', '../shared-demo-styles.scss'],
 })
 export class ListboxesComponent implements OnInit, OnDestroy {
+  readonly loading = loadingSignal(false);
+
   // Reactive form for departments example
   public departmentsForm: FormGroup;
   public departmentOptions$: Observable<ListboxOption[]>;
@@ -200,7 +203,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
 
   // Code examples for demo cards
   codeExamples = {
-    multiple: `<i-listbox
+    multiple: `<i-listbox [loading]="loading()"
   title="Countries"
   [options]="countries"
   optionLabel="name"
@@ -212,7 +215,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   [(ngModel)]="selectedCountriesMultiple">
 </i-listbox>`,
 
-    single: `<i-listbox
+    single: `<i-listbox [loading]="loading()"
   title="Select Country"
   [options]="countries"
   optionLabel="name"
@@ -221,7 +224,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   [(ngModel)]="selectedCountrySingle">
 </i-listbox>`,
 
-    withIcons: `<i-listbox
+    withIcons: `<i-listbox [loading]="loading()"
   title="Tasks"
   [options]="tasks"
   optionLabel="name"
@@ -232,7 +235,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   (onAction)="onManageTasks()">
 </i-listbox>`,
 
-    displayAsMenu: `<i-listbox
+    displayAsMenu: `<i-listbox [loading]="loading()"
   title="Navigation"
   [options]="menuItems"
   optionLabel="name"
@@ -242,7 +245,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   [(ngModel)]="selectedMenuItem">
 </i-listbox>`,
 
-    filter: `<i-listbox
+    filter: `<i-listbox [loading]="loading()"
   title="Searchable Countries"
   [options]="countries"
   optionLabel="name"
@@ -252,7 +255,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   [showClear]="true">
 </i-listbox>`,
 
-    fluid: `<i-listbox
+    fluid: `<i-listbox [loading]="loading()"
   title="Full Width Listbox"
   [options]="countries"
   optionLabel="name"
@@ -261,7 +264,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
   [showClear]="true">
 </i-listbox>`,
 
-    disabled: `<i-listbox
+    disabled: `<i-listbox [loading]="loading()"
   title="Disabled Listbox"
   [options]="countries"
   optionLabel="name"
@@ -271,7 +274,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
 </i-listbox>`,
 
     constrained: `<div class="constrained-wrapper">
-  <i-listbox
+  <i-listbox [loading]="loading()"
     title="Items (50 total)"
     [options]="largeDataset"
     optionLabel="name"
@@ -283,7 +286,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
 </div>`,
 
     reactive: `<form [formGroup]="departmentsForm">
-  <i-listbox
+  <i-listbox [loading]="loading()"
     title="Departments"
     [options]="departmentOptions$ | async"
     optionLabel="name"

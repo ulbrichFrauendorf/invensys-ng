@@ -1,3 +1,5 @@
+import { input } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   Component,
   Input,
@@ -217,12 +219,15 @@ interface IChartLegendItem extends LegendItem {
 @Component({
   selector: 'i-chart',
   standalone: true,
-  imports: [],
+  imports: [LoadingSurfaceComponent],
   templateUrl: './chart.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './chart.component.scss',
 })
 export class IChart implements AfterViewInit, OnDestroy, OnChanges {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /**
    * Array of chart data objects to render
    */

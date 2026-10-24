@@ -11,6 +11,7 @@
     "build:mcp-catalog": "node tools/mcp/generate-catalog.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:loading": "ng test invensys-ng --watch=false --runner-config=projects/invensys-ng/vitest.frontend.config.mts --ts-config=projects/invensys-ng/tsconfig.loading.spec.json --include=lib/components/loading-controls.spec.ts",
     "test:page-layout": "ng test invensys-ng --watch=false --runner-config=projects/invensys-ng/vitest.frontend.config.mts --ts-config=projects/invensys-ng/tsconfig.page-layout.spec.json --include=lib/components/page-layout/page-layout.component.spec.ts --include=lib/components/layout/layout.component.spec.ts",
     "test:frontend": "ng test invensys-ng --watch=false --runner-config=projects/invensys-ng/vitest.frontend.config.mts --ts-config=projects/invensys-ng/tsconfig.mobile.spec.json --include=lib/components/mobile-controls.spec.ts --include=lib/components/frontend-consistency.spec.ts",
     "test:file-upload": "ng test invensys-ng --watch=false --ts-config=projects/invensys-ng/tsconfig.file-upload.spec.json --include=lib/components/file-upload/file-upload.component.spec.ts",

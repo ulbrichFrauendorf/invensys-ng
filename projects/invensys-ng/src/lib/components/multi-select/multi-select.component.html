@@ -1,147 +1,154 @@
-<div
-  class="i-option-field"
-  [class.i-option-field--open]="isOpen"
-  [class.native-on-mobile]="nativeOnMobile"
-  [class.i-option-field--float]="useFloatLabel"
-  [class.i-option-field--filled]="value.length > 0"
-  [class.i-option-field--disabled]="disabled"
-  [class.i-option-field--invalid]="showErrors"
-  #dropdown
+<i-loading-surface
+  [loading]="loading()"
+  variant="field"
+  [minimumHeight]="'42px'"
+  ariaLabel="Loading options"
 >
-  <div class="i-option-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
-    <div class="i-option-value">
-      @if (value.length > 0 && value.length <= maxSelectedLabels) {
-        <i-chips
-          [chips]="selectedChips()"
-          [removable]="!disabled"
-          [disabled]="disabled"
-          [collapseOnOverflow]="true"
-          [overflowLabel]="getDisplayLabel()"
-          (removeChip)="onChipRemove($event)"
-        ></i-chips>
-      } @else {
-        <span class="i-option-text" [class.i-option-placeholder]="!value.length">{{
-          getDisplayLabel() || (useFloatLabel ? '' : placeholder)
-        }}</span>
-      }
-    </div>
-    <button
-      #trigger
-      type="button"
-      class="i-option-trigger"
-      [id]="id || componentId"
-      [disabled]="disabled"
-      [attr.aria-label]="label + ': ' + (getDisplayLabel() || placeholder)"
-      aria-haspopup="listbox"
-      [attr.aria-expanded]="isOpen"
-      [attr.aria-controls]="isOpen ? componentId + '-options' : null"
-      [attr.aria-invalid]="showErrors"
-      [attr.aria-describedby]="showErrors ? componentId + '-error' : null"
-      (click)="toggleDropdown()"
-      (keydown.arrowdown)="$event.preventDefault(); openDropdown()"
-      (blur)="touch()"
-    ></button>
-    @if (nativeOnMobile) {
-      <select
-        class="i-native-select"
-        [id]="(id || componentId) + '-native'"
-        [disabled]="disabled"
-        [attr.aria-label]="label"
+  <div
+    class="i-option-field"
+    [class.i-option-field--open]="isOpen"
+    [class.native-on-mobile]="nativeOnMobile"
+    [class.i-option-field--float]="useFloatLabel"
+    [class.i-option-field--filled]="value.length > 0"
+    [class.i-option-field--disabled]="disabled"
+    [class.i-option-field--invalid]="showErrors"
+    #dropdown
+  >
+    <div class="i-option-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+      <div class="i-option-value">
+        @if (value.length > 0 && value.length <= maxSelectedLabels) {
+          <i-chips
+            [chips]="selectedChips()"
+            [removable]="!disabled"
+            [disabled]="disabled || loading()"
+            [collapseOnOverflow]="true"
+            [overflowLabel]="getDisplayLabel()"
+            (removeChip)="onChipRemove($event)"
+          ></i-chips>
+        } @else {
+          <span class="i-option-text" [class.i-option-placeholder]="!value.length">{{
+            getDisplayLabel() || (useFloatLabel ? '' : placeholder)
+          }}</span>
+        }
+      </div>
+      <button
+        #trigger
+        type="button"
+        class="i-option-trigger"
+        [id]="id || componentId"
+        [disabled]="disabled || loading()"
+        [attr.aria-label]="label + ': ' + (getDisplayLabel() || placeholder)"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="isOpen"
+        [attr.aria-controls]="isOpen ? componentId + '-options' : null"
         [attr.aria-invalid]="showErrors"
         [attr.aria-describedby]="showErrors ? componentId + '-error' : null"
-        multiple
-        size="1"
-        (pointerdown)="closeDropdown()"
-        (change)="onNativeChange($event)"
+        (click)="toggleDropdown()"
+        (keydown.arrowdown)="$event.preventDefault(); openDropdown()"
         (blur)="touch()"
-      >
-        @for (option of options() || []; track $index) {
-          <option [value]="$index" [selected]="isOptionSelected(option)">
-            {{ getOptionLabel(option) }}
-          </option>
-        }
-      </select>
-    }
-    <div class="i-option-actions">
-      @if (showClear && value.length > 0) {
-        <button
-          type="button"
-          class="i-option-clear"
-          [disabled]="disabled"
-          [attr.aria-label]="'Clear ' + label"
-          (click)="clearSelection(); $event.stopPropagation()"
+      ></button>
+      @if (nativeOnMobile) {
+        <select
+          class="i-native-select"
+          [id]="(id || componentId) + '-native'"
+          [disabled]="disabled || loading()"
+          [attr.aria-label]="label"
+          [attr.aria-invalid]="showErrors"
+          [attr.aria-describedby]="showErrors ? componentId + '-error' : null"
+          multiple
+          size="1"
+          (pointerdown)="closeDropdown()"
+          (change)="onNativeChange($event)"
+          (blur)="touch()"
         >
-          <i class="pi pi-times" aria-hidden="true"></i>
-        </button>
+          @for (option of options() || []; track $index) {
+            <option [value]="$index" [selected]="isOptionSelected(option)">
+              {{ getOptionLabel(option) }}
+            </option>
+          }
+        </select>
       }
-      <span class="i-option-arrow" aria-hidden="true"
-        ><i class="pi pi-chevron-down" [class.flipped]="isOpen"></i
-      ></span>
+      <div class="i-option-actions">
+        @if (showClear && value.length > 0) {
+          <button
+            type="button"
+            class="i-option-clear"
+            [disabled]="disabled || loading()"
+            [attr.aria-label]="'Clear ' + label"
+            (click)="clearSelection(); $event.stopPropagation()"
+          >
+            <i class="pi pi-times" aria-hidden="true"></i>
+          </button>
+        }
+        <span class="i-option-arrow" aria-hidden="true"
+          ><i class="pi pi-chevron-down" [class.flipped]="isOpen"></i
+        ></span>
+      </div>
     </div>
-  </div>
-  @if (label && useFloatLabel) {
-    <label class="i-option-label" [for]="id || componentId">{{ label }}</label>
-  }
-  @if (showErrors) {
-    <div class="i-option-error" [id]="componentId + '-error'" role="alert">
-      {{ getErrorMessage() }}
-    </div>
-  }
-</div>
-
-<ng-template
-  cdkConnectedOverlay
-  [cdkConnectedOverlayOrigin]="origin"
-  [cdkConnectedOverlayOpen]="isOpen && !disabled"
-  [cdkConnectedOverlayPositions]="overlayPositions"
-  [cdkConnectedOverlayWidth]="
-    isOpen ? origin.elementRef.nativeElement.getBoundingClientRect().width : undefined
-  "
-  [cdkConnectedOverlayViewportMargin]="12"
-  [cdkConnectedOverlayPush]="true"
-  (overlayOutsideClick)="onDocumentClick($event)"
-  (attach)="focusOptions()"
-  (detach)="closeDropdown()"
->
-  <div class="i-option-panel" #optionsPanel (keydown)="onPanelKeydown($event)">
-    @if (filter) {
-      <div class="i-option-filter">
-        <input
-          #searchInput
-          type="search"
-          class="i-option-search"
-          placeholder="Search..."
-          [attr.aria-label]="'Search ' + label"
-          [ngModel]="filterValue()"
-          (ngModelChange)="filterValue.set($event)"
-        />
+    @if (label && useFloatLabel) {
+      <label class="i-option-label" [for]="id || componentId">{{ label }}</label>
+    }
+    @if (showErrors) {
+      <div class="i-option-error" [id]="componentId + '-error'" role="alert">
+        {{ getErrorMessage() }}
       </div>
     }
-    <div
-      class="i-option-list"
-      role="listbox"
-      [id]="componentId + '-options'"
-      [attr.aria-label]="label"
-      aria-multiselectable="true"
-    >
-      @for (option of filteredOptions(); track $index) {
-        <button
-          type="button"
-          class="i-option"
-          role="option"
-          [class.selected]="isOptionSelected(option)"
-          [attr.aria-selected]="isOptionSelected(option)"
-          (click)="toggleOption(option)"
-        >
-          <span class="i-option-check" aria-hidden="true"
-            ><i [class]="isOptionSelected(option) ? 'pi pi-check-square' : 'pi pi-stop'"></i
-          ></span>
-          <span>{{ getOptionLabel(option) }}</span>
-        </button>
-      }
-      @if (!filteredOptions().length) {
-        <div class="i-option-empty">No options found</div>
-      }
-    </div>
   </div>
-</ng-template>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="isOpen && !disabled"
+    [cdkConnectedOverlayPositions]="overlayPositions"
+    [cdkConnectedOverlayWidth]="
+      isOpen ? origin.elementRef.nativeElement.getBoundingClientRect().width : undefined
+    "
+    [cdkConnectedOverlayViewportMargin]="12"
+    [cdkConnectedOverlayPush]="true"
+    (overlayOutsideClick)="onDocumentClick($event)"
+    (attach)="focusOptions()"
+    (detach)="closeDropdown()"
+  >
+    <div class="i-option-panel" #optionsPanel (keydown)="onPanelKeydown($event)">
+      @if (filter) {
+        <div class="i-option-filter">
+          <input
+            #searchInput
+            type="search"
+            class="i-option-search"
+            placeholder="Search..."
+            [attr.aria-label]="'Search ' + label"
+            [ngModel]="filterValue()"
+            (ngModelChange)="filterValue.set($event)"
+          />
+        </div>
+      }
+      <div
+        class="i-option-list"
+        role="listbox"
+        [id]="componentId + '-options'"
+        [attr.aria-label]="label"
+        aria-multiselectable="true"
+      >
+        @for (option of filteredOptions(); track $index) {
+          <button
+            type="button"
+            class="i-option"
+            role="option"
+            [class.selected]="isOptionSelected(option)"
+            [attr.aria-selected]="isOptionSelected(option)"
+            (click)="toggleOption(option)"
+          >
+            <span class="i-option-check" aria-hidden="true"
+              ><i [class]="isOptionSelected(option) ? 'pi pi-check-square' : 'pi pi-stop'"></i
+            ></span>
+            <span>{{ getOptionLabel(option) }}</span>
+          </button>
+        }
+        @if (!filteredOptions().length) {
+          <div class="i-option-empty">No options found</div>
+        }
+      </div>
+    </div>
+  </ng-template>
+</i-loading-surface>

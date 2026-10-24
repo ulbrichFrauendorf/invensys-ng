@@ -1,3 +1,5 @@
+import { input } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -41,6 +43,7 @@ export interface EditorRule {
   selector: 'i-rule-editor',
   standalone: true,
   imports: [
+    LoadingSurfaceComponent,
     FormsModule,
     CdkDrag,
     CdkDragHandle,
@@ -55,6 +58,9 @@ export interface EditorRule {
   styleUrl: './rule-editor.component.scss',
 })
 export class IRuleEditor {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /** Available fields. */
   @Input() fields: RuleEditorField[] = [];
   /** Available operators, optionally restricted by field type. */
@@ -138,7 +144,15 @@ export class IRuleEditor {
   }
 
   update(index: number, changes: Partial<EditorRule>): void {
-    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
+    if (
+      this.loading() ||
+      this.readonly ||
+      this.loading() ||
+      this.disabled ||
+      index < 0 ||
+      index >= this.rules.length
+    )
+      return;
     this.rulesChange.emit(
       this.rules.map((rule, i) => (i === index ? { ...rule, ...changes } : rule)),
     );
@@ -146,7 +160,9 @@ export class IRuleEditor {
 
   reorder(index: number, target: number): void {
     if (
+      this.loading() ||
       this.readonly ||
+      this.loading() ||
       this.disabled ||
       index === target ||
       index < 0 ||
@@ -162,7 +178,15 @@ export class IRuleEditor {
   }
 
   remove(index: number): void {
-    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
+    if (
+      this.loading() ||
+      this.readonly ||
+      this.loading() ||
+      this.disabled ||
+      index < 0 ||
+      index >= this.rules.length
+    )
+      return;
     this.rulesChange.emit(this.rules.filter((_, i) => i !== index));
   }
 }

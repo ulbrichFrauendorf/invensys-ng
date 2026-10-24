@@ -1,3 +1,5 @@
+import { signal } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   Component,
   Input,
@@ -93,7 +95,7 @@ export type TreeSelectionMode = 'single' | 'multiple' | 'checkbox';
 @Component({
   selector: 'i-tree-view',
   standalone: true,
-  imports: [CommonModule, FormsModule, ICheckbox, IInputText],
+  imports: [LoadingSurfaceComponent, CommonModule, FormsModule, ICheckbox, IInputText],
   templateUrl: './tree-view.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tree-view.component.scss',
@@ -125,7 +127,14 @@ export class ITreeView implements OnInit, OnChanges {
    * Whether the tree is in loading state
    * @default false
    */
-  @Input() loading = false;
+  readonly loadingState = signal(false);
+  @Input()
+  get loading(): boolean {
+    return this.loadingState();
+  }
+  set loading(value: boolean) {
+    this.loadingState.set(value);
+  }
 
   /**
    * Message to display when tree is empty
@@ -390,6 +399,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   onNodeClick(event: Event, node: ITreeNode) {
+    if (this.loading || node.loading) return;
     if (node.selectable === false) {
       return;
     }
@@ -466,6 +476,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   onCheckboxChange(checked: boolean, node: ITreeNode) {
+    if (this.loading || node.loading) return;
     this.addTemporaryHighlight(node);
 
     const fakeEvent = new MouseEvent('click', {
@@ -525,6 +536,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   toggleNode(event: Event, node: ITreeNode) {
+    if (this.loading || node.loading) return;
     if (node.expanded) {
       this.collapseNode(event, node);
     } else {
@@ -547,10 +559,6 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   getToggleIcon(node: ITreeNode): string {
-    if (node.loading) {
-      return 'pi pi-spin pi-spinner';
-    }
-
     const expanded = node.expanded;
 
     if (node.expandedIcon && node.collapsedIcon) {

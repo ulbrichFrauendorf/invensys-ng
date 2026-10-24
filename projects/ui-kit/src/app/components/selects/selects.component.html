@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="selects-demo"
   title="Selects"
   eyebrow="Form Controls"
@@ -14,6 +16,7 @@
     <form [formGroup]="basicForm" class="demo-form">
       <div class="input-grid">
         <i-select
+          [loading]="loading()"
           label="Country"
           [options]="selectData.countries"
           optionLabel="label"
@@ -22,6 +25,7 @@
         />
 
         <i-select
+          [loading]="loading()"
           label="Status"
           [options]="selectData.statuses"
           optionLabel="label"
@@ -30,6 +34,7 @@
         />
 
         <i-select
+          [loading]="loading()"
           label="Preselected Country"
           [options]="selectData.countries"
           optionLabel="label"
@@ -38,6 +43,7 @@
         />
 
         <i-select
+          [loading]="loading()"
           label="Disabled Select"
           [options]="selectData.countries"
           optionLabel="label"
@@ -48,6 +54,7 @@
 
         <!-- Object Storage Example 1 -->
         <i-select
+          [loading]="loading()"
           label="Country (Full Object)"
           [options]="selectData.countries"
           optionLabel="label"
@@ -58,6 +65,7 @@
 
         <!-- Object Storage Example 2 -->
         <i-select
+          [loading]="loading()"
           label="Country (Full Object)"
           [options]="selectData.countries"
           optionLabel="label"
@@ -80,6 +88,7 @@
   >
     <form [formGroup]="validationForm" class="demo-form">
       <i-select
+        [loading]="loading()"
         label="Status (Required)"
         [options]="selectData.statuses"
         optionLabel="label"
@@ -100,6 +109,7 @@
   >
     <form [formGroup]="advancedForm" class="demo-form">
       <i-select
+        [loading]="loading()"
         [options]="selectData.reports"
         [filter]="true"
         [showClear]="true"
@@ -120,6 +130,7 @@
   <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
     <form [formGroup]="fluidForm" class="demo-form">
       <i-select
+        [loading]="loading()"
         label="Fluid Select"
         [options]="selectData.countries"
         optionLabel="label"

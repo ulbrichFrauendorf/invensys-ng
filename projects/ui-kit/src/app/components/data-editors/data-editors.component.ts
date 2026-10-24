@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IToggle } from '@shared/components/toggle/toggle.component';
@@ -33,6 +34,8 @@ import { DemoOptionDirective, DemoUsageDirective } from '../demo-playground/demo
   styleUrl: './data-editors.component.scss',
 })
 export class DataEditorsComponent {
+  readonly loading = loadingSignal(false);
+
   readonly = false;
   fields: FieldPickerOption[] = [
     { key: 'name', label: 'Name', group: 'Identity', description: 'Text' },
@@ -60,8 +63,8 @@ export class DataEditorsComponent {
   label = (key: string): string => this.fields.find((field) => field.key === key)?.label ?? key;
 
   codeExamples = {
-    fieldPicker: `<i-field-picker [options]="fields" [(ngModel)]="selected" [readonly]="readonly" />`,
-    orderedList: `<i-ordered-list
+    fieldPicker: `<i-field-picker [loading]="loading()" [options]="fields" [(ngModel)]="selected" [readonly]="readonly" />`,
+    orderedList: `<i-ordered-list [loading]="loading()"
   [(items)]="selected"
   [itemLabel]="label"
   [readonly]="readonly"
@@ -70,13 +73,13 @@ export class DataEditorsComponent {
 <ng-template #settings let-key>
   <small>{{ label(key) }} settings</small>
 </ng-template>`,
-    filters: `<i-rule-editor
+    filters: `<i-rule-editor [loading]="loading()"
   [fields]="ruleFields"
   [operators]="operators"
   [(rules)]="rules"
   [readonly]="readonly"
 />`,
-    sorts: `<i-rule-editor
+    sorts: `<i-rule-editor [loading]="loading()"
   ariaLabel="Sort order"
   operatorLabel="Direction"
   addLabel="Add sort"

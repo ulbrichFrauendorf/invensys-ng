@@ -1,445 +1,281 @@
-<div class="i-table-wrapper" [ngClass]="getTableClasses()">
-  <!-- Table Header: global filter + download -->
-  @if (globalFilter || downloadable) {
-    <div class="i-table-header">
-      <div class="i-table-header-start">
-        <ng-content select="[header]"></ng-content>
+<i-loading-surface
+  [loading]="loadingState()"
+  variant="table"
+  [minimumHeight]="effectiveHeight()"
+  ariaLabel="Loading table"
+>
+  <div class="i-table-wrapper" [ngClass]="getTableClasses()">
+    <!-- Table Header: global filter + download -->
+    @if (globalFilter || downloadable) {
+      <div class="i-table-header">
+        <div class="i-table-header-start">
+          <ng-content select="[header]"></ng-content>
+        </div>
+        <div class="i-table-header-end">
+          @if (globalFilter) {
+            <div class="i-table-global-filter">
+              <i-input-text
+                [useFloatLabel]="false"
+                label="Search table"
+                placeholder="Search…"
+                [ngModel]="globalFilterValue()"
+                (ngModelChange)="onGlobalFilterInput($event)"
+                [fluid]="true"
+                [icon]="'pi pi-search'"
+              ></i-input-text>
+            </div>
+          }
+          @if (downloadable) {
+            <div class="i-table-download">
+              <i-button
+                severity="secondary"
+                [text]="true"
+                size="small"
+                icon="pi pi-download"
+                label="Download"
+                (clicked)="handleDownload()"
+              ></i-button>
+            </div>
+          }
+        </div>
       </div>
-      <div class="i-table-header-end">
-        @if (globalFilter) {
-          <div class="i-table-global-filter">
-            <i-input-text
-              [useFloatLabel]="false"
-              label="Search table"
-              placeholder="Search…"
-              [ngModel]="globalFilterValue()"
-              (ngModelChange)="onGlobalFilterInput($event)"
-              [fluid]="true"
-              [icon]="'pi pi-search'"
-            ></i-input-text>
-          </div>
-        }
-        @if (downloadable) {
-          <div class="i-table-download">
-            <i-button
-              severity="secondary"
-              [text]="true"
-              size="small"
-              icon="pi pi-download"
-              label="Download"
-              (clicked)="handleDownload()"
-            ></i-button>
-          </div>
-        }
-      </div>
-    </div>
-  }
+    }
 
-  <!-- Loading Overlay -->
-  @if (loading) {
-    <div class="i-table-loading-overlay">
-      <i class="pi pi-spin pi-spinner i-table-loading-icon"></i>
-    </div>
-  }
-
-  <!-- ================================================================
+    <!-- ================================================================
        PATH A — Detail-expandable table
        Uses a standard scrollable container so that nested <i-table>
        components can expand inline below their parent rows.
   ================================================================ -->
-  @if (hasDetails()) {
-    <div
-      class="i-table-container i-table-container--scrollable"
-      [style.max-height]="effectiveHeight()"
-    >
-      <table class="i-table">
-        <thead>
-          <!-- Column Filter Row -->
-          @if (filterable) {
-            <tr class="i-table-filter-row">
+    @if (hasDetails()) {
+      <div
+        class="i-table-container i-table-container--scrollable"
+        [style.max-height]="effectiveHeight()"
+      >
+        <table class="i-table">
+          <thead>
+            <!-- Column Filter Row -->
+            @if (filterable) {
+              <tr class="i-table-filter-row">
+                @if (selectionMode === 'multiple') {
+                  <th class="i-table-selection-header"></th>
+                }
+                <th class="i-table-expand-header"></th>
+                @for (column of gridColumns(); track trackByColumn($index, column)) {
+                  @if (column.filterable !== false) {
+                    <th [style.width]="getColumnWidth(column)">
+                      <input
+                        type="text"
+                        class="i-table-column-filter"
+                        placeholder="Filter..."
+                        [ngModel]="columnFilters()[column.field] || ''"
+                        (ngModelChange)="onColumnFilterInput(column.field, $event)"
+                      />
+                    </th>
+                  } @else {
+                    <th [style.width]="getColumnWidth(column)"></th>
+                  }
+                }
+                <th class="i-table-detail-count-header"></th>
+                @if (gridActions().length > 0) {
+                  <th class="i-table-actions-header"></th>
+                }
+              </tr>
+            }
+
+            <!-- Column Headers -->
+            <tr>
               @if (selectionMode === 'multiple') {
-                <th class="i-table-selection-header"></th>
+                <th class="i-table-selection-header">
+                  <i-checkbox
+                    [checked]="areAllRowsSelected()"
+                    [indeterminate]="areSomeRowsSelected()"
+                    (onChange)="toggleAllSelection()"
+                  ></i-checkbox>
+                </th>
               }
               <th class="i-table-expand-header"></th>
               @for (column of gridColumns(); track trackByColumn($index, column)) {
-                @if (column.filterable !== false) {
-                  <th [style.width]="getColumnWidth(column)">
-                    <input
-                      type="text"
-                      class="i-table-column-filter"
-                      placeholder="Filter..."
-                      [ngModel]="columnFilters()[column.field] || ''"
-                      (ngModelChange)="onColumnFilterInput(column.field, $event)"
-                    />
-                  </th>
-                } @else {
-                  <th [style.width]="getColumnWidth(column)"></th>
-                }
+                <th
+                  [style.width]="getColumnWidth(column)"
+                  [style.text-align]="column.align || 'left'"
+                  [class.i-table-sortable-column]="sortable && column.sortable"
+                  [class.i-table-sorted]="sortField === column.field"
+                  (click)="onSortColumn(column)"
+                >
+                  <div class="i-table-header-content">
+                    <span class="i-table-header-text">{{ column.header }}</span>
+                    @if (sortable && column.sortable) {
+                      <i [class]="getSortIcon(column)" class="i-table-sort-icon"></i>
+                    }
+                  </div>
+                  @if (resizableColumns) {
+                    <span
+                      class="i-table-column-resizer"
+                      (mousedown)="onColumnResizeStart($event, column)"
+                    ></span>
+                  }
+                </th>
               }
               <th class="i-table-detail-count-header"></th>
               @if (gridActions().length > 0) {
-                <th class="i-table-actions-header"></th>
+                <th class="i-table-actions-header">
+                  {{ grid().actionsHeader ?? 'Actions' }}
+                </th>
               }
             </tr>
-          }
+          </thead>
 
-          <!-- Column Headers -->
-          <tr>
-            @if (selectionMode === 'multiple') {
-              <th class="i-table-selection-header">
-                <i-checkbox
-                  [checked]="areAllRowsSelected()"
-                  [indeterminate]="areSomeRowsSelected()"
-                  (onChange)="toggleAllSelection()"
-                ></i-checkbox>
-              </th>
-            }
-            <th class="i-table-expand-header"></th>
-            @for (column of gridColumns(); track trackByColumn($index, column)) {
-              <th
-                [style.width]="getColumnWidth(column)"
-                [style.text-align]="column.align || 'left'"
-                [class.i-table-sortable-column]="sortable && column.sortable"
-                [class.i-table-sorted]="sortField === column.field"
-                (click)="onSortColumn(column)"
-              >
-                <div class="i-table-header-content">
-                  <span class="i-table-header-text">{{ column.header }}</span>
-                  @if (sortable && column.sortable) {
-                    <i [class]="getSortIcon(column)" class="i-table-sort-icon"></i>
-                  }
-                </div>
-                @if (resizableColumns) {
-                  <span
-                    class="i-table-column-resizer"
-                    (mousedown)="onColumnResizeStart($event, column)"
-                  ></span>
-                }
-              </th>
-            }
-            <th class="i-table-detail-count-header"></th>
-            @if (gridActions().length > 0) {
-              <th class="i-table-actions-header">{{ grid().actionsHeader ?? 'Actions' }}</th>
-            }
-          </tr>
-        </thead>
-
-        <tbody>
-          @if (processedData().length === 0) {
-            <tr class="i-table-empty-row">
-              <td [attr.colspan]="totalColspan()">
-                <i-no-content />
-              </td>
-            </tr>
-          }
-          @for (row of processedData(); track trackByRow($index, row)) {
-            <!-- Parent row -->
-            <tr
-              [class.i-table-row-odd]="$odd"
-              [class.i-table-row-selected]="isRowSelected(row)"
-              (click)="toggleRowSelection(row)"
-            >
-              @if (selectionMode === 'multiple') {
-                <td class="i-table-selection-cell">
-                  <i-checkbox
-                    [checked]="isRowSelected(row)"
-                    (onChange)="toggleRowSelection(row)"
-                    (click)="$event.stopPropagation()"
-                  ></i-checkbox>
-                </td>
-              }
-              <td class="i-table-expand-cell">
-                <i-button
-                  severity="secondary"
-                  [text]="true"
-                  size="xtra-small"
-                  [icon]="isRowExpanded(row) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-                  [ariaLabel]="isRowExpanded(row) ? 'Collapse details' : 'Expand details'"
-                  [ariaExpanded]="isRowExpanded(row)"
-                  (clicked)="toggleRowExpansion(row, $event)"
-                ></i-button>
-              </td>
-              @for (column of gridColumns(); track trackByColumn($index, column)) {
-                <td
-                  [style.text-align]="column.align || 'left'"
-                  [style.width]="getColumnWidth(column)"
-                  [class]="
-                    getCellSeverity(row, column)
-                      ? 'i-table-cell-' + getCellSeverity(row, column)
-                      : ''
-                  "
-                >
-                  @if (isIconColumn(column)) {
-                    <i
-                      [class]="getCellIcon(row, column)"
-                      [class.i-severity-icon]="getCellSeverity(row, column)"
-                      [style.font-size]="column.iconSize || '12px'"
-                    ></i>
-                  } @else if (isListColumn(column)) {
-                    <div class="i-table-list-cell">
-                      @for (item of getCellListItems(row, column); track item) {
-                        <i-chip [label]="item"></i-chip>
-                      }
-                    </div>
-                  } @else {
-                    <span [class.i-severity-text]="getCellSeverity(row, column)">
-                      {{ formatCellValue(getCellValue(row, column.field), column) }}
-                    </span>
-                  }
-                </td>
-              }
-              <td class="i-table-detail-count-cell">({{ getDetailRowCount(row) }})</td>
-              @if (gridActions().length > 0) {
-                <td class="i-table-actions-cell">
-                  <div class="i-table-actions">
-                    @for (action of gridActions(); track action.id) {
-                      <i-button
-                        [severity]="action.severity || 'secondary'"
-                        [text]="true"
-                        size="small"
-                        [icon]="action.icon || ''"
-                        [disabled]="isActionDisabled(action, row)"
-                        [loading]="isActionLoading(action, row)"
-                        [iTooltip]="getActionTooltip(action, row)"
-                        [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
-                        [class.i-action-hidden]="!isActionVisible(action, row)"
-                        (clicked)="triggerAction(action, row, $event)"
-                      >
-                        @if (action.label) {
-                          {{ action.label }}
-                        }
-                      </i-button>
-                    }
-                  </div>
-                </td>
-              }
-            </tr>
-
-            <!-- Detail expansion row -->
-            @if (isRowExpanded(row)) {
-              <tr class="i-table-expanded-row">
-                <td [attr.colspan]="totalColspan()" class="i-table-expanded-cell">
-                  <div class="i-table-expanded-content">
-                    <i-table
-                      [class.i-table-compact-details]="!detailRowBorders"
-                      [grid]="getDetailGrid(row)"
-                      [rowBorders]="detailRowBorders"
-                      [sortable]="sortable"
-                      [filterable]="filterable"
-                      [selectionMode]="selectionMode"
-                      [selection]="selection"
-                      [striped]="striped"
-                      [hoverable]="hoverable"
-                      [bordered]="bordered"
-                      [size]="size"
-                      [dataKey]="dataKey"
-                      [resizableColumns]="resizableColumns"
-                      (onSort)="onSort.emit($event)"
-                      (onFilter)="onFilter.emit($event)"
-                      (onSelectionChange)="onSelectionChange.emit($event)"
-                      (selectionChange)="selectionChange.emit($event)"
-                      (onRowSelect)="onRowSelect.emit($event)"
-                      (onRowUnselect)="onRowUnselect.emit($event)"
-                    ></i-table>
-                  </div>
+          <tbody>
+            @if (processedData().length === 0) {
+              <tr class="i-table-empty-row">
+                <td [attr.colspan]="totalColspan()">
+                  <i-no-content />
                 </td>
               </tr>
             }
-          }
-        </tbody>
-      </table>
-    </div>
-  } @else if (virtualScroll) {
-    <!-- ================================================================
+            @for (row of processedData(); track trackByRow($index, row)) {
+              <!-- Parent row -->
+              <tr
+                [class.i-table-row-odd]="$odd"
+                [class.i-table-row-selected]="isRowSelected(row)"
+                (click)="toggleRowSelection(row)"
+              >
+                @if (selectionMode === 'multiple') {
+                  <td class="i-table-selection-cell">
+                    <i-checkbox
+                      [checked]="isRowSelected(row)"
+                      (onChange)="toggleRowSelection(row)"
+                      (click)="$event.stopPropagation()"
+                    ></i-checkbox>
+                  </td>
+                }
+                <td class="i-table-expand-cell">
+                  <i-button
+                    severity="secondary"
+                    [text]="true"
+                    size="xtra-small"
+                    [icon]="isRowExpanded(row) ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                    [ariaLabel]="isRowExpanded(row) ? 'Collapse details' : 'Expand details'"
+                    [ariaExpanded]="isRowExpanded(row)"
+                    (clicked)="toggleRowExpansion(row, $event)"
+                  ></i-button>
+                </td>
+                @for (column of gridColumns(); track trackByColumn($index, column)) {
+                  <td
+                    [style.text-align]="column.align || 'left'"
+                    [style.width]="getColumnWidth(column)"
+                    [class]="
+                      getCellSeverity(row, column)
+                        ? 'i-table-cell-' + getCellSeverity(row, column)
+                        : ''
+                    "
+                  >
+                    @if (isIconColumn(column)) {
+                      <i
+                        [class]="getCellIcon(row, column)"
+                        [class.i-severity-icon]="getCellSeverity(row, column)"
+                        [style.font-size]="column.iconSize || '12px'"
+                      ></i>
+                    } @else if (isListColumn(column)) {
+                      <div class="i-table-list-cell">
+                        @for (item of getCellListItems(row, column); track item) {
+                          <i-chip [label]="item"></i-chip>
+                        }
+                      </div>
+                    } @else {
+                      <span [class.i-severity-text]="getCellSeverity(row, column)">
+                        {{ formatCellValue(getCellValue(row, column.field), column) }}
+                      </span>
+                    }
+                  </td>
+                }
+                <td class="i-table-detail-count-cell">({{ getDetailRowCount(row) }})</td>
+                @if (gridActions().length > 0) {
+                  <td class="i-table-actions-cell">
+                    <div class="i-table-actions">
+                      @for (action of gridActions(); track action.id) {
+                        <i-button
+                          [severity]="action.severity || 'secondary'"
+                          [text]="true"
+                          size="small"
+                          [icon]="action.icon || ''"
+                          [disabled]="isActionDisabled(action, row)"
+                          [loading]="isActionLoading(action, row)"
+                          [iTooltip]="getActionTooltip(action, row)"
+                          [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
+                          [class.i-action-hidden]="!isActionVisible(action, row)"
+                          (clicked)="triggerAction(action, row, $event)"
+                        >
+                          @if (action.label) {
+                            {{ action.label }}
+                          }
+                        </i-button>
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+
+              <!-- Detail expansion row -->
+              @if (isRowExpanded(row)) {
+                <tr class="i-table-expanded-row">
+                  <td [attr.colspan]="totalColspan()" class="i-table-expanded-cell">
+                    <div class="i-table-expanded-content">
+                      <i-table
+                        [class.i-table-compact-details]="!detailRowBorders"
+                        [grid]="getDetailGrid(row)"
+                        [rowBorders]="detailRowBorders"
+                        [sortable]="sortable"
+                        [filterable]="filterable"
+                        [selectionMode]="selectionMode"
+                        [selection]="selection"
+                        [striped]="striped"
+                        [hoverable]="hoverable"
+                        [bordered]="bordered"
+                        [size]="size"
+                        [dataKey]="dataKey"
+                        [resizableColumns]="resizableColumns"
+                        (onSort)="onSort.emit($event)"
+                        (onFilter)="onFilter.emit($event)"
+                        (onSelectionChange)="onSelectionChange.emit($event)"
+                        (selectionChange)="selectionChange.emit($event)"
+                        (onRowSelect)="onRowSelect.emit($event)"
+                        (onRowUnselect)="onRowUnselect.emit($event)"
+                      ></i-table>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else if (virtualScroll) {
+      <!-- ================================================================
          PATH B — CDK Virtual Scroll (div-based rows)
          Use only for large row counts (≥ ~500 rows). Uses flex <div> rows
          so CDK's wrapper <div> does not end up inside <tbody> (invalid HTML).
     ================================================================ -->
-    <div
-      class="i-table-container i-table-container--scrollable i-table-container--virtual-scroll"
-      [style.height]="effectiveHeight()"
-    >
-      <!-- Sticky header — flex rows that mirror the virtual body rows -->
-      <div class="i-table-virtual-header">
-        @if (filterable) {
-          <div class="i-table-virtual-row i-table-filter-row">
-            @if (selectionMode === 'multiple') {
-              <div class="i-table-virtual-cell i-table-selection-header"></div>
-            }
-            @for (column of gridColumns(); track trackByColumn($index, column)) {
-              @if (column.filterable !== false) {
-                <div
-                  class="i-table-virtual-cell"
-                  [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
-                  [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
-                >
-                  <input
-                    type="text"
-                    class="i-table-column-filter"
-                    placeholder="Filter..."
-                    [ngModel]="columnFilters()[column.field] || ''"
-                    (ngModelChange)="onColumnFilterInput(column.field, $event)"
-                  />
-                </div>
-              } @else {
-                <div
-                  class="i-table-virtual-cell"
-                  [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
-                  [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
-                ></div>
-              }
-            }
-            @if (gridActions().length > 0) {
-              <div class="i-table-virtual-cell i-table-actions-header"></div>
-            }
-          </div>
-        }
-        <div class="i-table-virtual-row i-table-header-row">
-          @if (selectionMode === 'multiple') {
-            <div class="i-table-virtual-cell i-table-selection-header">
-              <i-checkbox
-                [checked]="areAllRowsSelected()"
-                [indeterminate]="areSomeRowsSelected()"
-                (onChange)="toggleAllSelection()"
-              ></i-checkbox>
-            </div>
-          }
-          @for (column of gridColumns(); track trackByColumn($index, column)) {
-            <div
-              class="i-table-virtual-cell i-table-header-cell"
-              [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
-              [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
-              [style.text-align]="column.align || 'left'"
-              [class.i-table-sortable-column]="sortable && column.sortable"
-              [class.i-table-sorted]="sortField === column.field"
-              (click)="onSortColumn(column)"
-            >
-              <div class="i-table-header-content">
-                <span class="i-table-header-text">{{ column.header }}</span>
-                @if (sortable && column.sortable) {
-                  <i [class]="getSortIcon(column)" class="i-table-sort-icon"></i>
-                }
-              </div>
-            </div>
-          }
-          @if (gridActions().length > 0) {
-            <div class="i-table-virtual-cell i-table-actions-header">
-              {{ grid().actionsHeader ?? 'Actions' }}
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- Virtual Scroll Viewport — *cdkVirtualFor on <div>, not <tr> -->
-      <cdk-virtual-scroll-viewport
-        [itemSize]="virtualScrollItemSize"
-        [minBufferPx]="virtualScrollMinBufferPx"
-        [maxBufferPx]="virtualScrollMaxBufferPx"
-        class="i-table-virtual-viewport"
+      <div
+        class="i-table-container i-table-container--scrollable i-table-container--virtual-scroll"
+        [style.height]="effectiveHeight()"
       >
-        @if (processedData().length === 0) {
-          <div class="i-table-virtual-row i-table-empty-row">
-            <div
-              class="i-table-virtual-cell"
-              style="flex: 1; text-align: center; padding: 40px 16px"
-            >
-              <i-no-content />
-            </div>
-          </div>
-        }
-        <div
-          *cdkVirtualFor="let row of processedData(); let rowIndex = index; trackBy: trackByRow"
-          class="i-table-virtual-row"
-          [style.height.px]="virtualScrollItemSize"
-          [class.i-table-row-odd]="rowIndex % 2 !== 0"
-          [class.i-table-row-selected]="isRowSelected(row)"
-          (click)="toggleRowSelection(row)"
-        >
-          @if (selectionMode === 'multiple') {
-            <div class="i-table-virtual-cell i-table-selection-cell">
-              <i-checkbox
-                [checked]="isRowSelected(row)"
-                (onChange)="toggleRowSelection(row)"
-                (click)="$event.stopPropagation()"
-              ></i-checkbox>
-            </div>
-          }
-          @for (column of gridColumns(); track trackByColumn($index, column)) {
-            <div
-              class="i-table-virtual-cell"
-              [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
-              [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
-              [style.text-align]="column.align || 'left'"
-              [ngClass]="
-                getCellSeverity(row, column) ? 'i-table-cell-' + getCellSeverity(row, column) : ''
-              "
-            >
-              @if (isIconColumn(column)) {
-                <i
-                  [class]="getIconClasses(row, column)"
-                  [style.font-size]="column.iconSize || '12px'"
-                ></i>
-              } @else if (isListColumn(column)) {
-                <div class="i-table-list-cell">
-                  @for (item of getCellListItems(row, column); track item) {
-                    <i-chip [label]="item"></i-chip>
-                  }
-                </div>
-              } @else {
-                <span [class.i-severity-text]="getCellSeverity(row, column)">
-                  {{ formatCellValue(getCellValue(row, column.field), column) }}
-                </span>
-              }
-            </div>
-          }
-          @if (gridActions().length > 0) {
-            <div class="i-table-virtual-cell i-table-actions-cell">
-              <div class="i-table-actions">
-                @for (action of gridActions(); track action.id) {
-                  <i-button
-                    [severity]="action.severity || 'secondary'"
-                    [text]="true"
-                    size="small"
-                    [icon]="action.icon || ''"
-                    [disabled]="isActionDisabled(action, row)"
-                    [loading]="isActionLoading(action, row)"
-                    [iTooltip]="getActionTooltip(action, row)"
-                    [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
-                    [class.i-action-hidden]="!isActionVisible(action, row)"
-                    (clicked)="triggerAction(action, row, $event)"
-                  >
-                    @if (action.label) {
-                      {{ action.label }}
-                    }
-                  </i-button>
-                }
-              </div>
-            </div>
-          }
-        </div>
-      </cdk-virtual-scroll-viewport>
-    </div>
-  } @else {
-    <!-- ================================================================
-         PATH C — Regular scrollable table
-         Default for small/medium datasets and nested detail tables.
-         Uses a plain overflow container with a @for loop — no CDK needed.
-    ================================================================ -->
-    <div
-      class="i-table-container i-table-container--scrollable"
-      [style.max-height]="effectiveHeight()"
-    >
-      <table class="i-table">
-        <thead>
-          <!-- Column Filter Row -->
+        <!-- Sticky header — flex rows that mirror the virtual body rows -->
+        <div class="i-table-virtual-header">
           @if (filterable) {
-            <tr class="i-table-filter-row">
+            <div class="i-table-virtual-row i-table-filter-row">
               @if (selectionMode === 'multiple') {
-                <th class="i-table-selection-header"></th>
+                <div class="i-table-virtual-cell i-table-selection-header"></div>
               }
               @for (column of gridColumns(); track trackByColumn($index, column)) {
                 @if (column.filterable !== false) {
-                  <th [style.width]="getColumnWidth(column)">
+                  <div
+                    class="i-table-virtual-cell"
+                    [style.width]="
+                      getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null
+                    "
+                    [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
+                  >
                     <input
                       type="text"
                       class="i-table-column-filter"
@@ -447,31 +283,37 @@
                       [ngModel]="columnFilters()[column.field] || ''"
                       (ngModelChange)="onColumnFilterInput(column.field, $event)"
                     />
-                  </th>
+                  </div>
                 } @else {
-                  <th [style.width]="getColumnWidth(column)"></th>
+                  <div
+                    class="i-table-virtual-cell"
+                    [style.width]="
+                      getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null
+                    "
+                    [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
+                  ></div>
                 }
               }
               @if (gridActions().length > 0) {
-                <th class="i-table-actions-header"></th>
+                <div class="i-table-virtual-cell i-table-actions-header"></div>
               }
-            </tr>
+            </div>
           }
-
-          <!-- Column Headers -->
-          <tr>
+          <div class="i-table-virtual-row i-table-header-row">
             @if (selectionMode === 'multiple') {
-              <th class="i-table-selection-header">
+              <div class="i-table-virtual-cell i-table-selection-header">
                 <i-checkbox
                   [checked]="areAllRowsSelected()"
                   [indeterminate]="areSomeRowsSelected()"
                   (onChange)="toggleAllSelection()"
                 ></i-checkbox>
-              </th>
+              </div>
             }
             @for (column of gridColumns(); track trackByColumn($index, column)) {
-              <th
-                [style.width]="getColumnWidth(column)"
+              <div
+                class="i-table-virtual-cell i-table-header-cell"
+                [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
+                [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
                 [style.text-align]="column.align || 'left'"
                 [class.i-table-sortable-column]="sortable && column.sortable"
                 [class.i-table-sorted]="sortField === column.field"
@@ -483,99 +325,265 @@
                     <i [class]="getSortIcon(column)" class="i-table-sort-icon"></i>
                   }
                 </div>
-                @if (resizableColumns) {
-                  <span
-                    class="i-table-column-resizer"
-                    (mousedown)="onColumnResizeStart($event, column)"
-                  ></span>
-                }
-              </th>
+              </div>
             }
             @if (gridActions().length > 0) {
-              <th class="i-table-actions-header">{{ grid().actionsHeader ?? 'Actions' }}</th>
+              <div class="i-table-virtual-cell i-table-actions-header">
+                {{ grid().actionsHeader ?? 'Actions' }}
+              </div>
             }
-          </tr>
-        </thead>
+          </div>
+        </div>
 
-        <tbody>
+        <!-- Virtual Scroll Viewport — *cdkVirtualFor on <div>, not <tr> -->
+        <cdk-virtual-scroll-viewport
+          [itemSize]="virtualScrollItemSize"
+          [minBufferPx]="virtualScrollMinBufferPx"
+          [maxBufferPx]="virtualScrollMaxBufferPx"
+          class="i-table-virtual-viewport"
+        >
           @if (processedData().length === 0) {
-            <tr class="i-table-empty-row">
-              <td [attr.colspan]="totalColspan()">
+            <div class="i-table-virtual-row i-table-empty-row">
+              <div
+                class="i-table-virtual-cell"
+                style="flex: 1; text-align: center; padding: 40px 16px"
+              >
                 <i-no-content />
-              </td>
-            </tr>
+              </div>
+            </div>
           }
-          @for (row of processedData(); track trackByRow($index, row)) {
-            <tr
-              [class.i-table-row-odd]="$odd"
-              [class.i-table-row-selected]="isRowSelected(row)"
-              (click)="toggleRowSelection(row)"
-            >
-              @if (selectionMode === 'multiple') {
-                <td class="i-table-selection-cell">
-                  <i-checkbox
-                    [checked]="isRowSelected(row)"
-                    (onChange)="toggleRowSelection(row)"
-                    (click)="$event.stopPropagation()"
-                  ></i-checkbox>
-                </td>
-              }
-              @for (column of gridColumns(); track trackByColumn($index, column)) {
-                <td
-                  [style.text-align]="column.align || 'left'"
-                  [style.width]="getColumnWidth(column)"
-                  [class]="
-                    getCellSeverity(row, column)
-                      ? 'i-table-cell-' + getCellSeverity(row, column)
-                      : ''
-                  "
-                >
-                  @if (isIconColumn(column)) {
-                    <i
-                      [class]="getIconClasses(row, column)"
-                      [style.font-size]="column.iconSize || '12px'"
-                    ></i>
-                  } @else if (isListColumn(column)) {
-                    <div class="i-table-list-cell">
-                      @for (item of getCellListItems(row, column); track item) {
-                        <i-chip [label]="item"></i-chip>
-                      }
-                    </div>
-                  } @else {
-                    <span [class.i-severity-text]="getCellSeverity(row, column)">
-                      {{ formatCellValue(getCellValue(row, column.field), column) }}
-                    </span>
-                  }
-                </td>
-              }
-              @if (gridActions().length > 0) {
-                <td class="i-table-actions-cell">
-                  <div class="i-table-actions">
-                    @for (action of gridActions(); track action.id) {
-                      <i-button
-                        [severity]="action.severity || 'secondary'"
-                        [text]="true"
-                        size="small"
-                        [icon]="action.icon || ''"
-                        [disabled]="isActionDisabled(action, row)"
-                        [loading]="isActionLoading(action, row)"
-                        [iTooltip]="getActionTooltip(action, row)"
-                        [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
-                        [class.i-action-hidden]="!isActionVisible(action, row)"
-                        (clicked)="triggerAction(action, row, $event)"
-                      >
-                        @if (action.label) {
-                          {{ action.label }}
-                        }
-                      </i-button>
+          <div
+            *cdkVirtualFor="let row of processedData(); let rowIndex = index; trackBy: trackByRow"
+            class="i-table-virtual-row"
+            [style.height.px]="virtualScrollItemSize"
+            [class.i-table-row-odd]="rowIndex % 2 !== 0"
+            [class.i-table-row-selected]="isRowSelected(row)"
+            (click)="toggleRowSelection(row)"
+          >
+            @if (selectionMode === 'multiple') {
+              <div class="i-table-virtual-cell i-table-selection-cell">
+                <i-checkbox
+                  [checked]="isRowSelected(row)"
+                  (onChange)="toggleRowSelection(row)"
+                  (click)="$event.stopPropagation()"
+                ></i-checkbox>
+              </div>
+            }
+            @for (column of gridColumns(); track trackByColumn($index, column)) {
+              <div
+                class="i-table-virtual-cell"
+                [style.width]="getColumnWidth(column) !== 'auto' ? getColumnWidth(column) : null"
+                [style.flex]="getColumnWidth(column) === 'auto' ? '1' : null"
+                [style.text-align]="column.align || 'left'"
+                [ngClass]="
+                  getCellSeverity(row, column) ? 'i-table-cell-' + getCellSeverity(row, column) : ''
+                "
+              >
+                @if (isIconColumn(column)) {
+                  <i
+                    [class]="getIconClasses(row, column)"
+                    [style.font-size]="column.iconSize || '12px'"
+                  ></i>
+                } @else if (isListColumn(column)) {
+                  <div class="i-table-list-cell">
+                    @for (item of getCellListItems(row, column); track item) {
+                      <i-chip [label]="item"></i-chip>
                     }
                   </div>
-                </td>
+                } @else {
+                  <span [class.i-severity-text]="getCellSeverity(row, column)">
+                    {{ formatCellValue(getCellValue(row, column.field), column) }}
+                  </span>
+                }
+              </div>
+            }
+            @if (gridActions().length > 0) {
+              <div class="i-table-virtual-cell i-table-actions-cell">
+                <div class="i-table-actions">
+                  @for (action of gridActions(); track action.id) {
+                    <i-button
+                      [severity]="action.severity || 'secondary'"
+                      [text]="true"
+                      size="small"
+                      [icon]="action.icon || ''"
+                      [disabled]="isActionDisabled(action, row)"
+                      [loading]="isActionLoading(action, row)"
+                      [iTooltip]="getActionTooltip(action, row)"
+                      [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
+                      [class.i-action-hidden]="!isActionVisible(action, row)"
+                      (clicked)="triggerAction(action, row, $event)"
+                    >
+                      @if (action.label) {
+                        {{ action.label }}
+                      }
+                    </i-button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    } @else {
+      <!-- ================================================================
+         PATH C — Regular scrollable table
+         Default for small/medium datasets and nested detail tables.
+         Uses a plain overflow container with a @for loop — no CDK needed.
+    ================================================================ -->
+      <div
+        class="i-table-container i-table-container--scrollable"
+        [style.max-height]="effectiveHeight()"
+      >
+        <table class="i-table">
+          <thead>
+            <!-- Column Filter Row -->
+            @if (filterable) {
+              <tr class="i-table-filter-row">
+                @if (selectionMode === 'multiple') {
+                  <th class="i-table-selection-header"></th>
+                }
+                @for (column of gridColumns(); track trackByColumn($index, column)) {
+                  @if (column.filterable !== false) {
+                    <th [style.width]="getColumnWidth(column)">
+                      <input
+                        type="text"
+                        class="i-table-column-filter"
+                        placeholder="Filter..."
+                        [ngModel]="columnFilters()[column.field] || ''"
+                        (ngModelChange)="onColumnFilterInput(column.field, $event)"
+                      />
+                    </th>
+                  } @else {
+                    <th [style.width]="getColumnWidth(column)"></th>
+                  }
+                }
+                @if (gridActions().length > 0) {
+                  <th class="i-table-actions-header"></th>
+                }
+              </tr>
+            }
+
+            <!-- Column Headers -->
+            <tr>
+              @if (selectionMode === 'multiple') {
+                <th class="i-table-selection-header">
+                  <i-checkbox
+                    [checked]="areAllRowsSelected()"
+                    [indeterminate]="areSomeRowsSelected()"
+                    (onChange)="toggleAllSelection()"
+                  ></i-checkbox>
+                </th>
+              }
+              @for (column of gridColumns(); track trackByColumn($index, column)) {
+                <th
+                  [style.width]="getColumnWidth(column)"
+                  [style.text-align]="column.align || 'left'"
+                  [class.i-table-sortable-column]="sortable && column.sortable"
+                  [class.i-table-sorted]="sortField === column.field"
+                  (click)="onSortColumn(column)"
+                >
+                  <div class="i-table-header-content">
+                    <span class="i-table-header-text">{{ column.header }}</span>
+                    @if (sortable && column.sortable) {
+                      <i [class]="getSortIcon(column)" class="i-table-sort-icon"></i>
+                    }
+                  </div>
+                  @if (resizableColumns) {
+                    <span
+                      class="i-table-column-resizer"
+                      (mousedown)="onColumnResizeStart($event, column)"
+                    ></span>
+                  }
+                </th>
+              }
+              @if (gridActions().length > 0) {
+                <th class="i-table-actions-header">
+                  {{ grid().actionsHeader ?? 'Actions' }}
+                </th>
               }
             </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-</div>
+          </thead>
+
+          <tbody>
+            @if (processedData().length === 0) {
+              <tr class="i-table-empty-row">
+                <td [attr.colspan]="totalColspan()">
+                  <i-no-content />
+                </td>
+              </tr>
+            }
+            @for (row of processedData(); track trackByRow($index, row)) {
+              <tr
+                [class.i-table-row-odd]="$odd"
+                [class.i-table-row-selected]="isRowSelected(row)"
+                (click)="toggleRowSelection(row)"
+              >
+                @if (selectionMode === 'multiple') {
+                  <td class="i-table-selection-cell">
+                    <i-checkbox
+                      [checked]="isRowSelected(row)"
+                      (onChange)="toggleRowSelection(row)"
+                      (click)="$event.stopPropagation()"
+                    ></i-checkbox>
+                  </td>
+                }
+                @for (column of gridColumns(); track trackByColumn($index, column)) {
+                  <td
+                    [style.text-align]="column.align || 'left'"
+                    [style.width]="getColumnWidth(column)"
+                    [class]="
+                      getCellSeverity(row, column)
+                        ? 'i-table-cell-' + getCellSeverity(row, column)
+                        : ''
+                    "
+                  >
+                    @if (isIconColumn(column)) {
+                      <i
+                        [class]="getIconClasses(row, column)"
+                        [style.font-size]="column.iconSize || '12px'"
+                      ></i>
+                    } @else if (isListColumn(column)) {
+                      <div class="i-table-list-cell">
+                        @for (item of getCellListItems(row, column); track item) {
+                          <i-chip [label]="item"></i-chip>
+                        }
+                      </div>
+                    } @else {
+                      <span [class.i-severity-text]="getCellSeverity(row, column)">
+                        {{ formatCellValue(getCellValue(row, column.field), column) }}
+                      </span>
+                    }
+                  </td>
+                }
+                @if (gridActions().length > 0) {
+                  <td class="i-table-actions-cell">
+                    <div class="i-table-actions">
+                      @for (action of gridActions(); track action.id) {
+                        <i-button
+                          [severity]="action.severity || 'secondary'"
+                          [text]="true"
+                          size="small"
+                          [icon]="action.icon || ''"
+                          [disabled]="isActionDisabled(action, row)"
+                          [loading]="isActionLoading(action, row)"
+                          [iTooltip]="getActionTooltip(action, row)"
+                          [ariaLabel]="action.label || getActionTooltip(action, row) || action.id"
+                          [class.i-action-hidden]="!isActionVisible(action, row)"
+                          (clicked)="triggerAction(action, row, $event)"
+                        >
+                          @if (action.label) {
+                            {{ action.label }}
+                          }
+                        </i-button>
+                      }
+                    </div>
+                  </td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</i-loading-surface>

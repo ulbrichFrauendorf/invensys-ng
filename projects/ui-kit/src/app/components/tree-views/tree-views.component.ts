@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
@@ -21,6 +22,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './tree-views.component.scss',
 })
 export class TreeViewsComponent {
+  readonly loading = loadingSignal(false);
+
   // Basic tree data
   basicTreeData: ITreeNode[] = [
     {
@@ -217,30 +220,30 @@ export class TreeViewsComponent {
 
   // HTML Code examples
   codeExamples = {
-    basic: `<i-tree-view [value]="treeData"></i-tree-view>`,
+    basic: `<i-tree-view [loading]="loading()" [value]="treeData"></i-tree-view>`,
 
     selection: `<!-- Single selection -->
-<i-tree-view
+<i-tree-view [loading]="loading()"
   [value]="treeData"
   selectionMode="single"
   [(selection)]="singleSelection">
 </i-tree-view>
 
 <!-- Multiple selection -->
-<i-tree-view
+<i-tree-view [loading]="loading()"
   [value]="treeData"
   selectionMode="multiple"
   [(selection)]="multipleSelection">
 </i-tree-view>
 
 <!-- Checkbox selection -->
-<i-tree-view
+<i-tree-view [loading]="loading()"
   [value]="treeData"
   selectionMode="checkbox"
   [(selection)]="checkboxSelection">
 </i-tree-view>`,
 
-    events: `<i-tree-view
+    events: `<i-tree-view [loading]="loading()"
   [value]="treeData"
   (onNodeSelect)="onNodeSelect($event)"
   (onNodeUnselect)="onNodeUnselect($event)"
@@ -248,19 +251,19 @@ export class TreeViewsComponent {
   (onNodeCollapse)="onNodeCollapse($event)">
 </i-tree-view>`,
 
-    filtering: `<i-tree-view
+    filtering: `<i-tree-view [loading]="loading()"
   [value]="treeData"
   [filter]="true"
   filterPlaceholder="Search nodes..."
   filterBy="label">
 </i-tree-view>`,
 
-    scrollable: `<i-tree-view
+    scrollable: `<i-tree-view [loading]="loading()"
   [value]="treeData"
   scrollHeight="400px">
 </i-tree-view>`,
 
-    customization: `<i-tree-view
+    customization: `<i-tree-view [loading]="loading()"
   [value]="customTreeData"
   [scrollHeight]="'400px'">
 </i-tree-view>`,

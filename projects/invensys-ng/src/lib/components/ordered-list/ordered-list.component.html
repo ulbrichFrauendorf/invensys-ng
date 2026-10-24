@@ -1,85 +1,92 @@
-<ol
-  class="i-ordered-list"
-  [attr.aria-label]="ariaLabel"
-  cdkDropList
-  [cdkDropListDisabled]="readonly || disabled"
-  (cdkDropListDropped)="reorder($event.previousIndex, $event.currentIndex)"
+<i-loading-surface
+  [loading]="loading()"
+  variant="list"
+  [minimumHeight]="'160px'"
+  ariaLabel="Loading items"
 >
-  @for (item of items; track itemKey(item); let index = $index) {
-    <li
-      class="i-ordered-list__item"
-      cdkDrag
-      cdkDragLockAxis="y"
-      cdkDragPreviewContainer="parent"
-      [cdkDragDisabled]="readonly || disabled"
-    >
-      <button
-        type="button"
-        class="i-ordered-list__drag-handle"
-        cdkDragHandle
-        [disabled]="readonly || disabled"
-        [attr.aria-label]="'Reorder ' + itemLabel(item) + '. Use up and down arrow keys.'"
-        title="Drag to reorder"
-        (keydown.arrowup)="move(index, -1); $event.preventDefault()"
-        (keydown.arrowdown)="move(index, 1); $event.preventDefault()"
+  <ol
+    class="i-ordered-list"
+    [attr.aria-label]="ariaLabel"
+    cdkDropList
+    [cdkDropListDisabled]="readonly || disabled"
+    (cdkDropListDropped)="reorder($event.previousIndex, $event.currentIndex)"
+  >
+    @for (item of items; track itemKey(item); let index = $index) {
+      <li
+        class="i-ordered-list__item"
+        cdkDrag
+        cdkDragLockAxis="y"
+        cdkDragPreviewContainer="parent"
+        [cdkDragDisabled]="readonly || disabled"
       >
-        <i class="pi pi-bars" aria-hidden="true"></i>
-      </button>
-      <div class="i-ordered-list__content">
-        <strong>{{ itemLabel(item) }}</strong>
-        @if (itemTemplate) {
-          <ng-container
-            [ngTemplateOutlet]="itemTemplate"
-            [ngTemplateOutletContext]="{
-              $implicit: item,
-              index: index,
-              readonly: readonly || disabled,
-            }"
-          />
-        }
-      </div>
-      <div
-        class="i-ordered-list__actions"
-        role="group"
-        [attr.aria-label]="'Actions for ' + itemLabel(item)"
-      >
-        <i-button
-          icon="pi pi-arrow-up"
-          size="small"
-          [text]="true"
-          [ariaLabel]="'Move ' + itemLabel(item) + ' up'"
-          title="Move up"
-          [disabled]="readonly || disabled || index === 0"
-          (clicked)="move(index, -1)"
-        />
-        <i-button
-          icon="pi pi-arrow-down"
-          size="small"
-          [text]="true"
-          [ariaLabel]="'Move ' + itemLabel(item) + ' down'"
-          title="Move down"
-          [disabled]="readonly || disabled || index === items.length - 1"
-          (clicked)="move(index, 1)"
-        />
-        @if (removable) {
+        <button
+          type="button"
+          class="i-ordered-list__drag-handle"
+          cdkDragHandle
+          [disabled]="readonly || disabled"
+          [attr.aria-label]="'Reorder ' + itemLabel(item) + '. Use up and down arrow keys.'"
+          title="Drag to reorder"
+          (keydown.arrowup)="move(index, -1); $event.preventDefault()"
+          (keydown.arrowdown)="move(index, 1); $event.preventDefault()"
+        >
+          <i class="pi pi-bars" aria-hidden="true"></i>
+        </button>
+        <div class="i-ordered-list__content">
+          <strong>{{ itemLabel(item) }}</strong>
+          @if (itemTemplate) {
+            <ng-container
+              [ngTemplateOutlet]="itemTemplate"
+              [ngTemplateOutletContext]="{
+                $implicit: item,
+                index: index,
+                readonly: readonly || disabled,
+              }"
+            />
+          }
+        </div>
+        <div
+          class="i-ordered-list__actions"
+          role="group"
+          [attr.aria-label]="'Actions for ' + itemLabel(item)"
+        >
           <i-button
-            icon="pi pi-times"
+            icon="pi pi-arrow-up"
             size="small"
-            severity="danger"
             [text]="true"
-            [ariaLabel]="'Remove ' + itemLabel(item)"
-            title="Remove"
-            [disabled]="readonly || disabled"
-            (clicked)="remove(index)"
+            [ariaLabel]="'Move ' + itemLabel(item) + ' up'"
+            title="Move up"
+            [disabled]="readonly || disabled || index === 0"
+            (clicked)="move(index, -1)"
           />
-        }
-      </div>
-    </li>
+          <i-button
+            icon="pi pi-arrow-down"
+            size="small"
+            [text]="true"
+            [ariaLabel]="'Move ' + itemLabel(item) + ' down'"
+            title="Move down"
+            [disabled]="readonly || disabled || index === items.length - 1"
+            (clicked)="move(index, 1)"
+          />
+          @if (removable) {
+            <i-button
+              icon="pi pi-times"
+              size="small"
+              severity="danger"
+              [text]="true"
+              [ariaLabel]="'Remove ' + itemLabel(item)"
+              title="Remove"
+              [disabled]="readonly || disabled"
+              (clicked)="remove(index)"
+            />
+          }
+        </div>
+      </li>
+    }
+  </ol>
+  @if (!items.length) {
+    <i-no-content [message]="emptyMessage" />
   }
-</ol>
-@if (!items.length) {
-  <i-no-content [message]="emptyMessage" />
-}
-<span class="i-ordered-list__announcement" role="status" aria-live="polite">{{
-  announcement
-}}</span>
+  <span class="i-ordered-list__announcement" role="status" aria-live="polite">{{
+    announcement
+  }}</span>
+</i-loading-surface>

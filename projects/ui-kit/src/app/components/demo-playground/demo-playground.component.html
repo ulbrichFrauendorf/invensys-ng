@@ -1,5 +1,12 @@
 <i-page-layout [headerText]="title" [eyebrowText]="eyebrow" sidebarPosition="right">
-  <div iPageHeaderActions>
+  <div iPageHeaderActions class="demo-header-actions">
+    @if (showLoadingControl) {
+      <i-toggle
+        label="Loading preview"
+        [ngModel]="loading()"
+        (ngModelChange)="loading.set($event)"
+      />
+    }
     <i-button
       size="small"
       severity="secondary"

@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="tree-views-demo"
   title="Tree Views"
   eyebrow="Data Display"
@@ -18,7 +20,7 @@
       <i-button severity="secondary" (clicked)="collapseAll()"> Collapse All </i-button>
     </div>
 
-    <i-tree-view [value]="basicTreeData" scrollHeight="300px"> </i-tree-view>
+    <i-tree-view [loading]="loading()" [value]="basicTreeData" scrollHeight="300px"> </i-tree-view>
   </ng-template>
 
   <ng-template
@@ -39,6 +41,7 @@
     </div>
 
     <i-tree-view
+      [loading]="loading()"
       [value]="organizationData"
       selectionMode="checkbox"
       [selectAll]="true"
@@ -81,6 +84,7 @@
     </div>
 
     <i-tree-view
+      [loading]="loading()"
       [value]="organizationData"
       selectionMode="single"
       [(selection)]="singleSelection"
@@ -115,6 +119,7 @@
     </div>
 
     <i-tree-view
+      [loading]="loading()"
       [value]="organizationData"
       selectionMode="multiple"
       [(selection)]="multipleSelection"
@@ -146,6 +151,7 @@
     <p>Search through tree nodes using the built-in filter.</p>
 
     <i-tree-view
+      [loading]="loading()"
       [value]="basicTreeData"
       [filter]="true"
       filterPlaceholder="Search files and folders..."
@@ -158,6 +164,7 @@
     <p>TreeView emits various events for node interactions. Check the console for event logs.</p>
 
     <i-tree-view
+      [loading]="loading()"
       [value]="basicTreeData"
       selectionMode="single"
       (onNodeSelect)="onSingleNodeSelect($event)"
@@ -176,7 +183,8 @@
   >
     <p>Set a fixed height for the tree to make it scrollable.</p>
 
-    <i-tree-view [value]="organizationData" scrollHeight="200px"> </i-tree-view>
+    <i-tree-view [loading]="loading()" [value]="organizationData" scrollHeight="200px">
+    </i-tree-view>
   </ng-template>
 
   <ng-template

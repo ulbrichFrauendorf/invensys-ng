@@ -1,3 +1,5 @@
+import { input } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   Component,
   EventEmitter,
@@ -32,7 +34,7 @@ export interface FieldPickerOption {
 @Component({
   selector: 'i-field-picker',
   standalone: true,
-  imports: [FormsModule, ICheckbox, IInputText, NoContentComponent],
+  imports: [LoadingSurfaceComponent, FormsModule, ICheckbox, IInputText, NoContentComponent],
   templateUrl: './field-picker.component.html',
   styleUrl: './field-picker.component.scss',
   providers: [
@@ -46,6 +48,9 @@ export interface FieldPickerOption {
   host: { '(focusout)': 'markTouched()' },
 })
 export class IFieldPicker implements ControlValueAccessor {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /** Available fields. Selection is retained when options are filtered or reloaded. */
   @Input() options: FieldPickerOption[] = [];
   /** Accessible name of the grouped selection. */
@@ -86,7 +91,9 @@ export class IFieldPicker implements ControlValueAccessor {
 
   select(option: FieldPickerOption, checked: boolean): void {
     if (
+      this.loading() ||
       this.disabled ||
+      this.loading() ||
       this.readonly ||
       option.disabled ||
       this.value.includes(option.key) === checked

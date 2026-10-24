@@ -50,7 +50,10 @@ describe('IRuleEditor', () => {
     const changed = vi.fn();
     fixture.componentInstance.rulesChange.subscribe(changed);
     const list = fixture.debugElement.query(By.directive(CdkDropList));
-    list.triggerEventHandler('cdkDropListDropped', { previousIndex: 2, currentIndex: 0 });
+    list.triggerEventHandler('cdkDropListDropped', {
+      previousIndex: 2,
+      currentIndex: 0,
+    });
     expect(changed).toHaveBeenCalledWith([original[2], original[0], original[1]]);
     expect(original.map((rule) => rule.fieldKey)).toEqual(['name', 'amount', 'date']);
     fixture.nativeElement
@@ -66,7 +69,10 @@ describe('IRuleEditor', () => {
           .queryAll(By.directive(CdkDrag))
           .every((row) => row.injector.get(CdkDrag).disabled),
       ).toBe(true);
-      list.triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 2 });
+      list.triggerEventHandler('cdkDropListDropped', {
+        previousIndex: 0,
+        currentIndex: 2,
+      });
       expect(changed).not.toHaveBeenCalled();
       fixture.componentRef.setInput(state, false);
     }

@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/loading-spec"
+  },
+  "include": [
+    "src/lib/components/loading-controls.spec.ts"
+  ]
+}

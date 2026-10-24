@@ -1,3 +1,5 @@
+import { input } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
@@ -38,12 +40,23 @@ export interface OrderedListMoveEvent<T> {
 @Component({
   selector: 'i-ordered-list',
   standalone: true,
-  imports: [NgTemplateOutlet, CdkDrag, CdkDragHandle, CdkDropList, IButton, NoContentComponent],
+  imports: [
+    LoadingSurfaceComponent,
+    NgTemplateOutlet,
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
+    IButton,
+    NoContentComponent,
+  ],
   templateUrl: './ordered-list.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './ordered-list.component.scss',
 })
 export class IOrderedList<T> {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /** Items in display order. Bind itemsChange or use two-way binding. */
   @Input() items: T[] = [];
   /** Accessible row labels. */
@@ -76,7 +89,9 @@ export class IOrderedList<T> {
 
   reorder(index: number, target: number): void {
     if (
+      this.loading() ||
       this.readonly ||
+      this.loading() ||
       this.disabled ||
       index === target ||
       index < 0 ||
@@ -95,7 +110,9 @@ export class IOrderedList<T> {
 
   remove(index: number): void {
     if (
+      this.loading() ||
       this.readonly ||
+      this.loading() ||
       this.disabled ||
       !this.removable ||
       index < 0 ||

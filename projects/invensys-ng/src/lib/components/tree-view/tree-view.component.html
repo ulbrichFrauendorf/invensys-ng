@@ -1,120 +1,128 @@
-<div class="i-tree-view-wrapper" [style.height]="scrollHeight">
-  @if (filter) {
-    <div class="i-tree-view-filter-container">
-      <i-input-text
-        [ngModel]="filterValue"
-        (ngModelChange)="filterValue = $event; applyFilter()"
-        label="Search tree"
-        [placeholder]="filterPlaceholder"
-        [icon]="'pi pi-search'"
-        [useFloatLabel]="false"
-        [fluid]="true"
-        class="i-tree-view-filter"
-      >
-      </i-input-text>
-    </div>
-  }
-  @if (selectAll && selectionMode === 'checkbox') {
-    <div class="i-tree-view-select-all-container">
-      <div class="select-box">
-        <i-checkbox
-          [(ngModel)]="selectAllChecked"
-          [id]="componentId + '-select-all'"
-          [label]="'Select All'"
-          (ngModelChange)="onSelectAllChange()"
-        />
+<i-loading-surface
+  [loading]="loadingState()"
+  variant="list"
+  [minimumHeight]="scrollHeight || '200px'"
+  ariaLabel="Loading tree"
+>
+  <div class="i-tree-view-wrapper" [style.height]="scrollHeight">
+    @if (filter) {
+      <div class="i-tree-view-filter-container">
+        <i-input-text
+          [ngModel]="filterValue"
+          (ngModelChange)="filterValue = $event; applyFilter()"
+          label="Search tree"
+          [placeholder]="filterPlaceholder"
+          [icon]="'pi pi-search'"
+          [useFloatLabel]="false"
+          [fluid]="true"
+          class="i-tree-view-filter"
+        >
+        </i-input-text>
       </div>
-    </div>
-  }
+    }
+    @if (selectAll && selectionMode === 'checkbox') {
+      <div class="i-tree-view-select-all-container">
+        <div class="select-box">
+          <i-checkbox
+            [(ngModel)]="selectAllChecked"
+            [id]="componentId + '-select-all'"
+            [label]="'Select All'"
+            (ngModelChange)="onSelectAllChange()"
+          />
+        </div>
+      </div>
+    }
 
-  <div class="i-tree-view-container">
-    @if (loading) {
-      <div class="i-tree-view-loading">
-        <i class="pi pi-spin pi-spinner"></i>
-        <span>Loading...</span>
+    <div class="i-tree-view-container">
+      @if (filteredValue.length === 0) {
+        <div class="i-tree-view-empty">
+          <span>{{ emptyMessage }}</span>
+        </div>
+      } @else {
+        <ul class="i-tree-view-root" [attr.id]="componentId" role="tree">
+          @for (node of filteredValue; track node.key || $index) {
+            <li>
+              <ng-container
+                [ngTemplateOutlet]="nodeTemplate"
+                [ngTemplateOutletContext]="{ $implicit: node, level: 0 }"
+              ></ng-container>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+
+  <ng-template #nodeTemplate let-node let-level="level">
+    <div
+      class="i-tree-view-node"
+      [class.i-tree-view-node--selected]="isNodeHighlighted(node)"
+      [class.i-tree-view-node--leaf]="!hasChildren(node)"
+      [class.i-tree-view-node--expanded]="node.expanded"
+      [class.i-tree-view-node--collapsed]="!node.expanded && hasChildren(node)"
+      [class.i-tree-view-node--temporary-highlight]="isTemporarilyHighlighted(node)"
+      [class]="node.styleClass"
+      [style.padding-left.rem]="level * 1"
+      role="treeitem"
+      [attr.aria-expanded]="hasChildren(node) ? node.expanded : null"
+      [attr.aria-selected]="isSelected(node)"
+      [attr.aria-level]="level + 1"
+      tabindex="0"
+      (click)="onNodeClick($event, node)"
+      (keydown.enter)="onNodeClick($event, node)"
+      (keydown.space)="$event.preventDefault(); onNodeClick($event, node)"
+    >
+      <div class="i-tree-view-node-content">
+        @if (hasChildren(node)) {
+          <button
+            type="button"
+            class="i-tree-view-toggler"
+            (click)="$event.stopPropagation(); toggleNode($event, node)"
+            [attr.aria-label]="node.expanded ? 'Collapse' : 'Expand'"
+            tabindex="-1"
+          >
+            <i-loading-surface
+              [loading]="!!node.loading"
+              variant="inline"
+              minimumHeight="16px"
+              ariaLabel="Loading node"
+              ><i [class]="getToggleIcon(node)"></i
+            ></i-loading-surface>
+          </button>
+        } @else {
+          <span class="i-tree-view-toggler-spacer"></span>
+        }
+        @if (selectionMode === 'checkbox') {
+          <div class="i-tree-view-checkbox-container">
+            <i-checkbox
+              [checked]="isSelected(node) && !isPartiallySelected(node)"
+              [indeterminate]="isPartiallySelected(node)"
+              (onChange)="onCheckboxChange($event, node)"
+              [id]="getCheckboxId(node)"
+              size="small"
+              tabindex="-1"
+            >
+            </i-checkbox>
+          </div>
+        }
+
+        <i [class]="getNodeIcon(node)" class="i-tree-view-node-icon"></i>
+
+        <span class="i-tree-view-node-label">{{ node.label }}</span>
       </div>
-    } @else if (filteredValue.length === 0) {
-      <div class="i-tree-view-empty">
-        <span>{{ emptyMessage }}</span>
-      </div>
-    } @else {
-      <ul class="i-tree-view-root" [attr.id]="componentId" role="tree">
-        @for (node of filteredValue; track node.key || $index) {
+    </div>
+
+    @if (hasChildren(node) && node.expanded) {
+      <ul class="i-tree-view-children" role="group">
+        @for (child of node.children; track child.key || $index) {
           <li>
             <ng-container
               [ngTemplateOutlet]="nodeTemplate"
-              [ngTemplateOutletContext]="{ $implicit: node, level: 0 }"
+              [ngTemplateOutletContext]="{ $implicit: child, level: level + 1 }"
             ></ng-container>
           </li>
         }
       </ul>
     }
-  </div>
-</div>
-
-<ng-template #nodeTemplate let-node let-level="level">
-  <div
-    class="i-tree-view-node"
-    [class.i-tree-view-node--selected]="isNodeHighlighted(node)"
-    [class.i-tree-view-node--leaf]="!hasChildren(node)"
-    [class.i-tree-view-node--expanded]="node.expanded"
-    [class.i-tree-view-node--collapsed]="!node.expanded && hasChildren(node)"
-    [class.i-tree-view-node--temporary-highlight]="isTemporarilyHighlighted(node)"
-    [class]="node.styleClass"
-    [style.padding-left.rem]="level * 1"
-    role="treeitem"
-    [attr.aria-expanded]="hasChildren(node) ? node.expanded : null"
-    [attr.aria-selected]="isSelected(node)"
-    [attr.aria-level]="level + 1"
-    tabindex="0"
-    (click)="onNodeClick($event, node)"
-    (keydown.enter)="onNodeClick($event, node)"
-    (keydown.space)="$event.preventDefault(); onNodeClick($event, node)"
-  >
-    <div class="i-tree-view-node-content">
-      @if (hasChildren(node)) {
-        <button
-          type="button"
-          class="i-tree-view-toggler"
-          (click)="$event.stopPropagation(); toggleNode($event, node)"
-          [attr.aria-label]="node.expanded ? 'Collapse' : 'Expand'"
-          tabindex="-1"
-        >
-          <i [class]="getToggleIcon(node)"></i>
-        </button>
-      } @else {
-        <span class="i-tree-view-toggler-spacer"></span>
-      }
-      @if (selectionMode === 'checkbox') {
-        <div class="i-tree-view-checkbox-container">
-          <i-checkbox
-            [checked]="isSelected(node) && !isPartiallySelected(node)"
-            [indeterminate]="isPartiallySelected(node)"
-            (onChange)="onCheckboxChange($event, node)"
-            [id]="getCheckboxId(node)"
-            size="small"
-            tabindex="-1"
-          >
-          </i-checkbox>
-        </div>
-      }
-
-      <i [class]="getNodeIcon(node)" class="i-tree-view-node-icon"></i>
-
-      <span class="i-tree-view-node-label">{{ node.label }}</span>
-    </div>
-  </div>
-
-  @if (hasChildren(node) && node.expanded) {
-    <ul class="i-tree-view-children" role="group">
-      @for (child of node.children; track child.key || $index) {
-        <li>
-          <ng-container
-            [ngTemplateOutlet]="nodeTemplate"
-            [ngTemplateOutletContext]="{ $implicit: child, level: level + 1 }"
-          ></ng-container>
-        </li>
-      }
-    </ul>
-  }
-</ng-template>
+  </ng-template>
+</i-loading-surface>

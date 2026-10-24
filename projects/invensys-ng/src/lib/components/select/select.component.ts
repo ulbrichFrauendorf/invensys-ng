@@ -1,3 +1,5 @@
+import { effect as loadingEffect } from '@angular/core';
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OPTION_OVERLAY_POSITIONS, handleOptionKeys } from '../../utils/option-picker';
 import {
@@ -88,7 +90,7 @@ export interface SelectOption {
 @Component({
   selector: 'i-select',
   standalone: true,
-  imports: [FormsModule, OverlayModule],
+  imports: [LoadingSurfaceComponent, FormsModule, OverlayModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -101,6 +103,9 @@ export interface SelectOption {
   ],
 })
 export class ISelect implements ControlValueAccessor {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /**
    * Label text displayed for the select
    * @default 'Select'
@@ -185,6 +190,7 @@ export class ISelect implements ControlValueAccessor {
   }
 
   onNativeChange(event: Event): void {
+    if (this.loading() || this.disabled) return;
     const index = Number((event.target as HTMLSelectElement).value);
     const option = (this.options() || [])[index];
     if (option !== undefined) this.selectOption(option);
@@ -232,7 +238,7 @@ export class ISelect implements ControlValueAccessor {
   @ViewChild('optionsPanel') panelRef?: ElementRef<HTMLDivElement>;
 
   openDropdown(): void {
-    if (this.disabled) return;
+    if (this.loading() || this.disabled) return;
     this.filterValue.set('');
     this.isOpen = true;
   }
@@ -356,6 +362,9 @@ export class ISelect implements ControlValueAccessor {
   componentId = UniqueComponentId('i-select-');
 
   constructor(private injector: Injector) {
+    loadingEffect(() => {
+      if (this.loading()) this.closeDropdown();
+    });
     afterNextRender(() => {
       this.ngControl = this.injector.get(NgControl, null);
     });
@@ -366,7 +375,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   toggleDropdown() {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     if (this.isOpen) this.closeDropdown();
     else this.openDropdown();
   }
@@ -376,7 +385,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   selectOption(option: SelectOption) {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     const newValue = this.getOptionValue(option);
     this.value = newValue;
     this.onChange.emit(newValue);
@@ -390,7 +399,7 @@ export class ISelect implements ControlValueAccessor {
    * @internal
    */
   clearSelection() {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     this.value = null;
     this.onChange.emit(null);
     this.onClear.emit();

@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { IChip } from '@shared/components/chip/chip.component';
@@ -20,6 +21,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrls: ['./chips.component.scss'],
 })
 export class ChipsComponent {
+  readonly loading = loadingSignal(false);
+
   // Code examples organized by category
   codeExamples = {
     basicChips: `<i-chip label="Action" />
@@ -27,36 +30,36 @@ export class ChipsComponent {
 <i-chip label="Mystery" />
 <i-chip label="Thriller" [removable]="true" (onRemove)="onChipRemove($event)" />
 <i-chip label="Apple" icon="pi pi-apple" />`,
-    chipsContainer: `<i-chips
+    chipsContainer: `<i-chips [loading]="loading()"
   [chips]="filterChips"
   [removable]="true"
   (removeChip)="onRemove($event)"
 ></i-chips>`,
-    boxed: `<i-chips
+    boxed: `<i-chips [loading]="loading()"
   [chips]="selectedItems"
   [boxed]="true"
   [removable]="true"
   (removeChip)="onRemove($event)"
 ></i-chips>`,
-    collapse: `<i-chips
+    collapse: `<i-chips [loading]="loading()"
   [chips]="selectedItems"
   [removable]="true"
   [collapseOnOverflow]="true"
   [overflowLabel]="selectedItems.length + ' items selected'"
   (removeChip)="onRemove($event)"
 ></i-chips>`,
-    closeAll: `<i-chips
+    closeAll: `<i-chips [loading]="loading()"
   [chips]="activeFilters"
   [removable]="true"
   [allowCloseAll]="true"
   (removeChip)="onRemove($event)"
   (closedAll)="onClearAll()"
 ></i-chips>`,
-    disabled: `<i-chips
+    disabled: `<i-chips [loading]="loading()"
   [chips]="lockedTags"
   [disabled]="true"
 ></i-chips>`,
-    combined: `<i-chips
+    combined: `<i-chips [loading]="loading()"
   [chips]="selections"
   [boxed]="true"
   [removable]="true"

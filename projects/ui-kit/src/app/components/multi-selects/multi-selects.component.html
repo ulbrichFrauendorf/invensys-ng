@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="multi-selects-demo"
   title="Multi Selects"
   eyebrow="Form Controls"
@@ -14,6 +16,7 @@
     <form [formGroup]="basicForm" (ngSubmit)="onSubmit(basicForm, 'basic')" class="demo-form">
       <div class="form-grid">
         <i-multi-select
+          [loading]="loading()"
           label="Skills"
           [options]="selectData.skills"
           optionLabel="label"
@@ -23,6 +26,7 @@
         </i-multi-select>
 
         <i-multi-select
+          [loading]="loading()"
           label="Departments"
           [options]="selectData.departments"
           optionLabel="label"
@@ -32,6 +36,7 @@
         </i-multi-select>
 
         <i-multi-select
+          [loading]="loading()"
           label="Preselected Skills"
           [options]="selectData.skills"
           optionLabel="label"
@@ -41,6 +46,7 @@
         </i-multi-select>
 
         <i-multi-select
+          [loading]="loading()"
           label="Disabled Multi-Select"
           [options]="selectData.departments"
           optionLabel="label"
@@ -51,6 +57,7 @@
 
         <!-- Value Extraction Example -->
         <i-multi-select
+          [loading]="loading()"
           label="Skills (Values Only)"
           [options]="selectData.skills"
           optionLabel="label"
@@ -62,6 +69,7 @@
 
         <!-- Full Object Example -->
         <i-multi-select
+          [loading]="loading()"
           label="Skills (Full Objects)"
           [options]="selectData.skills"
           optionLabel="label"
@@ -89,6 +97,7 @@
     >
       <div class="form-grid">
         <i-multi-select
+          [loading]="loading()"
           label="Required Skills (At least 1)"
           [options]="selectData.skills"
           optionLabel="label"
@@ -98,6 +107,7 @@
         </i-multi-select>
 
         <i-multi-select
+          [loading]="loading()"
           label="Minimum Skills (At least 2)"
           [options]="selectData.skills"
           optionLabel="label"
@@ -122,6 +132,7 @@
       class="demo-form"
     >
       <i-multi-select
+        [loading]="loading()"
         label="Categories with Filtering"
         [options]="selectData.categories"
         [filter]="true"
@@ -141,6 +152,7 @@
   <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
     <form [formGroup]="fluidForm" (ngSubmit)="onSubmit(fluidForm, 'fluid')" class="demo-form">
       <i-multi-select
+        [loading]="loading()"
         label="Fluid Multi-Select"
         [options]="selectData.skills"
         optionLabel="label"

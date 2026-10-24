@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="chips-demo"
   title="Chips"
   eyebrow="Buttons &amp; Actions"
@@ -29,6 +31,7 @@
   >
     <div class="chips-container-demo">
       <i-chips
+        [loading]="loading()"
         [chips]="basicChips"
         [removable]="true"
         (removeChip)="onRemoveBasic($event)"
@@ -43,6 +46,7 @@
   <ng-template appDemoOption="option-3" label="Boxed Container" [sourceCode]="codeExamples.boxed">
     <div class="chips-container-demo">
       <i-chips
+        [loading]="loading()"
         [chips]="boxedChips"
         [boxed]="true"
         [removable]="true"
@@ -67,6 +71,7 @@
   >
     <div class="chips-container-demo">
       <i-chips
+        [loading]="loading()"
         [chips]="collapsibleChips"
         [removable]="true"
         [collapseOnOverflow]="true"
@@ -91,6 +96,7 @@
   >
     <div class="chips-container-demo">
       <i-chips
+        [loading]="loading()"
         [chips]="closeAllChips"
         [removable]="true"
         [allowCloseAll]="true"
@@ -110,7 +116,7 @@
 
   <ng-template appDemoOption="option-6" label="Disabled State" [sourceCode]="codeExamples.disabled">
     <div class="chips-container-demo">
-      <i-chips [chips]="disabledChips" [disabled]="true"></i-chips>
+      <i-chips [loading]="loading()" [chips]="disabledChips" [disabled]="true"></i-chips>
 
       <i-message [severity]="'info'">Disabled chips are read-only and cannot be removed</i-message>
     </div>
@@ -123,6 +129,7 @@
   >
     <div class="chips-container-demo">
       <i-chips
+        [loading]="loading()"
         [chips]="combinedChips"
         [boxed]="true"
         [removable]="true"

@@ -1,3 +1,4 @@
+import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   afterNextRender,
   Component,
@@ -104,7 +105,7 @@ export interface ListboxOption {
 @Component({
   selector: 'i-listbox',
   standalone: true,
-  imports: [FormsModule, IChipsComponent, IInputText, IButton],
+  imports: [LoadingSurfaceComponent, FormsModule, IChipsComponent, IInputText, IButton],
   templateUrl: './listbox.component.html',
   styleUrls: ['./listbox.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -117,6 +118,9 @@ export interface ListboxOption {
   ],
 })
 export class IListbox implements ControlValueAccessor {
+  /** Shows loading without changing the current value or selection. */
+  readonly loading = input(false);
+
   /**
    * Title text displayed in the listbox header
    * @default 'List Box'
@@ -265,6 +269,7 @@ export class IListbox implements ControlValueAccessor {
    * Handles action button click
    */
   onActionClick(event: Event): void {
+    if (this.loading()) return;
     event.stopPropagation();
     this.onAction.emit();
   }
@@ -278,7 +283,7 @@ export class IListbox implements ControlValueAccessor {
   }
 
   toggleOption(option: ListboxOption) {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     const optionValue = this.getOptionValue(option);
 
     if (this.multiple) {
@@ -329,6 +334,7 @@ export class IListbox implements ControlValueAccessor {
   }
 
   removeSelectedItem(value: any, event: Event) {
+    if (this.loading()) return;
     event.stopPropagation();
 
     if (this.multiple) {
@@ -458,7 +464,7 @@ export class IListbox implements ControlValueAccessor {
   }
 
   onChipRemove(event: ChipRemoveEvent): void {
-    if (this.disabled) return;
+    if (this.disabled || this.loading()) return;
     this.removeSelectedItem(event.chip.value, event.originalEvent);
   }
 

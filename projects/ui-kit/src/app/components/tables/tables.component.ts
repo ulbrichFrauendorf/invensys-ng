@@ -1,3 +1,4 @@
+import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import {
@@ -49,6 +50,8 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './tables.component.scss',
 })
 export class TablesComponent {
+  readonly loading = loadingSignal(false);
+
   showBorder = false;
   showDetailRowBorders = false;
   constructor(private whisperService: WhisperService) {}
@@ -377,7 +380,7 @@ export class TablesComponent {
   // ── Code snippets ─────────────────────────────────────────────────────────
 
   codeExamples = {
-    flat: `<i-table
+    flat: `<i-table [loading]="loading()"
   [grid]="flatGrid"
   [showBorder]="showBorder"
   [sortable]="true"
@@ -389,7 +392,7 @@ export class TablesComponent {
   (onFilter)="onFilter($event)"
 ></i-table>`,
 
-    actions: `<i-table
+    actions: `<i-table [loading]="loading()"
   [grid]="actionsGrid"
   selectionMode="multiple"
   dataKey="id"
@@ -399,7 +402,7 @@ export class TablesComponent {
   (onSelectionChange)="onSelectionChange($event)"
 ></i-table>`,
 
-    detail: `<i-table
+    detail: `<i-table [loading]="loading()"
   [grid]="detailGrid"
   [detailRowBorders]="false"
   [sortable]="true"
@@ -407,14 +410,14 @@ export class TablesComponent {
   [height]="'420px'"
 ></i-table>`,
 
-    icons: `<i-table
+    icons: `<i-table [loading]="loading()"
   [grid]="iconGrid"
   [sortable]="true"
   [height]="'360px'"
   [hoverable]="true"
 ></i-table>`,
 
-    large: `<i-table
+    large: `<i-table [loading]="loading()"
   [grid]="largeGrid"
   [sortable]="true"
   [globalFilter]="true"

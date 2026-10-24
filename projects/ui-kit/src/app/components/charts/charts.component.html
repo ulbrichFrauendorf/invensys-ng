@@ -1,4 +1,6 @@
 <app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
   class="charts-demo"
   title="Charts"
   eyebrow="Data Display"
@@ -13,7 +15,7 @@
   >
     <p class="demo-description">Basic bar chart displaying data with category labels.</p>
     <div class="chart-container">
-      <i-chart [charts]="barChartData"></i-chart>
+      <i-chart [loading]="loading()" [charts]="barChartData"></i-chart>
     </div>
   </ng-template>
 
@@ -27,7 +29,7 @@
       Stacked bar chart using the 'bar-stack' type to compare multiple datasets.
     </p>
     <div class="chart-container">
-      <i-chart [charts]="stackedBarChartData"></i-chart>
+      <i-chart [loading]="loading()" [charts]="stackedBarChartData"></i-chart>
     </div>
   </ng-template>
 
@@ -41,7 +43,7 @@
       Horizontal bar chart using the 'bar-horizontal' type for left-to-right data display.
     </p>
     <div class="chart-container">
-      <i-chart [charts]="horizontalBarChartData"></i-chart>
+      <i-chart [loading]="loading()" [charts]="horizontalBarChartData"></i-chart>
     </div>
   </ng-template>
 
@@ -53,7 +55,7 @@
   >
     <p class="demo-description">Line chart with multiple datasets for trend visualization.</p>
     <div class="chart-container">
-      <i-chart [charts]="lineChartData"></i-chart>
+      <i-chart [loading]="loading()" [charts]="lineChartData"></i-chart>
     </div>
   </ng-template>
 
@@ -67,11 +69,11 @@
     <div class="chart-row">
       <div class="chart-half">
         <h4>Pie Chart</h4>
-        <i-chart [charts]="pieChartData"></i-chart>
+        <i-chart [loading]="loading()" [charts]="pieChartData"></i-chart>
       </div>
       <div class="chart-half">
         <h4>Doughnut Chart</h4>
-        <i-chart [charts]="doughnutChartData"></i-chart>
+        <i-chart [loading]="loading()" [charts]="doughnutChartData"></i-chart>
       </div>
     </div>
   </ng-template>
@@ -84,7 +86,7 @@
   >
     <p class="demo-description">Radar chart for comparing multiple variables across categories.</p>
     <div class="chart-container">
-      <i-chart [charts]="radarChartData"></i-chart>
+      <i-chart [loading]="loading()" [charts]="radarChartData"></i-chart>
     </div>
   </ng-template>
 
@@ -99,7 +101,7 @@
       configurations.
     </p>
     <div class="chart-container">
-      <i-chart [charts]="multipleChartsData" [responsive]="true"></i-chart>
+      <i-chart [loading]="loading()" [charts]="multipleChartsData" [responsive]="true"></i-chart>
     </div>
   </ng-template>
 </app-demo-playground>

@@ -1,4 +1,10 @@
-<app-demo-playground class="data-editors-demo" title="Data Editors" eyebrow="Form Controls">
+<app-demo-playground
+  [showLoadingControl]="true"
+  [(loading)]="loading"
+  class="data-editors-demo"
+  title="Data Editors"
+  eyebrow="Form Controls"
+>
   <ng-template
     appDemoOption="option-1"
     label="Field picker"
@@ -9,7 +15,12 @@
       <h3>Fields</h3>
       <i-toggle label="Read-only examples" [(ngModel)]="readonly" />
     </div>
-    <i-field-picker [options]="fields" [(ngModel)]="selected" [readonly]="readonly" />
+    <i-field-picker
+      [loading]="loading()"
+      [options]="fields"
+      [(ngModel)]="selected"
+      [readonly]="readonly"
+    />
   </ng-template>
 
   <ng-template
@@ -21,6 +32,7 @@
       <h3>Columns</h3>
     </div>
     <i-ordered-list
+      [loading]="loading()"
       [(items)]="selected"
       [itemLabel]="label"
       [readonly]="readonly"
@@ -36,6 +48,7 @@
       <h3>Filters</h3>
     </div>
     <i-rule-editor
+      [loading]="loading()"
       [fields]="ruleFields"
       [operators]="operators"
       [(rules)]="rules"
@@ -48,6 +61,7 @@
       <h3>Sort order</h3>
     </div>
     <i-rule-editor
+      [loading]="loading()"
       ariaLabel="Sort order"
       operatorLabel="Direction"
       addLabel="Add sort"

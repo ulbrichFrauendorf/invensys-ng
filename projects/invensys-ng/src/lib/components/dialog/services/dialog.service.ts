@@ -114,10 +114,7 @@ export class DialogService {
    * }, 5000);
    * ```
    */
-  open<T>(
-    component: Type<T>,
-    config: IDynamicDialogConfig = {},
-  ): IDynamicDialogRef {
+  open<T>(component: Type<T>, config: IDynamicDialogConfig = {}): IDynamicDialogRef {
     // Create the dialog wrapper component
     const dialogRef = createComponent(IDialog, {
       environmentInjector: this.environmentInjector,
@@ -154,9 +151,7 @@ export class DialogService {
         this.appRef.detachView(dialogRef.hostView);
 
         if (dialogRef.location.nativeElement.parentNode) {
-          dialogRef.location.nativeElement.parentNode.removeChild(
-            dialogRef.location.nativeElement,
-          );
+          dialogRef.location.nativeElement.parentNode.removeChild(dialogRef.location.nativeElement);
         }
         componentRef.destroy();
         dialogRef.destroy();
@@ -206,7 +201,7 @@ export class DialogService {
 
     // Insert the dynamic component into the dialog content
     const dialogContent =
-      dialogRef.location.nativeElement.querySelector('.i-dialog-content');
+      dialogRef.instance.dialogElement?.nativeElement.querySelector('.i-dialog-content');
     if (dialogContent) {
       dialogContent.appendChild(componentRef.location.nativeElement);
     }

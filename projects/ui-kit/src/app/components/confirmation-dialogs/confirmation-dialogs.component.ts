@@ -44,7 +44,14 @@ export class ConfirmationDialogsComponent {
     { key: 'reject', label: 'Reject callback', hint: 'Run a callback when the user cancels.' },
   ];
   readonly severities: ISeverity[] = [
-    'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'contrast',
+    'primary',
+    'secondary',
+    'tertiary',
+    'success',
+    'info',
+    'warning',
+    'danger',
+    'contrast',
   ];
   readonly enabled = signal<Record<DialogOption, boolean>>({
     message: true,
@@ -75,15 +82,19 @@ export class ConfirmationDialogsComponent {
       ...(enabled.severity && { severity: values.severity }),
       ...(enabled.acceptLabel && { acceptLabel: values.acceptLabel }),
       ...(enabled.rejectLabel && { rejectLabel: values.rejectLabel }),
-      ...(enabled.accept && { accept: () => this.result.set('Accepted. Accept callback executed.') }),
-      ...(enabled.reject && { reject: () => this.result.set('Cancelled. Reject callback executed.') }),
+      ...(enabled.accept && {
+        accept: () => this.result.set('Accepted. Accept callback executed.'),
+      }),
+      ...(enabled.reject && {
+        reject: () => this.result.set('Cancelled. Reject callback executed.'),
+      }),
     };
   });
 
   readonly code = computed(() => {
     const config = this.configuration();
     const properties = this.options
-      .filter(option => this.enabled()[option.key])
+      .filter((option) => this.enabled()[option.key])
       .map(({ key }) => {
         if (key === 'accept' || key === 'reject') {
           const message = key === 'accept' ? 'Accepted' : 'Cancelled';
@@ -114,7 +125,7 @@ ${properties}
 
   setEnabled(key: DialogOption, enabled: boolean): void {
     if (key === 'message') return;
-    this.enabled.update(options => ({ ...options, [key]: enabled }));
+    this.enabled.update((options) => ({ ...options, [key]: enabled }));
   }
 
   optionValue(key: DialogOption): string {
@@ -124,11 +135,11 @@ ${properties}
   setValue(key: DialogOption, value: string): void {
     if (key === 'accept' || key === 'reject') return;
     if (key === 'severity') {
-      const severity = this.severities.find(item => item === value);
-      if (severity) this.values.update(values => ({ ...values, severity }));
+      const severity = this.severities.find((item) => item === value);
+      if (severity) this.values.update((values) => ({ ...values, severity }));
       return;
     }
-    this.values.update(values => ({ ...values, [key]: value }));
+    this.values.update((values) => ({ ...values, [key]: value }));
   }
 
   async openConfirmation(): Promise<void> {
@@ -138,11 +149,14 @@ ${properties}
     const config = this.configuration();
     try {
       const ref = await this.confirmationService.confirm(config);
-      ref.onClose.subscribe(result => {
+      ref.onClose.subscribe((result) => {
         this.opening.set(false);
-        if (result === true && !config.accept) this.result.set('Accepted. No accept callback selected.');
-        else if (result === false && !config.reject) this.result.set('Cancelled. No reject callback selected.');
-        else if (result !== true && result !== false) this.result.set('Dismissed without a decision.');
+        if (result === true && !config.accept)
+          this.result.set('Accepted. No accept callback selected.');
+        else if (result === false && !config.reject)
+          this.result.set('Cancelled. No reject callback selected.');
+        else if (result !== true && result !== false)
+          this.result.set('Dismissed without a decision.');
       });
     } catch {
       this.opening.set(false);

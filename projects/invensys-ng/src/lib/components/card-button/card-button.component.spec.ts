@@ -36,16 +36,13 @@ class Host {
 class SlotsHost {}
 
 describe('ICardButton', () => {
-  beforeEach(() =>
-    TestBed.configureTestingModule({ providers: [provideRouter([])] }),
-  );
+  beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
 
   it('renders projected content in a native non-submit button and emits once', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const button: HTMLButtonElement =
-      fixture.nativeElement.querySelector('button');
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.type).toBe('button');
     expect(button.querySelector('i-card h2')?.textContent).toBe('Reports');
     expect(button.hasAttribute('aria-pressed')).toBe(false);
@@ -60,8 +57,7 @@ describe('ICardButton', () => {
     fixture.componentInstance.disabled = true;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const button: HTMLButtonElement =
-      fixture.nativeElement.querySelector('button');
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.getAttribute('aria-pressed')).toBe('true');
     expect(button.disabled).toBe(true);
     button.click();
@@ -74,16 +70,10 @@ describe('ICardButton', () => {
     fixture.componentRef.setInput('fullHeight', true);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.i-card-title')?.textContent).toBe('Card title');
+    expect(fixture.nativeElement.classList.contains('i-card-button--full-height')).toBe(true);
     expect(
-      fixture.nativeElement.querySelector('.i-card-title')?.textContent,
-    ).toBe('Card title');
-    expect(
-      fixture.nativeElement.classList.contains('i-card-button--full-height'),
-    ).toBe(true);
-    expect(
-      fixture.nativeElement
-        .querySelector('i-card')
-        .classList.contains('i-card--full-height'),
+      fixture.nativeElement.querySelector('i-card').classList.contains('i-card--full-height'),
     ).toBe(true);
   });
 
@@ -91,15 +81,13 @@ describe('ICardButton', () => {
     const fixture = TestBed.createComponent(SlotsHost);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('.i-card-header').textContent,
-    ).toContain('Custom header');
-    expect(
-      fixture.nativeElement.querySelector('.i-card-body').textContent,
-    ).toContain('Card body');
-    expect(
-      fixture.nativeElement.querySelector('.i-card-footer').textContent,
-    ).toContain('Footer detail');
+    expect(fixture.nativeElement.querySelector('.i-card-header').textContent).toContain(
+      'Custom header',
+    );
+    expect(fixture.nativeElement.querySelector('.i-card-body').textContent).toContain('Card body');
+    expect(fixture.nativeElement.querySelector('.i-card-footer').textContent).toContain(
+      'Footer detail',
+    );
     expect(fixture.nativeElement.textContent).not.toContain('Fallback title');
   });
 
@@ -117,9 +105,7 @@ describe('ICardButton', () => {
     expect(anchor.hasAttribute('href')).toBe(false);
     expect(anchor.tabIndex).toBe(-1);
     expect(anchor.getAttribute('aria-disabled')).toBe('true');
-    const navigate = vi
-      .spyOn(TestBed.inject(Router), 'navigateByUrl')
-      .mockResolvedValue(true);
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
     anchor.click();
     expect(navigate).not.toHaveBeenCalled();
     expect(fixture.componentInstance.activate).not.toHaveBeenCalled();

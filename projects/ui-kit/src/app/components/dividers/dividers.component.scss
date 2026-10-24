@@ -1,4 +1,4 @@
-@use "../shared-demo-styles.scss" as *;
+@use '../shared-demo-styles.scss' as *;
 
 .vertical-example {
   display: flex;
@@ -10,5 +10,4 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-
 }

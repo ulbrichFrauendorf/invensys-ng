@@ -1,0 +1,24 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin component-interactions-theme() {
+  .component-demo {
+    .lead {
+      color: colors.$color-text-secondary;
+    }
+
+    .form-values {
+      background-color: colors.$color-surface-ground;
+
+      strong {
+        color: colors.$color-text-primary;
+      }
+
+      pre {
+        background-color: colors.$color-surface-card;
+      }
+    }
+
+    .actions {
+      border-top-color: colors.$color-surface-border;
+    }
+  }
+}

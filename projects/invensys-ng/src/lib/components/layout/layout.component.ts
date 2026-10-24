@@ -10,7 +10,7 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
@@ -116,7 +116,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private getScrollContainer(container: HTMLElement): HTMLElement {
-    if (window.matchMedia('(max-width: 991px)').matches && container.querySelector('i-page-layout')) {
+    if (
+      window.matchMedia('(max-width: 991px)').matches &&
+      container.querySelector('i-page-layout')
+    ) {
       return container.closest<HTMLElement>('.layout-wrapper') ?? container;
     }
     return container;
@@ -137,11 +140,17 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Let controls and nested scroll areas own their gestures.
     let target = event.target instanceof Element ? event.target : null;
-    if (target?.closest('input, textarea, select, button, [role="slider"], [contenteditable="true"]')) return;
+    if (
+      target?.closest('input, textarea, select, button, [role="slider"], [contenteditable="true"]')
+    )
+      return;
     while (target && target !== container) {
       const style = window.getComputedStyle(target);
-      if ((target.scrollHeight > target.clientHeight && /auto|scroll/.test(style.overflowY)) ||
-          (target.scrollWidth > target.clientWidth && /auto|scroll/.test(style.overflowX))) return;
+      if (
+        (target.scrollHeight > target.clientHeight && /auto|scroll/.test(style.overflowY)) ||
+        (target.scrollWidth > target.clientWidth && /auto|scroll/.test(style.overflowX))
+      )
+        return;
       target = target.parentElement;
     }
 
@@ -163,7 +172,10 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.touchCurrentY = event.touches[0].clientY;
-    if (Math.abs(event.touches[0].clientX - this.touchStartX) > Math.abs(this.touchCurrentY - this.touchStartY)) {
+    if (
+      Math.abs(event.touches[0].clientX - this.touchStartX) >
+      Math.abs(this.touchCurrentY - this.touchStartY)
+    ) {
       this.isPulling = false;
       this.pullDistance.set(0);
       return;

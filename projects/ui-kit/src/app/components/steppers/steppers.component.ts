@@ -19,48 +19,62 @@ export class SteppersComponent {
   columnsComplete = false;
   resultsComplete = false;
 
-  readonly sourceCode = `<i-stepper [(activeIndex)]="activeIndex" [linear]="true">
-  <i-step
-    label="Report details"
-    description="Name, access and scope"
-    icon="pi pi-file-edit"
-    [completed]="detailsComplete"
-  >
-    <!-- First step content -->
+  readonly sourceCode = `<i-stepper [(activeIndex)]="activeIndex" [linear]="true" ariaLabel="Report setup">
+  <i-step label="Report details" icon="pi pi-file-edit" [completed]="detailsComplete">
+    <div class="step-content">
+      <h3>Report details</h3>
+    </div>
   </i-step>
-  <i-step
-    label="Choose columns"
-    description="Select and arrange fields"
-    icon="pi pi-table"
-    [completed]="columnsComplete"
-  >
-    <!-- Second step content -->
+
+  <i-step label="Choose columns" icon="pi pi-table" [completed]="columnsComplete">
+    <div class="step-content">
+      <h3>Choose columns</h3>
+    </div>
   </i-step>
+
   <i-step
     label="Refine results"
-    description="Optional filters and sorting"
     icon="pi pi-sliders-h"
     [optional]="true"
     [completed]="resultsComplete"
   >
-    <!-- Final step content -->
+    <div class="step-content">
+      <h3>Refine results</h3>
+      @if (resultsComplete) {
+        <p role="status">Report saved. All steps are complete.</p>
+      }
+    </div>
   </i-step>
-  <div stepperActions>
-    @if (activeIndex === 0) {
-      <i-button (clicked)="completeDetails()">Complete and continue</i-button>
-    } @else if (activeIndex === 1) {
-      <i-button (clicked)="completeColumns()">Complete and continue</i-button>
-    } @else {
-      <i-button (clicked)="resultsComplete = true">Save report</i-button>
+  <div stepperActions class="step-actions">
+    @if (activeIndex > 0) {
+      <i-button severity="contrast" [text]="true" (clicked)="activeIndex = activeIndex - 1"
+        >Back</i-button
+      >
+    }
+    @switch (activeIndex) {
+      @case (0) {
+        <i-button icon="pi pi-arrow-right" (clicked)="completeDetails()"
+          >Complete and continue</i-button
+        >
+      }
+      @case (1) {
+        <i-button icon="pi pi-arrow-right" (clicked)="completeColumns()"
+          >Complete and continue</i-button
+        >
+      }
+      @case (2) {
+        <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
+      }
     }
   </div>
 </i-stepper>`;
 
-  readonly tsCode = `import { IButton, IStep, IStepper } from 'invensys-ng';
+  readonly tsCode = `import { Component } from '@angular/core';
+import { IButton, IStep, IStepper } from 'invensys-ng';
 
 @Component({
   imports: [IButton, IStep, IStepper],
-  templateUrl: './report-wizard.component.html'
+  templateUrl: './report-wizard.component.html',
 })
 export class ReportWizardComponent {
   activeIndex = 0;

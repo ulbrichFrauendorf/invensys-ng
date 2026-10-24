@@ -15,7 +15,7 @@ import {
   computed,
   InputSignal,
   input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import {
@@ -179,7 +179,9 @@ export class ISelect implements ControlValueAccessor {
 
   get nativeSelectedIndex(): string {
     const options = this.options();
-    return String(Array.isArray(options) ? options.findIndex(option => this.isOptionSelected(option)) : -1);
+    return String(
+      Array.isArray(options) ? options.findIndex((option) => this.isOptionSelected(option)) : -1,
+    );
   }
 
   onNativeChange(event: Event): void {
@@ -243,7 +245,9 @@ export class ISelect implements ControlValueAccessor {
   }
 
   focusControl(): void {
-    const native = this.dropdownRef?.nativeElement.querySelector('.i-native-select') as HTMLSelectElement | null;
+    const native = this.dropdownRef?.nativeElement.querySelector(
+      '.i-native-select',
+    ) as HTMLSelectElement | null;
     if (native?.getClientRects().length) native.focus();
     else this.triggerRef?.nativeElement.focus();
   }
@@ -252,12 +256,13 @@ export class ISelect implements ControlValueAccessor {
     setTimeout(() => {
       if (!this.isOpen) return;
       if (this.filter) this.searchInputRef?.nativeElement.focus();
-      else this.panelRef?.nativeElement.querySelector<HTMLButtonElement>('[role="option"]')?.focus();
+      else
+        this.panelRef?.nativeElement.querySelector<HTMLButtonElement>('[role="option"]')?.focus();
     });
   }
 
   onPanelKeydown(event: KeyboardEvent): void {
-    handleOptionKeys(event, this.panelRef?.nativeElement, restore => this.closeDropdown(restore));
+    handleOptionKeys(event, this.panelRef?.nativeElement, (restore) => this.closeDropdown(restore));
   }
 
   /**
@@ -451,9 +456,7 @@ export class ISelect implements ControlValueAccessor {
       this.isOptionSelected(option),
     );
 
-    return selectedOption
-      ? this.getOptionLabel(selectedOption)
-      : String(this.value);
+    return selectedOption ? this.getOptionLabel(selectedOption) : String(this.value);
   }
 
   /**
@@ -543,16 +546,13 @@ export class ISelect implements ControlValueAccessor {
     const key = this.firstErrorKey;
     if (!key) return null;
     const c = this.control;
-    if (this.errorMessages && this.errorMessages[key])
-      return this.errorMessages[key];
+    if (this.errorMessages && this.errorMessages[key]) return this.errorMessages[key];
     const err = c?.errors || {};
     switch (key) {
       case 'required':
         return `${this.label} is required`;
       default:
-        return err[key] && typeof err[key] === 'string'
-          ? err[key]
-          : 'Invalid selection';
+        return err[key] && typeof err[key] === 'string' ? err[key] : 'Invalid selection';
     }
   }
 }

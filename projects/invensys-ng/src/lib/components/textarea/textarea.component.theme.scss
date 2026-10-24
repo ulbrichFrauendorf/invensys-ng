@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-textarea-theme() {
   .i-textarea {
@@ -27,8 +27,10 @@
     color: colors.$color-text-disabled;
     cursor: not-allowed;
 
-    & + .i-textarea-label {
-      color: colors.$color-text-disabled;
+    & {
+      + .i-textarea-label {
+        color: colors.$color-text-disabled;
+      }
     }
   }
 
@@ -55,6 +57,14 @@
 
     &.i-char-count--over {
       color: colors.$color-danger;
+    }
+  }
+
+  .i-textarea-wrapper {
+    .i-textarea {
+      &.readonly {
+        caret-color: transparent;
+      }
     }
   }
 }

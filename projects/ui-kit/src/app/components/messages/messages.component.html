@@ -1,91 +1,94 @@
-<app-demo-playground class="messages-demo" title="Message" description="Inline message component for displaying alerts, notifications, and contextual feedback.">
-  <ng-template appDemoOption="option-1" label="Severities" [selected]="true" [sourceCode]="codeExamples.severities">
-      <div class="message-examples">
-        <i-message severity="success">
-          <strong>Success!</strong> Your changes have been saved.
-        </i-message>
-        <i-message severity="info">
-          <strong>Tip:</strong> You can customize your dashboard in settings.
-        </i-message>
-        <i-message severity="warning">
-          <strong>Warning:</strong> Your session will expire in 5 minutes.
-        </i-message>
-        <i-message severity="danger">
-          <strong>Error:</strong> Failed to connect. Please check your network.
-        </i-message>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="messages-demo"
+  title="Messages"
+  eyebrow="Feedback &amp; Messages"
+  description="Inline message component for displaying alerts, notifications, and contextual feedback."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Severities"
+    [selected]="true"
+    [sourceCode]="codeExamples.severities"
+  >
+    <div class="message-examples">
+      <i-message severity="success">
+        <strong>Success!</strong> Your changes have been saved.
+      </i-message>
+      <i-message severity="info">
+        <strong>Tip:</strong> You can customize your dashboard in settings.
+      </i-message>
+      <i-message severity="warning">
+        <strong>Warning:</strong> Your session will expire in 5 minutes.
+      </i-message>
+      <i-message severity="danger">
+        <strong>Error:</strong> Failed to connect. Please check your network.
+      </i-message>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Sizes" [sourceCode]="codeExamples.sizes">
-      <div class="message-examples">
-        <i-message severity="info" size="small">
-          <strong>Small:</strong> Compact message for inline hints.
-        </i-message>
-        <i-message severity="info" size="medium">
-          <strong>Medium:</strong> Default size for standard alerts.
-        </i-message>
-        <i-message severity="info" size="large">
-          <strong>Large:</strong> Prominent message for important announcements.
-        </i-message>
-      </div>
-    </ng-template>
+    <div class="message-examples">
+      <i-message severity="info" size="small">
+        <strong>Small:</strong> Compact message for inline hints.
+      </i-message>
+      <i-message severity="info" size="medium">
+        <strong>Medium:</strong> Default size for standard alerts.
+      </i-message>
+      <i-message severity="info" size="large">
+        <strong>Large:</strong> Prominent message for important announcements.
+      </i-message>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Closable Messages" [sourceCode]="codeExamples.closable">
-      <div class="message-examples">
-        <i-message
-          severity="info"
-          [closable]="true"
-          [(visible)]="showClosableInfo"
-        >
-          Click the X to dismiss this info message.
-        </i-message>
-        <i-message
-          severity="warning"
-          [closable]="true"
-          [(visible)]="showClosableWarning"
-        >
-          This warning can also be dismissed.
-        </i-message>
-        <i-message
-          severity="danger"
-          [closable]="true"
-          [(visible)]="showClosableDanger"
-        >
-          Critical alerts can be closable too.
-        </i-message>
-        @if (!showClosableInfo || !showClosableWarning || !showClosableDanger) {
-          <button class="reset-button" (click)="resetClosableMessages()">
-            Reset Messages
-          </button>
-        }
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Closable Messages"
+    [sourceCode]="codeExamples.closable"
+  >
+    <div class="message-examples">
+      <i-message severity="info" [closable]="true" [(visible)]="showClosableInfo">
+        Click the X to dismiss this info message.
+      </i-message>
+      <i-message severity="warning" [closable]="true" [(visible)]="showClosableWarning">
+        This warning can also be dismissed.
+      </i-message>
+      <i-message severity="danger" [closable]="true" [(visible)]="showClosableDanger">
+        Critical alerts can be closable too.
+      </i-message>
+      @if (!showClosableInfo || !showClosableWarning || !showClosableDanger) {
+        <button class="reset-button" (click)="resetClosableMessages()">Reset Messages</button>
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Custom Icons" [sourceCode]="codeExamples.customIcon">
-      <div class="message-examples">
-        <i-message severity="primary" icon="pi pi-star">
-          <strong>Featured:</strong> Check out our new premium features.
-        </i-message>
-        <i-message severity="info" icon="pi pi-bolt">
-          <strong>Quick Tip:</strong> Use keyboard shortcuts for faster
-          navigation.
-        </i-message>
-        <i-message severity="success" icon="pi pi-thumbs-up">
-          <strong>Great job!</strong> You've completed all tasks.
-        </i-message>
-      </div>
-    </ng-template>
+    <div class="message-examples">
+      <i-message severity="primary" icon="pi pi-star">
+        <strong>Featured:</strong> Check out our new premium features.
+      </i-message>
+      <i-message severity="info" icon="pi pi-bolt">
+        <strong>Quick Tip:</strong> Use keyboard shortcuts for faster navigation.
+      </i-message>
+      <i-message severity="success" icon="pi pi-thumbs-up">
+        <strong>Great job!</strong> You've completed all tasks.
+      </i-message>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Rich Content" [sourceCode]="codeExamples.richContent">
-      <div class="message-examples">
-        <i-message severity="warning">
-          <strong>Action Required:</strong> Please update your payment method
-          before <em>December 1st</em> to avoid service interruption.
-        </i-message>
-        <i-message severity="info">
-          Need help? Visit our <strong>documentation</strong> or contact
-          <em>support&#64;example.com</em> for assistance.
-        </i-message>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-5"
+    label="Rich Content"
+    [sourceCode]="codeExamples.richContent"
+  >
+    <div class="message-examples">
+      <i-message severity="warning">
+        <strong>Action Required:</strong> Please update your payment method before
+        <em>December 1st</em> to avoid service interruption.
+      </i-message>
+      <i-message severity="info">
+        Need help? Visit our <strong>documentation</strong> or contact
+        <em>support&#64;example.com</em> for assistance.
+      </i-message>
+    </div>
+  </ng-template>
 </app-demo-playground>

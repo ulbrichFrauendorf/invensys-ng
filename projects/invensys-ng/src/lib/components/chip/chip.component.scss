@@ -1,4 +1,4 @@
-@use "./chip.component.theme.scss" as theme;
+@use './chip.component.theme.scss' as theme;
 
 @include theme.i-chip-theme();
 
@@ -8,7 +8,7 @@
   gap: 6px;
   padding: 4px 12px;
   border-radius: 16px;
-  font-size: 1em;
+  font-size: 12px;
   font-weight: 500;
   transition: all 0.2s ease;
   user-select: none;
@@ -43,8 +43,6 @@
 
   .i-chip-remove-icon {
     border: 0;
-    background: transparent;
-    color: inherit;
     padding: 0;
     cursor: pointer;
     opacity: 0.7;
@@ -60,15 +58,28 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    &:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+    &:focus-visible {
+      outline-width: 2px;
+      outline-style: solid;
+      outline-offset: -2px;
+    }
 
     &:hover {
       opacity: 1;
     }
   }
+
+  @media (pointer: coarse) {
+    min-height: 40px;
+    padding: 4px 8px;
+  }
 }
 
-@media (pointer: coarse) {
-  .i-chip { min-height: 40px; padding: 4px 8px; }
-  .i-chip .i-chip-remove-icon { width: 32px; height: 32px; }
+.i-chip {
+  .i-chip-remove-icon {
+    @media (pointer: coarse) {
+      width: 32px;
+      height: 32px;
+    }
+  }
 }

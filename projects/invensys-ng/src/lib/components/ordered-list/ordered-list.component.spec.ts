@@ -27,9 +27,14 @@ describe('IOrderedList', () => {
       const row = root.querySelector('.i-ordered-list__item')!.getBoundingClientRect();
       const handle = root.querySelector('.i-ordered-list__drag-handle')!.getBoundingClientRect();
       const content = root.querySelector('.i-ordered-list__content')!.getBoundingClientRect();
-      const buttons = Array.from(root.querySelectorAll('.i-ordered-list__actions button'), button => button.getBoundingClientRect());
+      const buttons = Array.from(
+        root.querySelectorAll('.i-ordered-list__actions button'),
+        (button) => button.getBoundingClientRect(),
+      );
       expect(Math.abs(handle.y + handle.height / 2 - row.y - row.height / 2)).toBeLessThan(1);
-      expect(buttons.every(button => button.left >= content.right && button.right <= row.right)).toBe(true);
+      expect(
+        buttons.every((button) => button.left >= content.right && button.right <= row.right),
+      ).toBe(true);
       if (width <= 360) {
         expect(buttons[1].top).toBeGreaterThanOrEqual(buttons[0].bottom);
         expect(buttons[2].top).toBeGreaterThanOrEqual(buttons[1].bottom);
@@ -53,14 +58,28 @@ describe('IOrderedList', () => {
     const y = start.y + start.height / 2;
     const session: CDPSession = cdp();
     await session.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
-    await session.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', buttons: 1, clickCount: 1 });
+    await session.send('Input.dispatchMouseEvent', {
+      type: 'mousePressed',
+      x,
+      y,
+      button: 'left',
+      buttons: 1,
+      clickCount: 1,
+    });
     for (let step = 1; step <= 10; step++) {
       await session.send('Input.dispatchMouseEvent', {
-        type: 'mouseMoved', x, y: y + (end.y + end.height / 2 - y) * step / 10, buttons: 1,
+        type: 'mouseMoved',
+        x,
+        y: y + ((end.y + end.height / 2 - y) * step) / 10,
+        buttons: 1,
       });
     }
     await session.send('Input.dispatchMouseEvent', {
-      type: 'mouseReleased', x, y: end.y + end.height / 2, button: 'left', clickCount: 1,
+      type: 'mouseReleased',
+      x,
+      y: end.y + end.height / 2,
+      button: 'left',
+      clickCount: 1,
     });
     expect(changed).toHaveBeenCalledWith(['B', 'C', 'A']);
   });
@@ -75,9 +94,9 @@ describe('IOrderedList', () => {
     fixture.componentInstance.itemsChange.subscribe(changed);
     fixture.componentInstance.onMove.subscribe(moved);
 
-    fixture.debugElement.query(By.directive(CdkDropList)).triggerEventHandler(
-      'cdkDropListDropped', { previousIndex: 0, currentIndex: 3 },
-    );
+    fixture.debugElement
+      .query(By.directive(CdkDropList))
+      .triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 3 });
 
     expect(changed).toHaveBeenCalledWith(['B', 'C', 'D', 'A']);
     expect(moved).toHaveBeenCalledWith({ item: 'A', previousIndex: 0, index: 3 });
@@ -90,22 +109,30 @@ describe('IOrderedList', () => {
     fixture.detectChanges();
     const changed = vi.fn();
     fixture.componentInstance.itemsChange.subscribe(changed);
-    const actions: HTMLButtonElement[] = Array.from(fixture.nativeElement.querySelectorAll('.i-ordered-list__actions button'));
-    expect(actions.every(button => !button.textContent?.trim() && button.getAttribute('aria-label'))).toBe(true);
-    expect(fixture.nativeElement.querySelector('.i-ordered-list__position')).toBeNull();
-    fixture.nativeElement.querySelector('.i-ordered-list__drag-handle').dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+    const actions: HTMLButtonElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.i-ordered-list__actions button'),
     );
+    expect(
+      actions.every((button) => !button.textContent?.trim() && button.getAttribute('aria-label')),
+    ).toBe(true);
+    expect(fixture.nativeElement.querySelector('.i-ordered-list__position')).toBeNull();
+    fixture.nativeElement
+      .querySelector('.i-ordered-list__drag-handle')
+      .dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     expect(changed).toHaveBeenCalledWith(['B', 'A', 'C']);
     changed.mockClear();
 
     for (const state of ['readonly', 'disabled']) {
       fixture.componentRef.setInput(state, true);
       fixture.detectChanges();
-      expect(fixture.debugElement.queryAll(By.directive(CdkDrag)).every(row => row.injector.get(CdkDrag).disabled)).toBe(true);
-      fixture.debugElement.query(By.directive(CdkDropList)).triggerEventHandler(
-        'cdkDropListDropped', { previousIndex: 0, currentIndex: 2 },
-      );
+      expect(
+        fixture.debugElement
+          .queryAll(By.directive(CdkDrag))
+          .every((row) => row.injector.get(CdkDrag).disabled),
+      ).toBe(true);
+      fixture.debugElement
+        .query(By.directive(CdkDropList))
+        .triggerEventHandler('cdkDropListDropped', { previousIndex: 0, currentIndex: 2 });
       expect(changed).not.toHaveBeenCalled();
       fixture.componentRef.setInput(state, false);
     }
@@ -123,9 +150,9 @@ describe('IOrderedList', () => {
     expect(original).toEqual(['A', 'B']);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('[role="status"]').textContent,
-    ).toContain('A moved to position 2');
+    expect(fixture.nativeElement.querySelector('[role="status"]').textContent).toContain(
+      'A moved to position 2',
+    );
   });
 
   it('blocks out-of-range and readonly actions', () => {

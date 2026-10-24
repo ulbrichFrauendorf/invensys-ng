@@ -1,6 +1,6 @@
-@use "./tree-view.component.theme.scss" as theme;
-@use "../../themes/scrollbar-mixins.scss" as scrollbar;
-@use "../../themes/variables" as vars;
+@use './tree-view.component.theme.scss' as theme;
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
+@use '../../themes/variables' as vars;
 
 @include theme.i-tree-view-theme();
 
@@ -41,7 +41,7 @@
     justify-content: center;
     gap: 8px;
     padding: 20px;
-    font-size: 1em;
+    font-size: 12px;
 
     .pi-spinner {
       font-size: 16px;
@@ -53,7 +53,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    font-size: 1em;
+    font-size: 12px;
     font-style: italic;
   }
 }
@@ -79,8 +79,10 @@
     outline: none;
   }
 
-  &.i-tree-view-node--temporary-highlight .i-tree-view-node-content {
-    animation: highlight-fade 700ms ease-out;
+  &.i-tree-view-node--temporary-highlight {
+    .i-tree-view-node-content {
+      animation: highlight-fade 700ms ease-out;
+    }
   }
 
   .i-tree-view-node-content {
@@ -101,7 +103,6 @@
     width: 20px;
     height: 20px;
     border: none;
-    background: transparent;
     cursor: pointer;
     border-radius: calc(vars.$componentBorderRadius / 2);
     transition: all 0.15s ease;
@@ -129,12 +130,12 @@
   }
 
   .i-tree-view-node-icon {
-    font-size: 1em;
+    font-size: 12px;
     flex-shrink: 0;
   }
 
   .i-tree-view-node-label {
-    font-size: 1em;
+    font-size: 12px;
     line-height: 1.4;
     flex: 1;
     overflow: hidden;
@@ -143,8 +144,29 @@
   }
 }
 
-@media (pointer: coarse) {
-  .i-tree-view-node .i-tree-view-node-content { min-height: 44px; padding-block: 0; }
-  .i-tree-view-node .i-tree-view-toggler { width: 44px; height: 44px; flex-shrink: 0; }
-  .i-tree-view-node .i-tree-view-toggler-spacer { width: 44px; }
+.i-tree-view-node {
+  .i-tree-view-node-content {
+    @media (pointer: coarse) {
+      min-height: 44px;
+      padding-block: 0;
+    }
+  }
+}
+
+.i-tree-view-node {
+  .i-tree-view-toggler {
+    @media (pointer: coarse) {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.i-tree-view-node {
+  .i-tree-view-toggler-spacer {
+    @media (pointer: coarse) {
+      width: 44px;
+    }
+  }
 }

@@ -1,8 +1,8 @@
-@use "../../invensys-ng/src/lib/themes/theme.scss" as invensys-theme;
-@use "../../invensys-ng/src/lib/themes/color-variables.scss" as vars;
-@use "../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as scrollbar;
+@use '../../invensys-ng/src/lib/themes/theme.scss' as invensys-theme;
+@use '../../invensys-ng/src/lib/themes/color-variables.scss' as vars;
+@use '../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 
-@import "primeicons/primeicons.css";
+@import 'primeicons/primeicons.css';
 
 @include invensys-theme.define-theme();
 
@@ -20,13 +20,12 @@ body {
 
 body {
   box-sizing: border-box;
-  font-size: 1em;
 }
 
 .component-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 24px;
   max-width: 100%;
   overflow-x: auto;
 

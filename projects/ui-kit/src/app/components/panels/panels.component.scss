@@ -1,7 +1,8 @@
-@use "../shared-demo-styles.scss" as *;
+@use './panels.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .panels-demo {
-
   .panel-examples {
     display: flex;
     flex-direction: column;
@@ -23,10 +24,9 @@
 
       .demo-button {
         padding: 8px 16px;
-        border: 1px solid var(--surface-border);
+        border-width: 1px;
+        border-style: solid;
         border-radius: 6px;
-        background: var(--color-primary);
-        color: var(--color-text-contrast);
         cursor: pointer;
         font-size: 14px;
         font-weight: 500;
@@ -43,14 +43,12 @@
 
       .status {
         font-size: 14px;
-        color: var(--text-color-secondary);
         font-weight: 500;
       }
     }
 
     .status {
       font-size: 14px;
-      color: var(--text-color-secondary);
       font-weight: 500;
     }
   }
@@ -59,16 +57,9 @@
 .panel-surface {
   padding: 20px;
   margin-bottom: 20px;
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
-
-  h4 { margin: 0 0 12px; }
-
-  &--ground { background: var(--surface-ground); }
-  &--tinted {
-    background: color-mix(in srgb, var(--color-primary) 12%, var(--surface-ground));
-  }
-  &--gradient {
-    background: linear-gradient(120deg, var(--surface-ground), color-mix(in srgb, var(--color-primary) 18%, var(--surface-ground)));
-  }
 }
+
+@include theme.panels-theme();

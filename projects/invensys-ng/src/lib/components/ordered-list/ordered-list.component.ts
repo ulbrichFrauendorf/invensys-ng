@@ -6,7 +6,7 @@ import {
   Input,
   Output,
   TemplateRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { IButton } from '../button/button.component';
 import { NoContentComponent } from '../no-content/no-content.component';

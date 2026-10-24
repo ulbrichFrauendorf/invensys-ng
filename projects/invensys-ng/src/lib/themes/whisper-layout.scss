@@ -23,7 +23,9 @@
   justify-content: center;
   flex-shrink: 0;
   margin-top: 2px;
-  i { font-size: 20px; }
+  i {
+    font-size: 20px;
+  }
 }
 @mixin text() {
   flex: 1;

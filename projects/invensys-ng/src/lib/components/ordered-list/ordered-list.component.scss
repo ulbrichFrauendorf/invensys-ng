@@ -1,4 +1,4 @@
-@use "./ordered-list.component.theme.scss" as theme;
+@use './ordered-list.component.theme.scss' as theme;
 @include theme.i-ordered-list-theme();
 :host {
   display: block;
@@ -6,48 +6,56 @@
 }
 .i-ordered-list {
   display: grid;
-  gap: 0.75rem;
+  gap: 9px;
   list-style: none;
   padding: 0;
   margin: 0;
   &__item {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border: 1px solid var(--surface-border);
-    border-radius: 0.5rem;
+    gap: 12px;
+    padding: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
   }
   &__drag-handle {
     display: grid;
     place-items: center;
-    width: 2rem;
-    height: 2rem;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 0;
-    border-radius: 0.25rem;
-    color: inherit;
-    background: transparent;
+    border-radius: 3px;
     cursor: grab;
     touch-action: none;
 
-    &:active { cursor: grabbing; }
-    &:disabled { cursor: default; opacity: 0.4; }
-    &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    &:active {
+      cursor: grabbing;
+    }
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+    }
+    &:focus-visible {
+      outline-width: 2px;
+      outline-style: solid;
+      outline-offset: 2px;
+    }
   }
   &__content {
     min-width: 0;
     overflow-wrap: anywhere;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding-top: 0.25rem;
+    gap: 6px;
+    padding-top: 3px;
   }
   &__actions {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 3px;
   }
   &__announcement {
     position: absolute;
@@ -61,12 +69,13 @@
 .i-ordered-list__item.cdk-drag-preview {
   box-sizing: border-box;
   list-style: none;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
 }
-.i-ordered-list__item.cdk-drag-placeholder { opacity: 0.25; }
+.i-ordered-list__item.cdk-drag-placeholder {
+  opacity: 0.25;
+}
 
-@container (max-width: 34rem) {
-  .i-ordered-list__actions {
+.i-ordered-list__actions {
+  @container (max-width: 408px) {
     flex-direction: column;
   }
 }

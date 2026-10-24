@@ -1,4 +1,4 @@
-// Empty state component styles
+/* Empty state component styles */
 .i-empty-state {
   &__container {
     display: flex;
@@ -27,7 +27,7 @@
   }
 }
 
-// Legacy class names for backward compatibility
+/* Legacy class names for backward compatibility */
 .no-results-container {
   display: flex;
   align-items: center;
@@ -54,4 +54,7 @@
   }
 }
 
-.i-empty-state__image--fixed, .no-results-image.fixed { max-width: 100%; }
+.i-empty-state__image--fixed,
+.no-results-image.fixed {
+  max-width: 100%;
+}

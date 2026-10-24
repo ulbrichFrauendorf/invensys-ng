@@ -1,0 +1,11 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin buttons-theme() {
+  .button-grid {
+    .style-group {
+      .style-label {
+        color: colors.$color-text-primary;
+      }
+    }
+  }
+}

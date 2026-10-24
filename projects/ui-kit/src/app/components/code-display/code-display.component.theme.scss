@@ -1,57 +1,67 @@
-// Code editor palette, separate from layout and sizing.
-$background: #2b2b2b;
-$panel: #3c3f41;
-$border: #4b4e50;
-$text: #a9b7c6;
-$comment: #808080;
-$keyword: #cc7832;
-$string: #6a8759;
-$number: #6897bb;
-$function: #ffc66d;
-$tag: #e8bf6a;
-$attribute: #bababa;
-$binding: #9876aa;
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
 
 @mixin code-display-theme() {
-  .code-display-container .code-section {
-    border-color: $border;
-    background: $background;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  .code-display-container {
+    .code-section {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-black;
+      box-shadow: colors.$color-box-shadow;
 
-    .code-header {
-      background: $panel;
-      border-color: $border;
-      .code-title { color: $text; }
-    }
+      .code-header {
+        background: colors.$color-surface-section;
+        border-color: colors.$color-surface-border;
+        .code-title {
+          color: colors.$color-text-primary;
+        }
+      }
 
-    .code-block {
-      background: $background;
-
-      pre {
-        background: transparent;
-        color: $text;
-
-        code {
+      .code-block {
+        background: colors.$color-black;
+        pre {
           background: transparent;
-          color: inherit;
-          .html-tag, .angular-interpolation, .scss-selector { color: $tag; }
-          .html-attr-name { color: $attribute; }
-          .html-attr-value, .code-string { color: $string; }
-          .angular-binding, .scss-property, .scss-variable { color: $binding; }
-          .angular-event, .code-keyword, .scss-pseudo { color: $keyword; }
-          .code-number { color: $number; }
-          .code-function { color: $function; }
-          .code-comment { color: $comment; }
+          color: colors.$color-text-primary;
+          code {
+            background: transparent;
+            color: inherit;
+            .html-tag,
+            .angular-interpolation,
+            .scss-selector {
+              color: colors.$color-primary;
+            }
+            .html-attr-name {
+              color: colors.$color-text-secondary;
+            }
+            .html-attr-value,
+            .code-string {
+              color: colors.$color-success;
+            }
+            .angular-binding,
+            .scss-property,
+            .scss-variable {
+              color: colors.$color-info;
+            }
+            .angular-event,
+            .code-keyword,
+            .scss-pseudo {
+              color: colors.$color-warning;
+            }
+            .code-number {
+              color: colors.$color-info;
+            }
+            .code-function {
+              color: colors.$color-primary;
+            }
+            .code-comment {
+              color: colors.$color-text-tertiary;
+            }
+          }
         }
       }
     }
-  }
-
-  @media (prefers-color-scheme: light) {
-    .code-display-container .code-section {
-      background: #fafafa;
-      .code-header { background: #f0f0f0; }
-      .code-block pre { color: #333; }
+    &.code-display--embedded {
+      .code-section {
+        box-shadow: none;
+      }
     }
   }
 }

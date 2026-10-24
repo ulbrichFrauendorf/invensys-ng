@@ -8,24 +8,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, BehaviorSubject, interval, map, takeWhile } from 'rxjs';
-import {
-  IListbox,
-  ListboxOption,
-} from '@shared/components/listbox/listbox.component';
+import { IListbox, ListboxOption } from '@shared/components/listbox/listbox.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-listboxes',
   standalone: true,
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     CommonModule,
     AsyncPipe,
     JsonPipe,
     FormsModule,
     ReactiveFormsModule,
     IListbox,
-    ],
+  ],
   templateUrl: './listboxes.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./listboxes.component.scss', '../shared-demo-styles.scss'],
@@ -134,11 +133,9 @@ export class ListboxesComponent implements OnInit, OnDestroy {
     this.simulateDynamicData();
 
     // Debug form changes - listbox with reactive forms and observable data
-    this.departmentsForm
-      .get('selectedDepartments')
-      ?.valueChanges.subscribe((value) => {
-        console.log('Departments form value changed:', value);
-      });
+    this.departmentsForm.get('selectedDepartments')?.valueChanges.subscribe((value) => {
+      console.log('Departments form value changed:', value);
+    });
   }
 
   ngOnDestroy() {
@@ -165,9 +162,7 @@ export class ListboxesComponent implements OnInit, OnDestroy {
         const newDepartment = additionalDepartments[index];
 
         // Check if department already exists to avoid duplicates
-        if (
-          !currentDepartments.some((dept) => dept['id'] === newDepartment['id'])
-        ) {
+        if (!currentDepartments.some((dept) => dept['id'] === newDepartment['id'])) {
           const updatedDepartments = [...currentDepartments, newDepartment];
           this.departmentSubject.next(updatedDepartments);
         }
@@ -382,7 +377,6 @@ export class ExampleComponent {
   scssExamples = {
     constrained: `.constrained-wrapper {
   height: 500px;
-  border: 2px dashed var(--surface-400);
   border-radius: 8px;
   padding: 8px;
 }`,

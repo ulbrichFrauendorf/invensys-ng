@@ -8,21 +8,15 @@ describe('Native mobile option controls', () => {
     { id: 2, label: 'Same label' },
   ];
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({ imports: [ISelect, IMultiSelect] }),
-  );
+  beforeEach(() => TestBed.configureTestingModule({ imports: [ISelect, IMultiSelect] }));
 
-  function setup<T extends ISelect | IMultiSelect>(
-    type: new (...args: any[]) => T,
-  ) {
+  function setup<T extends ISelect | IMultiSelect>(type: new (...args: any[]) => T) {
     const fixture = TestBed.createComponent(type);
     fixture.componentRef.setInput('options', options);
     fixture.componentRef.setInput('optionLabel', 'label');
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const picker = fixture.nativeElement.querySelector(
-      'select',
-    ) as HTMLSelectElement;
+    const picker = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
     return { fixture, component: fixture.componentInstance, picker };
   }
 
@@ -96,9 +90,7 @@ describe('Native mobile option controls', () => {
     component.setDisabledState!(true);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      Array.from(picker.selectedOptions).map((option) => option.value),
-    ).toEqual(['1']);
+    expect(Array.from(picker.selectedOptions).map((option) => option.value)).toEqual(['1']);
     component.toggleDropdown();
     component.toggleOption(options[0]);
     component.clearSelection();

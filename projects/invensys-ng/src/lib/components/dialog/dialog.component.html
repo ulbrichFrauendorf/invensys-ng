@@ -1,12 +1,12 @@
-@if (visible) {
-  <div
-    class="i-dialog-overlay"
-    (click)="onOverlayClick($event)"
-    [attr.id]="componentId"
-  >
+<ng-template #dialogTemplate>
+  <div class="i-dialog-overlay" (click)="onOverlayClick($event)" [attr.id]="componentId">
     <div
       #dialogElement
       class="i-dialog-container"
+      role="dialog"
+      [attr.aria-modal]="modal"
+      [attr.aria-label]="header"
+      tabindex="-1"
       [style.width]="currentWidth || width"
       [style.height]="currentHeight || height"
     >
@@ -25,4 +25,4 @@
       </i-card>
     </div>
   </div>
-}
+</ng-template>

@@ -1,20 +1,31 @@
-@use "../shared-demo-styles.scss" as *;
+@use './cards.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .card-example {
   margin-bottom: 20px;
+
+  .full-height-container {
+    height: 300px;
+    border-width: 2px;
+    border-style: dashed;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .closed-message {
+    padding: 32px;
+    text-align: center;
+    border-width: 2px;
+    border-style: dashed;
+    border-radius: 8px;
+  }
+
+  .custom-card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
 }
 
-.full-height-container {
-  height: 300px;
-  border: 2px dashed var(--surface-400, #9ca3af);
-  border-radius: 8px;
-  padding: 8px;
-}
-
-.closed-message {
-  padding: 32px;
-  text-align: center;
-  border: 2px dashed var(--surface-400, #9ca3af);
-  border-radius: 8px;
-  background: var(--surface-50, #f9fafb);
-}
+@include theme.cards-theme();

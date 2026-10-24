@@ -15,19 +15,18 @@ import { IStepper, StepperChangeEvent, StepperOrientation } from './stepper.comp
       [orientation]="orientation"
       (onChange)="lastChange = $event"
     >
-      <i-step
-        label="Details"
-        description="Name and access"
-        [completed]="detailsComplete"
-      >
+      <i-step label="Details" description="Name and access" [completed]="detailsComplete">
         Details content
-        <div class="tall-content" [style.height.px]="contentHeight" style="float: left; width: 100%">Form fields</div>
+        <div
+          class="tall-content"
+          [style.height.px]="contentHeight"
+          style="float: left; width: 100%"
+        >
+          Form fields
+        </div>
       </i-step>
       <i-step label="Columns">Columns content</i-step>
-      <i-step
-        label="Review"
-        [disabled]="reviewDisabled"
-        [completed]="reviewComplete"
+      <i-step label="Review" [disabled]="reviewDisabled" [completed]="reviewComplete"
         >Review content</i-step
       >
       <footer stepperActions><button type="button">Continue</button></footer>
@@ -60,12 +59,9 @@ describe('IStepper', () => {
   });
 
   it('renders every projected step and the active content', () => {
+    expect(fixture.debugElement.queryAll(By.css('.i-stepper__trigger')).length).toBe(3);
     expect(
-      fixture.debugElement.queryAll(By.css('.i-stepper__trigger')).length,
-    ).toBe(3);
-    expect(
-      fixture.debugElement.query(By.css('.i-stepper__panel--active'))
-        .nativeElement.textContent,
+      fixture.debugElement.query(By.css('.i-stepper__panel--active')).nativeElement.textContent,
     ).toContain('Details content');
   });
 
@@ -84,8 +80,12 @@ describe('IStepper', () => {
           const content = root.querySelector('.tall-content')!;
           expect(actions.textContent).toContain('Continue');
           expect(content.getBoundingClientRect().height).toBe(height);
-          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(content.getBoundingClientRect().bottom);
-          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(navigation.getBoundingClientRect().bottom);
+          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+            content.getBoundingClientRect().bottom,
+          );
+          expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+            navigation.getBoundingClientRect().bottom,
+          );
         }
         host.activeIndex = 1;
         fixture.changeDetectorRef.markForCheck();
@@ -93,15 +93,15 @@ describe('IStepper', () => {
         const panel = fixture.nativeElement.querySelector('.i-stepper__panel--active');
         const actions = fixture.nativeElement.querySelector('.i-stepper__actions');
         expect(actions.textContent).toContain('Continue');
-        expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(panel.getBoundingClientRect().bottom);
+        expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+          panel.getBoundingClientRect().bottom,
+        );
       });
     }
   }
 
   it('updates the active index and emits change details', () => {
-    fixture.debugElement
-      .queryAll(By.css('.i-stepper__trigger'))[1]
-      .nativeElement.click();
+    fixture.debugElement.queryAll(By.css('.i-stepper__trigger'))[1].nativeElement.click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
@@ -111,9 +111,7 @@ describe('IStepper', () => {
   });
 
   it('does not select a disabled step', () => {
-    fixture.debugElement
-      .queryAll(By.css('.i-stepper__trigger'))[2]
-      .nativeElement.click();
+    fixture.debugElement.queryAll(By.css('.i-stepper__trigger'))[2].nativeElement.click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(host.activeIndex).toBe(0);
@@ -136,9 +134,7 @@ describe('IStepper', () => {
   });
 
   it('replaces the trailing chevron with a tick when a step is completed', () => {
-    const first = fixture.debugElement.query(
-      By.css('.i-stepper__trigger'),
-    ).nativeElement;
+    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
     expect(first.querySelector('.i-stepper__chevron')).not.toBeNull();
     expect(first.querySelector('.i-stepper__completion')).toBeNull();
     host.detailsComplete = true;
@@ -154,15 +150,12 @@ describe('IStepper', () => {
     host.reviewComplete = true;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const final = fixture.debugElement.queryAll(
-      By.css('.i-stepper__trigger'),
-    )[2].nativeElement;
+    const final = fixture.debugElement.queryAll(By.css('.i-stepper__trigger'))[2].nativeElement;
     expect(final.querySelector('.i-stepper__completion')).not.toBeNull();
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
     expect(final.getAttribute('aria-current')).toBe('step');
     expect(
-      fixture.debugElement.query(By.css('.i-stepper__panel--active'))
-        .nativeElement.textContent,
+      fixture.debugElement.query(By.css('.i-stepper__panel--active')).nativeElement.textContent,
     ).toContain('Review content');
     host.reviewComplete = false;
     fixture.changeDetectorRef.markForCheck();
@@ -172,16 +165,13 @@ describe('IStepper', () => {
   });
 
   it('does not show a next-step chevron or connector on the final step', () => {
-    const final = fixture.debugElement.queryAll(By.css('.i-stepper__item'))[2]
-      .nativeElement;
+    const final = fixture.debugElement.queryAll(By.css('.i-stepper__item'))[2].nativeElement;
     expect(final.querySelector('.i-stepper__chevron')).toBeNull();
     expect(final.querySelector('.i-stepper__connector')).toBeNull();
   });
 
   it('exposes step progress semantics', () => {
-    const first = fixture.debugElement.query(
-      By.css('.i-stepper__trigger'),
-    ).nativeElement;
+    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
     expect(first.getAttribute('aria-current')).toBe('step');
     expect(first.getAttribute('aria-controls')).toContain('-panel-0');
     expect(first.textContent).toContain('Step 1 of 3');
@@ -195,9 +185,7 @@ describe('IStepper', () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
-    const first = fixture.debugElement.query(
-      By.css('.i-stepper__trigger'),
-    ).nativeElement;
+    const first = fixture.debugElement.query(By.css('.i-stepper__trigger')).nativeElement;
     expect(first.querySelector('.pi-file-edit')).not.toBeNull();
     expect(first.textContent).toContain('Step 1 of 3');
   });

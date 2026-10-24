@@ -19,12 +19,14 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-selects',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     ISelect,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './selects.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './selects.component.scss',
@@ -237,10 +239,7 @@ export class ExampleComponent {
   }
 
   onReportChange() {
-    console.log(
-      'Report changed:',
-      this.advancedForm.get('selectedReport')?.value,
-    );
+    console.log('Report changed:', this.advancedForm.get('selectedReport')?.value);
   }
 
   onReportClear() {
@@ -264,10 +263,7 @@ export class ExampleComponent {
 
   onCountryObjectChange(value: any) {
     console.log('Country Object Changed (full object):', value);
-    console.log(
-      'Form control value:',
-      this.basicForm.get('fullObjectSelect')?.value,
-    );
+    console.log('Form control value:', this.basicForm.get('fullObjectSelect')?.value);
     console.log('Type:', typeof value);
     console.log('Full object properties:', value ? Object.keys(value) : 'null');
   }

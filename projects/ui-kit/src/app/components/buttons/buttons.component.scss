@@ -1,24 +1,19 @@
-@use "../shared-demo-styles.scss" as *;
+@use './buttons.component.theme.scss' as theme;
 
-.section-description {
-  color: var(--text-color-secondary);
-  margin-bottom: 16px;
-  font-size: 15.2px;
-}
+@use '../shared-demo-styles.scss' as *;
 
 .button-grid {
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
 
-.style-group {
-  .style-label {
-    display: block;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 12px;
-    font-size: 14.4px;
+  .style-group {
+    .style-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-size: 14.4px;
+    }
   }
 }
 
@@ -31,3 +26,5 @@
   flex-direction: column;
   gap: 12px;
 }
+
+@include theme.buttons-theme();

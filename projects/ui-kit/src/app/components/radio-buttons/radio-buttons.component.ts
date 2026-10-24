@@ -14,13 +14,15 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-radio-buttons',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     IRadioButton,
     IButton,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    ],
+  ],
   templateUrl: './radio-buttons.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './radio-buttons.component.scss',

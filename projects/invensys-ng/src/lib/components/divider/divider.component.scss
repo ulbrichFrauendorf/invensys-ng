@@ -1,5 +1,5 @@
-@use "./divider.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use './divider.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-divider-theme();
 
@@ -18,20 +18,20 @@
 
   &--horizontal {
     width: 100%;
-    min-height: 1.5rem;
-    margin: 1rem 0;
+    min-height: 18px;
+    margin: 12px 0;
 
     .i-divider-line {
       height: 1px;
-      min-width: 1rem;
+      min-width: 12px;
     }
 
     .i-divider-content {
       display: inline-flex;
       align-items: center;
       flex-shrink: 0;
-      padding: 0 0.75rem;
-      font-size: 0.875rem;
+      padding: 0 9px;
+      font-size: 10.5px;
       font-weight: 500;
       line-height: 1;
       white-space: nowrap;
@@ -43,7 +43,7 @@
 
     &.i-divider--align-start {
       .i-divider-line:first-child {
-        max-width: 2rem;
+        max-width: 24px;
       }
     }
 
@@ -55,7 +55,7 @@
 
     &.i-divider--align-end {
       .i-divider-line:last-child {
-        max-width: 2rem;
+        max-width: 24px;
       }
     }
   }
@@ -63,8 +63,8 @@
   &--vertical {
     align-self: stretch;
     justify-content: center;
-    min-height: 2rem;
-    margin: 0 1rem;
+    min-height: 24px;
+    margin: 0 12px;
 
     .i-divider-line {
       width: 1px;

@@ -7,7 +7,7 @@ import {
   Input,
   Output,
   QueryList,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IStep } from './step.component';
@@ -96,16 +96,12 @@ export class IStepper implements AfterContentInit {
       return true;
     }
 
-    return this.steps
-      .slice(0, index)
-      .every((item) => item.completed || item.optional);
+    return this.steps.slice(0, index).every((item) => item.completed || item.optional);
   }
 
   onKeyDown(event: KeyboardEvent, index: number): void {
     const directionKeys =
-      this.orientation === 'vertical'
-        ? ['ArrowUp', 'ArrowDown']
-        : ['ArrowLeft', 'ArrowRight'];
+      this.orientation === 'vertical' ? ['ArrowUp', 'ArrowDown'] : ['ArrowLeft', 'ArrowRight'];
 
     if (event.key === directionKeys[0]) {
       this.focusAdjacent(index, -1);
@@ -129,10 +125,7 @@ export class IStepper implements AfterContentInit {
       return;
     }
 
-    this.activeIndex = Math.min(
-      Math.max(this.activeIndex, 0),
-      this.steps.length - 1,
-    );
+    this.activeIndex = Math.min(Math.max(this.activeIndex, 0), this.steps.length - 1);
   }
 
   private focusAdjacent(index: number, direction: number): void {

@@ -1,66 +1,59 @@
-<app-demo-playground class="steppers-demo" title="Stepper Components" description="Guide users through ordered, multi-stage workflows with clear progress and validation states.">
-  <ng-template appDemoOption="option-1" label="Linear workflow" [selected]="true" [sourceCode]="sourceCode" [tsCode]="tsCode">
-      <i-stepper
-        [(activeIndex)]="activeIndex"
-        [linear]="true"
-        ariaLabel="Report setup"
+<app-demo-playground class="steppers-demo" title="Steppers" eyebrow="Layout &amp; Containers">
+  <ng-template
+    appDemoOption="option-1"
+    label="Linear workflow"
+    [selected]="true"
+    [sourceCode]="sourceCode"
+    [tsCode]="tsCode"
+  >
+    <i-stepper [(activeIndex)]="activeIndex" [linear]="true" ariaLabel="Report setup">
+      <i-step label="Report details" icon="pi pi-file-edit" [completed]="detailsComplete">
+        <div class="step-content">
+          <h3>Report details</h3>
+        </div>
+      </i-step>
+
+      <i-step label="Choose columns" icon="pi pi-table" [completed]="columnsComplete">
+        <div class="step-content">
+          <h3>Choose columns</h3>
+        </div>
+      </i-step>
+
+      <i-step
+        label="Refine results"
+        icon="pi pi-sliders-h"
+        [optional]="true"
+        [completed]="resultsComplete"
       >
-        <i-step
-          label="Report details"
-          description="Name, access and scope"
-          icon="pi pi-file-edit"
-          [completed]="detailsComplete"
-        >
-          <div class="step-content">
-            <h3>Report details</h3>
-            <p>
-              Collect and validate the information required to create the
-              report.
-            </p>
-          </div>
-        </i-step>
-
-        <i-step
-          label="Choose columns"
-          description="Select and arrange fields"
-          icon="pi pi-table"
-          [completed]="columnsComplete"
-        >
-          <div class="step-content">
-            <h3>Choose columns</h3>
-            <p>Select the fields that should appear in the final report.</p>
-          </div>
-        </i-step>
-
-        <i-step
-          label="Refine results"
-          description="Optional filters and sorting"
-          icon="pi pi-sliders-h"
-          [optional]="true"
-          [completed]="resultsComplete"
-        >
-          <div class="step-content">
-            <h3>Refine results</h3>
-            <p>Add optional filters and sorting before saving the report.</p>
-            @if (resultsComplete) { <p role="status">Report saved. All steps are complete.</p> }
-          </div>
-        </i-step>
-        <div stepperActions class="step-actions">
-          @if (activeIndex > 0) {
-            <i-button severity="contrast" [text]="true" (clicked)="activeIndex = activeIndex - 1">Back</i-button>
-          }
-          @switch (activeIndex) {
-            @case (0) {
-              <i-button icon="pi pi-arrow-right" (clicked)="completeDetails()">Complete and continue</i-button>
-            }
-            @case (1) {
-              <i-button icon="pi pi-arrow-right" (clicked)="completeColumns()">Complete and continue</i-button>
-            }
-            @case (2) {
-              <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
-            }
+        <div class="step-content">
+          <h3>Refine results</h3>
+          @if (resultsComplete) {
+            <p role="status">Report saved. All steps are complete.</p>
           }
         </div>
-      </i-stepper>
-    </ng-template>
+      </i-step>
+      <div stepperActions class="step-actions">
+        @if (activeIndex > 0) {
+          <i-button severity="contrast" [text]="true" (clicked)="activeIndex = activeIndex - 1"
+            >Back</i-button
+          >
+        }
+        @switch (activeIndex) {
+          @case (0) {
+            <i-button icon="pi pi-arrow-right" (clicked)="completeDetails()"
+              >Complete and continue</i-button
+            >
+          }
+          @case (1) {
+            <i-button icon="pi pi-arrow-right" (clicked)="completeColumns()"
+              >Complete and continue</i-button
+            >
+          }
+          @case (2) {
+            <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
+          }
+        }
+      </div>
+    </i-stepper>
+  </ng-template>
 </app-demo-playground>

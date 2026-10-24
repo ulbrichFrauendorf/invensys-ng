@@ -78,5 +78,4 @@ export class ButtonsComponent {
 })
 export class ExampleComponent {}`,
   };
-
 }

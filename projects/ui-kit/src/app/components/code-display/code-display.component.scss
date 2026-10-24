@@ -8,16 +8,21 @@
   .code-section {
     width: 100%;
     position: relative;
-    border: 1px solid;
+    border-width: 1px;
+    border-style: solid;
 
     .code-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 8px 12px;
-      border-bottom: 1px solid;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
 
-      .tab-container { display: flex; gap: 2px; }
+      .tab-container {
+        display: flex;
+        gap: 2px;
+      }
 
       .code-title {
         font-size: 16px;
@@ -47,49 +52,59 @@
           border: none;
           font-family: inherit;
           font-size: inherit;
-          .angular-binding, .angular-event { font-weight: 600; }
-          .code-comment { font-style: italic; }
+          .angular-binding,
+          .angular-event {
+            font-weight: 600;
+          }
+          .code-comment {
+            font-style: italic;
+          }
         }
       }
     }
+
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
   }
-}
 
-.code-display-container.code-display--embedded {
-  display: flex;
-  min-width: 0;
-  min-height: 0;
-  padding: 0;
-
-  .code-section {
+  &.code-display--embedded {
     display: flex;
     min-width: 0;
-    flex-direction: column;
-    border: 0;
-    box-shadow: none;
-  }
-
-  .code-header { flex-shrink: 0; }
-
-  .code-block {
-    display: flex;
     min-height: 0;
-    flex: 1;
+    padding: 0;
 
-    .code-scroll {
-      width: 100%;
-      overflow: auto;
-      @include scrollbar.dropdown-scrollbar();
+    .code-section {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      border: 0;
     }
 
-    pre { width: max-content; overflow: visible; }
-  }
-}
+    .code-header {
+      flex-shrink: 0;
+    }
 
-@media (max-width: 768px) {
-  .code-display-container {
+    .code-block {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+
+      .code-scroll {
+        width: 100%;
+        overflow: auto;
+        @include scrollbar.dropdown-scrollbar();
+      }
+
+      pre {
+        width: max-content;
+        overflow: visible;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
     padding: 20px 16px;
-    .code-section { max-width: 100%; }
   }
 }
 

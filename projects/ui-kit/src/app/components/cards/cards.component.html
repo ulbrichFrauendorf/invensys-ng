@@ -1,103 +1,124 @@
-<app-demo-playground class="cards-demo" title="Card Components" description="Flexible card components for organizing content with headers, footers, and customizable layouts. Perfect for dashboards and content display.">
-  <ng-template appDemoOption="option-1" label="Basic Card" [selected]="true" [sourceCode]="codeExamples.basic">
-      <div class="card-example">
-        <i-card [title]="'Card Title'">
-          <p>This is the card content in the body section.</p>
+<app-demo-playground
+  class="cards-demo"
+  title="Cards"
+  eyebrow="Layout &amp; Containers"
+  description="Flexible card components for organizing content with headers, footers, and customizable layouts. Perfect for dashboards and content display."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Card"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="card-example">
+      <i-card [title]="'Card Title'">
+        <p>This is the card content in the body section.</p>
+      </i-card>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-2"
+    label="Card with Actions"
+    [sourceCode]="codeExamples.withFooter"
+  >
+    <div class="card-example">
+      <i-card [title]="'Card with Actions'">
+        <p>This card includes footer content with action buttons.</p>
+        <div slot="footer">
+          <i-dialog-actions (submitEvent)="onSubmit()" (cancelEvent)="onCancel()" />
+        </div>
+      </i-card>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-3"
+    label="Custom Header"
+    [sourceCode]="codeExamples.customHeader"
+  >
+    <div class="card-example">
+      <i-card>
+        <div slot="header" class="custom-card-header">
+          <i class="pi pi-star custom-card-icon" aria-hidden="true"></i>
+          <h3>Custom Header Content</h3>
+        </div>
+        <p>Using the header slot for custom content with icons and styling.</p>
+      </i-card>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-4"
+    label="Content Only"
+    [sourceCode]="codeExamples.contentOnly"
+  >
+    <div class="card-example">
+      <i-card>
+        <p>Simple card with just content, no title or footer.</p>
+        <p>This demonstrates the minimal card structure for basic content display.</p>
+      </i-card>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Full Height Card"
+    [sourceCode]="codeExamples.fullHeight"
+    [scssCode]="scssExamples.fullHeight"
+  >
+    <div class="card-example">
+      <div class="full-height-container">
+        <i-card [title]="'Full Height Card'" [fullHeight]="true">
+          <p>This card fills the height of its container.</p>
+          <p>The body area becomes scrollable when content overflows.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
         </i-card>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Card with Actions" [sourceCode]="codeExamples.withFooter">
-      <div class="card-example">
-        <i-card [title]="'Card with Actions'">
-          <p>This card includes footer content with action buttons.</p>
-          <div slot="footer">
-            <i-dialog-actions
-              (submitEvent)="onSubmit()"
-              (cancelEvent)="onCancel()"
-            />
-          </div>
-        </i-card>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Custom Header" [sourceCode]="codeExamples.customHeader">
-      <div class="card-example">
-        <i-card>
-          <div slot="header">
-            <h3 style="margin: 0; display: flex; align-items: center; gap: 8px">
-              <i class="pi pi-star" style="color: #ffd700"></i>
-              Custom Header Content
-            </h3>
-          </div>
+  <ng-template
+    appDemoOption="option-6"
+    label="Closable Card"
+    [sourceCode]="codeExamples.closable"
+    [tsCode]="tsExamples.closable"
+  >
+    <div class="card-example">
+      @if (showClosableCard) {
+        <i-card [title]="'Closable Card'" [closable]="true" (closeCard)="onCardClosed()">
+          <p>This card can be closed using the X button in the header.</p>
           <p>
-            Using the header slot for custom content with icons and styling.
+            <small>It will reappear after 3 seconds for demo purposes.</small>
           </p>
         </i-card>
-      </div>
-    </ng-template>
+      } @else {
+        <div class="closed-message">
+          <p>Card was closed. It will reappear in a few seconds...</p>
+        </div>
+      }
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Content Only" [sourceCode]="codeExamples.contentOnly">
-      <div class="card-example">
-        <i-card>
-          <p>Simple card with just content, no title or footer.</p>
-          <p>
-            This demonstrates the minimal card structure for basic content
-            display.
-          </p>
+  <ng-template
+    appDemoOption="option-7"
+    label="Scrollable Content"
+    [sourceCode]="codeExamples.scrollable"
+    [scssCode]="scssExamples.scrollable"
+  >
+    <div class="card-example">
+      <div class="full-height-container">
+        <i-card [title]="'Scrollable Content'" [fullHeight]="true">
+          <div>
+            @for (paragraph of scrollableContent; track $index) {
+              <p>{{ paragraph }}</p>
+            }
+          </div>
         </i-card>
       </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Full Height Card" [sourceCode]="codeExamples.fullHeight" [scssCode]="scssExamples.fullHeight">
-      <div class="card-example">
-        <div class="full-height-container">
-          <i-card [title]="'Full Height Card'" [fullHeight]="true">
-            <p>This card fills the height of its container.</p>
-            <p>The body area becomes scrollable when content overflows.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
-          </i-card>
-        </div>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-6" label="Closable Card" [sourceCode]="codeExamples.closable" [tsCode]="tsExamples.closable">
-      <div class="card-example">
-        @if (showClosableCard) {
-          <i-card
-            [title]="'Closable Card'"
-            [closable]="true"
-            (closeCard)="onCardClosed()"
-          >
-            <p>This card can be closed using the X button in the header.</p>
-            <p>
-              <small>It will reappear after 3 seconds for demo purposes.</small>
-            </p>
-          </i-card>
-        } @else {
-          <div class="closed-message">
-            <p>Card was closed. It will reappear in a few seconds...</p>
-          </div>
-        }
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-7" label="Scrollable Content" [sourceCode]="codeExamples.scrollable" [scssCode]="scssExamples.scrollable">
-      <div class="card-example">
-        <div class="full-height-container">
-          <i-card [title]="'Scrollable Content'" [fullHeight]="true">
-            <div>
-              @for (paragraph of scrollableContent; track $index) {
-                <p>{{ paragraph }}</p>
-              }
-            </div>
-          </i-card>
-        </div>
-      </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

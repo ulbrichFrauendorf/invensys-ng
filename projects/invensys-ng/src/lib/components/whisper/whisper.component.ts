@@ -10,10 +10,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WhisperService } from './services/whisper.service';
-import {
-  IWhisperMessage,
-  IWhisperOptions,
-} from './services/whisper.interfaces';
+import { IWhisperMessage, IWhisperOptions } from './services/whisper.interfaces';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { ZIndexUtils } from '../../utils/zindexutils';
 import { IButton } from '../button/button.component';
@@ -158,63 +155,59 @@ export class IWhisper implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.messageSubscription = this.whisperService.messageObserver.subscribe(
-      (message) => {
-        if (message) {
-          if (this.key) {
-            if (message.key !== this.key) {
-              return;
-            }
-          } else {
-            if (message.key) {
-              return;
-            }
+    this.messageSubscription = this.whisperService.messageObserver.subscribe((message) => {
+      if (message) {
+        if (this.key) {
+          if (message.key !== this.key) {
+            return;
           }
+        } else {
+          if (message.key) {
+            return;
+          }
+        }
 
-          if (this.preventDuplicates) {
-            const isDuplicate = this.messages.some(
-              (m) =>
+        if (this.preventDuplicates) {
+          const isDuplicate = this.messages.some(
+            (m) =>
+              m.summary === message.summary &&
+              m.detail === message.detail &&
+              m.severity === message.severity,
+          );
+          if (isDuplicate) return;
+        }
+
+        if (this.preventOpenDuplicates) {
+          this.messages = this.messages.filter(
+            (m) =>
+              !(
                 m.summary === message.summary &&
                 m.detail === message.detail &&
-                m.severity === message.severity,
-            );
-            if (isDuplicate) return;
-          }
-
-          if (this.preventOpenDuplicates) {
-            this.messages = this.messages.filter(
-              (m) =>
-                !(
-                  m.summary === message.summary &&
-                  m.detail === message.detail &&
-                  m.severity === message.severity
-                ),
-            );
-          }
-
-          this.messages = [...this.messages, message];
-
-          if (message.life && message.life > 0) {
-            setTimeout(() => {
-              this.remove(message);
-            }, message.life);
-          }
-
-          this.cd.markForCheck();
+                m.severity === message.severity
+              ),
+          );
         }
-      },
-    );
 
-    this.clearSubscription = this.whisperService.clearObserver.subscribe(
-      (key) => {
-        if (key) {
-          this.messages = this.messages.filter((m) => m.key !== key);
-        } else {
-          this.messages = [];
+        this.messages = [...this.messages, message];
+
+        if (message.life && message.life > 0) {
+          setTimeout(() => {
+            this.remove(message);
+          }, message.life);
         }
+
         this.cd.markForCheck();
-      },
-    );
+      }
+    });
+
+    this.clearSubscription = this.whisperService.clearObserver.subscribe((key) => {
+      if (key) {
+        this.messages = this.messages.filter((m) => m.key !== key);
+      } else {
+        this.messages = [];
+      }
+      this.cd.markForCheck();
+    });
   }
 
   ngOnDestroy(): void {

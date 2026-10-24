@@ -1,0 +1,14 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin tags-theme() {
+  .usage-examples {
+    .usage-row {
+      background: colors.$color-surface-ground;
+      border-color: colors.$color-surface-border;
+
+      .usage-label {
+        color: colors.$color-text-primary;
+      }
+    }
+  }
+}

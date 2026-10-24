@@ -1,47 +1,140 @@
-<app-demo-playground class="workflow-demo" title="Reporting workflows" description="Build focused workspaces from shared controls. These interactive examples use sample data and do not run or save real reports.">
-  <ng-template appDemoOption="option-1" label="Report builder" [selected]="true" [sourceCode]="sourceCode">
-      <i-stepper [(activeIndex)]="activeIndex" ariaLabel="Report setup">
-        <i-step label="Report details" description="Name and layout" icon="pi pi-file-edit" [completed]="!!name.trim()">
-          <section class="step-content"><h2>Start with the essentials</h2><p>Give the report a clear name so your team can find it later.</p><i-input-text label="Report name" [(ngModel)]="name" [fluid]="true" /></section>
-        </i-step>
-        <i-step label="Choose columns" [description]="selected.length + ' selected'" icon="pi pi-table" [disabled]="!name.trim()" [completed]="selected.length > 0">
-          <section class="step-content"><h2>Make the spreadsheet yours</h2><p>Select fields, then arrange them in the order you want to see.</p>
-            <div class="editor-grid"><i-field-picker [options]="fields" [(ngModel)]="selected" /><i-ordered-list [(items)]="selected" [itemLabel]="label" ariaLabel="Spreadsheet columns" emptyMessage="Select fields from the catalog to start your spreadsheet." /></div>
-          </section>
-        </i-step>
-        <i-step label="Refine results" description="Filters and sorting" icon="pi pi-sliders-h" [optional]="true" [completed]="isSaved()" [disabled]="!name.trim() || !selected.length">
-          <section class="step-content"><h2>Focus on the results that matter</h2><p>Filters are optional. Continue if you need all results.</p><i-rule-editor [fields]="ruleFields" [operators]="operators" [(rules)]="rules" addLabel="Add filter" emptyMessage="All matching records are included." /></section>
-        </i-step>
-        <i-step label="Preview & save" description="Review final headings" icon="pi pi-eye" [completed]="isSaved()" [disabled]="!name.trim() || !selected.length">
-          <section class="step-content"><h2>{{ name }}</h2><p>{{ selected.length }} columns · {{ rules.length }} filters</p><i-ordered-list [(items)]="selected" [itemLabel]="label" [removable]="false" ariaLabel="Final headings" /></section>
-        </i-step>
+<app-demo-playground
+  class="workflow-demo"
+  title="Reporting Workflows"
+  eyebrow="Examples"
+  description="Sample data only. Reports are not run or saved to a server."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Report builder"
+    [selected]="true"
+    [sourceCode]="sourceCode"
+  >
+    <i-stepper [(activeIndex)]="activeIndex" ariaLabel="Report setup">
+      <i-step label="Report details" icon="pi pi-file-edit" [completed]="!!name.trim()">
+        <section class="step-content">
+          <h2>Report details</h2>
+          <i-input-text label="Report name" [(ngModel)]="name" [fluid]="true" />
+        </section>
+      </i-step>
+      <i-step
+        label="Choose columns"
+        [description]="selected.length + ' selected'"
+        icon="pi pi-table"
+        [disabled]="!name.trim()"
+        [completed]="selected.length > 0"
+      >
+        <section class="step-content">
+          <h2>Columns</h2>
+          <div class="editor-grid">
+            <i-field-picker [options]="fields" [(ngModel)]="selected" /><i-ordered-list
+              [(items)]="selected"
+              [itemLabel]="label"
+              ariaLabel="Spreadsheet columns"
+              emptyMessage="Select fields from the catalog to start your spreadsheet."
+            />
+          </div>
+        </section>
+      </i-step>
+      <i-step
+        label="Refine results"
+        icon="pi pi-sliders-h"
+        [optional]="true"
+        [completed]="isSaved()"
+        [disabled]="!name.trim() || !selected.length"
+      >
+        <section class="step-content">
+          <h2>Filters</h2>
+          <i-rule-editor
+            [fields]="ruleFields"
+            [operators]="operators"
+            [(rules)]="rules"
+            addLabel="Add filter"
+            emptyMessage="All matching records are included."
+          />
+        </section>
+      </i-step>
+      <i-step
+        label="Preview & save"
+        icon="pi pi-eye"
+        [completed]="isSaved()"
+        [disabled]="!name.trim() || !selected.length"
+      >
+        <section class="step-content">
+          <h2>{{ name }}</h2>
+          <p>{{ selected.length }} columns · {{ rules.length }} filters</p>
+          <i-ordered-list
+            [(items)]="selected"
+            [itemLabel]="label"
+            [removable]="false"
+            ariaLabel="Final headings"
+          />
+        </section>
+      </i-step>
       <footer stepperActions class="workflow-footer">
-        <i-button severity="contrast" [text]="true" [disabled]="activeIndex === 0" (clicked)="activeIndex = activeIndex - 1">Back</i-button>
+        <i-button
+          severity="contrast"
+          [text]="true"
+          [disabled]="activeIndex === 0"
+          (clicked)="activeIndex = activeIndex - 1"
+          >Back</i-button
+        >
         <span>Step {{ activeIndex + 1 }} of 4</span>
-        @if (activeIndex < 3) { <i-button [disabled]="!name.trim() || (activeIndex > 0 && !selected.length)" (clicked)="next()">Continue</i-button> }
-        @else { <i-button icon="pi pi-check" [disabled]="!name.trim() || !selected.length" (clicked)="save()">Save example</i-button> }
+        @if (activeIndex < 3) {
+          <i-button
+            [disabled]="!name.trim() || (activeIndex > 0 && !selected.length)"
+            (clicked)="next()"
+            >Continue</i-button
+          >
+        } @else {
+          <i-button
+            icon="pi pi-check"
+            [disabled]="!name.trim() || !selected.length"
+            (clicked)="save()"
+            >Save example</i-button
+          >
+        }
       </footer>
-      </i-stepper>
-      @if (isSaved()) { <p role="status" class="saved-message">Example saved for this session. No report was sent to a server.</p> }
-    </ng-template>
+    </i-stepper>
+    @if (isSaved()) {
+      <div role="status" class="saved-message">
+        <p>Example saved for this session. No report was sent to a server.</p>
+      </div>
+    }
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Automation workspace" [sourceCode]="tableCode">
-      <header class="section-heading"><h2>Your automations</h2><p>Expand a row to see the report sequence. Grouped data uses GridData.details, with a stable dataKey.</p></header>
-      <i-table [grid]="automations" dataKey="id" [globalFilter]="true" />
-    </ng-template>
+    <header class="section-heading">
+      <h2>Automations</h2>
+    </header>
+    <i-table [grid]="automations" dataKey="id" [globalFilter]="true" />
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Run progress" [sourceCode]="progressTableCode" [tsCode]="progressCode">
-      <p>Expand the automation to see the shared spinner in the actions column while a report is in progress.</p>
-      <i-table [grid]="runProgress" dataKey="name" />
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Run progress"
+    [sourceCode]="progressTableCode"
+    [tsCode]="progressCode"
+  >
+    <i-table [grid]="runProgress" dataKey="name" />
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Clear dialog actions" [sourceCode]="actionsCode">
-      <p>Use a specific action label and a filled primary action. Loading prevents repeated submissions.</p>
-      <div class="demo-tools">
-        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'ready'">Ready</i-button>
-        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'loading'">Loading</i-button>
-        <i-button severity="contrast" [text]="true" (clicked)="actionState = 'disabled'">Invalid form</i-button>
-      </div>
-      <i-dialog-actions submitLabel="Save automation" [submitLoading]="actionState === 'loading'" [submitDisabled]="actionState === 'disabled'" (submitEvent)="actionState = 'loading'" (cancelEvent)="actionState = 'ready'" />
-    </ng-template>
+    <div class="demo-tools">
+      <i-button severity="contrast" [text]="true" (clicked)="actionState = 'ready'">Ready</i-button>
+      <i-button severity="contrast" [text]="true" (clicked)="actionState = 'loading'"
+        >Loading</i-button
+      >
+      <i-button severity="contrast" [text]="true" (clicked)="actionState = 'disabled'"
+        >Invalid form</i-button
+      >
+    </div>
+    <i-dialog-actions
+      submitLabel="Save automation"
+      [submitLoading]="actionState === 'loading'"
+      [submitDisabled]="actionState === 'disabled'"
+      (submitEvent)="actionState = 'loading'"
+      (cancelEvent)="actionState = 'ready'"
+    />
+  </ng-template>
 </app-demo-playground>

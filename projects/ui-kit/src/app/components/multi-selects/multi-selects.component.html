@@ -1,148 +1,156 @@
-<app-demo-playground class="multi-selects-demo" title="Multi-Select Components" description="Multi-selection dropdown components with filtering, chips display, and reactive forms support. Perfect for handling multiple option selections with a clean, user-friendly interface.">
-  <ng-template appDemoOption="option-1" label="Basic Multi-Select" [selected]="true" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <form
-        [formGroup]="basicForm"
-        (ngSubmit)="onSubmit(basicForm, 'basic')"
-        class="demo-form"
-      >
-        <div class="form-grid">
-          <i-multi-select
-            label="Skills"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Select skills"
-            formControlName="skills"
-          >
-          </i-multi-select>
-
-          <i-multi-select
-            label="Departments"
-            [options]="selectData.departments"
-            optionLabel="label"
-            placeholder="Select departments"
-            formControlName="departments"
-          >
-          </i-multi-select>
-
-          <i-multi-select
-            label="Preselected Skills"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Preselected values"
-            formControlName="preselected"
-          >
-          </i-multi-select>
-
-          <i-multi-select
-            label="Disabled Multi-Select"
-            [options]="selectData.departments"
-            optionLabel="label"
-            placeholder="This is disabled"
-            formControlName="disabled"
-          >
-          </i-multi-select>
-
-          <!-- Value Extraction Example -->
-          <i-multi-select
-            label="Skills (Values Only)"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Stores only the values"
-            formControlName="skills"
-            (onChange)="onSkillsValueChange($event)"
-          >
-          </i-multi-select>
-
-          <!-- Full Object Example -->
-          <i-multi-select
-            label="Skills (Full Objects)"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Stores the entire objects"
-            formControlName="fullObjectSkills"
-            (onChange)="onSkillsObjectChange($event)"
-          >
-          </i-multi-select>
-        </div>
-
-        <i-button type="submit" severity="primary">Submit Basic Form</i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-2" label="Required Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
-      <form
-        [formGroup]="validationForm"
-        (ngSubmit)="onSubmit(validationForm, 'validation')"
-        class="demo-form"
-      >
-        <div class="form-grid">
-          <i-multi-select
-            label="Required Skills (At least 1)"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Select at least 1 skill"
-            formControlName="requiredSkills"
-          >
-          </i-multi-select>
-
-          <i-multi-select
-            label="Minimum Skills (At least 2)"
-            [options]="selectData.skills"
-            optionLabel="label"
-            placeholder="Select at least 2 skills"
-            formControlName="minimumSkills"
-          >
-          </i-multi-select>
-        </div>
-
-        <i-button type="submit" severity="primary"
-          >Submit Validation Form</i-button
-        >
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Advanced Features" [sourceCode]="codeExamples.advanced">
-      <form
-        [formGroup]="advancedForm"
-        (ngSubmit)="onSubmit(advancedForm, 'advanced')"
-        class="demo-form"
-      >
+<app-demo-playground
+  class="multi-selects-demo"
+  title="Multi Selects"
+  eyebrow="Form Controls"
+  description="Multi-selection dropdown components with filtering, chips display, and reactive forms support. Perfect for handling multiple option selections with a clean, user-friendly interface."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Multi-Select"
+    [selected]="true"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <form [formGroup]="basicForm" (ngSubmit)="onSubmit(basicForm, 'basic')" class="demo-form">
+      <div class="form-grid">
         <i-multi-select
-          label="Categories with Filtering"
-          [options]="selectData.categories"
-          [filter]="true"
-          [showClear]="true"
-          filterBy="name"
-          optionLabel="name"
-          placeholder="Select Categories"
-          [maxSelectedLabels]="3"
-          formControlName="selectedCategories"
-        >
-        </i-multi-select>
-
-        <i-button type="submit" severity="primary"
-          >Submit Advanced Form</i-button
-        >
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <form
-        [formGroup]="fluidForm"
-        (ngSubmit)="onSubmit(fluidForm, 'fluid')"
-        class="demo-form"
-      >
-        <i-multi-select
-          label="Fluid Multi-Select"
+          label="Skills"
           [options]="selectData.skills"
           optionLabel="label"
-          [fluid]="true"
-          placeholder="Select options"
-          formControlName="fluidSelect"
+          placeholder="Select skills"
+          formControlName="skills"
         >
         </i-multi-select>
 
-        <i-button type="submit" severity="primary">Submit Fluid Form</i-button>
-      </form>
-    </ng-template>
+        <i-multi-select
+          label="Departments"
+          [options]="selectData.departments"
+          optionLabel="label"
+          placeholder="Select departments"
+          formControlName="departments"
+        >
+        </i-multi-select>
+
+        <i-multi-select
+          label="Preselected Skills"
+          [options]="selectData.skills"
+          optionLabel="label"
+          placeholder="Preselected values"
+          formControlName="preselected"
+        >
+        </i-multi-select>
+
+        <i-multi-select
+          label="Disabled Multi-Select"
+          [options]="selectData.departments"
+          optionLabel="label"
+          placeholder="This is disabled"
+          formControlName="disabled"
+        >
+        </i-multi-select>
+
+        <!-- Value Extraction Example -->
+        <i-multi-select
+          label="Skills (Values Only)"
+          [options]="selectData.skills"
+          optionLabel="label"
+          placeholder="Stores only the values"
+          formControlName="skills"
+          (onChange)="onSkillsValueChange($event)"
+        >
+        </i-multi-select>
+
+        <!-- Full Object Example -->
+        <i-multi-select
+          label="Skills (Full Objects)"
+          [options]="selectData.skills"
+          optionLabel="label"
+          placeholder="Stores the entire objects"
+          formControlName="fullObjectSkills"
+          (onChange)="onSkillsObjectChange($event)"
+        >
+        </i-multi-select>
+      </div>
+
+      <i-button type="submit" severity="primary">Submit Basic Form</i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-2"
+    label="Required Validation"
+    [sourceCode]="codeExamples.validation"
+    [tsCode]="tsExamples.validation"
+  >
+    <form
+      [formGroup]="validationForm"
+      (ngSubmit)="onSubmit(validationForm, 'validation')"
+      class="demo-form"
+    >
+      <div class="form-grid">
+        <i-multi-select
+          label="Required Skills (At least 1)"
+          [options]="selectData.skills"
+          optionLabel="label"
+          placeholder="Select at least 1 skill"
+          formControlName="requiredSkills"
+        >
+        </i-multi-select>
+
+        <i-multi-select
+          label="Minimum Skills (At least 2)"
+          [options]="selectData.skills"
+          optionLabel="label"
+          placeholder="Select at least 2 skills"
+          formControlName="minimumSkills"
+        >
+        </i-multi-select>
+      </div>
+
+      <i-button type="submit" severity="primary">Submit Validation Form</i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-3"
+    label="Advanced Features"
+    [sourceCode]="codeExamples.advanced"
+  >
+    <form
+      [formGroup]="advancedForm"
+      (ngSubmit)="onSubmit(advancedForm, 'advanced')"
+      class="demo-form"
+    >
+      <i-multi-select
+        label="Categories with Filtering"
+        [options]="selectData.categories"
+        [filter]="true"
+        [showClear]="true"
+        filterBy="name"
+        optionLabel="name"
+        placeholder="Select Categories"
+        [maxSelectedLabels]="3"
+        formControlName="selectedCategories"
+      >
+      </i-multi-select>
+
+      <i-button type="submit" severity="primary">Submit Advanced Form</i-button>
+    </form>
+  </ng-template>
+
+  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
+    <form [formGroup]="fluidForm" (ngSubmit)="onSubmit(fluidForm, 'fluid')" class="demo-form">
+      <i-multi-select
+        label="Fluid Multi-Select"
+        [options]="selectData.skills"
+        optionLabel="label"
+        [fluid]="true"
+        placeholder="Select options"
+        formControlName="fluidSelect"
+      >
+      </i-multi-select>
+
+      <i-button type="submit" severity="primary">Submit Fluid Form</i-button>
+    </form>
+  </ng-template>
 </app-demo-playground>

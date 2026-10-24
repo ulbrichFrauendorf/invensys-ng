@@ -1,31 +1,27 @@
-.layouts-demo {
-  .section-description {
-    margin-bottom: 24px;
-    color: var(--text-color-secondary);
-    line-height: 1.6;
-  }
+@use './layouts.component.theme.scss' as theme;
 
+.layouts-demo {
   .layout-preview {
     .preview-image {
       width: 100%;
       max-width: 100%;
       height: auto;
       border-radius: 8px;
-      border: 1px solid var(--surface-border);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-width: 1px;
+      border-style: solid;
     }
 
     .preview-placeholder {
       .placeholder-layout {
-        border: 1px solid var(--surface-border);
+        border-width: 1px;
+        border-style: solid;
         border-radius: 8px;
         overflow: hidden;
-        background: var(--surface-ground);
 
         .placeholder-topbar {
           height: 60px;
-          background: var(--surface-card);
-          border-bottom: 1px solid var(--surface-border);
+          border-bottom-width: 1px;
+          border-bottom-style: solid;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -34,7 +30,6 @@
           .placeholder-logo {
             width: 120px;
             height: 30px;
-            background: var(--primary-color);
             border-radius: 4px;
             opacity: 0.3;
           }
@@ -42,7 +37,6 @@
           .placeholder-actions {
             width: 80px;
             height: 30px;
-            background: var(--surface-border);
             border-radius: 4px;
           }
         }
@@ -53,16 +47,19 @@
 
           .placeholder-sidebar {
             width: 250px;
-            background: var(--surface-overlay);
-            border-right: 1px solid var(--surface-border);
+            border-right-width: 1px;
+            border-right-style: solid;
             padding: 16px;
 
             .placeholder-menu-item {
               height: 40px;
-              background: var(--surface-border);
               border-radius: 4px;
               margin-bottom: 8px;
               opacity: 0.5;
+            }
+
+            @media (max-width: 768px) {
+              width: 200px;
             }
           }
 
@@ -72,7 +69,6 @@
 
             .placeholder-text {
               height: 20px;
-              background: var(--surface-border);
               border-radius: 4px;
               margin-bottom: 16px;
               opacity: 0.3;
@@ -91,9 +87,6 @@
 
       .placeholder-text-label {
         text-align: center;
-        margin-top: 16px;
-        color: var(--text-color-secondary);
-        font-style: italic;
       }
     }
   }
@@ -105,12 +98,11 @@
 
     .config-item {
       padding: 16px;
-      background: var(--surface-ground);
-      border-left: 3px solid var(--primary-color);
+      border-left-width: 3px;
+      border-left-style: solid;
       border-radius: 4px;
 
       strong {
-        color: var(--primary-color);
         margin-right: 8px;
       }
     }
@@ -124,25 +116,21 @@
 
     .component-item {
       padding: 24px;
-      background: var(--surface-ground);
       border-radius: 8px;
-      border: 1px solid var(--surface-border);
+      border-width: 1px;
+      border-style: solid;
 
       .component-name {
         display: block;
         font-size: 17.6px;
         font-weight: 600;
-        color: var(--primary-color);
         margin-bottom: 8px;
-        font-family: "Courier New", monospace;
+        font-family: 'Courier New', monospace;
       }
+    }
 
-      .component-description {
-        color: var(--text-color-secondary);
-        font-size: 14.4px;
-        line-height: 1.5;
-        margin: 0;
-      }
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -155,13 +143,12 @@
       display: flex;
       gap: 16px;
       padding: 16px;
-      background: var(--highlight-bg);
       border-radius: 6px;
-      border-left: 3px solid var(--primary-color);
+      border-left-width: 3px;
+      border-left-style: solid;
 
       i {
         font-size: 20px;
-        color: var(--primary-color);
         flex-shrink: 0;
         margin-top: 2px;
       }
@@ -172,41 +159,25 @@
         strong {
           display: block;
           margin-bottom: 4px;
-          color: var(--text-color);
         }
-
-        color: var(--text-color-secondary);
         line-height: 1.5;
       }
     }
   }
 
   code {
-    background: var(--surface-ground);
     padding: 3.2px 6.4px;
     border-radius: 4px;
-    font-family: "Courier New", monospace;
-    font-size: 0.9em;
-    color: var(--primary-color);
+    font-family: 'Courier New', monospace;
+    font-size: 10.8px;
+  }
+  .preview-placeholder {
+    display: none;
+  }
+  .usage-notes,
+  .config-examples {
+    margin-top: 16px;
   }
 }
 
-@media (max-width: 768px) {
-  .layouts-demo {
-    .components-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .layout-preview {
-      .preview-placeholder {
-        .placeholder-layout {
-          .placeholder-body {
-            .placeholder-sidebar {
-              width: 200px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+@include theme.layouts-theme();

@@ -1,89 +1,113 @@
-<app-demo-playground class="panels-demo" title="Panel Components" description="Collapsible panel containers with header and toggle functionality. Perfect for organizing content into expandable sections.">
-  <ng-template appDemoOption="option-1" label="Basic Panel" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
-      <div class="panel-examples">
-        <i-panel header="Options">
-          <p>This is the content of the panel.</p>
-          <p>You can put any content here including text, forms, and more.</p>
-        </i-panel>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="panels-demo"
+  title="Panels"
+  eyebrow="Layout &amp; Containers"
+  description="Collapsible panel containers with header and toggle functionality. Perfect for organizing content into expandable sections."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Panel"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+    [tsCode]="tsExamples.basic"
+  >
+    <div class="panel-examples">
+      <i-panel header="Options">
+        <p>This is the content of the panel.</p>
+        <p>You can put any content here including text, forms, and more.</p>
+      </i-panel>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Panel with Radio Buttons" [sourceCode]="codeExamples.withContent" [tsCode]="tsExamples.withContent">
-      <div class="panel-examples">
-        <i-panel header="Split Options">
-          <div class="radio-row">
-            <i-radio-button
-              label="None"
-              value="none"
-              name="splitOption"
-              [(ngModel)]="splitOption"
-            />
-            <i-radio-button
-              label="Company"
-              value="company"
-              name="splitOption"
-              [(ngModel)]="splitOption"
-            />
-            <i-radio-button
-              label="Frequency"
-              value="frequency"
-              name="splitOption"
-              [(ngModel)]="splitOption"
-            />
-            <i-radio-button
-              label="PayRun"
-              value="payrun"
-              name="splitOption"
-              [(ngModel)]="splitOption"
-            />
-          </div>
-        </i-panel>
-        <div class="status">Selected: {{ splitOption }}</div>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Initially Collapsed" [sourceCode]="codeExamples.collapsed">
-      <div class="panel-examples">
-        <i-panel header="Settings" [collapsed]="true">
-          <p>This panel starts collapsed.</p>
-          <p>Click the header to expand it.</p>
-        </i-panel>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Non-toggleable Panel" [sourceCode]="codeExamples.nonToggleable">
-      <div class="panel-examples">
-        <i-panel header="Fixed Section" [toggleable]="false">
-          <p>This panel cannot be toggled.</p>
-          <p>It will always be visible.</p>
-        </i-panel>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Programmatic Control" [sourceCode]="codeExamples.programmatic" [tsCode]="tsExamples.programmatic">
-      <div class="panel-examples">
-        <div class="control-buttons">
-          <button class="demo-button" (click)="toggleProgrammatic()">
-            {{ programmaticCollapsed ? "Expand" : "Collapse" }} Panel
-          </button>
-          <span class="status"
-            >Status:
-            {{ programmaticCollapsed ? "Collapsed" : "Expanded" }}</span
-          >
+  <ng-template
+    appDemoOption="option-2"
+    label="Panel with Radio Buttons"
+    [sourceCode]="codeExamples.withContent"
+    [tsCode]="tsExamples.withContent"
+  >
+    <div class="panel-examples">
+      <i-panel header="Split Options">
+        <div class="radio-row">
+          <i-radio-button label="None" value="none" name="splitOption" [(ngModel)]="splitOption" />
+          <i-radio-button
+            label="Company"
+            value="company"
+            name="splitOption"
+            [(ngModel)]="splitOption"
+          />
+          <i-radio-button
+            label="Frequency"
+            value="frequency"
+            name="splitOption"
+            [(ngModel)]="splitOption"
+          />
+          <i-radio-button
+            label="PayRun"
+            value="payrun"
+            name="splitOption"
+            [(ngModel)]="splitOption"
+          />
         </div>
-        <i-panel
-          header="Programmatically Controlled"
-          [collapsed]="programmaticCollapsed"
-          (collapsedChange)="programmaticCollapsed = $event"
-          (onToggle)="onToggle($event)"
-        >
-          <p>This panel's state is controlled via the component's property.</p>
-          <p>Click the button above to toggle it programmatically.</p>
-        </i-panel>
+      </i-panel>
+      <div class="status">Selected: {{ splitOption }}</div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-3"
+    label="Initially Collapsed"
+    [sourceCode]="codeExamples.collapsed"
+  >
+    <div class="panel-examples">
+      <i-panel header="Settings" [collapsed]="true">
+        <p>This panel starts collapsed.</p>
+        <p>Click the header to expand it.</p>
+      </i-panel>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-4"
+    label="Non-toggleable Panel"
+    [sourceCode]="codeExamples.nonToggleable"
+  >
+    <div class="panel-examples">
+      <i-panel header="Fixed Section" [toggleable]="false">
+        <p>This panel cannot be toggled.</p>
+        <p>It will always be visible.</p>
+      </i-panel>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Programmatic Control"
+    [sourceCode]="codeExamples.programmatic"
+    [tsCode]="tsExamples.programmatic"
+  >
+    <div class="panel-examples">
+      <div class="control-buttons">
+        <button class="demo-button" (click)="toggleProgrammatic()">
+          {{ programmaticCollapsed ? 'Expand' : 'Collapse' }} Panel
+        </button>
+        <span class="status">Status: {{ programmaticCollapsed ? 'Collapsed' : 'Expanded' }}</span>
       </div>
-    </ng-template>
+      <i-panel
+        header="Programmatically Controlled"
+        [collapsed]="programmaticCollapsed"
+        (collapsedChange)="programmaticCollapsed = $event"
+        (onToggle)="onToggle($event)"
+      >
+        <p>This panel's state is controlled via the component's property.</p>
+        <p>Click the button above to toggle it programmatically.</p>
+      </i-panel>
+    </div>
+  </ng-template>
   <ng-template appDemoOption="option-6" label="Headers on Different Backgrounds">
-    <p>Compare panel headers on different surfaces, including collapsed, fixed, nested, and long titles. Use the theme toggle to compare light and dark themes.</p>
+    <p>
+      Compare panel headers on different surfaces, including collapsed, fixed, nested, and long
+      titles. Use the theme toggle to compare light and dark themes.
+    </p>
     @for (surface of labelSurfaces; track surface) {
       <div [class]="'panel-surface panel-surface--' + surface">
         <h4>{{ surface }} background</h4>
@@ -96,7 +120,10 @@
         <i-panel header="Initially collapsed" [collapsed]="true">
           <p>Expand this panel to check the header and border.</p>
         </i-panel>
-        <i-panel header="A long fixed panel title that should stay within the available width on smaller screens" [toggleable]="false">
+        <i-panel
+          header="A long fixed panel title that should stay within the available width on smaller screens"
+          [toggleable]="false"
+        >
           <p>Long headers are truncated within the panel width.</p>
         </i-panel>
       </div>

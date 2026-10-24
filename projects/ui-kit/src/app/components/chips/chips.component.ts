@@ -14,11 +14,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 @Component({
   selector: 'app-chips',
   standalone: true,
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IChip,
-    IChipsComponent,
-    IMessage,
-  ],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IChip, IChipsComponent, IMessage],
   templateUrl: './chips.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./chips.component.scss'],
@@ -133,27 +129,19 @@ export class ChipsComponent {
   }
 
   onRemoveBasic(event: ChipRemoveEvent): void {
-    this.basicChips = this.basicChips.filter(
-      (c) => c.value !== event.chip.value,
-    );
+    this.basicChips = this.basicChips.filter((c) => c.value !== event.chip.value);
   }
 
   onRemoveBoxed(event: ChipRemoveEvent): void {
-    this.boxedChips = this.boxedChips.filter(
-      (c) => c.value !== event.chip.value,
-    );
+    this.boxedChips = this.boxedChips.filter((c) => c.value !== event.chip.value);
   }
 
   onRemoveCollapsible(event: ChipRemoveEvent): void {
-    this.collapsibleChips = this.collapsibleChips.filter(
-      (c) => c.value !== event.chip.value,
-    );
+    this.collapsibleChips = this.collapsibleChips.filter((c) => c.value !== event.chip.value);
   }
 
   onRemoveCloseAll(event: ChipRemoveEvent): void {
-    this.closeAllChips = this.closeAllChips.filter(
-      (c) => c.value !== event.chip.value,
-    );
+    this.closeAllChips = this.closeAllChips.filter((c) => c.value !== event.chip.value);
   }
 
   onClearCloseAll(): void {
@@ -161,9 +149,7 @@ export class ChipsComponent {
   }
 
   onRemoveCombined(event: ChipRemoveEvent): void {
-    this.combinedChips = this.combinedChips.filter(
-      (c) => c.value !== event.chip.value,
-    );
+    this.combinedChips = this.combinedChips.filter((c) => c.value !== event.chip.value);
   }
 
   onClearCombined(): void {
@@ -211,8 +197,6 @@ export class ChipsComponent {
   }
 
   get combinedSummary(): string {
-    return this.combinedChips.length
-      ? `${this.combinedChips.length} selected`
-      : 'None selected';
+    return this.combinedChips.length ? `${this.combinedChips.length} selected` : 'None selected';
   }
 }

@@ -97,7 +97,6 @@ export class ExampleComponent {
   scssExamples = {
     fullHeight: `.full-height-container {
   height: 250px;
-  border: 2px dashed var(--surface-400);
   border-radius: 8px;
   padding: 8px;
 }`,
@@ -107,15 +106,6 @@ export class ExampleComponent {
     max-height: 300px;
     overflow-y: auto;
     padding-right: 8px;
-
-    p {
-      margin-bottom: 16px;
-      line-height: 1.6;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
   }
 }`,
   };

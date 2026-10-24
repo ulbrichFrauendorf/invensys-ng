@@ -4,13 +4,9 @@ import {
   forwardRef,
   Input,
   Output,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ICheckbox } from '../checkbox/checkbox.component';
 import { IInputText } from '../input-text/input-text.component';
 import { NoContentComponent } from '../no-content/no-content.component';
@@ -80,9 +76,7 @@ export class IFieldPicker implements ControlValueAccessor {
       const name = option.group || this.ungroupedLabel;
       if (
         term &&
-        !`${option.label} ${name} ${option.description ?? ''}`
-          .toLocaleLowerCase()
-          .includes(term)
+        !`${option.label} ${name} ${option.description ?? ''}`.toLocaleLowerCase().includes(term)
       )
         continue;
       groups.set(name, [...(groups.get(name) ?? []), option]);

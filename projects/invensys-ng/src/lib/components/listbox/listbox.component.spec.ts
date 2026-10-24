@@ -405,18 +405,13 @@ describe('IListbox', () => {
       fixture.componentRef.setInput('multiple', true);
       component.writeValue([mockOptions[0]]);
       await fixture.whenStable();
-      expect(
-        fixture.nativeElement.querySelector('i-chips')?.textContent,
-      ).toContain('First Option');
+      expect(fixture.nativeElement.querySelector('i-chips')?.textContent).toContain('First Option');
     });
 
     it('should get value array in multiple mode', () => {
       fixture.componentRef.setInput('multiple', true);
       component.value = [mockOptions[0], mockOptions[1]];
-      expect(component.getValueArray()).toEqual([
-        mockOptions[0],
-        mockOptions[1],
-      ]);
+      expect(component.getValueArray()).toEqual([mockOptions[0], mockOptions[1]]);
     });
 
     it('should get value array in single mode', () => {
@@ -448,9 +443,7 @@ describe('IListbox', () => {
 
     it('should fallback to label for search value', () => {
       fixture.componentRef.setInput('filterBy', 'nonexistent');
-      expect(component.getOptionSearchValue(mockOptions[0])).toBe(
-        'First Option',
-      );
+      expect(component.getOptionSearchValue(mockOptions[0])).toBe('First Option');
     });
   });
 });

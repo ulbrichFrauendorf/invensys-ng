@@ -29,18 +29,12 @@ describe('IButton', () => {
     fixture.componentRef.setInput('ariaExpanded', false);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe(
-      'Expand details',
-    );
-    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
-      'false',
-    );
+    expect(buttonElement.nativeElement.getAttribute('aria-label')).toBe('Expand details');
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('false');
     fixture.componentRef.setInput('ariaExpanded', true);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe(
-      'true',
-    );
+    expect(buttonElement.nativeElement.getAttribute('aria-expanded')).toBe('true');
   });
 
   describe('Component Inputs', () => {

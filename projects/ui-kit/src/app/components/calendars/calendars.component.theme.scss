@@ -1,0 +1,15 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin calendars-theme() {
+  .calendars-demo {
+    .values-display {
+      background: colors.$color-component-background-secondary;
+      border-color: colors.$color-surface-border;
+    }
+
+    .date-range-display {
+      background: colors.$color-component-background-secondary;
+      border-left-color: colors.$color-primary;
+    }
+  }
+}

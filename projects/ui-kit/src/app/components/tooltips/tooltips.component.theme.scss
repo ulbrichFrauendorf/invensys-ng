@@ -1,0 +1,179 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin tooltips-theme() {
+  .position-showcase {
+    .position-grid {
+      .position-cell {
+        .center-element {
+          border-color: colors.$color-surface-border;
+          background: colors.$color-surface-ground;
+          color: colors.$color-text-secondary;
+
+          i {
+            color: colors.$color-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .icon-tooltips-section {
+    .icon-toolbar {
+      background: colors.$color-surface-section;
+      border-color: colors.$color-surface-border;
+
+      .icon-btn {
+        background: transparent;
+        color: colors.$color-text-primary;
+
+        &:hover {
+          background: colors.$color-surface-hover;
+          color: colors.$color-primary;
+        }
+
+        &.danger:hover {
+          background: color-mix(in srgb, colors.$color-danger 12%, colors.$color-surface-card);
+          color: colors.$color-danger;
+        }
+      }
+
+      .toolbar-divider {
+        background: colors.$color-surface-border;
+      }
+    }
+  }
+
+  .form-help-section {
+    .form-field-demo {
+      .field-label {
+        color: colors.$color-text-primary;
+
+        .help-icon {
+          color: colors.$color-text-secondary;
+
+          &:hover {
+            color: colors.$color-primary;
+          }
+
+          &.warning {
+            color: colors.$color-warning;
+            &:hover {
+              color: colors.$color-warning;
+            }
+          }
+        }
+      }
+
+      .demo-input {
+        border-color: colors.$color-surface-border;
+        color: colors.$color-text-primary;
+        background: colors.$color-surface-card;
+
+        &::placeholder {
+          color: colors.$color-text-secondary;
+        }
+
+        &:focus {
+          border-color: colors.$color-primary;
+          box-shadow: 0 0 0 3px color-mix(in srgb, colors.$color-primary 15%, transparent);
+        }
+      }
+    }
+  }
+
+  .timing-section {
+    .timing-examples {
+      .timing-item {
+        .timing-label {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+  }
+
+  .truncated-section {
+    .truncated-examples {
+      .truncated-item {
+        background: colors.$color-surface-ground;
+        border-color: colors.$color-surface-hover;
+
+        &:hover {
+          background: colors.$color-surface-section;
+          border-color: colors.$color-primary;
+        }
+
+        .file-icon {
+          color: colors.$color-danger;
+
+          &.excel {
+            color: colors.$color-success;
+          }
+        }
+
+        .truncated-text {
+          color: colors.$color-text-primary;
+        }
+      }
+    }
+  }
+
+  .status-section {
+    .status-examples {
+      .status-item {
+        .status-badge {
+          &.success {
+            background: color-mix(in srgb, colors.$color-success 12%, colors.$color-surface-card);
+            border-color: color-mix(
+              in srgb,
+              colors.$color-success 25%,
+              colors.$color-surface-border
+            );
+            color: colors.$color-success;
+
+            &:hover {
+              background: color-mix(in srgb, colors.$color-success 25%, colors.$color-surface-card);
+            }
+          }
+
+          &.warning {
+            background: color-mix(in srgb, colors.$color-warning 12%, colors.$color-surface-card);
+            border-color: color-mix(
+              in srgb,
+              colors.$color-warning 25%,
+              colors.$color-surface-border
+            );
+            color: colors.$color-warning;
+
+            &:hover {
+              background: color-mix(in srgb, colors.$color-warning 25%, colors.$color-surface-card);
+            }
+          }
+
+          &.danger {
+            background: color-mix(in srgb, colors.$color-danger 12%, colors.$color-surface-card);
+            border-color: color-mix(
+              in srgb,
+              colors.$color-danger 25%,
+              colors.$color-surface-border
+            );
+            color: colors.$color-danger;
+
+            &:hover {
+              background: color-mix(in srgb, colors.$color-danger 25%, colors.$color-surface-card);
+            }
+          }
+
+          &.info {
+            background: color-mix(in srgb, colors.$color-info 12%, colors.$color-surface-card);
+            border-color: color-mix(in srgb, colors.$color-info 25%, colors.$color-surface-border);
+            color: colors.$color-info;
+
+            &:hover {
+              background: color-mix(in srgb, colors.$color-info 25%, colors.$color-surface-card);
+            }
+          }
+        }
+      }
+    }
+  }
+}

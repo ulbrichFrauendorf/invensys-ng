@@ -15,11 +15,8 @@ export function ZIndexUtils(): ZIndexUtilsInterface {
 
   const generateZIndex = (key: string, baseZIndex: number): number => {
     let lastZIndex =
-      zIndexes.length > 0
-        ? zIndexes[zIndexes.length - 1]
-        : { key, value: baseZIndex };
-    let newZIndex =
-      lastZIndex.value + (lastZIndex.key === key ? 0 : baseZIndex) + 2;
+      zIndexes.length > 0 ? zIndexes[zIndexes.length - 1] : { key, value: baseZIndex };
+    let newZIndex = lastZIndex.value + (lastZIndex.key === key ? 0 : baseZIndex) + 2;
 
     zIndexes.push({ key, value: newZIndex });
 

@@ -1,0 +1,6 @@
+@use '../../../../themes/color-variables.scss' as colors;
+@mixin i-dialog-actions-theme() {
+  .dialog-actions {
+    border-top-color: colors.$color-surface-border;
+  }
+}

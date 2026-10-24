@@ -1,10 +1,18 @@
-@use "./chips.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
-@use "../../themes/color-variables" as colors;
+@use './chips.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
+@use '../../themes/color-variables' as colors;
 @include theme.i-chips-theme();
 
-:host { display: block; width: 100%; min-width: 0; max-width: 100%; }
-.i-chips-wrapper { width: 100%; min-width: 0; }
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.i-chips-wrapper {
+  width: 100%;
+  min-width: 0;
+}
 .i-chips-container {
   display: flex;
   align-items: center;
@@ -13,16 +21,50 @@
   min-width: 0;
   box-sizing: border-box;
 }
-.i-chips-viewport { position: relative; flex: 1; min-width: 0; }
-.i-chips-list { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-.i-chips-list i-chip { min-width: 0; max-width: 100%; }
+.i-chips-viewport {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+.i-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.i-chips-list {
+  i-chip {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
 .i-chips-viewport--collapse {
   overflow: hidden;
-  .i-chips-list { flex-wrap: nowrap; }
-  .i-chips-list i-chip { flex-shrink: 0; }
+  .i-chips-list {
+    flex-wrap: nowrap;
+  }
+  .i-chips-list {
+    i-chip {
+      flex-shrink: 0;
+    }
+  }
 }
-.i-chips-viewport--overflow .i-chips-list { visibility: hidden; }
-.i-chips-summary { position: absolute; inset: 0; display: flex; align-items: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; pointer-events: none; }
+.i-chips-viewport--overflow {
+  .i-chips-list {
+    visibility: hidden;
+  }
+}
+.i-chips-summary {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
 .i-chips-clear {
   position: relative;
   z-index: 2;
@@ -35,14 +77,24 @@
   padding: 0;
   border: 0;
   border-radius: vars.$componentBorderRadius;
-  color: colors.$color-text-secondary;
-  background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  &:focus-visible { outline: 2px solid colors.$color-primary; outline-offset: -2px; }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: -2px;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  @media (pointer: coarse) {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
 }
-.i-chips-box { padding: 6px 8px; border-radius: vars.$componentBorderRadius; }
-@media (pointer: coarse) {
-  .i-chips-clear { flex-basis: 44px; width: 44px; height: 44px; }
+.i-chips-box {
+  padding: 6px 8px;
+  border-radius: vars.$componentBorderRadius;
 }

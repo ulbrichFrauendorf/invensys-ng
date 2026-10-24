@@ -1,24 +1,38 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-tooltip-theme() {
   .i-tooltip {
     background-color: colors.$color-component-background-solid;
     color: colors.$color-text-contrast;
 
-    &--above .i-tooltip__arrow {
-      border-top-color: colors.$color-component-background-solid;
+    &--above {
+      .i-tooltip__arrow {
+        border-top-color: colors.$color-component-background-solid;
+      }
     }
 
-    &--below .i-tooltip__arrow {
-      border-bottom-color: colors.$color-component-background-solid;
+    &--below {
+      .i-tooltip__arrow {
+        border-bottom-color: colors.$color-component-background-solid;
+      }
     }
 
-    &--left .i-tooltip__arrow {
-      border-left-color: colors.$color-component-background-solid;
+    &--left {
+      .i-tooltip__arrow {
+        border-left-color: colors.$color-component-background-solid;
+      }
     }
 
-    &--right .i-tooltip__arrow {
-      border-right-color: colors.$color-component-background-solid;
+    &--right {
+      .i-tooltip__arrow {
+        border-right-color: colors.$color-component-background-solid;
+      }
+    }
+  }
+
+  .i-tooltip {
+    &__arrow {
+      border-color: transparent;
     }
   }
 }

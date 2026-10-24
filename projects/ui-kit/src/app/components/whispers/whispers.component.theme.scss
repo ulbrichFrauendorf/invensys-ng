@@ -1,0 +1,12 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin whispers-theme() {
+  .whispers-demo {
+    .setup-info {
+      code {
+        background: colors.$color-surface-hover;
+        color: colors.$color-text-primary;
+      }
+    }
+  }
+}

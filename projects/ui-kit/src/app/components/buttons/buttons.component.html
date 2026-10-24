@@ -1,132 +1,129 @@
-<app-demo-playground class="buttons-demo" title="Button Components" description="Versatile button components with multiple styles, sizes, and variants. Built for consistency and accessibility across your application.">
-  <ng-template appDemoOption="option-1" label="Severity Variants" [selected]="true" [sourceCode]="codeExamples.severities" [tsCode]="tsExamples.basic">
-      <p class="section-description">
-        Buttons come in 7 severity levels for different use cases.
-      </p>
-      <div class="button-examples">
-        @for (severity of severities; track severity) {
-          <i-button [severity]="severity">{{ severity | titlecase }}</i-button>
-        }
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="buttons-demo"
+  title="Buttons"
+  eyebrow="Buttons &amp; Actions"
+  description="Versatile button components with multiple styles, sizes, and variants. Built for consistency and accessibility across your application."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Severity Variants"
+    [selected]="true"
+    [sourceCode]="codeExamples.severities"
+    [tsCode]="tsExamples.basic"
+  >
+    <p class="section-description">Buttons come in 7 severity levels for different use cases.</p>
+    <div class="button-examples">
+      @for (severity of severities; track severity) {
+        <i-button [severity]="severity">{{ severity | titlecase }}</i-button>
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
-      <p class="section-description">
-        Available in small, medium (default), and large sizes.
-      </p>
-      <div class="button-examples align-end">
-        <i-button size="small">Small</i-button>
-        <i-button size="medium">Medium</i-button>
-        <i-button size="large">Large</i-button>
-      </div>
-    </ng-template>
+    <p class="section-description">Available in small, medium (default), and large sizes.</p>
+    <div class="button-examples align-end">
+      <i-button size="small">Small</i-button>
+      <i-button size="medium">Medium</i-button>
+      <i-button size="large">Large</i-button>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Button Styles" [sourceCode]="codeExamples.styles">
-      <p class="section-description">
-        Choose from filled (default), outlined, text, and raised styles.
-      </p>
-      <div class="button-grid">
-        <div class="style-group">
-          <span class="style-label">Filled (Default)</span>
-          <div class="button-examples">
-            <i-button severity="primary">Primary</i-button>
-            <i-button severity="success">Success</i-button>
-            <i-button severity="danger">Danger</i-button>
-          </div>
-        </div>
-        <div class="style-group">
-          <span class="style-label">Outlined</span>
-          <div class="button-examples">
-            <i-button severity="primary" [outlined]="true">Primary</i-button>
-            <i-button severity="success" [outlined]="true">Success</i-button>
-            <i-button severity="danger" [outlined]="true">Danger</i-button>
-          </div>
-        </div>
-        <div class="style-group">
-          <span class="style-label">Text</span>
-          <div class="button-examples">
-            <i-button severity="primary" [text]="true">Primary</i-button>
-            <i-button severity="success" [text]="true">Success</i-button>
-            <i-button severity="danger" [text]="true">Danger</i-button>
-          </div>
-        </div>
-        <div class="style-group">
-          <span class="style-label">Raised</span>
-          <div class="button-examples">
-            <i-button severity="primary" [raised]="true">Primary</i-button>
-            <i-button severity="success" [raised]="true">Success</i-button>
-            <i-button severity="danger" [raised]="true">Danger</i-button>
-          </div>
+    <p class="section-description">
+      Choose from filled (default), outlined, text, and raised styles.
+    </p>
+    <div class="button-grid">
+      <div class="style-group">
+        <span class="style-label">Filled (Default)</span>
+        <div class="button-examples">
+          <i-button severity="primary">Primary</i-button>
+          <i-button severity="success">Success</i-button>
+          <i-button severity="danger">Danger</i-button>
         </div>
       </div>
-    </ng-template>
+      <div class="style-group">
+        <span class="style-label">Outlined</span>
+        <div class="button-examples">
+          <i-button severity="primary" [outlined]="true">Primary</i-button>
+          <i-button severity="success" [outlined]="true">Success</i-button>
+          <i-button severity="danger" [outlined]="true">Danger</i-button>
+        </div>
+      </div>
+      <div class="style-group">
+        <span class="style-label">Text</span>
+        <div class="button-examples">
+          <i-button severity="primary" [text]="true">Primary</i-button>
+          <i-button severity="success" [text]="true">Success</i-button>
+          <i-button severity="danger" [text]="true">Danger</i-button>
+        </div>
+      </div>
+      <div class="style-group">
+        <span class="style-label">Raised</span>
+        <div class="button-examples">
+          <i-button severity="primary" [raised]="true">Primary</i-button>
+          <i-button severity="success" [raised]="true">Success</i-button>
+          <i-button severity="danger" [raised]="true">Danger</i-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Buttons with Icons" [sourceCode]="codeExamples.icons">
-      <p class="section-description">
-        Add icons to buttons using PrimeIcons. Icon-only buttons are
-        automatically styled.
-      </p>
-      <div class="button-grid">
-        <div class="style-group">
-          <span class="style-label">With Text</span>
-          <div class="button-examples">
-            <i-button severity="primary" icon="pi pi-check">Save</i-button>
-            <i-button severity="danger" icon="pi pi-trash" [outlined]="true"
-              >Delete</i-button
-            >
-            <i-button severity="info" icon="pi pi-search" [text]="true"
-              >Search</i-button
-            >
-          </div>
-        </div>
-        <div class="style-group">
-          <span class="style-label">Icon Only</span>
-          <div class="button-examples">
-            <i-button severity="primary" icon="pi pi-check" />
-            <i-button severity="danger" icon="pi pi-trash" [outlined]="true" />
-            <i-button severity="info" icon="pi pi-search" [text]="true" />
-            <i-button severity="contrast" icon="pi pi-cog" [text]="true" />
-          </div>
+  <ng-template
+    appDemoOption="option-4"
+    label="Buttons with Icons"
+    [sourceCode]="codeExamples.icons"
+  >
+    <p class="section-description">
+      Add icons to buttons using PrimeIcons. Icon-only buttons are automatically styled.
+    </p>
+    <div class="button-grid">
+      <div class="style-group">
+        <span class="style-label">With Text</span>
+        <div class="button-examples">
+          <i-button severity="primary" icon="pi pi-check">Save</i-button>
+          <i-button severity="danger" icon="pi pi-trash" [outlined]="true">Delete</i-button>
+          <i-button severity="info" icon="pi pi-search" [text]="true">Search</i-button>
         </div>
       </div>
-    </ng-template>
+      <div class="style-group">
+        <span class="style-label">Icon Only</span>
+        <div class="button-examples">
+          <i-button severity="primary" icon="pi pi-check" />
+          <i-button severity="danger" icon="pi pi-trash" [outlined]="true" />
+          <i-button severity="info" icon="pi pi-search" [text]="true" />
+          <i-button severity="contrast" icon="pi pi-cog" [text]="true" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-5" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <p class="section-description">
-        Fluid buttons expand to fill the full width of their container.
-      </p>
-      <div class="fluid-container">
-        <i-button severity="primary" [fluid]="true">Submit Form</i-button>
-        <i-button severity="secondary" [fluid]="true" [outlined]="true"
-          >Cancel</i-button
-        >
-        <i-button
-          severity="success"
-          [fluid]="true"
-          [raised]="true"
-          icon="pi pi-download"
-          >Download Report</i-button
-        >
-      </div>
-    </ng-template>
+    <p class="section-description">
+      Fluid buttons expand to fill the full width of their container.
+    </p>
+    <div class="fluid-container">
+      <i-button severity="primary" [fluid]="true">Submit Form</i-button>
+      <i-button severity="secondary" [fluid]="true" [outlined]="true">Cancel</i-button>
+      <i-button severity="success" [fluid]="true" [raised]="true" icon="pi pi-download"
+        >Download Report</i-button
+      >
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Disabled State" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Disabled%20buttons%20prevent%20user%20interaction%20and%20display%20a%20muted%0A%20%20%20%20%20%20%20%20appearance.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22button-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22primary%22%20%5Bdisabled%5D%3D%22true%22%3EPrimary%3C%2Fi-button%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22success%22%20%5Boutlined%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EOutlined%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22info%22%20%5Btext%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EText%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22warning%22%20%5Braised%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3ERaised%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20icon%3D%22pi%20pi-trash%22%20%5Bdisabled%5D%3D%22true%22%20%2F%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <p class="section-description">
-        Disabled buttons prevent user interaction and display a muted
-        appearance.
-      </p>
-      <div class="button-examples">
-        <i-button severity="primary" [disabled]="true">Primary</i-button>
-        <i-button severity="success" [outlined]="true" [disabled]="true"
-          >Outlined</i-button
-        >
-        <i-button severity="info" [text]="true" [disabled]="true"
-          >Text</i-button
-        >
-        <i-button severity="warning" [raised]="true" [disabled]="true"
-          >Raised</i-button
-        >
-        <i-button severity="danger" icon="pi pi-trash" [disabled]="true" />
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-6"
+    label="Disabled State"
+    sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Disabled%20buttons%20prevent%20user%20interaction%20and%20display%20a%20muted%0A%20%20%20%20%20%20%20%20appearance.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22button-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22primary%22%20%5Bdisabled%5D%3D%22true%22%3EPrimary%3C%2Fi-button%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22success%22%20%5Boutlined%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EOutlined%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22info%22%20%5Btext%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3EText%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22warning%22%20%5Braised%5D%3D%22true%22%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%3ERaised%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20icon%3D%22pi%20pi-trash%22%20%5Bdisabled%5D%3D%22true%22%20%2F%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <p class="section-description">
+      Disabled buttons prevent user interaction and display a muted appearance.
+    </p>
+    <div class="button-examples">
+      <i-button severity="primary" [disabled]="true">Primary</i-button>
+      <i-button severity="success" [outlined]="true" [disabled]="true">Outlined</i-button>
+      <i-button severity="info" [text]="true" [disabled]="true">Text</i-button>
+      <i-button severity="warning" [raised]="true" [disabled]="true">Raised</i-button>
+      <i-button severity="danger" icon="pi pi-trash" [disabled]="true" />
+    </div>
+  </ng-template>
 </app-demo-playground>

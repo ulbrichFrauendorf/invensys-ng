@@ -13,8 +13,18 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 export class CardButtonsComponent {
   readonly activeTool = signal('password');
   readonly cardTools = [
-    { key: 'password', title: 'Add password', description: 'Protect your PDFs with a password', icon: 'pi pi-lock' },
-    { key: 'watermark', title: 'Add watermark', description: 'Add your text to every page', icon: 'pi pi-pencil' },
+    {
+      key: 'password',
+      title: 'Add password',
+      description: 'Protect your PDFs with a password',
+      icon: 'pi pi-lock',
+    },
+    {
+      key: 'watermark',
+      title: 'Add watermark',
+      description: 'Add your text to every page',
+      icon: 'pi pi-pencil',
+    },
   ];
 
   readonly codeExamples = {

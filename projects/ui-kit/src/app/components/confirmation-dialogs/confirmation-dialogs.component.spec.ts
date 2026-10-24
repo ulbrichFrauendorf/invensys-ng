@@ -17,9 +17,7 @@ describe('Confirmation dialog playground', () => {
 
   it('updates displayed code when options are enabled, edited, and removed', () => {
     const component = fixture.componentInstance;
-    fixture.nativeElement
-      .querySelector('button[aria-label="View code"]')
-      .click();
+    fixture.nativeElement.querySelector('button[aria-label="View code"]').click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const displayedCode = () =>
@@ -30,12 +28,8 @@ describe('Confirmation dialog playground', () => {
     component.setValue('acceptLabel', 'Delete "this" item\nnow');
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(displayedCode()).toContain(
-      'acceptLabel: "Delete \\"this\\" item\\nnow"',
-    );
-    expect(component.configuration().acceptLabel).toBe(
-      'Delete "this" item\nnow',
-    );
+    expect(displayedCode()).toContain('acceptLabel: "Delete \\"this\\" item\\nnow"');
+    expect(component.configuration().acceptLabel).toBe('Delete "this" item\nnow');
 
     component.setEnabled('acceptLabel', false);
     fixture.changeDetectorRef.markForCheck();
@@ -56,26 +50,29 @@ describe('Confirmation dialog playground', () => {
     expect(component.result()).toContain('Accept callback executed');
   });
 
-  it('switches between preview and code in the same card without losing options', () => {
+  it('switches between preview and code in the page body without losing options', () => {
     const element = fixture.nativeElement as HTMLElement;
     const component = fixture.componentInstance;
+    expect(element.querySelector('.page-heading h1')?.textContent).toBe('Confirmation Dialogs');
+    expect(element.querySelector('.page-heading .eyebrow')?.textContent).toBe('Overlays');
+    expect(element.querySelector('.preview-panel')).toBeNull();
+    expect(element.querySelector('.sidebar-right')).not.toBeNull();
+    expect(
+      element.querySelector('.page-header .header-actions button[aria-label="View code"]'),
+    ).not.toBeNull();
     component.setEnabled('severity', true);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
-    element
-      .querySelector<HTMLButtonElement>('button[aria-label="View code"]')!
-      .click();
+    element.querySelector<HTMLButtonElement>('button[aria-label="View code"]')!.click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      element.querySelector('.preview-panel pre code')?.textContent,
-    ).toContain('severity: "danger"');
+    expect(element.querySelector('.page-body pre code')?.textContent).toContain(
+      'severity: "danger"',
+    );
     expect(element.querySelector('.preview-stage')).toBeNull();
 
-    element
-      .querySelector<HTMLButtonElement>('button[aria-label="View preview"]')!
-      .click();
+    element.querySelector<HTMLButtonElement>('button[aria-label="View preview"]')!.click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelector('.preview-stage')).not.toBeNull();

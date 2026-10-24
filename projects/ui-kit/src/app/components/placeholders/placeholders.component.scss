@@ -1,15 +1,16 @@
-@use "../shared-demo-styles.scss" as *;
+@use './placeholders.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .demo-placeholder-container {
   height: 300px;
-}
 
-.demo-placeholder-small {
-  height: 180px;
-}
-
-.demo-placeholder-medium {
-  height: 250px;
+  .upload-icon {
+    font-size: 48px;
+    opacity: 0.5;
+    margin-bottom: 16px;
+    display: block;
+  }
 }
 
 .demo-grid {
@@ -24,48 +25,53 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .demo-placeholder-small {
+    height: 180px;
+  }
+
+  .demo-placeholder-medium {
+    height: 250px;
+  }
 }
 
-// Split view demo styles
 .split-layout-demo {
   display: flex;
   height: 350px;
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
   overflow: hidden;
-}
 
-.list-panel-demo {
-  width: 200px;
-  flex-shrink: 0;
-  border-right: 1px solid var(--surface-border);
-  background: var(--surface-ground);
-}
+  .list-panel-demo {
+    width: 200px;
+    flex-shrink: 0;
+    border-right-width: 1px;
+    border-right-style: solid;
 
-.list-item-demo {
-  padding: 16px;
-  border-bottom: 1px solid var(--surface-border);
-  cursor: pointer;
-  color: var(--color-text-primary);
-  transition: background-color 0.2s;
+    .list-item-demo {
+      padding: 16px;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      cursor: pointer;
+      transition: background-color 0.2s;
 
-  &:hover {
-    background: var(--surface-hover);
+      &:last-child {
+        border-bottom: none;
+      }
+    }
   }
 
-  &:last-child {
-    border-bottom: none;
+  .detail-panel-demo {
+    flex: 1;
+    padding: 16px;
   }
 }
 
-.detail-panel-demo {
-  flex: 1;
-  padding: 16px;
-}
-
-// Placeholder content styling (caller's responsibility)
 i-placeholder {
   i-button {
     margin-top: 16px;
   }
 }
+
+@include theme.placeholders-theme();

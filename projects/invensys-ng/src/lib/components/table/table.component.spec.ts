@@ -90,9 +90,7 @@ describe('ITable', () => {
 
     it('should handle nested field paths', () => {
       const nestedData = { user: { profile: { name: 'John' } } };
-      expect(component.getCellValue(nestedData, 'user.profile.name')).toBe(
-        'John',
-      );
+      expect(component.getCellValue(nestedData, 'user.profile.name')).toBe('John');
     });
 
     it('should return empty string for null/undefined values', () => {
@@ -237,32 +235,20 @@ describe('ITable', () => {
         rows: [mockData[1]],
       });
       await fixture.whenStable();
-      expect(
-        fixture.nativeElement.querySelector('thead')?.textContent,
-      ).toContain('Updated name');
-      expect(
-        fixture.nativeElement.querySelector('tbody')?.textContent,
-      ).toContain('Product B');
-      expect(
-        fixture.nativeElement.querySelector('tbody')?.textContent,
-      ).not.toContain('Product A');
+      expect(fixture.nativeElement.querySelector('thead')?.textContent).toContain('Updated name');
+      expect(fixture.nativeElement.querySelector('tbody')?.textContent).toContain('Product B');
+      expect(fixture.nativeElement.querySelector('tbody')?.textContent).not.toContain('Product A');
     });
     it('sorts the rows without mutating the caller data', () => {
       fixture.componentRef.setInput('sortable', true);
       component.onSortColumn(mockColumns[2]);
-      expect(component.processedData().map((row) => row.price)).toEqual([
-        100, 150, 200, 250, 300,
-      ]);
-      expect(mockData.map((row) => row.price)).toEqual([
-        100, 200, 150, 300, 250,
-      ]);
+      expect(component.processedData().map((row) => row.price)).toEqual([100, 150, 200, 250, 300]);
+      expect(mockData.map((row) => row.price)).toEqual([100, 200, 150, 300, 250]);
     });
     it('renders the empty state when a replacement grid has no rows', async () => {
       fixture.componentRef.setInput('grid', { columns: mockColumns, rows: [] });
       await fixture.whenStable();
-      expect(
-        fixture.nativeElement.querySelector('i-no-content'),
-      ).not.toBeNull();
+      expect(fixture.nativeElement.querySelector('i-no-content')).not.toBeNull();
     });
   });
 
@@ -293,9 +279,7 @@ describe('ITable', () => {
       it('should emit selection events', () => {
         vi.spyOn(component.onRowSelect, 'emit').mockReturnValue(undefined);
         vi.spyOn(component.selectionChange, 'emit').mockReturnValue(undefined);
-        vi.spyOn(component.onSelectionChange, 'emit').mockReturnValue(
-          undefined,
-        );
+        vi.spyOn(component.onSelectionChange, 'emit').mockReturnValue(undefined);
 
         component.toggleRowSelection(mockData[0]);
 
@@ -391,9 +375,7 @@ describe('ITable', () => {
         disabled: true,
         handler: vi.fn(),
       };
-      expect(component.isActionDisabled(disabledAction, mockData[0])).toBe(
-        true,
-      );
+      expect(component.isActionDisabled(disabledAction, mockData[0])).toBe(true);
     });
 
     it('should evaluate function-based disabled', () => {
@@ -402,12 +384,8 @@ describe('ITable', () => {
         handler: vi.fn(),
         disabled: (row) => row.id === 1,
       };
-      expect(component.isActionDisabled(conditionalAction, mockData[0])).toBe(
-        true,
-      );
-      expect(component.isActionDisabled(conditionalAction, mockData[1])).toBe(
-        false,
-      );
+      expect(component.isActionDisabled(conditionalAction, mockData[0])).toBe(true);
+      expect(component.isActionDisabled(conditionalAction, mockData[1])).toBe(false);
     });
   });
 
@@ -447,6 +425,29 @@ describe('ITable', () => {
   });
 
   describe('CSS Classes', () => {
+    it('should toggle the outer border and radius independently of cell borders', () => {
+      const wrapper = fixture.nativeElement.querySelector('.i-table-wrapper');
+      fixture.nativeElement.style.setProperty('--surface-border', 'currentColor');
+
+      expect(component.showBorder).toBe(false);
+      expect(getComputedStyle(wrapper).borderTopStyle).toBe('none');
+      expect(getComputedStyle(wrapper).borderTopLeftRadius).toBe('0px');
+
+      fixture.componentRef.setInput('showBorder', true);
+      fixture.detectChanges();
+      expect(getComputedStyle(wrapper).borderTopStyle).toBe('solid');
+      expect(getComputedStyle(wrapper).borderTopWidth).toBe('1px');
+      expect(getComputedStyle(wrapper).borderTopLeftRadius).toBe('8px');
+      expect(component.bordered).toBe(false);
+
+      fixture.componentRef.setInput('showBorder', false);
+      fixture.componentRef.setInput('bordered', true);
+      fixture.detectChanges();
+      expect(getComputedStyle(wrapper).borderTopStyle).toBe('none');
+      expect(getComputedStyle(wrapper).borderTopLeftRadius).toBe('0px');
+      expect(getComputedStyle(wrapper.querySelector('td')).borderTopStyle).toBe('solid');
+    });
+
     it('should return correct table classes', () => {
       const classes = component.getTableClasses();
       expect(classes['i-table']).toBe(true);

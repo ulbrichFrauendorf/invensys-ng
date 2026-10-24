@@ -6,12 +6,20 @@ import {
   Input,
   QueryList,
   signal,
-  ChangeDetectionStrategy
+  computed,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { IButton } from '@shared/components/button/button.component';
-import { ICheckbox } from '@shared/components/checkbox/checkbox.component';
+import { FormsModule } from '@angular/forms';
+import { IRadioButton } from '@shared/components/radio-button/radio-button.component';
+import { UniqueComponentId } from '@shared/utils/uniquecomponentid';
 import { CodeDisplayComponent } from '../code-display/code-display.component';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import {
+  PageHeaderActionsDirective,
+  PageSidebarDirective,
+} from '@shared/components/page-layout/page-layout-slots.directive';
 import {
   DemoOptionDirective,
   DemoOptionsDirective,
@@ -22,13 +30,23 @@ import {
 @Component({
   selector: 'app-demo-playground',
   standalone: true,
-  imports: [NgTemplateOutlet, IButton, ICheckbox, CodeDisplayComponent],
+  imports: [
+    NgTemplateOutlet,
+    IButton,
+    FormsModule,
+    IRadioButton,
+    CodeDisplayComponent,
+    PageLayoutComponent,
+    PageHeaderActionsDirective,
+    PageSidebarDirective,
+  ],
   templateUrl: './demo-playground.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './demo-playground.component.scss',
 })
 export class DemoPlaygroundComponent implements AfterContentInit {
   @Input() title = 'Component';
+  @Input() eyebrow = '';
   @Input() description = '';
   @Input() sourceCode = '';
   @Input() tsCode = '';
@@ -42,60 +60,29 @@ export class DemoPlaygroundComponent implements AfterContentInit {
   @ContentChild(DemoUsageDirective) usageNotes?: DemoUsageDirective;
 
   readonly options = signal<DemoOptionDirective[]>([]);
-  readonly selectedKeys = signal<ReadonlySet<string>>(new Set());
+  readonly selectedKey = signal<string | null>(null);
+  readonly optionGroupName = UniqueComponentId('demo-options-');
   readonly showCode = signal(false);
 
   ngAfterContentInit(): void {
     const options = this.optionTemplates.toArray();
     this.options.set(options);
-    this.selectedKeys.set(
-      new Set(options.filter(option => option.selected).map(option => option.key)),
-    );
+    this.selectedKey.set((options.find((option) => option.selected) ?? options[0])?.key ?? null);
   }
 
-  isSelected(key: string): boolean {
-    return this.selectedKeys().has(key);
+  readonly selectedOption = computed(() =>
+    this.options().find((option) => option.key === this.selectedKey()),
+  );
+
+  htmlCode(): string {
+    return this.sourceCode || this.selectedOption()?.code || '';
   }
 
-  setSelected(key: string, selected: boolean): void {
-    this.selectedKeys.update(current => {
-      const next = new Set(current);
-      if (selected) next.add(key);
-      else next.delete(key);
-      return next;
-    });
+  typescriptCode(): string {
+    return this.tsCode || this.selectedOption()?.tsCode || '';
   }
 
-  get selectedOptions(): DemoOptionDirective[] {
-    const selected = this.selectedKeys();
-    return this.options().filter(option => selected.has(option.key));
-  }
-
-  get htmlCode(): string {
-    if (this.sourceCode) return this.sourceCode;
-
-    const options = this.selectedOptions;
-    if (!options.length) return '<!-- Select an option to generate code. -->';
-
-    return options
-      .map(
-        option =>
-          `<!-- ${option.label} -->\n${option.code || '<!-- Example markup is not available. -->'}`,
-      )
-      .join('\n\n');
-  }
-
-  get typescriptCode(): string {
-    if (this.tsCode) return this.tsCode;
-    return this.joinCode(this.selectedOptions.map(option => option.tsCode));
-  }
-
-  get stylesheetCode(): string {
-    if (this.scssCode) return this.scssCode;
-    return this.joinCode(this.selectedOptions.map(option => option.scssCode));
-  }
-
-  private joinCode(snippets: string[]): string {
-    return [...new Set(snippets.filter(Boolean))].join('\n\n');
+  stylesheetCode(): string {
+    return this.scssCode || this.selectedOption()?.scssCode || '';
   }
 }

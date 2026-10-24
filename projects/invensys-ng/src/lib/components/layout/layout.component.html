@@ -14,15 +14,11 @@
         <i-sidebar [menuModel]="menuModel" />
       </div>
       <div class="layout-main-container" #mainContainer>
-        @if (
-          config.enablePullToRefresh && layoutService.state().isMobileViewport
-        ) {
+        @if (config.enablePullToRefresh && layoutService.state().isMobileViewport) {
           <div
             class="pull-to-refresh-indicator"
             [style.transform]="
-              'translateY(' +
-              Math.max(-INDICATOR_OFFSET, pullDistance() - INDICATOR_OFFSET) +
-              'px)'
+              'translateY(' + Math.max(-INDICATOR_OFFSET, pullDistance() - INDICATOR_OFFSET) + 'px)'
             "
             [style.opacity]="Math.min(1, pullDistance() / PULL_THRESHOLD)"
           >
@@ -32,10 +28,10 @@
             <div class="refresh-text">
               {{
                 isRefreshing()
-                  ? "Refreshing..."
+                  ? 'Refreshing...'
                   : pullDistance() >= PULL_THRESHOLD
-                    ? "Release to refresh"
-                    : "Pull to refresh"
+                    ? 'Release to refresh'
+                    : 'Pull to refresh'
               }}
             </div>
           </div>

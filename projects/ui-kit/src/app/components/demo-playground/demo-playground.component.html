@@ -1,70 +1,79 @@
-<div class="demo-playground">
-  <div class="playground">
-    <section class="preview-panel" aria-labelledby="demo-preview-heading">
-      <div class="panel-heading preview-heading">
-        <div>
-          <h3 id="demo-preview-heading">{{ title }}</h3>
-          <p>{{ showCode() ? 'Code' : 'Preview' }}</p>
-        </div>
-        <i-button
-          size="small"
-          severity="secondary"
-          [text]="true"
-          [icon]="showCode() ? 'pi pi-eye' : 'pi pi-code'"
-          [ariaLabel]="showCode() ? 'View preview' : 'View code'"
-          [title]="showCode() ? 'View preview' : 'View code'"
-          (clicked)="showCode.set(!showCode())"
-        />
-      </div>
-
-      <div class="panel-content">
-        @if (showCode()) {
-          <app-code-display
-            class="code-view"
-            [sourceCode]="htmlCode"
-            [tsCode]="typescriptCode"
-            [scssCode]="stylesheetCode"
-            [language]="language"
-            [embedded]="true"
-          />
-        } @else if (customPreview) {
-          <ng-container [ngTemplateOutlet]="customPreview.templateRef" />
-        } @else if (selectedOptions.length) {
-          <div class="preview-stage">
-            @for (option of selectedOptions; track option.key) {
-              <ng-container [ngTemplateOutlet]="option.templateRef" />
-            }
-          </div>
-        } @else {
-          <div class="preview-stage empty-preview">
-            <p>Select an option to preview the component.</p>
+<i-page-layout [headerText]="title" [eyebrowText]="eyebrow" sidebarPosition="right">
+  <div iPageHeaderActions>
+    <i-button
+      size="small"
+      severity="secondary"
+      [text]="true"
+      [icon]="showCode() ? 'pi pi-eye' : 'pi pi-code'"
+      [ariaLabel]="showCode() ? 'View preview' : 'View code'"
+      (clicked)="showCode.set(!showCode())"
+    >
+      {{ showCode() ? 'Preview' : 'Code' }}
+    </i-button>
+  </div>
+  <section iPageSidebar class="options-panel" aria-labelledby="demo-options-heading">
+    <div class="panel-heading">
+      <h2 id="demo-options-heading">Options</h2>
+      @if (description) {
+        <p>{{ description }}</p>
+      }
+    </div>
+    @if (customOptions) {
+      <ng-container [ngTemplateOutlet]="customOptions.templateRef" />
+    } @else {
+      <div class="options-list" role="radiogroup" aria-label="Demo examples">
+        @for (option of options(); track option.key) {
+          <div class="option-row">
+            <i-radio-button
+              [inputId]="optionGroupName + '-' + option.key"
+              [name]="optionGroupName"
+              [value]="option.key"
+              [label]="option.label"
+              [ngModel]="selectedKey()"
+              (ngModelChange)="selectedKey.set($event)"
+              [ngModelOptions]="{ standalone: true }"
+            />
           </div>
         }
       </div>
-    </section>
-
-    <section class="options-panel" aria-labelledby="demo-options-heading">
-      <div class="panel-heading">
-        <h2 id="demo-options-heading">Options</h2>
-        <p>{{ description || 'Choose the examples to include in the preview.' }}</p>
-      </div>
-      @if (customOptions) {
-        <ng-container [ngTemplateOutlet]="customOptions.templateRef" />
+    }
+  </section>
+  <div class="demo-content">
+    @if (showCode()) {
+      @let html = htmlCode();
+      @let typescript = typescriptCode();
+      @let stylesheet = stylesheetCode();
+      @if (html || typescript || stylesheet) {
+        <app-code-display
+          class="code-view"
+          [sourceCode]="html"
+          [tsCode]="typescript"
+          [scssCode]="stylesheet"
+          [language]="language"
+          [embedded]="true"
+        />
       } @else {
-        <div class="options-list">
-          @for (option of options(); track option.key) {
-            <div class="option-row">
-              <i-checkbox
-                [id]="'demo-option-' + option.key"
-                [label]="option.label"
-                [checked]="isSelected(option.key)"
-                (onChange)="setSelected(option.key, $event)"
-              />
-            </div>
-          }
+        <div class="preview-stage empty-preview">
+          <p>
+            {{
+              selectedOption()
+                ? 'No code is available for this example.'
+                : 'Select an option to view its code.'
+            }}
+          </p>
         </div>
       }
-    </section>
+    } @else if (customPreview) {
+      <ng-container [ngTemplateOutlet]="customPreview.templateRef" />
+    } @else {
+      <div class="preview-stage" [class.empty-preview]="!selectedOption()">
+        @if (selectedOption(); as option) {
+          <ng-container [ngTemplateOutlet]="option.templateRef" />
+        } @else {
+          <p>Select an option to preview the component.</p>
+        }
+      </div>
+    }
   </div>
 
   @if (usageNotes) {
@@ -73,4 +82,4 @@
       <ng-container [ngTemplateOutlet]="usageNotes.templateRef" />
     </section>
   }
-</div>
+</i-page-layout>

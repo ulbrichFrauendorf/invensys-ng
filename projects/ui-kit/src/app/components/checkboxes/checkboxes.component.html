@@ -1,161 +1,143 @@
-<app-demo-playground class="checkboxes-demo" title="Checkbox Components" description="Versatile checkbox components with full form integration support. Compatible with ngModel and reactive forms with proper accessibility.">
-  <ng-template appDemoOption="option-1" label="Basic ngModel Usage" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
-      <div class="checkbox-examples">
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="basicChecked"
-            (onChange)="onBasicChange($event)"
-          />
-          <span class="status"
-            >Status: {{ basicChecked ? "Checked" : "Unchecked" }}</span
-          >
-        </div>
+<app-demo-playground
+  class="checkboxes-demo"
+  title="Checkboxes"
+  eyebrow="Form Controls"
+  description="Versatile checkbox components with full form integration support. Compatible with ngModel and reactive forms with proper accessibility."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic ngModel Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.ngModel"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="checkbox-examples">
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="basicChecked" (onChange)="onBasicChange($event)" />
+        <span class="status">Status: {{ basicChecked ? 'Checked' : 'Unchecked' }}</span>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Checkboxes with Labels" [sourceCode]="codeExamples.ngModel">
-      <div class="checkbox-examples">
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="checkedWithLabel"
-            label="Accept terms and conditions"
-          />
-        </div>
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="basicChecked"
-            inputId="custom-id"
-            label="Custom input ID"
-          />
-        </div>
+  <ng-template
+    appDemoOption="option-2"
+    label="Checkboxes with Labels"
+    [sourceCode]="codeExamples.ngModel"
+  >
+    <div class="checkbox-examples">
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="checkedWithLabel" label="Accept terms and conditions" />
       </div>
-    </ng-template>
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="basicChecked" inputId="custom-id" label="Custom input ID" />
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Checkbox States" [sourceCode]="codeExamples.ngModel">
-      <div class="checkbox-examples">
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="disabledChecked"
-            [disabled]="true"
-            label="Disabled checkbox"
-          />
-        </div>
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="readonlyChecked"
-            [readonly]="true"
-            label="Readonly checkbox"
-          />
-        </div>
+    <div class="checkbox-examples">
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="disabledChecked" [disabled]="true" label="Disabled checkbox" />
       </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Checkbox Sizes" [sourceCode]="codeExamples.sizes" [tsCode]="tsExamples.ngModel">
-      <div class="checkbox-examples">
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="smallChecked"
-            size="small"
-            label="Small checkbox"
-          />
-        </div>
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="mediumChecked"
-            size="medium"
-            label="Medium checkbox"
-          />
-        </div>
-        <div class="example-row">
-          <i-checkbox
-            [(ngModel)]="largeChecked"
-            size="large"
-            label="Large checkbox"
-          />
-        </div>
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="readonlyChecked" [readonly]="true" label="Readonly checkbox" />
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Reactive Forms - FormControl" [sourceCode]="codeExamples.formControl" [tsCode]="tsExamples.formControl">
-      <div class="checkbox-examples">
-        <div class="example-row">
-          <i-checkbox
-            [formControl]="formControlExample"
-            label="FormControl checkbox"
-          />
-          <span class="status">Value: {{ formControlExample.value }}</span>
-        </div>
-        <div class="example-row">
-          <i-button
-            severity="secondary"
-            [text]="true"
-            (clicked)="formControlExample.setValue(!formControlExample.value)"
-          >
-            Toggle via FormControl
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="formControlExample.disable()"
-            [disabled]="formControlExample.disabled"
-          >
-            Disable
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="formControlExample.enable()"
-            [disabled]="!formControlExample.disabled"
-          >
-            Enable
-          </i-button>
-        </div>
+  <ng-template
+    appDemoOption="option-4"
+    label="Checkbox Sizes"
+    [sourceCode]="codeExamples.sizes"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="checkbox-examples">
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="smallChecked" size="small" label="Small checkbox" />
       </div>
-    </ng-template>
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="mediumChecked" size="medium" label="Medium checkbox" />
+      </div>
+      <div class="example-row">
+        <i-checkbox [(ngModel)]="largeChecked" size="large" label="Large checkbox" />
+      </div>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Reactive Forms - FormGroup" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <div class="checkbox-examples">
-        <form [formGroup]="userPreferencesForm" (ngSubmit)="onFormSubmit()">
-          <div class="form-section">
-            <h4>User Preferences</h4>
-            <div class="example-row">
-              <i-checkbox
-                formControlName="notifications"
-                label="Email notifications"
-              />
-            </div>
-            <div class="example-row">
-              <i-checkbox
-                formControlName="newsletter"
-                label="Subscribe to newsletter"
-              />
-            </div>
-            <div class="example-row">
-              <i-checkbox
-                formControlName="marketing"
-                label="Marketing communications"
-              />
-            </div>
-            <div class="example-row">
-              <i-checkbox formControlName="analytics" label="Usage analytics" />
-            </div>
+  <ng-template
+    appDemoOption="option-5"
+    label="Reactive Forms - FormControl"
+    [sourceCode]="codeExamples.formControl"
+    [tsCode]="tsExamples.formControl"
+  >
+    <div class="checkbox-examples">
+      <div class="example-row">
+        <i-checkbox [formControl]="formControlExample" label="FormControl checkbox" />
+        <span class="status">Value: {{ formControlExample.value }}</span>
+      </div>
+      <div class="example-row">
+        <i-button
+          severity="secondary"
+          [text]="true"
+          (clicked)="formControlExample.setValue(!formControlExample.value)"
+        >
+          Toggle via FormControl
+        </i-button>
+        <i-button
+          severity="secondary"
+          (clicked)="formControlExample.disable()"
+          [disabled]="formControlExample.disabled"
+        >
+          Disable
+        </i-button>
+        <i-button
+          severity="secondary"
+          (clicked)="formControlExample.enable()"
+          [disabled]="!formControlExample.disabled"
+        >
+          Enable
+        </i-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-6"
+    label="Reactive Forms - FormGroup"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <div class="checkbox-examples">
+      <form [formGroup]="userPreferencesForm" (ngSubmit)="onFormSubmit()">
+        <div class="form-section">
+          <h4>User Preferences</h4>
+          <div class="example-row">
+            <i-checkbox formControlName="notifications" label="Email notifications" />
           </div>
-
-          <div class="form-actions">
-            <i-button severity="primary" type="submit">Submit</i-button>
-            <i-button severity="secondary" (clicked)="selectAll()">
-              Select All
-            </i-button>
-            <i-button severity="secondary" (clicked)="resetForm()">
-              Reset
-            </i-button>
+          <div class="example-row">
+            <i-checkbox formControlName="newsletter" label="Subscribe to newsletter" />
           </div>
-        </form>
-
-        <div class="form-output">
-          <h5>Form Value:</h5>
-          <pre>{{ userPreferencesForm.value | json }}</pre>
-          <h5>Form Status:</h5>
-          <pre>{{ userPreferencesForm.status }}</pre>
+          <div class="example-row">
+            <i-checkbox formControlName="marketing" label="Marketing communications" />
+          </div>
+          <div class="example-row">
+            <i-checkbox formControlName="analytics" label="Usage analytics" />
+          </div>
         </div>
+
+        <div class="form-actions">
+          <i-button severity="primary" type="submit">Submit</i-button>
+          <i-button severity="secondary" (clicked)="selectAll()"> Select All </i-button>
+          <i-button severity="secondary" (clicked)="resetForm()"> Reset </i-button>
+        </div>
+      </form>
+
+      <div class="form-output">
+        <h5>Form Value:</h5>
+        <pre>{{ userPreferencesForm.value | json }}</pre>
+        <h5>Form Status:</h5>
+        <pre>{{ userPreferencesForm.status }}</pre>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

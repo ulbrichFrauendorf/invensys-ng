@@ -61,9 +61,7 @@ describe('IAccordion', () => {
       fixture.componentRef.setInput('header', 'My Accordion Title');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      const titleElement = fixture.debugElement.query(
-        By.css('.i-accordion-title'),
-      );
+      const titleElement = fixture.debugElement.query(By.css('.i-accordion-title'));
       expect(titleElement.nativeElement.textContent).toBe('My Accordion Title');
     });
 
@@ -71,9 +69,7 @@ describe('IAccordion', () => {
       fixture.componentRef.setInput('icon', 'pi pi-info-circle');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      const iconElement = fixture.debugElement.query(
-        By.css('.i-accordion-icon'),
-      );
+      const iconElement = fixture.debugElement.query(By.css('.i-accordion-icon'));
       expect(iconElement).toBeTruthy();
       expect(iconElement.nativeElement.classList).toContain('pi-info-circle');
     });
@@ -81,9 +77,7 @@ describe('IAccordion', () => {
     it('should not display icon when not provided', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      const iconElement = fixture.debugElement.query(
-        By.css('.i-accordion-icon'),
-      );
+      const iconElement = fixture.debugElement.query(By.css('.i-accordion-icon'));
       expect(iconElement).toBeFalsy();
     });
   });
@@ -154,9 +148,7 @@ describe('IAccordion', () => {
       fixture.componentRef.setInput('expanded', false);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      const contentWrapper = fixture.debugElement.query(
-        By.css('.i-accordion-content-wrapper'),
-      );
+      const contentWrapper = fixture.debugElement.query(By.css('.i-accordion-content-wrapper'));
       expect(contentWrapper.nativeElement.classList).toContain('collapsed');
     });
 
@@ -164,9 +156,7 @@ describe('IAccordion', () => {
       fixture.componentRef.setInput('expanded', true);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      const contentWrapper = fixture.debugElement.query(
-        By.css('.i-accordion-content-wrapper'),
-      );
+      const contentWrapper = fixture.debugElement.query(By.css('.i-accordion-content-wrapper'));
       expect(contentWrapper.nativeElement.classList).not.toContain('collapsed');
     });
   });

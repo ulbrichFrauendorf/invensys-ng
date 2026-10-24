@@ -36,7 +36,7 @@
         tooltipPosition="below"
         [tooltipDelay]="100"
       />
-      @if (type === "number" && !disabled && !readonly) {
+      @if (type === 'number' && !disabled && !readonly) {
         <div class="i-input-spinners">
           <button
             type="button"
@@ -60,12 +60,9 @@
       }
     </div>
     @if (useFloatLabel) {
-      <label
-        [for]="id || componentId"
-        class="i-label"
-        [class.floated]="forceFloated || hasValue"
-        >{{ label }}</label
-      >
+      <label [for]="id || componentId" class="i-label" [class.floated]="forceFloated || hasValue">{{
+        label
+      }}</label>
     }
     <ng-content></ng-content>
   </div>

@@ -26,19 +26,28 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-input-texts',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IInputText, ITextarea, ISelect, IMultiSelect, ICalendar,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
+    IInputText,
+    ITextarea,
+    ISelect,
+    IMultiSelect,
+    ICalendar,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './input-texts.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './input-texts.component.scss',
 })
 export class InputTextsComponent implements OnInit {
   labelSurfaces = ['ground', 'tinted', 'gradient'];
-  labelOptions = [{ label: 'Alpha', value: 'alpha' }, { label: 'Beta', value: 'beta' }];
+  labelOptions = [
+    { label: 'Alpha', value: 'alpha' },
+    { label: 'Beta', value: 'beta' },
+  ];
   labelDate = new Date(2026, 9, 16);
 
   basicForm: FormGroup;

@@ -1,0 +1,26 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin placeholders-theme() {
+  .demo-placeholder-container {
+    .upload-icon {
+      color: colors.$color-primary;
+    }
+  }
+
+  .split-layout-demo {
+    border-color: colors.$color-surface-border;
+
+    .list-panel-demo {
+      border-right-color: colors.$color-surface-border;
+      background: colors.$color-surface-ground;
+      .list-item-demo {
+        border-bottom-color: colors.$color-surface-border;
+        color: colors.$color-text-primary;
+
+        &:hover {
+          background: colors.$color-surface-hover;
+        }
+      }
+    }
+  }
+}

@@ -1,17 +1,12 @@
-@use "../shared-demo-styles.scss" as *;
+@use './accordions.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .accordions-demo {
-
   .accordion-examples {
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    .example-description {
-      margin: 0 0 8px 0;
-      color: var(--text-color-secondary);
-      font-size: 14px;
-    }
 
     .control-buttons {
       display: flex;
@@ -22,10 +17,9 @@
 
       .demo-button {
         padding: 8px 16px;
-        border: 1px solid var(--surface-border);
+        border-width: 1px;
+        border-style: solid;
         border-radius: 6px;
-        background: var(--color-primary);
-        color: var(--color-text-contrast);
         cursor: pointer;
         font-size: 14px;
         font-weight: 500;
@@ -42,7 +36,6 @@
 
       .status {
         font-size: 14px;
-        color: var(--text-color-secondary);
         font-weight: 500;
       }
     }
@@ -53,8 +46,9 @@
 
       li {
         margin-bottom: 4px;
-        color: var(--color-text-secondary);
       }
     }
   }
 }
+
+@include theme.accordions-theme();

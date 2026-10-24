@@ -1,4 +1,6 @@
-@use "../shared-demo-styles.scss" as *;
+@use './chips.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .chip-examples {
   @extend .demo-examples;
@@ -10,29 +12,16 @@
   i-chips {
     width: 100%;
   }
-}
 
-.chips-container-empty {
-  margin-top: 8px;
-  font-size: 14.4px;
-  color: var(--i-color-text-secondary, #6c757d);
-}
-
-.reset-button {
-  padding: 8px 16px;
-  border: 1px solid var(--i-color-primary, #3b82f6);
-  border-radius: 6px;
-  background-color: var(--i-color-primary, #3b82f6);
-  color: white;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: var(--i-color-primary-hover, #2563eb);
-  }
-
-  &:active {
-    background-color: var(--i-color-primary-active, #1d4ed8);
+  .reset-button {
+    padding: 8px 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
   }
 }
+
+@include theme.chips-theme();

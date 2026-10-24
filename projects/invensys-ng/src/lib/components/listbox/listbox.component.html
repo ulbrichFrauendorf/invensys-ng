@@ -59,7 +59,9 @@
 
     <div class="i-listbox-options">
       @for (option of filteredOptions(); track getOptionValue(option)) {
-        <button type="button" [disabled]="disabled"
+        <button
+          type="button"
+          [disabled]="disabled"
           class="i-listbox-option"
           [attr.aria-pressed]="isOptionSelected(option)"
           [class.selected]="isOptionSelected(option)"
@@ -68,9 +70,12 @@
         >
           <!-- Checkbox only in multiple mode -->
           @if (multiple) {
-            <span aria-hidden="true" class="pi i-listbox-checkbox"
+            <span
+              aria-hidden="true"
+              class="pi i-listbox-checkbox"
               [class.pi-check-square]="isOptionSelected(option)"
-              [class.pi-stop]="!isOptionSelected(option)"></span>
+              [class.pi-stop]="!isOptionSelected(option)"
+            ></span>
           }
 
           <!-- Left icon -->
@@ -87,9 +92,7 @@
 
           <!-- Right chevron for menu mode -->
           @if (displayAsMenu) {
-            <i
-              class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"
-            ></i>
+            <i class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"></i>
           }
         </button>
       }

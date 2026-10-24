@@ -5,7 +5,7 @@ import {
   QueryList,
   AfterContentInit,
   OnDestroy,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IAccordion } from '../accordion/accordion.component';

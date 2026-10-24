@@ -35,9 +35,7 @@ export class LayoutService {
 
   public colorScheme = signal(this.config().colorScheme);
 
-  state: WritableSignal<LayoutState> = signal<LayoutState>(
-    this.createInitialLayoutState(),
-  );
+  state: WritableSignal<LayoutState> = signal<LayoutState>(this.createInitialLayoutState());
 
   private configUpdate = new Subject<AppConfig>();
 
@@ -73,9 +71,7 @@ export class LayoutService {
 
   closeSidebar() {
     this.state.update((currentState) =>
-      currentState.isSidebarOpen
-        ? { ...currentState, isSidebarOpen: false }
-        : currentState,
+      currentState.isSidebarOpen ? { ...currentState, isSidebarOpen: false } : currentState,
     );
   }
 

@@ -1,0 +1,28 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin radio-buttons-theme() {
+  .radio-buttons-demo {
+    .radio-examples {
+      .status {
+        color: colors.$color-text-secondary;
+        background: colors.$color-surface-section;
+      }
+    }
+
+    .form-group {
+      .group-label {
+        color: colors.$color-text-primary;
+      }
+    }
+
+    .form-output {
+      background: colors.$color-surface-section;
+      border-color: colors.$color-surface-border;
+
+      pre {
+        background: colors.$color-surface-ground;
+        border-color: colors.$color-surface-border;
+      }
+    }
+  }
+}

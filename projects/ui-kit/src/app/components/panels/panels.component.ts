@@ -7,11 +7,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-panels',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IPanel,
-    IRadioButton,
-    FormsModule,
-    ],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IPanel, IRadioButton, FormsModule],
   templateUrl: './panels.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './panels.component.scss',

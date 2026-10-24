@@ -1,23 +1,18 @@
-@use "../shared-demo-styles.scss" as *;
+@use './tables.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .visual-examples {
   display: flex;
   flex-direction: column;
   gap: 24px;
-
-  .visual-example {
-    h4 {
-      margin-bottom: 12px;
-      color: var(--color-primary);
-      font-weight: 600;
-    }
-  }
 }
 
 .selection-info {
   margin-bottom: 12px;
   padding: 8px 12px;
-  background: var(--surface-100, #f8f9fa);
   border-radius: 4px;
   font-size: 14.4px;
 }
+
+@include theme.tables-theme();

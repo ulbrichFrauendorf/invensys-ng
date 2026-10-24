@@ -1,22 +1,35 @@
+@use './chart.component.theme.scss' as theme;
+
 :host {
-  // Map global theme variables to chart-specific variables
-  // This allows Chart.js to read the resolved values from the component host
-  --chart-grid-color: var(--surface-border);
-  --chart-text-color: var(--color-text-primary);
-  --chart-text-secondary: var(--color-text-secondary);
+  /* Map global theme variables to chart-specific variables */
+  /* This allows Chart.js to read the resolved values from the component host */
 }
 
 .i-charts-container {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  gap: 4rem;
+  gap: 48px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+  @media (max-width: 768px) {
+    gap: 18px;
+  }
 }
 
 .i-chart-panel {
   flex: 1 1 45%;
   min-width: 300px;
   box-sizing: border-box;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    min-width: 0;
+    flex-basis: auto;
+    max-width: 100%;
+  }
 }
 
 .i-chart-item {
@@ -29,24 +42,22 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem 1rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--surface-border);
-  border-radius: var(--border-radius, 0.5rem);
-  background: var(--surface-card, var(--surface-ground, transparent));
+  gap: 9px 12px;
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--border-radius, 6px);
 }
 
 .i-chart-legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 6px;
   min-width: 0;
-  padding: 0.25rem 0.5rem;
+  padding: 3px 6px;
   border: 0;
-  border-radius: var(--border-radius, 0.5rem);
-  background: transparent;
-  color: var(--chart-text-color);
+  border-radius: var(--border-radius, 6px);
   font: inherit;
   cursor: pointer;
   transition:
@@ -56,7 +67,6 @@
 
 .i-chart-legend-item:hover,
 .i-chart-legend-item:focus-visible {
-  background: var(--surface-hover, rgba(148, 163, 184, 0.12));
   outline: none;
 }
 
@@ -64,16 +74,19 @@
   opacity: 0.55;
 }
 
-.i-chart-legend-item-hidden .i-chart-legend-label {
-  text-decoration: line-through;
+.i-chart-legend-item-hidden {
+  .i-chart-legend-label {
+    text-decoration: line-through;
+  }
 }
 
 .i-chart-legend-marker {
-  width: 0.875rem;
-  height: 0.875rem;
-  flex: 0 0 0.875rem;
-  border: 1px solid;
-  border-radius: 0.25rem;
+  width: 10.5px;
+  height: 10.5px;
+  flex: 0 0 10.5px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
 }
 
 .i-chart-legend-label {
@@ -82,17 +95,4 @@
   white-space: nowrap;
 }
 
-@media (max-width: 768px) {
-  .i-charts-container {
-    flex-direction: column;
-  }
-
-  .i-chart-panel {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .i-charts-container { gap: 1.5rem; }
-  .i-chart-panel { min-width: 0; flex-basis: auto; max-width: 100%; }
-}
+@include theme.i-chart-theme();

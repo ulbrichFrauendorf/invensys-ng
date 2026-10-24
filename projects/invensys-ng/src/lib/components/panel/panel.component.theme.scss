@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-panel-theme() {
   .i-panel {
@@ -19,12 +19,25 @@
       }
     }
 
-    &.i-panel--toggleable .i-panel-header:hover {
-      color: colors.$color-primary;
+    &.i-panel--toggleable {
+      .i-panel-header:hover {
+        color: colors.$color-primary;
+      }
     }
 
     .i-panel-content {
       color: colors.$color-text-primary;
+    }
+  }
+
+  .i-panel {
+    .i-panel-header-wrap {
+      .i-panel-header {
+        background: transparent;
+        &.i-panel-header:where(button) {
+          background: transparent;
+        }
+      }
     }
   }
 }

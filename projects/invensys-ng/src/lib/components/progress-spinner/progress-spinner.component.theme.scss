@@ -1,11 +1,11 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-progress-spinner-theme() {
   .spinner-rings {
     color: colors.$color-primary;
   }
 
-  // Primary
+  /* Primary */
   .spinner--primary {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -17,7 +17,7 @@
     }
   }
 
-  // Secondary
+  /* Secondary */
   .spinner--secondary {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -29,7 +29,7 @@
     }
   }
 
-  // Tertiary
+  /* Tertiary */
   .spinner--tertiary {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -41,7 +41,7 @@
     }
   }
 
-  // Success
+  /* Success */
   .spinner--success {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -53,7 +53,7 @@
     }
   }
 
-  // Info
+  /* Info */
   .spinner--info {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -65,10 +65,10 @@
     }
   }
 
-  // Warning
+  /* Warning */
   .spinner--warning {
     .spinner-rings {
-      color: colors.$color-white;
+      color: colors.$color-text-contrast;
     }
     &--text {
       .spinner-rings {
@@ -77,10 +77,10 @@
     }
   }
 
-  // Danger
+  /* Danger */
   .spinner--danger {
     .spinner-rings {
-      color: colors.$color-white;
+      color: colors.$color-text-contrast;
     }
     &--text {
       .spinner-rings {
@@ -89,7 +89,7 @@
     }
   }
 
-  // Contrast
+  /* Contrast */
   .spinner--contrast {
     .spinner-rings {
       color: colors.$color-contrast-inverse;
@@ -99,5 +99,24 @@
         color: colors.$color-text-secondary;
       }
     }
+  }
+
+  .spinner-ring {
+    border-color: transparent;
+  }
+
+  .spinner-ring-1 {
+    border-top-color: currentColor;
+    border-right-color: currentColor;
+  }
+
+  .spinner-ring-2 {
+    border-bottom-color: currentColor;
+    border-left-color: currentColor;
+  }
+
+  .spinner-ring-3 {
+    border-top-color: currentColor;
+    border-right-color: currentColor;
   }
 }

@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-message-theme() {
   .i-message {
@@ -18,7 +18,7 @@
       }
     }
 
-    // Success messages
+    /* Success messages */
     &.i-message-success {
       border-left-color: colors.$color-success;
 
@@ -27,7 +27,7 @@
       }
     }
 
-    // Info messages
+    /* Info messages */
     &.i-message-info {
       border-left-color: colors.$color-info;
 
@@ -36,7 +36,7 @@
       }
     }
 
-    // Warning messages
+    /* Warning messages */
     &.i-message-warning {
       border-left-color: colors.$color-warning;
 
@@ -45,7 +45,7 @@
       }
     }
 
-    // Danger/Error messages
+    /* Danger/Error messages */
     &.i-message-danger {
       border-left-color: colors.$color-danger;
 
@@ -54,7 +54,7 @@
       }
     }
 
-    // Primary messages
+    /* Primary messages */
     &.i-message-primary {
       border-left-color: colors.$color-primary;
 
@@ -63,7 +63,7 @@
       }
     }
 
-    // Secondary messages
+    /* Secondary messages */
     &.i-message-secondary {
       border-left-color: colors.$color-secondary;
 
@@ -72,7 +72,7 @@
       }
     }
 
-    // Tertiary messages
+    /* Tertiary messages */
     &.i-message-tertiary {
       border-left-color: colors.$color-text-tertiary;
 
@@ -81,12 +81,20 @@
       }
     }
 
-    // Contrast messages
+    /* Contrast messages */
     &.i-message-contrast {
       border-left-color: colors.$color-contrast;
 
       .i-message-icon {
         color: colors.$color-contrast;
+      }
+    }
+  }
+
+  .i-message {
+    .i-message-content {
+      .i-message-close {
+        background: none;
       }
     }
   }

@@ -86,7 +86,11 @@ export class IFileUpload {
     const limits = this.limits;
     for (const file of incoming) {
       if (!this.accepts(file)) {
-        this.reject({ code: 'fileType', file, message: `${file.name}: supported file types are ${limits.fileTypes.join(', ')}.` });
+        this.reject({
+          code: 'fileType',
+          file,
+          message: `${file.name}: supported file types are ${limits.fileTypes.join(', ')}.`,
+        });
         return;
       }
       if (!limits.allowEmptyFiles && file.size === 0) {
@@ -94,7 +98,11 @@ export class IFileUpload {
         return;
       }
       if (file.size > limits.maxFileSize) {
-        this.reject({ code: 'fileSize', file, message: `${file.name} exceeds ${this.formatSize(limits.maxFileSize)} per file.` });
+        this.reject({
+          code: 'fileSize',
+          file,
+          message: `${file.name} exceeds ${this.formatSize(limits.maxFileSize)} per file.`,
+        });
         return;
       }
     }
@@ -105,14 +113,23 @@ export class IFileUpload {
     }
     const maxFiles = limits.multiple ? limits.maxFiles : Math.min(1, limits.maxFiles);
     if (combined.length > maxFiles) {
-      this.reject({ code: 'fileCount', message: `Select at most ${maxFiles} file${maxFiles === 1 ? '' : 's'}.` });
+      this.reject({
+        code: 'fileCount',
+        message: `Select at most ${maxFiles} file${maxFiles === 1 ? '' : 's'}.`,
+      });
       return;
     }
     if (combined.reduce((total, file) => total + file.size, 0) > limits.maxTotalSize) {
-      this.reject({ code: 'totalSize', message: `Selected files exceed ${this.formatSize(limits.maxTotalSize)} in total.` });
+      this.reject({
+        code: 'totalSize',
+        message: `Selected files exceed ${this.formatSize(limits.maxTotalSize)} in total.`,
+      });
       return;
     }
-    if (combined.length !== this.files.length || combined.some((file, index) => !this.sameFile(file, this.files[index]))) {
+    if (
+      combined.length !== this.files.length ||
+      combined.some((file, index) => !this.sameFile(file, this.files[index]))
+    ) {
       this.filesChange.emit(combined);
     }
   }
@@ -130,12 +147,15 @@ export class IFileUpload {
   }
 
   private accepts(file: File): boolean {
-    return this.limits.fileTypes.length === 0 || this.limits.fileTypes.some((type) => {
-      const token = type.toLowerCase();
-      if (token.startsWith('.')) return file.name.toLowerCase().endsWith(token);
-      if (token.endsWith('/*')) return file.type.toLowerCase().startsWith(token.slice(0, -1));
-      return file.type.toLowerCase() === token;
-    });
+    return (
+      this.limits.fileTypes.length === 0 ||
+      this.limits.fileTypes.some((type) => {
+        const token = type.toLowerCase();
+        if (token.startsWith('.')) return file.name.toLowerCase().endsWith(token);
+        if (token.endsWith('/*')) return file.type.toLowerCase().startsWith(token.slice(0, -1));
+        return file.type.toLowerCase() === token;
+      })
+    );
   }
 
   private sameFile(a: File, b: File): boolean {

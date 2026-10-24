@@ -1,11 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  FormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IAccordion } from '../../../../../invensys-ng/src/lib/components/accordion/accordion.component';
 import { IAccordionList } from '../../../../../invensys-ng/src/lib/components/accordion-list/accordion-list.component';
 import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
@@ -17,7 +12,9 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-component-interactions',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     JsonPipe,
     IAccordion,
     IAccordionList,
@@ -27,7 +24,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './component-interactions.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './component-interactions.component.scss',

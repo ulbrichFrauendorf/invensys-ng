@@ -1,139 +1,125 @@
-<app-demo-playground class="tabs-demo" title="Tabs Components" description="Flexible tabs component with support for icons, text, or both. Built with accessibility and keyboard navigation in mind.">
-  <ng-template appDemoOption="option-1" label="Text Only Tabs" [selected]="true" [sourceCode]="codeExamples.textOnly" [tsCode]="tsExamples.basic">
-      <div class="tab-examples">
-        <i-tabs [(activeIndex)]="textOnlyActiveIndex">
-          <i-tab-panel header="Home">
-            <div class="tab-content">
-              <h3>Home</h3>
-              <p>
-                Welcome to the home tab. This is an example of a text-only tab
-                panel.
-              </p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Profile">
-            <div class="tab-content">
-              <h3>Profile</h3>
-              <p>Manage your profile settings and preferences here.</p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Settings">
-            <div class="tab-content">
-              <h3>Settings</h3>
-              <p>Configure your application settings in this panel.</p>
-            </div>
-          </i-tab-panel>
-        </i-tabs>
-      </div>
-    </ng-template>
+<app-demo-playground class="tabs-demo" title="Tabs" eyebrow="Layout &amp; Containers">
+  <ng-template
+    appDemoOption="option-1"
+    label="Text Only Tabs"
+    [selected]="true"
+    [sourceCode]="codeExamples.textOnly"
+    [tsCode]="tsExamples.basic"
+  >
+    <div class="tab-examples">
+      <i-tabs [(activeIndex)]="textOnlyActiveIndex">
+        <i-tab-panel header="Home">
+          <div class="tab-content">
+            <h3>Home</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel header="Profile">
+          <div class="tab-content">
+            <h3>Profile</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel header="Settings">
+          <div class="tab-content">
+            <h3>Settings</h3>
+          </div>
+        </i-tab-panel>
+      </i-tabs>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Icon Only Tabs" [sourceCode]="codeExamples.iconOnly">
-      <div class="tab-examples">
-        <i-tabs [(activeIndex)]="iconOnlyActiveIndex">
-          <i-tab-panel icon="pi pi-home">
-            <div class="tab-content">
-              <h3>Home</h3>
-              <p>This tab uses only an icon in the header.</p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel icon="pi pi-user">
-            <div class="tab-content">
-              <h3>User</h3>
-              <p>Icon-only tabs are great for compact navigation.</p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel icon="pi pi-cog">
-            <div class="tab-content">
-              <h3>Settings</h3>
-              <p>Perfect for mobile-friendly interfaces.</p>
-            </div>
-          </i-tab-panel>
-        </i-tabs>
-      </div>
-    </ng-template>
+    <div class="tab-examples">
+      <i-tabs [(activeIndex)]="iconOnlyActiveIndex">
+        <i-tab-panel icon="pi pi-home">
+          <div class="tab-content">
+            <h3>Home</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel icon="pi pi-user">
+          <div class="tab-content">
+            <h3>User</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel icon="pi pi-cog">
+          <div class="tab-content">
+            <h3>Settings</h3>
+          </div>
+        </i-tab-panel>
+      </i-tabs>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Icon and Text Tabs" [sourceCode]="codeExamples.iconText">
-      <div class="tab-examples">
-        <i-tabs [(activeIndex)]="iconTextActiveIndex">
-          <i-tab-panel header="Home" icon="pi pi-home">
-            <div class="tab-content">
-              <h3>Home</h3>
-              <p>
-                Combining icons and text provides the best of both worlds -
-                visual recognition and clear labels.
-              </p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Profile" icon="pi pi-user">
-            <div class="tab-content">
-              <h3>Profile</h3>
-              <p>
-                Users can quickly identify tabs with icons while still having
-                text for clarity.
-              </p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Settings" icon="pi pi-cog">
-            <div class="tab-content">
-              <h3>Settings</h3>
-              <p>This is the recommended approach for most use cases.</p>
-            </div>
-          </i-tab-panel>
-        </i-tabs>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Icon and Text Tabs"
+    [sourceCode]="codeExamples.iconText"
+  >
+    <div class="tab-examples">
+      <i-tabs [(activeIndex)]="iconTextActiveIndex">
+        <i-tab-panel header="Home" icon="pi pi-home">
+          <div class="tab-content">
+            <h3>Home</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel header="Profile" icon="pi pi-user">
+          <div class="tab-content">
+            <h3>Profile</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel header="Settings" icon="pi pi-cog">
+          <div class="tab-content">
+            <h3>Settings</h3>
+          </div>
+        </i-tab-panel>
+      </i-tabs>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Disabled Tabs" [sourceCode]="codeExamples.disabled">
-      <div class="tab-examples">
-        <i-tabs [(activeIndex)]="disabledActiveIndex">
-          <i-tab-panel header="Active" icon="pi pi-check">
-            <div class="tab-content">
-              <h3>Active Tab</h3>
-              <p>This tab is active and can be selected.</p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Disabled" icon="pi pi-ban" [disabled]="true">
-            <div class="tab-content">
-              <h3>Disabled Tab</h3>
-              <p>This content won't be visible because the tab is disabled.</p>
-            </div>
-          </i-tab-panel>
-          <i-tab-panel header="Another" icon="pi pi-star">
-            <div class="tab-content">
-              <h3>Another Tab</h3>
-              <p>Another active tab that can be selected.</p>
-            </div>
-          </i-tab-panel>
-        </i-tabs>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Closable Tabs" [sourceCode]="codeExamples.closable" [tsCode]="tsExamples.closable">
-      <div class="tab-examples">
-        @if (closableTabs.length > 0) {
-          <i-tabs
-            [(activeIndex)]="closableActiveIndex"
-            (onClose)="onTabClose($event)"
-          >
-            @for (tab of closableTabs; track $index) {
-              <i-tab-panel
-                [header]="tab.header"
-                [icon]="tab.icon"
-                [closable]="true"
-              >
-                <div class="tab-content">
-                  <h3>{{ tab.header }}</h3>
-                  <p>Click the X button on the tab to close it.</p>
-                </div>
-              </i-tab-panel>
-            }
-          </i-tabs>
-        } @else {
-          <div class="empty-state">
-            <i class="pi pi-inbox"></i>
-            <p>All tabs have been closed. Refresh to reset.</p>
+    <div class="tab-examples">
+      <i-tabs [(activeIndex)]="disabledActiveIndex">
+        <i-tab-panel header="Active" icon="pi pi-check">
+          <div class="tab-content">
+            <h3>Active Tab</h3>
           </div>
-        }
-      </div>
-    </ng-template>
+        </i-tab-panel>
+        <i-tab-panel header="Disabled" icon="pi pi-ban" [disabled]="true">
+          <div class="tab-content">
+            <h3>Disabled Tab</h3>
+          </div>
+        </i-tab-panel>
+        <i-tab-panel header="Another" icon="pi pi-star">
+          <div class="tab-content">
+            <h3>Another Tab</h3>
+          </div>
+        </i-tab-panel>
+      </i-tabs>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Closable Tabs"
+    [sourceCode]="codeExamples.closable"
+    [tsCode]="tsExamples.closable"
+  >
+    <div class="tab-examples">
+      @if (closableTabs.length > 0) {
+        <i-tabs [(activeIndex)]="closableActiveIndex" (onClose)="onTabClose($event)">
+          @for (tab of closableTabs; track $index) {
+            <i-tab-panel [header]="tab.header" [icon]="tab.icon" [closable]="true">
+              <div class="tab-content">
+                <h3>{{ tab.header }}</h3>
+              </div>
+            </i-tab-panel>
+          }
+        </i-tabs>
+      } @else {
+        <div class="empty-state">
+          <i class="pi pi-inbox" aria-hidden="true"></i>
+          <p>All tabs have been closed. Refresh to reset.</p>
+        </div>
+      }
+    </div>
+  </ng-template>
 </app-demo-playground>

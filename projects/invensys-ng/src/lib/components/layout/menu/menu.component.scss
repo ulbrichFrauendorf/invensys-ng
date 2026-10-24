@@ -1,4 +1,6 @@
-@use "../../../themes/color-variables.scss" as colors;
+@use './menu.component.theme.scss' as theme;
+
+@use '../../../themes/color-variables.scss' as colors;
 
 .menu {
   list-style: none;
@@ -7,14 +9,13 @@
 }
 
 .menu-group {
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 
   .menu-group-label {
-    font-size: 1em;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    color: colors.$color-contrast;
+    padding: 6px 12px;
   }
 
   .menu-items {
@@ -26,48 +27,40 @@
       a {
         display: flex;
         align-items: center;
-        padding: 0.75rem 1rem;
-        color: colors.$color-text-secondary;
+        padding: 9px 12px;
         text-decoration: none;
-        font-size: 1em;
-        border-left: 3px solid transparent;
+        font-size: 12px;
+        border-left-width: 3px;
+        border-left-style: solid;
         transition: all 0.2s ease;
 
         i {
-          margin-right: 0.5rem;
-          font-size: 1em;
+          margin-right: 6px;
+          font-size: 12px;
         }
 
         &:hover {
-          background-color: colors.$color-surface-hover;
           border-radius: 6px;
         }
 
         &.active {
-          background-color: colors.$color-surface-hover;
           border-radius: 6px;
-          border-left: 3px solid colors.$color-primary;
+          border-left-width: 3px;
+          border-left-style: solid;
           font-weight: 600;
         }
       }
 
       .submenu {
         list-style: none;
-        padding-left: 1.5rem;
+        padding-left: 18px;
 
         .submenu-item {
           a {
-            padding: 0.5rem 1rem;
-            font-size: 0.95em;
-            color: colors.$color-text-tertiary;
-
-            &:hover {
-              background-color: colors.$color-surface-hover;
-              color: colors.$color-text-primary;
-            }
+            padding: 6px 12px;
+            font-size: 11.4px;
 
             &.active {
-              color: colors.$color-primary;
               font-weight: 600;
             }
           }
@@ -77,8 +70,4 @@
   }
 }
 
-.separator {
-  border: none;
-  border-top: 1px solid #334155;
-  margin: 0.5rem 0;
-}
+@include theme.i-menu-theme();

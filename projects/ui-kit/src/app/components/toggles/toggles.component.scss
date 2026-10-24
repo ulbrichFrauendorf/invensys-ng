@@ -1,7 +1,8 @@
-@use "../shared-demo-styles.scss" as *;
+@use './toggles.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .toggles-demo {
-
   .toggle-examples {
     display: flex;
     flex-direction: column;
@@ -15,7 +16,6 @@
 
       .status {
         font-size: 14px;
-        color: var(--text-color-secondary);
         font-weight: 500;
       }
     }
@@ -23,13 +23,6 @@
 
   .form-section {
     margin-bottom: 24px;
-
-    h4 {
-      margin-bottom: 16px;
-      color: var(--text-color);
-      font-size: 18px;
-      font-weight: 600;
-    }
   }
 
   .form-actions {
@@ -40,33 +33,28 @@
   }
 
   .form-output {
-    background: var(--surface-section);
-    border: 1px solid var(--surface-border);
+    border-width: 1px;
+    border-style: solid;
     border-radius: 4px;
     padding: 16px;
     margin-top: 16px;
 
-    h5 {
-      margin: 0 0 8px 0;
-      color: var(--text-color);
-      font-size: 14px;
-      font-weight: 600;
-    }
-
     pre {
       margin: 0 0 16px 0;
-      background: var(--surface-ground);
-      border: 1px solid var(--surface-border);
+      border-width: 1px;
+      border-style: solid;
       border-radius: 4px;
       padding: 12px;
       font-size: 13px;
       line-height: 1.4;
       overflow-x: auto;
       white-space: pre-wrap;
-    }
 
-    pre:last-child {
-      margin-bottom: 0;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
+
+@include theme.toggles-theme();

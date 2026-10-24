@@ -1,4 +1,12 @@
-import { afterRenderEffect, ChangeDetectionStrategy, Component, contentChild, ElementRef, input, viewChild } from '@angular/core';
+import {
+  afterRenderEffect,
+  ChangeDetectionStrategy,
+  Component,
+  contentChild,
+  ElementRef,
+  input,
+  viewChild,
+} from '@angular/core';
 import { PageHeaderActionsDirective, PageSidebarDirective } from './page-layout-slots.directive';
 
 /**
@@ -18,6 +26,8 @@ export class PageLayoutComponent {
   readonly headerText = input.required<string>();
   readonly eyebrowText = input('');
   readonly showHeader = input(true);
+  /** Side on which the optional sidebar appears; existing consumers default to the left. */
+  readonly sidebarPosition = input<'left' | 'right'>('left');
 
   protected readonly sidebar = contentChild(PageSidebarDirective);
   protected readonly headerActions = contentChild(PageHeaderActionsDirective);

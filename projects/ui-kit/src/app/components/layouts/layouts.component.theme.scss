@@ -1,0 +1,92 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin layouts-theme() {
+  .layouts-demo {
+    .layout-preview {
+      .preview-image {
+        border-color: colors.$color-surface-border;
+        box-shadow: 0 2px 8px color-mix(in srgb, colors.$color-contrast 10%, transparent);
+      }
+
+      .preview-placeholder {
+        .placeholder-layout {
+          border-color: colors.$color-surface-border;
+          background: colors.$color-surface-ground;
+
+          .placeholder-body {
+            .placeholder-sidebar {
+              background: colors.$color-surface-overlay;
+              border-right-color: colors.$color-surface-border;
+
+              .placeholder-menu-item {
+                background: colors.$color-surface-border;
+              }
+            }
+
+            .placeholder-content {
+              .placeholder-text {
+                background: colors.$color-surface-border;
+              }
+            }
+          }
+          .placeholder-topbar {
+            background: colors.$color-surface-card;
+            border-bottom-color: colors.$color-surface-border;
+
+            .placeholder-logo {
+              background: colors.$color-primary;
+            }
+
+            .placeholder-actions {
+              background: colors.$color-surface-border;
+            }
+          }
+        }
+      }
+    }
+
+    .config-examples {
+      .config-item {
+        background: colors.$color-surface-ground;
+        border-left-color: colors.$color-primary;
+
+        strong {
+          color: colors.$color-primary;
+        }
+      }
+    }
+
+    .components-grid {
+      .component-item {
+        background: colors.$color-surface-ground;
+        border-color: colors.$color-surface-border;
+
+        .component-name {
+          color: colors.$color-primary;
+        }
+      }
+    }
+
+    .usage-notes {
+      .note-item {
+        background: color-mix(in srgb, colors.$color-primary 10%, colors.$color-surface-ground);
+        border-left-color: colors.$color-primary;
+
+        i {
+          color: colors.$color-primary;
+        }
+
+        div {
+          color: colors.$color-text-secondary;
+          strong {
+            color: colors.$color-text-primary;
+          }
+        }
+      }
+    }
+
+    code {
+      background: colors.$color-surface-ground;
+      color: colors.$color-primary;
+    }
+  }
+}

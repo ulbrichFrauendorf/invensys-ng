@@ -8,16 +8,9 @@
   OnDestroy,
   Renderer2,
   NgZone,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  AnimationEvent,
-} from '@angular/animations';
+import { trigger, state, style, transition, animate, AnimationEvent } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { IButton } from '../button/button.component';
 import { ZIndexUtils } from '../../utils/zindexutils';
@@ -137,12 +130,7 @@ export class IOverlayPanel implements OnDestroy {
     this.unbindResizeListener();
     if (this.appendTo === 'body' && this.containerViewChild) {
       // The animation renderer is also being destroyed, so removal cannot wait for it.
-      this.renderer.removeChild(
-        document.body,
-        this.containerViewChild.nativeElement,
-        false,
-        true,
-      );
+      this.renderer.removeChild(document.body, this.containerViewChild.nativeElement, false, true);
     }
     this.target = undefined;
   }
@@ -178,9 +166,7 @@ export class IOverlayPanel implements OnDestroy {
     if (event.toState === 'open') {
       const zIndexUtils = ZIndexUtils();
       this.containerViewChild!.nativeElement.style.zIndex = String(
-        this.autoZIndex
-          ? this.baseZIndex + zIndexUtils.getCurrent() + 1
-          : this.baseZIndex,
+        this.autoZIndex ? this.baseZIndex + zIndexUtils.getCurrent() + 1 : this.baseZIndex,
       );
       this.appendContainer();
       this.align();
@@ -195,10 +181,7 @@ export class IOverlayPanel implements OnDestroy {
   onAnimationEnd(event: any) {
     if (event.toState === 'closed') {
       if (this.appendTo === 'body' && this.containerViewChild) {
-        this.renderer.removeChild(
-          document.body,
-          this.containerViewChild.nativeElement,
-        );
+        this.renderer.removeChild(document.body, this.containerViewChild.nativeElement);
       }
       this.unbindDocumentClickListener();
       this.unbindScrollListener();
@@ -211,10 +194,7 @@ export class IOverlayPanel implements OnDestroy {
 
   appendContainer() {
     if (this.appendTo === 'body') {
-      this.renderer.appendChild(
-        document.body,
-        this.containerViewChild!.nativeElement,
-      );
+      this.renderer.appendChild(document.body, this.containerViewChild!.nativeElement);
     }
   }
 
@@ -296,19 +276,15 @@ export class IOverlayPanel implements OnDestroy {
   bindDocumentClickListener() {
     if (!this.documentClickListener && this.dismissable) {
       this.zone.runOutsideAngular(() => {
-        this.documentClickListener = this.renderer.listen(
-          'document',
-          'click',
-          () => {
-            if (!this.selfClick && !this.targetClick && this.visible) {
-              this.zone.run(() => {
-                this.hide();
-              });
-            }
-            this.selfClick = false;
-            this.targetClick = false;
-          },
-        );
+        this.documentClickListener = this.renderer.listen('document', 'click', () => {
+          if (!this.selfClick && !this.targetClick && this.visible) {
+            this.zone.run(() => {
+              this.hide();
+            });
+          }
+          this.selfClick = false;
+          this.targetClick = false;
+        });
       });
     }
   }
@@ -343,17 +319,13 @@ export class IOverlayPanel implements OnDestroy {
   bindResizeListener() {
     if (!this.documentResizeListener) {
       this.zone.runOutsideAngular(() => {
-        this.documentResizeListener = this.renderer.listen(
-          'window',
-          'resize',
-          () => {
-            if (this.visible) {
-              this.zone.run(() => {
-                this.align();
-              });
-            }
-          },
-        );
+        this.documentResizeListener = this.renderer.listen('window', 'resize', () => {
+          if (this.visible) {
+            this.zone.run(() => {
+              this.align();
+            });
+          }
+        });
       });
     }
   }

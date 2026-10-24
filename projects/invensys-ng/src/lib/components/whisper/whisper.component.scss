@@ -1,8 +1,8 @@
-@use "./whisper.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
-@use "../../themes/whisper-layout" as layout;
+@use './whisper.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
+@use '../../themes/whisper-layout' as layout;
 
-// Apply the whisper color mixin which uses CSS custom properties
+/* Apply the whisper color mixin which uses CSS custom properties */
 @include theme.i-whisper-theme();
 
 .i-whisper {
@@ -15,7 +15,7 @@
   max-width: 400px;
   min-width: 300px;
 
-  // Position variations
+  /* Position variations */
   &.i-whisper-top-left {
     top: 20px;
     left: 20px;
@@ -102,7 +102,6 @@
     }
 
     .i-whisper-message-close {
-      background: none;
       border: none;
       cursor: pointer;
       padding: 4px;
@@ -115,19 +114,34 @@
       margin-left: 8px;
       transition: background-color 0.2s;
 
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-      }
-
       i {
         font-size: 18px;
       }
     }
 
-    // Animation for message removal
+    /* Animation for message removal */
     &.i-whisper-message-exit {
       animation: whisperSlideOut 0.3s ease-in forwards;
     }
+  }
+
+  @media (max-width: 768px) {
+    max-width: calc(100vw - 40px);
+    min-width: 280px;
+
+    &.i-whisper-top-center,
+    &.i-whisper-bottom-center {
+      left: 20px;
+      right: 20px;
+      transform: none;
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -181,20 +195,4 @@
   }
 }
 
-// Responsive adjustments
-@media (max-width: 768px) {
-  .i-whisper {
-    max-width: calc(100vw - 40px);
-    min-width: 280px;
-
-    &.i-whisper-top-center,
-    &.i-whisper-bottom-center {
-      left: 20px;
-      right: 20px;
-      transform: none;
-      max-width: none;
-    }
-  }
-}
-
-@media (max-width: 768px) { .i-whisper { min-width: 0; box-sizing: border-box; overflow-wrap: anywhere; } }
+/* Responsive adjustments */

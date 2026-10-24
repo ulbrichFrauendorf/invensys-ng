@@ -1,5 +1,6 @@
 $color-white: #ffffff;
 $color-black: #000000;
+$color-shadow: $color-black;
 $color-primary: var(--color-primary);
 $color-secondary: var(--color-secondary);
 $color-tertiary: var(--color-tertiary);
@@ -12,9 +13,7 @@ $color-contrast-inverse: var(--color-contrast-inverse);
 
 $color-overlay-background: rgba(0, 0, 0, 0.4);
 $color-component-background: var(--color-component-background);
-$color-component-background-secondary: var(
-  --color-component-background-secondary
-);
+$color-component-background-secondary: var(--color-component-background-secondary);
 $color-component-background-solid: var(--color-component-background-solid);
 $color-disabled-background: var(--color-disabled-background);
 $color-disabled-border: var(--color-disabled-border);

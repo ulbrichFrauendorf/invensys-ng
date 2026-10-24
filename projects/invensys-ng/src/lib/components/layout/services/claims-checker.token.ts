@@ -29,9 +29,7 @@ export interface ClaimsChecker {
  *   }
  * ]
  */
-export const CLAIMS_CHECKER = new InjectionToken<ClaimsChecker>(
-  'ClaimsChecker',
-);
+export const CLAIMS_CHECKER = new InjectionToken<ClaimsChecker>('ClaimsChecker');
 
 /**
  * Provides a claims checker service for menu item filtering.

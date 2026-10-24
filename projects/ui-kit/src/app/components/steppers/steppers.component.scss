@@ -1,12 +1,13 @@
-@use "../shared-demo-styles.scss" as *;
+@use './steppers.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .step-content {
   min-height: 160px;
   padding: 20px;
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
-  background: var(--surface-card);
-
 }
 
 .step-actions {
@@ -16,3 +17,5 @@
   gap: 12px;
   width: 100%;
 }
+
+@include theme.steppers-theme();

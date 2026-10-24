@@ -1,4 +1,6 @@
-@use "../shared-demo-styles.scss" as *;
+@use './tags.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .tag-row {
   display: flex;
@@ -15,19 +17,20 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
 
-.usage-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
-  border-radius: 6px;
-  background: var(--surface-ground);
-  border: 1px solid var(--surface-border);
+  .usage-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
 
-  .usage-label {
-    font-size: 0.95em;
-    color: var(--color-text-primary);
+    .usage-label {
+      font-size: 11.4px;
+    }
   }
 }
+
+@include theme.tags-theme();

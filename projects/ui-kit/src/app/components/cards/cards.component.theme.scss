@@ -1,0 +1,20 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin cards-theme() {
+  .card-example {
+    .full-height-container {
+      border-color: colors.$color-surface-border;
+    }
+
+    .closed-message {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-surface-ground;
+    }
+
+    .custom-card-header {
+      .custom-card-icon {
+        color: colors.$color-warning;
+      }
+    }
+  }
+}

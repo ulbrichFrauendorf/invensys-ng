@@ -5,10 +5,7 @@
   [class.i-textarea--no-float]="!useFloatLabel"
   [attr.id]="componentId"
 >
-  <div
-    [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'"
-    class="i-textarea-container"
-  >
+  <div [ngClass]="useFloatLabel ? 'float-label' : 'normal-input'" class="i-textarea-container">
     <div class="i-textarea-icon-wrapper">
       <textarea
         #textareaElement

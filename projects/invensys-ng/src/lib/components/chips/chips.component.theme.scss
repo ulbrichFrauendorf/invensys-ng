@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-chips-theme() {
   .i-chips-container {
@@ -43,7 +43,16 @@
   }
 
   /* Error state for boxed container */
-  .i-chips-wrapper--error .i-chips-box {
-    border-color: colors.$color-danger;
+  .i-chips-wrapper--error {
+    .i-chips-box {
+      border-color: colors.$color-danger;
+    }
+  }
+  .i-chips-clear {
+    color: colors.$color-text-secondary;
+    background: transparent;
+    &:focus-visible {
+      outline-color: colors.$color-primary;
+    }
   }
 }

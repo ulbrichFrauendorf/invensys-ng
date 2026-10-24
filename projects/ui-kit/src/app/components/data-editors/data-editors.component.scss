@@ -1,7 +1,8 @@
-@use "../shared-demo-styles.scss" as *;
+@use './data-editors.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .data-editors-demo {
-
   .editor-intro {
     display: flex;
     align-items: center;
@@ -9,8 +10,13 @@
     gap: 24px;
     padding-bottom: 16px;
     margin-bottom: 16px;
-    border-bottom: 1px solid var(--surface-border);
-
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    @media (max-width: 640px) {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 
   i-field-picker,
@@ -19,12 +25,6 @@
     display: block;
     max-width: 100%;
   }
-
-  @media (max-width: 640px) {
-    .editor-intro {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 12px;
-    }
-  }
 }
+
+@include theme.data-editors-theme();

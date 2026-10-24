@@ -1,134 +1,128 @@
-<app-demo-playground class="textareas-demo" title="Textarea Component" description="Multi-line text input with floating labels, character counters, validation support, and consistent theming including dark mode.">
-  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
-      <div class="demo-form">
-        <div class="textarea-stack">
-          <i-textarea label="Description" [(ngModel)]="basicValue" />
-          <i-textarea label="Notes" [(ngModel)]="notesValue" [rows]="6" />
-          <i-textarea
-            label="Comment (200 chars)"
-            [(ngModel)]="commentValue"
-            [maxLength]="200"
-          />
-        </div>
-
-        <div class="values-display">
-          <h4>Current Values:</h4>
-          <p><strong>Description:</strong> {{ basicValue || "(empty)" }}</p>
-          <p><strong>Notes:</strong> {{ notesValue || "(empty)" }}</p>
-          <p><strong>Comment:</strong> {{ commentValue || "(empty)" }}</p>
-        </div>
+<app-demo-playground
+  class="textareas-demo"
+  title="Textareas"
+  eyebrow="Form Controls"
+  description="Multi-line text input with floating labels, character counters, validation support, and consistent theming including dark mode."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Template-driven Forms (NgModel)"
+    [selected]="true"
+    [sourceCode]="codeExamples.ngModel"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="demo-form">
+      <div class="textarea-stack">
+        <i-textarea label="Description" [(ngModel)]="basicValue" />
+        <i-textarea label="Notes" [(ngModel)]="notesValue" [rows]="6" />
+        <i-textarea label="Comment (200 chars)" [(ngModel)]="commentValue" [maxLength]="200" />
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <form [formGroup]="basicForm" class="demo-form">
-        <div class="textarea-stack">
-          <i-textarea label="Bio" formControlName="bio" [fluid]="true" />
-          <i-textarea
-            label="Address"
-            formControlName="address"
-            [rows]="3"
-            [fluid]="true"
-          />
-          <i-textarea label="Notes" formControlName="notes" [fluid]="true" />
-        </div>
-
-        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
-          Submit Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
-      <form [formGroup]="validationForm" class="demo-form">
-        <div class="textarea-stack">
-          <i-textarea
-            label="Required Field"
-            formControlName="requiredField"
-            [fluid]="true"
-          />
-          <i-textarea
-            label="Min Length (20 chars)"
-            formControlName="minLengthField"
-            [fluid]="true"
-          />
-          <i-textarea
-            label="Max 100 chars"
-            formControlName="maxLengthField"
-            [fluid]="true"
-            [maxLength]="100"
-          />
-        </div>
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(validationForm, 'validation')"
-        >
-          Validate Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Character Counter" [sourceCode]="codeExamples.charCount">
-      <div class="demo-form">
-        <div class="textarea-stack">
-          <i-textarea
-            label="Short Comment"
-            [(ngModel)]="commentValue"
-            [maxLength]="50"
-            [fluid]="true"
-          />
-          <i-textarea
-            label="Bio (200 chars)"
-            [(ngModel)]="basicValue"
-            [maxLength]="200"
-            [rows]="5"
-            [fluid]="true"
-          />
-        </div>
+      <div class="values-display">
+        <h4>Current Values:</h4>
+        <p><strong>Description:</strong> {{ basicValue || '(empty)' }}</p>
+        <p><strong>Notes:</strong> {{ notesValue || '(empty)' }}</p>
+        <p><strong>Comment:</strong> {{ commentValue || '(empty)' }}</p>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Disabled &amp;amp; Readonly States" [sourceCode]="codeExamples.disabled">
-      <div class="demo-form">
-        <div class="textarea-stack">
-          <i-textarea
-            label="Disabled Textarea"
-            [disabled]="true"
-            [fluid]="true"
-          />
-          <i-textarea
-            label="Disabled With Value"
-            [disabled]="true"
-            [forceFloated]="true"
-            [(ngModel)]="disabledValue"
-            [fluid]="true"
-          />
-          <i-textarea
-            label="Readonly Textarea"
-            [readonly]="true"
-            [(ngModel)]="readonlyValue"
-            [fluid]="true"
-          />
-        </div>
+  <ng-template
+    appDemoOption="option-2"
+    label="Reactive Forms"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <form [formGroup]="basicForm" class="demo-form">
+      <div class="textarea-stack">
+        <i-textarea label="Bio" formControlName="bio" [fluid]="true" />
+        <i-textarea label="Address" formControlName="address" [rows]="3" [fluid]="true" />
+        <i-textarea label="Notes" formControlName="notes" [fluid]="true" />
       </div>
-    </ng-template>
+
+      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')"> Submit Form </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-3"
+    label="Form Validation"
+    [sourceCode]="codeExamples.validation"
+    [tsCode]="tsExamples.validation"
+  >
+    <form [formGroup]="validationForm" class="demo-form">
+      <div class="textarea-stack">
+        <i-textarea label="Required Field" formControlName="requiredField" [fluid]="true" />
+        <i-textarea label="Min Length (20 chars)" formControlName="minLengthField" [fluid]="true" />
+        <i-textarea
+          label="Max 100 chars"
+          formControlName="maxLengthField"
+          [fluid]="true"
+          [maxLength]="100"
+        />
+      </div>
+
+      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+        Validate Form
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-4"
+    label="Character Counter"
+    [sourceCode]="codeExamples.charCount"
+  >
+    <div class="demo-form">
+      <div class="textarea-stack">
+        <i-textarea
+          label="Short Comment"
+          [(ngModel)]="commentValue"
+          [maxLength]="50"
+          [fluid]="true"
+        />
+        <i-textarea
+          label="Bio (200 chars)"
+          [(ngModel)]="basicValue"
+          [maxLength]="200"
+          [rows]="5"
+          [fluid]="true"
+        />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Disabled &amp;amp; Readonly States"
+    [sourceCode]="codeExamples.disabled"
+  >
+    <div class="demo-form">
+      <div class="textarea-stack">
+        <i-textarea label="Disabled Textarea" [disabled]="true" [fluid]="true" />
+        <i-textarea
+          label="Disabled With Value"
+          [disabled]="true"
+          [forceFloated]="true"
+          [(ngModel)]="disabledValue"
+          [fluid]="true"
+        />
+        <i-textarea
+          label="Readonly Textarea"
+          [readonly]="true"
+          [(ngModel)]="readonlyValue"
+          [fluid]="true"
+        />
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <form [formGroup]="basicForm" class="demo-form">
-        <i-textarea
-          label="Full Width Notes"
-          formControlName="notes"
-          [fluid]="true"
-          [rows]="5"
-        />
-        <i-button
-          severity="primary"
-          [fluid]="true"
-          (click)="onSubmit(basicForm, 'fluid')"
-        >
-          Submit
-        </i-button>
-      </form>
-    </ng-template>
+    <form [formGroup]="basicForm" class="demo-form">
+      <i-textarea label="Full Width Notes" formControlName="notes" [fluid]="true" [rows]="5" />
+      <i-button severity="primary" [fluid]="true" (click)="onSubmit(basicForm, 'fluid')">
+        Submit
+      </i-button>
+    </form>
+  </ng-template>
 </app-demo-playground>

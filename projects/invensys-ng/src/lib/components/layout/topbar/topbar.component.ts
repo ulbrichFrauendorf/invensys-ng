@@ -1,8 +1,5 @@
 import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  LayoutService,
-  LocalStorageColorSchemeKey,
-} from '../services/layout.service';
+import { LayoutService, LocalStorageColorSchemeKey } from '../services/layout.service';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IButton } from '../../button/button.component';

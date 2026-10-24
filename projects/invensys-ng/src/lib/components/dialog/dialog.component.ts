@@ -5,10 +5,17 @@ import {
   ViewChild,
   OnInit,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  TemplateRef,
+  ViewContainerRef,
+  inject,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { ICard } from '../card/card.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { AbstractDialog } from './dialog-base';
@@ -66,7 +73,23 @@ import { AbstractDialog } from './dialog-base';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog.component.scss',
 })
-export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
+export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChanges {
+  private static readonly openDialogs: IDialog[] = [];
+  private static readonly scrollLocks = new WeakMap<
+    Document,
+    { count: number; overflow: string }
+  >();
+  private readonly document = inject(DOCUMENT);
+  private readonly overlayService = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private overlayRef?: OverlayRef;
+  private overlay?: HTMLElement;
+  private initialized = false;
+  private scrollLocked = false;
+  private previousFocus?: HTMLElement;
+
+  @ViewChild('dialogTemplate', { static: true }) private dialogTemplate!: TemplateRef<unknown>;
+
   /**
    * Reference to the dialog element for positioning and styling
    * @internal
@@ -96,14 +119,80 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (this.visible) {
-      this.show();
-    }
+    this.initialized = true;
     this.applyBreakpoints();
+    if (this.visible) this.attachOverlay();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['visible'] && this.initialized) {
+      if (this.visible) this.attachOverlay();
+      else this.detachOverlay();
+    }
+    if (changes['width'] || changes['height'] || changes['breakpoints']) {
+      this.applyBreakpoints();
+    }
+    if (changes['modal'] && this.overlay) {
+      this.updateScrollLock();
+    }
   }
 
   ngOnDestroy(): void {
-    this.hide();
+    this.detachOverlay();
+  }
+
+  private attachOverlay(): void {
+    if (this.overlayRef) return;
+    this.previousFocus = this.document.activeElement as HTMLElement | undefined;
+    // Share the CDK layer with connected dropdowns and escape ancestor stacking contexts.
+    this.overlayRef = this.overlayService.create();
+    this.overlayRef.attach(new TemplatePortal(this.dialogTemplate, this.viewContainerRef));
+    this.overlay = this.overlayRef.overlayElement.querySelector<HTMLElement>('.i-dialog-overlay')!;
+    IDialog.openDialogs.push(this);
+    this.updateScrollLock();
+    this.overlay.querySelector<HTMLElement>('.i-dialog-container')?.focus({ preventScroll: true });
+  }
+
+  private detachOverlay(): void {
+    if (!this.overlay) return;
+    const overlay = this.overlay;
+    const restoreFocus = overlay.contains(this.document.activeElement);
+    const index = IDialog.openDialogs.indexOf(this);
+    if (index !== -1) IDialog.openDialogs.splice(index, 1);
+    this.releaseScrollLock();
+    this.overlayRef?.dispose();
+    this.overlayRef = undefined;
+    this.overlay = undefined;
+    if (restoreFocus && this.previousFocus?.isConnected) {
+      this.previousFocus.focus({ preventScroll: true });
+    }
+    this.previousFocus = undefined;
+  }
+
+  private updateScrollLock(): void {
+    if (!this.modal) {
+      this.releaseScrollLock();
+      return;
+    }
+    if (this.scrollLocked) return;
+    const lock = IDialog.scrollLocks.get(this.document) ?? {
+      count: 0,
+      overflow: this.document.body.style.overflow,
+    };
+    lock.count++;
+    IDialog.scrollLocks.set(this.document, lock);
+    this.document.body.style.overflow = 'hidden';
+    this.scrollLocked = true;
+  }
+
+  private releaseScrollLock(): void {
+    if (!this.scrollLocked) return;
+    const lock = IDialog.scrollLocks.get(this.document)!;
+    if (--lock.count === 0) {
+      this.document.body.style.overflow = lock.overflow;
+      IDialog.scrollLocks.delete(this.document);
+    }
+    this.scrollLocked = false;
   }
 
   /**
@@ -111,9 +200,10 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
    */
   show(): void {
     this.visible = true;
-    this.visibleChange.emit(true);
-    document.body.style.overflow = 'hidden';
     this.cdr.detectChanges();
+    this.attachOverlay();
+    this.cdr.detectChanges();
+    this.visibleChange.emit(true);
   }
 
   /**
@@ -121,18 +211,22 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
    */
   hide(): void {
     this.visible = false;
+    this.detachOverlay();
+    this.cdr.detectChanges();
     this.visibleChange.emit(false);
-    document.body.style.overflow = '';
   }
 
   /**
    * Handles Escape key press to close dialog
    * @internal
    */
-  @HostListener('document:keydown.escape')
-  onEscapeKey(): void {
-    if (this.closable && this.visible) {
-      this.hide();
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event?: Event): void {
+    const topDialog = IDialog.openDialogs.at(-1);
+    if (event?.defaultPrevented || (topDialog && topDialog !== this)) return;
+    if (this.visible) {
+      event?.preventDefault();
+      if (this.closable) this.hide();
     }
   }
 
@@ -147,12 +241,7 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
     const target = event.target as HTMLElement;
     const overlay = event.currentTarget as HTMLElement;
 
-    if (
-      this.modal &&
-      this.closable &&
-      this.dismissableMask &&
-      target === overlay
-    ) {
+    if (this.modal && this.closable && this.dismissableMask && target === overlay) {
       this.hide();
     }
   }
@@ -207,7 +296,5 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy {
       this.currentWidth = this.width;
       this.currentHeight = this.height || '';
     }
-
-    this.cdr.detectChanges();
   }
 }

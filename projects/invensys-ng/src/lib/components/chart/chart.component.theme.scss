@@ -1,0 +1,23 @@
+@use '../../themes/color-variables.scss' as colors;
+@mixin i-chart-theme() {
+  :host {
+    --chart-grid-color: #{colors.$color-surface-border};
+    --chart-text-color: #{colors.$color-text-primary};
+    --chart-text-secondary: #{colors.$color-text-secondary};
+  }
+
+  .i-chart-legend {
+    border-color: colors.$color-surface-border;
+    background: colors.$color-surface-card;
+  }
+
+  .i-chart-legend-item {
+    background: transparent;
+    color: var(--chart-text-color);
+  }
+
+  .i-chart-legend-item:hover,
+  .i-chart-legend-item:focus-visible {
+    background: colors.$color-surface-hover;
+  }
+}

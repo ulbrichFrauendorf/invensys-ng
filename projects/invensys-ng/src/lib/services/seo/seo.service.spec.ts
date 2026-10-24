@@ -66,12 +66,8 @@ describe('SeoService', () => {
       service.updateMetaTags(config);
 
       expect(titleService.getTitle()).toBe(config.title);
-      expect(metaService.getTag('name="description"')?.content).toBe(
-        config.description,
-      );
-      expect(metaService.getTag('name="keywords"')?.content).toBe(
-        config.keywords,
-      );
+      expect(metaService.getTag('name="description"')?.content).toBe(config.description);
+      expect(metaService.getTag('name="keywords"')?.content).toBe(config.keywords);
     });
 
     it('should update Open Graph tags', () => {
@@ -85,19 +81,11 @@ describe('SeoService', () => {
 
       service.updateMetaTags(config);
 
-      expect(metaService.getTag('property="og:title"')?.content).toBe(
-        config.title,
-      );
-      expect(metaService.getTag('property="og:description"')?.content).toBe(
-        config.description,
-      );
+      expect(metaService.getTag('property="og:title"')?.content).toBe(config.title);
+      expect(metaService.getTag('property="og:description"')?.content).toBe(config.description);
       expect(metaService.getTag('property="og:url"')?.content).toBe(config.url);
-      expect(metaService.getTag('property="og:image"')?.content).toBe(
-        config.image,
-      );
-      expect(metaService.getTag('property="og:site_name"')?.content).toBe(
-        config.siteName,
-      );
+      expect(metaService.getTag('property="og:image"')?.content).toBe(config.image);
+      expect(metaService.getTag('property="og:site_name"')?.content).toBe(config.siteName);
     });
 
     it('should update Twitter Card tags', () => {
@@ -111,18 +99,10 @@ describe('SeoService', () => {
 
       service.updateMetaTags(config);
 
-      expect(metaService.getTag('name="twitter:card"')?.content).toBe(
-        config.twitterCard,
-      );
-      expect(metaService.getTag('name="twitter:title"')?.content).toBe(
-        config.title,
-      );
-      expect(metaService.getTag('name="twitter:description"')?.content).toBe(
-        config.description,
-      );
-      expect(metaService.getTag('name="twitter:image"')?.content).toBe(
-        config.image,
-      );
+      expect(metaService.getTag('name="twitter:card"')?.content).toBe(config.twitterCard);
+      expect(metaService.getTag('name="twitter:title"')?.content).toBe(config.title);
+      expect(metaService.getTag('name="twitter:description"')?.content).toBe(config.description);
+      expect(metaService.getTag('name="twitter:image"')?.content).toBe(config.image);
     });
 
     it('should set default og:type to website', () => {

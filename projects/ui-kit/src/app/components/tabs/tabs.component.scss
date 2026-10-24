@@ -1,24 +1,27 @@
-@use "../shared-demo-styles.scss" as *;
+@use './tabs.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .tab-examples {
   margin-bottom: 20px;
-}
 
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  text-align: center;
-  color: var(--color-text-secondary);
-  background: var(--surface-100);
-  border-radius: 6px;
-  border: 1px dashed var(--color-border);
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: dashed;
 
-  i {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.5;
+    i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
   }
 }
+
+@include theme.tabs-theme();

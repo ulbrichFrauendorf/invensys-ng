@@ -61,9 +61,7 @@ describe('ITextarea', () => {
       fixture.componentRef.setInput('maxLength', 100);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(textareaElement.nativeElement.getAttribute('maxlength')).toBe(
-        '100',
-      );
+      expect(textareaElement.nativeElement.getAttribute('maxlength')).toBe('100');
     });
   });
 

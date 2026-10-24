@@ -1,4 +1,4 @@
-@use "./checkbox.component.theme.scss" as theme;
+@use './checkbox.component.theme.scss' as theme;
 
 @include theme.i-checkbox-theme();
 
@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 1em;
+  font-size: 12px;
 
   &.i-checkbox--disabled {
     opacity: 0.6;
@@ -27,7 +27,7 @@
   }
 
   &.i-checkbox--small {
-    font-size: 0.9em;
+    font-size: 10.8px;
     gap: 6px;
 
     .i-checkbox {
@@ -42,7 +42,7 @@
   }
 
   &.i-checkbox--medium {
-    font-size: 1em;
+    font-size: 12px;
     gap: 8px;
 
     .i-checkbox {
@@ -56,7 +56,7 @@
   }
 
   &.i-checkbox--large {
-    font-size: 1.2em;
+    font-size: 14.4px;
     gap: 10px;
 
     .i-checkbox {
@@ -81,7 +81,6 @@
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
     }
 
     .i-checkbox-icon {
@@ -101,10 +100,26 @@
 .i-checkbox-wrapper {
   cursor: pointer;
   border-radius: 4px;
-  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  &.i-checkbox--disabled { cursor: not-allowed; }
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 2px;
+  }
+  &.i-checkbox--disabled {
+    cursor: not-allowed;
+  }
 }
-@media (pointer: coarse) {
-  .i-checkbox-wrapper:not(.i-checkbox--readonly) { min-height: 44px; min-width: 44px; justify-content: center; }
-  .i-checkbox-wrapper .i-checkbox { flex-shrink: 0; }
+.i-checkbox-wrapper:not(.i-checkbox--readonly) {
+  @media (pointer: coarse) {
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+  }
+}
+.i-checkbox-wrapper {
+  .i-checkbox {
+    @media (pointer: coarse) {
+      flex-shrink: 0;
+    }
+  }
 }

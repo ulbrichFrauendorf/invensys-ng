@@ -39,10 +39,7 @@
       ]"
     >
       @if (icon) {
-        <i
-          aria-hidden="true"
-          [ngClass]="[icon, 'i-button__icon', iconOnly ? 'icon-only' : '']"
-        ></i>
+        <i aria-hidden="true" [ngClass]="[icon, 'i-button__icon', iconOnly ? 'icon-only' : '']"></i>
       }
       <span class="projected-content" #projected>
         <ng-content></ng-content>

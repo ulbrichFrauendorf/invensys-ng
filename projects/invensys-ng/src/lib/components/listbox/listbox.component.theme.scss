@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-listbox-theme() {
   .i-listbox-wrapper {
@@ -23,7 +23,7 @@
 
       .i-listbox-action-btn {
         background: colors.$color-primary;
-        color: colors.$color-white;
+        color: colors.$color-text-contrast;
 
         &:hover:not(:disabled) {
           background: colors.$color-primary;
@@ -77,8 +77,93 @@
 
     .i-listbox-error {
       color: colors.$color-danger;
-      background: rgba(239, 68, 68, 0.05);
+      background: color-mix(in srgb, colors.$color-danger 5%, transparent);
       border-top-color: colors.$color-danger;
+    }
+  }
+
+  .i-listbox-wrapper {
+    border-color: colors.$color-surface-border;
+    background: colors.$color-component-background;
+
+    &.i-listbox--invalid {
+      border-color: colors.$color-danger;
+    }
+
+    .i-listbox-header {
+      border-bottom-color: colors.$color-surface-border;
+      background: colors.$color-surface-card;
+
+      .i-listbox-header-content {
+        .i-listbox-title {
+          color: colors.$color-text-primary;
+        }
+
+        .i-listbox-action-btn {
+          background: colors.$color-primary;
+          color: colors.$color-text-contrast;
+        }
+      }
+    }
+
+    .i-listbox-dropdown {
+      .i-listbox-filter {
+        border-bottom-color: colors.$color-surface-border;
+      }
+
+      .i-listbox-options {
+        .i-listbox-option {
+          &:hover {
+            background-color: colors.$color-surface-hover;
+          }
+
+          &.selected {
+            background-color: colors.$color-surface-hover;
+          }
+
+          .i-listbox-option-icon {
+            &--left {
+              color: colors.$color-text-secondary;
+            }
+
+            &--chevron {
+              color: colors.$color-text-tertiary;
+            }
+          }
+        }
+
+        .i-listbox-no-options {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+
+    .i-listbox-error {
+      color: colors.$color-danger;
+      background: color-mix(in srgb, colors.$color-danger 5%, transparent);
+      border-top-color: colors.$color-danger;
+    }
+    &.i-listbox--menu {
+      .i-listbox-options {
+        .i-listbox-option {
+          &.selected {
+            background-color: colors.$color-surface-hover;
+            border-left-color: colors.$color-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .i-listbox-wrapper {
+    .i-listbox-options {
+      .i-listbox-option {
+        color: inherit;
+        background: transparent;
+        &:focus-visible {
+          outline-color: currentColor;
+        }
+      }
     }
   }
 }

@@ -28,9 +28,7 @@ describe('IWhisper', () => {
 
     fixture = TestBed.createComponent(IWhisper);
     component = fixture.componentInstance;
-    whisperService = TestBed.inject(
-      WhisperService,
-    ) as MockedObject<WhisperService>;
+    whisperService = TestBed.inject(WhisperService) as MockedObject<WhisperService>;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
   });
@@ -249,17 +247,13 @@ describe('IWhisper', () => {
     it('should get correct icon for severity', () => {
       expect(component.getMessageIcon('success')).toBe('pi-check-circle');
       expect(component.getMessageIcon('info')).toBe('pi-info-circle');
-      expect(component.getMessageIcon('warning')).toBe(
-        'pi-exclamation-triangle',
-      );
+      expect(component.getMessageIcon('warning')).toBe('pi-exclamation-triangle');
       expect(component.getMessageIcon('danger')).toBe('pi-times-circle');
     });
 
     it('should get correct container class', () => {
       fixture.componentRef.setInput('position', 'bottom-right');
-      expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-right',
-      );
+      expect(component.getContainerClass()).toBe('i-whisper i-whisper-bottom-right');
     });
 
     it('should get correct message class', () => {
@@ -269,20 +263,14 @@ describe('IWhisper', () => {
         summary: 'Test',
         detail: 'Message',
       };
-      expect(component.getMessageClass(message)).toContain(
-        'i-whisper-message-success',
-      );
+      expect(component.getMessageClass(message)).toContain('i-whisper-message-success');
     });
   });
 
   describe('Lifecycle', () => {
     it('should unsubscribe on destroy', () => {
-      vi.spyOn(component.messageSubscription!, 'unsubscribe').mockReturnValue(
-        undefined,
-      );
-      vi.spyOn(component.clearSubscription!, 'unsubscribe').mockReturnValue(
-        undefined,
-      );
+      vi.spyOn(component.messageSubscription!, 'unsubscribe').mockReturnValue(undefined);
+      vi.spyOn(component.clearSubscription!, 'unsubscribe').mockReturnValue(undefined);
 
       component.ngOnDestroy();
 
@@ -310,30 +298,22 @@ describe('IWhisper', () => {
   describe('Position variants', () => {
     it('should apply top-left position class', () => {
       fixture.componentRef.setInput('position', 'top-left');
-      expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-top-left',
-      );
+      expect(component.getContainerClass()).toBe('i-whisper i-whisper-top-left');
     });
 
     it('should apply top-center position class', () => {
       fixture.componentRef.setInput('position', 'top-center');
-      expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-top-center',
-      );
+      expect(component.getContainerClass()).toBe('i-whisper i-whisper-top-center');
     });
 
     it('should apply bottom-center position class', () => {
       fixture.componentRef.setInput('position', 'bottom-center');
-      expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-center',
-      );
+      expect(component.getContainerClass()).toBe('i-whisper i-whisper-bottom-center');
     });
 
     it('should apply bottom-left position class', () => {
       fixture.componentRef.setInput('position', 'bottom-left');
-      expect(component.getContainerClass()).toBe(
-        'i-whisper i-whisper-bottom-left',
-      );
+      expect(component.getContainerClass()).toBe('i-whisper i-whisper-bottom-left');
     });
   });
 

@@ -1,430 +1,412 @@
-<app-demo-playground class="dialogs-demo" title="Dialog Components" description="Modal dialog components with dynamic service-based and template-based implementations. Flexible and accessible dialogs for displaying content, forms, and user interactions.">
-  <ng-template appDemoOption="option-1" label="Dynamic Dialog Service" [selected]="true" [sourceCode]="codeExamples.dynamic" [tsCode]="dynamicDialogTsCode">
-      <div class="demo-content">
-        <p>
-          Use the DialogService to programmatically open dialogs with
-          components.
-        </p>
-        <i-button severity="primary" (clicked)="displayExampleDialog()"
-          >Open Dynamic Dialog</i-button
-        >
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="dialogs-demo"
+  title="Dialogs"
+  eyebrow="Overlays"
+  description="Modal dialog components with dynamic service-based and template-based implementations. Flexible and accessible dialogs for displaying content, forms, and user interactions."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Dynamic Dialog Service"
+    [selected]="true"
+    [sourceCode]="codeExamples.dynamic"
+    [tsCode]="dynamicDialogTsCode"
+  >
+    <div class="demo-content">
+      <p>Use the DialogService to programmatically open dialogs with components.</p>
+      <i-button severity="primary" (clicked)="displayExampleDialog()">Open Dynamic Dialog</i-button>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Basic Template Dialog" [sourceCode]="codeExamples.basic">
-      <div class="demo-content">
-        <p>
-          Use the i-dialog component directly in your template for declarative
-          dialogs.
-        </p>
-        <i-button
-          severity="secondary"
-          [outlined]="true"
-          (clicked)="showBasicDialogModal()"
-          >Open Basic Dialog</i-button
-        >
-      </div>
-
-      <!-- Basic Dialog Template -->
-      <i-dialog
-        [(visible)]="showBasicDialog"
-        [closable]="true"
-        header="Welcome to Invensys"
-        width="500px"
-        height="400px"
-        [breakpoints]="{
-          '640px': { width: '576px', height: '510px' },
-        }"
+  <ng-template
+    appDemoOption="option-2"
+    label="Basic Template Dialog"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="demo-content">
+      <p>Use the i-dialog component directly in your template for declarative dialogs.</p>
+      <i-button severity="secondary" [outlined]="true" (clicked)="showBasicDialogModal()"
+        >Open Basic Dialog</i-button
       >
-        <div class="dialog-content basic-dialog">
-          <div class="dialog-icon">
-            <i class="pi pi-check-circle"></i>
+    </div>
+
+    <!-- Basic Dialog Template -->
+    <i-dialog
+      [(visible)]="showBasicDialog"
+      [closable]="true"
+      header="Welcome to Invensys"
+      width="500px"
+      height="400px"
+      [breakpoints]="{
+        '640px': { width: '576px', height: '510px' },
+      }"
+    >
+      <div class="dialog-content basic-dialog">
+        <div class="dialog-icon">
+          <i class="pi pi-check-circle"></i>
+        </div>
+        <h4>Getting Started</h4>
+        <p class="dialog-description">
+          Welcome to the Invensys component library! This dialog demonstrates a clean, user-friendly
+          design with proper spacing and hierarchy.
+        </p>
+        <div class="feature-highlights">
+          <div class="highlight-item">
+            <i class="pi pi-bolt"></i>
+            <span>Fast & Responsive</span>
           </div>
-          <h4>Getting Started</h4>
-          <p class="dialog-description">
-            Welcome to the Invensys component library! This dialog demonstrates
-            a clean, user-friendly design with proper spacing and hierarchy.
-          </p>
-          <div class="feature-highlights">
-            <div class="highlight-item">
-              <i class="pi pi-bolt"></i>
-              <span>Fast & Responsive</span>
-            </div>
-            <div class="highlight-item">
-              <i class="pi pi-shield"></i>
-              <span>Accessible (WCAG 2.1)</span>
-            </div>
-            <div class="highlight-item">
-              <i class="pi pi-palette"></i>
-              <span>Themeable</span>
-            </div>
+          <div class="highlight-item">
+            <i class="pi pi-shield"></i>
+            <span>Accessible (WCAG 2.1)</span>
           </div>
-          <div
-            class="tooltip-test"
-            style="
-              margin-top: 16px;
-              display: flex;
-              gap: 8px;
-              justify-content: center;
-            "
+          <div class="highlight-item">
+            <i class="pi pi-palette"></i>
+            <span>Themeable</span>
+          </div>
+        </div>
+        <div class="tooltip-test" class="dialog-example-actions">
+          <i-button
+            severity="info"
+            [outlined]="true"
+            iTooltip="This tooltip should appear above the dialog"
+            tooltipPosition="above"
           >
-            <i-button
-              severity="info"
-              [outlined]="true"
-              iTooltip="This tooltip should appear above the dialog"
-              tooltipPosition="above"
-            >
-              <i class="pi pi-info-circle"></i>
-              Hover me
-            </i-button>
-          </div>
+            <i class="pi pi-info-circle"></i>
+            Hover me
+          </i-button>
         </div>
-        <i-dialog-actions
-          slot="footer"
-          (cancelEvent)="onBasicDialogHide()"
-          (submitEvent)="onBasicDialogHide()"
-          submitLabel="Get Started"
-          cancelLabel="Maybe Later"
-        ></i-dialog-actions>
-      </i-dialog>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Single Button Dialog" [sourceCode]="codeExamples.singleButton">
-      <div class="demo-content">
-        <p>
-          Dialog with only one button by setting [showCancel]="false" on dialog
-          actions.
-        </p>
-        <i-button severity="success" (clicked)="showSingleButtonDialogModal()"
-          >Open Single Button Dialog</i-button
-        >
       </div>
+      <i-dialog-actions
+        slot="footer"
+        (cancelEvent)="onBasicDialogHide()"
+        (submitEvent)="onBasicDialogHide()"
+        submitLabel="Get Started"
+        cancelLabel="Maybe Later"
+      ></i-dialog-actions>
+    </i-dialog>
+  </ng-template>
 
-      <!-- Single Button Dialog Template -->
-      <i-dialog
-        [(visible)]="showSingleButtonDialog"
-        [closable]="true"
-        header="Notification"
-        width="384px"
-        [breakpoints]="{
-          '640px': { width: '576px' },
-        }"
+  <ng-template
+    appDemoOption="option-3"
+    label="Single Button Dialog"
+    [sourceCode]="codeExamples.singleButton"
+  >
+    <div class="demo-content">
+      <p>Dialog with only one button by setting [showCancel]="false" on dialog actions.</p>
+      <i-button severity="success" (clicked)="showSingleButtonDialogModal()"
+        >Open Single Button Dialog</i-button
       >
-        <div class="dialog-content basic-dialog">
-          <div class="dialog-icon success">
-            <i class="pi pi-check-circle"></i>
+    </div>
+
+    <!-- Single Button Dialog Template -->
+    <i-dialog
+      [(visible)]="showSingleButtonDialog"
+      [closable]="true"
+      header="Notification"
+      width="384px"
+      [breakpoints]="{
+        '640px': { width: '576px' },
+      }"
+    >
+      <div class="dialog-content basic-dialog">
+        <div class="dialog-icon success">
+          <i class="pi pi-check-circle"></i>
+        </div>
+        <h4>Success!</h4>
+        <p class="dialog-description">
+          Your changes have been saved successfully. This dialog only has one action button for
+          acknowledgment.
+        </p>
+      </div>
+      <i-dialog-actions
+        slot="footer"
+        (submitEvent)="onSingleButtonDialogHide()"
+        submitLabel="OK"
+        [showCancel]="false"
+      ></i-dialog-actions>
+    </i-dialog>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-4"
+    label="Responsive Dialog"
+    [sourceCode]="codeExamples.responsive"
+  >
+    <div class="demo-content">
+      <p>Dialogs that adapt to different screen sizes using breakpoints.</p>
+      <i-button severity="info" (clicked)="showResponsiveDialogModal()"
+        >Open Responsive Dialog</i-button
+      >
+    </div>
+
+    <!-- Responsive Dialog Template -->
+    <i-dialog
+      [(visible)]="showResponsiveDialog"
+      header="Screen Size Adaptation"
+      width="800px"
+      height="600px"
+      [breakpoints]="{
+        '960px': { width: '720px', height: '420px' },
+        '640px': { width: '576px', height: '480px' },
+      }"
+    >
+      <div class="dialog-content responsive-dialog">
+        <div class="responsive-info-card">
+          <div class="info-header">
+            <i class="pi pi-desktop"></i>
+            <h5>Current Breakpoint</h5>
           </div>
-          <h4>Success!</h4>
-          <p class="dialog-description">
-            Your changes have been saved successfully. This dialog only has one
-            action button for acknowledgment.
+          <p class="breakpoint-indicator">
+            Resize your browser to see the dialog adapt automatically.
           </p>
         </div>
-        <i-dialog-actions
-          slot="footer"
-          (submitEvent)="onSingleButtonDialogHide()"
-          submitLabel="OK"
-          [showCancel]="false"
-        ></i-dialog-actions>
-      </i-dialog>
-    </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Responsive Dialog" [sourceCode]="codeExamples.responsive">
-      <div class="demo-content">
-        <p>Dialogs that adapt to different screen sizes using breakpoints.</p>
-        <i-button severity="info" (clicked)="showResponsiveDialogModal()"
-          >Open Responsive Dialog</i-button
-        >
-      </div>
-
-      <!-- Responsive Dialog Template -->
-      <i-dialog
-        [(visible)]="showResponsiveDialog"
-        header="Screen Size Adaptation"
-        width="800px"
-        height="600px"
-        [breakpoints]="{
-          '960px': { width: '720px', height: '420px' },
-          '640px': { width: '576px', height: '480px' },
-        }"
-      >
-        <div class="dialog-content responsive-dialog">
-          <div class="responsive-info-card">
-            <div class="info-header">
+        <div class="breakpoints-grid">
+          <div class="breakpoint-card">
+            <div class="breakpoint-icon">
               <i class="pi pi-desktop"></i>
-              <h5>Current Breakpoint</h5>
             </div>
-            <p class="breakpoint-indicator">
-              Resize your browser to see the dialog adapt automatically.
+            <div class="breakpoint-details">
+              <strong>Desktop</strong>
+              <span class="breakpoint-value">50vw</span>
+              <small>> 960px</small>
+            </div>
+          </div>
+          <div class="breakpoint-card">
+            <div class="breakpoint-icon">
+              <i class="pi pi-tablet"></i>
+            </div>
+            <div class="breakpoint-details">
+              <strong>Tablet</strong>
+              <span class="breakpoint-value">75vw</span>
+              <small>≤ 960px</small>
+            </div>
+          </div>
+          <div class="breakpoint-card">
+            <div class="breakpoint-icon">
+              <i class="pi pi-mobile"></i>
+            </div>
+            <div class="breakpoint-details">
+              <strong>Mobile</strong>
+              <span class="breakpoint-value">90vw</span>
+              <small>≤ 640px</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="responsive-tip">
+          <i class="pi pi-info-circle" aria-hidden="true"></i>
+          <p>
+            All dialogs are constrained to a maximum height of 80vh for optimal mobile experience.
+          </p>
+        </div>
+      </div>
+      <i-dialog-actions
+        slot="footer"
+        (cancelEvent)="onResponsiveDialogHide()"
+        (submitEvent)="onResponsiveDialogHide()"
+        submitLabel="Got It"
+        cancelLabel="Close"
+      ></i-dialog-actions>
+    </i-dialog>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Dialog with Dropdowns (Test Case)"
+    sourceCodeEncoded="%3Cdiv%20class%3D%22demo-content%22%3E%0A%20%20%20%20%20%20%20%20%3Cp%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETesting%20dropdown%20behavior%20in%20dialogs%3A%3C%2Fstrong%3E%20This%20dialog%0A%20%20%20%20%20%20%20%20%20%20contains%20select%20and%20multi-select%20dropdowns.%20Click%20inside%20the%20dialog%0A%20%20%20%20%20%20%20%20%20%20but%20outside%20an%20expanded%20dropdown%20to%20test%20if%20it%20properly%20closes.%0A%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20(clicked)%3D%22showDropdownTestDialogModal()%22%0A%20%20%20%20%20%20%20%20%20%20%3EOpen%20Dropdown%20Test%20Dialog%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3C!--%20Dropdown%20Test%20Dialog%20Template%20--%3E%0A%20%20%20%20%20%20%3Ci-dialog%0A%20%20%20%20%20%20%20%20%5B(visible)%5D%3D%22showDropdownTestDialog%22%0A%20%20%20%20%20%20%20%20header%3D%22Dropdown%20Test%20in%20Dialog%22%0A%20%20%20%20%20%20%20%20width%3D%22600px%22%0A%20%20%20%20%20%20%20%20height%3D%22500px%22%0A%20%20%20%20%20%20%20%20%5Bbreakpoints%5D%3D%22%7B%0A%20%20%20%20%20%20%20%20%20%20'960px'%3A%20%7B%20width%3A%20'720px'%2C%20height%3A%20'420px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20'640px'%3A%20%7B%20width%3A%20'576px'%2C%20height%3A%20'480px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%7D%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dialog-content%22%20style%3D%22height%3A%20100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-test-instruction%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETest%20Instructions%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Col%20style%3D%22margin%3A%208px%200%200%200%3B%20padding-left%3A%2020px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EOpen%20the%20%22Country%22%20dropdown%20below%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Click%20anywhere%20else%20in%20the%20dialog%20(but%20not%20on%20the%20dropdown)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Observe%20if%20the%20dropdown%20closes%20automatically%20(expected%20behavior)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3ERepeat%20with%20the%20%22Skills%22%20multi-select%20dropdown%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fol%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%3Cform%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BformGroup%5D%3D%22dropdownTestForm%22%0A%20%20%20%20%20%20%20%20%20%20%20%20style%3D%22display%3A%20flex%3B%20flex-direction%3A%20column%3B%20gap%3A%2016px%22%0A%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22countryOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20a%20country%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-multi-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22skillOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BmaxSelectedLabels%5D%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selectedItemsLabel%3D%22%7B0%7D%20skills%20selected%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-multi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20at%20least%20one%20skill%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-values-panel%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20style%3D%22margin%3A%200%3B%20font-size%3A%2014px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ECurrent%20Values%3A%3C%2Fstrong%3E%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Country%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20dropdownTestForm.get(%22country%22)%3F.value%3F.label%20%7C%7C%20%22None%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%7D%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Skills%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20(dropdownTestForm.get(%22skills%22)%3F.value%20%7C%7C%20%5B%5D).length%20%7D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selected%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fform%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3Ci-dialog-actions%0A%20%20%20%20%20%20%20%20%20%20slot%3D%22footer%22%0A%20%20%20%20%20%20%20%20%20%20(cancelEvent)%3D%22onDropdownTestDialogHide()%22%0A%20%20%20%20%20%20%20%20%20%20(submitEvent)%3D%22onDropdownTestDialogSubmit()%22%0A%20%20%20%20%20%20%20%20%20%20submitLabel%3D%22Submit%22%0A%20%20%20%20%20%20%20%20%20%20cancelLabel%3D%22Cancel%22%0A%20%20%20%20%20%20%20%20%20%20%5BsubmitDisabled%5D%3D%22dropdownTestForm.invalid%22%0A%20%20%20%20%20%20%20%20%3E%3C%2Fi-dialog-actions%3E%0A%20%20%20%20%20%20%3C%2Fi-dialog%3E"
+  >
+    <div class="demo-content">
+      <p>
+        <strong>Testing dropdown behavior in dialogs:</strong> This dialog contains select and
+        multi-select dropdowns. Click inside the dialog but outside an expanded dropdown to test if
+        it properly closes.
+      </p>
+      <i-button severity="danger" (clicked)="showDropdownTestDialogModal()"
+        >Open Dropdown Test Dialog</i-button
+      >
+    </div>
+
+    <!-- Dropdown Test Dialog Template -->
+    <i-dialog
+      [(visible)]="showDropdownTestDialog"
+      header="Dropdown Test in Dialog"
+      width="600px"
+      height="500px"
+      [breakpoints]="{
+        '960px': { width: '720px', height: '420px' },
+        '640px': { width: '576px', height: '480px' },
+      }"
+    >
+      <div class="dialog-content dialog-content-full-height">
+        <div class="dropdown-test-instruction">
+          <strong>Test Instructions:</strong>
+          <ol class="dropdown-check-list">
+            <li>Open the "Country" dropdown below</li>
+            <li>Click anywhere else in the dialog (but not on the dropdown)</li>
+            <li>Observe if the dropdown closes automatically (expected behavior)</li>
+            <li>Repeat with the "Skills" multi-select dropdown</li>
+          </ol>
+        </div>
+
+        <form [formGroup]="dropdownTestForm" class="dropdown-controls">
+          <div class="form-field">
+            <i-select
+              id="country"
+              label="Country"
+              [options]="countryOptions"
+              optionLabel="label"
+              formControlName="country"
+              [filter]="true"
+              [showClear]="true"
+              [fluid]="true"
+            >
+            </i-select>
+            @if (
+              dropdownTestForm.get('country')?.invalid && dropdownTestForm.get('country')?.touched
+            ) {
+              <small class="error-message">
+                <i class="pi pi-exclamation-circle"></i>
+                Please select a country
+              </small>
+            }
+          </div>
+
+          <div class="form-field">
+            <i-multi-select
+              id="skills"
+              label="Skills"
+              [options]="skillOptions"
+              optionLabel="label"
+              formControlName="skills"
+              [filter]="true"
+              [showClear]="true"
+              [fluid]="true"
+              [maxSelectedLabels]="3"
+              selectedItemsLabel="{0} skills selected"
+            >
+            </i-multi-select>
+            @if (
+              dropdownTestForm.get('skills')?.invalid && dropdownTestForm.get('skills')?.touched
+            ) {
+              <small class="error-message">
+                <i class="pi pi-exclamation-circle"></i>
+                Please select at least one skill
+              </small>
+            }
+          </div>
+
+          <div class="dropdown-values-panel">
+            <p>
+              <strong>Current Values:</strong><br />
+              Country:
+              {{ dropdownTestForm.get('country')?.value?.label || 'None' }}<br />
+              Skills:
+              {{ (dropdownTestForm.get('skills')?.value || []).length }}
+              selected
             </p>
           </div>
-
-          <div class="breakpoints-grid">
-            <div class="breakpoint-card">
-              <div class="breakpoint-icon">
-                <i class="pi pi-desktop"></i>
-              </div>
-              <div class="breakpoint-details">
-                <strong>Desktop</strong>
-                <span class="breakpoint-value">50vw</span>
-                <small>> 960px</small>
-              </div>
-            </div>
-            <div class="breakpoint-card">
-              <div class="breakpoint-icon">
-                <i class="pi pi-tablet"></i>
-              </div>
-              <div class="breakpoint-details">
-                <strong>Tablet</strong>
-                <span class="breakpoint-value">75vw</span>
-                <small>≤ 960px</small>
-              </div>
-            </div>
-            <div class="breakpoint-card">
-              <div class="breakpoint-icon">
-                <i class="pi pi-mobile"></i>
-              </div>
-              <div class="breakpoint-details">
-                <strong>Mobile</strong>
-                <span class="breakpoint-value">90vw</span>
-                <small>≤ 640px</small>
-              </div>
-            </div>
-          </div>
-
-          <p class="responsive-tip">
-            <i class="pi pi-info-circle"></i>
-            All dialogs are constrained to a maximum height of 80vh for optimal
-            mobile experience.
-          </p>
-        </div>
-        <i-dialog-actions
-          slot="footer"
-          (cancelEvent)="onResponsiveDialogHide()"
-          (submitEvent)="onResponsiveDialogHide()"
-          submitLabel="Got It"
-          cancelLabel="Close"
-        ></i-dialog-actions>
-      </i-dialog>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Dialog with Dropdowns (Test Case)" sourceCodeEncoded="%3Cdiv%20class%3D%22demo-content%22%3E%0A%20%20%20%20%20%20%20%20%3Cp%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETesting%20dropdown%20behavior%20in%20dialogs%3A%3C%2Fstrong%3E%20This%20dialog%0A%20%20%20%20%20%20%20%20%20%20contains%20select%20and%20multi-select%20dropdowns.%20Click%20inside%20the%20dialog%0A%20%20%20%20%20%20%20%20%20%20but%20outside%20an%20expanded%20dropdown%20to%20test%20if%20it%20properly%20closes.%0A%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20(clicked)%3D%22showDropdownTestDialogModal()%22%0A%20%20%20%20%20%20%20%20%20%20%3EOpen%20Dropdown%20Test%20Dialog%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3C!--%20Dropdown%20Test%20Dialog%20Template%20--%3E%0A%20%20%20%20%20%20%3Ci-dialog%0A%20%20%20%20%20%20%20%20%5B(visible)%5D%3D%22showDropdownTestDialog%22%0A%20%20%20%20%20%20%20%20header%3D%22Dropdown%20Test%20in%20Dialog%22%0A%20%20%20%20%20%20%20%20width%3D%22600px%22%0A%20%20%20%20%20%20%20%20height%3D%22500px%22%0A%20%20%20%20%20%20%20%20%5Bbreakpoints%5D%3D%22%7B%0A%20%20%20%20%20%20%20%20%20%20'960px'%3A%20%7B%20width%3A%20'720px'%2C%20height%3A%20'420px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20'640px'%3A%20%7B%20width%3A%20'576px'%2C%20height%3A%20'480px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%7D%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dialog-content%22%20style%3D%22height%3A%20100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-test-instruction%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETest%20Instructions%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Col%20style%3D%22margin%3A%208px%200%200%200%3B%20padding-left%3A%2020px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EOpen%20the%20%22Country%22%20dropdown%20below%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Click%20anywhere%20else%20in%20the%20dialog%20(but%20not%20on%20the%20dropdown)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Observe%20if%20the%20dropdown%20closes%20automatically%20(expected%20behavior)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3ERepeat%20with%20the%20%22Skills%22%20multi-select%20dropdown%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fol%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%3Cform%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BformGroup%5D%3D%22dropdownTestForm%22%0A%20%20%20%20%20%20%20%20%20%20%20%20style%3D%22display%3A%20flex%3B%20flex-direction%3A%20column%3B%20gap%3A%2016px%22%0A%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22countryOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20a%20country%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-multi-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22skillOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BmaxSelectedLabels%5D%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selectedItemsLabel%3D%22%7B0%7D%20skills%20selected%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-multi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20at%20least%20one%20skill%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-values-panel%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20style%3D%22margin%3A%200%3B%20font-size%3A%2014px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ECurrent%20Values%3A%3C%2Fstrong%3E%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Country%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20dropdownTestForm.get(%22country%22)%3F.value%3F.label%20%7C%7C%20%22None%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%7D%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Skills%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20(dropdownTestForm.get(%22skills%22)%3F.value%20%7C%7C%20%5B%5D).length%20%7D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selected%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fform%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3Ci-dialog-actions%0A%20%20%20%20%20%20%20%20%20%20slot%3D%22footer%22%0A%20%20%20%20%20%20%20%20%20%20(cancelEvent)%3D%22onDropdownTestDialogHide()%22%0A%20%20%20%20%20%20%20%20%20%20(submitEvent)%3D%22onDropdownTestDialogSubmit()%22%0A%20%20%20%20%20%20%20%20%20%20submitLabel%3D%22Submit%22%0A%20%20%20%20%20%20%20%20%20%20cancelLabel%3D%22Cancel%22%0A%20%20%20%20%20%20%20%20%20%20%5BsubmitDisabled%5D%3D%22dropdownTestForm.invalid%22%0A%20%20%20%20%20%20%20%20%3E%3C%2Fi-dialog-actions%3E%0A%20%20%20%20%20%20%3C%2Fi-dialog%3E">
-      <div class="demo-content">
-        <p>
-          <strong>Testing dropdown behavior in dialogs:</strong> This dialog
-          contains select and multi-select dropdowns. Click inside the dialog
-          but outside an expanded dropdown to test if it properly closes.
-        </p>
-        <i-button severity="danger" (clicked)="showDropdownTestDialogModal()"
-          >Open Dropdown Test Dialog</i-button
-        >
+        </form>
       </div>
-
-      <!-- Dropdown Test Dialog Template -->
-      <i-dialog
-        [(visible)]="showDropdownTestDialog"
-        header="Dropdown Test in Dialog"
-        width="600px"
-        height="500px"
-        [breakpoints]="{
-          '960px': { width: '720px', height: '420px' },
-          '640px': { width: '576px', height: '480px' },
-        }"
-      >
-        <div class="dialog-content" style="height: 100%">
-          <div class="dropdown-test-instruction">
-            <strong>Test Instructions:</strong>
-            <ol style="margin: 8px 0 0 0; padding-left: 20px">
-              <li>Open the "Country" dropdown below</li>
-              <li>
-                Click anywhere else in the dialog (but not on the dropdown)
-              </li>
-              <li>
-                Observe if the dropdown closes automatically (expected behavior)
-              </li>
-              <li>Repeat with the "Skills" multi-select dropdown</li>
-            </ol>
-          </div>
-
-          <form
-            [formGroup]="dropdownTestForm"
-            style="display: flex; flex-direction: column; gap: 16px"
-          >
-            <div class="form-field">
-              <i-select
-                id="country"
-                label="Country"
-                [options]="countryOptions"
-                optionLabel="label"
-                formControlName="country"
-                [filter]="true"
-                [showClear]="true"
-                [fluid]="true"
-              >
-              </i-select>
-              @if (
-                dropdownTestForm.get("country")?.invalid &&
-                dropdownTestForm.get("country")?.touched
-              ) {
-                <small class="error-message">
-                  <i class="pi pi-exclamation-circle"></i>
-                  Please select a country
-                </small>
-              }
-            </div>
-
-            <div class="form-field">
-              <i-multi-select
-                id="skills"
-                label="Skills"
-                [options]="skillOptions"
-                optionLabel="label"
-                formControlName="skills"
-                [filter]="true"
-                [showClear]="true"
-                [fluid]="true"
-                [maxSelectedLabels]="3"
-                selectedItemsLabel="{0} skills selected"
-              >
-              </i-multi-select>
-              @if (
-                dropdownTestForm.get("skills")?.invalid &&
-                dropdownTestForm.get("skills")?.touched
-              ) {
-                <small class="error-message">
-                  <i class="pi pi-exclamation-circle"></i>
-                  Please select at least one skill
-                </small>
-              }
-            </div>
-
-            <div class="dropdown-values-panel">
-              <p style="margin: 0; font-size: 14px">
-                <strong>Current Values:</strong><br />
-                Country:
-                {{ dropdownTestForm.get("country")?.value?.label || "None"
-                }}<br />
-                Skills:
-                {{ (dropdownTestForm.get("skills")?.value || []).length }}
-                selected
-              </p>
-            </div>
-          </form>
-        </div>
-        <i-dialog-actions
-          slot="footer"
-          (cancelEvent)="onDropdownTestDialogHide()"
-          (submitEvent)="onDropdownTestDialogSubmit()"
-          submitLabel="Submit"
-          cancelLabel="Cancel"
-          [submitDisabled]="dropdownTestForm.invalid"
-        ></i-dialog-actions>
-      </i-dialog>
-    </ng-template>
+      <i-dialog-actions
+        slot="footer"
+        (cancelEvent)="onDropdownTestDialogHide()"
+        (submitEvent)="onDropdownTestDialogSubmit()"
+        submitLabel="Submit"
+        cancelLabel="Cancel"
+        [submitDisabled]="dropdownTestForm.invalid"
+      ></i-dialog-actions>
+    </i-dialog>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Large Dialog" [sourceCode]="codeExamples.fullscreen">
-      <div class="demo-content">
-        <p>Dialogs with larger dimensions for complex content.</p>
-        <i-button severity="warning" (clicked)="showFullscreenDialogModal()"
-          >Open Large Dialog</i-button
-        >
-      </div>
-
-      <!-- Fullscreen Dialog Template -->
-      <i-dialog
-        [(visible)]="showFullscreenDialog"
-        header="Team Assignment"
-        [modal]="true"
-        width="600px"
-        height="800px"
-        [breakpoints]="{
-          '960px': { width: '768px', height: '680px' },
-          '640px': { width: '608px', height: '720px' },
-        }"
+    <div class="demo-content">
+      <p>Dialogs with larger dimensions for complex content.</p>
+      <i-button severity="warning" (clicked)="showFullscreenDialogModal()"
+        >Open Large Dialog</i-button
       >
-        <div class="dialog-content large-dialog">
-          <div class="dialog-intro">
-            <i class="pi pi-users"></i>
-            <div>
-              <h4>Select Team Departments</h4>
-              <p>Choose the departments you want to assign to this project.</p>
-            </div>
+    </div>
+
+    <!-- Fullscreen Dialog Template -->
+    <i-dialog
+      [(visible)]="showFullscreenDialog"
+      header="Team Assignment"
+      [modal]="true"
+      width="600px"
+      height="800px"
+      [breakpoints]="{
+        '960px': { width: '768px', height: '680px' },
+        '640px': { width: '608px', height: '720px' },
+      }"
+    >
+      <div class="dialog-content large-dialog">
+        <div class="dialog-intro">
+          <i class="pi pi-users"></i>
+          <div>
+            <h4>Select Team Departments</h4>
+            <p>Choose the departments you want to assign to this project.</p>
           </div>
+        </div>
 
-          <form [formGroup]="largeDialogForm" class="listbox-demo-form">
-            <div class="form-field">
-              <i-listbox
-                id="selectedDepartments"
-                label="Available Departments"
-                [options]="departmentOptions$ | async"
-                optionLabel="label"
-                optionValue="value"
-                formControlName="selectedDepartments"
-                [multiple]="true"
-                [filter]="true"
-                [showClear]="true"
-                [maxSelectedLabels]="2"
-                selectedItemsLabel="{0} departments selected"
-              >
-              </i-listbox>
+        <form [formGroup]="largeDialogForm" class="listbox-demo-form">
+          <div class="form-field">
+            <i-listbox
+              id="selectedDepartments"
+              label="Available Departments"
+              [options]="departmentOptions$ | async"
+              optionLabel="label"
+              optionValue="value"
+              formControlName="selectedDepartments"
+              [multiple]="true"
+              [filter]="true"
+              [showClear]="true"
+              [maxSelectedLabels]="2"
+              selectedItemsLabel="{0} departments selected"
+            >
+            </i-listbox>
 
-              @if (
-                largeDialogForm.get("selectedDepartments")?.invalid &&
-                largeDialogForm.get("selectedDepartments")?.touched
-              ) {
-                <small class="error-message">
-                  <i class="pi pi-exclamation-circle"></i>
-                  Please select at least one department
-                </small>
-              }
+            @if (
+              largeDialogForm.get('selectedDepartments')?.invalid &&
+              largeDialogForm.get('selectedDepartments')?.touched
+            ) {
+              <small class="error-message">
+                <i class="pi pi-exclamation-circle"></i>
+                Please select at least one department
+              </small>
+            }
+          </div>
+        </form>
+
+        <div class="selection-summary">
+          <div class="summary-header">
+            <i class="pi pi-chart-bar"></i>
+            <span>Selection Summary</span>
+          </div>
+          <div class="summary-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{
+                (largeDialogForm.get('selectedDepartments')?.value || []).length
+              }}</span>
+              <span class="stat-label">Selected</span>
             </div>
-          </form>
-
-          <div class="selection-summary">
-            <div class="summary-header">
-              <i class="pi pi-chart-bar"></i>
-              <span>Selection Summary</span>
+            <div class="stat-item">
+              <span class="stat-value">{{ (departmentOptions$ | async)?.length || 0 }}</span>
+              <span class="stat-label">Available</span>
             </div>
-            <div class="summary-stats">
-              <div class="stat-item">
-                <span class="stat-value">{{
-                  (largeDialogForm.get("selectedDepartments")?.value || [])
-                    .length
-                }}</span>
-                <span class="stat-label">Selected</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-value">{{
-                  (departmentOptions$ | async)?.length || 0
-                }}</span>
-                <span class="stat-label">Available</span>
-              </div>
-              <div
-                class="stat-item status"
-                [class.valid]="largeDialogForm.valid"
-              >
-                <i
-                  [class]="
-                    largeDialogForm.valid
-                      ? 'pi pi-check-circle'
-                      : 'pi pi-times-circle'
-                  "
-                ></i>
-                <span class="stat-label">{{
-                  largeDialogForm.valid ? "Ready" : "Incomplete"
-                }}</span>
-              </div>
+            <div class="stat-item status" [class.valid]="largeDialogForm.valid">
+              <i [class]="largeDialogForm.valid ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
+              <span class="stat-label">{{ largeDialogForm.valid ? 'Ready' : 'Incomplete' }}</span>
             </div>
           </div>
         </div>
-        <i-dialog-actions
-          slot="footer"
-          (cancelEvent)="onFullscreenDialogHide()"
-          (submitEvent)="onFullscreenDialogSubmit()"
-          submitLabel="Assign Departments"
-          cancelLabel="Cancel"
-          [submitDisabled]="largeDialogForm.invalid"
-        ></i-dialog-actions>
-      </i-dialog>
-    </ng-template>
+      </div>
+      <i-dialog-actions
+        slot="footer"
+        (cancelEvent)="onFullscreenDialogHide()"
+        (submitEvent)="onFullscreenDialogSubmit()"
+        submitLabel="Assign Departments"
+        cancelLabel="Cancel"
+        [submitDisabled]="largeDialogForm.invalid"
+      ></i-dialog-actions>
+    </i-dialog>
+  </ng-template>
 </app-demo-playground>

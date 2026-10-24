@@ -1,97 +1,108 @@
-<app-demo-playground class="progress-spinners-demo" title="Progress Spinner Component" description="A loading indicator component with customizable sizes and stroke widths. Perfect for showing loading states in buttons, overlays, and content areas. Features smooth CSS animations and full theme integration.">
-  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
-      <div class="demo-content centered">
-        <i-progress-spinner></i-progress-spinner>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="progress-spinners-demo"
+  title="Progress Spinners"
+  eyebrow="Feedback &amp; Messages"
+  description="A loading indicator component with customizable sizes and stroke widths. Perfect for showing loading states in buttons, overlays, and content areas. Features smooth CSS animations and full theme integration."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="demo-content centered">
+      <i-progress-spinner></i-progress-spinner>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
-      <div class="demo-content">
-        <div class="size-grid">
-          <div class="size-item">
-            <i-progress-spinner size="small"></i-progress-spinner>
-            <span>Small</span>
-          </div>
-          <div class="size-item">
-            <i-progress-spinner size="medium"></i-progress-spinner>
-            <span>Medium</span>
-          </div>
-          <div class="size-item">
-            <i-progress-spinner size="large"></i-progress-spinner>
-            <span>Large</span>
-          </div>
+    <div class="demo-content">
+      <div class="size-grid">
+        <div class="size-item">
+          <i-progress-spinner size="small"></i-progress-spinner>
+          <span>Small</span>
+        </div>
+        <div class="size-item">
+          <i-progress-spinner size="medium"></i-progress-spinner>
+          <span>Medium</span>
+        </div>
+        <div class="size-item">
+          <i-progress-spinner size="large"></i-progress-spinner>
+          <span>Large</span>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Custom Stroke Width" [sourceCode]="codeExamples.strokeWidth">
-      <div class="demo-content">
-        <div class="size-grid">
-          <div class="size-item">
-            <i-progress-spinner [strokeWidth]="2"></i-progress-spinner>
-            <span>Thin (2px)</span>
-          </div>
-          <div class="size-item">
-            <i-progress-spinner [strokeWidth]="4"></i-progress-spinner>
-            <span>Default (4px)</span>
-          </div>
-          <div class="size-item">
-            <i-progress-spinner [strokeWidth]="6"></i-progress-spinner>
-            <span>Thick (6px)</span>
-          </div>
+  <ng-template
+    appDemoOption="option-3"
+    label="Custom Stroke Width"
+    [sourceCode]="codeExamples.strokeWidth"
+  >
+    <div class="demo-content">
+      <div class="size-grid">
+        <div class="size-item">
+          <i-progress-spinner [strokeWidth]="2"></i-progress-spinner>
+          <span>Thin (2px)</span>
+        </div>
+        <div class="size-item">
+          <i-progress-spinner [strokeWidth]="4"></i-progress-spinner>
+          <span>Default (4px)</span>
+        </div>
+        <div class="size-item">
+          <i-progress-spinner [strokeWidth]="6"></i-progress-spinner>
+          <span>Thick (6px)</span>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Loading Button" [sourceCode]="codeExamples.withButton" [tsCode]="tsExamples.withButton">
-      <div class="demo-content centered">
-        <i-button [loading]="isLoading" (clicked)="simulateLoading()">
-          {{ isLoading ? "Loading..." : "Click Me" }}
-        </i-button>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-4"
+    label="Loading Button"
+    [sourceCode]="codeExamples.withButton"
+    [tsCode]="tsExamples.withButton"
+  >
+    <div class="demo-content centered">
+      <i-button [loading]="isLoading" (clicked)="simulateLoading()">
+        {{ isLoading ? 'Loading...' : 'Click Me' }}
+      </i-button>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Loading States with Button Severities" [sourceCode]="codeExamples.severities">
-      <div class="demo-content">
-        <div class="button-grid">
-          <i-button severity="primary" [loading]="true">Primary</i-button>
-          <i-button severity="secondary" [loading]="true">Secondary</i-button>
-          <i-button severity="success" [loading]="true">Success</i-button>
-          <i-button severity="info" [loading]="true">Info</i-button>
-          <i-button severity="warning" [loading]="true">Warning</i-button>
-          <i-button severity="danger" [loading]="true">Danger</i-button>
-        </div>
-        <div class="button-grid">
-          <i-button severity="primary" [outlined]="true" [loading]="true"
-            >Primary</i-button
-          >
-          <i-button severity="secondary" [outlined]="true" [loading]="true"
-            >Secondary</i-button
-          >
-          <i-button severity="success" [outlined]="true" [loading]="true"
-            >Success</i-button
-          >
-          <i-button severity="info" [outlined]="true" [loading]="true"
-            >Info</i-button
-          >
-          <i-button severity="warning" [outlined]="true" [loading]="true"
-            >Warning</i-button
-          >
-          <i-button severity="danger" [outlined]="true" [loading]="true"
-            >Danger</i-button
-          >
-        </div>
+  <ng-template
+    appDemoOption="option-5"
+    label="Loading States with Button Severities"
+    [sourceCode]="codeExamples.severities"
+  >
+    <div class="demo-content">
+      <div class="button-grid">
+        <i-button severity="primary" [loading]="true">Primary</i-button>
+        <i-button severity="secondary" [loading]="true">Secondary</i-button>
+        <i-button severity="success" [loading]="true">Success</i-button>
+        <i-button severity="info" [loading]="true">Info</i-button>
+        <i-button severity="warning" [loading]="true">Warning</i-button>
+        <i-button severity="danger" [loading]="true">Danger</i-button>
       </div>
-    </ng-template>
+      <div class="button-grid">
+        <i-button severity="primary" [outlined]="true" [loading]="true">Primary</i-button>
+        <i-button severity="secondary" [outlined]="true" [loading]="true">Secondary</i-button>
+        <i-button severity="success" [outlined]="true" [loading]="true">Success</i-button>
+        <i-button severity="info" [outlined]="true" [loading]="true">Info</i-button>
+        <i-button severity="warning" [outlined]="true" [loading]="true">Warning</i-button>
+        <i-button severity="danger" [outlined]="true" [loading]="true">Danger</i-button>
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Loading Overlay" [sourceCode]="codeExamples.inCard">
-      <div class="demo-content">
-        <div class="loading-card-demo">
-          <div class="loading-overlay-demo">
-            <i-progress-spinner></i-progress-spinner>
-            <p>Loading content...</p>
-          </div>
+    <div class="demo-content">
+      <div class="loading-card-demo">
+        <div class="loading-overlay-demo">
+          <i-progress-spinner></i-progress-spinner>
+          <p>Loading content...</p>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

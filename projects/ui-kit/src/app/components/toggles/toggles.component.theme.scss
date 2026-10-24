@@ -1,0 +1,23 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin toggles-theme() {
+  .toggles-demo {
+    .toggle-examples {
+      .example-row {
+        .status {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+
+    .form-output {
+      background: colors.$color-surface-section;
+      border-color: colors.$color-surface-border;
+
+      pre {
+        background: colors.$color-surface-ground;
+        border-color: colors.$color-surface-border;
+      }
+    }
+  }
+}

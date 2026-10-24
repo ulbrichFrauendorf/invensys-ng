@@ -13,12 +13,14 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-textareas',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     ITextarea,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './textareas.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './textareas.component.scss',

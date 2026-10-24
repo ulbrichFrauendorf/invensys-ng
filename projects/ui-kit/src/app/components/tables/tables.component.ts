@@ -49,6 +49,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
   styleUrl: './tables.component.scss',
 })
 export class TablesComponent {
+  showBorder = false;
   showDetailRowBorders = false;
   constructor(private whisperService: WhisperService) {}
 
@@ -378,6 +379,7 @@ export class TablesComponent {
   codeExamples = {
     flat: `<i-table
   [grid]="flatGrid"
+  [showBorder]="showBorder"
   [sortable]="true"
   [filterable]="true"
   [globalFilter]="true"
@@ -443,6 +445,8 @@ readonly baseColumns: TableColumn[] = [
   { field: 'status',   header: 'Status',   sortable: true, filterable: true },
   { field: 'date',     header: 'Date',     sortable: true, type: 'date', format: 'yyyy-MM-dd' },
 ];
+
+showBorder = false;
 
 flatGrid: GridData<Product> = {
   columns: this.baseColumns,
@@ -594,13 +598,7 @@ largeGrid: GridData<Product> = {
   // ── Helpers ───────────────────────────────────────────────────────────────
 
   private generateLargeDataset(count: number): Product[] {
-    const categories = [
-      'Electronics',
-      'Accessories',
-      'Audio',
-      'Storage',
-      'Furniture',
-    ];
+    const categories = ['Electronics', 'Accessories', 'Audio', 'Storage', 'Furniture'];
     const statuses = ['In Stock', 'Low Stock', 'Out of Stock'];
     return Array.from({ length: count }, (_, i) => {
       const statusLabel = statuses[Math.floor(Math.random() * statuses.length)];
@@ -618,16 +616,8 @@ largeGrid: GridData<Product> = {
               ? 'pi pi-exclamation-circle'
               : 'pi pi-times-circle',
         statusSeverity:
-          statusLabel === 'In Stock'
-            ? 'success'
-            : statusLabel === 'Low Stock'
-              ? 'warn'
-              : 'danger',
-        date: new Date(
-          2024,
-          Math.floor(Math.random() * 12),
-          Math.floor(Math.random() * 28) + 1,
-        )
+          statusLabel === 'In Stock' ? 'success' : statusLabel === 'Low Stock' ? 'warn' : 'danger',
+        date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1)
           .toISOString()
           .split('T')[0],
         tags: [],

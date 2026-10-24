@@ -1,5 +1,5 @@
-@use "./calendar.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
+@use './calendar.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
 
 @include theme.i-calendar-theme();
 
@@ -21,6 +21,17 @@
   border-radius: vars.$borderRadius;
   overflow: hidden;
   animation: slideDown 0.2s ease-out;
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(360px, calc(100vw - 24px));
+    min-width: 0;
+    max-height: calc(100dvh - 24px);
+    overflow: auto;
+    animation: none;
+  }
 }
 
 @keyframes slideDown {
@@ -34,7 +45,7 @@
   }
 }
 
-// Header
+/* Header */
 .i-calendar-header {
   display: flex;
   align-items: center;
@@ -49,24 +60,27 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 1em;
+  font-size: 12px;
 }
 
 .i-calendar-title-text {
   font-weight: 600;
-  font-size: 1em;
+  font-size: 12px;
 }
 
-// Body
+/* Body */
 .i-calendar-body {
   padding: 12px;
 }
 
 .i-calendar-selection {
   border-radius: vars.$componentBorderRadius;
+  @media (max-width: 768px) {
+    min-width: 0;
+  }
 }
 
-// Date View
+/* Date View */
 .i-calendar-date-view {
   display: flex;
   flex-direction: column;
@@ -84,24 +98,21 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
 }
 
-// Month View
+/* Month View */
 .i-calendar-month-view {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
-// Year View
+/* Year View */
 .i-calendar-year-view {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-}
-
-@media (max-width: 768px) {
-  .i-calendar-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100vw - 24px)); min-width: 0; max-height: calc(100dvh - 24px); overflow: auto; animation: none; }
-  .i-calendar-days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-  .i-calendar-selection { min-width: 0; }
 }

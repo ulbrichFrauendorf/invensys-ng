@@ -16,18 +16,11 @@
   (keydown.space)="handleKeydown($event)"
   (keydown.enter)="handleKeydown($event)"
 >
-  <div
-    class="i-toggle"
-    [class.i-toggle--checked]="checked"
-    aria-hidden="true"
-  >
+  <div class="i-toggle" [class.i-toggle--checked]="checked" aria-hidden="true">
     <span class="i-toggle-thumb"></span>
   </div>
   @if (label) {
-    <label
-      [id]="(id || componentId) + '-label'"
-      class="i-toggle-label"
-    >
+    <label [id]="(id || componentId) + '-label'" class="i-toggle-label">
       {{ label }}
     </label>
   }

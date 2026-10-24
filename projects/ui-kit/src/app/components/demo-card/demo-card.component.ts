@@ -25,19 +25,7 @@ import { CodeDisplayComponent } from '../code-display/code-display.component';
     }
   `,
   changeDetection: ChangeDetectionStrategy.Eager,
-  styles: [
-    `
-      :host { display: block; min-width: 0; }
-
-      .demo-card-content {
-        padding: 20px 0;
-      }
-
-      .demo-section {
-        margin-bottom: 20px;
-      }
-    `,
-  ],
+  styleUrl: './demo-card.component.scss',
 })
 export class DemoCardComponent {
   @Input() title!: string;

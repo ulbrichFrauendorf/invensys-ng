@@ -1,8 +1,5 @@
 <div class="sidebar">
-  @if (
-    layoutService.state().isMobileViewport &&
-    layoutService.state().isSidebarOpen
-  ) {
+  @if (layoutService.state().isMobileViewport && layoutService.state().isSidebarOpen) {
     <div class="sidebar-mobile-header">
       <div class="sidebar-mobile-header-inner">
         <i-button

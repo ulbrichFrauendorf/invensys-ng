@@ -1,4 +1,4 @@
-@use "./progress-spinner.component.theme.scss" as theme;
+@use './progress-spinner.component.theme.scss' as theme;
 @include theme.i-progress-spinner-theme();
 
 .spinner-container {
@@ -9,18 +9,18 @@
   overflow: visible;
 
   &.spinner-small {
-    width: 2rem;
-    height: 2rem;
+    width: 24px;
+    height: 24px;
   }
 
   &.spinner-medium {
-    width: 4rem;
-    height: 4rem;
+    width: 48px;
+    height: 48px;
   }
 
   &.spinner-large {
-    width: 6rem;
-    height: 6rem;
+    width: 72px;
+    height: 72px;
   }
 }
 
@@ -37,7 +37,8 @@
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 2px solid transparent;
+  border-width: 2px;
+  border-style: solid;
   box-sizing: border-box;
   transform: translate(-50%, -50%);
   will-change: transform, opacity;
@@ -47,8 +48,6 @@
 .spinner-ring-1 {
   width: 100%;
   height: 100%;
-  border-top-color: currentColor;
-  border-right-color: currentColor;
   animation: spinner-spin-1 2.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
   opacity: 0.9;
 }
@@ -56,8 +55,6 @@
 .spinner-ring-2 {
   width: 75%;
   height: 75%;
-  border-bottom-color: currentColor;
-  border-left-color: currentColor;
   animation: spinner-spin-2 2.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
   animation-delay: -0.3s;
   opacity: 0.7;
@@ -66,8 +63,6 @@
 .spinner-ring-3 {
   width: 50%;
   height: 50%;
-  border-top-color: currentColor;
-  border-right-color: currentColor;
   animation: spinner-spin-3 2.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
   animation-delay: -0.6s;
   opacity: 0.5;

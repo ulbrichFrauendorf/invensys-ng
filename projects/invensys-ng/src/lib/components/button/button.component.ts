@@ -9,7 +9,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   HostBinding,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { ISeverity } from '@shared/enums/IButtonSeverity';

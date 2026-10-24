@@ -6,10 +6,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-accordions',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IAccordion,
-    IAccordionList,
-    ],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IAccordion, IAccordionList],
   templateUrl: './accordions.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './accordions.component.scss',

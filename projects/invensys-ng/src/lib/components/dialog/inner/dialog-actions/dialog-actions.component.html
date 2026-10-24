@@ -1,8 +1,6 @@
 <div class="dialog-actions">
   @if (showCancel) {
-    <i-button [text]="true" severity="secondary" (clicked)="onCancel()">{{
-      cancelLabel
-    }}</i-button>
+    <i-button [text]="true" severity="secondary" (clicked)="onCancel()">{{ cancelLabel }}</i-button>
   }
   @if (showSubmit) {
     <i-button

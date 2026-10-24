@@ -13,7 +13,7 @@ import {
   computed,
   InputSignal,
   input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import {
@@ -23,11 +23,7 @@ import {
   NgControl,
   AbstractControl,
 } from '@angular/forms';
-import {
-  IChipsComponent,
-  ChipItem,
-  ChipRemoveEvent,
-} from '../chips/chips.component';
+import { IChipsComponent, ChipItem, ChipRemoveEvent } from '../chips/chips.component';
 import { IInputText } from '../input-text/input-text.component';
 import { IButton } from '../button/button.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -303,9 +299,7 @@ export class IListbox implements ControlValueAccessor {
       this.onTouchedCallback();
     } else {
       const newValue =
-        JSON.stringify(this.value) === JSON.stringify(optionValue)
-          ? null
-          : optionValue;
+        JSON.stringify(this.value) === JSON.stringify(optionValue) ? null : optionValue;
       this.value = newValue;
       this.onChange.emit(newValue);
       this.onChangeCallback(newValue);
@@ -319,9 +313,7 @@ export class IListbox implements ControlValueAccessor {
     if (this.multiple) {
       return (
         Array.isArray(this.value) &&
-        this.value.some(
-          (val) => JSON.stringify(val) === JSON.stringify(optionValue),
-        )
+        this.value.some((val) => JSON.stringify(val) === JSON.stringify(optionValue))
       );
     } else {
       return JSON.stringify(this.value) === JSON.stringify(optionValue);
@@ -341,9 +333,7 @@ export class IListbox implements ControlValueAccessor {
 
     if (this.multiple) {
       const currentValues = Array.isArray(this.value) ? [...this.value] : [];
-      const index = currentValues.findIndex(
-        (val) => JSON.stringify(val) === JSON.stringify(value),
-      );
+      const index = currentValues.findIndex((val) => JSON.stringify(val) === JSON.stringify(value));
       if (index > -1) {
         currentValues.splice(index, 1);
         this.value = currentValues;
@@ -388,8 +378,7 @@ export class IListbox implements ControlValueAccessor {
       }
       const option = currentOptions.find(
         (opt: ListboxOption) =>
-          JSON.stringify(this.getOptionValue(opt)) ===
-          JSON.stringify(this.value),
+          JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(this.value),
       );
       return option ? [this.getOptionLabel(option)] : [String(this.value)];
     }
@@ -397,8 +386,7 @@ export class IListbox implements ControlValueAccessor {
     const values = Array.isArray(this.value) ? this.value : [];
     return values.map((val: any) => {
       const option = currentOptions.find(
-        (opt: ListboxOption) =>
-          JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(val),
+        (opt: ListboxOption) => JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(val),
       );
       return option ? this.getOptionLabel(option) : String(val);
     });
@@ -427,8 +415,7 @@ export class IListbox implements ControlValueAccessor {
       }
       const option = currentOptions.find(
         (opt: ListboxOption) =>
-          JSON.stringify(this.getOptionValue(opt)) ===
-          JSON.stringify(this.value),
+          JSON.stringify(this.getOptionValue(opt)) === JSON.stringify(this.value),
       );
       return option ? this.getOptionLabel(option) : String(this.value);
     }
@@ -442,10 +429,7 @@ export class IListbox implements ControlValueAccessor {
     if (selectedLabels.length <= this.maxSelectedLabels) {
       return selectedLabels.join(', ');
     } else {
-      return this.selectedItemsLabel.replace(
-        '{0}',
-        selectedLabels.length.toString(),
-      );
+      return this.selectedItemsLabel.replace('{0}', selectedLabels.length.toString());
     }
   }
 
@@ -465,17 +449,12 @@ export class IListbox implements ControlValueAccessor {
     if (this.multiple) {
       return Array.isArray(this.value) ? this.value : [];
     } else {
-      return this.value !== null && this.value !== undefined
-        ? [this.value]
-        : [];
+      return this.value !== null && this.value !== undefined ? [this.value] : [];
     }
   }
 
   getPlaceholder(): string {
-    return (
-      this.placeholder ||
-      (this.multiple ? 'Select options' : 'Select an option')
-    );
+    return this.placeholder || (this.multiple ? 'Select options' : 'Select an option');
   }
 
   onChipRemove(event: ChipRemoveEvent): void {
@@ -485,10 +464,7 @@ export class IListbox implements ControlValueAccessor {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
-    if (
-      this.dropdownRef &&
-      !this.dropdownRef.nativeElement.contains(event.target)
-    ) {
+    if (this.dropdownRef && !this.dropdownRef.nativeElement.contains(event.target)) {
       this.filterValue.set('');
     }
   }
@@ -533,8 +509,7 @@ export class IListbox implements ControlValueAccessor {
     const key = this.firstErrorKey;
     if (!key) return null;
     const c = this.control;
-    if (this.errorMessages && this.errorMessages[key])
-      return this.errorMessages[key];
+    if (this.errorMessages && this.errorMessages[key]) return this.errorMessages[key];
     const err = c?.errors || {};
     switch (key) {
       case 'required':
@@ -546,9 +521,7 @@ export class IListbox implements ControlValueAccessor {
       case 'maxlength':
         return `Maximum ${err['maxlength']?.requiredLength} items allowed`;
       default:
-        return err[key] && typeof err[key] === 'string'
-          ? err[key]
-          : 'Invalid selection';
+        return err[key] && typeof err[key] === 'string' ? err[key] : 'Invalid selection';
     }
   }
 }

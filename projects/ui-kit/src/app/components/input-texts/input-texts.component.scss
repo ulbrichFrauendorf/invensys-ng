@@ -1,4 +1,6 @@
-@use "../shared-demo-styles.scss" as *;
+@use './input-texts.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .input-grid {
   display: grid;
@@ -20,31 +22,17 @@
 .values-display {
   margin-top: 16px;
   padding: 12px;
-  background-color: var(--surface-ground);
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 4px;
-
-  h4 {
-    margin: 0 0 8px 0;
-    color: var(--text-color);
-    font-size: 1em;
-    font-weight: 600;
-  }
 }
 
 .label-surface {
   padding: 20px;
   margin-bottom: 20px;
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
-
-  h4 { margin: 0 0 12px; }
-
-  &--ground { background: var(--surface-ground); }
-  &--tinted {
-    background: color-mix(in srgb, var(--color-primary) 12%, var(--surface-ground));
-  }
-  &--gradient {
-    background: linear-gradient(120deg, var(--surface-ground), color-mix(in srgb, var(--color-primary) 18%, var(--surface-ground)));
-  }
 }
+
+@include theme.input-texts-theme();

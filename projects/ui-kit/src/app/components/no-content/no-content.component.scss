@@ -1,10 +1,12 @@
-@use "../shared-demo-styles.scss" as *;
+@use './no-content.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .example-container {
-  border: 1px solid var(--color-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
   padding: 32px;
-  background: var(--color-surface);
   min-height: 200px;
   display: flex;
   align-items: center;
@@ -16,55 +18,42 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 24px;
   margin-top: 16px;
-}
 
-.use-case {
-  h4 {
-    margin: 0 0 16px 0;
-    font-size: 15.2px;
-    font-weight: 600;
-    color: var(--color-text-primary);
+  .use-case {
+    .use-case-example {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
-}
-
-.use-case-example {
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 24px;
-  background: var(--color-surface);
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .code-examples {
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
 
-.code-example {
-  h4 {
-    margin: 0 0 8px 0;
-    font-size: 15.2px;
-    font-weight: 600;
-    color: var(--color-text-primary);
-  }
+  .code-example {
+    pre {
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 0;
+      overflow-x: auto;
 
-  pre {
-    background: var(--color-surface-variant);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 16px;
-    margin: 0;
-    overflow-x: auto;
-
-    code {
-      font-family: "Courier New", Courier, monospace;
-      font-size: 13.6px;
-      color: var(--color-text-primary);
-      line-height: 1.5;
+      code {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13.6px;
+        line-height: 1.5;
+      }
     }
   }
 }
+
+@include theme.no-content-theme();

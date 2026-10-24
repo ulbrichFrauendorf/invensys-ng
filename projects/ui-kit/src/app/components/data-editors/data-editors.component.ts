@@ -13,18 +13,21 @@ import {
   RuleEditorOperator,
 } from '@shared/components/rule-editor/rule-editor.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
-import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+import { DemoOptionDirective, DemoUsageDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-data-editors',
   standalone: true,
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
+    DemoUsageDirective,
     FormsModule,
     IToggle,
     IFieldPicker,
     IOrderedList,
     IRuleEditor,
-    ],
+  ],
   templateUrl: './data-editors.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-editors.component.scss',
@@ -54,15 +57,33 @@ export class DataEditorsComponent {
     { key: 'asc', label: 'Ascending', requiresValue: false },
     { key: 'desc', label: 'Descending', requiresValue: false },
   ];
-  label = (key: string): string =>
-    this.fields.find((field) => field.key === key)?.label ?? key;
+  label = (key: string): string => this.fields.find((field) => field.key === key)?.label ?? key;
 
   codeExamples = {
-    fieldPicker: `<i-field-picker [options]="fields" [(ngModel)]="selectedFields" />`,
-    orderedList: `<i-ordered-list [(items)]="columns" [itemLabel]="columnLabel" />`,
-    filters: `<i-rule-editor [fields]="fields" [operators]="operators" [(rules)]="filters" />`,
-    sorts: `<i-rule-editor operatorLabel="Direction" addLabel="Add sort"
-  [fields]="fields" [operators]="directions" [(rules)]="sorts" />`,
+    fieldPicker: `<i-field-picker [options]="fields" [(ngModel)]="selected" [readonly]="readonly" />`,
+    orderedList: `<i-ordered-list
+  [(items)]="selected"
+  [itemLabel]="label"
+  [readonly]="readonly"
+  [itemTemplate]="settings"
+/>
+<ng-template #settings let-key>
+  <small>{{ label(key) }} settings</small>
+</ng-template>`,
+    filters: `<i-rule-editor
+  [fields]="ruleFields"
+  [operators]="operators"
+  [(rules)]="rules"
+  [readonly]="readonly"
+/>`,
+    sorts: `<i-rule-editor
+  ariaLabel="Sort order"
+  operatorLabel="Direction"
+  addLabel="Add sort"
+  [fields]="ruleFields"
+  [operators]="directions"
+  [(rules)]="sorts"
+  [readonly]="readonly"
+/>`,
   };
-
 }

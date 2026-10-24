@@ -1,317 +1,350 @@
-<app-demo-playground class="calendars-demo" title="Calendar Components" description="Versatile date picker components with support for date, month, and year selection. Customizable formats and full Angular Forms integration.">
-  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
-      <div class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [label]="'Select Date'"
-            [placeholder]="'DD/MM/YYYY'"
-          />
+<app-demo-playground
+  class="calendars-demo"
+  title="Calendars"
+  eyebrow="Form Controls"
+  description="Versatile date picker components with support for date, month, and year selection. Customizable formats and full Angular Forms integration."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Template-driven Forms (NgModel)"
+    [selected]="true"
+    [sourceCode]="codeExamples.ngModel"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [label]="'Select Date'"
+          [placeholder]="'DD/MM/YYYY'"
+        />
 
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [dateFormat]="'MMM yy'"
-            [label]="'Select Month'"
-            [placeholder]="'Month YYYY'"
-          />
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [dateFormat]="'MMM yy'"
+          [label]="'Select Month'"
+          [placeholder]="'Month YYYY'"
+        />
 
-          <i-calendar
-            [(ngModel)]="selectedYear"
-            [view]="'year'"
-            [dateFormat]="'yy'"
-            [label]="'Select Year'"
-            [placeholder]="'YYYY'"
-          />
-        </div>
-
-        <div class="values-display">
-          <h4>Current Values:</h4>
-          <p><strong>Date:</strong> {{ formatDate(selectedDate) }}</p>
-          <p><strong>Month:</strong> {{ formatMonth(selectedMonth) }}</p>
-          <p><strong>Year:</strong> {{ formatYear(selectedYear) }}</p>
-        </div>
+        <i-calendar
+          [(ngModel)]="selectedYear"
+          [view]="'year'"
+          [dateFormat]="'yy'"
+          [label]="'Select Year'"
+          [placeholder]="'YYYY'"
+        />
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <form [formGroup]="basicForm" class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            formControlName="date"
-            [label]="'Select Date'"
-            [placeholder]="'DD/MM/YYYY'"
-          />
-
-          <i-calendar
-            formControlName="eventDate"
-            [label]="'Event Date'"
-            [dateFormat]="'dd MMMM yy'"
-            [icon]="'pi pi-calendar-plus'"
-            [placeholder]="'Select event date'"
-          />
-        </div>
-
-        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
-          Submit Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Month Picker" [sourceCode]="codeExamples.monthPicker" [tsCode]="tsExamples.monthPicker">
-      <form [formGroup]="monthPickerForm" class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            formControlName="reportMonth"
-            [view]="'month'"
-            [dateFormat]="'mm-yy'"
-            [label]="'Report Month'"
-            [readonlyInput]="true"
-            [placeholder]="'MM-YYYY'"
-            (onSelect)="onMonthSelected($event)"
-          />
-
-          <i-calendar
-            formControlName="fiscalMonth"
-            [view]="'month'"
-            [dateFormat]="'MMMM yy'"
-            [label]="'Fiscal Month'"
-            [readonlyInput]="true"
-            [placeholder]="'Month YYYY'"
-          />
-        </div>
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(monthPickerForm, 'month-picker')"
-        >
-          Generate Report
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Year Picker" [sourceCode]="codeExamples.yearPicker" [tsCode]="tsExamples.yearPicker">
-      <form [formGroup]="yearPickerForm" class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            formControlName="fiscalYear"
-            [view]="'year'"
-            [dateFormat]="'yy'"
-            [label]="'Fiscal Year'"
-            [readonlyInput]="true"
-            [placeholder]="'YYYY'"
-            (onSelect)="onYearSelected($event)"
-          />
-
-          <i-calendar
-            formControlName="graduationYear"
-            [view]="'year'"
-            [dateFormat]="'yy'"
-            [label]="'Graduation Year'"
-            [placeholder]="'YYYY'"
-          />
-        </div>
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(yearPickerForm, 'year-picker')"
-        >
-          Load Year Data
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Date Range Picker" [sourceCode]="codeExamples.dateRange" [tsCode]="tsExamples.dateRange">
-      <form [formGroup]="dateRangeForm" class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            formControlName="startDate"
-            [label]="'Start Date'"
-            [placeholder]="'Select start date'"
-            (onSelect)="onStartDateChange($event)"
-          />
-
-          <i-calendar
-            formControlName="endDate"
-            [label]="'End Date'"
-            [placeholder]="'Select end date'"
-            (onSelect)="onEndDateChange($event)"
-          />
-        </div>
-
-        @if (startDate && endDate) {
-          <div class="date-range-display">
-            <p><strong>Selected Range:</strong></p>
-            <p>{{ formatDate(startDate) }} to {{ formatDate(endDate) }}</p>
-          </div>
-        }
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(dateRangeForm, 'date-range')"
-        >
-          Apply Date Range
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-6" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
-      <form [formGroup]="validationForm" class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            formControlName="birthDate"
-            [label]="'Birth Date (Required)'"
-            [placeholder]="'DD/MM/YYYY'"
-          />
-
-          <i-calendar
-            formControlName="appointmentDate"
-            [label]="'Appointment Date (Required)'"
-            [placeholder]="'Select appointment date'"
-          />
-        </div>
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(validationForm, 'validation')"
-        >
-          Submit Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-7" label="Custom Date Formats" [sourceCode]="codeExamples.customFormats">
-      <div class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [dateFormat]="'dd/mm/yy'"
-            [label]="'DD/MM/YYYY'"
-            [placeholder]="'15/03/2024'"
-          />
-
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [dateFormat]="'mm-yy'"
-            [label]="'MM-YYYY'"
-            [placeholder]="'03-2024'"
-          />
-
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [dateFormat]="'dd MMMM yy'"
-            [label]="'Full Month Name'"
-            [placeholder]="'15 March 2024'"
-          />
-
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [dateFormat]="'dd MMM yy'"
-            [label]="'Short Month Name'"
-            [placeholder]="'15 Mar 2024'"
-          />
-
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [dateFormat]="'MMMM yy'"
-            [label]="'Month Full Name'"
-            [placeholder]="'March 2024'"
-          />
-
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [dateFormat]="'MMM yy'"
-            [label]="'Month Short Name'"
-            [placeholder]="'Mar 2024'"
-          />
-        </div>
+      <div class="values-display">
+        <h4>Current Values:</h4>
+        <p><strong>Date:</strong> {{ formatDate(selectedDate) }}</p>
+        <p><strong>Month:</strong> {{ formatMonth(selectedMonth) }}</p>
+        <p><strong>Year:</strong> {{ formatYear(selectedYear) }}</p>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-8" label="Event Handling" [sourceCode]="codeExamples.events" [tsCode]="tsExamples.events">
-      <div class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            [(ngModel)]="birthDate"
-            [label]="'Birth Date'"
-            [placeholder]="'Select your birth date'"
-            (onSelect)="handleDateSelection($event)"
-          />
+  <ng-template
+    appDemoOption="option-2"
+    label="Reactive Forms"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <form [formGroup]="basicForm" class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar formControlName="date" [label]="'Select Date'" [placeholder]="'DD/MM/YYYY'" />
 
-          <i-calendar
-            [(ngModel)]="appointmentDate"
-            [label]="'Appointment Date'"
-            [placeholder]="'Select appointment date'"
-            [icon]="'pi pi-calendar-plus'"
-            (onSelect)="handleDateSelection($event)"
-          />
-        </div>
-
-        <div class="values-display">
-          <h4>Event Log:</h4>
-          <p><strong>Birth Date:</strong> {{ formatDate(birthDate) }}</p>
-          <p><strong>Appointment:</strong> {{ formatDate(appointmentDate) }}</p>
-          <p class="hint">
-            Check the console to see event logs when dates are selected
-          </p>
-        </div>
+        <i-calendar
+          formControlName="eventDate"
+          [label]="'Event Date'"
+          [dateFormat]="'dd MMMM yy'"
+          [icon]="'pi pi-calendar-plus'"
+          [placeholder]="'Select event date'"
+        />
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-9" label="Disabled &amp; Readonly States" [sourceCode]="codeExamples.disabled">
-      <div class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            [label]="'Disabled Calendar'"
-            [placeholder]="'Cannot select'"
-            [disabled]="true"
-          />
+      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')"> Submit Form </i-button>
+    </form>
+  </ng-template>
 
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [label]="'Readonly Input'"
-            [placeholder]="'Use calendar picker'"
-            [readonlyInput]="true"
-          />
+  <ng-template
+    appDemoOption="option-3"
+    label="Month Picker"
+    [sourceCode]="codeExamples.monthPicker"
+    [tsCode]="tsExamples.monthPicker"
+  >
+    <form [formGroup]="monthPickerForm" class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          formControlName="reportMonth"
+          [view]="'month'"
+          [dateFormat]="'mm-yy'"
+          [label]="'Report Month'"
+          [readonlyInput]="true"
+          [placeholder]="'MM-YYYY'"
+          (onSelect)="onMonthSelected($event)"
+        />
 
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [dateFormat]="'MMMM yy'"
-            [label]="'Readonly Month Picker'"
-            [readonlyInput]="true"
-          />
-        </div>
+        <i-calendar
+          formControlName="fiscalMonth"
+          [view]="'month'"
+          [dateFormat]="'MMMM yy'"
+          [label]="'Fiscal Month'"
+          [readonlyInput]="true"
+          [placeholder]="'Month YYYY'"
+        />
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-10" label="Floating Label Options" [sourceCode]="codeExamples.floating">
-      <div class="demo-form">
-        <div class="calendar-grid">
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [useFloatLabel]="false"
-            [label]="'Without Floating Label'"
-            [placeholder]="'Select date'"
-          />
+      <i-button severity="primary" (click)="onSubmit(monthPickerForm, 'month-picker')">
+        Generate Report
+      </i-button>
+    </form>
+  </ng-template>
 
-          <i-calendar
-            [(ngModel)]="selectedDate"
-            [useFloatLabel]="true"
-            [label]="'With Floating Label'"
-          />
+  <ng-template
+    appDemoOption="option-4"
+    label="Year Picker"
+    [sourceCode]="codeExamples.yearPicker"
+    [tsCode]="tsExamples.yearPicker"
+  >
+    <form [formGroup]="yearPickerForm" class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          formControlName="fiscalYear"
+          [view]="'year'"
+          [dateFormat]="'yy'"
+          [label]="'Fiscal Year'"
+          [readonlyInput]="true"
+          [placeholder]="'YYYY'"
+          (onSelect)="onYearSelected($event)"
+        />
 
-          <i-calendar
-            [(ngModel)]="selectedMonth"
-            [view]="'month'"
-            [useFloatLabel]="false"
-            [label]="'Month Without Float'"
-            [placeholder]="'Select month'"
-          />
-        </div>
+        <i-calendar
+          formControlName="graduationYear"
+          [view]="'year'"
+          [dateFormat]="'yy'"
+          [label]="'Graduation Year'"
+          [placeholder]="'YYYY'"
+        />
       </div>
-    </ng-template>
+
+      <i-button severity="primary" (click)="onSubmit(yearPickerForm, 'year-picker')">
+        Load Year Data
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Date Range Picker"
+    [sourceCode]="codeExamples.dateRange"
+    [tsCode]="tsExamples.dateRange"
+  >
+    <form [formGroup]="dateRangeForm" class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          formControlName="startDate"
+          [label]="'Start Date'"
+          [placeholder]="'Select start date'"
+          (onSelect)="onStartDateChange($event)"
+        />
+
+        <i-calendar
+          formControlName="endDate"
+          [label]="'End Date'"
+          [placeholder]="'Select end date'"
+          (onSelect)="onEndDateChange($event)"
+        />
+      </div>
+
+      @if (startDate && endDate) {
+        <div class="date-range-display">
+          <p><strong>Selected Range:</strong></p>
+          <p>{{ formatDate(startDate) }} to {{ formatDate(endDate) }}</p>
+        </div>
+      }
+
+      <i-button severity="primary" (click)="onSubmit(dateRangeForm, 'date-range')">
+        Apply Date Range
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-6"
+    label="Form Validation"
+    [sourceCode]="codeExamples.validation"
+    [tsCode]="tsExamples.validation"
+  >
+    <form [formGroup]="validationForm" class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          formControlName="birthDate"
+          [label]="'Birth Date (Required)'"
+          [placeholder]="'DD/MM/YYYY'"
+        />
+
+        <i-calendar
+          formControlName="appointmentDate"
+          [label]="'Appointment Date (Required)'"
+          [placeholder]="'Select appointment date'"
+        />
+      </div>
+
+      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+        Submit Form
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-7"
+    label="Custom Date Formats"
+    [sourceCode]="codeExamples.customFormats"
+  >
+    <div class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [dateFormat]="'dd/mm/yy'"
+          [label]="'DD/MM/YYYY'"
+          [placeholder]="'15/03/2024'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [dateFormat]="'mm-yy'"
+          [label]="'MM-YYYY'"
+          [placeholder]="'03-2024'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [dateFormat]="'dd MMMM yy'"
+          [label]="'Full Month Name'"
+          [placeholder]="'15 March 2024'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [dateFormat]="'dd MMM yy'"
+          [label]="'Short Month Name'"
+          [placeholder]="'15 Mar 2024'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [dateFormat]="'MMMM yy'"
+          [label]="'Month Full Name'"
+          [placeholder]="'March 2024'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [dateFormat]="'MMM yy'"
+          [label]="'Month Short Name'"
+          [placeholder]="'Mar 2024'"
+        />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-8"
+    label="Event Handling"
+    [sourceCode]="codeExamples.events"
+    [tsCode]="tsExamples.events"
+  >
+    <div class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          [(ngModel)]="birthDate"
+          [label]="'Birth Date'"
+          [placeholder]="'Select your birth date'"
+          (onSelect)="handleDateSelection($event)"
+        />
+
+        <i-calendar
+          [(ngModel)]="appointmentDate"
+          [label]="'Appointment Date'"
+          [placeholder]="'Select appointment date'"
+          [icon]="'pi pi-calendar-plus'"
+          (onSelect)="handleDateSelection($event)"
+        />
+      </div>
+
+      <div class="values-display">
+        <h4>Event Log:</h4>
+        <p><strong>Birth Date:</strong> {{ formatDate(birthDate) }}</p>
+        <p><strong>Appointment:</strong> {{ formatDate(appointmentDate) }}</p>
+        <p class="hint">Check the console to see event logs when dates are selected</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-9"
+    label="Disabled &amp; Readonly States"
+    [sourceCode]="codeExamples.disabled"
+  >
+    <div class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          [label]="'Disabled Calendar'"
+          [placeholder]="'Cannot select'"
+          [disabled]="true"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [label]="'Readonly Input'"
+          [placeholder]="'Use calendar picker'"
+          [readonlyInput]="true"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [dateFormat]="'MMMM yy'"
+          [label]="'Readonly Month Picker'"
+          [readonlyInput]="true"
+        />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-10"
+    label="Floating Label Options"
+    [sourceCode]="codeExamples.floating"
+  >
+    <div class="demo-form">
+      <div class="calendar-grid">
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [useFloatLabel]="false"
+          [label]="'Without Floating Label'"
+          [placeholder]="'Select date'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedDate"
+          [useFloatLabel]="true"
+          [label]="'With Floating Label'"
+        />
+
+        <i-calendar
+          [(ngModel)]="selectedMonth"
+          [view]="'month'"
+          [useFloatLabel]="false"
+          [label]="'Month Without Float'"
+          [placeholder]="'Select month'"
+        />
+      </div>
+    </div>
+  </ng-template>
 </app-demo-playground>

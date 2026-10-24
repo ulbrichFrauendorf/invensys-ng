@@ -1,57 +1,46 @@
+@use './theming.component.theme.scss' as theme;
 .theming-demo {
   .theming-content {
     p {
-      margin-bottom: 1rem;
-      line-height: 1.6;
-
       code {
-        background-color: var(--surface-section);
-        padding: 0.2rem 0.4rem;
+        padding: 2.4px 4.8px;
         border-radius: 3px;
-        font-family: "Courier New", monospace;
-        font-size: 0.9em;
-        color: var(--color-primary);
-        border: 1px solid var(--surface-border);
+        font-family: 'Courier New', monospace;
+        font-size: 10.8px;
+        border-width: 1px;
+        border-style: solid;
       }
     }
 
     .variable-section {
-      margin-top: 1.5rem;
+      margin-top: 18px;
 
       &:first-of-type {
-        margin-top: 1rem;
-      }
-
-      h3 {
-        font-size: 1.1rem;
-        color: var(--color-primary);
-        margin-bottom: 0.75rem;
-        font-weight: 600;
+        margin-top: 12px;
       }
 
       .variable-list {
         list-style: none;
         padding: 0;
-        margin: 0 0 1rem 0;
+        margin: 0 0 12px 0;
 
         li {
-          padding: 0.5rem 0;
-          color: var(--color-text-primary);
+          padding: 6px 0;
           line-height: 1.6;
 
           code {
-            background-color: var(--surface-section);
-            padding: 0.2rem 0.5rem;
+            padding: 2.4px 6px;
             border-radius: 3px;
-            font-family: "Courier New", monospace;
-            font-size: 0.85em;
-            color: var(--color-info);
-            border: 1px solid var(--surface-border);
+            font-family: 'Courier New', monospace;
+            font-size: 10.2px;
+            border-width: 1px;
+            border-style: solid;
             font-weight: 600;
-            margin-right: 0.5rem;
+            margin-right: 6px;
           }
         }
       }
     }
   }
 }
+@include theme.theming-theme();

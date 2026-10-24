@@ -1,10 +1,13 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-table-theme() {
   .i-table-wrapper {
     color: colors.$color-text-primary;
     background: colors.$color-component-background;
-    border: 1px solid colors.$color-surface-border;
+
+    &.i-table--show-border {
+      border: 1px solid colors.$color-surface-border;
+    }
 
     .i-table-header {
       background: colors.$color-surface-section;
@@ -18,7 +21,7 @@
     }
 
     .i-table-loading-overlay {
-      background: rgba(255, 255, 255, 0.7);
+      background: color-mix(in srgb, colors.$color-surface-card 70%, transparent);
 
       .i-table-loading-icon {
         color: colors.$color-primary;
@@ -51,8 +54,10 @@
               color: colors.$color-text-secondary;
             }
 
-            &.i-table-sorted .i-table-sort-icon {
-              color: colors.$color-primary;
+            &.i-table-sorted {
+              .i-table-sort-icon {
+                color: colors.$color-primary;
+              }
             }
           }
         }
@@ -103,7 +108,7 @@
           background: colors.$color-component-background;
 
           .i-table-expanded-content {
-            // No border or background: the nested <i-table> renders flat
+            /* No border or background: the nested <i-table> renders flat */
             background: transparent;
           }
         }
@@ -114,7 +119,7 @@
           }
         }
 
-        // Grouped data styles (legacy)
+        /* Grouped data styles (legacy) */
         .i-table-group-header {
           background: colors.$color-component-background;
           border-bottom: 2px solid colors.$color-surface-border;
@@ -159,7 +164,7 @@
           }
         }
 
-        // Group summary rows (outer table parent rows)
+        /* Group summary rows (outer table parent rows) */
         .i-table-group-summary-row {
           background: colors.$color-surface-section;
           border-bottom: 2px solid colors.$color-surface-border;
@@ -178,7 +183,7 @@
           }
         }
 
-        // Detail row containing the nested <i-table>
+        /* Detail row containing the nested <i-table> */
         .i-table-group-detail-row {
           background: colors.$color-surface-ground;
 
@@ -186,8 +191,12 @@
             .i-table-wrapper {
               background: colors.$color-surface-ground;
 
-              table thead tr {
-                background: colors.$color-surface-section;
+              table {
+                thead {
+                  tr {
+                    background: colors.$color-surface-section;
+                  }
+                }
               }
             }
           }
@@ -195,7 +204,7 @@
       }
     }
 
-    // Bordered variant
+    /* Bordered variant */
     &.i-table--bordered {
       table {
         border: 1px solid colors.$color-surface-border;
@@ -207,31 +216,41 @@
       }
     }
 
-    // Hoverable variant
-    // Scope separators to this table so parent themes cannot reintroduce
-    // borders into a nested table that has disabled them.
-    &.i-table--no-row-borders > .i-table-container > table > tbody > tr {
-      border-bottom: none;
-      > td { border-bottom: none; }
+    /* Hoverable variant */
+    /* Scope separators to this table so parent themes cannot reintroduce */
+    /* borders into a nested table that has disabled them. */
+    &.i-table--no-row-borders {
+      > .i-table-container > table > tbody > tr {
+        border-bottom: none;
+        > td {
+          border-bottom: none;
+        }
+      }
     }
 
-    &.i-table--no-row-borders > .i-table-container--virtual-scroll
-      .i-table-virtual-viewport .i-table-virtual-row {
+    &.i-table--no-row-borders
+      > .i-table-container--virtual-scroll
+      .i-table-virtual-viewport
+      .i-table-virtual-row {
       border-bottom: none;
     }
 
-    &.i-table--no-detail-row-borders > .i-table-container > table > tbody > .i-table-expanded-row {
-      border-bottom: none;
-      > td { border-bottom: none; }
+    &.i-table--no-detail-row-borders {
+      > .i-table-container > table > tbody > .i-table-expanded-row {
+        border-bottom: none;
+        > td {
+          border-bottom: none;
+        }
+      }
     }
 
-    // Hoverable variant
+    /* Hoverable variant */
     &.i-table--hoverable {
       table
         tbody
-        tr:not(.i-table-empty-row):not(.i-table-expanded-row):not(
-          .i-table-group-header
-        ):not(.i-table-group-columns-header):not(.i-table-group-detail-row) {
+        tr:not(.i-table-empty-row):not(.i-table-expanded-row):not(.i-table-group-header):not(
+          .i-table-group-columns-header
+        ):not(.i-table-group-detail-row) {
         &:hover {
           background: colors.$color-surface-hover;
         }
@@ -242,7 +261,7 @@
       }
     }
 
-    // Column resizer
+    /* Column resizer */
     .i-table-column-resizer {
       background: colors.$color-surface-border;
 
@@ -251,7 +270,7 @@
       }
     }
 
-    // ── Virtual scroll (PATH B) — flex-row theme ──────────────────────────────
+    /* ── Virtual scroll (PATH B) — flex-row theme ────────────────────────────── */
     .i-table-container--virtual-scroll {
       .i-table-virtual-header {
         background: colors.$color-component-background;
@@ -280,46 +299,81 @@
           }
         }
 
-        .i-table-filter-row .i-table-column-filter {
-          border: 1px solid colors.$color-surface-border;
-          background: colors.$color-surface-ground;
-          color: colors.$color-text-primary;
+        .i-table-filter-row {
+          .i-table-column-filter {
+            border: 1px solid colors.$color-surface-border;
+            background: colors.$color-surface-ground;
+            color: colors.$color-text-primary;
 
-          &:focus {
-            border-color: colors.$color-primary;
-            outline: none;
-          }
+            &:focus {
+              border-color: colors.$color-primary;
+              outline: none;
+            }
 
-          &::placeholder {
-            color: colors.$color-text-tertiary;
+            &::placeholder {
+              color: colors.$color-text-tertiary;
+            }
           }
         }
       }
 
-      .i-table-virtual-viewport .i-table-virtual-row {
-        background: colors.$color-component-background;
-        border-bottom: 1px solid colors.$color-surface-border;
-        color: colors.$color-text-primary;
-        transition: background-color 0.15s ease;
-
-        &.i-table-row-odd {
+      .i-table-virtual-viewport {
+        .i-table-virtual-row {
           background: colors.$color-component-background;
-        }
+          border-bottom: 1px solid colors.$color-surface-border;
+          color: colors.$color-text-primary;
+          transition: background-color 0.15s ease;
 
-        &.i-table-row-selected {
-          background: colors.$color-surface-hover;
-          color: colors.$color-primary;
+          &.i-table-row-odd {
+            background: colors.$color-component-background;
+          }
+
+          &.i-table-row-selected {
+            background: colors.$color-surface-hover;
+            color: colors.$color-primary;
+          }
         }
       }
     }
 
-    // ── Nested table — rendered inside a detail expansion row ─────────────────
+    /* ── Nested table — rendered inside a detail expansion row ───────────────── */
     &.i-table--nested {
       background: transparent;
 
-      table thead tr {
-        background: colors.$color-surface-section;
+      table {
+        thead {
+          tr {
+            background: colors.$color-surface-section;
+          }
+        }
       }
+    }
+  }
+  .i-severity-icon,
+  .i-severity-text {
+    &.success,
+    .i-table-cell-success & {
+      color: colors.$color-success;
+    }
+
+    &.info,
+    .i-table-cell-info & {
+      color: colors.$color-info;
+    }
+
+    &.warning,
+    .i-table-cell-warning & {
+      color: colors.$color-warning;
+    }
+
+    &.danger,
+    .i-table-cell-danger & {
+      color: colors.$color-danger;
+    }
+
+    &.secondary,
+    .i-table-cell-secondary & {
+      color: colors.$color-text-secondary;
     }
   }
 }

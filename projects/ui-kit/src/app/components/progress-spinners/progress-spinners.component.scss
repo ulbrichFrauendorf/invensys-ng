@@ -1,21 +1,22 @@
-@use "../shared-demo-styles.scss" as *;
+@use './progress-spinners.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .size-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 32px;
   padding: 32px;
-}
 
-.size-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 
-  span {
-    font-size: 14px;
-    color: var(--color-text-secondary);
+    span {
+      font-size: 14px;
+    }
   }
 }
 
@@ -38,23 +39,23 @@
   min-height: 150px;
 }
 
-// Loading card overlay demo
 .loading-card-demo {
   position: relative;
   min-height: 200px;
-  background: var(--surface-card);
-  border: 1px solid var(--surface-border);
+  border-width: 1px;
+  border-style: solid;
   border-radius: 8px;
+
+  .loading-overlay-demo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(2px);
+  }
 }
 
-.loading-overlay-demo {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  background: var(--surface-overlay);
-  backdrop-filter: blur(2px);
-}
+@include theme.progress-spinners-theme();

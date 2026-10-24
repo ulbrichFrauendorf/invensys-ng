@@ -1,21 +1,78 @@
-@use '../demo-playground.styles.scss' as layout;
-@use '../demo-playground.theme.scss' as theme;
+@use '../../../../../invensys-ng/src/lib/themes/variables' as vars;
+@use './demo-playground.component.theme.scss' as theme;
 
-@include layout.demo-playground-layout();
 @include theme.demo-playground-theme();
 
-.preview-stage {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 24px;
+:host {
+  display: block;
   min-width: 0;
-  padding: 24px;
+  --page-layout-sidebar-width: 320px;
 }
 
-.empty-preview {
-  align-items: center;
-  justify-content: center;
-  min-height: 240px;
-  text-align: center;
+.demo-content {
+  min-width: 0;
+
+  .code-view {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .preview-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    min-width: 0;
+
+    &.empty-preview {
+      align-items: center;
+      justify-content: center;
+      min-height: 240px;
+      text-align: center;
+    }
+  }
+}
+
+.options-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: vars.$borderRadius;
+  box-sizing: border-box;
+
+  .panel-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option-row {
+    padding: 12px 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    & + & {
+      border-top-width: 1px;
+      border-top-style: solid;
+    }
+  }
+
+  @media (max-width: 991px) {
+    padding: 16px;
+  }
+}
+
+.usage-notes {
+  margin-top: 28px;
 }

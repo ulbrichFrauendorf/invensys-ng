@@ -93,5 +93,4 @@ export class TagsComponent {
 <!-- Saved/unsaved indicator -->
 <i-tag value="Saved" severity="success" icon="pi pi-check" [rounded]="true" />`,
   };
-
 }

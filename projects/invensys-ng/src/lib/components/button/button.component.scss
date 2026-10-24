@@ -1,5 +1,5 @@
-@use "./button.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
+@use './button.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
 
 @include theme.i-button-theme();
 
@@ -21,7 +21,8 @@
     box-sizing: border-box;
     padding: 0 16px;
     font-weight: 550;
-    border: 1px solid transparent;
+    border-width: 1px;
+    border-style: solid;
     border-radius: vars.$componentBorderRadius;
     outline: none;
     cursor: pointer;
@@ -120,24 +121,15 @@
     }
 
     /* Spinner is always fully opaque regardless of disabled state */
-    &--loading .button-loading-spinner {
-      opacity: 1 !important;
-    }
-
-    &--raised {
-      box-shadow:
-        0 3px 1px -2px rgba(0, 0, 0, 0.2),
-        0 2px 2px 0 rgba(0, 0, 0, 0.14),
-        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    &--loading {
+      .button-loading-spinner {
+        opacity: 1 !important;
+      }
     }
 
     &--outlined {
-      box-shadow: none;
-      border: 1px solid;
-    }
-
-    &--text {
-      box-shadow: none;
+      border-width: 1px;
+      border-style: solid;
     }
 
     &--fluid {
@@ -145,7 +137,7 @@
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 50%;
       left: 50%;
@@ -166,7 +158,19 @@
   }
 }
 
-@media (pointer: coarse) {
-  .i-button-wrapper .i-button { min-height: 44px; min-width: 44px; touch-action: manipulation; }
-  :host-context(.i-calendar-days) .i-button-wrapper .i-button { min-width: 0; padding-inline: 0; }
+.i-button-wrapper {
+  .i-button {
+    @media (pointer: coarse) {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+  }
+}
+
+:host-context(.i-calendar-days) .i-button-wrapper .i-button {
+  @media (pointer: coarse) {
+    min-width: 0;
+    padding-inline: 0;
+  }
 }

@@ -6,18 +6,10 @@ import { IDynamicDialogRef } from '@shared/components/dialog/services/dialog.int
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { CommonModule } from '@angular/common';
-import {
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { Observable, BehaviorSubject, interval } from 'rxjs';
-import {
-  IListbox,
-  ListboxOption,
-} from '@shared/components/listbox/listbox.component';
+import { IListbox, ListboxOption } from '@shared/components/listbox/listbox.component';
 import { TooltipDirective } from '@shared/directives/tooltip/tooltip.directive';
 import { ISelect } from '@shared/components/select/select.component';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
@@ -27,7 +19,9 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-dialogs',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     CommonModule,
     ReactiveFormsModule,
     AsyncPipe,

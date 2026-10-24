@@ -7,16 +7,10 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-progress-spinners',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    IProgressSpinner,
-    IButton,
-    ],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IProgressSpinner, IButton],
   templateUrl: './progress-spinners.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrls: [
-    './progress-spinners.component.scss',
-    '../shared-demo-styles.scss',
-  ],
+  styleUrls: ['./progress-spinners.component.scss', '../shared-demo-styles.scss'],
 })
 export class ProgressSpinnersComponent {
   // Loading state for button example

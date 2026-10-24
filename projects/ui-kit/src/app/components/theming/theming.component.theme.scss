@@ -1,0 +1,28 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin theming-theme() {
+  .theming-demo {
+    .theming-content {
+      p {
+        code {
+          background-color: colors.$color-surface-section;
+          color: colors.$color-primary;
+          border-color: colors.$color-surface-border;
+        }
+      }
+
+      .variable-section {
+        .variable-list {
+          li {
+            color: colors.$color-text-primary;
+
+            code {
+              background-color: colors.$color-surface-section;
+              color: colors.$color-info;
+              border-color: colors.$color-surface-border;
+            }
+          }
+        }
+      }
+    }
+  }
+}

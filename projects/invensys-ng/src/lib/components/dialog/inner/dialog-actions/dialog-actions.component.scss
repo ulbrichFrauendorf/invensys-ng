@@ -1,2 +1,15 @@
-:host { display: block; }
-.dialog-actions { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--surface-border); }
+@use './dialog-actions.component.theme.scss' as theme;
+:host {
+  display: block;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding-top: 12px;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+@include theme.i-dialog-actions-theme();

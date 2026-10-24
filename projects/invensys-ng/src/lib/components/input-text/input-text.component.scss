@@ -1,6 +1,6 @@
-@use "./input-text.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
-@use "../../themes/floating-label" as floating;
+@use './input-text.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
+@use '../../themes/floating-label' as floating;
 
 @include theme.i-input-theme();
 
@@ -15,7 +15,7 @@ $input-transition:
   gap: 8px;
   width: 100%;
   margin-top: floating.$space;
-  font-size: 1em;
+  font-size: 12px;
 
   &.i-input--fluid {
     width: 100%;
@@ -48,15 +48,12 @@ $input-transition:
     }
 
     &.hide-text {
-      color: transparent;
-      text-shadow: none;
       cursor: pointer;
     }
 
     &.readonly {
       cursor: pointer;
       user-select: none;
-      caret-color: transparent;
     }
   }
 
@@ -75,7 +72,6 @@ $input-transition:
     flex-shrink: 0;
     width: $input-icon-size;
     height: $input-icon-size;
-    color: inherit;
     pointer-events: none;
     transform: translateY(-50%);
   }
@@ -111,7 +107,9 @@ $input-transition:
       @include floating.floated;
     }
 
-    &.has-icon .i-input-icon-wrapper:not(:has(.i-input:focus)):not(:has(.i-input:not(:placeholder-shown))) + .i-label:not(.floated) {
+    &.has-icon
+      .i-input-icon-wrapper:not(:has(.i-input:focus)):not(:has(.i-input:not(:placeholder-shown)))
+      + .i-label:not(.floated) {
       left: 34px;
     }
   }
@@ -132,9 +130,9 @@ $input-transition:
     }
   }
 
-  // Number input spinner styling
-  .i-input[type="number"] {
-    // Make room for the styled spinners
+  /* Number input spinner styling */
+  .i-input[type='number'] {
+    /* Make room for the styled spinners */
     padding-right: 32px;
 
     &::-webkit-outer-spin-button,
@@ -143,7 +141,7 @@ $input-transition:
       margin: 0;
     }
 
-    // Firefox
+    /* Firefox */
     appearance: textfield;
     -moz-appearance: textfield;
   }
@@ -184,7 +182,19 @@ $input-transition:
   }
 }
 
-@media (pointer: coarse) {
-  .i-input-wrapper .i-input { min-height: 44px; font-size: 16px; }
-  .i-input-wrapper .i-input-spinners { display: none; }
+.i-input-wrapper {
+  .i-input {
+    @media (pointer: coarse) {
+      min-height: 44px;
+      font-size: 16px;
+    }
+  }
+}
+
+.i-input-wrapper {
+  .i-input-spinners {
+    @media (pointer: coarse) {
+      display: none;
+    }
+  }
 }

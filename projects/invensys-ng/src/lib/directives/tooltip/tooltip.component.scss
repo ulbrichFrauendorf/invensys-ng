@@ -1,14 +1,14 @@
-@use "./tooltip.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
+@use './tooltip.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
 
-// Apply the tooltip theme mixin which uses CSS custom properties
+/* Apply the tooltip theme mixin which uses CSS custom properties */
 @include theme.i-tooltip-theme();
 
 .i-tooltip {
   position: relative;
   padding: 8px 12px;
   border-radius: vars.$componentBorderRadius;
-  font-size: 0.9em;
+  font-size: 10.8px;
   line-height: 1.4;
   white-space: nowrap;
   max-width: 200px;
@@ -22,10 +22,11 @@
     position: absolute;
     width: 0;
     height: 0;
-    border: 6px solid transparent;
+    border-width: 6px;
+    border-style: solid;
   }
 
-  // Arrow positioning for different tooltip positions
+  /* Arrow positioning for different tooltip positions */
   &--above {
     .i-tooltip__arrow {
       bottom: -6px;

@@ -7,7 +7,7 @@ import {
   Input,
   OnChanges,
   ViewEncapsulation,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
@@ -17,7 +17,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
   imports: [IButton],
   template: `
     <div class="code-display-container" [class.code-display--embedded]="embedded">
-      <div class="code-section">
+      <div class="code-section dark">
         <div class="code-header">
           @if (showTabs && (tsCode || scssCode)) {
             <div class="tab-container">
@@ -58,13 +58,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
           }
           @if (!showTabs || (!tsCode && !scssCode)) {
             <span class="code-title">
-              {{
-                activeTab === 'html'
-                  ? 'HTML'
-                  : activeTab === 'ts'
-                    ? 'TypeScript'
-                    : 'SCSS'
-              }}
+              {{ activeTab === 'html' ? 'HTML' : activeTab === 'ts' ? 'TypeScript' : 'SCSS' }}
             </span>
           }
           <i-button
@@ -178,8 +172,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     // Check if sourceCode contains fluid="true" or [fluid]="true"
     if (this.sourceCode) {
       this.hasFluidComponents =
-        this.sourceCode.includes('fluid]="true"') ||
-        this.sourceCode.includes('fluid="true"');
+        this.sourceCode.includes('fluid]="true"') || this.sourceCode.includes('fluid="true"');
     } else {
       // Check DOM for fluid buttons
       setTimeout(() => {
@@ -307,10 +300,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     );
 
     // 2. Closing brackets > and self-closing />
-    highlighted = highlighted.replace(
-      /(\s*\/?)(&gt;)/g,
-      '<span class="html-tag">$1$2</span>',
-    );
+    highlighted = highlighted.replace(/(\s*\/?)(&gt;)/g, '<span class="html-tag">$1$2</span>');
 
     // 3. Angular property bindings [property]="value"
     highlighted = highlighted.replace(
@@ -343,10 +333,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     );
 
     // 7. Numbers
-    highlighted = highlighted.replace(
-      /\b(\d+)\b/g,
-      '<span class="code-number">$1</span>',
-    );
+    highlighted = highlighted.replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>');
 
     return highlighted;
   }
@@ -357,14 +344,11 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     let stringCounter = 0;
 
     // Extract and replace all string literals
-    let processed = code.replace(
-      /(["'`])((?:\\.|(?!\1)[^\\])*)\1/g,
-      (match, quote, content) => {
-        const placeholder = `__STRING_${stringCounter++}__`;
-        stringMap.set(placeholder, match);
-        return placeholder;
-      },
-    );
+    let processed = code.replace(/(["'`])((?:\\.|(?!\1)[^\\])*)\1/g, (match, quote, content) => {
+      const placeholder = `__STRING_${stringCounter++}__`;
+      stringMap.set(placeholder, match);
+      return placeholder;
+    });
 
     // Extract and replace all comments
     const commentMap = new Map();
@@ -389,10 +373,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
       '<span class="code-keyword">$1</span>',
     );
 
-    processed = processed.replace(
-      /\b(\d+)\b/g,
-      '<span class="code-number">$1</span>',
-    );
+    processed = processed.replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>');
 
     processed = processed.replace(
       /([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(/g,
@@ -433,14 +414,11 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     let stringCounter = 0;
 
     // Extract and replace all string literals
-    let processed = code.replace(
-      /(["'])((?:\\.|(?!\1)[^\\])*)\1/g,
-      (match, quote, content) => {
-        const placeholder = `__STRING_${stringCounter++}__`;
-        stringMap.set(placeholder, match);
-        return placeholder;
-      },
-    );
+    let processed = code.replace(/(["'])((?:\\.|(?!\1)[^\\])*)\1/g, (match, quote, content) => {
+      const placeholder = `__STRING_${stringCounter++}__`;
+      stringMap.set(placeholder, match);
+      return placeholder;
+    });
 
     // Extract and replace all comments
     const commentMap = new Map();
@@ -473,10 +451,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     );
 
     // CSS properties (word followed by colon)
-    processed = processed.replace(
-      /\b([a-z-]+)(\s*:)/g,
-      '<span class="scss-property">$1</span>$2',
-    );
+    processed = processed.replace(/\b([a-z-]+)(\s*:)/g, '<span class="scss-property">$1</span>$2');
 
     // Class selectors
     processed = processed.replace(
@@ -491,22 +466,13 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
     );
 
     // Pseudo-classes and pseudo-elements
-    processed = processed.replace(
-      /(::?[a-z-]+)/g,
-      '<span class="scss-pseudo">$1</span>',
-    );
+    processed = processed.replace(/(::?[a-z-]+)/g, '<span class="scss-pseudo">$1</span>');
 
     // CSS variables
-    processed = processed.replace(
-      /(--[a-zA-Z0-9-]+)/g,
-      '<span class="scss-variable">$1</span>',
-    );
+    processed = processed.replace(/(--[a-zA-Z0-9-]+)/g, '<span class="scss-variable">$1</span>');
 
     // Color values (hex)
-    processed = processed.replace(
-      /(#[0-9a-fA-F]{3,8})\b/g,
-      '<span class="code-number">$1</span>',
-    );
+    processed = processed.replace(/(#[0-9a-fA-F]{3,8})\b/g, '<span class="code-number">$1</span>');
 
     // Numbers with units
     processed = processed.replace(
@@ -542,9 +508,7 @@ export class CodeDisplayComponent implements OnChanges, AfterViewInit, OnDestroy
 
     if (this.activeTab === 'html') {
       codeToCopy =
-        this.sourceCode && this.rawSourceCode
-          ? this.rawSourceCode
-          : this.getCleanedHtml();
+        this.sourceCode && this.rawSourceCode ? this.rawSourceCode : this.getCleanedHtml();
     } else if (this.activeTab === 'ts') {
       codeToCopy = this.rawTsCode;
     } else if (this.activeTab === 'scss') {

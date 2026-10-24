@@ -1,150 +1,143 @@
-<app-demo-playground class="toggles-demo" title="Toggle Components" description="Toggle switch components that switch between true and false boolean values. Compatible with ngModel and reactive forms with proper accessibility.">
-  <ng-template appDemoOption="option-1" label="Basic ngModel Usage" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
-      <div class="toggle-examples">
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="basicToggled"
-            (onChange)="onBasicChange($event)"
-          />
-          <span class="status">Status: {{ basicToggled ? "On" : "Off" }}</span>
-        </div>
+<app-demo-playground
+  class="toggles-demo"
+  title="Toggles"
+  eyebrow="Form Controls"
+  description="Toggle switch components that switch between true and false boolean values. Compatible with ngModel and reactive forms with proper accessibility."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic ngModel Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.ngModel"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="toggle-examples">
+      <div class="example-row">
+        <i-toggle [(ngModel)]="basicToggled" (onChange)="onBasicChange($event)" />
+        <span class="status">Status: {{ basicToggled ? 'On' : 'Off' }}</span>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Toggles with Labels" [sourceCode]="codeExamples.ngModel">
-      <div class="toggle-examples">
-        <div class="example-row">
-          <i-toggle [(ngModel)]="toggledWithLabel" label="Enable dark mode" />
-        </div>
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="basicToggled"
-            id="custom-toggle-id"
-            label="Custom toggle ID"
-          />
-        </div>
+  <ng-template
+    appDemoOption="option-2"
+    label="Toggles with Labels"
+    [sourceCode]="codeExamples.ngModel"
+  >
+    <div class="toggle-examples">
+      <div class="example-row">
+        <i-toggle [(ngModel)]="toggledWithLabel" label="Enable dark mode" />
       </div>
-    </ng-template>
+      <div class="example-row">
+        <i-toggle [(ngModel)]="basicToggled" id="custom-toggle-id" label="Custom toggle ID" />
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Toggle States" [sourceCode]="codeExamples.ngModel">
-      <div class="toggle-examples">
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="disabledToggled"
-            [disabled]="true"
-            label="Disabled toggle"
-          />
-        </div>
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="readonlyToggled"
-            [readonly]="true"
-            label="Readonly toggle"
-          />
-        </div>
+    <div class="toggle-examples">
+      <div class="example-row">
+        <i-toggle [(ngModel)]="disabledToggled" [disabled]="true" label="Disabled toggle" />
       </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Toggle Sizes" [sourceCode]="codeExamples.sizes" [tsCode]="tsExamples.ngModel">
-      <div class="toggle-examples">
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="smallToggled"
-            size="small"
-            label="Small toggle"
-          />
-        </div>
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="mediumToggled"
-            size="medium"
-            label="Medium toggle"
-          />
-        </div>
-        <div class="example-row">
-          <i-toggle
-            [(ngModel)]="largeToggled"
-            size="large"
-            label="Large toggle"
-          />
-        </div>
+      <div class="example-row">
+        <i-toggle [(ngModel)]="readonlyToggled" [readonly]="true" label="Readonly toggle" />
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Reactive Forms - FormControl" [sourceCode]="codeExamples.formControl" [tsCode]="tsExamples.formControl">
-      <div class="toggle-examples">
-        <div class="example-row">
-          <i-toggle
-            [formControl]="formControlExample"
-            label="FormControl toggle"
-          />
-          <span class="status">Value: {{ formControlExample.value }}</span>
-        </div>
-        <div class="example-row">
-          <i-button
-            severity="secondary"
-            [text]="true"
-            (clicked)="formControlExample.setValue(!formControlExample.value)"
-          >
-            Toggle via FormControl
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="formControlExample.disable()"
-            [disabled]="formControlExample.disabled"
-          >
-            Disable
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="formControlExample.enable()"
-            [disabled]="!formControlExample.disabled"
-          >
-            Enable
-          </i-button>
-        </div>
+  <ng-template
+    appDemoOption="option-4"
+    label="Toggle Sizes"
+    [sourceCode]="codeExamples.sizes"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="toggle-examples">
+      <div class="example-row">
+        <i-toggle [(ngModel)]="smallToggled" size="small" label="Small toggle" />
       </div>
-    </ng-template>
+      <div class="example-row">
+        <i-toggle [(ngModel)]="mediumToggled" size="medium" label="Medium toggle" />
+      </div>
+      <div class="example-row">
+        <i-toggle [(ngModel)]="largeToggled" size="large" label="Large toggle" />
+      </div>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Reactive Forms - FormGroup" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <div class="toggle-examples">
-        <form [formGroup]="settingsForm" (ngSubmit)="onFormSubmit()">
-          <div class="form-section">
-            <h4>App Settings</h4>
-            <div class="example-row">
-              <i-toggle formControlName="darkMode" label="Dark mode" />
-            </div>
-            <div class="example-row">
-              <i-toggle
-                formControlName="notifications"
-                label="Push notifications"
-              />
-            </div>
-            <div class="example-row">
-              <i-toggle formControlName="autoSave" label="Auto-save" />
-            </div>
-            <div class="example-row">
-              <i-toggle formControlName="analytics" label="Usage analytics" />
-            </div>
+  <ng-template
+    appDemoOption="option-5"
+    label="Reactive Forms - FormControl"
+    [sourceCode]="codeExamples.formControl"
+    [tsCode]="tsExamples.formControl"
+  >
+    <div class="toggle-examples">
+      <div class="example-row">
+        <i-toggle [formControl]="formControlExample" label="FormControl toggle" />
+        <span class="status">Value: {{ formControlExample.value }}</span>
+      </div>
+      <div class="example-row">
+        <i-button
+          severity="secondary"
+          [text]="true"
+          (clicked)="formControlExample.setValue(!formControlExample.value)"
+        >
+          Toggle via FormControl
+        </i-button>
+        <i-button
+          severity="secondary"
+          (clicked)="formControlExample.disable()"
+          [disabled]="formControlExample.disabled"
+        >
+          Disable
+        </i-button>
+        <i-button
+          severity="secondary"
+          (clicked)="formControlExample.enable()"
+          [disabled]="!formControlExample.disabled"
+        >
+          Enable
+        </i-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-6"
+    label="Reactive Forms - FormGroup"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <div class="toggle-examples">
+      <form [formGroup]="settingsForm" (ngSubmit)="onFormSubmit()">
+        <div class="form-section">
+          <h4>App Settings</h4>
+          <div class="example-row">
+            <i-toggle formControlName="darkMode" label="Dark mode" />
           </div>
-
-          <div class="form-actions">
-            <i-button severity="primary" type="submit">Submit</i-button>
-            <i-button severity="secondary" (clicked)="enableAll()">
-              Enable All
-            </i-button>
-            <i-button severity="secondary" (clicked)="resetForm()">
-              Reset
-            </i-button>
+          <div class="example-row">
+            <i-toggle formControlName="notifications" label="Push notifications" />
           </div>
-        </form>
-
-        <div class="form-output">
-          <h5>Form Value:</h5>
-          <pre>{{ settingsForm.value | json }}</pre>
-          <h5>Form Status:</h5>
-          <pre>{{ settingsForm.status }}</pre>
+          <div class="example-row">
+            <i-toggle formControlName="autoSave" label="Auto-save" />
+          </div>
+          <div class="example-row">
+            <i-toggle formControlName="analytics" label="Usage analytics" />
+          </div>
         </div>
+
+        <div class="form-actions">
+          <i-button severity="primary" type="submit">Submit</i-button>
+          <i-button severity="secondary" (clicked)="enableAll()"> Enable All </i-button>
+          <i-button severity="secondary" (clicked)="resetForm()"> Reset </i-button>
+        </div>
+      </form>
+
+      <div class="form-output">
+        <h5>Form Value:</h5>
+        <pre>{{ settingsForm.value | json }}</pre>
+        <h5>Form Status:</h5>
+        <pre>{{ settingsForm.status }}</pre>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

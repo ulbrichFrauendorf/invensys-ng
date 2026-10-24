@@ -3,8 +3,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 /**
  * Arrow direction options for the placeholder icon
  */
-export type PlaceholderArrowDirection =
-  'left' | 'right' | 'up' | 'down' | 'none';
+export type PlaceholderArrowDirection = 'left' | 'right' | 'up' | 'down' | 'none';
 
 /**
  * Placeholder Component

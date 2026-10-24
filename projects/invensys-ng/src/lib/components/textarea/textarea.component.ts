@@ -1,10 +1,6 @@
 import { Component, Input, Optional, Self, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ControlValueAccessor,
-  NgControl,
-  AbstractControl,
-} from '@angular/forms';
+import { ControlValueAccessor, NgControl, AbstractControl } from '@angular/forms';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { TooltipDirective } from '../../directives/tooltip/tooltip.directive';
 
@@ -273,8 +269,7 @@ export class ITextarea implements ControlValueAccessor {
     const key = this.firstErrorKey;
     if (!key) return null;
     const c = this.control;
-    if (this.errorMessages && this.errorMessages[key])
-      return this.errorMessages[key];
+    if (this.errorMessages && this.errorMessages[key]) return this.errorMessages[key];
     const err = c?.errors || {};
     switch (key) {
       case 'required':
@@ -286,9 +281,7 @@ export class ITextarea implements ControlValueAccessor {
       case 'pattern':
         return `${this.label} is not valid`;
       default:
-        return err[key] && typeof err[key] === 'string'
-          ? err[key]
-          : 'Invalid value';
+        return err[key] && typeof err[key] === 'string' ? err[key] : 'Invalid value';
     }
   }
 

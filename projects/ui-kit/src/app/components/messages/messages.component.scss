@@ -1,7 +1,8 @@
-@use "../shared-demo-styles.scss" as *;
+@use './messages.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .messages-demo {
-
   .message-examples {
     display: flex;
     flex-direction: column;
@@ -11,16 +12,12 @@
   .reset-button {
     margin-top: 16px;
     padding: 8px 16px;
-    background-color: var(--color-primary);
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14.4px;
     transition: background-color 0.2s;
-
-    &:hover {
-      background-color: color-mix(in srgb, var(--color-primary) 85%, black);
-    }
   }
 }
+
+@include theme.messages-theme();

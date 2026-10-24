@@ -1,9 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  Component,
-  DebugElement,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, DebugElement, ChangeDetectionStrategy } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ITabs } from './tabs.component';
 import { ITabPanel } from './tab-panel.component';
@@ -15,9 +11,7 @@ import { ITabPanel } from './tab-panel.component';
       <i-tab-panel header="Tab 1">Content 1</i-tab-panel>
       <i-tab-panel header="Tab 2" icon="pi pi-user">Content 2</i-tab-panel>
       <i-tab-panel icon="pi pi-home">Content 3</i-tab-panel>
-      <i-tab-panel header="Disabled" [disabled]="true"
-        >Disabled content</i-tab-panel
-      >
+      <i-tab-panel header="Disabled" [disabled]="true">Disabled content</i-tab-panel>
     </i-tabs>
   `,
   standalone: true,
@@ -116,18 +110,14 @@ describe('ITabs with host', () => {
       expect(label).toBeNull();
       expect(icon).toBeTruthy();
       expect(icon.nativeElement.classList.contains('pi-home')).toBe(true);
-      expect(
-        thirdTab.nativeElement.classList.contains('i-tabs__tab--icon-only'),
-      ).toBe(true);
+      expect(thirdTab.nativeElement.classList.contains('i-tabs__tab--icon-only')).toBe(true);
     });
   });
 
   describe('Tab selection', () => {
     it('should mark first tab as active by default', () => {
       const firstTab = fixture.debugElement.query(By.css('.i-tabs__tab'));
-      expect(
-        firstTab.nativeElement.classList.contains('i-tabs__tab--active'),
-      ).toBe(true);
+      expect(firstTab.nativeElement.classList.contains('i-tabs__tab--active')).toBe(true);
     });
 
     it('should change active tab on click', () => {
@@ -137,9 +127,7 @@ describe('ITabs with host', () => {
       fixture.detectChanges();
 
       expect(hostComponent.activeIndex).toBe(1);
-      expect(
-        tabs[1].nativeElement.classList.contains('i-tabs__tab--active'),
-      ).toBe(true);
+      expect(tabs[1].nativeElement.classList.contains('i-tabs__tab--active')).toBe(true);
     });
 
     it('should emit onChange event when tab is clicked', () => {
@@ -221,9 +209,7 @@ describe('ITabs with host', () => {
   describe('Disabled state', () => {
     it('should add disabled class to disabled tabs', () => {
       const tabs = fixture.debugElement.queryAll(By.css('.i-tabs__tab'));
-      expect(
-        tabs[3].nativeElement.classList.contains('i-tabs__tab--disabled'),
-      ).toBe(true);
+      expect(tabs[3].nativeElement.classList.contains('i-tabs__tab--disabled')).toBe(true);
     });
 
     it('should set disabled attribute on disabled tabs', () => {

@@ -37,9 +37,7 @@ describe('ITable action progress', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    fixture.debugElement
-      .query(By.css('.i-table-expand-cell button'))
-      .nativeElement.click();
+    fixture.debugElement.query(By.css('.i-table-expand-cell button')).nativeElement.click();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const tables = fixture.debugElement.queryAll(By.directive(ITable));
@@ -49,19 +47,13 @@ describe('ITable action progress', () => {
         .query(By.css('.i-table-actions-header'))
         .nativeElement.textContent.trim(),
     ).toBe('Actions');
-    expect(
-      child
-        .query(By.css('.i-table-actions-header'))
-        .nativeElement.textContent.trim(),
-    ).toBe('');
+    expect(child.query(By.css('.i-table-actions-header')).nativeElement.textContent.trim()).toBe(
+      '',
+    );
     expect(child.query(By.directive(IProgressSpinner))).not.toBeNull();
     const table = child.componentInstance as ITable;
     const action = fixture.componentInstance.grid.details!.actions![0];
-    table.triggerAction(
-      action,
-      fixture.componentInstance.step,
-      new Event('click'),
-    );
+    table.triggerAction(action, fixture.componentInstance.step, new Event('click'));
     expect(fixture.componentInstance.handler).not.toHaveBeenCalled();
     fixture.componentInstance.step = { status: 'Completed' };
     fixture.componentInstance.grid = { ...fixture.componentInstance.grid };

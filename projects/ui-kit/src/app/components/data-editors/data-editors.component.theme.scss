@@ -1,0 +1,9 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin data-editors-theme() {
+  .data-editors-demo {
+    .editor-intro {
+      border-bottom-color: colors.$color-surface-border;
+    }
+  }
+}

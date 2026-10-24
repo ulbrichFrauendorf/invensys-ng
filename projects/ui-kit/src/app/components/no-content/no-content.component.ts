@@ -78,5 +78,4 @@ export class NoContentComponent {
 export class ExampleComponent {
   items: any[] = [];
 }`;
-
 }

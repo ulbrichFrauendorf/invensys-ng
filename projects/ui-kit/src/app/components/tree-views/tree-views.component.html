@@ -1,279 +1,296 @@
-<app-demo-playground class="tree-views-demo" title="TreeView Components" description="A hierarchical tree component that replicates PrimeNG's p-tree functionality with support for single, multiple, and checkbox selection modes, filtering, and rich event handling.">
-  <ng-template appDemoOption="option-1" label="Basic Tree" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
-      <p>Basic tree structure with expand/collapse functionality.</p>
+<app-demo-playground
+  class="tree-views-demo"
+  title="Tree Views"
+  eyebrow="Data Display"
+  description="A hierarchical tree component that replicates PrimeNG's p-tree functionality with support for single, multiple, and checkbox selection modes, filtering, and rich event handling."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Tree"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+    [tsCode]="tsExamples.basic"
+  >
+    <p>Basic tree structure with expand/collapse functionality.</p>
 
-      <div class="demo-actions">
-        <i-button severity="secondary" (clicked)="expandAll()">
-          Expand All
-        </i-button>
-        <i-button severity="secondary" (clicked)="collapseAll()">
-          Collapse All
-        </i-button>
+    <div class="demo-actions">
+      <i-button severity="secondary" (clicked)="expandAll()"> Expand All </i-button>
+      <i-button severity="secondary" (clicked)="collapseAll()"> Collapse All </i-button>
+    </div>
+
+    <i-tree-view [value]="basicTreeData" scrollHeight="300px"> </i-tree-view>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-2"
+    label="Checkbox Selection"
+    sourceCodeEncoded="%3Cp%3E%0A%20%20%20%20%20%20%20%20Select%20nodes%20using%20checkboxes.%20Child%20selections%20propagate%20to%20parents.%0A%20%20%20%20%20%20%20%20Search%20for%20a%20node%2C%20select%20it%2C%20then%20clear%20the%20search%20to%20keep%20working%20with%0A%20%20%20%20%20%20%20%20your%20selection.%20The%20component%20includes%20an%20integrated%20%22Select%20All%22%20checkbox.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22demo-actions%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22secondary%22%20(clicked)%3D%22clearCheckboxSelection()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Clear%20Selection%0A%20%20%20%20%20%20%20%20%3C%2Fi-button%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Ci-tree-view%0A%20%20%20%20%20%20%20%20%5Bvalue%5D%3D%22organizationData%22%0A%20%20%20%20%20%20%20%20selectionMode%3D%22checkbox%22%0A%20%20%20%20%20%20%20%20%5BselectAll%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20filterPlaceholder%3D%22Search%20organization...%22%0A%20%20%20%20%20%20%20%20%5B(selection)%5D%3D%22checkboxSelection%22%0A%20%20%20%20%20%20%20%20(onNodeSelect)%3D%22onCheckboxNodeSelect(%24event)%22%0A%20%20%20%20%20%20%20%20(onNodeUnselect)%3D%22onCheckboxNodeUnselect(%24event)%22%0A%20%20%20%20%20%20%20%20scrollHeight%3D%22300px%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fi-tree-view%3E%0A%0A%20%20%20%20%20%20%40if%20(checkboxSelection.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22selection-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ESelected%20(%7B%7B%20checkboxSelection.length%20%7D%7D%20items)%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40for%20(node%20of%20checkboxSelection%3B%20track%20node.key)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20node.label%20%7D%7D%20%3Csmall%3E(%7B%7B%20node.key%20%7D%7D)%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdetails%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csummary%3EView%20Details%3C%2Fsummary%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%7B%7B%20getMultipleNodesSummary(checkboxSelection)%20%7C%20json%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdetails%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%7D"
+  >
+    <p>
+      Select nodes using checkboxes. Child selections propagate to parents. Search for a node,
+      select it, then clear the search to keep working with your selection. The component includes
+      an integrated "Select All" checkbox.
+    </p>
+
+    <div class="demo-actions">
+      <i-button severity="secondary" (clicked)="clearCheckboxSelection()">
+        Clear Selection
+      </i-button>
+    </div>
+
+    <i-tree-view
+      [value]="organizationData"
+      selectionMode="checkbox"
+      [selectAll]="true"
+      filterPlaceholder="Search organization..."
+      [(selection)]="checkboxSelection"
+      (onNodeSelect)="onCheckboxNodeSelect($event)"
+      (onNodeUnselect)="onCheckboxNodeUnselect($event)"
+      scrollHeight="300px"
+    >
+    </i-tree-view>
+
+    @if (checkboxSelection.length > 0) {
+      <div class="selection-info">
+        <strong>Selected ({{ checkboxSelection.length }} items):</strong>
+        <ul>
+          @for (node of checkboxSelection; track node.key) {
+            <li>
+              {{ node.label }} <small>({{ node.key }})</small>
+            </li>
+          }
+        </ul>
+        <details>
+          <summary>View Details</summary>
+          <pre>{{ getMultipleNodesSummary(checkboxSelection) | json }}</pre>
+        </details>
       </div>
+    }
+  </ng-template>
 
-      <i-tree-view [value]="basicTreeData" scrollHeight="300px"> </i-tree-view>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Single Selection"
+    [sourceCode]="codeExamples.selection"
+    [tsCode]="tsExamples.selection"
+  >
+    <p>Click on any node to select it. Only one node can be selected at a time.</p>
 
-  <ng-template appDemoOption="option-2" label="Checkbox Selection" sourceCodeEncoded="%3Cp%3E%0A%20%20%20%20%20%20%20%20Select%20nodes%20using%20checkboxes.%20Child%20selections%20propagate%20to%20parents.%0A%20%20%20%20%20%20%20%20Search%20for%20a%20node%2C%20select%20it%2C%20then%20clear%20the%20search%20to%20keep%20working%20with%0A%20%20%20%20%20%20%20%20your%20selection.%20The%20component%20includes%20an%20integrated%20%22Select%20All%22%20checkbox.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22demo-actions%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22secondary%22%20(clicked)%3D%22clearCheckboxSelection()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Clear%20Selection%0A%20%20%20%20%20%20%20%20%3C%2Fi-button%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Ci-tree-view%0A%20%20%20%20%20%20%20%20%5Bvalue%5D%3D%22organizationData%22%0A%20%20%20%20%20%20%20%20selectionMode%3D%22checkbox%22%0A%20%20%20%20%20%20%20%20%5BselectAll%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20filterPlaceholder%3D%22Search%20organization...%22%0A%20%20%20%20%20%20%20%20%5B(selection)%5D%3D%22checkboxSelection%22%0A%20%20%20%20%20%20%20%20(onNodeSelect)%3D%22onCheckboxNodeSelect(%24event)%22%0A%20%20%20%20%20%20%20%20(onNodeUnselect)%3D%22onCheckboxNodeUnselect(%24event)%22%0A%20%20%20%20%20%20%20%20scrollHeight%3D%22300px%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fi-tree-view%3E%0A%0A%20%20%20%20%20%20%40if%20(checkboxSelection.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22selection-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ESelected%20(%7B%7B%20checkboxSelection.length%20%7D%7D%20items)%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40for%20(node%20of%20checkboxSelection%3B%20track%20node.key)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20node.label%20%7D%7D%20%3Csmall%3E(%7B%7B%20node.key%20%7D%7D)%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdetails%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csummary%3EView%20Details%3C%2Fsummary%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%7B%7B%20getMultipleNodesSummary(checkboxSelection)%20%7C%20json%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdetails%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%7D">
-      <p>
-        Select nodes using checkboxes. Child selections propagate to parents.
-        Search for a node, select it, then clear the search to keep working with
-        your selection. The component includes an integrated "Select All" checkbox.
-      </p>
+    <div class="demo-actions">
+      <i-button severity="secondary" (clicked)="clearSingleSelection()"> Clear Selection </i-button>
+    </div>
 
-      <div class="demo-actions">
-        <i-button severity="secondary" (clicked)="clearCheckboxSelection()">
-          Clear Selection
-        </i-button>
+    <i-tree-view
+      [value]="organizationData"
+      selectionMode="single"
+      [(selection)]="singleSelection"
+      (onNodeSelect)="onSingleNodeSelect($event)"
+      (onNodeUnselect)="onSingleNodeUnselect($event)"
+      scrollHeight="300px"
+    >
+    </i-tree-view>
+
+    @if (singleSelection) {
+      <div class="selection-info">
+        <strong>Selected:</strong> {{ singleSelection.label }}
+        <details>
+          <summary>View Details</summary>
+          <pre>{{ getNodeSummary(singleSelection) | json }}</pre>
+        </details>
       </div>
+    }
+  </ng-template>
 
-      <i-tree-view
-        [value]="organizationData"
-        selectionMode="checkbox"
-        [selectAll]="true"
-        filterPlaceholder="Search organization..."
-        [(selection)]="checkboxSelection"
-        (onNodeSelect)="onCheckboxNodeSelect($event)"
-        (onNodeUnselect)="onCheckboxNodeUnselect($event)"
-        scrollHeight="300px"
-      >
-      </i-tree-view>
+  <ng-template
+    appDemoOption="option-4"
+    label="Multiple Selection"
+    sourceCodeEncoded="%3Cp%3EHold%20Ctrl%2FCmd%20and%20click%20to%20select%20multiple%20nodes.%3C%2Fp%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22demo-actions%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22secondary%22%20(clicked)%3D%22clearMultipleSelection()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Clear%20Selection%0A%20%20%20%20%20%20%20%20%3C%2Fi-button%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Ci-tree-view%0A%20%20%20%20%20%20%20%20%5Bvalue%5D%3D%22organizationData%22%0A%20%20%20%20%20%20%20%20selectionMode%3D%22multiple%22%0A%20%20%20%20%20%20%20%20%5B(selection)%5D%3D%22multipleSelection%22%0A%20%20%20%20%20%20%20%20(onNodeSelect)%3D%22onMultipleNodeSelect(%24event)%22%0A%20%20%20%20%20%20%20%20(onNodeUnselect)%3D%22onMultipleNodeUnselect(%24event)%22%0A%20%20%20%20%20%20%20%20scrollHeight%3D%22300px%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fi-tree-view%3E%0A%0A%20%20%20%20%20%20%40if%20(multipleSelection.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22selection-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ESelected%20(%7B%7B%20multipleSelection.length%20%7D%7D%20items)%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40for%20(node%20of%20multipleSelection%3B%20track%20node.key)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20node.label%20%7D%7D%20%3Csmall%3E(%7B%7B%20node.key%20%7D%7D)%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdetails%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csummary%3EView%20Details%3C%2Fsummary%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%7B%7B%20getMultipleNodesSummary(multipleSelection)%20%7C%20json%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdetails%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%7D"
+  >
+    <p>Hold Ctrl/Cmd and click to select multiple nodes.</p>
 
-      @if (checkboxSelection.length > 0) {
-        <div class="selection-info">
-          <strong>Selected ({{ checkboxSelection.length }} items):</strong>
-          <ul>
-            @for (node of checkboxSelection; track node.key) {
-              <li>
-                {{ node.label }} <small>({{ node.key }})</small>
-              </li>
-            }
-          </ul>
-          <details>
-            <summary>View Details</summary>
-            <pre>{{ getMultipleNodesSummary(checkboxSelection) | json }}</pre>
-          </details>
-        </div>
-      }
-    </ng-template>
+    <div class="demo-actions">
+      <i-button severity="secondary" (clicked)="clearMultipleSelection()">
+        Clear Selection
+      </i-button>
+    </div>
 
-  <ng-template appDemoOption="option-3" label="Single Selection" [sourceCode]="codeExamples.selection" [tsCode]="tsExamples.selection">
-      <p>
-        Click on any node to select it. Only one node can be selected at a time.
-      </p>
+    <i-tree-view
+      [value]="organizationData"
+      selectionMode="multiple"
+      [(selection)]="multipleSelection"
+      (onNodeSelect)="onMultipleNodeSelect($event)"
+      (onNodeUnselect)="onMultipleNodeUnselect($event)"
+      scrollHeight="300px"
+    >
+    </i-tree-view>
 
-      <div class="demo-actions">
-        <i-button severity="secondary" (clicked)="clearSingleSelection()">
-          Clear Selection
-        </i-button>
+    @if (multipleSelection.length > 0) {
+      <div class="selection-info">
+        <strong>Selected ({{ multipleSelection.length }} items):</strong>
+        <ul>
+          @for (node of multipleSelection; track node.key) {
+            <li>
+              {{ node.label }} <small>({{ node.key }})</small>
+            </li>
+          }
+        </ul>
+        <details>
+          <summary>View Details</summary>
+          <pre>{{ getMultipleNodesSummary(multipleSelection) | json }}</pre>
+        </details>
       </div>
-
-      <i-tree-view
-        [value]="organizationData"
-        selectionMode="single"
-        [(selection)]="singleSelection"
-        (onNodeSelect)="onSingleNodeSelect($event)"
-        (onNodeUnselect)="onSingleNodeUnselect($event)"
-        scrollHeight="300px"
-      >
-      </i-tree-view>
-
-      @if (singleSelection) {
-        <div class="selection-info">
-          <strong>Selected:</strong> {{ singleSelection.label }}
-          <details>
-            <summary>View Details</summary>
-            <pre>{{ getNodeSummary(singleSelection) | json }}</pre>
-          </details>
-        </div>
-      }
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Multiple Selection" sourceCodeEncoded="%3Cp%3EHold%20Ctrl%2FCmd%20and%20click%20to%20select%20multiple%20nodes.%3C%2Fp%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22demo-actions%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22secondary%22%20(clicked)%3D%22clearMultipleSelection()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Clear%20Selection%0A%20%20%20%20%20%20%20%20%3C%2Fi-button%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Ci-tree-view%0A%20%20%20%20%20%20%20%20%5Bvalue%5D%3D%22organizationData%22%0A%20%20%20%20%20%20%20%20selectionMode%3D%22multiple%22%0A%20%20%20%20%20%20%20%20%5B(selection)%5D%3D%22multipleSelection%22%0A%20%20%20%20%20%20%20%20(onNodeSelect)%3D%22onMultipleNodeSelect(%24event)%22%0A%20%20%20%20%20%20%20%20(onNodeUnselect)%3D%22onMultipleNodeUnselect(%24event)%22%0A%20%20%20%20%20%20%20%20scrollHeight%3D%22300px%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fi-tree-view%3E%0A%0A%20%20%20%20%20%20%40if%20(multipleSelection.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22selection-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ESelected%20(%7B%7B%20multipleSelection.length%20%7D%7D%20items)%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40for%20(node%20of%20multipleSelection%3B%20track%20node.key)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20node.label%20%7D%7D%20%3Csmall%3E(%7B%7B%20node.key%20%7D%7D)%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdetails%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csummary%3EView%20Details%3C%2Fsummary%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%7B%7B%20getMultipleNodesSummary(multipleSelection)%20%7C%20json%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdetails%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%7D">
-      <p>Hold Ctrl/Cmd and click to select multiple nodes.</p>
-
-      <div class="demo-actions">
-        <i-button severity="secondary" (clicked)="clearMultipleSelection()">
-          Clear Selection
-        </i-button>
-      </div>
-
-      <i-tree-view
-        [value]="organizationData"
-        selectionMode="multiple"
-        [(selection)]="multipleSelection"
-        (onNodeSelect)="onMultipleNodeSelect($event)"
-        (onNodeUnselect)="onMultipleNodeUnselect($event)"
-        scrollHeight="300px"
-      >
-      </i-tree-view>
-
-      @if (multipleSelection.length > 0) {
-        <div class="selection-info">
-          <strong>Selected ({{ multipleSelection.length }} items):</strong>
-          <ul>
-            @for (node of multipleSelection; track node.key) {
-              <li>
-                {{ node.label }} <small>({{ node.key }})</small>
-              </li>
-            }
-          </ul>
-          <details>
-            <summary>View Details</summary>
-            <pre>{{ getMultipleNodesSummary(multipleSelection) | json }}</pre>
-          </details>
-        </div>
-      }
-    </ng-template>
+    }
+  </ng-template>
 
   <ng-template appDemoOption="option-5" label="Filtering" [sourceCode]="codeExamples.filtering">
-      <p>Search through tree nodes using the built-in filter.</p>
+    <p>Search through tree nodes using the built-in filter.</p>
 
-      <i-tree-view
-        [value]="basicTreeData"
-        [filter]="true"
-        filterPlaceholder="Search files and folders..."
-        scrollHeight="300px"
-      >
-      </i-tree-view>
-    </ng-template>
+    <i-tree-view
+      [value]="basicTreeData"
+      [filter]="true"
+      filterPlaceholder="Search files and folders..."
+      scrollHeight="300px"
+    >
+    </i-tree-view>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Events" [sourceCode]="codeExamples.events">
-      <p>
-        TreeView emits various events for node interactions. Check the console
-        for event logs.
-      </p>
+    <p>TreeView emits various events for node interactions. Check the console for event logs.</p>
 
-      <i-tree-view
-        [value]="basicTreeData"
-        selectionMode="single"
-        (onNodeSelect)="onSingleNodeSelect($event)"
-        (onNodeUnselect)="onSingleNodeUnselect($event)"
-        (onNodeExpand)="onNodeExpand($event)"
-        (onNodeCollapse)="onNodeCollapse($event)"
-        scrollHeight="250px"
-      >
-      </i-tree-view>
-    </ng-template>
+    <i-tree-view
+      [value]="basicTreeData"
+      selectionMode="single"
+      (onNodeSelect)="onSingleNodeSelect($event)"
+      (onNodeUnselect)="onSingleNodeUnselect($event)"
+      (onNodeExpand)="onNodeExpand($event)"
+      (onNodeCollapse)="onNodeCollapse($event)"
+      scrollHeight="250px"
+    >
+    </i-tree-view>
+  </ng-template>
 
-  <ng-template appDemoOption="option-7" label="Scrollable TreeView" [sourceCode]="codeExamples.scrollable">
-      <p>Set a fixed height for the tree to make it scrollable.</p>
+  <ng-template
+    appDemoOption="option-7"
+    label="Scrollable TreeView"
+    [sourceCode]="codeExamples.scrollable"
+  >
+    <p>Set a fixed height for the tree to make it scrollable.</p>
 
-      <i-tree-view [value]="organizationData" scrollHeight="200px">
-      </i-tree-view>
-    </ng-template>
+    <i-tree-view [value]="organizationData" scrollHeight="200px"> </i-tree-view>
+  </ng-template>
 
-  <ng-template appDemoOption="option-8" label="TreeView API" sourceCodeEncoded="%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EInputs%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Ctable%20class%3D%22api-table%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cthead%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EProperty%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EType%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDefault%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDescription%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fthead%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ctbody%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Evalue%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EAn%20array%20of%20tree%20nodes%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectionMode%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'single'%20%7C%20'multiple'%20%7C%20'checkbox'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'single'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3ESelection%20mode%20of%20the%20tree%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eselection%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%20%7C%20ITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Enull%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3ESelected%20node(s)%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EscrollHeight%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eundefined%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EMaximum%20height%20of%20the%20tree%20container%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Efilter%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eboolean%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Etrue%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EShow%20the%20search%20bar%3B%20set%20false%20to%20hide%20it%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EfilterPlaceholder%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'Search'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EPlaceholder%20text%20for%20filter%20input%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EemptyMessage%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'No%20data%20found'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EMessage%20to%20display%20when%20no%20data%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectAll%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eboolean%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Efalse%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Show%20integrated%20%22Select%20All%22%20checkbox%20for%20checkbox%20selection%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mode%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ftbody%3E%0A%20%20%20%20%20%20%20%20%3C%2Ftable%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EOutputs%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Ctable%20class%3D%22api-table%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cthead%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EEvent%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EType%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDescription%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fthead%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ctbody%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeSelect%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20selected%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeUnselect%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20unselected%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeExpand%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20expanded%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeCollapse%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20collapsed%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectionChange%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%20%7C%20ITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20selection%20changes%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ftbody%3E%0A%20%20%20%20%20%20%20%20%3C%2Ftable%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EITreeNode%20Interface%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Cpre%20class%3D%22code-block%22%3E%7B%7B%20codeExamples.customization%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <div class="api-section">
-        <h4>Inputs</h4>
-        <table class="api-table">
-          <thead>
-            <tr>
-              <th>Property</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>value</td>
-              <td>ITreeNode[]</td>
-              <td>[]</td>
-              <td>An array of tree nodes</td>
-            </tr>
-            <tr>
-              <td>selectionMode</td>
-              <td>'single' | 'multiple' | 'checkbox'</td>
-              <td>'single'</td>
-              <td>Selection mode of the tree</td>
-            </tr>
-            <tr>
-              <td>selection</td>
-              <td>ITreeNode | ITreeNode[]</td>
-              <td>null</td>
-              <td>Selected node(s)</td>
-            </tr>
-            <tr>
-              <td>scrollHeight</td>
-              <td>string</td>
-              <td>undefined</td>
-              <td>Maximum height of the tree container</td>
-            </tr>
-            <tr>
-              <td>filter</td>
-              <td>boolean</td>
-              <td>true</td>
-              <td>Show the search bar; set false to hide it</td>
-            </tr>
-            <tr>
-              <td>filterPlaceholder</td>
-              <td>string</td>
-              <td>'Search'</td>
-              <td>Placeholder text for filter input</td>
-            </tr>
-            <tr>
-              <td>emptyMessage</td>
-              <td>string</td>
-              <td>'No data found'</td>
-              <td>Message to display when no data</td>
-            </tr>
-            <tr>
-              <td>selectAll</td>
-              <td>boolean</td>
-              <td>false</td>
-              <td>
-                Show integrated "Select All" checkbox for checkbox selection
-                mode
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <ng-template
+    appDemoOption="option-8"
+    label="TreeView API"
+    sourceCodeEncoded="%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EInputs%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Ctable%20class%3D%22api-table%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cthead%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EProperty%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EType%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDefault%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDescription%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fthead%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ctbody%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Evalue%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EAn%20array%20of%20tree%20nodes%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectionMode%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'single'%20%7C%20'multiple'%20%7C%20'checkbox'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'single'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3ESelection%20mode%20of%20the%20tree%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eselection%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%20%7C%20ITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Enull%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3ESelected%20node(s)%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EscrollHeight%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eundefined%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EMaximum%20height%20of%20the%20tree%20container%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Efilter%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eboolean%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Etrue%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EShow%20the%20search%20bar%3B%20set%20false%20to%20hide%20it%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EfilterPlaceholder%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'Search'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EPlaceholder%20text%20for%20filter%20input%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EemptyMessage%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Estring%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E'No%20data%20found'%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EMessage%20to%20display%20when%20no%20data%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectAll%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Eboolean%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3Efalse%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Show%20integrated%20%22Select%20All%22%20checkbox%20for%20checkbox%20selection%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mode%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ftbody%3E%0A%20%20%20%20%20%20%20%20%3C%2Ftable%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EOutputs%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Ctable%20class%3D%22api-table%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cthead%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EEvent%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EType%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cth%3EDescription%3C%2Fth%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fthead%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ctbody%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeSelect%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20selected%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeUnselect%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20unselected%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeExpand%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20expanded%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EonNodeCollapse%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3E%7B%7B%20%22%7B%22%20%7D%7D%20originalEvent%3A%20Event%2C%20node%3A%20ITreeNode%20%7B%7B%20%22%7D%22%20%7D%7D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20a%20node%20is%20collapsed%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ctr%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EselectionChange%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EITreeNode%20%7C%20ITreeNode%5B%5D%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ctd%3EFired%20when%20selection%20changes%3C%2Ftd%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Ftr%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ftbody%3E%0A%20%20%20%20%20%20%20%20%3C%2Ftable%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22api-section%22%3E%0A%20%20%20%20%20%20%20%20%3Ch4%3EITreeNode%20Interface%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%3Cpre%20class%3D%22code-block%22%3E%7B%7B%20codeExamples.customization%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <div class="api-section">
+      <h4>Inputs</h4>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>ITreeNode[]</td>
+            <td>[]</td>
+            <td>An array of tree nodes</td>
+          </tr>
+          <tr>
+            <td>selectionMode</td>
+            <td>'single' | 'multiple' | 'checkbox'</td>
+            <td>'single'</td>
+            <td>Selection mode of the tree</td>
+          </tr>
+          <tr>
+            <td>selection</td>
+            <td>ITreeNode | ITreeNode[]</td>
+            <td>null</td>
+            <td>Selected node(s)</td>
+          </tr>
+          <tr>
+            <td>scrollHeight</td>
+            <td>string</td>
+            <td>undefined</td>
+            <td>Maximum height of the tree container</td>
+          </tr>
+          <tr>
+            <td>filter</td>
+            <td>boolean</td>
+            <td>true</td>
+            <td>Show the search bar; set false to hide it</td>
+          </tr>
+          <tr>
+            <td>filterPlaceholder</td>
+            <td>string</td>
+            <td>'Search'</td>
+            <td>Placeholder text for filter input</td>
+          </tr>
+          <tr>
+            <td>emptyMessage</td>
+            <td>string</td>
+            <td>'No data found'</td>
+            <td>Message to display when no data</td>
+          </tr>
+          <tr>
+            <td>selectAll</td>
+            <td>boolean</td>
+            <td>false</td>
+            <td>Show integrated "Select All" checkbox for checkbox selection mode</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="api-section">
-        <h4>Outputs</h4>
-        <table class="api-table">
-          <thead>
-            <tr>
-              <th>Event</th>
-              <th>Type</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>onNodeSelect</td>
-              <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
-              <td>Fired when a node is selected</td>
-            </tr>
-            <tr>
-              <td>onNodeUnselect</td>
-              <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
-              <td>Fired when a node is unselected</td>
-            </tr>
-            <tr>
-              <td>onNodeExpand</td>
-              <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
-              <td>Fired when a node is expanded</td>
-            </tr>
-            <tr>
-              <td>onNodeCollapse</td>
-              <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
-              <td>Fired when a node is collapsed</td>
-            </tr>
-            <tr>
-              <td>selectionChange</td>
-              <td>ITreeNode | ITreeNode[]</td>
-              <td>Fired when selection changes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="api-section">
+      <h4>Outputs</h4>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>onNodeSelect</td>
+            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>Fired when a node is selected</td>
+          </tr>
+          <tr>
+            <td>onNodeUnselect</td>
+            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>Fired when a node is unselected</td>
+          </tr>
+          <tr>
+            <td>onNodeExpand</td>
+            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>Fired when a node is expanded</td>
+          </tr>
+          <tr>
+            <td>onNodeCollapse</td>
+            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>Fired when a node is collapsed</td>
+          </tr>
+          <tr>
+            <td>selectionChange</td>
+            <td>ITreeNode | ITreeNode[]</td>
+            <td>Fired when selection changes</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="api-section">
-        <h4>ITreeNode Interface</h4>
-        <pre class="code-block">{{ codeExamples.customization }}</pre>
-      </div>
-    </ng-template>
+    <div class="api-section">
+      <h4>ITreeNode Interface</h4>
+      <pre class="code-block">{{ codeExamples.customization }}</pre>
+    </div>
+  </ng-template>
 </app-demo-playground>

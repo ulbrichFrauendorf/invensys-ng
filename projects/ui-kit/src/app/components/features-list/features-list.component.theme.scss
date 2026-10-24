@@ -1,0 +1,22 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin features-list-theme() {
+  .features-grid {
+    .feature-item {
+      background: colors.$color-surface-ground;
+      border-color: colors.$color-surface-border;
+
+      &:hover {
+        background: colors.$color-surface-hover;
+        border-color: colors.$color-primary;
+      }
+
+      strong {
+        color: colors.$color-text-primary;
+      }
+
+      span {
+        color: colors.$color-text-secondary;
+      }
+    }
+  }
+}

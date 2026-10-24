@@ -1,0 +1,153 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin dialogs-theme() {
+  .basic-dialog {
+    .dialog-icon {
+      i {
+        color: colors.$color-success;
+      }
+
+      &.success {
+        i {
+          color: colors.$color-success;
+        }
+      }
+    }
+
+    .feature-highlights {
+      background: colors.$color-surface-section;
+
+      .highlight-item {
+        background: colors.$color-surface-card;
+        color: colors.$color-text-primary;
+        box-shadow: 0 1px 3px color-mix(in srgb, colors.$color-contrast 10%, transparent);
+
+        i {
+          color: colors.$color-primary;
+        }
+      }
+    }
+  }
+
+  .responsive-dialog {
+    .responsive-info-card {
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, colors.$color-primary 12%, colors.$color-surface-card),
+        colors.$color-surface-card
+      );
+      color: colors.$color-text-primary;
+    }
+
+    .breakpoint-card {
+      background: colors.$color-surface-section;
+
+      &:hover {
+        box-shadow: 0 4px 12px color-mix(in srgb, colors.$color-contrast 10%, transparent);
+      }
+
+      .breakpoint-icon {
+        background: colors.$color-primary;
+        color: colors.$color-contrast-inverse;
+      }
+
+      .breakpoint-details {
+        strong {
+          color: colors.$color-text-primary;
+        }
+
+        .breakpoint-value {
+          color: colors.$color-primary;
+        }
+
+        small {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+
+    .responsive-tip {
+      background: colors.$color-surface-section;
+      color: colors.$color-text-secondary;
+      border-left-color: colors.$color-info;
+
+      i {
+        color: colors.$color-info;
+      }
+    }
+  }
+
+  .large-dialog {
+    .dialog-intro {
+      background: colors.$color-surface-section;
+
+      > i {
+        color: colors.$color-warning;
+      }
+    }
+
+    .listbox-demo-form {
+      .form-field {
+        label {
+          color: colors.$color-text-primary;
+        }
+      }
+
+      .error-message {
+        color: colors.$color-danger;
+      }
+    }
+
+    .selection-summary {
+      background: colors.$color-surface-section;
+
+      .summary-header {
+        border-bottom-color: colors.$color-surface-border;
+
+        i {
+          color: colors.$color-primary;
+        }
+
+        span {
+          color: colors.$color-text-primary;
+        }
+      }
+
+      .summary-stats {
+        .stat-item {
+          .stat-value {
+            color: colors.$color-primary;
+          }
+
+          .stat-label {
+            color: colors.$color-text-secondary;
+          }
+
+          &.status {
+            i {
+              color: colors.$color-danger;
+            }
+
+            &.valid {
+              i {
+                color: colors.$color-success;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .dialog-content-full-height {
+    .dropdown-test-instruction {
+      background: colors.$color-surface-section;
+      border-color: colors.$color-warning;
+      color: colors.$color-text-primary;
+    }
+    .dropdown-controls {
+      .dropdown-values-panel {
+        background: colors.$color-surface-card;
+      }
+    }
+  }
+}

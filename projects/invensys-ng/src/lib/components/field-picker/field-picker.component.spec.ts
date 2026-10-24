@@ -20,9 +20,7 @@ describe('IFieldPicker', () => {
     component.search = 'pay';
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const checkbox = fixture.nativeElement.querySelector(
-      '[role="checkbox"]',
-    ) as HTMLElement;
+    const checkbox = fixture.nativeElement.querySelector('[role="checkbox"]') as HTMLElement;
     const emittedValue = firstValueFrom(component.onChange);
     checkbox.click();
     expect(await emittedValue).toEqual(['name', 'amount']);

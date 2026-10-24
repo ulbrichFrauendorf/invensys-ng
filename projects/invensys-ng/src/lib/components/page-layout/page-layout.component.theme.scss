@@ -1,0 +1,20 @@
+@use '../../themes/color-variables.scss' as colors;
+@mixin i-page-layout-theme() {
+  :host {
+    color: colors.$color-text-primary;
+
+    .page-layout {
+      .page-body {
+        .page-header {
+          background: colors.$color-surface-ground;
+
+          .page-heading {
+            .eyebrow {
+              color: colors.$color-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
-@use "../../themes/color-variables.scss" as colors;
-@use "../../themes/_variables.scss" as vars;
+@use '../../themes/color-variables.scss' as colors;
+@use '../../themes/_variables.scss' as vars;
 
 @mixin i-placeholder-theme() {
   .i-placeholder {
@@ -10,11 +10,7 @@
     min-height: 200px;
 
     &.has-pattern {
-      background-image: radial-gradient(
-        circle,
-        colors.$color-surface-border 1px,
-        transparent 1px
-      );
+      background-image: radial-gradient(circle, colors.$color-surface-border 1px, transparent 1px);
       background-size: 20px 20px;
     }
   }

@@ -1,102 +1,113 @@
-<app-demo-playground class="placeholders-demo" title="Placeholder Component" description="A flexible placeholder component for empty states, selection prompts, and drop zones. Features directional arrows, custom icons, and support for rich content.">
-  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
-      <div class="demo-placeholder-container">
-        <i-placeholder arrowDirection="left">
-          Select an item from the list
-        </i-placeholder>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="placeholders-demo"
+  title="Placeholders"
+  eyebrow="Feedback &amp; Messages"
+  description="A flexible placeholder component for empty states, selection prompts, and drop zones. Features directional arrows, custom icons, and support for rich content."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="demo-placeholder-container">
+      <i-placeholder arrowDirection="left"> Select an item from the list </i-placeholder>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Arrow Directions" [sourceCode]="codeExamples.directions">
-      <div class="demo-grid">
-        <div class="demo-placeholder-small">
-          <i-placeholder arrowDirection="left">Point left</i-placeholder>
-        </div>
-        <div class="demo-placeholder-small">
-          <i-placeholder arrowDirection="right">Point right</i-placeholder>
-        </div>
-        <div class="demo-placeholder-small">
-          <i-placeholder arrowDirection="up">Point up</i-placeholder>
-        </div>
-        <div class="demo-placeholder-small">
-          <i-placeholder arrowDirection="down">Point down</i-placeholder>
-        </div>
-        <div class="demo-placeholder-small">
-          <i-placeholder arrowDirection="none">No icon</i-placeholder>
-        </div>
+  <ng-template
+    appDemoOption="option-2"
+    label="Arrow Directions"
+    [sourceCode]="codeExamples.directions"
+  >
+    <div class="demo-grid">
+      <div class="demo-placeholder-small">
+        <i-placeholder arrowDirection="left">Point left</i-placeholder>
       </div>
-    </ng-template>
+      <div class="demo-placeholder-small">
+        <i-placeholder arrowDirection="right">Point right</i-placeholder>
+      </div>
+      <div class="demo-placeholder-small">
+        <i-placeholder arrowDirection="up">Point up</i-placeholder>
+      </div>
+      <div class="demo-placeholder-small">
+        <i-placeholder arrowDirection="down">Point down</i-placeholder>
+      </div>
+      <div class="demo-placeholder-small">
+        <i-placeholder arrowDirection="none">No icon</i-placeholder>
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Custom Icons" [sourceCode]="codeExamples.customIcon">
-      <div class="demo-grid two-columns">
-        <div class="demo-placeholder-medium">
-          <i-placeholder [customIcon]="'pi pi-inbox'">
-            Your inbox is empty
-          </i-placeholder>
-        </div>
-        <div class="demo-placeholder-medium">
-          <i-placeholder [customIcon]="'pi pi-search'">
-            No search results found
-          </i-placeholder>
-        </div>
+    <div class="demo-grid two-columns">
+      <div class="demo-placeholder-medium">
+        <i-placeholder [customIcon]="'pi pi-inbox'"> Your inbox is empty </i-placeholder>
       </div>
-    </ng-template>
+      <div class="demo-placeholder-medium">
+        <i-placeholder [customIcon]="'pi pi-search'"> No search results found </i-placeholder>
+      </div>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Rich Content" [sourceCode]="codeExamples.richContent">
-      <div class="demo-placeholder-container">
+  <ng-template
+    appDemoOption="option-4"
+    label="Rich Content"
+    [sourceCode]="codeExamples.richContent"
+  >
+    <div class="demo-placeholder-container">
+      <i-placeholder arrowDirection="left">
+        <h3>Select a Conversation</h3>
+        <p>Choose a conversation from the list to view messages</p>
+      </i-placeholder>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="With Action Button"
+    [sourceCode]="codeExamples.withButton"
+  >
+    <div class="demo-placeholder-container">
+      <i-placeholder [customIcon]="'pi pi-folder-open'">
+        <h3>No Projects Yet</h3>
+        <p>Create your first project to get started</p>
+        <i-button label="Create Project" icon="pi pi-plus" (onClick)="onCreateProject()"></i-button>
+      </i-placeholder>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-6"
+    label="Pattern Background"
+    [sourceCode]="codeExamples.pattern"
+  >
+    <div class="demo-placeholder-container">
+      <i-placeholder arrowDirection="none" [showPattern]="true">
+        <i class="pi pi-cloud-upload upload-icon"></i>
+        Drop files here to upload
+      </i-placeholder>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-7"
+    label="Split View Pattern"
+    [sourceCode]="codeExamples.splitView"
+  >
+    <div class="split-layout-demo">
+      <div class="list-panel-demo">
+        <div class="list-item-demo">Item 1</div>
+        <div class="list-item-demo">Item 2</div>
+        <div class="list-item-demo">Item 3</div>
+        <div class="list-item-demo">Item 4</div>
+      </div>
+      <div class="detail-panel-demo">
         <i-placeholder arrowDirection="left">
-          <h3>Select a Conversation</h3>
-          <p>Choose a conversation from the list to view messages</p>
+          <h3>Select an Item</h3>
+          <p>Choose an item from the list to view details</p>
         </i-placeholder>
       </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="With Action Button" [sourceCode]="codeExamples.withButton">
-      <div class="demo-placeholder-container">
-        <i-placeholder [customIcon]="'pi pi-folder-open'">
-          <h3>No Projects Yet</h3>
-          <p>Create your first project to get started</p>
-          <i-button
-            label="Create Project"
-            icon="pi pi-plus"
-            (onClick)="onCreateProject()"
-          ></i-button>
-        </i-placeholder>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-6" label="Pattern Background" [sourceCode]="codeExamples.pattern">
-      <div class="demo-placeholder-container">
-        <i-placeholder arrowDirection="none" [showPattern]="true">
-          <i
-            class="pi pi-cloud-upload"
-            style="
-              font-size: 48px;
-              opacity: 0.5;
-              margin-bottom: 16px;
-              display: block;
-              color: var(--color-primary);
-            "
-          ></i>
-          Drop files here to upload
-        </i-placeholder>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-7" label="Split View Pattern" [sourceCode]="codeExamples.splitView">
-      <div class="split-layout-demo">
-        <div class="list-panel-demo">
-          <div class="list-item-demo">Item 1</div>
-          <div class="list-item-demo">Item 2</div>
-          <div class="list-item-demo">Item 3</div>
-          <div class="list-item-demo">Item 4</div>
-        </div>
-        <div class="detail-panel-demo">
-          <i-placeholder arrowDirection="left">
-            <h3>Select an Item</h3>
-            <p>Choose an item from the list to view details</p>
-          </i-placeholder>
-        </div>
-      </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

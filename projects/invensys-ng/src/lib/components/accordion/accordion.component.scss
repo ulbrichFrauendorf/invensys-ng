@@ -1,5 +1,5 @@
-@use "./accordion.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use './accordion.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-accordion-theme();
 
@@ -7,8 +7,10 @@
   border-radius: vars.$borderRadius;
   overflow: visible;
 
-  &.expanded .i-accordion-header {
-    border-radius: vars.$borderRadius vars.$borderRadius 0 0;
+  &.expanded {
+    .i-accordion-header {
+      border-radius: vars.$borderRadius vars.$borderRadius 0 0;
+    }
   }
 
   &:not(.expanded) .i-accordion-header {
@@ -39,17 +41,17 @@
       gap: 12px;
 
       .i-accordion-icon {
-        font-size: 1em;
+        font-size: 12px;
       }
 
       .i-accordion-title {
         font-weight: 600;
-        font-size: 1em;
+        font-size: 12px;
       }
     }
 
     .i-accordion-toggle-icon {
-      font-size: 1em;
+      font-size: 12px;
       transition: transform vars.$transitionDuration ease;
     }
   }

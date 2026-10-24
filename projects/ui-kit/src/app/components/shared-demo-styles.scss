@@ -9,9 +9,13 @@
     }
   }
 
-  .form-field { width: 100%; }
+  .form-field {
+    width: 100%;
+  }
 
-  i-button[type="submit"] { margin-top: 16px; }
+  i-button[type="submit"] {
+    margin-top: 16px;
+  }
 }
 
 .button-examples {
@@ -21,7 +25,10 @@
   margin-bottom: 20px;
   align-items: center;
 
-  &.fluid { flex-direction: column; gap: 16px; }
+  &.fluid {
+    flex-direction: column;
+    gap: 16px;
+  }
 }
 
 .demo-examples {

@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-stepper-theme() {
   .i-stepper {
@@ -33,17 +33,23 @@
     &__connector {
       background: colors.$color-surface-border;
     }
-    &__item--completed > .i-stepper__connector {
-      background: colors.$color-surface-border;
+    &__item--completed {
+      > .i-stepper__connector {
+        background: colors.$color-surface-border;
+      }
     }
     &__item--active:not(.i-stepper__item--completed) .i-stepper__chevron {
       color: colors.$color-primary;
     }
-    &__item--completed .i-stepper__trigger {
-      border-bottom-color: colors.$color-success;
+    &__item--completed {
+      .i-stepper__trigger {
+        border-bottom-color: colors.$color-success;
+      }
     }
-    &__item--completed .i-stepper__indicator {
-      color: colors.$color-success;
+    &__item--completed {
+      .i-stepper__indicator {
+        color: colors.$color-success;
+      }
     }
     &__item--active:not(.i-stepper__item--completed) .i-stepper__trigger {
       border-bottom-color: colors.$color-primary;
@@ -54,5 +60,8 @@
     &__item--disabled {
       opacity: 0.55;
     }
+  }
+  .i-stepper__trigger {
+    border-bottom-color: transparent;
   }
 }

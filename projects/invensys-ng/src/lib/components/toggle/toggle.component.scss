@@ -1,4 +1,4 @@
-@use "./toggle.component.theme.scss" as theme;
+@use './toggle.component.theme.scss' as theme;
 
 @include theme.i-toggle-theme();
 
@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 1em;
+  font-size: 12px;
 
   &.i-toggle--disabled {
     opacity: 0.6;
@@ -27,7 +27,7 @@
   }
 
   &.i-toggle--small {
-    font-size: 0.9em;
+    font-size: 10.8px;
     gap: 6px;
 
     .i-toggle {
@@ -40,14 +40,16 @@
         height: 10px;
       }
 
-      &.i-toggle--checked .i-toggle-thumb {
-        transform: translateX(13px);
+      &.i-toggle--checked {
+        .i-toggle-thumb {
+          transform: translateX(13px);
+        }
       }
     }
   }
 
   &.i-toggle--medium {
-    font-size: 1em;
+    font-size: 12px;
     gap: 8px;
 
     .i-toggle {
@@ -60,14 +62,16 @@
         height: 14px;
       }
 
-      &.i-toggle--checked .i-toggle-thumb {
-        transform: translateX(17px);
+      &.i-toggle--checked {
+        .i-toggle-thumb {
+          transform: translateX(17px);
+        }
       }
     }
   }
 
   &.i-toggle--large {
-    font-size: 1.2em;
+    font-size: 14.4px;
     gap: 10px;
 
     .i-toggle {
@@ -80,8 +84,10 @@
         height: 18px;
       }
 
-      &.i-toggle--checked .i-toggle-thumb {
-        transform: translateX(21px);
+      &.i-toggle--checked {
+        .i-toggle-thumb {
+          transform: translateX(21px);
+        }
       }
     }
   }
@@ -100,7 +106,6 @@
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
     }
 
     .i-toggle-thumb {
@@ -122,10 +127,26 @@
 .i-toggle-wrapper {
   cursor: pointer;
   border-radius: 4px;
-  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  &.i-toggle--disabled { cursor: not-allowed; }
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 2px;
+  }
+  &.i-toggle--disabled {
+    cursor: not-allowed;
+  }
 }
-@media (pointer: coarse) {
-  .i-toggle-wrapper:not(.i-toggle--readonly) { min-height: 44px; min-width: 44px; justify-content: center; }
-  .i-toggle-wrapper .i-toggle { flex-shrink: 0; }
+.i-toggle-wrapper:not(.i-toggle--readonly) {
+  @media (pointer: coarse) {
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+  }
+}
+.i-toggle-wrapper {
+  .i-toggle {
+    @media (pointer: coarse) {
+      flex-shrink: 0;
+    }
+  }
 }

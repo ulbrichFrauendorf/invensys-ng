@@ -1,5 +1,5 @@
-@use "../../themes/color-variables.scss" as colors;
-@use "../../themes/variables" as vars;
+@use '../../themes/color-variables.scss' as colors;
+@use '../../themes/variables' as vars;
 
 @mixin i-tree-view-theme() {
   .i-tree-view-wrapper {
@@ -70,6 +70,12 @@
 
     .i-tree-view-node-label {
       color: colors.$color-text-primary;
+    }
+  }
+
+  .i-tree-view-node {
+    .i-tree-view-toggler {
+      background: transparent;
     }
   }
 }

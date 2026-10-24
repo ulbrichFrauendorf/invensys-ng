@@ -1,0 +1,25 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin accordions-theme() {
+  .accordions-demo {
+    .accordion-examples {
+      .control-buttons {
+        .demo-button {
+          border-color: colors.$color-surface-border;
+          background: colors.$color-primary;
+          color: colors.$color-text-contrast;
+        }
+
+        .status {
+          color: colors.$color-text-secondary;
+        }
+      }
+
+      ul {
+        li {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+  }
+}

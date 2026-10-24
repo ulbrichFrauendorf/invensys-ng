@@ -1,0 +1,24 @@
+@use '../../themes/color-variables.scss' as colors;
+
+@mixin i-card-button-theme() {
+  .i-card-button {
+    border-color: transparent;
+    background: transparent;
+    color: colors.$color-text-primary;
+
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+      box-shadow: colors.$color-box-shadow;
+      border-color: colors.$color-surface-border;
+      &.i-card-button--selected {
+        border-color: colors.$color-primary;
+      }
+    }
+
+    &.i-card-button--selected {
+      border-color: colors.$color-primary;
+    }
+    &:focus-visible {
+      outline-color: colors.$color-primary;
+    }
+  }
+}

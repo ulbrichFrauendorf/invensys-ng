@@ -1,7 +1,7 @@
-@use "./listbox.component.theme.scss" as theme;
-@use "../../themes/scrollbar-mixins.scss" as scrollbar;
-@use "../../themes/variables" as vars;
-@use "../../themes/color-variables.scss" as colors;
+@use './listbox.component.theme.scss' as theme;
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
+@use '../../themes/variables' as vars;
+@use '../../themes/color-variables.scss' as colors;
 
 @include theme.i-listbox-theme();
 
@@ -14,8 +14,8 @@ $listbox-transition: 0.15s ease;
   width: 100%;
   height: 100%;
   border-radius: vars.$componentBorderRadius;
-  border: 1px solid colors.$color-surface-border;
-  background: colors.$color-component-background;
+  border-width: 1px;
+  border-style: solid;
   overflow: hidden;
 
   &.i-listbox--fluid {
@@ -27,10 +27,6 @@ $listbox-transition: 0.15s ease;
     pointer-events: none;
   }
 
-  &.i-listbox--invalid {
-    border-color: colors.$color-danger;
-  }
-
   .i-listbox-header {
     position: relative;
     display: flex;
@@ -38,8 +34,8 @@ $listbox-transition: 0.15s ease;
     flex-shrink: 0;
     gap: 8px;
     padding: 20px 14px;
-    border-bottom: 1px solid colors.$color-surface-border;
-    background: colors.$color-surface-card;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 
     .i-listbox-header-content {
       display: flex;
@@ -49,8 +45,7 @@ $listbox-transition: 0.15s ease;
 
       .i-listbox-title {
         font-weight: 600;
-        font-size: 1.15em;
-        color: colors.$color-text-primary;
+        font-size: 13.8px;
       }
 
       .i-listbox-action-btn {
@@ -62,8 +57,6 @@ $listbox-transition: 0.15s ease;
         padding: 0;
         border: none;
         border-radius: vars.$componentBorderRadius;
-        background: colors.$color-primary;
-        color: colors.$color-white;
         cursor: pointer;
         transition: all $listbox-transition;
 
@@ -82,7 +75,7 @@ $listbox-transition: 0.15s ease;
         }
 
         i {
-          font-size: 1em;
+          font-size: 12px;
         }
       }
     }
@@ -102,7 +95,8 @@ $listbox-transition: 0.15s ease;
     .i-listbox-filter {
       flex-shrink: 0;
       padding: 8px;
-      border-bottom: 1px solid colors.$color-surface-border;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
     }
 
     .i-listbox-options {
@@ -117,7 +111,7 @@ $listbox-transition: 0.15s ease;
         align-items: center;
         gap: 8px;
         padding: 10px 12px;
-        font-size: 1em;
+        font-size: 12px;
         cursor: pointer;
         transition: background-color $listbox-transition;
 
@@ -125,12 +119,7 @@ $listbox-transition: 0.15s ease;
           padding: 16px 12px;
         }
 
-        &:hover {
-          background-color: colors.$color-surface-hover;
-        }
-
         &.selected {
-          background-color: colors.$color-surface-hover;
           font-weight: 500;
         }
 
@@ -143,12 +132,7 @@ $listbox-transition: 0.15s ease;
           font-size: 16px;
           flex-shrink: 0;
 
-          &--left {
-            color: colors.$color-text-secondary;
-          }
-
           &--chevron {
-            color: colors.$color-text-tertiary;
             margin-left: auto;
             font-size: 12px;
             opacity: 0.6;
@@ -167,7 +151,6 @@ $listbox-transition: 0.15s ease;
         padding: 16px;
         font-style: italic;
         text-align: center;
-        color: colors.$color-text-secondary;
       }
     }
   }
@@ -175,26 +158,25 @@ $listbox-transition: 0.15s ease;
   .i-listbox-error {
     flex-shrink: 0;
     padding: 8px 12px;
-    font-size: 0.9em;
-    color: colors.$color-danger;
-    background: rgba(239, 68, 68, 0.05);
-    border-top: 1px solid colors.$color-danger;
+    font-size: 10.8px;
+    border-top-width: 1px;
+    border-top-style: solid;
   }
 
-  // Menu display mode styling
+  /* Menu display mode styling */
   &.i-listbox--menu {
     .i-listbox-options {
       .i-listbox-option {
         padding: 14px 16px;
-        font-size: 1.05em;
+        font-size: 12.6px;
 
         &.has-icon {
           padding: 18px 16px;
         }
 
         &.selected {
-          background-color: colors.$color-surface-hover;
-          border-left: 3px solid colors.$color-primary;
+          border-left-width: 3px;
+          border-left-style: solid;
           font-weight: 600;
         }
 
@@ -204,20 +186,38 @@ $listbox-transition: 0.15s ease;
       }
     }
   }
-}
-
-@media (max-width: 991px) {
-  .i-listbox-wrapper {
+  @media (max-width: 991px) {
     .i-listbox-options {
       max-height: 120px;
     }
   }
 }
 
-@media (max-width: 768px) { .i-listbox-wrapper .i-listbox-options { max-height: min(320px, 50dvh); } }
-@media (pointer: coarse) { .i-listbox-wrapper .i-listbox-options .i-listbox-option { min-height: 44px; box-sizing: border-box; } }
+.i-listbox-wrapper {
+  .i-listbox-options {
+    @media (max-width: 768px) {
+      max-height: min(320px, 50dvh);
+    }
+  }
+}
 
-.i-listbox-wrapper .i-listbox-options .i-listbox-option {
-  width: 100%; box-sizing: border-box; text-align: left; font-family: inherit; color: inherit; background: transparent; border: 0;
-  &:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+.i-listbox-wrapper {
+  .i-listbox-options {
+    .i-listbox-option {
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      font-family: inherit;
+      border: 0;
+      &:focus-visible {
+        outline-width: 2px;
+        outline-style: solid;
+        outline-offset: -2px;
+      }
+      @media (pointer: coarse) {
+        min-height: 44px;
+        box-sizing: border-box;
+      }
+    }
+  }
 }

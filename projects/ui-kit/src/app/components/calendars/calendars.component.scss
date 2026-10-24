@@ -1,4 +1,6 @@
-@use "../shared-demo-styles.scss" as *;
+@use './calendars.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .calendars-demo {
   .demo-form {
@@ -12,43 +14,24 @@
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-bottom: 20px;
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .values-display {
     padding: 20px;
-    background: var(--color-component-background-secondary);
     border-radius: 6px;
-    border: 1px solid var(--color-surface-border);
-
-    h4 {
-      margin-top: 0;
-      margin-bottom: 12px;
-      color: var(--color-text-primary);
-      font-size: 1em;
-      font-weight: 600;
-    }
-
-    .hint {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--color-surface-border);
-      font-style: italic;
-      color: var(--color-text-tertiary);
-      font-size: 12px;
-    }
+    border-width: 1px;
+    border-style: solid;
   }
 
   .date-range-display {
     padding: 16px;
-    background: var(--color-component-background-secondary);
     border-radius: 6px;
-    border-left: 3px solid var(--color-primary);
-  }
-
-  // Responsive adjustments
-  @media (max-width: 768px) {
-    .calendar-grid {
-      grid-template-columns: 1fr;
-    }
+    border-left-width: 3px;
+    border-left-style: solid;
   }
 }
+
+@include theme.calendars-theme();

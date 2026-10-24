@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 @mixin i-ordered-list-theme() {
   .i-ordered-list {
     color: colors.$color-text-primary;
@@ -6,5 +6,21 @@
       border-color: colors.$color-surface-border;
       background: colors.$color-surface-card;
     }
+  }
+  .i-ordered-list {
+    &__item {
+      border-color: colors.$color-surface-border;
+    }
+    &__drag-handle {
+      color: inherit;
+      background: transparent;
+      &:focus-visible {
+        outline-color: currentColor;
+      }
+    }
+  }
+
+  .i-ordered-list__item.cdk-drag-preview {
+    box-shadow: 0 8px 24px color-mix(in srgb, colors.$color-shadow 15%, transparent);
   }
 }

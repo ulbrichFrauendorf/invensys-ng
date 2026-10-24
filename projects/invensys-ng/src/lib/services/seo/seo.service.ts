@@ -163,9 +163,7 @@ export class SeoService {
       return;
     }
 
-    let link: HTMLLinkElement | null = document.querySelector(
-      'link[rel="canonical"]',
-    );
+    let link: HTMLLinkElement | null = document.querySelector('link[rel="canonical"]');
 
     if (!link) {
       link = document.createElement('link');

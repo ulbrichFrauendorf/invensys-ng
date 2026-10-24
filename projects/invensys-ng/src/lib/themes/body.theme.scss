@@ -1,8 +1,8 @@
-@use "./color-variables.scss" as vars;
+@use './color-variables.scss' as vars;
 
 @mixin define-body() {
   body {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: vars.$color-surface-ground;
     color: vars.$color-text-primary;
   }

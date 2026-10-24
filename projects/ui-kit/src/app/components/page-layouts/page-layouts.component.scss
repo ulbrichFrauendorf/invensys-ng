@@ -1,116 +1,118 @@
+@use './page-layouts.component.theme.scss' as theme;
+@use '../../../../../invensys-ng/src/lib/themes/variables' as vars;
+
 :host {
   display: block;
   min-width: 0;
 
   .demo-sidebar {
     min-width: 0;
-
-    h2 { margin-top: 0; font-size: 1.1rem; }
-    p { line-height: 1.5; color: var(--color-text-secondary); }
-    i-listbox { display: block; }
+    padding: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: vars.$borderRadius;
+    i-listbox {
+      display: block;
+    }
 
     .sidebar-end {
       margin-bottom: 0;
-      padding-block: 0.75rem;
-      border-bottom: 2px solid var(--color-primary);
+      padding-block: 9px;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
     }
   }
 
-  .heading-description {
-    margin: 0.4rem 0 0;
-    color: var(--color-text-secondary);
-    font-size: 0.9rem;
-  }
-
   .demo-controls {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border: 1px solid var(--surface-border);
-    border-radius: 0.5rem;
-    background: var(--surface-card);
-
-    h2 { font-size: 1.15rem; margin-top: 0; }
-    p { line-height: 1.6; }
+    margin-bottom: 18px;
+    padding: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
 
     .control-fields {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 1rem;
+      gap: 12px;
 
       label {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 6px;
         min-height: 44px;
       }
 
       select {
         max-width: 100%;
-        padding: 0.5rem;
-        color: var(--color-text-primary);
-        background: var(--surface-ground);
-        border: 1px solid var(--surface-border);
-        border-radius: 0.25rem;
+        padding: 6px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 3px;
         font: inherit;
       }
     }
   }
 
   .automation-list {
-    h2 { font-size: 1.15rem; }
-
     .automation-row {
+      overflow-wrap: anywhere;
       display: grid;
-      grid-template-columns: 2rem minmax(0, 1fr) auto auto;
+      grid-template-columns: 24px minmax(0, 1fr) auto auto;
       align-items: center;
-      gap: 0.75rem;
+      gap: 9px;
       min-height: 88px;
-      padding: 0.75rem;
-      border-bottom: 1px solid var(--surface-border);
-      background: var(--surface-card);
+      padding: 9px;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
 
       @media (max-width: 480px) {
         grid-template-columns: minmax(0, 1fr) auto;
       }
 
       .row-number {
-        @media (max-width: 480px) { display: none; }
+        @media (max-width: 480px) {
+          display: none;
+        }
       }
 
       i-button {
-        @media (max-width: 480px) { grid-column: 2; grid-row: 1 / span 2; }
+        @media (max-width: 480px) {
+          grid-column: 2;
+          grid-row: 1 / span 2;
+        }
       }
 
-      h3 { margin: 0; font-size: 1rem; overflow-wrap: anywhere; }
-      p { margin: 0.35rem 0 0; color: var(--color-text-secondary); }
-
       .status {
-        @media (max-width: 480px) { grid-column: 1; grid-row: 2; justify-self: start; }
-        padding: 0.3rem 0.5rem;
-        border-radius: 0.25rem;
-        color: var(--color-success);
-
-        &.paused { color: var(--color-warning); }
+        @media (max-width: 480px) {
+          grid-column: 1;
+          grid-row: 2;
+          justify-self: start;
+        }
+        padding: 3.6px 6px;
+        border-radius: 3px;
       }
     }
 
-    .content-end { padding-block: 1rem; border-bottom: 2px solid var(--color-primary); }
+    .content-end {
+      padding-block: 12px;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+    }
   }
 
   .usage {
-    padding-block: 1rem;
-
-    p { line-height: 1.6; }
+    padding-block: 12px;
 
     pre {
       overflow: auto;
-      padding: 1rem;
-      color: var(--color-text-primary);
-      background: var(--surface-card);
-      border: 1px solid var(--surface-border);
-      border-radius: 0.5rem;
+      padding: 12px;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 6px;
     }
   }
 }
+
+@include theme.page-layouts-theme();

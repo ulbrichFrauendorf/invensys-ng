@@ -1,0 +1,19 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin chips-theme() {
+  .chips-container-demo {
+    .reset-button {
+      border-color: colors.$color-primary;
+      background-color: colors.$color-primary;
+      color: colors.$color-contrast-inverse;
+
+      &:hover {
+        background-color: color-mix(in srgb, colors.$color-primary 85%, colors.$color-contrast 15%);
+      }
+
+      &:active {
+        background-color: color-mix(in srgb, colors.$color-primary 85%, colors.$color-contrast 15%);
+      }
+    }
+  }
+}

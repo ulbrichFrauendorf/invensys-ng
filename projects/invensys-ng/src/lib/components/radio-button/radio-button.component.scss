@@ -1,4 +1,4 @@
-@use "./radio-button.component.theme.scss" as theme;
+@use './radio-button.component.theme.scss' as theme;
 
 @include theme.i-radio-button-theme();
 
@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 1em;
+  font-size: 12px;
 
   &.i-radio-button--fluid {
     display: flex;
@@ -38,7 +38,6 @@
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
     }
 
     .i-radio-button-icon {
@@ -61,15 +60,30 @@
     user-select: none;
     line-height: 1.4;
   }
+
+  @media (pointer: coarse) {
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+  }
 }
 
 .i-radio-button-wrapper {
   cursor: pointer;
   border-radius: 4px;
-  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
-  &.i-radio-button--disabled { cursor: not-allowed; }
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 2px;
+  }
+  &.i-radio-button--disabled {
+    cursor: not-allowed;
+  }
 }
-@media (pointer: coarse) {
-  .i-radio-button-wrapper { min-height: 44px; min-width: 44px; justify-content: center; }
-  .i-radio-button-wrapper .i-radio-button { flex-shrink: 0; }
+.i-radio-button-wrapper {
+  .i-radio-button {
+    @media (pointer: coarse) {
+      flex-shrink: 0;
+    }
+  }
 }

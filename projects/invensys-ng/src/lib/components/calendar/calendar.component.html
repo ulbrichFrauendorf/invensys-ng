@@ -16,11 +16,7 @@
 
   <!-- Calendar Panel -->
   @if (isOpen) {
-    <div
-      #calendarPanel
-      class="i-calendar-panel"
-      (click)="$event.stopPropagation()"
-    >
+    <div #calendarPanel class="i-calendar-panel" (click)="$event.stopPropagation()">
       <!-- Header -->
       <div class="i-calendar-header">
         <i-button
@@ -34,20 +30,12 @@
         </i-button>
 
         <div class="i-calendar-header-title">
-          @if (currentView === "date") {
-            <i-button
-              [severity]="'contrast'"
-              [text]="true"
-              (clicked)="showMonthView()"
-            >
+          @if (currentView === 'date') {
+            <i-button [severity]="'contrast'" [text]="true" (clicked)="showMonthView()">
               {{ getHeaderTitle() }}
             </i-button>
-          } @else if (currentView === "month") {
-            <i-button
-              [severity]="'contrast'"
-              [text]="true"
-              (clicked)="showYearView()"
-            >
+          } @else if (currentView === 'month') {
+            <i-button [severity]="'contrast'" [text]="true" (clicked)="showYearView()">
               {{ getHeaderTitle() }}
             </i-button>
           } @else {
@@ -69,7 +57,7 @@
       <!-- Calendar Body -->
       <div class="i-calendar-body">
         <!-- Date View -->
-        @if (currentView === "date") {
+        @if (currentView === 'date') {
           <div class="i-calendar-date-view">
             <!-- Weekday headers -->
             <div class="i-calendar-weekdays">
@@ -104,7 +92,7 @@
         }
 
         <!-- Month View -->
-        @if (currentView === "month") {
+        @if (currentView === 'month') {
           <div class="i-calendar-month-view">
             @for (month of months; track month; let i = $index) {
               <i-button
@@ -123,7 +111,7 @@
         }
 
         <!-- Year View -->
-        @if (currentView === "year") {
+        @if (currentView === 'year') {
           <div class="i-calendar-year-view">
             @for (year of years; track year) {
               <i-button

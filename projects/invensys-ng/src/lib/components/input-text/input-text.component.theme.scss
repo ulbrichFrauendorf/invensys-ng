@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-input-theme() {
   .i-input {
@@ -54,6 +54,23 @@
     &:active {
       background: colors.$color-surface-hover;
       color: colors.$color-primary;
+    }
+  }
+
+  .i-input-wrapper {
+    .i-input {
+      &.hide-text {
+        color: transparent;
+        text-shadow: none;
+      }
+
+      &.readonly {
+        caret-color: transparent;
+      }
+    }
+
+    .i-input-icon {
+      color: inherit;
     }
   }
 }

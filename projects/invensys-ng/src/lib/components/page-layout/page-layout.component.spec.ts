@@ -4,28 +4,45 @@ import { By } from '@angular/platform-browser';
 import { provideRouter, Router } from '@angular/router';
 import { LayoutComponent } from '../layout/layout.component';
 import { PageLayoutComponent } from './page-layout.component';
-import { PageHeaderActionsDirective, PageHeaderContentDirective, PageSidebarDirective } from './page-layout-slots.directive';
+import {
+  PageHeaderActionsDirective,
+  PageHeaderContentDirective,
+  PageSidebarDirective,
+} from './page-layout-slots.directive';
 
 @Component({
-  imports: [PageLayoutComponent, PageSidebarDirective, PageHeaderActionsDirective, PageHeaderContentDirective],
-  template: `
-    <i-page-layout headerText="Report automations" [showHeader]="showHeader()">
-      @if (showSidebar()) {
-        <nav iPageSidebar>
-          <h2>Sidebar start</h2>
-          @for (item of items; track item) { <button style="display:block;height:44px">Organization {{ item }}</button> }
-          <p class="sidebar-end">Sidebar end</p>
-        </nav>
+  imports: [
+    PageLayoutComponent,
+    PageSidebarDirective,
+    PageHeaderActionsDirective,
+    PageHeaderContentDirective,
+  ],
+  template: ` <i-page-layout
+    headerText="Report automations"
+    [showHeader]="showHeader()"
+    [sidebarPosition]="sidebarPosition()"
+  >
+    @if (showSidebar()) {
+      <nav iPageSidebar>
+        <h2>Sidebar start</h2>
+        @for (item of items; track item) {
+          <button style="display:block;height:44px">Organization {{ item }}</button>
+        }
+        <p class="sidebar-end">Sidebar end</p>
+      </nav>
+    }
+    <button iPageHeaderActions (click)="saved.set(true)">Save</button>
+    <p iPageHeaderContent>Draft notice</p>
+    <section class="test-content">
+      @for (item of items; track item) {
+        <p style="height:88px">Report {{ item }}</p>
       }
-      <button iPageHeaderActions (click)="saved.set(true)">Save</button>
-      <p iPageHeaderContent>Draft notice</p>
-      <section class="test-content">
-        @for (item of items; track item) { <p style="height:88px">Report {{ item }}</p> }
-      </section>
-    </i-page-layout>`,
+    </section>
+  </i-page-layout>`,
 })
 class TestPage {
   readonly items = Array.from({ length: 40 }, (_, i) => i + 1);
+  readonly sidebarPosition = signal<'left' | 'right'>('left');
   readonly showSidebar = signal(true);
   readonly showHeader = signal(true);
   readonly saved = signal(false);
@@ -50,6 +67,36 @@ describe('PageLayoutComponent', () => {
     expect(fixture.nativeElement.querySelector('.header-actions')).toBeNull();
   });
 
+  it('defaults to the left and places a right sidebar beside or below the main view', async () => {
+    TestBed.configureTestingModule({ imports: [TestPage] });
+    const fixture = TestBed.createComponent(TestPage);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+      .componentInstance as PageLayoutComponent;
+    expect(layout.sidebarPosition()).toBe('left');
+    const sidebar = root.querySelector<HTMLElement>('aside')!;
+    const body = root.querySelector<HTMLElement>('.page-body')!;
+    const mobile = matchMedia('(max-width: 991px)').matches;
+    if (!mobile)
+      expect(sidebar.getBoundingClientRect().right).toBeLessThanOrEqual(
+        body.getBoundingClientRect().left,
+      );
+    fixture.componentInstance.sidebarPosition.set('right');
+    await fixture.whenStable();
+    expect(root.querySelectorAll('nav')).toHaveLength(1);
+    if (mobile)
+      expect(sidebar.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+        body.getBoundingClientRect().bottom,
+      );
+    else
+      expect(sidebar.getBoundingClientRect().left).toBeGreaterThanOrEqual(
+        body.getBoundingClientRect().right,
+      );
+    root.querySelector<HTMLButtonElement>('header button')!.click();
+    expect(fixture.componentInstance.saved()).toBe(true);
+  });
+
   it('projects slots once, preserves bindings, and supports dynamic composition', async () => {
     TestBed.configureTestingModule({ imports: [TestPage] });
     const fixture = TestBed.createComponent(TestPage);
@@ -68,84 +115,99 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelector('.test-content')).not.toBeNull();
   });
 
-  it.each([true, false])('owns its padding and snaps across the mobile app bar (sidebar: %s)', async (showSidebar) => {
-    const previousFontSize = document.documentElement.style.fontSize;
-    TestBed.configureTestingModule({
-      imports: [TestShell],
-      providers: [provideRouter([{ path: 'page', component: TestPage }])],
-    });
-    const fixture = TestBed.createComponent(TestShell);
-    try {
-      await TestBed.inject(Router).navigateByUrl('/page');
-      await fixture.whenStable();
-      const root: HTMLElement = fixture.nativeElement;
-      const pageComponent = fixture.debugElement.query(By.directive(TestPage)).componentInstance as TestPage;
-      pageComponent.showSidebar.set(showSidebar);
-      await fixture.whenStable();
-      const shell = root.querySelector<HTMLElement>('.layout-main-container')!;
-      const wrapper = root.querySelector<HTMLElement>('.layout-wrapper')!;
-      const sidebar = root.querySelector<HTMLElement>('i-page-layout .sidebar');
-      const header = root.querySelector<HTMLElement>('.page-header')!;
-      const page = root.querySelector<HTMLElement>('i-page-layout')!;
-      const mobile = matchMedia('(max-width: 991px)').matches;
-      const scrollOwner = mobile ? wrapper : shell;
-      scrollOwner.style.scrollBehavior = 'auto';
-      expect(getComputedStyle(shell).padding).toBe('0px');
-      page.style.setProperty('--page-layout-padding', '8px');
-      expect(getComputedStyle(header).paddingLeft).toBe('8px');
-      expect(getComputedStyle(shell).paddingLeft).toBe('0px');
-      const initialSidebarTop = sidebar?.getBoundingClientRect().top;
-      const bodyTop = root.querySelector('.page-body')!.getBoundingClientRect().top;
-      if (mobile) {
-        const topbar = root.querySelector<HTMLElement>('i-topbar')!;
-        const edge = wrapper.getBoundingClientRect().top;
-        const barBottom = topbar.getBoundingClientRect().bottom;
-        const waitForScroll = async () => {
-          await new Promise(requestAnimationFrame);
-          await new Promise(requestAnimationFrame);
-        };
-        // Both directions must skip every partially overlapping position.
-        for (const remaining of [barBottom - edge - 1, 1, (barBottom - edge) / 2]) {
-          wrapper.scrollTop = bodyTop - edge - remaining;
+  it.each([true, false])(
+    'owns its padding and snaps across the mobile app bar (sidebar: %s)',
+    async (showSidebar) => {
+      const previousFontSize = document.documentElement.style.fontSize;
+      TestBed.configureTestingModule({
+        imports: [TestShell],
+        providers: [provideRouter([{ path: 'page', component: TestPage }])],
+      });
+      const fixture = TestBed.createComponent(TestShell);
+      try {
+        await TestBed.inject(Router).navigateByUrl('/page');
+        await fixture.whenStable();
+        const root: HTMLElement = fixture.nativeElement;
+        const pageComponent = fixture.debugElement.query(By.directive(TestPage))
+          .componentInstance as TestPage;
+        pageComponent.showSidebar.set(showSidebar);
+        await fixture.whenStable();
+        const shell = root.querySelector<HTMLElement>('.layout-main-container')!;
+        const wrapper = root.querySelector<HTMLElement>('.layout-wrapper')!;
+        const sidebar = root.querySelector<HTMLElement>('i-page-layout .sidebar');
+        const header = root.querySelector<HTMLElement>('.page-header')!;
+        const page = root.querySelector<HTMLElement>('i-page-layout')!;
+        const mobile = matchMedia('(max-width: 991px)').matches;
+        const scrollOwner = mobile ? wrapper : shell;
+        scrollOwner.style.scrollBehavior = 'auto';
+        expect(getComputedStyle(shell).padding).toBe('0px');
+        page.style.setProperty('--page-layout-padding', '8px');
+        expect(getComputedStyle(header).paddingLeft).toBe('8px');
+        expect(getComputedStyle(shell).paddingLeft).toBe('0px');
+        const initialSidebarTop = sidebar?.getBoundingClientRect().top;
+        const bodyTop = root.querySelector('.page-body')!.getBoundingClientRect().top;
+        if (mobile) {
+          const topbar = root.querySelector<HTMLElement>('i-topbar')!;
+          const edge = wrapper.getBoundingClientRect().top;
+          const barBottom = topbar.getBoundingClientRect().bottom;
+          const waitForScroll = async () => {
+            await new Promise(requestAnimationFrame);
+            await new Promise(requestAnimationFrame);
+          };
+          // Both directions must skip every partially overlapping position.
+          for (const remaining of [barBottom - edge - 1, 1, (barBottom - edge) / 2]) {
+            wrapper.scrollTop = bodyTop - edge - remaining;
+            await waitForScroll();
+            expect(Math.abs(header.getBoundingClientRect().top - edge)).toBeLessThan(2);
+            expect(header.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(barBottom);
+          }
+          wrapper.scrollTop = 0;
           await waitForScroll();
-          expect(Math.abs(header.getBoundingClientRect().top - edge)).toBeLessThan(2);
-          expect(header.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(barBottom);
+          expect(Math.abs(header.getBoundingClientRect().top - bodyTop)).toBeLessThan(2);
         }
-        wrapper.scrollTop = 0;
-        await waitForScroll();
-        expect(Math.abs(header.getBoundingClientRect().top - bodyTop)).toBeLessThan(2);
+        scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
+        await new Promise(requestAnimationFrame);
+        expect(
+          Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top),
+        ).toBeLessThan(2);
+        if (mobile && sidebar) {
+          expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+            header.getBoundingClientRect().top,
+          );
+        } else if (sidebar) {
+          expect(sidebar.scrollHeight).toBeGreaterThan(sidebar.clientHeight);
+          expect(
+            Math.abs(sidebar.getBoundingClientRect().top - shell.getBoundingClientRect().top),
+          ).toBeLessThan(2);
+        }
+        if (mobile) {
+          const shellComponent = fixture.debugElement.query(By.directive(LayoutComponent))
+            .componentInstance as LayoutComponent;
+          header.dispatchEvent(
+            new TouchEvent('touchstart', {
+              touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 100 })],
+              bubbles: true,
+            }),
+          );
+          header.dispatchEvent(
+            new TouchEvent('touchmove', {
+              touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 200 })],
+              bubbles: true,
+              cancelable: true,
+            }),
+          );
+          expect(shellComponent.pullDistance()).toBe(0);
+          header.dispatchEvent(new TouchEvent('touchend', { touches: [], bubbles: true }));
+        }
+        scrollOwner.scrollTop = 0;
+        await new Promise(requestAnimationFrame);
+        if (sidebar && initialSidebarTop !== undefined) {
+          expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
+        }
+      } finally {
+        fixture.destroy();
+        document.documentElement.style.fontSize = previousFontSize;
       }
-      scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
-      await new Promise(requestAnimationFrame);
-      expect(Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top)).toBeLessThan(2);
-      if (mobile && sidebar) {
-        expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(header.getBoundingClientRect().top);
-      } else if (sidebar) {
-        expect(sidebar.scrollHeight).toBeGreaterThan(sidebar.clientHeight);
-        expect(Math.abs(sidebar.getBoundingClientRect().top - shell.getBoundingClientRect().top)).toBeLessThan(2);
-      }
-      if (mobile) {
-        const shellComponent = fixture.debugElement.query(By.directive(LayoutComponent)).componentInstance as LayoutComponent;
-        header.dispatchEvent(new TouchEvent('touchstart', {
-          touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 100 })],
-          bubbles: true,
-        }));
-        header.dispatchEvent(new TouchEvent('touchmove', {
-          touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 200 })],
-          bubbles: true,
-          cancelable: true,
-        }));
-        expect(shellComponent.pullDistance()).toBe(0);
-        header.dispatchEvent(new TouchEvent('touchend', { touches: [], bubbles: true }));
-      }
-      scrollOwner.scrollTop = 0;
-      await new Promise(requestAnimationFrame);
-      if (sidebar && initialSidebarTop !== undefined) {
-        expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
-      }
-    } finally {
-      fixture.destroy();
-      document.documentElement.style.fontSize = previousFontSize;
-    }
-  });
+    },
+  );
 });

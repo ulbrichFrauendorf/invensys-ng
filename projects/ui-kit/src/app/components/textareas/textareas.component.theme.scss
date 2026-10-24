@@ -1,0 +1,8 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin textareas-theme() {
+  .values-display {
+    background-color: colors.$color-surface-ground;
+    border-color: colors.$color-surface-border;
+  }
+}

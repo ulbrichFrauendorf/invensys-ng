@@ -1,8 +1,5 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  IDynamicDialogConfig,
-  IDynamicDialogRef,
-} from './services/dialog.interfaces';
+import { IDynamicDialogConfig, IDynamicDialogRef } from './services/dialog.interfaces';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -42,9 +39,7 @@ export abstract class IDialogBase implements OnInit, AfterViewInit {
     if (this.dialogRef) {
       this.dialogRef.close(result);
     } else {
-      console.error(
-        'BaseDialogComponent: Cannot close dialog - dialogRef is not available',
-      );
+      console.error('BaseDialogComponent: Cannot close dialog - dialogRef is not available');
     }
   }
 

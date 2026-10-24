@@ -7,7 +7,7 @@ import {
   Output,
   QueryList,
   AfterContentInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ITabPanel } from './tab-panel.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -209,9 +209,7 @@ export class ITabs implements AfterContentInit {
    * @internal
    */
   private focusTab(index: number): void {
-    const tabElement = document.getElementById(
-      `${this.componentId}-tab-${index}`,
-    );
+    const tabElement = document.getElementById(`${this.componentId}-tab-${index}`);
     tabElement?.focus();
   }
 }

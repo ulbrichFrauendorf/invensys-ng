@@ -54,9 +54,7 @@ describe('IDialogActions', () => {
   });
 
   it('does not submit while disabled or loading, then submits once ready', () => {
-    const emit = vi
-      .spyOn(component.submitEvent, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.submitEvent, 'emit').mockReturnValue(undefined);
     fixture.componentRef.setInput('submitDisabled', true);
     component.onSubmit();
     fixture.componentRef.setInput('submitDisabled', false);
@@ -64,9 +62,7 @@ describe('IDialogActions', () => {
     component.onSubmit();
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('button[type="submit"]').disabled,
-    ).toBe(true);
+    expect(fixture.nativeElement.querySelector('button[type="submit"]').disabled).toBe(true);
     expect(emit).not.toHaveBeenCalled();
     fixture.componentRef.setInput('submitLoading', false);
     fixture.changeDetectorRef.markForCheck();

@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-whisper-theme() {
   .i-whisper-message {
@@ -15,7 +15,7 @@
       }
     }
 
-    // Success messages
+    /* Success messages */
     &.i-whisper-message-success {
       border-left-color: colors.$color-success;
 
@@ -24,7 +24,7 @@
       }
     }
 
-    // Info messages
+    /* Info messages */
     &.i-whisper-message-info {
       border-left-color: colors.$color-info;
 
@@ -33,7 +33,7 @@
       }
     }
 
-    // Warning messages
+    /* Warning messages */
     &.i-whisper-message-warning {
       border-left-color: colors.$color-warning;
 
@@ -42,7 +42,7 @@
       }
     }
 
-    // Error messages
+    /* Error messages */
     &.i-whisper-message-danger {
       border-left-color: colors.$color-danger;
 
@@ -51,7 +51,7 @@
       }
     }
 
-    // Primary messages
+    /* Primary messages */
     &.i-whisper-message-primary {
       border-left-color: colors.$color-primary;
 
@@ -60,7 +60,7 @@
       }
     }
 
-    // Secondary messages
+    /* Secondary messages */
     &.i-whisper-message-secondary {
       border-left-color: colors.$color-secondary;
 
@@ -69,7 +69,7 @@
       }
     }
 
-    // Tertiary messages
+    /* Tertiary messages */
     &.i-whisper-message-tertiary {
       border-left-color: colors.$color-text-tertiary;
 
@@ -78,12 +78,24 @@
       }
     }
 
-    // Contrast messages
+    /* Contrast messages */
     &.i-whisper-message-contrast {
       border-left-color: colors.$color-contrast;
 
       .i-whisper-message-icon {
         color: colors.$color-contrast;
+      }
+    }
+  }
+
+  .i-whisper {
+    .i-whisper-message {
+      .i-whisper-message-close {
+        background: none;
+
+        &:hover {
+          background-color: color-mix(in srgb, colors.$color-shadow 10%, transparent);
+        }
       }
     }
   }

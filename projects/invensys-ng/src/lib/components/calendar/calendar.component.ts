@@ -8,14 +8,10 @@ import {
   ElementRef,
   ViewChild,
   AfterViewInit,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  FormsModule,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IInputText } from '../input-text/input-text.component';
 import { IButton } from '../button/button.component';
@@ -446,17 +442,9 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
    */
   navigatePrevious(): void {
     if (this.currentView === 'date') {
-      this.viewDate = new Date(
-        this.viewDate.getFullYear(),
-        this.viewDate.getMonth() - 1,
-        1,
-      );
+      this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
     } else if (this.currentView === 'month') {
-      this.viewDate = new Date(
-        this.viewDate.getFullYear() - 1,
-        this.viewDate.getMonth(),
-        1,
-      );
+      this.viewDate = new Date(this.viewDate.getFullYear() - 1, this.viewDate.getMonth(), 1);
     } else if (this.currentView === 'year') {
       const startYear = Math.floor(this.viewDate.getFullYear() / 10) * 10;
       this.viewDate = new Date(startYear - 10, 0, 1);
@@ -470,17 +458,9 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
    */
   navigateNext(): void {
     if (this.currentView === 'date') {
-      this.viewDate = new Date(
-        this.viewDate.getFullYear(),
-        this.viewDate.getMonth() + 1,
-        1,
-      );
+      this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
     } else if (this.currentView === 'month') {
-      this.viewDate = new Date(
-        this.viewDate.getFullYear() + 1,
-        this.viewDate.getMonth(),
-        1,
-      );
+      this.viewDate = new Date(this.viewDate.getFullYear() + 1, this.viewDate.getMonth(), 1);
     } else if (this.currentView === 'year') {
       const startYear = Math.floor(this.viewDate.getFullYear() / 10) * 10;
       this.viewDate = new Date(startYear + 10, 0, 1);
@@ -512,9 +492,7 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
    */
   getHeaderTitle(): string {
     if (this.currentView === 'date') {
-      return `${
-        this.months[this.viewDate.getMonth()]
-      } ${this.viewDate.getFullYear()}`;
+      return `${this.months[this.viewDate.getMonth()]} ${this.viewDate.getFullYear()}`;
     } else if (this.currentView === 'month') {
       return this.viewDate.getFullYear().toString();
     } else {
@@ -592,18 +570,12 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
     let formatted = this.dateFormat;
 
     // Day
-    formatted = formatted.replace(
-      'dd',
-      date.getDate().toString().padStart(2, '0'),
-    );
+    formatted = formatted.replace('dd', date.getDate().toString().padStart(2, '0'));
 
     // Month
     formatted = formatted.replace('MMMM', this.months[date.getMonth()]);
     formatted = formatted.replace('MMM', this.monthsShort[date.getMonth()]);
-    formatted = formatted.replace(
-      'mm',
-      (date.getMonth() + 1).toString().padStart(2, '0'),
-    );
+    formatted = formatted.replace('mm', (date.getMonth() + 1).toString().padStart(2, '0'));
 
     // Year
     formatted = formatted.replace('yy', date.getFullYear().toString());

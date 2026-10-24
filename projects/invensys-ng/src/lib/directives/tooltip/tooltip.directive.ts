@@ -70,11 +70,7 @@ export class TooltipDirective implements OnDestroy {
     }
 
     // Check for empty, null, or whitespace-only tooltip text
-    if (
-      !this.tooltipText ||
-      !this.tooltipText.trim() ||
-      this.tooltipComponent
-    ) {
+    if (!this.tooltipText || !this.tooltipText.trim() || this.tooltipComponent) {
       return;
     }
 
@@ -109,11 +105,7 @@ export class TooltipDirective implements OnDestroy {
 
     // Add a unique identifier to the tooltip element to avoid conflicts
     const tooltipId = `tooltip-${Math.random().toString(36).substr(2, 9)}`;
-    this.renderer.setAttribute(
-      this.tooltipComponent.location.nativeElement,
-      'id',
-      tooltipId,
-    );
+    this.renderer.setAttribute(this.tooltipComponent.location.nativeElement, 'id', tooltipId);
     this.renderer.setAttribute(
       this.tooltipComponent.location.nativeElement,
       'data-tooltip-for',
@@ -163,30 +155,18 @@ export class TooltipDirective implements OnDestroy {
     switch (this.tooltipPosition) {
       case 'above':
         top = hostRect.top - tooltipRect.height - gap + window.scrollY;
-        left =
-          hostRect.left +
-          (hostRect.width - tooltipRect.width) / 2 +
-          window.scrollX;
+        left = hostRect.left + (hostRect.width - tooltipRect.width) / 2 + window.scrollX;
         break;
       case 'below':
         top = hostRect.bottom + gap + window.scrollY;
-        left =
-          hostRect.left +
-          (hostRect.width - tooltipRect.width) / 2 +
-          window.scrollX;
+        left = hostRect.left + (hostRect.width - tooltipRect.width) / 2 + window.scrollX;
         break;
       case 'left':
-        top =
-          hostRect.top +
-          (hostRect.height - tooltipRect.height) / 2 +
-          window.scrollY;
+        top = hostRect.top + (hostRect.height - tooltipRect.height) / 2 + window.scrollY;
         left = hostRect.left - tooltipRect.width - gap + window.scrollX;
         break;
       case 'right':
-        top =
-          hostRect.top +
-          (hostRect.height - tooltipRect.height) / 2 +
-          window.scrollY;
+        top = hostRect.top + (hostRect.height - tooltipRect.height) / 2 + window.scrollY;
         left = hostRect.right + gap + window.scrollX;
         break;
     }

@@ -2,10 +2,7 @@ import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EMPTY } from 'rxjs';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-import {
-  IDynamicDialogConfig,
-  IDynamicDialogRef,
-} from '../dialog/services/dialog.interfaces';
+import { IDynamicDialogConfig, IDynamicDialogRef } from '../dialog/services/dialog.interfaces';
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
@@ -75,9 +72,7 @@ describe('ConfirmationDialogComponent', () => {
       fixture.detectChanges();
 
       const buttons = Array.from(
-        fixture.nativeElement.querySelectorAll(
-          'button',
-        ) as NodeListOf<HTMLButtonElement>,
+        fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>,
       ).map((button) => button.textContent?.trim());
       expect(buttons).toContain('Delete item');
       expect(buttons).toContain('Keep item');

@@ -10,7 +10,7 @@ import {
   QueryList,
   ChangeDetectorRef,
   inject,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import type { LegendItem } from 'chart.js';
@@ -189,7 +189,7 @@ const CHART_COLOR_PALETTE: Record<string, Record<string | number, string>> = {
  * ```html
  * <i-chart
  *   [charts]="myCharts"
- *   height="25rem">
+ *   height="300px">
  * </i-chart>
  * ```
  *
@@ -230,9 +230,9 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
 
   /**
    * Default height for charts
-   * @default '20rem'
+   * @default '240px'
    */
-  @Input() height = '20rem';
+  @Input() height = '240px';
 
   /**
    * Whether charts should be responsive
@@ -347,10 +347,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     this.canvasElements.forEach((canvasRef, index) => {
       const chartDisplay = this.chartDisplays[index];
       if (chartDisplay && canvasRef?.nativeElement) {
-        const chartInstance = this.createChartInstance(
-          canvasRef.nativeElement,
-          chartDisplay,
-        );
+        const chartInstance = this.createChartInstance(canvasRef.nativeElement, chartDisplay);
         this.chartInstances.push(chartInstance);
         this.updateLegendItems(index);
       }
@@ -374,10 +371,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    * Create a Chart.js instance
    * @internal
    */
-  private createChartInstance(
-    canvas: HTMLCanvasElement,
-    display: IChartDisplay,
-  ): Chart {
+  private createChartInstance(canvas: HTMLCanvasElement, display: IChartDisplay): Chart {
     const config: ChartConfiguration = {
       type: display.type,
       data: display.data as ChartConfiguration['data'],
@@ -391,10 +385,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    * Transform IChartData to IChartDisplay
    * @internal
    */
-  private transformToChartDisplay(
-    chart: IChartData,
-    index: number,
-  ): IChartDisplay {
+  private transformToChartDisplay(chart: IChartData, index: number): IChartDisplay {
     // Read resolved CSS variables from the host element
     // This picks up the values defined in chart.component.scss which map to the global theme
     const computedStyle = getComputedStyle(this.el.nativeElement);
@@ -421,9 +412,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
 
     const data = {
       labels: chart.labels,
-      datasets: chart.dataSets.map((dataset) =>
-        this.transformDataset(dataset, documentStyle),
-      ),
+      datasets: chart.dataSets.map((dataset) => this.transformDataset(dataset, documentStyle)),
     };
 
     return {
@@ -463,7 +452,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private getChartHeight(chartType: IChartTypeExtended): string {
     if (chartType === 'bar-large') {
-      return '40rem';
+      return '480px';
     }
     return this.height;
   }
@@ -607,10 +596,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    * Get scales configuration for stacked bar charts
    * @internal
    */
-  private getStackedBarScales(
-    textColorSecondary: string,
-    surfaceBorder: string,
-  ) {
+  private getStackedBarScales(textColorSecondary: string, surfaceBorder: string) {
     return {
       x: {
         stacked: true,
@@ -637,10 +623,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    * Transform dataset with resolved colors
    * @internal
    */
-  private transformDataset(
-    dataset: IChartDataSet,
-    documentStyle: CSSStyleDeclaration,
-  ) {
+  private transformDataset(dataset: IChartDataSet, documentStyle: CSSStyleDeclaration) {
     return {
       label: dataset.label,
       data: dataset.data,
@@ -648,9 +631,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
         const resolvedColor = this.resolveColor(color, documentStyle);
         return this.addTransparency(resolvedColor);
       }),
-      borderColor: dataset.backgroundColors.map((color) =>
-        this.resolveColor(color, documentStyle),
-      ),
+      borderColor: dataset.backgroundColors.map((color) => this.resolveColor(color, documentStyle)),
       borderWidth: 1,
     };
   }
@@ -663,16 +644,9 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    * - CSS custom properties (e.g., '--my-custom-color')
    * @internal
    */
-  private resolveColor(
-    color: string,
-    documentStyle: CSSStyleDeclaration,
-  ): string {
+  private resolveColor(color: string, documentStyle: CSSStyleDeclaration): string {
     // If it's already a hex color or rgb/rgba, return as-is
-    if (
-      color.startsWith('#') ||
-      color.startsWith('rgb(') ||
-      color.startsWith('rgba(')
-    ) {
+    if (color.startsWith('#') || color.startsWith('rgb(') || color.startsWith('rgba(')) {
       return color;
     }
 
@@ -740,9 +714,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     // If it's an rgb color, convert to rgba with transparency
     if (color.startsWith('rgb(')) {
       // Extract the rgb values and convert to rgba
-      const rgbMatch = color.match(
-        /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/,
-      );
+      const rgbMatch = color.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
       if (rgbMatch) {
         return `rgba(${rgbMatch[1]}, ${rgbMatch[2]}, ${rgbMatch[3]}, 0.75)`;
       }
@@ -773,10 +745,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     }
 
     if (item.datasetIndex !== undefined) {
-      chart.setDatasetVisibility(
-        item.datasetIndex,
-        !chart.isDatasetVisible(item.datasetIndex),
-      );
+      chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
     } else if (item.index !== undefined) {
       chart.toggleDataVisibility(item.index);
     }
@@ -791,8 +760,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
    */
   private updateLegendItems(chartIndex: number): void {
     const chart = this.chartInstances[chartIndex];
-    const generateLabels =
-      chart?.options.plugins?.legend?.labels?.generateLabels;
+    const generateLabels = chart?.options.plugins?.legend?.labels?.generateLabels;
 
     if (!chart || !generateLabels) {
       this.chartLegendItems[chartIndex] = [];
@@ -802,9 +770,7 @@ export class IChart implements AfterViewInit, OnDestroy, OnChanges {
     this.chartLegendItems[chartIndex] = generateLabels(chart).map((item) => ({
       ...item,
       fillStyleText: String(item.fillStyle ?? 'transparent'),
-      strokeStyleText: String(
-        item.strokeStyle ?? item.fillStyle ?? 'transparent',
-      ),
+      strokeStyleText: String(item.strokeStyle ?? item.fillStyle ?? 'transparent'),
     }));
     this.cdr.detectChanges();
   }

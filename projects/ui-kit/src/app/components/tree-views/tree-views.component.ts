@@ -1,28 +1,21 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import {
-  ITreeView,
-  ITreeNode,
-  IButton,
-} from '../../../../../invensys-ng/src/public-api';
+import { ITreeView, ITreeNode, IButton } from '../../../../../invensys-ng/src/public-api';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-tree-views',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     ITreeView,
     IButton,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    ],
+  ],
   templateUrl: './tree-views.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tree-views.component.scss',

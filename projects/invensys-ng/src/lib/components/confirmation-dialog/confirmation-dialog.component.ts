@@ -1,8 +1,5 @@
 import { Component, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  IDynamicDialogConfig,
-  IDynamicDialogRef,
-} from '../dialog/services/dialog.interfaces';
+import { IDynamicDialogConfig, IDynamicDialogRef } from '../dialog/services/dialog.interfaces';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IDialogActions } from '../dialog/inner/dialog-actions/dialog-actions.component';
 import { ISeverity } from '@shared/enums/IButtonSeverity';

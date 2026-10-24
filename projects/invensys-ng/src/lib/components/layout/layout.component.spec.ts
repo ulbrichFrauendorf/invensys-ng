@@ -42,19 +42,10 @@ describe('LayoutComponent', () => {
     document.documentElement.style.fontSize = previousFontSize;
   });
 
-  function touch(
-    type: string,
-    x: number,
-    y: number,
-    target: HTMLElement = container,
-  ) {
+  function touch(type: string, x: number, y: number, target: HTMLElement = container) {
     const touches =
-      type === 'touchend'
-        ? []
-        : [new Touch({ identifier: 1, target, clientX: x, clientY: y })];
-    target.dispatchEvent(
-      new TouchEvent(type, { touches, bubbles: true, cancelable: true }),
-    );
+      type === 'touchend' ? [] : [new Touch({ identifier: 1, target, clientX: x, clientY: y })];
+    target.dispatchEvent(new TouchEvent(type, { touches, bubbles: true, cancelable: true }));
   }
 
   it('renders the configured title and mobile layout', () => {

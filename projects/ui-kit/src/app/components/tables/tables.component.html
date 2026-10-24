@@ -1,59 +1,104 @@
-<app-demo-playground class="tables-demo" title="Table Component" description="Expand a category to view its detail rows. Use [detailRowBorders]=&quot;false&quot; to hide their bottom borders and condense their height.">
-  <ng-template appDemoOption="option-1" label="Sorting &amp; Filtering" [selected]="true" [sourceCode]="codeExamples.flat" [tsCode]="tsCodeExamples.flat">
-      <i-table
-        [grid]="flatGrid"
-        [sortable]="true"
-        [filterable]="true"
-        [globalFilter]="true"
-        [height]="'360px'"
-        [striped]="true"
-        (onSort)="onSort($event)"
-        (onFilter)="onFilter($event)"
-      ></i-table>
-    </ng-template>
+<app-demo-playground
+  class="tables-demo"
+  title="Tables"
+  eyebrow="Data Display"
+  description='Expand a category to view its detail rows. Use [detailRowBorders]="false" to hide their bottom borders and condense their height.'
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Sorting &amp; Filtering"
+    [selected]="true"
+    [sourceCode]="codeExamples.flat"
+    [tsCode]="tsCodeExamples.flat"
+  >
+    <label>
+      <input
+        type="checkbox"
+        [checked]="showBorder"
+        (change)="showBorder = $any($event.target).checked"
+      />
+      Show outer border and rounded corners
+    </label>
+    <i-table
+      [grid]="flatGrid"
+      [showBorder]="showBorder"
+      [sortable]="true"
+      [filterable]="true"
+      [globalFilter]="true"
+      [height]="'360px'"
+      [striped]="true"
+      (onSort)="onSort($event)"
+      (onFilter)="onFilter($event)"
+    ></i-table>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Selection &amp; Row Actions" [sourceCode]="codeExamples.actions" [tsCode]="tsCodeExamples.actions">
-      <i-table
-        [grid]="actionsGrid"
-        selectionMode="multiple"
-        dataKey="id"
-        [(selection)]="selectedProducts"
-        [hoverable]="true"
-        [height]="'360px'"
-        (onSelectionChange)="onSelectionChange($event)"
-      ></i-table>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Selection &amp; Row Actions"
+    [sourceCode]="codeExamples.actions"
+    [tsCode]="tsCodeExamples.actions"
+  >
+    <i-table
+      [grid]="actionsGrid"
+      selectionMode="multiple"
+      dataKey="id"
+      [(selection)]="selectedProducts"
+      [hoverable]="true"
+      [height]="'360px'"
+      (onSelectionChange)="onSelectionChange($event)"
+    ></i-table>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Expandable Detail Sub-Table" [sourceCode]="codeExamples.detail" [tsCode]="tsCodeExamples.detail">
-      <p>Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide their bottom borders and condense their height for easier viewing on mobile.</p>
-      <label>
-        <input type="checkbox" [checked]="showDetailRowBorders"
-          (change)="showDetailRowBorders = $any($event.target).checked" />
-        Show detail row borders
-      </label>
-      <i-table [grid]="detailGrid" [sortable]="true" [striped]="true"
-        [detailRowBorders]="showDetailRowBorders"></i-table>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Expandable Detail Sub-Table"
+    [sourceCode]="codeExamples.detail"
+    [tsCode]="tsCodeExamples.detail"
+  >
+    <p>
+      Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide
+      their bottom borders and condense their height for easier viewing on mobile.
+    </p>
+    <label>
+      <input
+        type="checkbox"
+        [checked]="showDetailRowBorders"
+        (change)="showDetailRowBorders = $any($event.target).checked"
+      />
+      Show detail row borders
+    </label>
+    <i-table
+      [grid]="detailGrid"
+      [sortable]="true"
+      [striped]="true"
+      [detailRowBorders]="showDetailRowBorders"
+    ></i-table>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Icon &amp; Chip Columns" [sourceCode]="codeExamples.icons" [tsCode]="tsCodeExamples.icons">
-      <i-table
-        [grid]="iconGrid"
-        [sortable]="true"
-        [height]="'360px'"
-        [hoverable]="true"
-      ></i-table>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-4"
+    label="Icon &amp; Chip Columns"
+    [sourceCode]="codeExamples.icons"
+    [tsCode]="tsCodeExamples.icons"
+  >
+    <i-table [grid]="iconGrid" [sortable]="true" [height]="'360px'" [hoverable]="true"></i-table>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Large Dataset — Virtual Scroll &amp; Download" [sourceCode]="codeExamples.large" [tsCode]="tsCodeExamples.large">
-      <i-table
-        [grid]="largeGrid"
-        [sortable]="true"
-        [globalFilter]="true"
-        [downloadable]="true"
-        [virtualScroll]="true"
-        downloadFormat="csv"
-        [height]="'400px'"
-        (onDownload)="onDownload($event)"
-      ></i-table>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-5"
+    label="Large Dataset — Virtual Scroll &amp; Download"
+    [sourceCode]="codeExamples.large"
+    [tsCode]="tsCodeExamples.large"
+  >
+    <i-table
+      [grid]="largeGrid"
+      [sortable]="true"
+      [globalFilter]="true"
+      [downloadable]="true"
+      [virtualScroll]="true"
+      downloadFormat="csv"
+      [height]="'400px'"
+      (onDownload)="onDownload($event)"
+    ></i-table>
+  </ng-template>
 </app-demo-playground>

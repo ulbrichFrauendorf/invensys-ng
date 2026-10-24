@@ -1,72 +1,134 @@
-<i-page-layout [headerText]="header()" [eyebrowText]="organizationName()"
-  [showHeader]="showHeader()" [style.--page-layout-padding]="spacing() || null">
+<i-page-layout
+  headerText="Page Layouts"
+  [sidebarPosition]="sidebarPosition()"
+  eyebrowText="Layout & Containers"
+  [showHeader]="showHeader()"
+  [style.--page-layout-padding]="spacing() || null"
+>
   @if (showSidebar()) {
     <section iPageSidebar class="demo-sidebar">
       <h2>Sidebar start</h2>
       <p>This entire panel must return when you scroll back to the top.</p>
-      <i-listbox title="Organizations" [options]="organizations" optionLabel="name"
-        [ngModel]="selectedOrganization()" (ngModelChange)="selectedOrganization.set($event)"
-        [multiple]="false" [filter]="true" [displayAsMenu]="true" />
-      <p class="sidebar-end">Sidebar end · 40 organizations</p>
+      <i-listbox
+        title="Organizations"
+        [options]="organizations"
+        optionLabel="name"
+        [ngModel]="selectedOrganization()"
+        (ngModelChange)="selectedOrganization.set($event)"
+        [multiple]="false"
+        [filter]="true"
+        [displayAsMenu]="true"
+      />
+      <div class="sidebar-end"><p>Sidebar end · 40 organizations</p></div>
     </section>
   }
 
   <div iPageHeaderActions>
+    <i-button
+      [text]="true"
+      severity="secondary"
+      [icon]="showCode() ? 'pi pi-eye' : 'pi pi-code'"
+      [ariaLabel]="showCode() ? 'View preview' : 'View code'"
+      (clicked)="showCode.set(!showCode())"
+    />
     <i-button icon="pi pi-check" (clicked)="saved.set(true)">Save</i-button>
   </div>
   <p iPageHeaderContent class="heading-description">
     {{ rows().length }} automations · Desktop and mobile scrolling playground
   </p>
 
-  <section class="demo-controls" aria-labelledby="scroll-checks">
-    <h2 id="scroll-checks">Scrolling checks</h2>
-    <p>On desktop, scroll the sidebar and content separately. On mobile, scroll past the
-      sidebar until this page header reaches the application bar. It should immediately snap
-      over the whole bar, then release when you scroll back past that point.
-      Rotate your device while scrolled. The sidebar title, search field, and end marker
-      should all remain reachable.</p>
-    <div class="control-fields">
-      <label><input type="checkbox" [ngModel]="showSidebar()" (ngModelChange)="showSidebar.set($event)" /> Show sidebar</label>
-      <label><input type="checkbox" [ngModel]="showHeader()" (ngModelChange)="showHeader.set($event)" /> Show sticky header</label>
-      <label><input type="checkbox" [ngModel]="longTitle()" (ngModelChange)="longTitle.set($event)" /> Long title</label>
-      <label>Page spacing
-        <select [ngModel]="spacing()" (ngModelChange)="spacing.set($event)">
-          <option value="">Responsive default</option>
-          <option value="0px">None</option>
-          <option value="8px">Compact · 8px</option>
-          <option value="32px">Roomy · 32px</option>
-        </select>
-      </label>
-      <label>Content length
-        <select [ngModel]="rowCount()" (ngModelChange)="rowCount.set($event)">
-          <option [ngValue]="3">Short · 3 rows</option>
-          <option [ngValue]="80">Long · 80 rows</option>
-          <option [ngValue]="200">Stress test · 200 rows</option>
-        </select>
-      </label>
-    </div>
-    <p role="status">{{ saved() ? 'Saved. The projected header action is working.' : 'Use Save in the sticky header to check its action.' }}</p>
-  </section>
+  @if (showCode()) {
+    <app-code-display [sourceCode]="sourceCode" [embedded]="true" />
+  } @else {
+    <section class="demo-controls" aria-labelledby="scroll-checks">
+      <h2 id="scroll-checks">Scrolling checks</h2>
+      <p>
+        On desktop, scroll the sidebar and content separately. On mobile, scroll past the sidebar
+        until this page header reaches the application bar. It should immediately snap over the
+        whole bar, then release when you scroll back past that point. Rotate your device while
+        scrolled. The sidebar title, search field, and end marker should all remain reachable.
+      </p>
+      <div class="control-fields">
+        <label
+          >Sidebar position
+          <select [ngModel]="sidebarPosition()" (ngModelChange)="sidebarPosition.set($event)">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+          </select>
+        </label>
+        <label
+          ><input
+            type="checkbox"
+            [ngModel]="showSidebar()"
+            (ngModelChange)="showSidebar.set($event)"
+          />
+          Show sidebar</label
+        >
+        <label
+          ><input
+            type="checkbox"
+            [ngModel]="showHeader()"
+            (ngModelChange)="showHeader.set($event)"
+          />
+          Show sticky header</label
+        >
+        <label
+          >Page spacing
+          <select [ngModel]="spacing()" (ngModelChange)="spacing.set($event)">
+            <option value="">Responsive default</option>
+            <option value="0px">None</option>
+            <option value="8px">Compact · 8px</option>
+            <option value="32px">Roomy · 32px</option>
+          </select>
+        </label>
+        <label
+          >Content length
+          <select [ngModel]="rowCount()" (ngModelChange)="rowCount.set($event)">
+            <option [ngValue]="3">Short · 3 rows</option>
+            <option [ngValue]="80">Long · 80 rows</option>
+            <option [ngValue]="200">Stress test · 200 rows</option>
+          </select>
+        </label>
+      </div>
+      <p role="status">
+        {{
+          saved()
+            ? 'Saved. The projected header action is working.'
+            : 'Use Save in the sticky header to check its action.'
+        }}
+      </p>
+    </section>
 
-  <section class="automation-list" aria-labelledby="automation-heading">
-    <h2 id="automation-heading">Automation list</h2>
-    @for (row of rows(); track row.id) {
-      <article class="automation-row">
-        <span class="row-number">{{ row.id }}</span>
-        <div><h3>{{ row.name }} {{ row.id }}</h3><p>{{ row.reports }} reports · {{ organizationName() }}</p></div>
-        <span class="status" [class.paused]="row.status === 'Paused'">{{ row.status }}</span>
-        <i-button [text]="true" icon="pi pi-play" [ariaLabel]="'Run automation ' + row.id" (clicked)="saved.set(true)" />
-      </article>
-    }
-    <p class="content-end">Content end · {{ rows().length }} rows. Scroll back to Sidebar start.</p>
-  </section>
+    <section class="automation-list" aria-labelledby="automation-heading">
+      <h2 id="automation-heading">Automation list</h2>
+      @for (row of rows(); track row.id) {
+        <article class="automation-row">
+          <span class="row-number">{{ row.id }}</span>
+          <div>
+            <h3>{{ row.name }} {{ row.id }}</h3>
+            <p>{{ row.reports }} reports · {{ organizationName() }}</p>
+          </div>
+          <span class="status" [class.paused]="row.status === 'Paused'">{{ row.status }}</span>
+          <i-button
+            [text]="true"
+            icon="pi pi-play"
+            [ariaLabel]="'Run automation ' + row.id"
+            (clicked)="saved.set(true)"
+          />
+        </article>
+      }
+      <div class="content-end">
+        <p>Content end · {{ rows().length }} rows. Scroll back to Sidebar start.</p>
+      </div>
+    </section>
 
-  <section class="usage">
-    <h2>Use in your application</h2>
-    <p>The shell adds no content padding. Each routed page chooses its spacing.
-      This component uses <code>--page-layout-padding</code> and
-      <code>--page-layout-sidebar-width</code>; other pages can use their own styles.
-      The mobile breakpoint matches the application navigation at 991px.</p>
-    <pre><code>{{ sourceCode }}</code></pre>
-  </section>
+    <section class="usage">
+      <h2>Use in your application</h2>
+      <p>
+        The shell adds no content padding. Each routed page chooses its spacing. This component uses
+        <code>--page-layout-padding</code> and <code>--page-layout-sidebar-width</code>; other pages
+        can use their own styles. The mobile breakpoint matches the application navigation at 991px.
+      </p>
+    </section>
+  }
 </i-page-layout>

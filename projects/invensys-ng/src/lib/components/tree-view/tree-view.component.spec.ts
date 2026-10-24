@@ -225,8 +225,7 @@ describe('ITreeView', () => {
 
     it('shows search by default and filters from the input control', async () => {
       await fixture.whenStable();
-      const input: HTMLInputElement =
-        fixture.nativeElement.querySelector('i-input-text input');
+      const input: HTMLInputElement = fixture.nativeElement.querySelector('i-input-text input');
       expect(input.getAttribute('aria-label')).toBe('Search tree');
       input.value = 'Child 1-1';
       input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -259,9 +258,7 @@ describe('ITreeView', () => {
       );
       expect(component.selection).toContain(component.value[0].children![0]);
       expect(component.selection).toContain(component.value[0]);
-      expect(component.isPartiallySelected(component.filteredValue[0])).toBe(
-        true,
-      );
+      expect(component.isPartiallySelected(component.filteredValue[0])).toBe(true);
     });
 
     it('keeps hidden selections when select all is toggled in search results', () => {
@@ -341,9 +338,7 @@ describe('ITreeView', () => {
       component.selectAllChecked = true;
       component.onSelectAllChange();
 
-      const allNodesCount = (component as any).flattenNodes(
-        component.filteredValue,
-      ).length;
+      const allNodesCount = (component as any).flattenNodes(component.filteredValue).length;
       expect((component.selection as ITreeNode[]).length).toBe(allNodesCount);
     });
 

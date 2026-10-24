@@ -1,308 +1,292 @@
-<app-demo-playground class="tooltips-demo" title="Tooltip Components" description="Contextual tooltip directive that can be applied to any HTML element. Provides helpful information on hover or focus with customizable positioning and timing.">
-  <ng-template appDemoOption="option-1" label="Tooltip Positions" [selected]="true" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
-      <div class="position-showcase">
-        <div class="position-grid">
-          <div class="position-cell top">
-            <i-button
-              iTooltip="Tooltip appears above the element"
-              tooltipPosition="above"
-              [severity]="'secondary'"
-              [outlined]="true"
-            >
-              <i class="pi pi-arrow-up"></i>
-              Above
-            </i-button>
-          </div>
-          <div class="position-cell left">
-            <i-button
-              iTooltip="Tooltip appears to the left"
-              tooltipPosition="left"
-              [severity]="'secondary'"
-              [outlined]="true"
-            >
-              <i class="pi pi-arrow-left"></i>
-              Left
-            </i-button>
-          </div>
-          <div class="position-cell center">
-            <div class="center-element">
-              <i class="pi pi-info-circle"></i>
-              <span>Hover buttons</span>
-            </div>
-          </div>
-          <div class="position-cell right">
-            <i-button
-              iTooltip="Tooltip appears to the right"
-              tooltipPosition="right"
-              [severity]="'secondary'"
-              [outlined]="true"
-            >
-              Right
-              <i class="pi pi-arrow-right"></i>
-            </i-button>
-          </div>
-          <div class="position-cell bottom">
-            <i-button
-              iTooltip="Tooltip appears below the element"
-              tooltipPosition="below"
-              [severity]="'secondary'"
-              [outlined]="true"
-            >
-              <i class="pi pi-arrow-down"></i>
-              Below
-            </i-button>
+<app-demo-playground
+  class="tooltips-demo"
+  title="Tooltips"
+  eyebrow="Overlays"
+  description="Contextual tooltip directive that can be applied to any HTML element. Provides helpful information on hover or focus with customizable positioning and timing."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Tooltip Positions"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+    [tsCode]="tsExamples.basic"
+  >
+    <div class="position-showcase">
+      <div class="position-grid">
+        <div class="position-cell top">
+          <i-button
+            iTooltip="Tooltip appears above the element"
+            tooltipPosition="above"
+            [severity]="'secondary'"
+            [outlined]="true"
+          >
+            <i class="pi pi-arrow-up"></i>
+            Above
+          </i-button>
+        </div>
+        <div class="position-cell left">
+          <i-button
+            iTooltip="Tooltip appears to the left"
+            tooltipPosition="left"
+            [severity]="'secondary'"
+            [outlined]="true"
+          >
+            <i class="pi pi-arrow-left"></i>
+            Left
+          </i-button>
+        </div>
+        <div class="position-cell center">
+          <div class="center-element">
+            <i class="pi pi-info-circle"></i>
+            <span>Hover buttons</span>
           </div>
         </div>
+        <div class="position-cell right">
+          <i-button
+            iTooltip="Tooltip appears to the right"
+            tooltipPosition="right"
+            [severity]="'secondary'"
+            [outlined]="true"
+          >
+            Right
+            <i class="pi pi-arrow-right"></i>
+          </i-button>
+        </div>
+        <div class="position-cell bottom">
+          <i-button
+            iTooltip="Tooltip appears below the element"
+            tooltipPosition="below"
+            [severity]="'secondary'"
+            [outlined]="true"
+          >
+            <i class="pi pi-arrow-down"></i>
+            Below
+          </i-button>
+        </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Icon Tooltips" [sourceCode]="codeExamples.icons">
-      <div class="icon-tooltips-section">
-        <p class="section-description">
-          Tooltips are perfect for icon-only buttons and informational icons.
-        </p>
-        <div class="icon-toolbar">
-          <button
-            class="icon-btn"
-            iTooltip="Create new document"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-file"></i>
-          </button>
-          <button
-            class="icon-btn"
-            iTooltip="Save changes"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-save"></i>
-          </button>
-          <button
-            class="icon-btn"
-            iTooltip="Edit content"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-pencil"></i>
-          </button>
-          <div class="toolbar-divider"></div>
-          <button
-            class="icon-btn"
-            iTooltip="Undo last action"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-undo"></i>
-          </button>
-          <button
-            class="icon-btn"
-            iTooltip="Redo last action"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-refresh"></i>
-          </button>
-          <div class="toolbar-divider"></div>
-          <button
-            class="icon-btn danger"
-            iTooltip="Delete selected items"
-            tooltipPosition="below"
-          >
-            <i class="pi pi-trash"></i>
-          </button>
-        </div>
+    <div class="icon-tooltips-section">
+      <p class="section-description">
+        Tooltips are perfect for icon-only buttons and informational icons.
+      </p>
+      <div class="icon-toolbar">
+        <button class="icon-btn" iTooltip="Create new document" tooltipPosition="below">
+          <i class="pi pi-file"></i>
+        </button>
+        <button class="icon-btn" iTooltip="Save changes" tooltipPosition="below">
+          <i class="pi pi-save"></i>
+        </button>
+        <button class="icon-btn" iTooltip="Edit content" tooltipPosition="below">
+          <i class="pi pi-pencil"></i>
+        </button>
+        <div class="toolbar-divider"></div>
+        <button class="icon-btn" iTooltip="Undo last action" tooltipPosition="below">
+          <i class="pi pi-undo"></i>
+        </button>
+        <button class="icon-btn" iTooltip="Redo last action" tooltipPosition="below">
+          <i class="pi pi-refresh"></i>
+        </button>
+        <div class="toolbar-divider"></div>
+        <button class="icon-btn danger" iTooltip="Delete selected items" tooltipPosition="below">
+          <i class="pi pi-trash"></i>
+        </button>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Form Field Helpers" [sourceCode]="codeExamples.formHelp">
-      <div class="form-help-section">
-        <p class="section-description">
-          Use tooltips to provide contextual help without cluttering the
-          interface.
-        </p>
-        <div class="form-field-demo">
-          <label class="field-label">
-            Email Address
-            <span
-              class="help-icon"
-              iTooltip="Enter your primary email address. We'll use this for account recovery and important notifications."
-              tooltipPosition="right"
-            >
-              <i class="pi pi-question-circle"></i>
-            </span>
-          </label>
-          <input
-            type="email"
-            class="demo-input"
-            placeholder="user@example.com"
-          />
-        </div>
-        <div class="form-field-demo">
-          <label class="field-label">
-            Password
-            <span
-              class="help-icon"
-              iTooltip="Password must be at least 8 characters with one uppercase letter, one number, and one special character."
-              tooltipPosition="right"
-            >
-              <i class="pi pi-question-circle"></i>
-            </span>
-          </label>
-          <input type="password" class="demo-input" placeholder="••••••••" />
-        </div>
-        <div class="form-field-demo">
-          <label class="field-label">
-            API Key
-            <span
-              class="help-icon warning"
-              iTooltip="Keep this key secure! Never share it publicly or commit it to version control."
-              tooltipPosition="right"
-            >
-              <i class="pi pi-exclamation-triangle"></i>
-            </span>
-          </label>
-          <input
-            type="text"
-            class="demo-input"
-            placeholder="sk-xxxx-xxxx-xxxx"
-          />
-        </div>
+  <ng-template
+    appDemoOption="option-3"
+    label="Form Field Helpers"
+    [sourceCode]="codeExamples.formHelp"
+  >
+    <div class="form-help-section">
+      <p class="section-description">
+        Use tooltips to provide contextual help without cluttering the interface.
+      </p>
+      <div class="form-field-demo">
+        <label class="field-label">
+          Email Address
+          <span
+            class="help-icon"
+            iTooltip="Enter your primary email address. We'll use this for account recovery and important notifications."
+            tooltipPosition="right"
+          >
+            <i class="pi pi-question-circle"></i>
+          </span>
+        </label>
+        <input type="email" class="demo-input" placeholder="user@example.com" />
       </div>
-    </ng-template>
+      <div class="form-field-demo">
+        <label class="field-label">
+          Password
+          <span
+            class="help-icon"
+            iTooltip="Password must be at least 8 characters with one uppercase letter, one number, and one special character."
+            tooltipPosition="right"
+          >
+            <i class="pi pi-question-circle"></i>
+          </span>
+        </label>
+        <input type="password" class="demo-input" placeholder="••••••••" />
+      </div>
+      <div class="form-field-demo">
+        <label class="field-label">
+          API Key
+          <span
+            class="help-icon warning"
+            iTooltip="Keep this key secure! Never share it publicly or commit it to version control."
+            tooltipPosition="right"
+          >
+            <i class="pi pi-exclamation-triangle"></i>
+          </span>
+        </label>
+        <input type="text" class="demo-input" placeholder="sk-xxxx-xxxx-xxxx" />
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Custom Timing" [sourceCode]="codeExamples.timing">
-      <div class="timing-section">
-        <p class="section-description">
-          Adjust tooltip delay for different use cases.
-        </p>
-        <div class="timing-examples">
-          <div class="timing-item">
-            <i-button
-              iTooltip="Instant feedback for quick actions"
-              tooltipPosition="above"
-              [tooltipDelay]="100"
-              [severity]="'info'"
-              [outlined]="true"
-            >
-              <i class="pi pi-bolt"></i>
-              Fast (100ms)
-            </i-button>
-            <span class="timing-label">Quick actions</span>
-          </div>
-          <div class="timing-item">
-            <i-button
-              iTooltip="Standard delay prevents accidental triggers"
-              tooltipPosition="above"
-              [tooltipDelay]="500"
-              [severity]="'primary'"
-            >
-              <i class="pi pi-clock"></i>
-              Normal (500ms)
-            </i-button>
-            <span class="timing-label">General use</span>
-          </div>
-          <div class="timing-item">
-            <i-button
-              iTooltip="Slower delay for less important hints"
-              tooltipPosition="above"
-              [tooltipDelay]="1000"
-              [severity]="'secondary'"
-              [text]="true"
-            >
-              <i class="pi pi-hourglass"></i>
-              Slow (1000ms)
-            </i-button>
-            <span class="timing-label">Subtle hints</span>
-          </div>
+    <div class="timing-section">
+      <p class="section-description">Adjust tooltip delay for different use cases.</p>
+      <div class="timing-examples">
+        <div class="timing-item">
+          <i-button
+            iTooltip="Instant feedback for quick actions"
+            tooltipPosition="above"
+            [tooltipDelay]="100"
+            [severity]="'info'"
+            [outlined]="true"
+          >
+            <i class="pi pi-bolt"></i>
+            Fast (100ms)
+          </i-button>
+          <span class="timing-label">Quick actions</span>
+        </div>
+        <div class="timing-item">
+          <i-button
+            iTooltip="Standard delay prevents accidental triggers"
+            tooltipPosition="above"
+            [tooltipDelay]="500"
+            [severity]="'primary'"
+          >
+            <i class="pi pi-clock"></i>
+            Normal (500ms)
+          </i-button>
+          <span class="timing-label">General use</span>
+        </div>
+        <div class="timing-item">
+          <i-button
+            iTooltip="Slower delay for less important hints"
+            tooltipPosition="above"
+            [tooltipDelay]="1000"
+            [severity]="'secondary'"
+            [text]="true"
+          >
+            <i class="pi pi-hourglass"></i>
+            Slow (1000ms)
+          </i-button>
+          <span class="timing-label">Subtle hints</span>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Truncated Text Tooltips" [sourceCode]="codeExamples.truncated">
-      <div class="truncated-section">
-        <p class="section-description">
-          Show full content when text is truncated due to space constraints.
-        </p>
-        <div class="truncated-examples">
-          <div
-            class="truncated-item"
-            iTooltip="project-requirements-document-v2-final-reviewed.pdf"
-            tooltipPosition="above"
+  <ng-template
+    appDemoOption="option-5"
+    label="Truncated Text Tooltips"
+    [sourceCode]="codeExamples.truncated"
+  >
+    <div class="truncated-section">
+      <p class="section-description">
+        Show full content when text is truncated due to space constraints.
+      </p>
+      <div class="truncated-examples">
+        <div
+          class="truncated-item"
+          iTooltip="project-requirements-document-v2-final-reviewed.pdf"
+          tooltipPosition="above"
+        >
+          <i class="pi pi-file-pdf file-icon"></i>
+          <span class="truncated-text">project-requirements-document-v2-final-reviewed.pdf</span>
+        </div>
+        <div
+          class="truncated-item"
+          iTooltip="Annual Budget Report Q4 2024 - Consolidated Financial Summary"
+          tooltipPosition="above"
+        >
+          <i class="pi pi-file-excel file-icon excel"></i>
+          <span class="truncated-text"
+            >Annual Budget Report Q4 2024 - Consolidated Financial Summary</span
           >
-            <i class="pi pi-file-pdf file-icon"></i>
-            <span class="truncated-text"
-              >project-requirements-document-v2-final-reviewed.pdf</span
-            >
-          </div>
-          <div
-            class="truncated-item"
-            iTooltip="Annual Budget Report Q4 2024 - Consolidated Financial Summary"
-            tooltipPosition="above"
+        </div>
+        <div
+          class="truncated-item"
+          iTooltip="Team Meeting Notes - Sprint Planning and Retrospective Discussion"
+          tooltipPosition="above"
+        >
+          <i class="pi pi-file file-icon"></i>
+          <span class="truncated-text"
+            >Team Meeting Notes - Sprint Planning and Retrospective Discussion</span
           >
-            <i class="pi pi-file-excel file-icon excel"></i>
-            <span class="truncated-text"
-              >Annual Budget Report Q4 2024 - Consolidated Financial
-              Summary</span
-            >
-          </div>
-          <div
-            class="truncated-item"
-            iTooltip="Team Meeting Notes - Sprint Planning and Retrospective Discussion"
-            tooltipPosition="above"
-          >
-            <i class="pi pi-file file-icon"></i>
-            <span class="truncated-text"
-              >Team Meeting Notes - Sprint Planning and Retrospective
-              Discussion</span
-            >
-          </div>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Status Indicators" [sourceCode]="codeExamples.status">
-      <div class="status-section">
-        <p class="section-description">
-          Tooltips provide additional context for status badges and indicators.
-        </p>
-        <div class="status-examples">
-          <div class="status-item">
-            <span
-              class="status-badge success"
-              iTooltip="All systems operational. Last checked 2 minutes ago."
-              tooltipPosition="above"
-            >
-              <i class="pi pi-check-circle"></i>
-              Online
-            </span>
-          </div>
-          <div class="status-item">
-            <span
-              class="status-badge warning"
-              iTooltip="High CPU usage detected. Consider scaling up resources."
-              tooltipPosition="above"
-            >
-              <i class="pi pi-exclamation-triangle"></i>
-              Warning
-            </span>
-          </div>
-          <div class="status-item">
-            <span
-              class="status-badge danger"
-              iTooltip="Service unavailable. Our team is investigating the issue."
-              tooltipPosition="above"
-            >
-              <i class="pi pi-times-circle"></i>
-              Offline
-            </span>
-          </div>
-          <div class="status-item">
-            <span
-              class="status-badge info"
-              iTooltip="Scheduled maintenance in progress. Expected completion: 30 min."
-              tooltipPosition="above"
-            >
-              <i class="pi pi-info-circle"></i>
-              Maintenance
-            </span>
-          </div>
+  <ng-template
+    appDemoOption="option-6"
+    label="Status Indicators"
+    [sourceCode]="codeExamples.status"
+  >
+    <div class="status-section">
+      <p class="section-description">
+        Tooltips provide additional context for status badges and indicators.
+      </p>
+      <div class="status-examples">
+        <div class="status-item">
+          <span
+            class="status-badge success"
+            iTooltip="All systems operational. Last checked 2 minutes ago."
+            tooltipPosition="above"
+          >
+            <i class="pi pi-check-circle"></i>
+            Online
+          </span>
+        </div>
+        <div class="status-item">
+          <span
+            class="status-badge warning"
+            iTooltip="High CPU usage detected. Consider scaling up resources."
+            tooltipPosition="above"
+          >
+            <i class="pi pi-exclamation-triangle"></i>
+            Warning
+          </span>
+        </div>
+        <div class="status-item">
+          <span
+            class="status-badge danger"
+            iTooltip="Service unavailable. Our team is investigating the issue."
+            tooltipPosition="above"
+          >
+            <i class="pi pi-times-circle"></i>
+            Offline
+          </span>
+        </div>
+        <div class="status-item">
+          <span
+            class="status-badge info"
+            iTooltip="Scheduled maintenance in progress. Expected completion: 30 min."
+            tooltipPosition="above"
+          >
+            <i class="pi pi-info-circle"></i>
+            Maintenance
+          </span>
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 </app-demo-playground>

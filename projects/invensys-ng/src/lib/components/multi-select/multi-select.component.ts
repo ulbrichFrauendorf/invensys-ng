@@ -16,7 +16,7 @@ import {
   InputSignal,
   input,
   WritableSignal,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import {
@@ -195,8 +195,9 @@ export class IMultiSelect implements ControlValueAccessor {
   onNativeChange(event: Event): void {
     if (this.disabled) return;
     const options = this.options() || [];
-    this.value = Array.from((event.target as HTMLSelectElement).selectedOptions)
-      .map(option => this.getOptionValue(options[Number(option.value)]));
+    this.value = Array.from((event.target as HTMLSelectElement).selectedOptions).map((option) =>
+      this.getOptionValue(options[Number(option.value)]),
+    );
     this.onChange.emit(this.value);
     this.onChangeCallback(this.value);
     this.onTouchedCallback();
@@ -251,7 +252,9 @@ export class IMultiSelect implements ControlValueAccessor {
   }
 
   focusControl(): void {
-    const native = this.dropdownRef?.nativeElement.querySelector('.i-native-select') as HTMLSelectElement | null;
+    const native = this.dropdownRef?.nativeElement.querySelector(
+      '.i-native-select',
+    ) as HTMLSelectElement | null;
     if (native?.getClientRects().length) native.focus();
     else this.triggerRef?.nativeElement.focus();
   }
@@ -260,12 +263,13 @@ export class IMultiSelect implements ControlValueAccessor {
     setTimeout(() => {
       if (!this.isOpen) return;
       if (this.filter) this.searchInputRef?.nativeElement.focus();
-      else this.panelRef?.nativeElement.querySelector<HTMLButtonElement>('[role="option"]')?.focus();
+      else
+        this.panelRef?.nativeElement.querySelector<HTMLButtonElement>('[role="option"]')?.focus();
     });
   }
 
   onPanelKeydown(event: KeyboardEvent): void {
-    handleOptionKeys(event, this.panelRef?.nativeElement, restore => this.closeDropdown(restore));
+    handleOptionKeys(event, this.panelRef?.nativeElement, (restore) => this.closeDropdown(restore));
   }
 
   /**
@@ -407,9 +411,7 @@ export class IMultiSelect implements ControlValueAccessor {
    */
   isOptionSelected(option: MultiSelectOption): boolean {
     const optionValue = this.getOptionValue(option);
-    return this.value.some(
-      (val) => JSON.stringify(val) === JSON.stringify(optionValue),
-    );
+    return this.value.some((val) => JSON.stringify(val) === JSON.stringify(optionValue));
   }
 
   /**
@@ -507,10 +509,7 @@ export class IMultiSelect implements ControlValueAccessor {
     if (selectedLabels.length <= this.maxSelectedLabels) {
       return selectedLabels.join(', ');
     } else {
-      return this.selectedItemsLabel.replace(
-        '{0}',
-        selectedLabels.length.toString(),
-      );
+      return this.selectedItemsLabel.replace('{0}', selectedLabels.length.toString());
     }
   }
 
@@ -606,8 +605,7 @@ export class IMultiSelect implements ControlValueAccessor {
     const key = this.firstErrorKey;
     if (!key) return null;
     const c = this.control;
-    if (this.errorMessages && this.errorMessages[key])
-      return this.errorMessages[key];
+    if (this.errorMessages && this.errorMessages[key]) return this.errorMessages[key];
     const err = c?.errors || {};
     switch (key) {
       case 'required':
@@ -619,9 +617,7 @@ export class IMultiSelect implements ControlValueAccessor {
       case 'maxlength':
         return `Maximum ${err['maxlength']?.requiredLength} items allowed`;
       default:
-        return err[key] && typeof err[key] === 'string'
-          ? err[key]
-          : 'Invalid selection';
+        return err[key] && typeof err[key] === 'string' ? err[key] : 'Invalid selection';
     }
   }
 }

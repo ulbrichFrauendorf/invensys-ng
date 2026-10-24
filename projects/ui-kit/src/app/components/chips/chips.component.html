@@ -1,133 +1,158 @@
-<app-demo-playground class="chips-demo" title="Chip Components" description="Chip components for displaying tags, selections, and other compact information. The i-chips component provides a flexible container with overflow handling, boxed styling, and close-all functionality.">
-  <ng-template appDemoOption="option-1" label="Basic Chips (i-chip)" [selected]="true" [sourceCode]="codeExamples.basicChips">
-      <div class="chip-examples">
-        @for (chip of chipExamples; track chip.label) {
-          <i-chip
-            [label]="chip.label"
-            [icon]="chip.icon"
-            [removable]="!!chip.removable"
-            (onRemove)="onChipRemove($event)"
-          />
-        }
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="chips-demo"
+  title="Chips"
+  eyebrow="Buttons &amp; Actions"
+  description="Chip components for displaying tags, selections, and other compact information. The i-chips component provides a flexible container with overflow handling, boxed styling, and close-all functionality."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Chips (i-chip)"
+    [selected]="true"
+    [sourceCode]="codeExamples.basicChips"
+  >
+    <div class="chip-examples">
+      @for (chip of chipExamples; track chip.label) {
+        <i-chip
+          [label]="chip.label"
+          [icon]="chip.icon"
+          [removable]="!!chip.removable"
+          (onRemove)="onChipRemove($event)"
+        />
+      }
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Chips Container (i-chips)" [sourceCode]="codeExamples.chipsContainer">
-      <div class="chips-container-demo">
-        <i-chips
-          [chips]="basicChips"
-          [removable]="true"
-          (removeChip)="onRemoveBasic($event)"
-        ></i-chips>
+  <ng-template
+    appDemoOption="option-2"
+    label="Chips Container (i-chips)"
+    [sourceCode]="codeExamples.chipsContainer"
+  >
+    <div class="chips-container-demo">
+      <i-chips
+        [chips]="basicChips"
+        [removable]="true"
+        (removeChip)="onRemoveBasic($event)"
+      ></i-chips>
 
-        @if (!basicChips.length) {
-          <p class="chips-container-empty">All chips removed.</p>
-        }
-      </div>
-    </ng-template>
+      @if (!basicChips.length) {
+        <p class="chips-container-empty">All chips removed.</p>
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Boxed Container" [sourceCode]="codeExamples.boxed">
-      <div class="chips-container-demo">
-        <i-chips
-          [chips]="boxedChips"
-          [boxed]="true"
-          [removable]="true"
-          (removeChip)="onRemoveBoxed($event)"
-        ></i-chips>
+    <div class="chips-container-demo">
+      <i-chips
+        [chips]="boxedChips"
+        [boxed]="true"
+        [removable]="true"
+        (removeChip)="onRemoveBoxed($event)"
+      ></i-chips>
 
-        <i-message [severity]="'info'"
-          >Boxed mode groups chips in a bordered collection without a label or dropdown arrow</i-message
-        >
+      <i-message [severity]="'info'"
+        >Boxed mode groups chips in a bordered collection without a label or dropdown
+        arrow</i-message
+      >
 
-        @if (!boxedChips.length) {
-          <p class="chips-container-empty">All chips removed.</p>
-        }
-      </div>
-    </ng-template>
+      @if (!boxedChips.length) {
+        <p class="chips-container-empty">All chips removed.</p>
+      }
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Collapsible Overflow" [sourceCode]="codeExamples.collapse">
-      <div class="chips-container-demo">
-        <i-chips
-          [chips]="collapsibleChips"
-          [removable]="true"
-          [collapseOnOverflow]="true"
-          [overflowLabel]="collapsibleSummary"
-          (removeChip)="onRemoveCollapsible($event)"
-        ></i-chips>
+  <ng-template
+    appDemoOption="option-4"
+    label="Collapsible Overflow"
+    [sourceCode]="codeExamples.collapse"
+  >
+    <div class="chips-container-demo">
+      <i-chips
+        [chips]="collapsibleChips"
+        [removable]="true"
+        [collapseOnOverflow]="true"
+        [overflowLabel]="collapsibleSummary"
+        (removeChip)="onRemoveCollapsible($event)"
+      ></i-chips>
 
-        <i-message [severity]="'info'"
-          >Resize the window to see the chips collapse into a summary
-          label</i-message
-        >
+      <i-message [severity]="'info'"
+        >Resize the window to see the chips collapse into a summary label</i-message
+      >
 
-        @if (!collapsibleChips.length) {
-          <p class="chips-container-empty">All filters removed.</p>
-        }
-      </div>
-    </ng-template>
+      @if (!collapsibleChips.length) {
+        <p class="chips-container-empty">All filters removed.</p>
+      }
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Close All Button" [sourceCode]="codeExamples.closeAll">
-      <div class="chips-container-demo">
-        <i-chips
-          [chips]="closeAllChips"
-          [removable]="true"
-          [allowCloseAll]="true"
-          (removeChip)="onRemoveCloseAll($event)"
-          (closedAll)="onClearCloseAll()"
-        ></i-chips>
+  <ng-template
+    appDemoOption="option-5"
+    label="Close All Button"
+    [sourceCode]="codeExamples.closeAll"
+  >
+    <div class="chips-container-demo">
+      <i-chips
+        [chips]="closeAllChips"
+        [removable]="true"
+        [allowCloseAll]="true"
+        (removeChip)="onRemoveCloseAll($event)"
+        (closedAll)="onClearCloseAll()"
+      ></i-chips>
 
-        <i-message [severity]="'info'"
-          >The close-all button allows clearing all chips at once</i-message
-        >
+      <i-message [severity]="'info'"
+        >The close-all button allows clearing all chips at once</i-message
+      >
 
-        @if (!closeAllChips.length) {
-          <p class="chips-container-empty">All filters cleared.</p>
-        }
-      </div>
-    </ng-template>
+      @if (!closeAllChips.length) {
+        <p class="chips-container-empty">All filters cleared.</p>
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Disabled State" [sourceCode]="codeExamples.disabled">
-      <div class="chips-container-demo">
-        <i-chips [chips]="disabledChips" [disabled]="true"></i-chips>
+    <div class="chips-container-demo">
+      <i-chips [chips]="disabledChips" [disabled]="true"></i-chips>
 
-        <i-message [severity]="'info'"
-          >Disabled chips are read-only and cannot be removed</i-message
-        >
-      </div>
-    </ng-template>
+      <i-message [severity]="'info'">Disabled chips are read-only and cannot be removed</i-message>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-7" label="Combined Features" [sourceCode]="codeExamples.combined">
-      <div class="chips-container-demo">
-        <i-chips
-          [chips]="combinedChips"
-          [boxed]="true"
-          [removable]="true"
-          [collapseOnOverflow]="true"
-          [allowCloseAll]="true"
-          [overflowLabel]="combinedSummary"
-          (removeChip)="onRemoveCombined($event)"
-          (closedAll)="onClearCombined()"
-        ></i-chips>
+  <ng-template
+    appDemoOption="option-7"
+    label="Combined Features"
+    [sourceCode]="codeExamples.combined"
+  >
+    <div class="chips-container-demo">
+      <i-chips
+        [chips]="combinedChips"
+        [boxed]="true"
+        [removable]="true"
+        [collapseOnOverflow]="true"
+        [allowCloseAll]="true"
+        [overflowLabel]="combinedSummary"
+        (removeChip)="onRemoveCombined($event)"
+        (closedAll)="onClearCombined()"
+      ></i-chips>
 
-        <i-message [severity]="'info'"
-          >Combines boxed styling, collapsible overflow, and close-all
-          button</i-message
-        >
+      <i-message [severity]="'info'"
+        >Combines boxed styling, collapsible overflow, and close-all button</i-message
+      >
 
-        @if (!combinedChips.length) {
-          <p class="chips-container-empty">All selections cleared.</p>
-        }
-      </div>
-    </ng-template>
+      @if (!combinedChips.length) {
+        <p class="chips-container-empty">All selections cleared.</p>
+      }
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-8" label="Reset Demo" sourceCodeEncoded="%3Cdiv%20class%3D%22chips-container-demo%22%3E%0A%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22reset-button%22%20(click)%3D%22onResetAll()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Reset%20All%20Demos%0A%20%20%20%20%20%20%20%20%3C%2Fbutton%3E%0A%20%20%20%20%20%20%20%20%3Ci-message%20%5Bseverity%5D%3D%22'warning'%22%0A%20%20%20%20%20%20%20%20%20%20%3EClick%20to%20restore%20all%20chip%20examples%20to%20their%20original%20state%3C%2Fi-message%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <div class="chips-container-demo">
-        <button class="reset-button" (click)="onResetAll()">
-          Reset All Demos
-        </button>
-        <i-message [severity]="'warning'"
-          >Click to restore all chip examples to their original state</i-message
-        >
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-8"
+    label="Reset Demo"
+    sourceCodeEncoded="%3Cdiv%20class%3D%22chips-container-demo%22%3E%0A%20%20%20%20%20%20%20%20%3Cbutton%20class%3D%22reset-button%22%20(click)%3D%22onResetAll()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Reset%20All%20Demos%0A%20%20%20%20%20%20%20%20%3C%2Fbutton%3E%0A%20%20%20%20%20%20%20%20%3Ci-message%20%5Bseverity%5D%3D%22'warning'%22%0A%20%20%20%20%20%20%20%20%20%20%3EClick%20to%20restore%20all%20chip%20examples%20to%20their%20original%20state%3C%2Fi-message%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <div class="chips-container-demo">
+      <button class="reset-button" (click)="onResetAll()">Reset All Demos</button>
+      <i-message [severity]="'warning'"
+        >Click to restore all chip examples to their original state</i-message
+      >
+    </div>
+  </ng-template>
 </app-demo-playground>

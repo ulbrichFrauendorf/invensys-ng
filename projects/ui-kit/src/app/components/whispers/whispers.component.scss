@@ -1,7 +1,8 @@
-@use "../shared-demo-styles.scss" as *;
+@use './whispers.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .whispers-demo {
-
   .whisper-container {
     position: relative;
     z-index: 1000;
@@ -17,27 +18,16 @@
     }
   }
 
-  .demo-section {
-    .section-description {
-      margin: 0 0 16px 0;
-      color: var(--text-secondary);
-      font-size: 1em;
-      line-height: 1.5;
-    }
-  }
-
   .setup-info {
-
     code {
-      background: var(--surface-hover, #f5f5f5);
       padding: 8px 12px;
       border-radius: 4px;
-      font-family: "Courier New", monospace;
+      font-family: 'Courier New', monospace;
       font-size: 13px;
-      color: var(--text-primary);
       display: block;
       margin-top: 8px;
     }
   }
-
 }
+
+@include theme.whispers-theme();

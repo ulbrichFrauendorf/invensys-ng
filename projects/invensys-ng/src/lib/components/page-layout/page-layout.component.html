@@ -1,4 +1,8 @@
-<div class="page-layout" [class.with-sidebar]="sidebar()">
+<div
+  class="page-layout"
+  [class.with-sidebar]="sidebar()"
+  [class.sidebar-right]="sidebarPosition() === 'right'"
+>
   @if (sidebar()) {
     <aside class="sidebar">
       <ng-content select="[iPageSidebar]" />
@@ -9,7 +13,7 @@
       <header class="page-header" #header>
         <div class="page-heading">
           @if (eyebrowText()) {
-            <p class="eyebrow">{{ eyebrowText() }}</p>
+            <div class="eyebrow">{{ eyebrowText() }}</div>
           }
           <h1>{{ headerText() }}</h1>
           <ng-content select="[iPageHeaderContent]" />

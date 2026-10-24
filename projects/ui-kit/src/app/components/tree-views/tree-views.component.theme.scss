@@ -1,0 +1,71 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin tree-views-theme() {
+  .demo-btn {
+    border-color: colors.$color-surface-border;
+    background: colors.$color-surface-card;
+    color: colors.$color-text-primary;
+
+    &:hover {
+      background: colors.$color-surface-hover;
+    }
+  }
+
+  .selection-info {
+    background: colors.$color-surface-elevated;
+    border-left-color: colors.$color-primary;
+
+    pre {
+      background: colors.$color-surface-elevated;
+    }
+
+    ul {
+      li {
+        small {
+          color: colors.$color-text-secondary;
+        }
+      }
+    }
+
+    details {
+      summary {
+        color: colors.$color-primary;
+
+        &:hover {
+          color: colors.$color-primary;
+        }
+      }
+    }
+  }
+
+  .api-section {
+    .api-table {
+      th,
+      td {
+        border-bottom-color: colors.$color-surface-border;
+      }
+
+      th {
+        background: colors.$color-surface-ground;
+        color: colors.$color-text-primary;
+      }
+
+      td:first-child {
+        color: colors.$color-warning;
+      }
+
+      td:nth-child(2) {
+        color: colors.$color-info;
+      }
+
+      td:nth-child(3) {
+        color: colors.$color-success;
+      }
+    }
+
+    .code-block {
+      background: colors.$color-surface-ground;
+      border-color: colors.$color-surface-border;
+    }
+  }
+}

@@ -1,10 +1,4 @@
-@use "../shared-demo-styles.scss" as *;
-
-.demo-description {
-  margin-bottom: 16px;
-  color: var(--text-color-secondary);
-  font-size: 14.4px;
-}
+@use '../shared-demo-styles.scss' as *;
 
 .chart-container {
   min-height: 300px;
@@ -18,11 +12,5 @@
   .chart-half {
     flex: 1;
     min-width: 280px;
-
-    h4 {
-      margin-bottom: 12px;
-      color: var(--color-primary);
-      font-weight: 600;
-    }
   }
 }

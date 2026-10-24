@@ -4,8 +4,8 @@
       <i class="pi pi-send"></i>
     </div>
     <p class="header-description">
-      Complete the form below to submit your request. All fields marked with
-      validation are required.
+      Complete the form below to submit your request. All fields marked with validation are
+      required.
     </p>
   </div>
 
@@ -57,24 +57,14 @@
   <div class="form-summary">
     <div class="summary-row">
       <span class="summary-label">Form Status:</span>
-      <span
-        class="summary-value"
-        [class.valid]="form.valid"
-        [class.invalid]="!form.valid"
-      >
-        <i
-          [class]="
-            form.valid ? 'pi pi-check-circle' : 'pi pi-exclamation-circle'
-          "
-        ></i>
-        {{ form.valid ? "Ready to submit" : "Please complete all fields" }}
+      <span class="summary-value" [class.valid]="form.valid" [class.invalid]="!form.valid">
+        <i [class]="form.valid ? 'pi pi-check-circle' : 'pi pi-exclamation-circle'"></i>
+        {{ form.valid ? 'Ready to submit' : 'Please complete all fields' }}
       </span>
     </div>
     <div class="summary-row">
       <span class="summary-label">Departments:</span>
-      <span class="summary-value"
-        >{{ (departmentOptions$ | async)?.length || 0 }} available</span
-      >
+      <span class="summary-value">{{ (departmentOptions$ | async)?.length || 0 }} available</span>
     </div>
   </div>
 </div>

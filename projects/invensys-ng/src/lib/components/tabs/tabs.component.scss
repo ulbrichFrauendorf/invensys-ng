@@ -1,5 +1,5 @@
-@use "./tabs.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
+@use './tabs.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
 
 @include theme.i-tabs-theme();
 
@@ -23,7 +23,11 @@
     }
   }
 
-  .i-tabs__tab-item { display: flex; align-items: center; flex-shrink: 0; }
+  .i-tabs__tab-item {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
 
   .i-tabs__tab {
     display: flex;
@@ -31,15 +35,14 @@
     gap: 8px;
     padding: 12px 20px;
     border: none;
-    background: transparent;
-    font-size: 1em;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     position: relative;
     white-space: nowrap;
 
     &--active::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
@@ -68,7 +71,6 @@
     .i-tabs__tab-label {
       display: inline-block;
     }
-
   }
 
   .i-tabs__tab-close {
@@ -81,7 +83,6 @@
     padding: 0;
     border: none;
     border-radius: 50%;
-    background: transparent;
     cursor: pointer;
 
     i {
@@ -104,10 +105,8 @@
       }
     }
   }
-}
 
-@media (max-width: 768px) {
-  .i-tabs {
+  @media (max-width: 768px) {
     .i-tabs__panels {
       .i-tabs__panel {
         padding-left: 0;
@@ -117,9 +116,27 @@
   }
 }
 
-:host, .i-tabs, .i-tabs__panels { min-width: 0; max-width: 100%; }
-.i-tabs .i-tabs__tab { flex-shrink: 0; }
-@media (pointer: coarse) {
-  .i-tabs .i-tabs__tab { min-height: 44px; }
-  .i-tabs .i-tabs__tab-close { width: 32px; height: 32px; margin-left: 4px; flex-shrink: 0; }
+:host,
+.i-tabs,
+.i-tabs__panels {
+  min-width: 0;
+  max-width: 100%;
+}
+.i-tabs {
+  .i-tabs__tab {
+    flex-shrink: 0;
+    @media (pointer: coarse) {
+      min-height: 44px;
+    }
+  }
+}
+.i-tabs {
+  .i-tabs__tab-close {
+    @media (pointer: coarse) {
+      width: 32px;
+      height: 32px;
+      margin-left: 4px;
+      flex-shrink: 0;
+    }
+  }
 }

@@ -1,9 +1,6 @@
 import { Input, Output, EventEmitter, Directive } from '@angular/core';
 
-export type DialogBreakpoints = Record<
-  string,
-  { width?: string; height?: string }
->;
+export type DialogBreakpoints = Record<string, { width?: string; height?: string }>;
 export type DialogContentStyle = Record<string, string | number>;
 
 @Directive()

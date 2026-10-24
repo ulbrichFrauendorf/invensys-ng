@@ -7,12 +7,8 @@ import { IOverlayPanel } from './overlay-panel.component';
 @Component({
   imports: [IOverlayPanel],
   template: `
-    <button #trigger (click)="panel.toggle($event, trigger)">
-      Toggle panel
-    </button>
-    <i-overlay-panel #panel [dismissable]="dismissable"
-      ><p>Panel content</p></i-overlay-panel
-    >
+    <button #trigger (click)="panel.toggle($event, trigger)">Toggle panel</button>
+    <i-overlay-panel #panel [dismissable]="dismissable"><p>Panel content</p></i-overlay-panel>
   `,
 })
 class OverlayHost {
@@ -31,18 +27,14 @@ describe('IOverlayPanel', () => {
     });
     fixture = TestBed.createComponent(OverlayHost);
     await fixture.whenStable();
-    panel = fixture.debugElement.query(
-      By.directive(IOverlayPanel),
-    ).componentInstance;
+    panel = fixture.debugElement.query(By.directive(IOverlayPanel)).componentInstance;
     trigger = fixture.nativeElement.querySelector('button');
   });
 
   async function open() {
     trigger.click();
     await fixture.whenStable();
-    return document.querySelector<HTMLElement>(
-      '.overlay-panel[role="dialog"]',
-    )!;
+    return document.querySelector<HTMLElement>('.overlay-panel[role="dialog"]')!;
   }
 
   it('starts hidden and dismissable', () => {
@@ -75,18 +67,14 @@ describe('IOverlayPanel', () => {
 
   it('closes through the close button', async () => {
     const dialog = await open();
-    dialog
-      .querySelector<HTMLButtonElement>('.overlay-panel-close button')!
-      .click();
+    dialog.querySelector<HTMLButtonElement>('.overlay-panel-close button')!.click();
     await fixture.whenStable();
     expect(panel.visible).toBe(false);
   });
 
   it('closes on Escape when dismissable', async () => {
     const dialog = await open();
-    dialog.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
-    );
+    dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await fixture.whenStable();
     expect(panel.visible).toBe(false);
   });
@@ -95,9 +83,7 @@ describe('IOverlayPanel', () => {
     fixture.componentInstance.dismissable = false;
     fixture.changeDetectorRef.markForCheck();
     const dialog = await open();
-    dialog.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
-    );
+    dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await fixture.whenStable();
     expect(panel.visible).toBe(true);
   });

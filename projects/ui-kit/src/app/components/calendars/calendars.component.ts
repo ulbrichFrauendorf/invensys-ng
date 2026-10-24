@@ -13,12 +13,14 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-calendars',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     ICalendar,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './calendars.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './calendars.component.scss',

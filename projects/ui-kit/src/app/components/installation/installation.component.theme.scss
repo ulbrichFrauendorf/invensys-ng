@@ -1,0 +1,63 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin installation-theme() {
+  .installation-demo {
+    .installation-content {
+      .info-box {
+        background-color: colors.$color-surface-section;
+        border-left-color: colors.$color-info;
+
+        i {
+          color: colors.$color-info;
+        }
+
+        span {
+          color: colors.$color-text-primary;
+        }
+      }
+
+      .success-box {
+        background-color: colors.$color-surface-section;
+        border-left-color: colors.$color-success;
+
+        i {
+          color: colors.$color-success;
+        }
+
+        span {
+          color: colors.$color-text-primary;
+        }
+      }
+
+      .requirements-list {
+        li {
+          border-bottom-color: colors.$color-surface-border;
+          color: colors.$color-text-primary;
+
+          strong {
+            color: colors.$color-primary;
+          }
+        }
+      }
+
+      .component-grid {
+        .component-item {
+          background-color: colors.$color-surface-section;
+          border-color: colors.$color-surface-border;
+
+          i {
+            color: colors.$color-primary;
+          }
+
+          span {
+            color: colors.$color-text-primary;
+          }
+
+          &:hover {
+            background-color: colors.$color-surface-hover;
+            border-color: colors.$color-primary;
+          }
+        }
+      }
+    }
+  }
+}

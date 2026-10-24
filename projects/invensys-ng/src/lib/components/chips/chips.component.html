@@ -1,15 +1,27 @@
 <div class="i-chips-wrapper" [class.i-chips-wrapper--error]="showError" [attr.id]="componentId">
-  <div class="i-chips-container" [class.i-chips-box]="boxed"
-    [class.i-chips--disabled]="disabled" [class.i-chips--empty]="!chips.length"
-    role="group" [attr.aria-label]="label || 'Selected items'">
-    <div class="i-chips-viewport" #chipsViewport
+  <div
+    class="i-chips-container"
+    [class.i-chips-box]="boxed"
+    [class.i-chips--disabled]="disabled"
+    [class.i-chips--empty]="!chips.length"
+    role="group"
+    [attr.aria-label]="label || 'Selected items'"
+  >
+    <div
+      class="i-chips-viewport"
+      #chipsViewport
       [class.i-chips-viewport--collapse]="collapseOnOverflow"
-      [class.i-chips-viewport--overflow]="collapseOnOverflow && chipsOverflow">
+      [class.i-chips-viewport--overflow]="collapseOnOverflow && chipsOverflow"
+    >
       <div class="i-chips-list" #chipsList>
         @for (chip of chips; track trackByValue($index, chip)) {
-          <i-chip [label]="chip.label" [icon]="chip.icon"
-            [removable]="chip.removable ?? removable" [disabled]="disabled || !!chip.disabled"
-            (onRemove)="onChipRemove(chip, $event)"></i-chip>
+          <i-chip
+            [label]="chip.label"
+            [icon]="chip.icon"
+            [removable]="chip.removable ?? removable"
+            [disabled]="disabled || !!chip.disabled"
+            (onRemove)="onChipRemove(chip, $event)"
+          ></i-chip>
         }
       </div>
       @if (collapseOnOverflow && chipsOverflow) {
@@ -17,8 +29,13 @@
       }
     </div>
     @if (allowCloseAll && chips.length > 0) {
-      <button type="button" class="i-chips-clear" aria-label="Clear all selected items"
-        [disabled]="disabled" (click)="onCloseAllClicked($event)">
+      <button
+        type="button"
+        class="i-chips-clear"
+        aria-label="Clear all selected items"
+        [disabled]="disabled"
+        (click)="onCloseAllClicked($event)"
+      >
         <i class="pi pi-times" aria-hidden="true"></i>
       </button>
     }

@@ -40,7 +40,16 @@ export interface EditorRule {
 @Component({
   selector: 'i-rule-editor',
   standalone: true,
-  imports: [FormsModule, CdkDrag, CdkDragHandle, CdkDropList, IButton, IInputText, ISelect, NoContentComponent],
+  imports: [
+    FormsModule,
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
+    IButton,
+    IInputText,
+    ISelect,
+    NoContentComponent,
+  ],
   templateUrl: './rule-editor.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './rule-editor.component.scss',
@@ -76,21 +85,16 @@ export class IRuleEditor {
     return this.fields.find((field) => field.key === rule.fieldKey) ?? null;
   }
   operator(rule: EditorRule): RuleEditorOperator | null {
-    return (
-      this.operators.find((operator) => operator.key === rule.operator) ?? null
-    );
+    return this.operators.find((operator) => operator.key === rule.operator) ?? null;
   }
   booleanValue(rule: EditorRule): { key: string; label: string } | null {
-    return (
-      this.booleanOptions.find((option) => option.key === rule.value) ?? null
-    );
+    return this.booleanOptions.find((option) => option.key === rule.value) ?? null;
   }
 
   operatorsFor(field: RuleEditorField | null): RuleEditorOperator[] {
     return field
       ? this.operators.filter(
-          (operator) =>
-            !operator.fieldTypes || operator.fieldTypes.includes(field.type),
+          (operator) => !operator.fieldTypes || operator.fieldTypes.includes(field.type),
         )
       : [];
   }
@@ -105,9 +109,7 @@ export class IRuleEditor {
 
   add(): void {
     if (!this.canAdd) return;
-    const field = this.fields.find(
-      (field) => this.operatorsFor(field).length > 0,
-    )!;
+    const field = this.fields.find((field) => this.operatorsFor(field).length > 0)!;
     this.rulesChange.emit([
       ...this.rules,
       {
@@ -136,26 +138,23 @@ export class IRuleEditor {
   }
 
   update(index: number, changes: Partial<EditorRule>): void {
-    if (
-      this.readonly ||
-      this.disabled ||
-      index < 0 ||
-      index >= this.rules.length
-    )
-      return;
+    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
     this.rulesChange.emit(
-      this.rules.map((rule, i) =>
-        i === index ? { ...rule, ...changes } : rule,
-      ),
+      this.rules.map((rule, i) => (i === index ? { ...rule, ...changes } : rule)),
     );
   }
 
   reorder(index: number, target: number): void {
     if (
-      this.readonly || this.disabled || index === target ||
-      index < 0 || index >= this.rules.length ||
-      target < 0 || target >= this.rules.length
-    ) return;
+      this.readonly ||
+      this.disabled ||
+      index === target ||
+      index < 0 ||
+      index >= this.rules.length ||
+      target < 0 ||
+      target >= this.rules.length
+    )
+      return;
     const rules = [...this.rules];
     moveItemInArray(rules, index, target);
     this.announcement = `${this.field(this.rules[index])?.label ?? 'Rule'} moved to position ${target + 1}.`;
@@ -163,13 +162,7 @@ export class IRuleEditor {
   }
 
   remove(index: number): void {
-    if (
-      this.readonly ||
-      this.disabled ||
-      index < 0 ||
-      index >= this.rules.length
-    )
-      return;
+    if (this.readonly || this.disabled || index < 0 || index >= this.rules.length) return;
     this.rulesChange.emit(this.rules.filter((_, i) => i !== index));
   }
 }

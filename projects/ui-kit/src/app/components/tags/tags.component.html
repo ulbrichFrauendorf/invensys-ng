@@ -1,90 +1,78 @@
-<app-demo-playground class="tags-demo" title="Tag Component" description="Compact badges for status indicators, labels, and categorisation. Supports all severity colours, optional icons, pill shape, and three sizes.">
-  <ng-template appDemoOption="option-1" label="Severities" [selected]="true" [sourceCode]="codeExamples.basic">
-      <div class="tag-row">
-        <i-tag value="Default" />
-        @for (s of severities; track s) {
-          <i-tag
-            [value]="s.charAt(0).toUpperCase() + s.slice(1)"
-            [severity]="s"
-          />
-        }
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="tags-demo"
+  title="Tags"
+  eyebrow="Buttons &amp; Actions"
+  description="Compact badges for status indicators, labels, and categorisation. Supports all severity colours, optional icons, pill shape, and three sizes."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Severities"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="tag-row">
+      <i-tag value="Default" />
+      @for (s of severities; track s) {
+        <i-tag [value]="s.charAt(0).toUpperCase() + s.slice(1)" [severity]="s" />
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-2" label="Rounded (Pill)" [sourceCode]="codeExamples.rounded">
-      <div class="tag-row">
-        <i-tag value="Default" [rounded]="true" />
-        @for (tag of roundedExamples; track tag.value) {
-          <i-tag
-            [value]="tag.value"
-            [severity]="tag.severity"
-            [rounded]="true"
-          />
-        }
-      </div>
-    </ng-template>
+    <div class="tag-row">
+      <i-tag value="Default" [rounded]="true" />
+      @for (tag of roundedExamples; track tag.value) {
+        <i-tag [value]="tag.value" [severity]="tag.severity" [rounded]="true" />
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="With Icons" [sourceCode]="codeExamples.withIcon">
-      <div class="tag-row">
-        @for (tag of iconExamples; track tag.value) {
-          <i-tag
-            [value]="tag.value"
-            [severity]="tag.severity"
-            [icon]="tag.icon"
-            [rounded]="true"
-          />
-        }
-      </div>
-    </ng-template>
+    <div class="tag-row">
+      @for (tag of iconExamples; track tag.value) {
+        <i-tag [value]="tag.value" [severity]="tag.severity" [icon]="tag.icon" [rounded]="true" />
+      }
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Sizes" [sourceCode]="codeExamples.sizes">
-      <div class="tag-row tag-row--align-center">
-        <i-tag value="Small" severity="primary" size="sm" />
-        <i-tag value="Medium" severity="primary" />
-        <i-tag value="Large" severity="primary" size="lg" />
-        <i-tag value="Small" severity="success" [rounded]="true" size="sm" />
-        <i-tag value="Medium" severity="success" [rounded]="true" />
-        <i-tag value="Large" severity="success" [rounded]="true" size="lg" />
-      </div>
-    </ng-template>
+    <div class="tag-row tag-row--align-center">
+      <i-tag value="Small" severity="primary" size="sm" />
+      <i-tag value="Medium" severity="primary" />
+      <i-tag value="Large" severity="primary" size="lg" />
+      <i-tag value="Small" severity="success" [rounded]="true" size="sm" />
+      <i-tag value="Medium" severity="success" [rounded]="true" />
+      <i-tag value="Large" severity="success" [rounded]="true" size="lg" />
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-5" label="Practical Usage" [sourceCode]="codeExamples.usage">
-      <div class="usage-examples">
-        <!-- Table-like rows -->
-        <div class="usage-row">
-          <span class="usage-label">Order #1042</span>
-          <i-tag value="Shipped" severity="info" [rounded]="true" />
-        </div>
-        <div class="usage-row">
-          <span class="usage-label">Order #1041</span>
-          <i-tag value="Delivered" severity="success" [rounded]="true" />
-        </div>
-        <div class="usage-row">
-          <span class="usage-label">Order #1040</span>
-          <i-tag value="Pending" severity="warning" [rounded]="true" />
-        </div>
-        <div class="usage-row">
-          <span class="usage-label">Order #1039</span>
-          <i-tag value="Cancelled" severity="danger" [rounded]="true" />
-        </div>
-        <div class="usage-row">
-          <span class="usage-label">Feature Flag</span>
-          <i-tag
-            value="Beta"
-            severity="secondary"
-            icon="pi pi-tag"
-            [rounded]="true"
-          />
-        </div>
-        <div class="usage-row">
-          <span class="usage-label">Form State</span>
-          <i-tag
-            value="Saved"
-            severity="success"
-            icon="pi pi-check"
-            [rounded]="true"
-          />
-        </div>
+    <div class="usage-examples">
+      <!-- Table-like rows -->
+      <div class="usage-row">
+        <span class="usage-label">Order #1042</span>
+        <i-tag value="Shipped" severity="info" [rounded]="true" />
       </div>
-    </ng-template>
+      <div class="usage-row">
+        <span class="usage-label">Order #1041</span>
+        <i-tag value="Delivered" severity="success" [rounded]="true" />
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Order #1040</span>
+        <i-tag value="Pending" severity="warning" [rounded]="true" />
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Order #1039</span>
+        <i-tag value="Cancelled" severity="danger" [rounded]="true" />
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Feature Flag</span>
+        <i-tag value="Beta" severity="secondary" icon="pi pi-tag" [rounded]="true" />
+      </div>
+      <div class="usage-row">
+        <span class="usage-label">Form State</span>
+        <i-tag value="Saved" severity="success" icon="pi pi-check" [rounded]="true" />
+      </div>
+    </div>
+  </ng-template>
 </app-demo-playground>

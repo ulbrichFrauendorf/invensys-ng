@@ -5,14 +5,11 @@ import {
   OnInit,
   inject,
   signal,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MenuModel, MenuItem } from '../models/menu.model';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  CLAIMS_CHECKER,
-  ClaimsChecker,
-} from '../services/claims-checker.token';
+import { CLAIMS_CHECKER, ClaimsChecker } from '../services/claims-checker.token';
 import { Subject, BehaviorSubject, forkJoin, of, Observable } from 'rxjs';
 import { takeUntil, switchMap, map } from 'rxjs/operators';
 
@@ -73,9 +70,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       return of(model);
     }
 
-    return forkJoin(claimChecks).pipe(
-      map((claimsMap) => this.filterModel(model, claimsMap)),
-    );
+    return forkJoin(claimChecks).pipe(map((claimsMap) => this.filterModel(model, claimsMap)));
   }
 
   private collectClaims(model: MenuModel[]): Set<string> {
@@ -106,10 +101,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  private filterModel(
-    model: MenuModel[],
-    claimsMap: { [key: string]: boolean },
-  ): MenuModel[] {
+  private filterModel(model: MenuModel[], claimsMap: { [key: string]: boolean }): MenuModel[] {
     return model
       .filter((group) => {
         // If group has a claim, check if user has access
@@ -125,10 +117,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       .filter((group) => group.items.length > 0); // Remove groups with no visible items
   }
 
-  private filterItems(
-    items: MenuItem[],
-    claimsMap: { [key: string]: boolean },
-  ): MenuItem[] {
+  private filterItems(items: MenuItem[], claimsMap: { [key: string]: boolean }): MenuItem[] {
     return items
       .filter((item) => {
         // If item has a claim, check if user has access

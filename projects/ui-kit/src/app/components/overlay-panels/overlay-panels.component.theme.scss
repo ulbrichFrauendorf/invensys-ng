@@ -1,0 +1,53 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin overlay-panels-theme() {
+  .centered {
+    .badge {
+      background-color: colors.$color-danger;
+      color: colors.$color-contrast-inverse;
+    }
+  }
+  .user-menu {
+    .user-header {
+      border-bottom-color: colors.$color-surface-border;
+
+      i {
+        color: colors.$color-primary;
+      }
+
+      strong {
+        color: colors.$color-text-primary;
+      }
+
+      .user-email {
+        color: colors.$color-text-secondary;
+      }
+    }
+  }
+
+  .notifications-panel {
+    .notification-item {
+      &:hover {
+        background-color: colors.$color-surface-hover;
+      }
+
+      i {
+        color: colors.$color-primary;
+      }
+
+      strong {
+        color: colors.$color-text-primary;
+      }
+
+      small {
+        color: colors.$color-text-tertiary;
+      }
+    }
+  }
+
+  .important-info {
+    i {
+      color: colors.$color-warning;
+    }
+  }
+}

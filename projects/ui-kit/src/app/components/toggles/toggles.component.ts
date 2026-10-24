@@ -1,10 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { IToggle } from '../../../../../invensys-ng/src/lib/components/toggle/toggle.component';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
 import { JsonPipe } from '@angular/common';
@@ -13,13 +8,15 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-toggles',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     IToggle,
     IButton,
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
-    ],
+  ],
   templateUrl: './toggles.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './toggles.component.scss',

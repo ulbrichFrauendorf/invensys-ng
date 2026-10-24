@@ -1,208 +1,252 @@
-<app-demo-playground class="layouts-demo" title="Layout Component" description="Complete application layout system with responsive sidebar navigation, customizable topbar, and built-in theme switching. Perfect for building admin dashboards and multi-page applications.">
-  <ng-template appDemoOption="option-1" label="Layout Preview" [selected]="true" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20component%20provides%20a%20complete%20application%20shell%20with%20sidebar%0A%20%20%20%20%20%20%20%20navigation%2C%20top%20bar%20with%20logo%20and%20actions%2C%20and%20a%20main%20content%20area.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22layout-preview%22%3E%0A%20%20%20%20%20%20%20%20%3Cimg%0A%20%20%20%20%20%20%20%20%20%20src%3D%22assets%2Fscreenshots%2Flayout-preview.png%22%0A%20%20%20%20%20%20%20%20%20%20alt%3D%22Layout%20Component%20Preview%22%0A%20%20%20%20%20%20%20%20%20%20class%3D%22preview-image%22%0A%20%20%20%20%20%20%20%20%20%20onerror%3D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20this.style.display%20%3D%20'none'%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20this.nextElementSibling.style.display%20%3D%20'block'%3B%0A%20%20%20%20%20%20%20%20%20%20%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22preview-placeholder%22%20style%3D%22display%3A%20none%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-layout%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-topbar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-logo%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-actions%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-body%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-sidebar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-content%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22placeholder-text-label%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20This%20is%20the%20current%20layout%20you're%20viewing!%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <p class="section-description">
-        The layout component provides a complete application shell with sidebar
-        navigation, top bar with logo and actions, and a main content area.
-      </p>
-      <div class="layout-preview">
-        <img
-          src="assets/screenshots/layout-preview.png"
-          alt="Layout Component Preview"
-          class="preview-image"
-          onerror="
-            this.style.display = 'none';
-            this.nextElementSibling.style.display = 'block';
-          "
-        />
-        <div class="preview-placeholder" style="display: none">
-          <div class="placeholder-layout">
-            <div class="placeholder-topbar">
-              <div class="placeholder-logo"></div>
-              <div class="placeholder-actions"></div>
+<app-demo-playground
+  class="layouts-demo"
+  title="Layouts"
+  eyebrow="Layout &amp; Containers"
+  description="Complete application layout system with responsive sidebar navigation, customizable topbar, and built-in theme switching. Perfect for building admin dashboards and multi-page applications."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Layout Preview"
+    [selected]="true"
+    sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20component%20provides%20a%20complete%20application%20shell%20with%20sidebar%0A%20%20%20%20%20%20%20%20navigation%2C%20top%20bar%20with%20logo%20and%20actions%2C%20and%20a%20main%20content%20area.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22layout-preview%22%3E%0A%20%20%20%20%20%20%20%20%3Cimg%0A%20%20%20%20%20%20%20%20%20%20src%3D%22assets%2Fscreenshots%2Flayout-preview.png%22%0A%20%20%20%20%20%20%20%20%20%20alt%3D%22Layout%20Component%20Preview%22%0A%20%20%20%20%20%20%20%20%20%20class%3D%22preview-image%22%0A%20%20%20%20%20%20%20%20%20%20onerror%3D%22%0A%20%20%20%20%20%20%20%20%20%20%20%20this.style.display%20%3D%20'none'%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20this.nextElementSibling.style.display%20%3D%20'block'%3B%0A%20%20%20%20%20%20%20%20%20%20%22%0A%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22preview-placeholder%22%20style%3D%22display%3A%20none%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-layout%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-topbar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-logo%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-actions%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-body%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-sidebar%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-menu-item%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-content%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22placeholder-text%22%3E%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22placeholder-text-label%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20This%20is%20the%20current%20layout%20you're%20viewing!%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <p class="section-description">
+      The layout component provides a complete application shell with sidebar navigation, top bar
+      with logo and actions, and a main content area.
+    </p>
+    <div class="layout-preview">
+      <img
+        src="assets/screenshots/layout-preview.png"
+        alt="Layout Component Preview"
+        class="preview-image"
+        onerror="
+          this.style.display = 'none';
+          this.nextElementSibling.style.display = 'block';
+        "
+      />
+      <div class="preview-placeholder">
+        <div class="placeholder-layout">
+          <div class="placeholder-topbar">
+            <div class="placeholder-logo"></div>
+            <div class="placeholder-actions"></div>
+          </div>
+          <div class="placeholder-body">
+            <div class="placeholder-sidebar">
+              <div class="placeholder-menu-item"></div>
+              <div class="placeholder-menu-item"></div>
+              <div class="placeholder-menu-item"></div>
             </div>
-            <div class="placeholder-body">
-              <div class="placeholder-sidebar">
-                <div class="placeholder-menu-item"></div>
-                <div class="placeholder-menu-item"></div>
-                <div class="placeholder-menu-item"></div>
-              </div>
-              <div class="placeholder-content">
-                <div class="placeholder-text"></div>
-                <div class="placeholder-text"></div>
-              </div>
+            <div class="placeholder-content">
+              <div class="placeholder-text"></div>
+              <div class="placeholder-text"></div>
             </div>
           </div>
-          <p class="placeholder-text-label">
-            This is the current layout you're viewing!
-          </p>
         </div>
+        <p class="placeholder-text-label">This is the current layout you're viewing!</p>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Installation" [sourceCode]="codeExamples.installation">
-      <p class="section-description">
-        Install the Invensys-NG library and import the layout components.
-      </p>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Installation"
+    [sourceCode]="codeExamples.installation"
+  >
+    <p class="section-description">
+      Install the Invensys-NG library and import the layout components.
+    </p>
+  </ng-template>
 
   <ng-template appDemoOption="option-3" label="Basic Usage" [sourceCode]="codeExamples.basic">
-      <p class="section-description">
-        Set up a basic layout with configuration and menu structure. The layout
-        component wraps your application and provides routing through
-        router-outlet.
-      </p>
-    </ng-template>
+    <p class="section-description">
+      Set up a basic layout with configuration and menu structure. The layout component wraps your
+      application and provides routing through router-outlet.
+    </p>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Layout Configuration" [sourceCode]="codeExamples.config">
-      <p class="section-description">
-        Configure your application name, logos for light and dark themes, and
-        toggle the theme switcher.
-      </p>
-      <div class="config-examples">
-        <div class="config-item">
-          <strong>Website Name:</strong> Displayed in the topbar
-        </div>
-        <div class="config-item">
-          <strong>Logo Light/Dark:</strong> Automatically switches based on
-          theme
-        </div>
-        <div class="config-item">
-          <strong>Theme Toggle:</strong> Built-in light/dark mode switcher
-        </div>
+  <ng-template
+    appDemoOption="option-4"
+    label="Layout Configuration"
+    [sourceCode]="codeExamples.config"
+  >
+    <p class="section-description">
+      Configure your application name, logos for light and dark themes, and toggle the theme
+      switcher.
+    </p>
+    <div class="config-examples">
+      <div class="config-item"><strong>Website Name:</strong> Displayed in the topbar</div>
+      <div class="config-item">
+        <strong>Logo Light/Dark:</strong> Automatically switches based on theme
       </div>
-    </ng-template>
+      <div class="config-item">
+        <strong>Theme Toggle:</strong> Built-in light/dark mode switcher
+      </div>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-5" label="Menu Configuration" [sourceCode]="codeExamples.menu">
-      <p class="section-description">
-        Define your navigation menu with groups, items, icons, and nested
-        sub-menus.
-      </p>
-    </ng-template>
+    <p class="section-description">
+      Define your navigation menu with groups, items, icons, and nested sub-menus.
+    </p>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Nested Menu Example" [sourceCode]="codeExamples.nestedMenu">
-      <p class="section-description">
-        Create multi-level navigation menus with separators between groups.
-      </p>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-6"
+    label="Nested Menu Example"
+    [sourceCode]="codeExamples.nestedMenu"
+  >
+    <p class="section-description">
+      Create multi-level navigation menus with separators between groups.
+    </p>
+  </ng-template>
 
-  <ng-template appDemoOption="option-7" label="Claims-Based Access Control" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Control%20menu%20visibility%20based%20on%20user%20permissions%20using%20claims.%20Perfect%0A%20%20%20%20%20%20%20%20for%20role-based%20access%20control%20in%20your%20application.%0A%20%20%20%20%20%20%3C%2Fp%3E">
-      <p class="section-description">
-        Control menu visibility based on user permissions using claims. Perfect
-        for role-based access control in your application.
-      </p>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-7"
+    label="Claims-Based Access Control"
+    sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20Control%20menu%20visibility%20based%20on%20user%20permissions%20using%20claims.%20Perfect%0A%20%20%20%20%20%20%20%20for%20role-based%20access%20control%20in%20your%20application.%0A%20%20%20%20%20%20%3C%2Fp%3E"
+  >
+    <p class="section-description">
+      Control menu visibility based on user permissions using claims. Perfect for role-based access
+      control in your application.
+    </p>
+  </ng-template>
 
-  <ng-template appDemoOption="option-8" label="Step 1: Create Claims Service" [sourceCode]="codeExamples.claimsService">
-      <p class="section-description">
-        Create a service that implements the
-        <code>ClaimsChecker</code> interface. This service determines which
-        claims the current user has.
-      </p>
-      <div class="usage-notes" style="margin-top: 16px">
-        <div class="note-item">
-          <i class="pi pi-lightbulb"></i>
-          <div>
-            In a real application, claims would typically come from your
-            authentication system (e.g., JWT tokens, OAuth, etc.)
-          </div>
+  <ng-template
+    appDemoOption="option-8"
+    label="Step 1: Create Claims Service"
+    [sourceCode]="codeExamples.claimsService"
+  >
+    <p class="section-description">
+      Create a service that implements the
+      <code>ClaimsChecker</code> interface. This service determines which claims the current user
+      has.
+    </p>
+    <div class="usage-notes">
+      <div class="note-item">
+        <i class="pi pi-lightbulb"></i>
+        <div>
+          In a real application, claims would typically come from your authentication system (e.g.,
+          JWT tokens, OAuth, etc.)
         </div>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-9" label="Step 2: Configure Provider" [sourceCode]="codeExamples.claimsProvider">
-      <p class="section-description">
-        Use the <code>provideMenuClaimsChecker()</code> function in your app
-        configuration. This is the recommended approach following Angular's
-        modern provider pattern.
-      </p>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-9"
+    label="Step 2: Configure Provider"
+    [sourceCode]="codeExamples.claimsProvider"
+  >
+    <p class="section-description">
+      Use the <code>provideMenuClaimsChecker()</code> function in your app configuration. This is
+      the recommended approach following Angular's modern provider pattern.
+    </p>
+  </ng-template>
 
-  <ng-template appDemoOption="option-10" label="Step 3: Add Claims to Menu" [sourceCode]="codeExamples.claimsMenu">
-      <p class="section-description">
-        Add <code>claim</code> properties to your menu items and groups. Items
-        without claims are always visible.
-      </p>
-      <div class="config-examples" style="margin-top: 16px">
-        <div class="config-item">
-          <strong>Item Claim:</strong> Controls visibility of individual menu
-          items
+  <ng-template
+    appDemoOption="option-10"
+    label="Step 3: Add Claims to Menu"
+    [sourceCode]="codeExamples.claimsMenu"
+  >
+    <p class="section-description">
+      Add <code>claim</code> properties to your menu items and groups. Items without claims are
+      always visible.
+    </p>
+    <div class="config-examples">
+      <div class="config-item">
+        <strong>Item Claim:</strong> Controls visibility of individual menu items
+      </div>
+      <div class="config-item">
+        <strong>Group Claim:</strong> Controls visibility of entire menu groups
+      </div>
+      <div class="config-item">
+        <strong>Nested Claims:</strong> Works with sub-menu items at any level
+      </div>
+      <div class="config-item">
+        <strong>Auto-Hide Empty Groups:</strong> Groups with no visible items are automatically
+        hidden
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-11"
+    label="Claims Checker Features"
+    sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20%3Ccode%3E%7B%7B%20codeExamples.claimsFeatures%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%3C%2Fp%3E"
+  >
+    <p class="section-description">
+      <code>{{ codeExamples.claimsFeatures }}</code>
+    </p>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-12"
+    label="Alternative: Manual Configuration"
+    [sourceCode]="codeExamples.claimsManual"
+  >
+    <p class="section-description">
+      If you prefer manual provider configuration instead of using
+      <code>provideMenuClaimsChecker()</code>, you can configure the
+      <code>CLAIMS_CHECKER</code> token directly.
+    </p>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-13"
+    label="Custom Topbar Actions"
+    [sourceCode]="codeExamples.customTopbar"
+  >
+    <p class="section-description">
+      Add custom buttons and actions to the top-right section of the topbar using the
+      <code>topbarActions</code> content projection.
+    </p>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-14"
+    label="Available Components"
+    sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20system%20is%20composed%20of%20the%20following%20components%3A%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22components-grid%22%3E%0A%20%20%20%20%20%20%20%20%40for%20(component%20of%20components%3B%20track%20component.name)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22component-item%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ccode%20class%3D%22component-name%22%3E%7B%7B%20component.name%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22component-description%22%3E%7B%7B%20component.description%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <p class="section-description">The layout system is composed of the following components:</p>
+    <div class="components-grid">
+      @for (component of components; track component.name) {
+        <div class="component-item">
+          <code class="component-name">{{ component.name }}</code>
+          <p class="component-description">{{ component.description }}</p>
         </div>
-        <div class="config-item">
-          <strong>Group Claim:</strong> Controls visibility of entire menu
-          groups
-        </div>
-        <div class="config-item">
-          <strong>Nested Claims:</strong> Works with sub-menu items at any level
-        </div>
-        <div class="config-item">
-          <strong>Auto-Hide Empty Groups:</strong> Groups with no visible items
-          are automatically hidden
+      }
+    </div>
+  </ng-template>
+  <ng-template appDemoUsage
+    ><div class="usage-notes">
+      <div class="note-item">
+        <i class="pi pi-info-circle"></i>
+        <div>
+          <strong>Router Outlet:</strong> The layout includes a router-outlet, so your routed
+          components will display in the main content area.
         </div>
       </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-11" label="Claims Checker Features" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20%3Ccode%3E%7B%7B%20codeExamples.claimsFeatures%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%3C%2Fp%3E">
-      <p class="section-description">
-        <code>{{ codeExamples.claimsFeatures }}</code>
-      </p>
-    </ng-template>
-
-  <ng-template appDemoOption="option-12" label="Alternative: Manual Configuration" [sourceCode]="codeExamples.claimsManual">
-      <p class="section-description">
-        If you prefer manual provider configuration instead of using
-        <code>provideMenuClaimsChecker()</code>, you can configure the
-        <code>CLAIMS_CHECKER</code> token directly.
-      </p>
-    </ng-template>
-
-  <ng-template appDemoOption="option-13" label="Custom Topbar Actions" [sourceCode]="codeExamples.customTopbar">
-      <p class="section-description">
-        Add custom buttons and actions to the top-right section of the topbar
-        using the <code>topbarActions</code> content projection.
-      </p>
-    </ng-template>
-
-  <ng-template appDemoOption="option-14" label="Available Components" sourceCodeEncoded="%3Cp%20class%3D%22section-description%22%3E%0A%20%20%20%20%20%20%20%20The%20layout%20system%20is%20composed%20of%20the%20following%20components%3A%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22components-grid%22%3E%0A%20%20%20%20%20%20%20%20%40for%20(component%20of%20components%3B%20track%20component.name)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22component-item%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ccode%20class%3D%22component-name%22%3E%7B%7B%20component.name%20%7D%7D%3C%2Fcode%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20class%3D%22component-description%22%3E%7B%7B%20component.description%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <p class="section-description">
-        The layout system is composed of the following components:
-      </p>
-      <div class="components-grid">
-        @for (component of components; track component.name) {
-          <div class="component-item">
-            <code class="component-name">{{ component.name }}</code>
-            <p class="component-description">{{ component.description }}</p>
-          </div>
-        }
+      <div class="note-item">
+        <i class="pi pi-info-circle"></i>
+        <div>
+          <strong>Theme Persistence:</strong> Theme selection is automatically saved to localStorage
+          and restored on page reload.
+        </div>
       </div>
-    </ng-template>
-  <ng-template appDemoUsage><div class="usage-notes">
-        <div class="note-item">
-          <i class="pi pi-info-circle"></i>
-          <div>
-            <strong>Router Outlet:</strong> The layout includes a router-outlet,
-            so your routed components will display in the main content area.
-          </div>
+      <div class="note-item">
+        <i class="pi pi-info-circle"></i>
+        <div>
+          <strong>Mobile Responsive:</strong> The sidebar automatically becomes an overlay on mobile
+          devices and closes after navigation.
         </div>
-        <div class="note-item">
-          <i class="pi pi-info-circle"></i>
-          <div>
-            <strong>Theme Persistence:</strong> Theme selection is automatically
-            saved to localStorage and restored on page reload.
-          </div>
+      </div>
+      <div class="note-item">
+        <i class="pi pi-info-circle"></i>
+        <div>
+          <strong>Active States:</strong> Menu items automatically highlight when their route is
+          active using Angular's routerLinkActive.
         </div>
-        <div class="note-item">
-          <i class="pi pi-info-circle"></i>
-          <div>
-            <strong>Mobile Responsive:</strong> The sidebar automatically
-            becomes an overlay on mobile devices and closes after navigation.
-          </div>
-        </div>
-        <div class="note-item">
-          <i class="pi pi-info-circle"></i>
-          <div>
-            <strong>Active States:</strong> Menu items automatically highlight
-            when their route is active using Angular's routerLinkActive.
-          </div>
-        </div>
-      </div></ng-template>
+      </div>
+    </div></ng-template
+  >
 </app-demo-playground>

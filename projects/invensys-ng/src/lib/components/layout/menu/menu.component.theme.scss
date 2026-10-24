@@ -1,0 +1,44 @@
+@use '../../../themes/color-variables.scss' as colors;
+
+@mixin i-menu-theme() {
+  .menu-group {
+    .menu-group-label {
+      color: colors.$color-contrast;
+    }
+
+    .menu-items {
+      .menu-item {
+        a {
+          color: colors.$color-text-secondary;
+          border-left-color: transparent;
+
+          &:hover {
+            background-color: colors.$color-surface-hover;
+          }
+
+          &.active {
+            background-color: colors.$color-surface-hover;
+            border-left-color: colors.$color-primary;
+          }
+        }
+
+        .submenu {
+          .submenu-item {
+            a {
+              color: colors.$color-text-tertiary;
+
+              &:hover {
+                background-color: colors.$color-surface-hover;
+                color: colors.$color-text-primary;
+              }
+
+              &.active {
+                color: colors.$color-primary;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

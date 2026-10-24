@@ -1,4 +1,4 @@
-@use "./confirmation-dialog.component.theme.scss" as theme;
+@use './confirmation-dialog.component.theme.scss' as theme;
 @include theme.i-confirmation-dialog-theme();
 
 .confirmation-dialog {
@@ -10,15 +10,13 @@
     align-items: flex-start;
     gap: 8px;
     padding: 20px 8px;
-
-    .confirmation-message {
-      margin: 0;
-      font-size: 1.1em;
-      line-height: 1.4;
-    }
   }
 }
 
-@media (max-width: 640px) {
-  :host, .confirmation-dialog { min-width: 0; max-width: 100%; }
+:host,
+.confirmation-dialog {
+  @media (max-width: 640px) {
+    min-width: 0;
+    max-width: 100%;
+  }
 }

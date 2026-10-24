@@ -17,9 +17,7 @@ describe('StructuredDataService', () => {
 
   afterEach(() => {
     // Clean up any scripts added during tests
-    const scripts = document.querySelectorAll(
-      'script[type="application/ld+json"]',
-    );
+    const scripts = document.querySelectorAll('script[type="application/ld+json"]');
     scripts.forEach((script) => script.remove());
   });
 
@@ -32,9 +30,7 @@ describe('StructuredDataService', () => {
       const schema = { '@context': 'https://schema.org', '@type': 'Thing' };
       service.insertSchema(schema, 'test-schema');
 
-      const script = document.getElementById(
-        'test-schema',
-      ) as HTMLScriptElement;
+      const script = document.getElementById('test-schema') as HTMLScriptElement;
       expect(script).toBeTruthy();
       expect(script.type).toBe('application/ld+json');
       expect(JSON.parse(script.textContent || '')).toEqual(schema);
@@ -102,10 +98,7 @@ describe('StructuredDataService', () => {
       }) as Record<string, unknown>;
 
       expect(schema['logo']).toBe('https://test.com/logo.png');
-      expect(schema['sameAs']).toEqual([
-        'https://twitter.com/test',
-        'https://facebook.com/test',
-      ]);
+      expect(schema['sameAs']).toEqual(['https://twitter.com/test', 'https://facebook.com/test']);
       expect(schema['contactPoint']).toEqual({
         '@type': 'ContactPoint',
         telephone: '+1-234-567-8900',
@@ -210,9 +203,7 @@ describe('StructuredDataService', () => {
 
       expect(schema['image']).toBe('https://test.com/image.png');
       expect(schema['dateModified']).toBe('2024-01-20');
-      expect((schema['author'] as Record<string, unknown>)['url']).toBe(
-        'https://test.com/author',
-      );
+      expect((schema['author'] as Record<string, unknown>)['url']).toBe('https://test.com/author');
     });
   });
 

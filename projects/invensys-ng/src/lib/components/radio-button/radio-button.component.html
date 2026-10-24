@@ -11,18 +11,11 @@
   [attr.tabindex]="disabled ? -1 : 0"
   (keydown.space)="$event.preventDefault(); select()"
 >
-  <div
-    class="i-radio-button"
-    [class.i-radio-button--checked]="checked"
-    aria-hidden="true"
-  >
+  <div class="i-radio-button" [class.i-radio-button--checked]="checked" aria-hidden="true">
     <span class="i-radio-button-icon"></span>
   </div>
   @if (label) {
-    <label
-      [id]="effectiveInputId + '-label'"
-      class="i-radio-button-label"
-    >
+    <label [id]="effectiveInputId + '-label'" class="i-radio-button-label">
       {{ label }}
     </label>
   }

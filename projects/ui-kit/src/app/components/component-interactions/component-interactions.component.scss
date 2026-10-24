@@ -1,8 +1,8 @@
+@use './component-interactions.component.theme.scss' as theme;
 .component-demo {
   .lead {
     font-size: 18px;
     margin-bottom: 32px;
-    color: var(--text-secondary);
   }
 
   .form-group {
@@ -13,32 +13,19 @@
     }
   }
 
-  .info-text {
-    margin-top: 16px;
-    padding: 12px;
-    background-color: var(--surface-100);
-    border-left: 3px solid var(--primary-color);
-    border-radius: 4px;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-
   .form-values {
     margin-top: 16px;
     padding: 16px;
-    background-color: var(--surface-50);
     border-radius: 4px;
 
     strong {
       display: block;
       margin-bottom: 8px;
-      color: var(--text-primary);
     }
 
     pre {
       margin: 0;
       padding: 8px;
-      background-color: var(--surface-0);
       border-radius: 4px;
       font-size: 14px;
       overflow-x: auto;
@@ -50,7 +37,8 @@
     gap: 16px;
     margin-top: 32px;
     padding-top: 24px;
-    border-top: 1px solid var(--surface-border);
+    border-top-width: 1px;
+    border-top-style: solid;
   }
 
   .panel-demo-grid {
@@ -63,3 +51,4 @@
     }
   }
 }
+@include theme.component-interactions-theme();

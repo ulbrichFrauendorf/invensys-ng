@@ -1,4 +1,4 @@
-@use "./color-variables.scss" as colors;
+@use './color-variables.scss' as colors;
 
 // Mixin for consistent thin scrollbars across components
 @mixin thin-scrollbar() {
@@ -72,10 +72,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: var(
-      --scrollbar-track-dropdown,
-      rgba(0, 0, 0, 0.05)
-    ); // Subtle track background
+    background: var(--scrollbar-track-dropdown, rgba(0, 0, 0, 0.05)); // Subtle track background
     border-radius: var(--scrollbar-radius, 3px);
     margin: 2px 0; // Add margin to prevent cutoff
   }

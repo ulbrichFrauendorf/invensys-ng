@@ -369,10 +369,13 @@ export class ITable {
   @Input() hoverable = true;
 
   /**
-   * Show borders
+   * Show cell grid borders
    * @default false
    */
   @Input() bordered = false;
+
+  /** Show the outer border and rounded corners. @default false */
+  @Input() showBorder = false;
 
   /** Show horizontal separators between body rows. @default true */
   @Input() rowBorders = true;
@@ -573,9 +576,7 @@ export class ITable {
       result = result.filter((row) =>
         cols.some((col) => {
           const value = this.getCellValue(row, col.field);
-          return String(value)
-            .toLowerCase()
-            .includes(globalFilter.toLowerCase());
+          return String(value).toLowerCase().includes(globalFilter.toLowerCase());
         }),
       );
     }
@@ -587,9 +588,7 @@ export class ITable {
       if (filterValue) {
         result = result.filter((row) => {
           const value = this.getCellValue(row, field);
-          return String(value)
-            .toLowerCase()
-            .includes(filterValue.toLowerCase());
+          return String(value).toLowerCase().includes(filterValue.toLowerCase());
         });
       }
     });
@@ -636,9 +635,7 @@ export class ITable {
       case 'date':
         try {
           const date = new Date(value);
-          return column.format
-            ? this.formatDate(date, column.format)
-            : date.toLocaleDateString();
+          return column.format ? this.formatDate(date, column.format) : date.toLocaleDateString();
         } catch {
           return String(value);
         }
@@ -790,9 +787,7 @@ export class ITable {
     if (this.sortField !== column.field) {
       return 'pi pi-sort-alt';
     }
-    return this.sortOrder === 'asc'
-      ? 'pi pi-sort-amount-up'
-      : 'pi pi-sort-amount-down';
+    return this.sortOrder === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down';
   }
 
   // ===== FILTERING METHODS =====
@@ -876,9 +871,7 @@ export class ITable {
       }
     } else if (this.selectionMode === 'multiple') {
       if (isSelected) {
-        this.selection = this.selection.filter(
-          (s) => !this.compareObjects(s, row),
-        );
+        this.selection = this.selection.filter((s) => !this.compareObjects(s, row));
         this.onRowUnselect.emit(row);
       } else {
         this.selection = [...this.selection, row];
@@ -924,9 +917,7 @@ export class ITable {
   areAllRowsSelected(): boolean {
     const data = this.processedData();
     if (data.length === 0) return false;
-    return data.every((d: any) =>
-      this.selection?.some((s: any) => this.compareObjects(s, d)),
-    );
+    return data.every((d: any) => this.selection?.some((s: any) => this.compareObjects(s, d)));
   }
 
   /**
@@ -1092,9 +1083,7 @@ export class ITable {
     const headers = columns
       .map((col) => {
         const escaped = String(col.header).replace(/"/g, '""');
-        return escaped.includes(',') ||
-          escaped.includes('"') ||
-          escaped.includes('\n')
+        return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n')
           ? `"${escaped}"`
           : escaped;
       })
@@ -1108,9 +1097,7 @@ export class ITable {
           const formatted = this.formatCellValue(value, col);
           // Escape quotes and wrap in quotes if contains comma or quote
           const escaped = String(formatted).replace(/"/g, '""');
-          return escaped.includes(',') ||
-            escaped.includes('"') ||
-            escaped.includes('\n')
+          return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n')
             ? `"${escaped}"`
             : escaped;
         })
@@ -1137,11 +1124,7 @@ export class ITable {
    * Creates and triggers file download
    * @internal
    */
-  private downloadFile(
-    content: string,
-    filename: string,
-    mimeType: string,
-  ): void {
+  private downloadFile(content: string, filename: string, mimeType: string): void {
     const blob = new Blob([content], { type: mimeType });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -1165,8 +1148,7 @@ export class ITable {
     this.resizeStartX = event.pageX;
 
     const widths = this.columnWidths();
-    this.resizeStartWidth =
-      widths[column.field] || this.getColumnDefaultWidth(column);
+    this.resizeStartWidth = widths[column.field] || this.getColumnDefaultWidth(column);
   }
 
   /**
@@ -1231,6 +1213,7 @@ export class ITable {
       'i-table--striped': this.striped,
       'i-table--hoverable': this.hoverable,
       'i-table--bordered': this.bordered,
+      'i-table--show-border': this.showBorder,
       'i-table--no-row-borders': !this.rowBorders,
       'i-table--no-detail-row-borders': !this.detailRowBorders,
       'i-table--small': this.size === 'small',

@@ -1,148 +1,137 @@
-<app-demo-playground class="overlay-panels-demo" title="Overlay Panel Component" description="A floating panel that positions itself relative to a trigger element with intelligent auto-positioning and collision detection. Perfect for user menus, notifications, actions, filters, and contextual information.">
-  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
-      <div class="demo-content centered">
-        <i-button (clicked)="basicPanel.toggle($event)">Show Info</i-button>
-        <i-overlay-panel #basicPanel>
-          <div class="info-content">
-            <h4>Quick Information</h4>
-            <p>
-              This panel automatically positions itself relative to the trigger
-              button.
-            </p>
-            <p>Try scrolling the page - the panel follows the button!</p>
-          </div>
-        </i-overlay-panel>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="overlay-panels-demo"
+  title="Overlay Panels"
+  eyebrow="Overlays"
+  description="A floating panel that positions itself relative to a trigger element with intelligent auto-positioning and collision detection. Perfect for user menus, notifications, actions, filters, and contextual information."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="demo-content centered">
+      <i-button (clicked)="basicPanel.toggle($event)">Show Info</i-button>
+      <i-overlay-panel #basicPanel>
+        <div class="info-content">
+          <h4>Quick Information</h4>
+          <p>This panel automatically positions itself relative to the trigger button.</p>
+          <p>Try scrolling the page - the panel follows the button!</p>
+        </div>
+      </i-overlay-panel>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="User Account Menu" [sourceCode]="codeExamples.userMenu">
-      <div class="demo-content centered">
-        <i-button
-          (clicked)="userPanel.toggle($event)"
-          icon="pi pi-user"
-          [text]="true"
-        >
-          John Doe
-        </i-button>
-        <i-overlay-panel #userPanel>
-          <div class="user-menu">
-            <div class="user-header">
-              <i class="pi pi-user-circle"></i>
-              <div>
-                <strong>John Doe</strong>
-                <div class="user-email">john.doe&#64;example.com</div>
-              </div>
-            </div>
-            <div class="menu-items">
-              <i-button [text]="true" [fluid]="true" icon="pi pi-user"
-                >Profile</i-button
-              >
-              <i-button [text]="true" [fluid]="true" icon="pi pi-cog"
-                >Settings</i-button
-              >
-              <i-button
-                [text]="true"
-                [fluid]="true"
-                icon="pi pi-sign-out"
-                severity="danger"
-                >Logout</i-button
-              >
+  <ng-template
+    appDemoOption="option-2"
+    label="User Account Menu"
+    [sourceCode]="codeExamples.userMenu"
+  >
+    <div class="demo-content centered">
+      <i-button (clicked)="userPanel.toggle($event)" icon="pi pi-user" [text]="true">
+        John Doe
+      </i-button>
+      <i-overlay-panel #userPanel>
+        <div class="user-menu">
+          <div class="user-header">
+            <i class="pi pi-user-circle"></i>
+            <div>
+              <strong>John Doe</strong>
+              <div class="user-email">john.doe&#64;example.com</div>
             </div>
           </div>
-        </i-overlay-panel>
-      </div>
-    </ng-template>
+          <div class="menu-items">
+            <i-button [text]="true" [fluid]="true" icon="pi pi-user">Profile</i-button>
+            <i-button [text]="true" [fluid]="true" icon="pi pi-cog">Settings</i-button>
+            <i-button [text]="true" [fluid]="true" icon="pi pi-sign-out" severity="danger"
+              >Logout</i-button
+            >
+          </div>
+        </div>
+      </i-overlay-panel>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Notifications Panel" [sourceCode]="codeExamples.notifications">
-      <div class="demo-content centered">
-        <i-button
-          (clicked)="notifPanel.toggle($event)"
-          icon="pi pi-bell"
-          [text]="true"
-          severity="secondary"
-        >
-          @if (notificationCount > 0) {
-            <span class="badge">{{ notificationCount }}</span>
-          }
-        </i-button>
-        <i-overlay-panel #notifPanel>
-          <div class="notifications-panel">
-            <h4>Notifications</h4>
-            <div class="notification-item">
-              <i class="pi pi-info-circle"></i>
-              <div>
-                <strong>System Update</strong>
-                <p>New version available</p>
-                <small>2 hours ago</small>
-              </div>
-            </div>
-            <div class="notification-item">
-              <i class="pi pi-check-circle"></i>
-              <div>
-                <strong>Task Completed</strong>
-                <p>Your report has been generated</p>
-                <small>1 day ago</small>
-              </div>
-            </div>
-            <div class="notification-item">
-              <i class="pi pi-envelope"></i>
-              <div>
-                <strong>New Message</strong>
-                <p>You have a new message from support</p>
-                <small>3 days ago</small>
-              </div>
+  <ng-template
+    appDemoOption="option-3"
+    label="Notifications Panel"
+    [sourceCode]="codeExamples.notifications"
+  >
+    <div class="demo-content centered">
+      <i-button
+        (clicked)="notifPanel.toggle($event)"
+        icon="pi pi-bell"
+        [text]="true"
+        severity="secondary"
+      >
+        @if (notificationCount > 0) {
+          <span class="badge">{{ notificationCount }}</span>
+        }
+      </i-button>
+      <i-overlay-panel #notifPanel>
+        <div class="notifications-panel">
+          <h4>Notifications</h4>
+          <div class="notification-item">
+            <i class="pi pi-info-circle"></i>
+            <div>
+              <strong>System Update</strong>
+              <p>New version available</p>
+              <small>2 hours ago</small>
             </div>
           </div>
-        </i-overlay-panel>
-      </div>
-    </ng-template>
+          <div class="notification-item">
+            <i class="pi pi-check-circle"></i>
+            <div>
+              <strong>Task Completed</strong>
+              <p>Your report has been generated</p>
+              <small>1 day ago</small>
+            </div>
+          </div>
+          <div class="notification-item">
+            <i class="pi pi-envelope"></i>
+            <div>
+              <strong>New Message</strong>
+              <p>You have a new message from support</p>
+              <small>3 days ago</small>
+            </div>
+          </div>
+        </div>
+      </i-overlay-panel>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Action Menu" [sourceCode]="codeExamples.actions">
-      <div class="demo-content centered">
-        <i-button
-          (clicked)="actionsPanel.toggle($event)"
-          icon="pi pi-ellipsis-v"
-          [text]="true"
-        />
-        <i-overlay-panel #actionsPanel>
-          <div class="actions-menu">
-            <i-button [text]="true" [fluid]="true" icon="pi pi-pencil"
-              >Edit</i-button
-            >
-            <i-button [text]="true" [fluid]="true" icon="pi pi-copy"
-              >Duplicate</i-button
-            >
-            <i-button [text]="true" [fluid]="true" icon="pi pi-download"
-              >Export</i-button
-            >
-            <i-button
-              [text]="true"
-              [fluid]="true"
-              icon="pi pi-trash"
-              severity="danger"
-              >Delete</i-button
-            >
-          </div>
-        </i-overlay-panel>
-      </div>
-    </ng-template>
+    <div class="demo-content centered">
+      <i-button (clicked)="actionsPanel.toggle($event)" icon="pi pi-ellipsis-v" [text]="true" />
+      <i-overlay-panel #actionsPanel>
+        <div class="actions-menu">
+          <i-button [text]="true" [fluid]="true" icon="pi pi-pencil">Edit</i-button>
+          <i-button [text]="true" [fluid]="true" icon="pi pi-copy">Duplicate</i-button>
+          <i-button [text]="true" [fluid]="true" icon="pi pi-download">Export</i-button>
+          <i-button [text]="true" [fluid]="true" icon="pi pi-trash" severity="danger"
+            >Delete</i-button
+          >
+        </div>
+      </i-overlay-panel>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Persistent Panel" [sourceCode]="codeExamples.persistent">
-      <div class="demo-content centered">
-        <i-button (clicked)="persistentPanel.toggle($event)"
-          >Important Info</i-button
-        >
-        <i-overlay-panel #persistentPanel [dismissable]="false">
-          <div class="important-info">
-            <i class="pi pi-exclamation-triangle"></i>
-            <h4>Important Notice</h4>
-            <p>This panel won't close when clicking outside.</p>
-            <p>You must explicitly close it using the button below.</p>
-            <i-button (clicked)="persistentPanel.hide()" [fluid]="true">
-              I Understand
-            </i-button>
-          </div>
-        </i-overlay-panel>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-5"
+    label="Persistent Panel"
+    [sourceCode]="codeExamples.persistent"
+  >
+    <div class="demo-content centered">
+      <i-button (clicked)="persistentPanel.toggle($event)">Important Info</i-button>
+      <i-overlay-panel #persistentPanel [dismissable]="false">
+        <div class="important-info">
+          <i class="pi pi-exclamation-triangle"></i>
+          <h4>Important Notice</h4>
+          <p>This panel won't close when clicking outside.</p>
+          <p>You must explicitly close it using the button below.</p>
+          <i-button (clicked)="persistentPanel.hide()" [fluid]="true"> I Understand </i-button>
+        </div>
+      </i-overlay-panel>
+    </div>
+  </ng-template>
 </app-demo-playground>

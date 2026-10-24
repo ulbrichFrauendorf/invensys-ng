@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-checkbox-theme() {
   .i-checkbox-wrapper {
@@ -23,16 +23,8 @@
         }
 
         &:hover {
-          border-color: color-mix(
-            in srgb,
-            colors.$color-primary 80%,
-            transparent
-          );
-          background-color: color-mix(
-            in srgb,
-            colors.$color-primary 80%,
-            transparent
-          );
+          border-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
+          background-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
         }
       }
     }
@@ -59,6 +51,20 @@
       .i-checkbox-label {
         color: colors.$color-text-disabled;
       }
+    }
+  }
+
+  .i-checkbox-wrapper {
+    .i-checkbox {
+      &:focus {
+        box-shadow: 0 0 0 2px color-mix(in srgb, colors.$color-primary 30%, transparent);
+      }
+    }
+  }
+
+  .i-checkbox-wrapper {
+    &:focus-visible {
+      outline-color: currentColor;
     }
   }
 }

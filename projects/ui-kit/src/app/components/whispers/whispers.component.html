@@ -1,106 +1,88 @@
-<app-demo-playground class="whispers-demo" title="Whisper Notifications" description="Toast-style notifications for user feedback and status updates. Similar to PrimeNG MessageService but with a creative whisper theme.">
-  <ng-template appDemoOption="option-1" label="Message Types" [selected]="true" [sourceCode]="codeExamples.buttons" [tsCode]="tsExamples.usage">
+<app-demo-playground
+  class="whispers-demo"
+  title="Whispers"
+  eyebrow="Feedback &amp; Messages"
+  description="Toast-style notifications for user feedback and status updates. Similar to PrimeNG MessageService but with a creative whisper theme."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Message Types"
+    [selected]="true"
+    [sourceCode]="codeExamples.buttons"
+    [tsCode]="tsExamples.usage"
+  >
+    <div class="button-grid">
+      <i-button severity="success" (clicked)="showSuccessMessage()" icon="check_circle">
+        Success
+      </i-button>
+      <i-button severity="info" (clicked)="showInfoMessage()" icon="info"> Info </i-button>
+      <i-button severity="warning" (clicked)="showWarningMessage()" icon="warning">
+        Warning
+      </i-button>
+      <i-button severity="danger" (clicked)="showErrorMessage()"> Error </i-button>
+      <i-button severity="primary" (clicked)="showStackingDemo()" icon="layers" [outlined]="true">
+        Test Stacking
+      </i-button>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-2"
+    label="Key-based Messages"
+    [sourceCode]="codeExamples.keyed"
+    [tsCode]="tsExamples.advanced"
+  >
+    <div class="demo-section">
+      <p class="section-description">
+        Messages with keys will show in specific whisper containers:
+      </p>
       <div class="button-grid">
-        <i-button
-          severity="success"
-          (clicked)="showSuccessMessage()"
-          icon="check_circle"
-        >
-          Success
+        <i-button severity="info" (clicked)="showMultipleMessages()" icon="queue">
+          Multiple Messages
         </i-button>
-        <i-button severity="info" (clicked)="showInfoMessage()" icon="info">
-          Info
+        <i-button severity="secondary" (clicked)="showLeftMessage()" icon="arrow_back">
+          Left Message
         </i-button>
-        <i-button
-          severity="warning"
-          (clicked)="showWarningMessage()"
-          icon="warning"
-        >
-          Warning
+        <i-button severity="secondary" (clicked)="showRightMessage()" icon="arrow_forward">
+          Right Message
         </i-button>
-        <i-button severity="danger" (clicked)="showErrorMessage()">
-          Error
+        <i-button severity="primary" (clicked)="showGlobalMessage()" icon="public">
+          Global Message
         </i-button>
         <i-button
-          severity="primary"
-          (clicked)="showStackingDemo()"
-          icon="layers"
+          severity="contrast"
+          (clicked)="clearAllMessages()"
+          icon="clear_all"
           [outlined]="true"
         >
-          Test Stacking
+          Clear All
         </i-button>
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Key-based Messages" [sourceCode]="codeExamples.keyed" [tsCode]="tsExamples.advanced">
-      <div class="demo-section">
-        <p class="section-description">
-          Messages with keys will show in specific whisper containers:
-        </p>
-        <div class="button-grid">
-          <i-button
-            severity="info"
-            (clicked)="showMultipleMessages()"
-            icon="queue"
-          >
-            Multiple Messages
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="showLeftMessage()"
-            icon="arrow_back"
-          >
-            Left Message
-          </i-button>
-          <i-button
-            severity="secondary"
-            (clicked)="showRightMessage()"
-            icon="arrow_forward"
-          >
-            Right Message
-          </i-button>
-          <i-button
-            severity="primary"
-            (clicked)="showGlobalMessage()"
-            icon="public"
-          >
-            Global Message
-          </i-button>
-          <i-button
-            severity="contrast"
-            (clicked)="clearAllMessages()"
-            icon="clear_all"
-            [outlined]="true"
-          >
-            Clear All
-          </i-button>
-        </div>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Real-world Example"
+    [sourceCode]="codeExamples.basic"
+    [tsCode]="tsExamples.basic"
+  >
+    <div class="demo-section">
+      <p class="section-description">Simulate a user link action like the one in your request:</p>
+      <i-button severity="success" (clicked)="simulateUserLinkAction()" icon="link" [raised]="true">
+        Link Users (Simulated)
+      </i-button>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Real-world Example" [sourceCode]="codeExamples.basic" [tsCode]="tsExamples.basic">
-      <div class="demo-section">
-        <p class="section-description">
-          Simulate a user link action like the one in your request:
-        </p>
-        <i-button
-          severity="success"
-          (clicked)="simulateUserLinkAction()"
-          icon="link"
-          [raised]="true"
-        >
-          Link Users (Simulated)
-        </i-button>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-5" label="Setup &amp; Positioning" [sourceCode]="codeExamples.basic">
-      <div class="setup-info">
-        <p>
-          Add the whisper component to your app.component.html template for
-          global notifications:
-        </p>
-        <code>&lt;i-whisper position="top-right"&gt;&lt;/i-whisper&gt;</code>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-5"
+    label="Setup &amp; Positioning"
+    [sourceCode]="codeExamples.basic"
+  >
+    <div class="setup-info">
+      <p>Add the whisper component to your app.component.html template for global notifications:</p>
+      <code>&lt;i-whisper position="top-right"&gt;&lt;/i-whisper&gt;</code>
+    </div>
+  </ng-template>
 </app-demo-playground>

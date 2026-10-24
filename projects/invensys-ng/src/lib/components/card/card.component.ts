@@ -4,7 +4,7 @@ import {
   Output,
   EventEmitter,
   HostBinding,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { IButton } from '../button/button.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';

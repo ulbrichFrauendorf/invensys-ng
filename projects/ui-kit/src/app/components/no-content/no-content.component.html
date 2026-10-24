@@ -1,131 +1,137 @@
-<app-demo-playground class="no-content-demo" title="No Content Component" description="A versatile empty state component for displaying friendly messages when there's no data to show. Perfect for tables, lists, search results, and more.">
-  <ng-template appDemoOption="option-1" label="Basic Usage" [selected]="true" [sourceCode]="codeExamples.basic">
-      <p class="demo-description">
-        The component with default settings shows an inbox icon and "No content
-        available" message.
-      </p>
-      <div class="example-container">
-        <i-no-content></i-no-content>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="no-content-demo"
+  title="No Content"
+  eyebrow="Overlays"
+  description="A versatile empty state component for displaying friendly messages when there's no data to show. Perfect for tables, lists, search results, and more."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Usage"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <p class="demo-description">
+      The component with default settings shows an inbox icon and "No content available" message.
+    </p>
+    <div class="example-container">
+      <i-no-content></i-no-content>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Custom Message" [sourceCode]="codeExamples.customMessage">
-      <p class="demo-description">
-        Customize the message to provide context-specific feedback.
-      </p>
-      <div class="example-container">
-        <i-no-content [message]="'No products found'"></i-no-content>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Custom Message"
+    [sourceCode]="codeExamples.customMessage"
+  >
+    <p class="demo-description">Customize the message to provide context-specific feedback.</p>
+    <div class="example-container">
+      <i-no-content [message]="'No products found'"></i-no-content>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Custom Icon &amp; Message" [sourceCode]="codeExamples.customIcon">
-      <p class="demo-description">
-        Customize both the icon and message for different scenarios.
-      </p>
-      <div class="example-container">
-        <i-no-content
-          [icon]="'pi pi-search'"
-          [message]="'No search results'"
-        ></i-no-content>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Custom Icon &amp; Message"
+    [sourceCode]="codeExamples.customIcon"
+  >
+    <p class="demo-description">Customize both the icon and message for different scenarios.</p>
+    <div class="example-container">
+      <i-no-content [icon]="'pi pi-search'" [message]="'No search results'"></i-no-content>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Common Use Cases" sourceCodeEncoded="%3Cp%20class%3D%22demo-description%22%3E%0A%20%20%20%20%20%20%20%20Examples%20of%20different%20scenarios%20where%20the%20no-content%20component%20provides%0A%20%20%20%20%20%20%20%20value.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22use-cases-grid%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EEmpty%20List%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-inbox'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20items%20to%20display'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ESearch%20Results%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-search'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20results%20found'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ENotifications%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-bell'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20new%20notifications'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EShopping%20Cart%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-shopping-cart'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'Your%20cart%20is%20empty'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EMessages%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-envelope'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20messages'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EFiles%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-file'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20files%20uploaded'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <p class="demo-description">
-        Examples of different scenarios where the no-content component provides
-        value.
-      </p>
-      <div class="use-cases-grid">
-        <div class="use-case">
-          <h4>Empty List</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-inbox'"
-              [message]="'No items to display'"
-            ></i-no-content>
-          </div>
-        </div>
-
-        <div class="use-case">
-          <h4>Search Results</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-search'"
-              [message]="'No results found'"
-            ></i-no-content>
-          </div>
-        </div>
-
-        <div class="use-case">
-          <h4>Notifications</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-bell'"
-              [message]="'No new notifications'"
-            ></i-no-content>
-          </div>
-        </div>
-
-        <div class="use-case">
-          <h4>Shopping Cart</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-shopping-cart'"
-              [message]="'Your cart is empty'"
-            ></i-no-content>
-          </div>
-        </div>
-
-        <div class="use-case">
-          <h4>Messages</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-envelope'"
-              [message]="'No messages'"
-            ></i-no-content>
-          </div>
-        </div>
-
-        <div class="use-case">
-          <h4>Files</h4>
-          <div class="use-case-example">
-            <i-no-content
-              [icon]="'pi pi-file'"
-              [message]="'No files uploaded'"
-            ></i-no-content>
-          </div>
+  <ng-template
+    appDemoOption="option-4"
+    label="Common Use Cases"
+    sourceCodeEncoded="%3Cp%20class%3D%22demo-description%22%3E%0A%20%20%20%20%20%20%20%20Examples%20of%20different%20scenarios%20where%20the%20no-content%20component%20provides%0A%20%20%20%20%20%20%20%20value.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22use-cases-grid%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EEmpty%20List%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-inbox'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20items%20to%20display'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ESearch%20Results%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-search'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20results%20found'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ENotifications%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-bell'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20new%20notifications'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EShopping%20Cart%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-shopping-cart'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'Your%20cart%20is%20empty'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EMessages%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-envelope'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20messages'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EFiles%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22use-case-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-no-content%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-file'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bmessage%5D%3D%22'No%20files%20uploaded'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%3C%2Fi-no-content%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <p class="demo-description">
+      Examples of different scenarios where the no-content component provides value.
+    </p>
+    <div class="use-cases-grid">
+      <div class="use-case">
+        <h4>Empty List</h4>
+        <div class="use-case-example">
+          <i-no-content [icon]="'pi pi-inbox'" [message]="'No items to display'"></i-no-content>
         </div>
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Automatic in Tables" [sourceCode]="codeExamples.inTable">
-      <p class="demo-description">
-        The <code>i-table</code> component automatically displays the no-content
-        component when data is empty. No additional code needed!
-      </p>
-    </ng-template>
-
-  <ng-template appDemoOption="option-6" label="Code Examples" sourceCodeEncoded="%3Cdiv%20class%3D%22code-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EIn%20a%20List%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.inList%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ESearch%20Results%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.searchResults%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ENotifications%20Panel%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.notifications%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EShopping%20Cart%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.cart%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E">
-      <div class="code-examples">
-        <div class="code-example">
-          <h4>In a List</h4>
-          <pre><code>{{ codeExamples.inList }}</code></pre>
-        </div>
-
-        <div class="code-example">
-          <h4>Search Results</h4>
-          <pre><code>{{ codeExamples.searchResults }}</code></pre>
-        </div>
-
-        <div class="code-example">
-          <h4>Notifications Panel</h4>
-          <pre><code>{{ codeExamples.notifications }}</code></pre>
-        </div>
-
-        <div class="code-example">
-          <h4>Shopping Cart</h4>
-          <pre><code>{{ codeExamples.cart }}</code></pre>
+      <div class="use-case">
+        <h4>Search Results</h4>
+        <div class="use-case-example">
+          <i-no-content [icon]="'pi pi-search'" [message]="'No results found'"></i-no-content>
         </div>
       </div>
-    </ng-template>
+
+      <div class="use-case">
+        <h4>Notifications</h4>
+        <div class="use-case-example">
+          <i-no-content [icon]="'pi pi-bell'" [message]="'No new notifications'"></i-no-content>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <h4>Shopping Cart</h4>
+        <div class="use-case-example">
+          <i-no-content
+            [icon]="'pi pi-shopping-cart'"
+            [message]="'Your cart is empty'"
+          ></i-no-content>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <h4>Messages</h4>
+        <div class="use-case-example">
+          <i-no-content [icon]="'pi pi-envelope'" [message]="'No messages'"></i-no-content>
+        </div>
+      </div>
+
+      <div class="use-case">
+        <h4>Files</h4>
+        <div class="use-case-example">
+          <i-no-content [icon]="'pi pi-file'" [message]="'No files uploaded'"></i-no-content>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-5"
+    label="Automatic in Tables"
+    [sourceCode]="codeExamples.inTable"
+  >
+    <p class="demo-description">
+      The <code>i-table</code> component automatically displays the no-content component when data
+      is empty. No additional code needed!
+    </p>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-6"
+    label="Code Examples"
+    sourceCodeEncoded="%3Cdiv%20class%3D%22code-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EIn%20a%20List%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.inList%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ESearch%20Results%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.searchResults%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3ENotifications%20Panel%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.notifications%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22code-example%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ch4%3EShopping%20Cart%3C%2Fh4%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%3Ccode%3E%7B%7B%20codeExamples.cart%20%7D%7D%3C%2Fcode%3E%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E"
+  >
+    <div class="code-examples">
+      <div class="code-example">
+        <h4>In a List</h4>
+        <pre><code>{{ codeExamples.inList }}</code></pre>
+      </div>
+
+      <div class="code-example">
+        <h4>Search Results</h4>
+        <pre><code>{{ codeExamples.searchResults }}</code></pre>
+      </div>
+
+      <div class="code-example">
+        <h4>Notifications Panel</h4>
+        <pre><code>{{ codeExamples.notifications }}</code></pre>
+      </div>
+
+      <div class="code-example">
+        <h4>Shopping Cart</h4>
+        <pre><code>{{ codeExamples.cart }}</code></pre>
+      </div>
+    </div>
+  </ng-template>
 </app-demo-playground>

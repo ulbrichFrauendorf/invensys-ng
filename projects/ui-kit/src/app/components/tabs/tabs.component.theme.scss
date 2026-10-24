@@ -1,0 +1,11 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin tabs-theme() {
+  .tab-examples {
+    .empty-state {
+      color: colors.$color-text-secondary;
+      border-color: colors.$color-border;
+      background: colors.$color-surface-section;
+    }
+  }
+}

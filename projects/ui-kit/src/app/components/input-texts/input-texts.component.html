@@ -1,203 +1,205 @@
-<app-demo-playground class="input-texts-demo" title="Input Text Components" description="Versatile input text components with floating labels, validation support, and multiple input types for all your form needs.">
-  <ng-template appDemoOption="option-1" label="Template-driven Forms (NgModel)" [selected]="true" [sourceCode]="codeExamples.ngModel" [tsCode]="tsExamples.ngModel">
-      <div class="demo-form">
-        <div class="input-grid">
-          <i-input-text
-            label="Text Input"
-            type="text"
-            [(ngModel)]="textValue"
-          />
-          <i-input-text
-            label="Email Input"
-            type="email"
-            [(ngModel)]="emailValue"
-          />
-          <i-input-text
-            label="Password Input"
-            type="password"
-            [(ngModel)]="passwordValue"
-          />
-          <i-input-text
-            label="Number Input"
-            type="number"
-            [(ngModel)]="numberValue"
-          />
-          <i-input-text
-            label="Pre-filled Number"
-            type="number"
-            [(ngModel)]="prefilledNumberValue"
-          />
-        </div>
-
-        <div class="values-display">
-          <h4>Current Values:</h4>
-          <p><strong>Text:</strong> {{ textValue || "(empty)" }}</p>
-          <p><strong>Email:</strong> {{ emailValue || "(empty)" }}</p>
-          <p><strong>Password:</strong> {{ passwordValue || "(empty)" }}</p>
-          <p><strong>Number:</strong> {{ numberValue }}</p>
-          <p><strong>Pre-filled Number:</strong> {{ prefilledNumberValue }}</p>
-        </div>
+<app-demo-playground
+  class="input-texts-demo"
+  title="Input Texts"
+  eyebrow="Form Controls"
+  description="Versatile input text components with floating labels, validation support, and multiple input types for all your form needs."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Template-driven Forms (NgModel)"
+    [selected]="true"
+    [sourceCode]="codeExamples.ngModel"
+    [tsCode]="tsExamples.ngModel"
+  >
+    <div class="demo-form">
+      <div class="input-grid">
+        <i-input-text label="Text Input" type="text" [(ngModel)]="textValue" />
+        <i-input-text label="Email Input" type="email" [(ngModel)]="emailValue" />
+        <i-input-text label="Password Input" type="password" [(ngModel)]="passwordValue" />
+        <i-input-text label="Number Input" type="number" [(ngModel)]="numberValue" />
+        <i-input-text label="Pre-filled Number" type="number" [(ngModel)]="prefilledNumberValue" />
       </div>
-    </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Reactive Forms" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <form [formGroup]="basicForm" class="demo-form">
-        <div class="input-grid">
-          @for (input of inputExamples.basic; track input.formControlName) {
-            <i-input-text
-              [label]="input.label"
-              [type]="input.type"
-              [formControlName]="input.formControlName"
-              icon="pi pi-search"
-            />
-          }
-        </div>
+      <div class="values-display">
+        <h4>Current Values:</h4>
+        <p><strong>Text:</strong> {{ textValue || '(empty)' }}</p>
+        <p><strong>Email:</strong> {{ emailValue || '(empty)' }}</p>
+        <p><strong>Password:</strong> {{ passwordValue || '(empty)' }}</p>
+        <p><strong>Number:</strong> {{ numberValue }}</p>
+        <p><strong>Pre-filled Number:</strong> {{ prefilledNumberValue }}</p>
+      </div>
+    </div>
+  </ng-template>
 
-        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
-          Submit Basic Form
-        </i-button>
-      </form>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Reactive Forms"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <form [formGroup]="basicForm" class="demo-form">
+      <div class="input-grid">
+        @for (input of inputExamples.basic; track input.formControlName) {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+            icon="pi pi-search"
+          />
+        }
+      </div>
 
-  <ng-template appDemoOption="option-3" label="Form Validation" [sourceCode]="codeExamples.validation" [tsCode]="tsExamples.validation">
-      <form [formGroup]="validationForm" class="demo-form">
-        <div class="input-grid">
-          @for (
-            input of inputExamples.validation;
-            track input.formControlName
-          ) {
-            <i-input-text
-              [label]="input.label"
-              [type]="input.type"
-              [formControlName]="input.formControlName"
-            />
-          }
-        </div>
+      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+        Submit Basic Form
+      </i-button>
+    </form>
+  </ng-template>
 
-        <i-button
-          severity="primary"
-          (click)="onSubmit(validationForm, 'validation')"
-        >
-          Submit Validation Form
-        </i-button>
-      </form>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Form Validation"
+    [sourceCode]="codeExamples.validation"
+    [tsCode]="tsExamples.validation"
+  >
+    <form [formGroup]="validationForm" class="demo-form">
+      <div class="input-grid">
+        @for (input of inputExamples.validation; track input.formControlName) {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+          />
+        }
+      </div>
+
+      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+        Submit Validation Form
+      </i-button>
+    </form>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <form [formGroup]="fluidForm" class="demo-form">
-        <div class="input-stack">
-          @for (input of inputExamples.fluid; track input.formControlName) {
-            <i-input-text
-              [label]="input.label"
-              [type]="input.type"
-              [formControlName]="input.formControlName"
-              [fluid]="true"
-            />
-          }
-        </div>
+    <form [formGroup]="fluidForm" class="demo-form">
+      <div class="input-stack">
+        @for (input of inputExamples.fluid; track input.formControlName) {
+          <i-input-text
+            [label]="input.label"
+            [type]="input.type"
+            [formControlName]="input.formControlName"
+            [fluid]="true"
+          />
+        }
+      </div>
 
-        <i-button
-          severity="primary"
-          [fluid]="true"
-          (click)="onSubmit(fluidForm, 'fluid')"
-        >
-          Submit Fluid Form
-        </i-button>
-      </form>
-    </ng-template>
+      <i-button severity="primary" [fluid]="true" (click)="onSubmit(fluidForm, 'fluid')">
+        Submit Fluid Form
+      </i-button>
+    </form>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Pre-filled Values (Float Label Test)" [sourceCode]="codeExamples.prefilled" [tsCode]="tsExamples.prefilled">
-      <form [formGroup]="prefilledForm" class="demo-form">
-        <div class="input-grid">
-          <i-input-text
-            label="Full Name"
-            type="text"
-            formControlName="prefilledText"
-          />
-          <i-input-text
-            label="Email Address"
-            type="email"
-            formControlName="prefilledEmail"
-          />
-          <i-input-text
-            label="Price"
-            type="number"
-            formControlName="prefilledNumber"
-            [attr.step]="0.01"
-          />
-          <i-input-text
-            label="Quantity"
-            type="number"
-            formControlName="prefilledQuantity"
-          />
-        </div>
+  <ng-template
+    appDemoOption="option-5"
+    label="Pre-filled Values (Float Label Test)"
+    [sourceCode]="codeExamples.prefilled"
+    [tsCode]="tsExamples.prefilled"
+  >
+    <form [formGroup]="prefilledForm" class="demo-form">
+      <div class="input-grid">
+        <i-input-text label="Full Name" type="text" formControlName="prefilledText" />
+        <i-input-text label="Email Address" type="email" formControlName="prefilledEmail" />
+        <i-input-text
+          label="Price"
+          type="number"
+          formControlName="prefilledNumber"
+          [attr.step]="0.01"
+        />
+        <i-input-text label="Quantity" type="number" formControlName="prefilledQuantity" />
+      </div>
 
-        <div class="values-display">
-          <h4>Pre-filled Values:</h4>
-          <p>
-            <strong>Name:</strong>
-            {{ prefilledForm.get("prefilledText")?.value }}
-          </p>
-          <p>
-            <strong>Email:</strong>
-            {{ prefilledForm.get("prefilledEmail")?.value }}
-          </p>
-          <p>
-            <strong>Price:</strong>
-            {{ prefilledForm.get("prefilledNumber")?.value }}
-          </p>
-          <p>
-            <strong>Quantity:</strong>
-            {{ prefilledForm.get("prefilledQuantity")?.value }}
-          </p>
-        </div>
+      <div class="values-display">
+        <h4>Pre-filled Values:</h4>
+        <p>
+          <strong>Name:</strong>
+          {{ prefilledForm.get('prefilledText')?.value }}
+        </p>
+        <p>
+          <strong>Email:</strong>
+          {{ prefilledForm.get('prefilledEmail')?.value }}
+        </p>
+        <p>
+          <strong>Price:</strong>
+          {{ prefilledForm.get('prefilledNumber')?.value }}
+        </p>
+        <p>
+          <strong>Quantity:</strong>
+          {{ prefilledForm.get('prefilledQuantity')?.value }}
+        </p>
+      </div>
 
-        <i-button
-          severity="primary"
-          (click)="onSubmit(prefilledForm, 'prefilled')"
-        >
-          Submit Pre-filled Form
-        </i-button>
-      </form>
-    </ng-template>
+      <i-button severity="primary" (click)="onSubmit(prefilledForm, 'prefilled')">
+        Submit Pre-filled Form
+      </i-button>
+    </form>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Disabled Inputs" sourceCodeEncoded="%3Cform%20class%3D%22demo-form%20disabled-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22input-grid%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Text%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Cannot%20edit%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20With%20Icon%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-search'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Search%20disabled%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Float%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BuseFloatLabel%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Floating%20label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fform%3E">
-      <form class="demo-form disabled-examples">
-        <div class="input-grid">
-          <i-input-text
-            label="Disabled Text"
-            placeholder="Cannot edit"
-            [disabled]="true"
-          />
-          <i-input-text
-            label="Disabled With Icon"
-            [icon]="'pi pi-search'"
-            placeholder="Search disabled"
-            [disabled]="true"
-          />
-          <i-input-text
-            label="Disabled Float"
-            [useFloatLabel]="true"
-            placeholder="Floating label"
-            [disabled]="true"
-          />
-        </div>
-      </form>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-6"
+    label="Disabled Inputs"
+    sourceCodeEncoded="%3Cform%20class%3D%22demo-form%20disabled-examples%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22input-grid%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Text%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Cannot%20edit%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20With%20Icon%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bicon%5D%3D%22'pi%20pi-search'%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Search%20disabled%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%3Ci-input-text%0A%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Disabled%20Float%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BuseFloatLabel%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20placeholder%3D%22Floating%20label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%5Bdisabled%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3C%2Fform%3E"
+  >
+    <form class="demo-form disabled-examples">
+      <div class="input-grid">
+        <i-input-text label="Disabled Text" placeholder="Cannot edit" [disabled]="true" />
+        <i-input-text
+          label="Disabled With Icon"
+          [icon]="'pi pi-search'"
+          placeholder="Search disabled"
+          [disabled]="true"
+        />
+        <i-input-text
+          label="Disabled Float"
+          [useFloatLabel]="true"
+          placeholder="Floating label"
+          [disabled]="true"
+        />
+      </div>
+    </form>
+  </ng-template>
   <ng-template appDemoOption="option-7" label="Floating Labels on Different Backgrounds">
-    <p>Focus and clear the fields to check floating labels. Use the theme toggle to compare light and dark surfaces.</p>
+    <p>
+      Focus and clear the fields to check floating labels. Use the theme toggle to compare light and
+      dark surfaces.
+    </p>
     @for (surface of labelSurfaces; track surface) {
       <div class="label-surface" [class]="'label-surface label-surface--' + surface">
         <h4>{{ surface }} background</h4>
         <div class="input-grid">
           <i-input-text label="Empty field" icon="pi pi-search" />
           <i-input-text label="Filled field" [ngModel]="'Example value'" />
-          <i-input-text label="Component background" backgroundStyle="component" [ngModel]="'Example value'" />
+          <i-input-text
+            label="Component background"
+            backgroundStyle="component"
+            [ngModel]="'Example value'"
+          />
           <i-input-text label="Disabled field" [disabled]="true" [ngModel]="'Disabled value'" />
-          <i-input-text label="Invalid field" [externalInvalid]="true" [ngModel]="'Invalid value'" />
+          <i-input-text
+            label="Invalid field"
+            [externalInvalid]="true"
+            [ngModel]="'Invalid value'"
+          />
           <i-input-text label="Forced floating label" [forceFloated]="true" />
-          <i-select label="Select" [options]="labelOptions" optionLabel="label" [ngModel]="labelOptions[0]" />
-          <i-multi-select label="Multi select" [options]="labelOptions" optionLabel="label" [ngModel]="[labelOptions[0]]" />
+          <i-select
+            label="Select"
+            [options]="labelOptions"
+            optionLabel="label"
+            [ngModel]="labelOptions[0]"
+          />
+          <i-multi-select
+            label="Multi select"
+            [options]="labelOptions"
+            optionLabel="label"
+            [ngModel]="[labelOptions[0]]"
+          />
           <i-calendar label="Calendar" [ngModel]="labelDate" />
           <i-textarea label="Textarea" [ngModel]="'Example text'" [rows]="2" />
           <i-input-text label="Without floating label" [useFloatLabel]="false" />

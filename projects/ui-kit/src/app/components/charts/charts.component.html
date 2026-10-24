@@ -1,74 +1,105 @@
-<app-demo-playground class="charts-demo" title="Chart Component" description="A versatile charting component built on Chart.js. Supports multiple chart types with theme-aware styling and CSS variable color resolution.">
-  <ng-template appDemoOption="option-1" label="Bar Chart" [selected]="true" [sourceCode]="codeExamples.bar" [tsCode]="codeExamples.barTs">
-      <p class="demo-description">
-        Basic bar chart displaying data with category labels.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="barChartData"></i-chart>
-      </div>
-    </ng-template>
+<app-demo-playground
+  class="charts-demo"
+  title="Charts"
+  eyebrow="Data Display"
+  description="A versatile charting component built on Chart.js. Supports multiple chart types with theme-aware styling and CSS variable color resolution."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Bar Chart"
+    [selected]="true"
+    [sourceCode]="codeExamples.bar"
+    [tsCode]="codeExamples.barTs"
+  >
+    <p class="demo-description">Basic bar chart displaying data with category labels.</p>
+    <div class="chart-container">
+      <i-chart [charts]="barChartData"></i-chart>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Stacked Bar Chart" [sourceCode]="codeExamples.stacked" [tsCode]="codeExamples.stackedTs">
-      <p class="demo-description">
-        Stacked bar chart using the 'bar-stack' type to compare multiple
-        datasets.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="stackedBarChartData"></i-chart>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Stacked Bar Chart"
+    [sourceCode]="codeExamples.stacked"
+    [tsCode]="codeExamples.stackedTs"
+  >
+    <p class="demo-description">
+      Stacked bar chart using the 'bar-stack' type to compare multiple datasets.
+    </p>
+    <div class="chart-container">
+      <i-chart [charts]="stackedBarChartData"></i-chart>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Horizontal Bar Chart" [sourceCode]="codeExamples.horizontal" [tsCode]="codeExamples.horizontalTs">
-      <p class="demo-description">
-        Horizontal bar chart using the 'bar-horizontal' type for left-to-right
-        data display.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="horizontalBarChartData"></i-chart>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Horizontal Bar Chart"
+    [sourceCode]="codeExamples.horizontal"
+    [tsCode]="codeExamples.horizontalTs"
+  >
+    <p class="demo-description">
+      Horizontal bar chart using the 'bar-horizontal' type for left-to-right data display.
+    </p>
+    <div class="chart-container">
+      <i-chart [charts]="horizontalBarChartData"></i-chart>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Line Chart" [sourceCode]="codeExamples.line" [tsCode]="codeExamples.lineTs">
-      <p class="demo-description">
-        Line chart with multiple datasets for trend visualization.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="lineChartData"></i-chart>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-4"
+    label="Line Chart"
+    [sourceCode]="codeExamples.line"
+    [tsCode]="codeExamples.lineTs"
+  >
+    <p class="demo-description">Line chart with multiple datasets for trend visualization.</p>
+    <div class="chart-container">
+      <i-chart [charts]="lineChartData"></i-chart>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Pie &amp; Doughnut Charts" [sourceCode]="codeExamples.pie" [tsCode]="codeExamples.pieTs">
-      <p class="demo-description">
-        Pie and doughnut charts for displaying proportional data.
-      </p>
-      <div class="chart-row">
-        <div class="chart-half">
-          <h4>Pie Chart</h4>
-          <i-chart [charts]="pieChartData"></i-chart>
-        </div>
-        <div class="chart-half">
-          <h4>Doughnut Chart</h4>
-          <i-chart [charts]="doughnutChartData"></i-chart>
-        </div>
+  <ng-template
+    appDemoOption="option-5"
+    label="Pie &amp; Doughnut Charts"
+    [sourceCode]="codeExamples.pie"
+    [tsCode]="codeExamples.pieTs"
+  >
+    <p class="demo-description">Pie and doughnut charts for displaying proportional data.</p>
+    <div class="chart-row">
+      <div class="chart-half">
+        <h4>Pie Chart</h4>
+        <i-chart [charts]="pieChartData"></i-chart>
       </div>
-    </ng-template>
+      <div class="chart-half">
+        <h4>Doughnut Chart</h4>
+        <i-chart [charts]="doughnutChartData"></i-chart>
+      </div>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Radar Chart" [sourceCode]="codeExamples.radar" [tsCode]="codeExamples.radarTs">
-      <p class="demo-description">
-        Radar chart for comparing multiple variables across categories.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="radarChartData"></i-chart>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-6"
+    label="Radar Chart"
+    [sourceCode]="codeExamples.radar"
+    [tsCode]="codeExamples.radarTs"
+  >
+    <p class="demo-description">Radar chart for comparing multiple variables across categories.</p>
+    <div class="chart-container">
+      <i-chart [charts]="radarChartData"></i-chart>
+    </div>
+  </ng-template>
 
-  <ng-template appDemoOption="option-7" label="Multiple Charts" [sourceCode]="codeExamples.multiple" [tsCode]="codeExamples.multipleTs">
-      <p class="demo-description">
-        Display multiple charts in a responsive grid layout by passing an array
-        of chart configurations.
-      </p>
-      <div class="chart-container">
-        <i-chart [charts]="multipleChartsData" [responsive]="true"></i-chart>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-7"
+    label="Multiple Charts"
+    [sourceCode]="codeExamples.multiple"
+    [tsCode]="codeExamples.multipleTs"
+  >
+    <p class="demo-description">
+      Display multiple charts in a responsive grid layout by passing an array of chart
+      configurations.
+    </p>
+    <div class="chart-container">
+      <i-chart [charts]="multipleChartsData" [responsive]="true"></i-chart>
+    </div>
+  </ng-template>
 </app-demo-playground>

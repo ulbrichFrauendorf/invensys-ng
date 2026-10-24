@@ -35,5 +35,4 @@ export class DividersComponent {
   <p>Role and access settings.</p>
 </section>`,
   };
-
 }

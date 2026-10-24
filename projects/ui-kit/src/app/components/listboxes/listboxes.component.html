@@ -1,151 +1,174 @@
-<app-demo-playground class="listboxes-demo" title="Listbox Components" description="Always visible option lists with single and multiple selection modes. Features a modern header with title and action button, option icons, chip display in multiselect mode, built-in filtering, and full reactive forms support.">
-  <ng-template appDemoOption="option-1" label="Multiple Selection with Action Button" [selected]="true" [sourceCode]="codeExamples.multiple" [tsCode]="tsExamples.multiple">
-      <i-listbox
-        title="Countries"
-        [options]="countries"
-        optionLabel="name"
-        [multiple]="true"
-        [showClear]="true"
-        actionIcon="pi pi-plus"
-        actionTooltip="Add Country"
-        (onAction)="onAddCountry()"
-        [(ngModel)]="selectedCountriesMultiple"
-        (onChange)="onMultipleSelectionChange($event)"
-        (onClear)="onClear()"
-      ></i-listbox>
-    </ng-template>
+<app-demo-playground
+  class="listboxes-demo"
+  title="Listboxes"
+  eyebrow="Form Controls"
+  description="Always visible option lists with single and multiple selection modes. Features a modern header with title and action button, option icons, chip display in multiselect mode, built-in filtering, and full reactive forms support."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Multiple Selection with Action Button"
+    [selected]="true"
+    [sourceCode]="codeExamples.multiple"
+    [tsCode]="tsExamples.multiple"
+  >
+    <i-listbox
+      title="Countries"
+      [options]="countries"
+      optionLabel="name"
+      [multiple]="true"
+      [showClear]="true"
+      actionIcon="pi pi-plus"
+      actionTooltip="Add Country"
+      (onAction)="onAddCountry()"
+      [(ngModel)]="selectedCountriesMultiple"
+      (onChange)="onMultipleSelectionChange($event)"
+      (onClear)="onClear()"
+    ></i-listbox>
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Single Selection (No Checkboxes)" [sourceCode]="codeExamples.single">
-      <i-listbox
-        title="Select Country"
-        [options]="countries"
-        optionLabel="name"
-        [multiple]="false"
-        [showClear]="true"
-        [(ngModel)]="selectedCountrySingle"
-        (onChange)="onSingleSelectionChange($event)"
-        (onClear)="onClear()"
-      ></i-listbox>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Single Selection (No Checkboxes)"
+    [sourceCode]="codeExamples.single"
+  >
+    <i-listbox
+      title="Select Country"
+      [options]="countries"
+      optionLabel="name"
+      [multiple]="false"
+      [showClear]="true"
+      [(ngModel)]="selectedCountrySingle"
+      (onChange)="onSingleSelectionChange($event)"
+      (onClear)="onClear()"
+    ></i-listbox>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Options with Icons" [sourceCode]="codeExamples.withIcons">
-      <i-listbox
-        title="Tasks"
-        [options]="tasks"
-        optionLabel="name"
-        [multiple]="true"
-        optionIcon="icon"
-        actionIcon="pi pi-cog"
-        actionTooltip="Manage Tasks"
-        (onAction)="onManageTasks()"
-        [(ngModel)]="selectedTasks"
-      ></i-listbox>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Options with Icons"
+    [sourceCode]="codeExamples.withIcons"
+  >
+    <i-listbox
+      title="Tasks"
+      [options]="tasks"
+      optionLabel="name"
+      [multiple]="true"
+      optionIcon="icon"
+      actionIcon="pi pi-cog"
+      actionTooltip="Manage Tasks"
+      (onAction)="onManageTasks()"
+      [(ngModel)]="selectedTasks"
+    ></i-listbox>
+  </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Display as Menu" [sourceCode]="codeExamples.displayAsMenu">
-      <i-listbox
-        title="Navigation"
-        [options]="menuItems"
-        optionLabel="name"
-        [multiple]="false"
-        [displayAsMenu]="true"
-        [filter]="false"
-        [(ngModel)]="selectedMenuItem"
-      ></i-listbox>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-4"
+    label="Display as Menu"
+    [sourceCode]="codeExamples.displayAsMenu"
+  >
+    <i-listbox
+      title="Navigation"
+      [options]="menuItems"
+      optionLabel="name"
+      [multiple]="false"
+      [displayAsMenu]="true"
+      [filter]="false"
+      [(ngModel)]="selectedMenuItem"
+    ></i-listbox>
+  </ng-template>
 
   <ng-template appDemoOption="option-5" label="With Filtering" [sourceCode]="codeExamples.filter">
-      <div class="demo-form">
-        <i-listbox
-          title="Searchable Countries"
-          [options]="countries"
-          optionLabel="name"
-          [multiple]="true"
-          [filter]="true"
-          filterBy="name"
-          [showClear]="true"
-        ></i-listbox>
-      </div>
-    </ng-template>
+    <div class="demo-form">
+      <i-listbox
+        title="Searchable Countries"
+        [options]="countries"
+        optionLabel="name"
+        [multiple]="true"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+      ></i-listbox>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-6" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <div class="demo-form">
-        <i-listbox
-          title="Full Width Listbox"
-          [options]="countries"
-          optionLabel="name"
-          [multiple]="true"
-          [fluid]="true"
-          [showClear]="true"
-        ></i-listbox>
-      </div>
-    </ng-template>
+    <div class="demo-form">
+      <i-listbox
+        title="Full Width Listbox"
+        [options]="countries"
+        optionLabel="name"
+        [multiple]="true"
+        [fluid]="true"
+        [showClear]="true"
+      ></i-listbox>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-7" label="Disabled State" [sourceCode]="codeExamples.disabled">
-      <div class="demo-form">
+    <div class="demo-form">
+      <i-listbox
+        title="Disabled Listbox"
+        [options]="countries"
+        optionLabel="name"
+        [multiple]="true"
+        [disabled]="true"
+        [ngModel]="[
+          { name: 'United States', code: 'US' },
+          { name: 'Canada', code: 'CA' },
+        ]"
+      ></i-listbox>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-8"
+    label="Reactive Forms + Observable Data"
+    [sourceCode]="codeExamples.reactive"
+    [tsCode]="tsExamples.reactive"
+  >
+    <div class="demo-form">
+      <form [formGroup]="departmentsForm">
         <i-listbox
-          title="Disabled Listbox"
-          [options]="countries"
+          title="Departments"
+          [options]="departmentOptions$ | async"
           optionLabel="name"
+          formControlName="selectedDepartments"
           [multiple]="true"
-          [disabled]="true"
-          [ngModel]="[
-            { name: 'United States', code: 'US' },
-            { name: 'Canada', code: 'CA' },
-          ]"
-        ></i-listbox>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-8" label="Reactive Forms + Observable Data" [sourceCode]="codeExamples.reactive" [tsCode]="tsExamples.reactive">
-      <div class="demo-form">
-        <form [formGroup]="departmentsForm">
-          <i-listbox
-            title="Departments"
-            [options]="departmentOptions$ | async"
-            optionLabel="name"
-            formControlName="selectedDepartments"
-            [multiple]="true"
-            [filter]="true"
-            [showClear]="true"
-            [maxSelectedLabels]="2"
-            selectedItemsLabel="{0} departments selected"
-          ></i-listbox>
-        </form>
-
-        <div
-          class="demo-info"
-          style="
-            margin-top: 16px;
-            padding: 16px;
-            background: #f5f5f5;
-            border-radius: 4px;
-            font-size: 14.4px;
-          "
-        >
-          <strong>Dynamic Data Demo:</strong> New departments are added every 5
-          seconds to showcase observable data updates. <br /><strong
-            >Form Value:</strong
-          >
-          {{ $safeNavigationMigration(departmentsForm.get("selectedDepartments")?.value) | json }}
-          <br /><strong>Form Valid:</strong> {{ departmentsForm.valid }}
-          <br /><strong>Available Options:</strong>
-          {{ (departmentOptions$ | async)?.length || 0 }}
-        </div>
-      </div>
-    </ng-template>
-
-  <ng-template appDemoOption="option-9" label="Constrained Height Container (500px)" [sourceCode]="codeExamples.constrained" [scssCode]="scssExamples.constrained">
-      <div class="wrapper">
-        <i-listbox
-          title="Items (50 total)"
-          [options]="largeDataset"
-          optionLabel="name"
-          [multiple]="false"
           [filter]="true"
           [showClear]="true"
-          [(ngModel)]="selectedLargeItems"
+          [maxSelectedLabels]="2"
+          selectedItemsLabel="{0} departments selected"
         ></i-listbox>
+      </form>
+
+      <div class="demo-info">
+        <strong>Dynamic Data Demo:</strong> New departments are added every 5 seconds to showcase
+        observable data updates. <br /><strong>Form Value:</strong>
+        {{ $safeNavigationMigration(departmentsForm.get('selectedDepartments')?.value) | json }}
+        <br /><strong>Form Valid:</strong> {{ departmentsForm.valid }} <br /><strong
+          >Available Options:</strong
+        >
+        {{ (departmentOptions$ | async)?.length || 0 }}
       </div>
-    </ng-template>
+    </div>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-9"
+    label="Constrained Height Container (500px)"
+    [sourceCode]="codeExamples.constrained"
+    [scssCode]="scssExamples.constrained"
+  >
+    <div class="wrapper">
+      <i-listbox
+        title="Items (50 total)"
+        [options]="largeDataset"
+        optionLabel="name"
+        [multiple]="false"
+        [filter]="true"
+        [showClear]="true"
+        [(ngModel)]="selectedLargeItems"
+      ></i-listbox>
+    </div>
+  </ng-template>
 </app-demo-playground>

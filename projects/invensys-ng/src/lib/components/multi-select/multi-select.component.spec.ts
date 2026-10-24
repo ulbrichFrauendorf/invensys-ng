@@ -289,9 +289,7 @@ describe('IMultiSelect', () => {
           errors: { required: true },
         },
       } as any;
-      expect(component.getErrorMessage()).toBe(
-        'Please select at least one option',
-      );
+      expect(component.getErrorMessage()).toBe('Please select at least one option');
     });
 
     it('should handle minlength error', () => {
@@ -377,9 +375,7 @@ describe('IMultiSelect', () => {
 
     it('should fallback to label for search value', () => {
       fixture.componentRef.setInput('filterBy', 'nonexistent');
-      expect(component.getOptionSearchValue(mockOptions[0])).toBe(
-        'First Option',
-      );
+      expect(component.getOptionSearchValue(mockOptions[0])).toBe('First Option');
     });
   });
 });

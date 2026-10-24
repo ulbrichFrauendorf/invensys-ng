@@ -1,6 +1,7 @@
 <app-demo-playground
   class="confirmation-dialogs-demo"
-  title="Confirmation Dialog"
+  title="Confirmation Dialogs"
+  eyebrow="Overlays"
   description="Choose the confirmation dialog options to include."
   [sourceCode]="code()"
   language="ts"
@@ -8,9 +9,7 @@
   <ng-template appDemoPreview>
     <div class="preview-stage">
       <i class="pi pi-comments preview-icon" aria-hidden="true"></i>
-      <i-button
-        [disabled]="opening() || !values().message.trim()"
-        (clicked)="openConfirmation()"
+      <i-button [disabled]="opening() || !values().message.trim()" (clicked)="openConfirmation()"
         >Open confirmation</i-button
       >
       <p class="preview-result" role="status">{{ result() }}</p>
@@ -33,9 +32,9 @@
           </p>
           @if (enabled()[option.key]) {
             @switch (option.key) {
-              @case ("accept") {}
-              @case ("reject") {}
-              @case ("message") {
+              @case ('accept') {}
+              @case ('reject') {}
+              @case ('message') {
                 <label class="visually-hidden" for="value-message">Message</label>
                 <textarea
                   id="value-message"
@@ -46,7 +45,7 @@
                   (ngModelChange)="setValue('message', $event)"
                 ></textarea>
               }
-              @case ("severity") {
+              @case ('severity') {
                 <label class="visually-hidden" for="value-severity">Severity</label>
                 <select
                   id="value-severity"
@@ -60,7 +59,9 @@
                 </select>
               }
               @default {
-                <label class="visually-hidden" [for]="'value-' + option.key">{{ option.label }}</label>
+                <label class="visually-hidden" [for]="'value-' + option.key">{{
+                  option.label
+                }}</label>
                 <input
                   type="text"
                   [id]="'value-' + option.key"
@@ -79,17 +80,16 @@
   <ng-template appDemoUsage>
     <ul>
       <li>
-        The message is required. Unchecked options are omitted so the service
-        uses its defaults.
+        The message is required. Unchecked options are omitted so the service uses its defaults.
       </li>
       <li>Replace the callback examples with your own action handlers.</li>
       <li>
-        <code>confirm()</code> resolves to a dialog reference when it opens. Use
-        callbacks or <code>ref.onClose</code> to handle the user's decision.
+        <code>confirm()</code> resolves to a dialog reference when it opens. Use callbacks or
+        <code>ref.onClose</code> to handle the user's decision.
       </li>
       <li>
-        Closing the dialog with its close button or Escape dismisses it without
-        running either callback.
+        Closing the dialog with its close button or Escape dismisses it without running either
+        callback.
       </li>
     </ul>
   </ng-template>

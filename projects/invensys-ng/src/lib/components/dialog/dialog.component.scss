@@ -1,5 +1,5 @@
-@use "./dialog.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use './dialog.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-dialog-theme();
 
@@ -34,6 +34,11 @@
       max-width: 90vw;
     }
   }
+
+  @media (max-width: 640px) {
+    padding: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
 }
 
 @keyframes fadeIn {
@@ -56,11 +61,28 @@
   }
 }
 
-.i-dialog-overlay { box-sizing: border-box; }
-.i-dialog-overlay .i-dialog-container { min-height: 0; max-height: calc(100dvh - 32px); }
-.i-dialog-container > i-card { min-height: 0; overflow: auto; overscroll-behavior: contain; }
-@media (max-width: 640px) {
-  .i-dialog-overlay { padding: 12px; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
-  .i-dialog-overlay .i-dialog-container { max-width: 100%; max-height: calc(100dvh - 32px); }
-  .i-dialog-content { overflow-wrap: anywhere; }
+.i-dialog-overlay {
+  box-sizing: border-box;
+}
+.i-dialog-overlay {
+  .i-dialog-container {
+    min-height: 0;
+    max-height: calc(100dvh - 32px);
+    @media (max-width: 640px) {
+      max-width: 100%;
+      max-height: calc(100dvh - 32px);
+    }
+  }
+}
+.i-dialog-container {
+  > i-card {
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+}
+.i-dialog-content {
+  @media (max-width: 640px) {
+    overflow-wrap: anywhere;
+  }
 }

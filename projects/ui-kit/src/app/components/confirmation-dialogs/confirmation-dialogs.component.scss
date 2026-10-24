@@ -8,21 +8,27 @@
   gap: 24px;
   padding: 40px 24px;
   text-align: center;
+
+  .preview-icon {
+    font-size: 32px;
+  }
+
+  .preview-result {
+    max-width: 320px;
+    min-height: 42px;
+  }
 }
 
-.preview-icon { font-size: 32px; }
+.options-list {
+  padding: 0 24px;
 
-.preview-result {
-  max-width: 320px;
-  min-height: 42px;
-}
-
-.options-list { padding: 0 24px; }
-
-.option-row {
-  padding: 16px 0;
-
-  & + & { border-top: 1px solid; }
+  .option-row {
+    padding: 16px 0;
+    & + & {
+      border-top-width: 1px;
+      border-top-style: solid;
+    }
+  }
 }
 
 input,
@@ -32,20 +38,30 @@ select {
   width: 100%;
   margin-top: 10px;
   padding: 10px 12px;
-  border: 1px solid;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 6px;
   font: inherit;
 
   &:focus-visible {
-    outline: 2px solid;
+    outline-width: 2px;
+    outline-style: solid;
     outline-offset: 2px;
   }
 }
 
-textarea { resize: vertical; }
+textarea {
+  resize: vertical;
+}
 
-ul { padding-left: 20px; }
+ul {
+  padding-left: 20px;
+}
 
-li + li { margin-top: 6px; }
+li {
+  + li {
+    margin-top: 6px;
+  }
+}
 
 @include theme.confirmation-dialogs-theme();

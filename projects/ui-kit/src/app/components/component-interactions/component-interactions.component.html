@@ -1,5 +1,16 @@
-<app-demo-playground class="component-demo" title="Component Interactions" description="This page demonstrates how different UI components interact with each other. These examples help ensure components work correctly when combined in real-world scenarios.">
-  <ng-template appDemoOption="option-1" label="Dropdown in Accordion" [selected]="true" [sourceCode]="codeExamples.dropdownInAccordion" [tsCode]="tsExamples.setup">
+<app-demo-playground
+  class="component-demo"
+  title="Component Interactions"
+  eyebrow="Examples"
+  description="This page demonstrates how different UI components interact with each other. These examples help ensure components work correctly when combined in real-world scenarios."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Dropdown in Accordion"
+    [selected]="true"
+    [sourceCode]="codeExamples.dropdownInAccordion"
+    [tsCode]="tsExamples.setup"
+  >
     <form [formGroup]="interactionForm">
       <i-accordion-list [multiple]="true">
         <i-accordion header="User Settings" icon="pi pi-user" [expanded]="true">
@@ -16,16 +27,12 @@
             />
           </div>
           <p class="info-text">
-            Select a country from the dropdown above. Notice how the dropdown
-            overlay appears correctly above the accordion content.
+            Select a country from the dropdown above. Notice how the dropdown overlay appears
+            correctly above the accordion content.
           </p>
         </i-accordion>
 
-        <i-accordion
-          header="Product Settings"
-          icon="pi pi-shopping-cart"
-          [expanded]="true"
-        >
+        <i-accordion header="Product Settings" icon="pi pi-shopping-cart" [expanded]="true">
           <div class="form-group">
             <i-select
               label="Category"
@@ -51,8 +58,8 @@
           </div>
 
           <p class="info-text">
-            When multiple accordions are expanded, dropdowns in each panel
-            should still function independently without z-index conflicts.
+            When multiple accordions are expanded, dropdowns in each panel should still function
+            independently without z-index conflicts.
           </p>
         </i-accordion>
 
@@ -81,17 +88,15 @@
           </div>
 
           <p class="info-text">
-            Multi-select dropdowns also expand properly beyond accordion
-            boundaries. Try selecting multiple items to see the chips display
-            and the dropdown overlay behavior.
+            Multi-select dropdowns also expand properly beyond accordion boundaries. Try selecting
+            multiple items to see the chips display and the dropdown overlay behavior.
           </p>
         </i-accordion>
 
         <i-accordion header="Summary" icon="pi pi-info-circle">
           <p>
-            This accordion panel can be expanded while the others remain open
-            (multiple expansion mode). Form state is preserved across all
-            panels.
+            This accordion panel can be expanded while the others remain open (multiple expansion
+            mode). Form state is preserved across all panels.
           </p>
           <div class="form-values">
             <strong>Current Form Values:</strong>
@@ -117,7 +122,12 @@
     </form>
   </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Dropdown in Panel" [sourceCode]="codeExamples.selectInPanel" [tsCode]="tsExamples.setup">
+  <ng-template
+    appDemoOption="option-2"
+    label="Dropdown in Panel"
+    [sourceCode]="codeExamples.selectInPanel"
+    [tsCode]="tsExamples.setup"
+  >
     <form [formGroup]="interactionForm">
       <div class="panel-demo-grid">
         <i-panel header="User Preferences" [toggleable]="true">
@@ -134,8 +144,8 @@
             />
           </div>
           <p class="info-text">
-            The dropdown should appear above the panel boundaries when opened,
-            ensuring full visibility of all options.
+            The dropdown should appear above the panel boundaries when opened, ensuring full
+            visibility of all options.
           </p>
         </i-panel>
 
@@ -152,8 +162,8 @@
             />
           </div>
           <p class="info-text">
-            Multi-select dropdowns in panels should also expand properly,
-            allowing selection of multiple items without overlay clipping.
+            Multi-select dropdowns in panels should also expand properly, allowing selection of
+            multiple items without overlay clipping.
           </p>
         </i-panel>
 
@@ -180,8 +190,8 @@
             />
           </div>
           <p class="info-text">
-            Multiple select components in the same panel should work
-            independently without z-index conflicts.
+            Multiple select components in the same panel should work independently without z-index
+            conflicts.
           </p>
         </i-panel>
       </div>

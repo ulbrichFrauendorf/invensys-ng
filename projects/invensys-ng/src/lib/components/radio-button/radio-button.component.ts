@@ -9,14 +9,10 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   Injector,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { Subject, Subscription } from 'rxjs';
 
@@ -237,9 +233,7 @@ export class IRadioButton implements ControlValueAccessor, OnInit, OnDestroy {
     if (!this.name) return;
 
     // compute a form-scoped key: name@formId or name@root
-    const form = this.elementRef.nativeElement.closest(
-      'form',
-    ) as HTMLFormElement | null;
+    const form = this.elementRef.nativeElement.closest('form') as HTMLFormElement | null;
     let formKey = 'root';
     if (form) {
       formKey =

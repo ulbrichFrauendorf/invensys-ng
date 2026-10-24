@@ -1,59 +1,35 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-tag-theme() {
   .i-tag {
-    // Default (no severity)
+    /* Default (no severity) */
     background: colors.$color-surface-hover;
     color: colors.$color-text-primary;
     border: 1px solid colors.$color-surface-border;
 
-    // Severity variants — translucent background, severity text + border
+    /* Severity variants — translucent background, severity text + border */
     &.i-tag-primary {
       background: color-mix(in srgb, #{colors.$color-primary} 15%, transparent);
       color: colors.$color-primary;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-primary} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-primary} 40%, transparent);
     }
 
     &.i-tag-secondary {
-      background: color-mix(
-        in srgb,
-        #{colors.$color-secondary} 15%,
-        transparent
-      );
+      background: color-mix(in srgb, #{colors.$color-secondary} 15%, transparent);
       color: colors.$color-secondary;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-secondary} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-secondary} 40%, transparent);
     }
 
     &.i-tag-tertiary {
-      background: color-mix(
-        in srgb,
-        #{colors.$color-tertiary} 15%,
-        transparent
-      );
+      background: color-mix(in srgb, #{colors.$color-tertiary} 15%, transparent);
       color: colors.$color-tertiary;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-tertiary} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-tertiary} 40%, transparent);
     }
 
     &.i-tag-success {
       background: color-mix(in srgb, #{colors.$color-success} 15%, transparent);
       color: colors.$color-success;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-success} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-success} 40%, transparent);
     }
 
     &.i-tag-info {
@@ -65,21 +41,13 @@
     &.i-tag-warning {
       background: color-mix(in srgb, #{colors.$color-warning} 15%, transparent);
       color: colors.$color-warning;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-warning} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-warning} 40%, transparent);
     }
 
     &.i-tag-danger {
       background: color-mix(in srgb, #{colors.$color-danger} 15%, transparent);
       color: colors.$color-danger;
-      border-color: color-mix(
-        in srgb,
-        #{colors.$color-danger} 40%,
-        transparent
-      );
+      border-color: color-mix(in srgb, #{colors.$color-danger} 40%, transparent);
     }
 
     &.i-tag-contrast {

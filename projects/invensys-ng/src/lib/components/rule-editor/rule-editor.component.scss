@@ -1,4 +1,4 @@
-@use "./rule-editor.component.theme.scss" as theme;
+@use './rule-editor.component.theme.scss' as theme;
 @include theme.i-rule-editor-theme();
 :host {
   display: block;
@@ -8,43 +8,51 @@
   &__toolbar {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 0.75rem;
+    margin-bottom: 9px;
   }
   &__rules {
     display: grid;
-    gap: 0.75rem;
+    gap: 9px;
   }
   &__row {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    border: 1px solid var(--surface-border);
-    border-radius: 0.5rem;
+    gap: 9px;
+    padding: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
   }
   &__drag-handle {
     display: grid;
     place-items: center;
-    width: 2rem;
-    height: 2rem;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 0;
-    border-radius: 0.25rem;
-    color: inherit;
-    background: transparent;
+    border-radius: 3px;
     cursor: grab;
     touch-action: none;
 
-    &:active { cursor: grabbing; }
-    &:disabled { cursor: default; opacity: 0.4; }
-    &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    &:active {
+      cursor: grabbing;
+    }
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+    }
+    &:focus-visible {
+      outline-width: 2px;
+      outline-style: solid;
+      outline-offset: 2px;
+    }
   }
   &__fields {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: end;
-    gap: 0.75rem;
+    gap: 9px;
     min-width: 0;
   }
   &__fields--valueless {
@@ -65,19 +73,24 @@
 
 .i-rule-editor__row.cdk-drag-preview {
   box-sizing: border-box;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 15%);
 }
-.i-rule-editor__row.cdk-drag-placeholder { opacity: 0.25; }
+.i-rule-editor__row.cdk-drag-placeholder {
+  opacity: 0.25;
+}
 
-@container (max-width: 48rem) {
-  .i-rule-editor__fields {
+.i-rule-editor__fields {
+  @container (max-width: 576px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .i-rule-editor__fields > :nth-child(3) { grid-column: 1 / -1; }
+  @container (max-width: 408px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-@container (max-width: 34rem) {
-  .i-rule-editor__fields {
-    grid-template-columns: minmax(0, 1fr);
+.i-rule-editor__fields {
+  > :nth-child(3) {
+    @container (max-width: 576px) {
+      grid-column: 1 / -1;
+    }
   }
 }

@@ -1,0 +1,12 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin reporting-workflows-theme() {
+  .workflow-footer {
+    border-top-color: colors.$color-surface-border;
+    span {
+      color: colors.$color-text-secondary;
+    }
+  }
+  .saved-message {
+    color: colors.$color-success;
+  }
+}

@@ -176,9 +176,7 @@ describe('IRadioButton', () => {
       hostFixture.changeDetectorRef.markForCheck();
       hostFixture.detectChanges();
 
-      const debugEls = hostFixture.debugElement.queryAll(
-        By.directive(IRadioButton),
-      );
+      const debugEls = hostFixture.debugElement.queryAll(By.directive(IRadioButton));
       radioButtons = debugEls.map((de) => de.componentInstance as IRadioButton);
     });
 
@@ -202,16 +200,8 @@ describe('IRadioButton', () => {
       // Recreate host with two radios sharing the same control
       @Component({
         template: `
-          <i-radio-button
-            name="group2"
-            value="one"
-            [formControl]="control"
-          ></i-radio-button>
-          <i-radio-button
-            name="group2"
-            value="two"
-            [formControl]="control"
-          ></i-radio-button>
+          <i-radio-button name="group2" value="one" [formControl]="control"></i-radio-button>
+          <i-radio-button name="group2" value="two" [formControl]="control"></i-radio-button>
         `,
         standalone: true,
         imports: [IRadioButton, ReactiveFormsModule],
@@ -223,9 +213,7 @@ describe('IRadioButton', () => {
       sharedFixture.changeDetectorRef.markForCheck();
       sharedFixture.detectChanges();
 
-      const debugEls = sharedFixture.debugElement.queryAll(
-        By.directive(IRadioButton),
-      );
+      const debugEls = sharedFixture.debugElement.queryAll(By.directive(IRadioButton));
       const radios = debugEls.map((de) => de.componentInstance as IRadioButton);
 
       // Initially should reflect control value
@@ -244,16 +232,8 @@ describe('IRadioButton', () => {
       @Component({
         template: `
           <form [formGroup]="form">
-            <i-radio-button
-              name="group3"
-              value="first"
-              formControlName="choice"
-            ></i-radio-button>
-            <i-radio-button
-              name="group3"
-              value="second"
-              formControlName="choice"
-            ></i-radio-button>
+            <i-radio-button name="group3" value="first" formControlName="choice"></i-radio-button>
+            <i-radio-button name="group3" value="second" formControlName="choice"></i-radio-button>
           </form>
         `,
         standalone: true,
@@ -266,9 +246,7 @@ describe('IRadioButton', () => {
       fgFixture.changeDetectorRef.markForCheck();
       fgFixture.detectChanges();
 
-      const debugEls = fgFixture.debugElement.queryAll(
-        By.directive(IRadioButton),
-      );
+      const debugEls = fgFixture.debugElement.queryAll(By.directive(IRadioButton));
       const radios = debugEls.map((de) => de.componentInstance as IRadioButton);
 
       expect(radios[0].checked).toBe(true);

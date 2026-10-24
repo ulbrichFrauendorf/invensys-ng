@@ -6,10 +6,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-tooltips',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
-    TooltipDirective,
-    IButton,
-    ],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, TooltipDirective, IButton],
   templateUrl: './tooltips.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './tooltips.component.scss',
@@ -145,5 +142,4 @@ export class ExampleComponent {
   // Custom delay in milliseconds (default: 500)
 }`,
   };
-
 }

@@ -1,4 +1,6 @@
-@use "../shared-demo-styles.scss" as *;
+@use './overlay-panels.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .position-grid {
   display: grid;
@@ -18,20 +20,27 @@
   justify-content: center;
   align-items: center;
   min-height: 100px;
-}
 
-// Info content
-.info-content {
-  max-width: 300px;
-
-  h4 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    color: var(--color-text-primary);
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 8px;
   }
 }
 
-// User menu styling
+@include theme.overlay-panels-theme();
+
+.info-content {
+  max-width: 300px;
+}
+
 .user-menu {
   min-width: 250px;
 
@@ -40,23 +49,21 @@
     gap: 12px;
     align-items: center;
     padding: 12px;
-    border-bottom: 1px solid var(--surface-border);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
     margin-bottom: 8px;
 
     i {
       font-size: 32px;
-      color: var(--color-primary);
     }
 
     strong {
       display: block;
-      color: var(--color-text-primary);
       margin-bottom: 4px;
     }
 
     .user-email {
       font-size: 14px;
-      color: var(--color-text-secondary);
     }
   }
 
@@ -67,15 +74,9 @@
   }
 }
 
-// Notifications panel
 .notifications-panel {
   min-width: 320px;
   max-width: 400px;
-
-  h4 {
-    margin: 0 0 12px 0;
-    color: var(--color-text-primary);
-  }
 
   .notification-item {
     display: flex;
@@ -84,30 +85,22 @@
     border-radius: 6px;
     transition: background-color 0.2s;
 
-    &:hover {
-      background-color: var(--surface-hover);
-    }
-
     i {
       font-size: 24px;
-      color: var(--color-primary);
       margin-top: 2px;
     }
 
     strong {
       display: block;
-      color: var(--color-text-primary);
       margin-bottom: 4px;
     }
 
     small {
-      color: var(--color-text-tertiary);
       font-size: 12px;
     }
   }
 }
 
-// Actions menu
 .actions-menu {
   min-width: 180px;
   display: flex;
@@ -115,40 +108,17 @@
   gap: 4px;
 }
 
-// Important info panel
 .important-info {
   max-width: 300px;
   text-align: center;
 
   i {
     font-size: 48px;
-    color: var(--color-warning);
     display: block;
     margin-bottom: 12px;
-  }
-
-  h4 {
-    margin: 0 0 12px 0;
-    color: var(--color-text-primary);
   }
 
   i-button {
     margin-top: 16px;
   }
-}
-
-// Badge for notifications
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: 10px;
-  background-color: var(--color-danger);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  margin-left: 8px;
 }

@@ -1,36 +1,54 @@
-<app-demo-playground class="dividers-demo" title="Divider Component" description="Visual separators for grouping content. Supports horizontal and vertical layouts, optional labels, and label alignment.">
-  <ng-template appDemoOption="option-1" label="Basic Divider" [selected]="true" [sourceCode]="codeExamples.basic">
-      <i-divider />
-    </ng-template>
+<app-demo-playground
+  class="dividers-demo"
+  title="Dividers"
+  eyebrow="Layout &amp; Containers"
+  description="Visual separators for grouping content. Supports horizontal and vertical layouts, optional labels, and label alignment."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Divider"
+    [selected]="true"
+    [sourceCode]="codeExamples.basic"
+  >
+    <i-divider />
+  </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Dividers with Labels" [sourceCode]="codeExamples.withContent">
-      <i-divider>Details</i-divider>
-      <i-divider align="start">Start aligned</i-divider>
-      <i-divider align="center">Center aligned</i-divider>
-      <i-divider align="end">End aligned</i-divider>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-2"
+    label="Dividers with Labels"
+    [sourceCode]="codeExamples.withContent"
+  >
+    <i-divider>Details</i-divider>
+    <i-divider align="start">Start aligned</i-divider>
+    <i-divider align="center">Center aligned</i-divider>
+    <i-divider align="end">End aligned</i-divider>
+  </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Vertical Divider" [sourceCode]="codeExamples.vertical">
-      <div class="vertical-example">
-        <span>Left content</span>
-        <i-divider layout="vertical" />
-        <span>Right content</span>
-      </div>
-    </ng-template>
+  <ng-template
+    appDemoOption="option-3"
+    label="Vertical Divider"
+    [sourceCode]="codeExamples.vertical"
+  >
+    <div class="vertical-example">
+      <span>Left content</span>
+      <i-divider layout="vertical" />
+      <span>Right content</span>
+    </div>
+  </ng-template>
 
   <ng-template appDemoOption="option-4" label="Practical Usage" [sourceCode]="codeExamples.usage">
-      <div class="usage-example">
-        <section>
-          <h3>Profile</h3>
-          <p>Basic account information and preferences.</p>
-        </section>
+    <div class="usage-example">
+      <section>
+        <h3>Profile</h3>
+        <p>Basic account information and preferences.</p>
+      </section>
 
-        <i-divider>Permissions</i-divider>
+      <i-divider>Permissions</i-divider>
 
-        <section>
-          <h3>Access</h3>
-          <p>Role, claims, and data access settings.</p>
-        </section>
-      </div>
-    </ng-template>
+      <section>
+        <h3>Access</h3>
+        <p>Role, claims, and data access settings.</p>
+      </section>
+    </div>
+  </ng-template>
 </app-demo-playground>

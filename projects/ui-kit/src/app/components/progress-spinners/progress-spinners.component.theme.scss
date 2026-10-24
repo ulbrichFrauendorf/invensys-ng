@@ -1,0 +1,20 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin progress-spinners-theme() {
+  .size-grid {
+    .size-item {
+      span {
+        color: colors.$color-text-secondary;
+      }
+    }
+  }
+
+  .loading-card-demo {
+    background: colors.$color-surface-card;
+    border-color: colors.$color-surface-border;
+
+    .loading-overlay-demo {
+      background: colors.$color-surface-overlay;
+    }
+  }
+}

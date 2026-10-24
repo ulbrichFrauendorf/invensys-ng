@@ -1,3 +1,5 @@
+@use './example-dialog.component.theme.scss' as theme;
+
 .example-dialog-content {
   padding: 8px 0;
 
@@ -12,26 +14,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(
-        135deg,
-        var(--color-primary) 0%,
-        var(--color-primary-dark, #1e40af) 100%
-      );
       border-radius: 50%;
 
       i {
         font-size: 28px;
-        color: white;
+        @media (max-width: 640px) {
+          font-size: 24px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        width: 56px;
+        height: 56px;
       }
     }
 
     .header-description {
-      color: var(--text-color-secondary);
-      font-size: 15.2px;
-      line-height: 1.6;
-      margin: 0;
       max-width: 400px;
-      margin: 0 auto;
     }
   }
 
@@ -47,7 +46,6 @@
   }
 
   .form-summary {
-    background: var(--surface-100, #f8f9fa);
     border-radius: 8px;
     padding: 16px;
     margin-top: 24px;
@@ -59,12 +57,12 @@
       padding: 8px 0;
 
       &:not(:last-child) {
-        border-bottom: 1px solid var(--surface-300, #e5e7eb);
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
       }
 
       .summary-label {
         font-size: 13.6px;
-        color: var(--text-color-secondary);
         font-weight: 500;
       }
 
@@ -74,40 +72,18 @@
         align-items: center;
         gap: 8px;
 
-        &.valid {
-          color: var(--color-success, #22c55e);
-        }
-
-        &.invalid {
-          color: var(--color-warning, #f59e0b);
-        }
-
         i {
           font-size: 16px;
         }
       }
-    }
-  }
-}
 
-// Mobile responsiveness
-@media (max-width: 640px) {
-  .example-dialog-content {
-    .dialog-header-section {
-      .header-icon {
-        width: 56px;
-        height: 56px;
-
-        i {
-          font-size: 24px;
-        }
+      @media (max-width: 640px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
       }
     }
-
-    .form-summary .summary-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
   }
 }
+
+@include theme.example-dialog-theme();

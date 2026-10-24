@@ -1,0 +1,50 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin page-layouts-theme() {
+  :host {
+    .demo-sidebar {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-surface-card;
+      .sidebar-end {
+        border-bottom-color: colors.$color-primary;
+      }
+    }
+
+    .demo-controls {
+      border-color: colors.$color-surface-border;
+      background: colors.$color-surface-card;
+      .control-fields {
+        select {
+          color: colors.$color-text-primary;
+          background: colors.$color-surface-ground;
+          border-color: colors.$color-surface-border;
+        }
+      }
+    }
+
+    .automation-list {
+      .automation-row {
+        border-bottom-color: colors.$color-surface-border;
+        background: colors.$color-surface-card;
+
+        .status {
+          color: colors.$color-success;
+          &.paused {
+            color: colors.$color-warning;
+          }
+        }
+      }
+
+      .content-end {
+        border-bottom-color: colors.$color-primary;
+      }
+    }
+
+    .usage {
+      pre {
+        color: colors.$color-text-primary;
+        border-color: colors.$color-surface-border;
+        background: colors.$color-surface-card;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin input-texts-theme() {
+  .values-display {
+    background-color: colors.$color-surface-ground;
+    border-color: colors.$color-surface-border;
+  }
+
+  .label-surface {
+    border-color: colors.$color-surface-border;
+
+    &--ground {
+      background: colors.$color-surface-ground;
+    }
+    &--tinted {
+      background: color-mix(in srgb, colors.$color-primary 12%, colors.$color-surface-ground);
+    }
+    &--gradient {
+      background: linear-gradient(
+        120deg,
+        colors.$color-surface-ground,
+        color-mix(in srgb, colors.$color-primary 18%, colors.$color-surface-ground)
+      );
+    }
+  }
+}

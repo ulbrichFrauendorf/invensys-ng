@@ -40,9 +40,7 @@ describe('IFileUpload', () => {
     expect(uploadStyle.borderTopColor).toBe(placeholderStyle.borderTopColor);
     expect(uploadStyle.borderTopStyle).toBe(placeholderStyle.borderTopStyle);
     expect(uploadStyle.borderTopWidth).toBe(placeholderStyle.borderTopWidth);
-    expect(uploadStyle.borderTopLeftRadius).toBe(
-      placeholderStyle.borderTopLeftRadius,
-    );
+    expect(uploadStyle.borderTopLeftRadius).toBe(placeholderStyle.borderTopLeftRadius);
     expect(uploadStyle.backgroundColor).toBe(placeholderStyle.backgroundColor);
     placeholder.destroy();
   });
@@ -50,9 +48,7 @@ describe('IFileUpload', () => {
   it('accepts arbitrary files by default and deduplicates against the selection and batch', () => {
     const first = file('first.txt');
     fixture.componentRef.setInput('files', [first]);
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     const second = file('second.bin');
     component.addFiles([first, second, second]);
     expect(emit).toHaveBeenCalledTimes(1);
@@ -72,9 +68,7 @@ describe('IFileUpload', () => {
       file('no-extension', 3, 'text/plain'),
       file('photo', 3, 'image/png'),
     ];
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.addFiles(files);
     expect(emit).toHaveBeenCalledTimes(1);
     expect(emit).toHaveBeenCalledWith(files);
@@ -85,9 +79,7 @@ describe('IFileUpload', () => {
 
   it('rejects empty files and permits them when configured', () => {
     const empty = file('empty.txt', 0);
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.addFiles([empty]);
     expect(component.error?.code).toBe('emptyFile');
     expect(emit).not.toHaveBeenCalled();
@@ -104,12 +96,8 @@ describe('IFileUpload', () => {
       maxTotalSize: 6,
     });
     fixture.componentRef.setInput('files', [file('existing.txt')]);
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
-    const errors = vi
-      .spyOn(component.validationError, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
+    const errors = vi.spyOn(component.validationError, 'emit').mockReturnValue(undefined);
     component.addFiles([file('large.txt', 5)]);
     expect(component.error?.code).toBe('fileSize');
     component.addFiles([file('a.txt', 1), file('b.txt', 1)]);
@@ -129,9 +117,7 @@ describe('IFileUpload', () => {
     fixture.componentRef.setInput('options', { multiple: false });
     fixture.componentRef.setInput('files', [file('old.txt')]);
     const replacement = file('new.txt');
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.addFiles([replacement]);
     expect(emit).toHaveBeenCalledTimes(1);
     expect(emit).toHaveBeenCalledWith([replacement]);
@@ -143,9 +129,7 @@ describe('IFileUpload', () => {
   it('blocks selection, drops and removal while disabled', () => {
     fixture.componentRef.setInput('files', [file('old.txt')]);
     fixture.componentRef.setInput('disabled', true);
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.addFiles([file('new.txt')]);
     component.remove(0);
     const preventDefault = vi.fn().mockName('preventDefault');
@@ -161,9 +145,7 @@ describe('IFileUpload', () => {
     const retained = file('keep.txt');
     fixture.componentRef.setInput('files', [file('remove.txt'), retained]);
     component.error = { code: 'fileCount', message: 'error' };
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.remove(0);
     expect(emit).toHaveBeenCalledTimes(1);
     expect(emit).toHaveBeenCalledWith([retained]);
@@ -179,8 +161,7 @@ describe('IFileUpload', () => {
     fixture.componentRef.setInput('chooseLabel', 'Choose PDF');
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const input: HTMLInputElement =
-      fixture.nativeElement.querySelector('input');
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
     expect(input.accept).toBe('.pdf');
     expect(input.multiple).toBe(false);
     expect(fixture.nativeElement.textContent).toContain('Choose PDF');
@@ -188,23 +169,17 @@ describe('IFileUpload', () => {
     Object.defineProperty(drop, 'dataTransfer', {
       value: { files: [file('bad.txt')] },
     });
-    fixture.nativeElement
-      .querySelector('.i-file-upload__drop-zone')
-      .dispatchEvent(drop);
+    fixture.nativeElement.querySelector('.i-file-upload__drop-zone').dispatchEvent(drop);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('[role="alert"]').textContent,
-    ).toContain('bad.txt');
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent).toContain('bad.txt');
   });
 
   it('uses the same validation for picker and drop and resets the picker', () => {
     fixture.componentRef.setInput('options', { fileTypes: ['.pdf'] });
     const selected = file('selected.pdf');
     const target = { files: [selected], value: 'selected.pdf' };
-    const emit = vi
-      .spyOn(component.filesChange, 'emit')
-      .mockReturnValue(undefined);
+    const emit = vi.spyOn(component.filesChange, 'emit').mockReturnValue(undefined);
     component.onSelect({ target } as unknown as Event);
     expect(target.value).toBe('');
     expect(emit).toHaveBeenCalledTimes(1);

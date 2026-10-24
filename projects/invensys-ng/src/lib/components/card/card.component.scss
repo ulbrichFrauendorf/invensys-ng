@@ -1,7 +1,6 @@
-@use "./card.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
-@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
-  scrollbar;
+@use './card.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 
 @include theme.i-card-theme();
 
@@ -37,7 +36,7 @@
 
     .i-card-title {
       padding-left: 12px;
-      font-size: 1.5em;
+      font-size: 18px;
       font-weight: 600;
     }
   }
@@ -53,10 +52,8 @@
       display: none;
     }
   }
-}
 
-@media (max-width: 768px) {
-  .i-card {
+  @media (max-width: 768px) {
     border-radius: 0;
 
     .i-card-body {
@@ -66,6 +63,19 @@
   }
 }
 
-:host { min-width: 0; max-width: 100%; }
-:host.i-card--full-height .i-card .i-card-body { min-height: 0; overscroll-behavior: contain; }
-.i-card-title { min-width: 0; overflow-wrap: anywhere; }
+:host {
+  min-width: 0;
+  max-width: 100%;
+}
+:host.i-card--full-height {
+  .i-card {
+    .i-card-body {
+      min-height: 0;
+      overscroll-behavior: contain;
+    }
+  }
+}
+.i-card-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

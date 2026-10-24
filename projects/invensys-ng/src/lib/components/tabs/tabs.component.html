@@ -3,29 +3,30 @@
   <div class="i-tabs__header" role="tablist">
     @for (tab of tabs; track $index) {
       <div class="i-tabs__tab-item" role="presentation">
-      <button type="button"
-        [attr.id]="componentId + '-tab-' + $index"
-        class="i-tabs__tab"
-        [ngClass]="{
-          'i-tabs__tab--active': activeIndex === $index,
-          'i-tabs__tab--disabled': tab.disabled,
-          'i-tabs__tab--icon-only': tab.icon && !tab.header,
-        }"
-        role="tab"
-        [attr.aria-selected]="activeIndex === $index"
-        [attr.aria-controls]="componentId + '-panel-' + $index"
-        [attr.tabindex]="activeIndex === $index ? 0 : -1"
-        [disabled]="tab.disabled"
-        (click)="selectTab($event, $index)"
-        (keydown)="onKeyDown($event, $index)"
-      >
-        @if (tab.icon) {
-          <i [ngClass]="tab.icon" class="i-tabs__tab-icon"></i>
-        }
-        @if (tab.header) {
-          <span class="i-tabs__tab-label">{{ tab.header }}</span>
-        }
-      </button>
+        <button
+          type="button"
+          [attr.id]="componentId + '-tab-' + $index"
+          class="i-tabs__tab"
+          [ngClass]="{
+            'i-tabs__tab--active': activeIndex === $index,
+            'i-tabs__tab--disabled': tab.disabled,
+            'i-tabs__tab--icon-only': tab.icon && !tab.header,
+          }"
+          role="tab"
+          [attr.aria-selected]="activeIndex === $index"
+          [attr.aria-controls]="componentId + '-panel-' + $index"
+          [attr.tabindex]="activeIndex === $index ? 0 : -1"
+          [disabled]="tab.disabled"
+          (click)="selectTab($event, $index)"
+          (keydown)="onKeyDown($event, $index)"
+        >
+          @if (tab.icon) {
+            <i [ngClass]="tab.icon" class="i-tabs__tab-icon"></i>
+          }
+          @if (tab.header) {
+            <span class="i-tabs__tab-label">{{ tab.header }}</span>
+          }
+        </button>
         @if (tab.closable && !tab.disabled) {
           <button
             class="i-tabs__tab-close"

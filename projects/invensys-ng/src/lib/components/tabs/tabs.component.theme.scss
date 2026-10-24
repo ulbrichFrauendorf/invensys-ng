@@ -1,4 +1,4 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-tabs-theme() {
   .i-tabs {
@@ -24,7 +24,7 @@
         background: colors.$color-surface-hover;
       }
 
-      // Active state
+      /* Active state */
       &--active {
         color: colors.$color-primary;
 
@@ -33,7 +33,7 @@
         }
       }
 
-      // Disabled state
+      /* Disabled state */
       &--disabled {
         color: colors.$color-text-disabled;
         opacity: 0.6;
@@ -52,6 +52,16 @@
 
     &__panels {
       background: colors.$color-surface-card;
+    }
+  }
+
+  .i-tabs {
+    .i-tabs__tab {
+      background: transparent;
+    }
+
+    .i-tabs__tab-close {
+      background: transparent;
     }
   }
 }

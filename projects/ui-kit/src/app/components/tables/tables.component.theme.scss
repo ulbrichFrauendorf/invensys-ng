@@ -1,0 +1,7 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin tables-theme() {
+  .selection-info {
+    background: colors.$color-surface-section;
+  }
+}

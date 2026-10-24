@@ -1,17 +1,23 @@
-@use "./panel.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use './panel.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-panel-theme();
 
-@media (pointer: coarse) {
-  .i-panel .i-panel-header-wrap .i-panel-header:where(button) { min-height: 44px; }
+.i-panel {
+  .i-panel-header-wrap {
+    .i-panel-header:where(button) {
+      @media (pointer: coarse) {
+        min-height: 44px;
+      }
+    }
+  }
 }
 
 .i-panel {
   border-radius: vars.$borderRadius;
   overflow: visible;
   position: relative;
-  // The native legend creates a real gap in the border without a painted mask.
+  /* The native legend creates a real gap in the border without a painted mask. */
   margin: 0;
   padding: 0;
   min-inline-size: 0;
@@ -30,14 +36,12 @@
       max-width: 100%;
       box-sizing: border-box;
       padding: 4px 12px;
-      background: transparent;
       user-select: none;
       transition: color vars.$transitionDuration ease;
 
-      // reset native button styles when header is a button
+      /* reset native button styles when header is a button */
       &.i-panel-header:where(button) {
         border: none;
-        background: transparent;
         cursor: pointer;
         padding: 4px 12px;
         font-family: inherit;
@@ -52,7 +56,7 @@
 
       .i-panel-title {
         font-weight: 500;
-        font-size: 1em;
+        font-size: 12px;
         line-height: 1;
         display: inline-block;
         min-width: 0;

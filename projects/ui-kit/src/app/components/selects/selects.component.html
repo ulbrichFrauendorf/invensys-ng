@@ -1,127 +1,136 @@
-<app-demo-playground class="selects-demo" title="Select Components" description="Dropdown select components with filtering, form integration, and reactive forms support. Perfect for option selection with search capabilities.">
-  <ng-template appDemoOption="option-1" label="Basic Select Options" [selected]="true" [sourceCode]="codeExamples.reactiveForm" [tsCode]="tsExamples.reactiveForm">
-      <form [formGroup]="basicForm" class="demo-form">
-        <div class="input-grid">
-          <i-select
-            label="Country"
-            [options]="selectData.countries"
-            optionLabel="label"
-            placeholder="Select a country"
-            formControlName="country"
-          />
-
-          <i-select
-            label="Status"
-            [options]="selectData.statuses"
-            optionLabel="label"
-            placeholder="Select status"
-            formControlName="status"
-          />
-
-          <i-select
-            label="Preselected Country"
-            [options]="selectData.countries"
-            optionLabel="label"
-            placeholder="Preselected value"
-            formControlName="preselected"
-          />
-
-          <i-select
-            label="Disabled Select"
-            [options]="selectData.countries"
-            optionLabel="label"
-            placeholder="This is disabled"
-            formControlName="disabled"
-            [readonly]="true"
-          />
-
-          <!-- Object Storage Example 1 -->
-          <i-select
-            label="Country (Full Object)"
-            [options]="selectData.countries"
-            optionLabel="label"
-            placeholder="Stores entire object"
-            formControlName="country"
-            (onChange)="onCountryValueChange($event)"
-          />
-
-          <!-- Object Storage Example 2 -->
-          <i-select
-            label="Country (Full Object)"
-            [options]="selectData.countries"
-            optionLabel="label"
-            placeholder="Stores entire object"
-            formControlName="fullObjectSelect"
-            (onChange)="onCountryObjectChange($event)"
-          />
-        </div>
-
-        <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
-          Submit Basic Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-2" label="Required Validation" [sourceCode]="codeExamples.validation">
-      <form [formGroup]="validationForm" class="demo-form">
+<app-demo-playground
+  class="selects-demo"
+  title="Selects"
+  eyebrow="Form Controls"
+  description="Dropdown select components with filtering, form integration, and reactive forms support. Perfect for option selection with search capabilities."
+>
+  <ng-template
+    appDemoOption="option-1"
+    label="Basic Select Options"
+    [selected]="true"
+    [sourceCode]="codeExamples.reactiveForm"
+    [tsCode]="tsExamples.reactiveForm"
+  >
+    <form [formGroup]="basicForm" class="demo-form">
+      <div class="input-grid">
         <i-select
-          label="Status (Required)"
+          label="Country"
+          [options]="selectData.countries"
+          optionLabel="label"
+          placeholder="Select a country"
+          formControlName="country"
+        />
+
+        <i-select
+          label="Status"
           [options]="selectData.statuses"
           optionLabel="label"
           placeholder="Select status"
           formControlName="status"
         />
 
-        <i-button
-          severity="primary"
-          (click)="onSubmit(validationForm, 'validation')"
-        >
-          Submit Validation Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-3" label="Advanced Features (Filtering &amp; Clear)" [sourceCode]="codeExamples.advanced">
-      <form [formGroup]="advancedForm" class="demo-form">
         <i-select
-          [options]="selectData.reports"
-          [filter]="true"
-          [showClear]="true"
-          filterBy="name"
-          optionLabel="name"
-          placeholder="Select Report"
-          formControlName="selectedReport"
-          (onClear)="onReportClear()"
-          (onChange)="onReportChange()"
-        />
-
-        <i-button
-          severity="primary"
-          (click)="onSubmit(advancedForm, 'advanced')"
-        >
-          Submit Advanced Form
-        </i-button>
-      </form>
-    </ng-template>
-
-  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
-      <form [formGroup]="fluidForm" class="demo-form">
-        <i-select
-          label="Fluid Select"
+          label="Preselected Country"
           [options]="selectData.countries"
           optionLabel="label"
-          [fluid]="true"
-          placeholder="Select option"
-          formControlName="fluidSelect"
+          placeholder="Preselected value"
+          formControlName="preselected"
         />
 
-        <i-button
-          severity="primary"
-          [fluid]="true"
-          (click)="onSubmit(fluidForm, 'fluid')"
-        >
-          Submit Fluid Form
-        </i-button>
-      </form>
-    </ng-template>
+        <i-select
+          label="Disabled Select"
+          [options]="selectData.countries"
+          optionLabel="label"
+          placeholder="This is disabled"
+          formControlName="disabled"
+          [readonly]="true"
+        />
+
+        <!-- Object Storage Example 1 -->
+        <i-select
+          label="Country (Full Object)"
+          [options]="selectData.countries"
+          optionLabel="label"
+          placeholder="Stores entire object"
+          formControlName="country"
+          (onChange)="onCountryValueChange($event)"
+        />
+
+        <!-- Object Storage Example 2 -->
+        <i-select
+          label="Country (Full Object)"
+          [options]="selectData.countries"
+          optionLabel="label"
+          placeholder="Stores entire object"
+          formControlName="fullObjectSelect"
+          (onChange)="onCountryObjectChange($event)"
+        />
+      </div>
+
+      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+        Submit Basic Form
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-2"
+    label="Required Validation"
+    [sourceCode]="codeExamples.validation"
+  >
+    <form [formGroup]="validationForm" class="demo-form">
+      <i-select
+        label="Status (Required)"
+        [options]="selectData.statuses"
+        optionLabel="label"
+        placeholder="Select status"
+        formControlName="status"
+      />
+
+      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+        Submit Validation Form
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template
+    appDemoOption="option-3"
+    label="Advanced Features (Filtering &amp; Clear)"
+    [sourceCode]="codeExamples.advanced"
+  >
+    <form [formGroup]="advancedForm" class="demo-form">
+      <i-select
+        [options]="selectData.reports"
+        [filter]="true"
+        [showClear]="true"
+        filterBy="name"
+        optionLabel="name"
+        placeholder="Select Report"
+        formControlName="selectedReport"
+        (onClear)="onReportClear()"
+        (onChange)="onReportChange()"
+      />
+
+      <i-button severity="primary" (click)="onSubmit(advancedForm, 'advanced')">
+        Submit Advanced Form
+      </i-button>
+    </form>
+  </ng-template>
+
+  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
+    <form [formGroup]="fluidForm" class="demo-form">
+      <i-select
+        label="Fluid Select"
+        [options]="selectData.countries"
+        optionLabel="label"
+        [fluid]="true"
+        placeholder="Select option"
+        formControlName="fluidSelect"
+      />
+
+      <i-button severity="primary" [fluid]="true" (click)="onSubmit(fluidForm, 'fluid')">
+        Submit Fluid Form
+      </i-button>
+    </form>
+  </ng-template>
 </app-demo-playground>

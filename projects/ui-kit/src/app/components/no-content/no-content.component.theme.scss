@@ -1,0 +1,30 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
+@mixin no-content-theme() {
+  .example-container {
+    border-color: colors.$color-border;
+    background: colors.$color-surface-card;
+  }
+
+  .use-cases-grid {
+    .use-case {
+      .use-case-example {
+        border-color: colors.$color-border;
+        background: colors.$color-surface-card;
+      }
+    }
+  }
+
+  .code-examples {
+    .code-example {
+      pre {
+        background: colors.$color-surface-section;
+        border-color: colors.$color-border;
+
+        code {
+          color: colors.$color-text-primary;
+        }
+      }
+    }
+  }
+}

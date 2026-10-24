@@ -1,0 +1,42 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@mixin example-dialog-theme() {
+  .example-dialog-content {
+    .dialog-header-section {
+      .header-icon {
+        background: linear-gradient(
+          135deg,
+          colors.$color-primary 0%,
+          color-mix(in srgb, colors.$color-primary 85%, colors.$color-contrast 15%) 100%
+        );
+
+        i {
+          color: colors.$color-contrast-inverse;
+        }
+      }
+    }
+
+    .form-summary {
+      background: colors.$color-surface-section;
+
+      .summary-row {
+        &:not(:last-child) {
+          border-bottom-color: colors.$color-surface-border;
+        }
+
+        .summary-label {
+          color: colors.$color-text-secondary;
+        }
+
+        .summary-value {
+          &.valid {
+            color: colors.$color-success;
+          }
+
+          &.invalid {
+            color: colors.$color-warning;
+          }
+        }
+      }
+    }
+  }
+}

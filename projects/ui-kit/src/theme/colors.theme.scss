@@ -1,37 +1,37 @@
-@use "sass:map";
-@use "../../../invensys-ng/src/lib/themes/color-variables.scss" as vars;
-@use "../../../invensys-ng/src/lib/themes/get-color.scss" as color;
+@use 'sass:map';
+@use '../../../invensys-ng/src/lib/themes/color-variables.scss' as vars;
+@use '../../../invensys-ng/src/lib/themes/get-color.scss' as color;
 
 @mixin define-color-palette($mode: light) {
   @if $mode == light {
     .light {
-      --color-primary: #{color.get-color("orange", 500)};
-      --color-secondary: #{color.get-color("gray", 700)};
-      --color-success: #{color.get-color("green", 500)};
-      --color-info: #{color.get-color("sky", "dark")};
-      --color-warning: #{color.get-color("yellow", 500)};
-      --color-danger: #{color.get-color("red", 500)};
+      --color-primary: #{color.get-color('orange', 500)};
+      --color-secondary: #{color.get-color('gray', 700)};
+      --color-success: #{color.get-color('green', 500)};
+      --color-info: #{color.get-color('sky', 'dark')};
+      --color-warning: #{color.get-color('yellow', 500)};
+      --color-danger: #{color.get-color('red', 500)};
       --color-contrast: #000;
       --color-contrast-inverse: #fff;
 
       // Text colors
-      --color-text-primary: #{color.get-color("gray", 700)};
+      --color-text-primary: #{color.get-color('gray', 700)};
       --color-text-contrast: #ffffffde;
-      --color-text-secondary: #{color.get-color("gray", 600)};
-      --color-text-tertiary: #{color.get-color("bluegray", 500)};
+      --color-text-secondary: #{color.get-color('gray', 600)};
+      --color-text-tertiary: #{color.get-color('bluegray', 500)};
 
       // Component colors
       --color-component-background: #ffffff;
       --color-component-background-secondary: #ffffff;
-      --color-component-background-solid: #{color.get-color("bluegray", 900)};
+      --color-component-background-solid: #{color.get-color('bluegray', 900)};
 
       // Border colors
-      --color-border: #{color.get-color("gray", 300)};
+      --color-border: #{color.get-color('gray', 300)};
 
       // Disabled state colors
       --color-disabled-background: #f5f5f5;
       --color-disabled-border: #e2e8f0;
-      --color-text-disabled: #{color.get-color("gray", 700)};
+      --color-text-disabled: #{color.get-color('gray', 700)};
 
       // Surface colors
       --surface-ground: #f8fafc;
@@ -44,25 +44,25 @@
     }
   } @else if $mode == dark {
     .dark {
-      --color-primary: #{color.get-color("yellow", 500)};
-      --color-secondary: #{color.get-color("gray", 300)};
-      --color-success: #{color.get-color("green", 400)};
-      --color-info: #{color.get-color("sky", "base")};
-      --color-warning: #{color.get-color("yellow", 400)};
-      --color-danger: #{color.get-color("red", 400)};
+      --color-primary: #{color.get-color('yellow', 500)};
+      --color-secondary: #{color.get-color('gray', 300)};
+      --color-success: #{color.get-color('green', 400)};
+      --color-info: #{color.get-color('sky', 'base')};
+      --color-warning: #{color.get-color('yellow', 400)};
+      --color-danger: #{color.get-color('red', 400)};
       --color-contrast: #ffffff;
       --color-contrast-inverse: #000;
 
       // Text colors
       --color-text-primary: #ffffffde;
       --color-text-contrast: #ffffffde;
-      --color-text-secondary: #{color.get-color("gray", 300)};
-      --color-text-tertiary: #{color.get-color("bluegray", 500)};
+      --color-text-secondary: #{color.get-color('gray', 300)};
+      --color-text-tertiary: #{color.get-color('bluegray', 500)};
 
       // Component colors
       --color-component-background: #0b121c;
       --color-component-background-secondary: #000510;
-      --color-component-background-solid: #{color.get-color("bluegray", 900)};
+      --color-component-background-solid: #{color.get-color('bluegray', 900)};
 
       // Border colors
       --color-border: #5e564b;

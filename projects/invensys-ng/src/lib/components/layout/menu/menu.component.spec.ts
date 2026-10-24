@@ -1,10 +1,7 @@
 import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
-import {
-  CLAIMS_CHECKER,
-  ClaimsChecker,
-} from '../services/claims-checker.token';
+import { CLAIMS_CHECKER, ClaimsChecker } from '../services/claims-checker.token';
 import { MenuModel } from '../models/menu.model';
 import { Observable, of } from 'rxjs';
 import { provideRouter } from '@angular/router';
@@ -92,10 +89,7 @@ describe('MenuComponent', () => {
 
       await TestBed.configureTestingModule({
         imports: [MenuComponent],
-        providers: [
-          provideRouter([]),
-          { provide: CLAIMS_CHECKER, useValue: mockClaimsChecker },
-        ],
+        providers: [provideRouter([]), { provide: CLAIMS_CHECKER, useValue: mockClaimsChecker }],
       }).compileComponents();
 
       fixture = TestBed.createComponent(MenuComponent);
@@ -291,9 +285,7 @@ describe('MenuComponent', () => {
 
       // Should only check 'duplicate-claim' once
       expect(mockClaimsChecker.hasClaim).toHaveBeenCalledTimes(1);
-      expect(mockClaimsChecker.hasClaim).toHaveBeenCalledWith(
-        'duplicate-claim',
-      );
+      expect(mockClaimsChecker.hasClaim).toHaveBeenCalledWith('duplicate-claim');
     });
   });
 

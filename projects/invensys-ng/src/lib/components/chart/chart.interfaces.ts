@@ -14,8 +14,7 @@ export type IChartType =
 /**
  * Extended chart types including custom variants
  */
-export type IChartTypeExtended =
-  IChartType | 'bar-stack' | 'bar-large' | 'bar-horizontal';
+export type IChartTypeExtended = IChartType | 'bar-stack' | 'bar-large' | 'bar-horizontal';
 
 /**
  * Dataset configuration for a chart
@@ -39,7 +38,7 @@ export interface IChartData {
    * Chart type. Supports:
    * - 'bar' - standard bar chart
    * - 'bar-stack' - stacked bar chart
-   * - 'bar-large' - bar chart with larger height (40rem)
+   * - 'bar-large' - bar chart with larger height (480px)
    * - 'bar-horizontal' - horizontal bar chart
    * - 'pie' - pie chart
    * - 'doughnut' - doughnut chart

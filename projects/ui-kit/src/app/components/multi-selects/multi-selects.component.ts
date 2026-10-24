@@ -19,12 +19,14 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-multi-selects',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective,
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
     IMultiSelect,
     IButton,
     ReactiveFormsModule,
     FormsModule,
-    ],
+  ],
   templateUrl: './multi-selects.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './multi-selects.component.scss',
@@ -322,10 +324,7 @@ export class ExampleComponent {
 
   onSkillsObjectChange(values: any[]) {
     console.log('Skills Objects Changed (full objects):', values);
-    console.log(
-      'Form control value:',
-      this.basicForm.get('fullObjectSkills')?.value,
-    );
+    console.log('Form control value:', this.basicForm.get('fullObjectSkills')?.value);
     console.log('Array length:', values.length);
     console.log(
       'Types:',

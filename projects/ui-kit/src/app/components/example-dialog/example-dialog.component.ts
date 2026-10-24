@@ -1,38 +1,20 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, interval, map, takeWhile } from 'rxjs';
 import { IDialogBase } from '@shared/components/dialog/base-dialog.component';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { IInputText } from '@shared/components/input-text/input-text.component';
-import {
-  IListbox,
-  ListboxOption,
-} from '@shared/components/listbox/listbox.component';
+import { IListbox, ListboxOption } from '@shared/components/listbox/listbox.component';
 
 @Component({
   selector: 'app-example-dialog',
-  imports: [
-    CommonModule,
-    AsyncPipe,
-    ReactiveFormsModule,
-    IDialogActions,
-    IInputText,
-    IListbox,
-  ],
+  imports: [CommonModule, AsyncPipe, ReactiveFormsModule, IDialogActions, IInputText, IListbox],
   templateUrl: './example-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './example-dialog.component.scss',
 })
-export class ExampleDialogComponent
-  extends IDialogBase
-  implements OnInit, OnDestroy
-{
+export class ExampleDialogComponent extends IDialogBase implements OnInit, OnDestroy {
   public form: FormGroup;
   public departmentOptions$: Observable<ListboxOption[]>;
   private departmentSubject = new BehaviorSubject<ListboxOption[]>([]);
@@ -109,9 +91,7 @@ export class ExampleDialogComponent
         const newDepartment = additionalDepartments[index];
 
         // Check if department already exists to avoid duplicates
-        if (
-          !currentDepartments.some((dept) => dept['id'] === newDepartment['id'])
-        ) {
+        if (!currentDepartments.some((dept) => dept['id'] === newDepartment['id'])) {
           const updatedDepartments = [...currentDepartments, newDepartment];
           this.departmentSubject.next(updatedDepartments);
 

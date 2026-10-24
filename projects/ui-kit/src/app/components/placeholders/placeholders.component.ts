@@ -19,13 +19,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 })
 export class PlaceholdersComponent {
   // Arrow directions for demo
-  arrowDirections: PlaceholderArrowDirection[] = [
-    'left',
-    'right',
-    'up',
-    'down',
-    'none',
-  ];
+  arrowDirections: PlaceholderArrowDirection[] = ['left', 'right', 'up', 'down', 'none'];
 
   selectedDirection: PlaceholderArrowDirection = 'left';
 

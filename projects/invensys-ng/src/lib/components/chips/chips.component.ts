@@ -86,7 +86,13 @@ export class IChipsComponent implements OnChanges, AfterViewInit, OnDestroy {
       }
     }
 
-    if (changes['chips'] || changes['allowCloseAll'] || changes['boxed'] || changes['removable'] || changes['disabled']) {
+    if (
+      changes['chips'] ||
+      changes['allowCloseAll'] ||
+      changes['boxed'] ||
+      changes['removable'] ||
+      changes['disabled']
+    ) {
       this.queueOverflowCheck();
     }
   }

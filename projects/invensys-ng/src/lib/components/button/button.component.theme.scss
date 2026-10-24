@@ -1,7 +1,7 @@
-@use "../../themes/color-variables.scss" as colors;
+@use '../../themes/color-variables.scss' as colors;
 
 @mixin i-button-theme() {
-  // Primary
+  /* Primary */
   .i-button--primary {
     background: colors.$color-primary;
     color: colors.$color-contrast-inverse;
@@ -11,11 +11,7 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-primary;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-primary 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-primary 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-primary 7%, transparent);
       }
@@ -30,7 +26,7 @@
       }
     }
   }
-  // Secondary
+  /* Secondary */
   .i-button--secondary {
     background: colors.$color-secondary;
     color: colors.$color-contrast-inverse;
@@ -40,11 +36,7 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-secondary;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-secondary 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-secondary 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-secondary 7%, transparent);
       }
@@ -59,7 +51,7 @@
       }
     }
   }
-  // Success
+  /* Success */
   .i-button--success {
     background: colors.$color-success;
     color: colors.$color-contrast-inverse;
@@ -69,11 +61,7 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-success;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-success 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-success 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-success 7%, transparent);
       }
@@ -88,7 +76,7 @@
       }
     }
   }
-  // Info
+  /* Info */
   .i-button--info {
     background: colors.$color-info;
     color: colors.$color-contrast-inverse;
@@ -98,11 +86,7 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-info;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-info 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-info 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-info 7%, transparent);
       }
@@ -117,21 +101,17 @@
       }
     }
   }
-  // Warning
+  /* Warning */
   .i-button--warning {
     background: colors.$color-warning;
-    color: colors.$color-white;
+    color: colors.$color-text-contrast;
     &:hover:not(:disabled) {
       background: color-mix(in srgb, colors.$color-warning 80%, transparent);
     }
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-warning;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-warning 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-warning 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-warning 7%, transparent);
       }
@@ -146,21 +126,17 @@
       }
     }
   }
-  // Danger
+  /* Danger */
   .i-button--danger {
     background: colors.$color-danger;
-    color: colors.$color-white;
+    color: colors.$color-text-contrast;
     &:hover:not(:disabled) {
       background: color-mix(in srgb, colors.$color-danger 80%, transparent);
     }
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-danger;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-danger 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-danger 40%, transparent) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-danger 7%, transparent);
       }
@@ -175,7 +151,7 @@
       }
     }
   }
-  // Contrast
+  /* Contrast */
   .i-button--contrast {
     background: colors.$color-contrast;
     color: colors.$color-contrast-inverse;
@@ -185,11 +161,7 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-text-secondary;
-      border-color: color-mix(
-        in srgb,
-        colors.$color-contrast 40%,
-        transparent
-      ) !important;
+      border-color: color-mix(in srgb, colors.$color-contrast 40%, transparent) !important;
       &:hover:not(:disabled) {
         color: colors.$color-text-primary;
         background: colors.$color-surface-hover;
@@ -208,9 +180,9 @@
     }
   }
 
-  // Disabled actions use a neutral, non-semantic surface.  Keeping the severity
-  // colour on a disabled control makes destructive and primary actions appear
-  // available, especially for text buttons used in dense editors.
+  /* Disabled actions use a neutral, non-semantic surface.  Keeping the severity */
+  /* colour on a disabled control makes destructive and primary actions appear */
+  /* available, especially for text buttons used in dense editors. */
   .i-button:disabled {
     background: colors.$color-disabled-background;
     border-color: colors.$color-disabled-border;
@@ -229,5 +201,26 @@
     background: transparent;
     border-color: transparent;
     color: colors.$color-text-disabled;
+  }
+
+  .i-button-wrapper {
+    .i-button {
+      border-color: transparent;
+
+      &--raised {
+        box-shadow:
+          0 3px 1px -2px color-mix(in srgb, colors.$color-shadow 20%, transparent),
+          0 2px 2px 0 color-mix(in srgb, colors.$color-shadow 14%, transparent),
+          0 1px 5px 0 color-mix(in srgb, colors.$color-shadow 12%, transparent);
+      }
+
+      &--outlined {
+        box-shadow: none;
+      }
+
+      &--text {
+        box-shadow: none;
+      }
+    }
   }
 }

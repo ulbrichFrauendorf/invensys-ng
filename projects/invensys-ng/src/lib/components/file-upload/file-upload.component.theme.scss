@@ -6,17 +6,27 @@
     &__drop-zone {
       border-color: colors.$color-surface-border;
       background: colors.$color-surface-card;
-      &--active, &:focus-within {
+      &--active,
+      &:focus-within {
         border-color: colors.$color-primary;
         background: colors.$color-surface-hover;
       }
     }
-    &__icon, &__row > i { color: colors.$color-primary; }
-    &__description { color: colors.$color-text-secondary; }
-    &__row { border-color: colors.$color-surface-border; }
-    &--disabled &__drop-zone {
-      background: colors.$color-disabled-background;
-      border-color: colors.$color-disabled-border;
+    &__icon,
+    &__row > i {
+      color: colors.$color-primary;
+    }
+    &__description {
+      color: colors.$color-text-secondary;
+    }
+    &__row {
+      border-color: colors.$color-surface-border;
+    }
+    &--disabled {
+      &__drop-zone {
+        background: colors.$color-disabled-background;
+        border-color: colors.$color-disabled-border;
+      }
     }
   }
 }

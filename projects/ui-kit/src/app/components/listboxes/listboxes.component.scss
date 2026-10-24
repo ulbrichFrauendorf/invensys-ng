@@ -1,8 +1,19 @@
-@use "../shared-demo-styles.scss" as *;
+@use './listboxes.component.theme.scss' as theme;
+
+@use '../shared-demo-styles.scss' as *;
 
 .wrapper {
   height: 500px;
   overflow: auto;
-  /* ensure the inner listbox fills the wrapper and scrolls */
+
   display: block;
 }
+
+.demo-info {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 14.4px;
+}
+
+@include theme.listboxes-theme();

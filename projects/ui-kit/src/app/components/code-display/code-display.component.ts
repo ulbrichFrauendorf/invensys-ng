@@ -17,7 +17,7 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
   imports: [IButton],
   template: `
     <div class="code-display-container" [class.code-display--embedded]="embedded">
-      <div class="code-section dark">
+      <div class="code-section">
         <div class="code-header">
           @if (showTabs && (tsCode || scssCode)) {
             <div class="tab-container">

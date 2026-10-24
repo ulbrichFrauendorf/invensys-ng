@@ -1,58 +1,69 @@
-@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+$background: #2b2b2b;
+$panel: #3c3f41;
+$border: #4b4e50;
+$text: #a9b7c6;
+$comment: #808080;
+$keyword: #cc7832;
+$string: #6a8759;
+$number: #6897bb;
+$function: #ffc66d;
+$tag: #e8bf6a;
+$attribute: #bababa;
+$binding: #9876aa;
 
 @mixin code-display-theme() {
   .code-display-container {
     .code-section {
-      border-color: colors.$color-surface-border;
-      background: colors.$color-black;
-      box-shadow: colors.$color-box-shadow;
+      border-color: $border;
+      background: $background;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 
       .code-header {
-        background: colors.$color-surface-section;
-        border-color: colors.$color-surface-border;
+        background: $panel;
+        border-color: $border;
         .code-title {
-          color: colors.$color-text-primary;
+          color: $text;
         }
       }
 
       .code-block {
-        background: colors.$color-black;
+        background: $background;
         pre {
           background: transparent;
-          color: colors.$color-text-primary;
+          color: $text;
           code {
             background: transparent;
             color: inherit;
             .html-tag,
             .angular-interpolation,
             .scss-selector {
-              color: colors.$color-primary;
+              color: $tag;
             }
             .html-attr-name {
-              color: colors.$color-text-secondary;
+              color: $attribute;
             }
             .html-attr-value,
             .code-string {
-              color: colors.$color-success;
+              color: $string;
             }
             .angular-binding,
             .scss-property,
             .scss-variable {
-              color: colors.$color-info;
+              color: $binding;
             }
             .angular-event,
             .code-keyword,
             .scss-pseudo {
-              color: colors.$color-warning;
+              color: $keyword;
             }
             .code-number {
-              color: colors.$color-info;
+              color: $number;
             }
             .code-function {
-              color: colors.$color-primary;
+              color: $function;
             }
             .code-comment {
-              color: colors.$color-text-tertiary;
+              color: $comment;
             }
           }
         }

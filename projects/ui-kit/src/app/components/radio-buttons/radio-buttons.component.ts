@@ -11,12 +11,14 @@ import { IButton } from '../../../../../invensys-ng/src/lib/components/button/bu
 import { JsonPipe } from '@angular/common';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
+import { IPanel } from '../../../../../invensys-ng/src/lib/components/panel/panel.component';
 
 @Component({
   selector: 'app-radio-buttons',
   imports: [
     DemoPlaygroundComponent,
     DemoOptionDirective,
+    IPanel,
     IRadioButton,
     IButton,
     FormsModule,

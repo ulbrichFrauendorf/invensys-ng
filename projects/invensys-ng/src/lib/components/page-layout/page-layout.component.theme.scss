@@ -8,6 +8,10 @@
         .page-header {
           background: colors.$color-surface-ground;
 
+          &.page-header-snapped {
+            box-shadow: colors.$color-box-shadow;
+          }
+
           .page-heading {
             .eyebrow {
               color: colors.$color-primary;

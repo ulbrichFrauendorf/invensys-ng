@@ -44,30 +44,39 @@ export class PageLayoutComponent {
       const topbar = scrollport?.querySelector<HTMLElement>(':scope > i-topbar');
       if (!header || !scrollport || !topbar) return;
 
+      const contentScrollport = body.closest<HTMLElement>('.layout-main-container');
       const mobile = window.matchMedia('(max-width: 991px)');
       const update = () => {
         let offset = 0;
+        const bodyTop = body.getBoundingClientRect().top;
+        const stickyEdge = mobile.matches
+          ? topbar.getBoundingClientRect().bottom
+          : (contentScrollport ?? scrollport).getBoundingClientRect().top;
+        const snapped = bodyTop < stickyEdge;
         if (mobile.matches) {
           const top = scrollport.getBoundingClientRect().top + scrollport.clientTop;
-          const bodyTop = body.getBoundingClientRect().top;
           // Snap the whole heading to the sticky edge on first contact with the app bar.
           // Measure its untransformed parent so the offset cannot feed back into itself.
-          if (bodyTop < topbar.getBoundingClientRect().bottom) {
+          if (snapped) {
             offset = Math.max(0, bodyTop - top);
           }
         }
+        header.classList.toggle('page-header-snapped', snapped);
         header.style.setProperty('--page-header-snap-offset', `${-offset}px`);
       };
       const observer = new ResizeObserver(update);
       observer.observe(body);
       observer.observe(topbar);
       scrollport.addEventListener('scroll', update, { passive: true });
+      contentScrollport?.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
       update();
       onCleanup(() => {
         observer.disconnect();
         scrollport.removeEventListener('scroll', update);
+        contentScrollport?.removeEventListener('scroll', update);
         window.removeEventListener('resize', update);
+        header.classList.remove('page-header-snapped');
         header.style.removeProperty('--page-header-snap-offset');
       });
     });

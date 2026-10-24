@@ -6,7 +6,7 @@
     &__trigger {
       background: colors.$color-surface-section;
       color: colors.$color-text-primary;
-      border-bottom-color: colors.$color-text-tertiary;
+      border-bottom-color: transparent;
       &:hover:not(:disabled) {
         background: colors.$color-surface-hover;
       }
@@ -42,11 +42,6 @@
       color: colors.$color-primary;
     }
     &__item--completed {
-      .i-stepper__trigger {
-        border-bottom-color: colors.$color-success;
-      }
-    }
-    &__item--completed {
       .i-stepper__indicator {
         color: colors.$color-success;
       }
@@ -60,8 +55,5 @@
     &__item--disabled {
       opacity: 0.55;
     }
-  }
-  .i-stepper__trigger {
-    border-bottom-color: transparent;
   }
 }

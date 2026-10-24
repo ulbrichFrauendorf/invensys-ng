@@ -11,34 +11,36 @@
     [sourceCode]="codeExamples.basic"
     [tsCode]="tsExamples.basic"
   >
-    <div class="radio-examples">
-      <div class="example-row">
-        <i-radio-button
-          label="Option 1"
-          value="option1"
-          name="options"
-          [(ngModel)]="selectedOption"
-          (onChange)="onOptionChange($event)"
-        />
+    <i-panel header="Basic ngModel Usage" [toggleable]="false">
+      <div class="radio-examples">
+        <div class="example-row">
+          <i-radio-button
+            label="Option 1"
+            value="option1"
+            name="options"
+            [(ngModel)]="selectedOption"
+            (onChange)="onOptionChange($event)"
+          />
+        </div>
+        <div class="example-row">
+          <i-radio-button
+            label="Option 2"
+            value="option2"
+            name="options"
+            [(ngModel)]="selectedOption"
+          />
+        </div>
+        <div class="example-row">
+          <i-radio-button
+            label="Option 3"
+            value="option3"
+            name="options"
+            [(ngModel)]="selectedOption"
+          />
+        </div>
+        <div class="status">Selected: {{ selectedOption }}</div>
       </div>
-      <div class="example-row">
-        <i-radio-button
-          label="Option 2"
-          value="option2"
-          name="options"
-          [(ngModel)]="selectedOption"
-        />
-      </div>
-      <div class="example-row">
-        <i-radio-button
-          label="Option 3"
-          value="option3"
-          name="options"
-          [(ngModel)]="selectedOption"
-        />
-      </div>
-      <div class="status">Selected: {{ selectedOption }}</div>
-    </div>
+    </i-panel>
   </ng-template>
 
   <ng-template
@@ -46,41 +48,50 @@
     label="Radio Group Example"
     [sourceCode]="codeExamples.gender"
   >
-    <div class="radio-examples">
-      <div class="example-row">
-        <i-radio-button label="Male" value="male" name="gender" [(ngModel)]="selectedGender" />
+    <i-panel header="Radio Group Example" [toggleable]="false">
+      <div class="radio-examples">
+        <div class="example-row">
+          <i-radio-button label="Male" value="male" name="gender" [(ngModel)]="selectedGender" />
+        </div>
+        <div class="example-row">
+          <i-radio-button
+            label="Female"
+            value="female"
+            name="gender"
+            [(ngModel)]="selectedGender"
+          />
+        </div>
+        <div class="example-row">
+          <i-radio-button label="Other" value="other" name="gender" [(ngModel)]="selectedGender" />
+        </div>
+        <div class="status">Selected: {{ selectedGender }}</div>
       </div>
-      <div class="example-row">
-        <i-radio-button label="Female" value="female" name="gender" [(ngModel)]="selectedGender" />
-      </div>
-      <div class="example-row">
-        <i-radio-button label="Other" value="other" name="gender" [(ngModel)]="selectedGender" />
-      </div>
-      <div class="status">Selected: {{ selectedGender }}</div>
-    </div>
+    </i-panel>
   </ng-template>
 
   <ng-template appDemoOption="option-3" label="Disabled State" [sourceCode]="codeExamples.disabled">
-    <div class="radio-examples">
-      <div class="example-row">
-        <i-radio-button
-          label="Available"
-          value="available"
-          name="availability"
-          [(ngModel)]="selectedPlan"
-        />
+    <i-panel header="Disabled State" [toggleable]="false">
+      <div class="radio-examples">
+        <div class="example-row">
+          <i-radio-button
+            label="Available"
+            value="available"
+            name="availability"
+            [(ngModel)]="selectedPlan"
+          />
+        </div>
+        <div class="example-row">
+          <i-radio-button
+            label="Unavailable (Disabled)"
+            value="unavailable"
+            name="availability"
+            [disabled]="true"
+            [(ngModel)]="selectedPlan"
+          />
+        </div>
+        <div class="status">Selected: {{ selectedPlan || 'None' }}</div>
       </div>
-      <div class="example-row">
-        <i-radio-button
-          label="Unavailable (Disabled)"
-          value="unavailable"
-          name="availability"
-          [disabled]="true"
-          [(ngModel)]="selectedPlan"
-        />
-      </div>
-      <div class="status">Selected: {{ selectedPlan || 'None' }}</div>
-    </div>
+    </i-panel>
   </ng-template>
 
   <ng-template
@@ -89,29 +100,31 @@
     [sourceCode]="codeExamples.formControl"
     [tsCode]="tsExamples.formControl"
   >
-    <div class="radio-examples">
-      <div class="example-row">
-        <i-radio-button label="Red" value="red" name="color" [formControl]="colorControl" />
+    <i-panel header="Reactive Forms - FormControl" [toggleable]="false">
+      <div class="radio-examples">
+        <div class="example-row">
+          <i-radio-button label="Red" value="red" name="color" [formControl]="colorControl" />
+        </div>
+        <div class="example-row">
+          <i-radio-button label="Green" value="green" name="color" [formControl]="colorControl" />
+        </div>
+        <div class="example-row">
+          <i-radio-button label="Blue" value="blue" name="color" [formControl]="colorControl" />
+        </div>
+        <div class="status">Value: {{ colorControl.value }}</div>
+        <div class="example-row">
+          <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('red')">
+            Set Red
+          </i-button>
+          <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('green')">
+            Set Green
+          </i-button>
+          <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('blue')">
+            Set Blue
+          </i-button>
+        </div>
       </div>
-      <div class="example-row">
-        <i-radio-button label="Green" value="green" name="color" [formControl]="colorControl" />
-      </div>
-      <div class="example-row">
-        <i-radio-button label="Blue" value="blue" name="color" [formControl]="colorControl" />
-      </div>
-      <div class="status">Value: {{ colorControl.value }}</div>
-      <div class="example-row">
-        <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('red')">
-          Set Red
-        </i-button>
-        <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('green')">
-          Set Green
-        </i-button>
-        <i-button severity="secondary" [text]="true" (clicked)="colorControl.setValue('blue')">
-          Set Blue
-        </i-button>
-      </div>
-    </div>
+    </i-panel>
   </ng-template>
 
   <ng-template
@@ -120,80 +133,82 @@
     [sourceCode]="codeExamples.reactiveForm"
     [tsCode]="tsExamples.reactiveForm"
   >
-    <div class="radio-examples">
-      <form [formGroup]="surveyForm" (ngSubmit)="onFormSubmit()">
-        <div class="form-section">
-          <h4>Customer Satisfaction Survey</h4>
+    <i-panel header="Reactive Forms - FormGroup" [toggleable]="false">
+      <div class="radio-examples">
+        <form [formGroup]="surveyForm" (ngSubmit)="onFormSubmit()">
+          <div class="form-section">
+            <h4>Customer Satisfaction Survey</h4>
 
-          <div class="form-group">
-            <label class="group-label">How satisfied are you?</label>
-            <div class="example-row">
-              <i-radio-button
-                label="Very Good"
-                value="very-good"
-                name="satisfaction"
-                formControlName="satisfaction"
-              />
+            <div class="form-group">
+              <label class="group-label">How satisfied are you?</label>
+              <div class="example-row">
+                <i-radio-button
+                  label="Very Good"
+                  value="very-good"
+                  name="satisfaction"
+                  formControlName="satisfaction"
+                />
+              </div>
+              <div class="example-row">
+                <i-radio-button
+                  label="Good"
+                  value="good"
+                  name="satisfaction"
+                  formControlName="satisfaction"
+                />
+              </div>
+              <div class="example-row">
+                <i-radio-button
+                  label="Average"
+                  value="average"
+                  name="satisfaction"
+                  formControlName="satisfaction"
+                />
+              </div>
+              <div class="example-row">
+                <i-radio-button
+                  label="Poor"
+                  value="poor"
+                  name="satisfaction"
+                  formControlName="satisfaction"
+                />
+              </div>
             </div>
-            <div class="example-row">
-              <i-radio-button
-                label="Good"
-                value="good"
-                name="satisfaction"
-                formControlName="satisfaction"
-              />
-            </div>
-            <div class="example-row">
-              <i-radio-button
-                label="Average"
-                value="average"
-                name="satisfaction"
-                formControlName="satisfaction"
-              />
-            </div>
-            <div class="example-row">
-              <i-radio-button
-                label="Poor"
-                value="poor"
-                name="satisfaction"
-                formControlName="satisfaction"
-              />
+
+            <div class="form-group">
+              <label class="group-label">Would you recommend us?</label>
+              <div class="example-row">
+                <i-radio-button
+                  label="Yes"
+                  value="yes"
+                  name="recommendation"
+                  formControlName="recommendation"
+                />
+              </div>
+              <div class="example-row">
+                <i-radio-button
+                  label="No"
+                  value="no"
+                  name="recommendation"
+                  formControlName="recommendation"
+                />
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="group-label">Would you recommend us?</label>
-            <div class="example-row">
-              <i-radio-button
-                label="Yes"
-                value="yes"
-                name="recommendation"
-                formControlName="recommendation"
-              />
-            </div>
-            <div class="example-row">
-              <i-radio-button
-                label="No"
-                value="no"
-                name="recommendation"
-                formControlName="recommendation"
-              />
-            </div>
+          <div class="form-actions">
+            <i-button severity="primary" type="submit">Submit</i-button>
+            <i-button severity="secondary" (clicked)="resetForm()"> Reset </i-button>
           </div>
-        </div>
+        </form>
 
-        <div class="form-actions">
-          <i-button severity="primary" type="submit">Submit</i-button>
-          <i-button severity="secondary" (clicked)="resetForm()"> Reset </i-button>
+        <div class="form-output">
+          <h5>Form Value:</h5>
+          <pre>{{ surveyForm.value | json }}</pre>
+          <h5>Form Status:</h5>
+          <pre>{{ surveyForm.status }}</pre>
         </div>
-      </form>
-
-      <div class="form-output">
-        <h5>Form Value:</h5>
-        <pre>{{ surveyForm.value | json }}</pre>
-        <h5>Form Status:</h5>
-        <pre>{{ surveyForm.status }}</pre>
       </div>
-    </div>
+    </i-panel>
   </ng-template>
 </app-demo-playground>

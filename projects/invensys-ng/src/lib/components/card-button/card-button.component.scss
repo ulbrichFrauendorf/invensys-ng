@@ -1,5 +1,4 @@
 @use './card-button.component.theme.scss' as theme;
-@use '../../themes/color-variables.scss' as colors;
 @use '../../themes/variables' as vars;
 
 :host {
@@ -27,6 +26,7 @@
   border-width: 1px;
   border-style: solid;
   border-radius: vars.$borderRadius;
+  overflow: hidden;
   font: inherit;
   text-align: inherit;
   text-decoration: none;

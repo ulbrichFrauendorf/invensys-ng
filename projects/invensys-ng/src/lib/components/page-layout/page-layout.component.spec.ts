@@ -140,6 +140,7 @@ describe('PageLayoutComponent', () => {
         const mobile = matchMedia('(max-width: 991px)').matches;
         const scrollOwner = mobile ? wrapper : shell;
         scrollOwner.style.scrollBehavior = 'auto';
+        expect(getComputedStyle(header).boxShadow).toBe('none');
         expect(getComputedStyle(shell).padding).toBe('0px');
         page.style.setProperty('--page-layout-padding', '8px');
         expect(getComputedStyle(header).paddingLeft).toBe('8px');
@@ -160,16 +161,19 @@ describe('PageLayoutComponent', () => {
             await waitForScroll();
             expect(Math.abs(header.getBoundingClientRect().top - edge)).toBeLessThan(2);
             expect(header.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(barBottom);
+            expect(getComputedStyle(header).boxShadow).not.toBe('none');
           }
           wrapper.scrollTop = 0;
           await waitForScroll();
           expect(Math.abs(header.getBoundingClientRect().top - bodyTop)).toBeLessThan(2);
+          expect(getComputedStyle(header).boxShadow).toBe('none');
         }
         scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
         await new Promise(requestAnimationFrame);
         expect(
           Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top),
         ).toBeLessThan(2);
+        expect(getComputedStyle(header).boxShadow).not.toBe('none');
         if (mobile && sidebar) {
           expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(
             header.getBoundingClientRect().top,
@@ -201,6 +205,7 @@ describe('PageLayoutComponent', () => {
         }
         scrollOwner.scrollTop = 0;
         await new Promise(requestAnimationFrame);
+        expect(getComputedStyle(header).boxShadow).toBe('none');
         if (sidebar && initialSidebarTop !== undefined) {
           expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
         }

@@ -58,3 +58,13 @@ npm run test:frontend
 ```
 
 This checks native control wiring and touch CSS; verify the operating system picker itself on physical iOS and Android devices before release.
+
+## Styling verification — 24 October 2026
+
+The library's `page-layout` applies the shared shadow token when its content header snaps, using the desktop content scrollport or mobile shell scrollport, and clears it when the header returns. Its existing desktop/touch regressions cover this behavior with and without a sidebar. The `card-button` clips the nested card surface to its rounded boundary so the primary selection border stays visible. The `stepper` uses a transparent bottom border for inactive and completed steps; only the active, incomplete step has the primary underline.
+
+The Radio Buttons, Checkboxes, and Toggles demos wrap each example in an `i-panel` with `[toggleable]="false"`. These changes follow the shared Angular requirements for library controls, theme-owned colors, nested SCSS, and preserved public inputs.
+
+Verification: production library/UI-kit/catalog build passed, as did 32 page-layout/layout browser tests, 5 card-button tests, and 13 stepper tests. Prettier checked only the changed `.ts`, `.html`, and `.scss` files, using the sibling iTrace frontend configuration because this checkout has no Prettier configuration. The build retains its existing confirmation-dialog dynamic/static import warning.
+
+Local production previews were checked in Chrome at 1440px and 390px in light and dark themes. All 17 form-control examples remained open in fixed panels; card selection, completed-step underlines, and header snap/return states were checked. Space still changes radio, checkbox, and toggle values within the panels; Enter selects a card with a visible keyboard focus outline. Phone-sized browser emulation does not verify physical-device rendering.

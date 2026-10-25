@@ -9,7 +9,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-whispers',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton],
+  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IWhisper],
   templateUrl: './whispers.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './whispers.component.scss',

@@ -1,3 +1,5 @@
+@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+
 $background: #2b2b2b;
 $panel: #3c3f41;
 $border: #4b4e50;
@@ -22,7 +24,7 @@ $binding: #9876aa;
         background: $panel;
         border-color: $border;
         .code-title {
-          color: $text;
+          color: colors.$color-primary;
         }
       }
 

@@ -38,6 +38,8 @@ export interface MultiSelectOption {
   [key: string]: any;
 }
 
+export type MultiSelectSelectionDisplay = 'tags' | 'list';
+
 /**
  * Multi-Select Component
  *
@@ -167,6 +169,9 @@ export class IMultiSelect implements ControlValueAccessor {
    * @default 3
    */
   @Input() maxSelectedLabels = 3;
+
+  /** Selected-item presentation. None and list show a count in the input; tags preserve the label limit. */
+  @Input() selectionDisplay: MultiSelectSelectionDisplay = 'tags';
 
   /**
    * Template string for selected items count label (use {0} for count placeholder)
@@ -514,7 +519,7 @@ export class IMultiSelect implements ControlValueAccessor {
 
     const selectedLabels = this.getSelectedLabels();
 
-    if (selectedLabels.length <= this.maxSelectedLabels) {
+    if (this.selectionDisplay === 'tags' && selectedLabels.length <= this.maxSelectedLabels) {
       return selectedLabels.join(', ');
     } else {
       return this.selectedItemsLabel.replace('{0}', selectedLabels.length.toString());

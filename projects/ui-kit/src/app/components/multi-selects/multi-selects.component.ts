@@ -7,7 +7,11 @@ import {
   Validators,
   FormsModule,
 } from '@angular/forms';
-import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
+import {
+  IMultiSelect,
+  MultiSelectSelectionDisplay,
+} from '@shared/components/multi-select/multi-select.component';
+import { ISelect } from '@shared/components/select/select.component';
 import { IButton } from '@shared/components/button/button.component';
 export interface MultiSelectOption {
   value: any;
@@ -24,6 +28,7 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
     DemoPlaygroundComponent,
     DemoOptionDirective,
     IMultiSelect,
+    ISelect,
     IButton,
     ReactiveFormsModule,
     FormsModule,
@@ -34,6 +39,11 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 })
 export class MultiSelectsComponent implements OnInit {
   readonly loading = loadingSignal(false);
+  readonly selectionDisplayOptions: { label: string; value: MultiSelectSelectionDisplay }[] = [
+    { label: 'Tags', value: 'tags' },
+    { label: 'List', value: 'list' },
+  ];
+  selectionDisplay = this.selectionDisplayOptions[1];
 
   basicForm: FormGroup;
   validationForm: FormGroup;
@@ -108,6 +118,13 @@ export class MultiSelectsComponent implements OnInit {
 
   // HTML Code examples organized by category
   codeExamples = {
+    selectionDisplay: `<i-multi-select
+  label="Skills"
+  [options]="skills"
+  optionLabel="label"
+  selectionDisplay="list"
+  [showClear]="true"
+  [(ngModel)]="selectedSkills" />`,
     ngModel: `// ngModel now stores full objects
 <i-multi-select [loading]="loading()"
   label="Skills"

@@ -8,6 +8,7 @@ import {
   EnvironmentInjector,
   inject,
   ApplicationRef,
+  afterEveryRender,
 } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { IDialog } from '../dialog.component';
@@ -43,16 +44,12 @@ import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
  *
  * @example
  * ```typescript
- * // Responsive dialog with custom styles
- * openResponsiveDialog() {
+ * // Dialog with custom styles
+ * openFormDialog() {
  *   this.dialogService.open(FormComponent, {
  *     header: 'Create New Item',
  *     width: '600px',
  *     contentStyle: { overflow: 'auto', padding: '20px' },
- *     breakpoints: {
- *       '960px': '75vw',
- *       '640px': '90vw'
- *     },
  *     data: { mode: 'create' }
  *   });
  * }
@@ -130,7 +127,6 @@ export class DialogService {
     dialogRef.instance.width = config.width || '300px';
     dialogRef.instance.height = config.height;
     dialogRef.instance.contentStyle = config.contentStyle;
-    dialogRef.instance.breakpoints = config.breakpoints;
     dialogRef.instance.closable = config.closable !== false;
     dialogRef.instance.modal = config.modal !== false;
     dialogRef.instance.dismissableMask = config.dismissableMask ?? false;
@@ -205,6 +201,26 @@ export class DialogService {
     if (dialogContent) {
       dialogContent.appendChild(componentRef.location.nativeElement);
     }
+
+    // Runtime component views do not participate in the wrapper's content projection.
+    // Move the live nodes so their bindings, events and Angular destruction remain intact.
+    const projectFooter = () => {
+      const host = componentRef.location.nativeElement as HTMLElement;
+      const footer = dialogRef.instance.dialogElement?.nativeElement.querySelector(
+        '.i-card-footer',
+      ) as HTMLElement | null;
+      if (!footer) return;
+      for (const node of host.querySelectorAll<HTMLElement>('[slot="footer"]')) {
+        const owner = node.parentElement?.closest('i-card, i-dialog, [slot="footer"]');
+        if (owner && host.contains(owner)) continue;
+        footer.appendChild(node);
+      }
+    };
+    projectFooter();
+    const footerRendering = afterEveryRender(projectFooter, {
+      injector: this.environmentInjector,
+    });
+    componentRef.onDestroy(() => footerRendering.destroy());
 
     return ref;
   }

@@ -137,10 +137,6 @@ export class ConfirmationDialogService {
       header: config.header,
       width: '400px',
       contentStyle: { overflow: 'auto' },
-      breakpoints: {
-        '960px': { width: '720px' },
-        '640px': { width: '576px' },
-      },
       data: {
         message: config.message,
         header: config.header,

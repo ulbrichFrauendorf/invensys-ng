@@ -1,63 +1,47 @@
 @use '../../themes/color-variables.scss' as colors;
 
 @mixin i-multi-select-theme() {
-  .i-multi-select-error {
-    color: colors.$color-danger;
-  }
-
-  .i-multi-select-icons-overlay {
-    color: colors.$color-text-secondary;
-  }
-
-  .i-multi-select-dropdown {
-    background: colors.$color-component-background;
-    border: 1px solid colors.$color-surface-border;
-
-    .i-multi-select-filter {
-      .i-multi-select-search {
-        border-color: colors.$color-surface-border;
-        background: colors.$color-surface-ground;
+  .i-option-field {
+    .i-multi-select-selection {
+      .i-multi-select-selected-item {
+        border: 1px solid var(--surface-border);
+        background: colors.$color-component-background;
         color: colors.$color-text-primary;
 
-        &:focus {
-          border-color: colors.$color-primary;
-          box-shadow: colors.$color-box-shadow;
+        .i-multi-select-selected-label {
+          color: colors.$color-text-primary;
+        }
+
+        .i-multi-select-remove {
+          background: transparent;
+          color: colors.$color-text-secondary;
+
+          &:hover:not(:disabled) {
+            background: colors.$color-surface-hover;
+          }
+
+          &:focus-visible {
+            outline-color: colors.$color-primary;
+          }
+
+          &:disabled {
+            color: colors.$color-text-disabled;
+          }
         }
       }
     }
 
-    .i-multi-select-options {
-      background: transparent;
+    &.i-option-field--disabled {
+      .i-multi-select-selection {
+        .i-multi-select-selected-item {
+          background: colors.$color-disabled-background;
+          color: colors.$color-text-disabled;
 
-      .i-multi-select-option {
-        color: colors.$color-text-primary;
-
-        &:hover {
-          background-color: colors.$color-surface-hover;
-        }
-
-        &.selected {
-          background-color: colors.$color-surface-hover;
-        }
-
-        .i-multi-select-checkbox {
-          accent-color: colors.$color-primary;
+          .i-multi-select-selected-label {
+            color: colors.$color-text-disabled;
+          }
         }
       }
-
-      .i-multi-select-no-options {
-        color: colors.$color-text-secondary;
-      }
-    }
-  }
-
-  .invalid {
-    .i-multi-select-trigger {
-      border-color: colors.$color-danger;
-    }
-
-    .i-label {
-      color: colors.$color-danger;
     }
   }
 }

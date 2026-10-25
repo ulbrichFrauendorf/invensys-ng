@@ -1,2 +1,64 @@
-@use '../../themes/option-field' as field;
+@use "../../themes/option-field" as field;
+@use "../../themes/variables" as vars;
+@use "./multi-select.component.theme" as theme;
 @include field.option-field();
+@include theme.i-multi-select-theme();
+
+.i-option-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .i-multi-select-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    .i-multi-select-selected-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      padding: 0 4px 0 12px;
+      border-radius: vars.$componentBorderRadius;
+
+      .i-multi-select-selected-label {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .i-multi-select-remove {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: 0;
+        border-radius: vars.$componentBorderRadius;
+        font: inherit;
+        cursor: pointer;
+
+        &:focus-visible {
+          outline: 2px solid;
+          outline-offset: -2px;
+        }
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+
+        @media (pointer: coarse) {
+          width: 44px;
+          height: 44px;
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   class="dialogs-demo"
   title="Dialogs"
   eyebrow="Overlays"
-  description="Modal dialog components with dynamic service-based and template-based implementations. Flexible and accessible dialogs for displaying content, forms, and user interactions."
+  description="Open dialogs from a service or template. All dialogs fit the viewport automatically; width and height set their preferred size."
 >
   <ng-template
     appDemoOption="option-1"
@@ -36,9 +36,6 @@
       header="Welcome to Invensys"
       width="500px"
       height="400px"
-      [breakpoints]="{
-        '640px': { width: '576px', height: '510px' },
-      }"
     >
       <div class="dialog-content basic-dialog">
         <div class="dialog-icon">
@@ -103,9 +100,6 @@
       [closable]="true"
       header="Notification"
       width="384px"
-      [breakpoints]="{
-        '640px': { width: '576px' },
-      }"
     >
       <div class="dialog-content basic-dialog">
         <div class="dialog-icon success">
@@ -127,93 +121,9 @@
   </ng-template>
 
   <ng-template
-    appDemoOption="option-4"
-    label="Responsive Dialog"
-    [sourceCode]="codeExamples.responsive"
-  >
-    <div class="demo-content">
-      <p>Dialogs that adapt to different screen sizes using breakpoints.</p>
-      <i-button severity="info" (clicked)="showResponsiveDialogModal()"
-        >Open Responsive Dialog</i-button
-      >
-    </div>
-
-    <!-- Responsive Dialog Template -->
-    <i-dialog
-      [(visible)]="showResponsiveDialog"
-      header="Screen Size Adaptation"
-      width="800px"
-      height="600px"
-      [breakpoints]="{
-        '960px': { width: '720px', height: '420px' },
-        '640px': { width: '576px', height: '480px' },
-      }"
-    >
-      <div class="dialog-content responsive-dialog">
-        <div class="responsive-info-card">
-          <div class="info-header">
-            <i class="pi pi-desktop"></i>
-            <h5>Current Breakpoint</h5>
-          </div>
-          <p class="breakpoint-indicator">
-            Resize your browser to see the dialog adapt automatically.
-          </p>
-        </div>
-
-        <div class="breakpoints-grid">
-          <div class="breakpoint-card">
-            <div class="breakpoint-icon">
-              <i class="pi pi-desktop"></i>
-            </div>
-            <div class="breakpoint-details">
-              <strong>Desktop</strong>
-              <span class="breakpoint-value">50vw</span>
-              <small>> 960px</small>
-            </div>
-          </div>
-          <div class="breakpoint-card">
-            <div class="breakpoint-icon">
-              <i class="pi pi-tablet"></i>
-            </div>
-            <div class="breakpoint-details">
-              <strong>Tablet</strong>
-              <span class="breakpoint-value">75vw</span>
-              <small>≤ 960px</small>
-            </div>
-          </div>
-          <div class="breakpoint-card">
-            <div class="breakpoint-icon">
-              <i class="pi pi-mobile"></i>
-            </div>
-            <div class="breakpoint-details">
-              <strong>Mobile</strong>
-              <span class="breakpoint-value">90vw</span>
-              <small>≤ 640px</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="responsive-tip">
-          <i class="pi pi-info-circle" aria-hidden="true"></i>
-          <p>
-            All dialogs are constrained to a maximum height of 80vh for optimal mobile experience.
-          </p>
-        </div>
-      </div>
-      <i-dialog-actions
-        slot="footer"
-        (cancelEvent)="onResponsiveDialogHide()"
-        (submitEvent)="onResponsiveDialogHide()"
-        submitLabel="Got It"
-        cancelLabel="Close"
-      ></i-dialog-actions>
-    </i-dialog>
-  </ng-template>
-
-  <ng-template
     appDemoOption="option-5"
     label="Dialog with Dropdowns (Test Case)"
-    sourceCodeEncoded="%3Cdiv%20class%3D%22demo-content%22%3E%0A%20%20%20%20%20%20%20%20%3Cp%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETesting%20dropdown%20behavior%20in%20dialogs%3A%3C%2Fstrong%3E%20This%20dialog%0A%20%20%20%20%20%20%20%20%20%20contains%20select%20and%20multi-select%20dropdowns.%20Click%20inside%20the%20dialog%0A%20%20%20%20%20%20%20%20%20%20but%20outside%20an%20expanded%20dropdown%20to%20test%20if%20it%20properly%20closes.%0A%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20(clicked)%3D%22showDropdownTestDialogModal()%22%0A%20%20%20%20%20%20%20%20%20%20%3EOpen%20Dropdown%20Test%20Dialog%3C%2Fi-button%0A%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3C!--%20Dropdown%20Test%20Dialog%20Template%20--%3E%0A%20%20%20%20%20%20%3Ci-dialog%0A%20%20%20%20%20%20%20%20%5B(visible)%5D%3D%22showDropdownTestDialog%22%0A%20%20%20%20%20%20%20%20header%3D%22Dropdown%20Test%20in%20Dialog%22%0A%20%20%20%20%20%20%20%20width%3D%22600px%22%0A%20%20%20%20%20%20%20%20height%3D%22500px%22%0A%20%20%20%20%20%20%20%20%5Bbreakpoints%5D%3D%22%7B%0A%20%20%20%20%20%20%20%20%20%20'960px'%3A%20%7B%20width%3A%20'720px'%2C%20height%3A%20'420px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20'640px'%3A%20%7B%20width%3A%20'576px'%2C%20height%3A%20'480px'%20%7D%2C%0A%20%20%20%20%20%20%20%20%7D%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dialog-content%22%20style%3D%22height%3A%20100%25%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-test-instruction%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETest%20Instructions%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Col%20style%3D%22margin%3A%208px%200%200%200%3B%20padding-left%3A%2020px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EOpen%20the%20%22Country%22%20dropdown%20below%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Click%20anywhere%20else%20in%20the%20dialog%20(but%20not%20on%20the%20dropdown)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Observe%20if%20the%20dropdown%20closes%20automatically%20(expected%20behavior)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3ERepeat%20with%20the%20%22Skills%22%20multi-select%20dropdown%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fol%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%3Cform%0A%20%20%20%20%20%20%20%20%20%20%20%20%5BformGroup%5D%3D%22dropdownTestForm%22%0A%20%20%20%20%20%20%20%20%20%20%20%20style%3D%22display%3A%20flex%3B%20flex-direction%3A%20column%3B%20gap%3A%2016px%22%0A%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22countryOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22country%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20a%20country%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-multi-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22skillOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BmaxSelectedLabels%5D%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selectedItemsLabel%3D%22%7B0%7D%20skills%20selected%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-multi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40if%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.invalid%20%26%26%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get(%22skills%22)%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20at%20least%20one%20skill%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-values-panel%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%20style%3D%22margin%3A%200%3B%20font-size%3A%2014px%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ECurrent%20Values%3A%3C%2Fstrong%3E%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Country%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20dropdownTestForm.get(%22country%22)%3F.value%3F.label%20%7C%7C%20%22None%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%7D%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Skills%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20(dropdownTestForm.get(%22skills%22)%3F.value%20%7C%7C%20%5B%5D).length%20%7D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20selected%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fform%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3Ci-dialog-actions%0A%20%20%20%20%20%20%20%20%20%20slot%3D%22footer%22%0A%20%20%20%20%20%20%20%20%20%20(cancelEvent)%3D%22onDropdownTestDialogHide()%22%0A%20%20%20%20%20%20%20%20%20%20(submitEvent)%3D%22onDropdownTestDialogSubmit()%22%0A%20%20%20%20%20%20%20%20%20%20submitLabel%3D%22Submit%22%0A%20%20%20%20%20%20%20%20%20%20cancelLabel%3D%22Cancel%22%0A%20%20%20%20%20%20%20%20%20%20%5BsubmitDisabled%5D%3D%22dropdownTestForm.invalid%22%0A%20%20%20%20%20%20%20%20%3E%3C%2Fi-dialog-actions%3E%0A%20%20%20%20%20%20%3C%2Fi-dialog%3E"
+    sourceCodeEncoded="%3Cdiv%20class%3D%22demo-content%22%3E%0A%20%20%20%20%20%20%3Cp%3E%0A%20%20%20%20%20%20%20%20%3Cstrong%3ETesting%20dropdown%20behavior%20in%20dialogs%3A%3C%2Fstrong%3E%20This%20dialog%20contains%20select%20and%0A%20%20%20%20%20%20%20%20multi-select%20dropdowns.%20Click%20inside%20the%20dialog%20but%20outside%20an%20expanded%20dropdown%20to%20test%20if%0A%20%20%20%20%20%20%20%20it%20properly%20closes.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%3Ci-button%20severity%3D%22danger%22%20%28clicked%29%3D%22showDropdownTestDialogModal%28%29%22%0A%20%20%20%20%20%20%20%20%3EOpen%20Dropdown%20Test%20Dialog%3C%2Fi-button%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%3C%21--%20Dropdown%20Test%20Dialog%20Template%20--%3E%0A%20%20%20%20%3Ci-dialog%0A%20%20%20%20%20%20%5B%28visible%29%5D%3D%22showDropdownTestDialog%22%0A%20%20%20%20%20%20header%3D%22Dropdown%20Test%20in%20Dialog%22%0A%20%20%20%20%20%20width%3D%22600px%22%0A%20%20%20%20%20%20height%3D%22500px%22%0A%20%20%20%20%3E%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22dialog-content%20dialog-content-full-height%22%3E%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-test-instruction%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ETest%20Instructions%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Col%20class%3D%22dropdown-check-list%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EOpen%20the%20%22Country%22%20dropdown%20below%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EClick%20anywhere%20else%20in%20the%20dialog%20%28but%20not%20on%20the%20dropdown%29%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3EObserve%20if%20the%20dropdown%20closes%20automatically%20%28expected%20behavior%29%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3ERepeat%20with%20the%20%22Skills%22%20multi-select%20dropdown%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fol%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%3Cform%20%5BformGroup%5D%3D%22dropdownTestForm%22%20class%3D%22dropdown-controls%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22countryOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22country%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40if%20%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get%28%27country%27%29%3F.invalid%20%26%26%20dropdownTestForm.get%28%27country%27%29%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20a%20country%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22form-field%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Ci-multi-select%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20id%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3D%22Skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Boptions%5D%3D%22skillOptions%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20optionLabel%3D%22label%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20formControlName%3D%22skills%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfilter%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BshowClear%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Bfluid%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5BmaxSelectedLabels%5D%3D%223%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20selectedItemsLabel%3D%22%7B0%7D%20skills%20selected%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fi-multi-select%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40if%20%28%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20dropdownTestForm.get%28%27skills%27%29%3F.invalid%20%26%26%20dropdownTestForm.get%28%27skills%27%29%3F.touched%0A%20%20%20%20%20%20%20%20%20%20%20%20%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Csmall%20class%3D%22error-message%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Ci%20class%3D%22pi%20pi-exclamation-circle%22%3E%3C%2Fi%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Please%20select%20at%20least%20one%20skill%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22dropdown-values-panel%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cp%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ECurrent%20Values%3A%3C%2Fstrong%3E%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20Country%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20dropdownTestForm.get%28%27country%27%29%3F.value%3F.label%20%7C%7C%20%27None%27%20%7D%7D%3Cbr%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20Skills%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20%28dropdownTestForm.get%28%27skills%27%29%3F.value%20%7C%7C%20%5B%5D%29.length%20%7D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20selected%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fp%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%20%20%3C%2Fform%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3Ci-dialog-actions%0A%20%20%20%20%20%20%20%20slot%3D%22footer%22%0A%20%20%20%20%20%20%20%20%28cancelEvent%29%3D%22onDropdownTestDialogHide%28%29%22%0A%20%20%20%20%20%20%20%20%28submitEvent%29%3D%22onDropdownTestDialogSubmit%28%29%22%0A%20%20%20%20%20%20%20%20submitLabel%3D%22Submit%22%0A%20%20%20%20%20%20%20%20cancelLabel%3D%22Cancel%22%0A%20%20%20%20%20%20%20%20%5BsubmitDisabled%5D%3D%22dropdownTestForm.invalid%22%0A%20%20%20%20%20%20%3E%3C%2Fi-dialog-actions%3E%0A%20%20%20%20%3C%2Fi-dialog%3E"
   >
     <div class="demo-content">
       <p>
@@ -232,10 +142,6 @@
       header="Dropdown Test in Dialog"
       width="600px"
       height="500px"
-      [breakpoints]="{
-        '960px': { width: '720px', height: '420px' },
-        '640px': { width: '576px', height: '480px' },
-      }"
     >
       <div class="dialog-content dialog-content-full-height">
         <div class="dropdown-test-instruction">
@@ -333,10 +239,6 @@
       [modal]="true"
       width="600px"
       height="800px"
-      [breakpoints]="{
-        '960px': { width: '768px', height: '680px' },
-        '640px': { width: '608px', height: '720px' },
-      }"
     >
       <div class="dialog-content large-dialog">
         <div class="dialog-intro">

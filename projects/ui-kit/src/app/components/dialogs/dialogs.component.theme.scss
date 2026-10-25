@@ -29,54 +29,6 @@
     }
   }
 
-  .responsive-dialog {
-    .responsive-info-card {
-      background: linear-gradient(
-        135deg,
-        color-mix(in srgb, colors.$color-primary 12%, colors.$color-surface-card),
-        colors.$color-surface-card
-      );
-      color: colors.$color-text-primary;
-    }
-
-    .breakpoint-card {
-      background: colors.$color-surface-section;
-
-      &:hover {
-        box-shadow: 0 4px 12px color-mix(in srgb, colors.$color-contrast 10%, transparent);
-      }
-
-      .breakpoint-icon {
-        background: colors.$color-primary;
-        color: colors.$color-contrast-inverse;
-      }
-
-      .breakpoint-details {
-        strong {
-          color: colors.$color-text-primary;
-        }
-
-        .breakpoint-value {
-          color: colors.$color-primary;
-        }
-
-        small {
-          color: colors.$color-text-secondary;
-        }
-      }
-    }
-
-    .responsive-tip {
-      background: colors.$color-surface-section;
-      color: colors.$color-text-secondary;
-      border-left-color: colors.$color-info;
-
-      i {
-        color: colors.$color-info;
-      }
-    }
-  }
-
   .large-dialog {
     .dialog-intro {
       background: colors.$color-surface-section;

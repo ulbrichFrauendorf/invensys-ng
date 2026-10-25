@@ -3,30 +3,7 @@
 @mixin i-checkbox-theme() {
   .i-checkbox-wrapper {
     .i-checkbox {
-      border: 1px solid colors.$color-surface-border;
-      background-color: colors.$color-surface-ground;
-
-      &:hover:not(.i-checkbox--disabled) {
-        border-color: colors.$color-primary;
-      }
-
-      &:focus {
-        box-shadow: colors.$color-box-shadow;
-      }
-
-      &.i-checkbox--checked {
-        border-color: colors.$color-primary;
-        background-color: colors.$color-primary;
-
-        .i-checkbox-icon {
-          color: colors.$color-contrast-inverse;
-        }
-
-        &:hover {
-          border-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
-          background-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
-        }
-      }
+      color: colors.$color-primary;
     }
 
     .i-checkbox-label {
@@ -35,29 +12,11 @@
 
     &.i-checkbox--disabled {
       .i-checkbox {
-        border-color: colors.$color-disabled-border;
-        background-color: colors.$color-disabled-background;
-
-        &.i-checkbox--checked {
-          border-color: colors.$color-disabled-border;
-          background-color: colors.$color-disabled-background;
-
-          .i-checkbox-icon {
-            color: colors.$color-text-disabled;
-          }
-        }
+        color: colors.$color-text-disabled;
       }
 
       .i-checkbox-label {
         color: colors.$color-text-disabled;
-      }
-    }
-  }
-
-  .i-checkbox-wrapper {
-    .i-checkbox {
-      &:focus {
-        box-shadow: 0 0 0 2px color-mix(in srgb, colors.$color-primary 30%, transparent);
       }
     }
   }

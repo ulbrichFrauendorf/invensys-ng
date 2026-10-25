@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { IDialogActions } from './inner/dialog-actions/dialog-actions.component';
 import { ISelect } from '../select/select.component';
 import { By } from '@angular/platform-browser';
 import { DialogService } from './services/dialog.service';
@@ -7,6 +8,25 @@ import { IDialog } from './dialog.component';
 
 @Component({ template: '<button>Dynamic action</button>' })
 class DialogTestContent {}
+
+@Component({
+  imports: [IDialogActions],
+  template: `<form>
+    <div style="height: 2000px">Long dialog content</div>
+    @if (showActions()) {
+      <i-dialog-actions slot="footer" [submitLabel]="label()" (submitEvent)="submitted()" />
+    }
+  </form>`,
+})
+class TallDialogContent {
+  static current: TallDialogContent;
+  showActions = signal(true);
+  label = signal('Save');
+  submitted = vi.fn();
+  constructor() {
+    TallDialogContent.current = this;
+  }
+}
 
 @Component({
   imports: [IDialog, ISelect],
@@ -44,6 +64,28 @@ describe('IDialog', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('fits oversized dimensions inside the viewport and responds to size input changes', async () => {
+    fixture.componentRef.setInput('width', '2000px');
+    fixture.componentRef.setInput('height', '2000px');
+    component.show();
+    await fixture.whenStable();
+    const dialog = document
+      .getElementById(component.componentId)!
+      .querySelector<HTMLElement>('.i-dialog-container')!;
+    dialog.style.animation = 'none';
+    const bounds = dialog.getBoundingClientRect();
+    const inset = window.innerWidth <= 640 ? 12 : 16;
+    expect(bounds.width).toBeGreaterThan(0);
+    expect(bounds.width).toBeCloseTo(Math.min(2000, window.innerWidth - inset * 2), 0);
+    expect(bounds.left).toBeGreaterThanOrEqual(inset - 1);
+    expect(bounds.bottom).toBeLessThanOrEqual(window.innerHeight - inset + 1);
+    fixture.componentRef.setInput('width', '240px');
+    fixture.componentRef.setInput('height', '180px');
+    await fixture.whenStable();
+    expect(dialog.style.width).toBe('240px');
+    expect(dialog.style.height).toBe('180px');
   });
 
   describe('Component Inputs', () => {
@@ -188,6 +230,43 @@ describe('IDialog', () => {
     });
   });
   describe('Body-level overlay lifecycle', () => {
+    for (const height of [undefined, '2000px']) {
+      it(`keeps dynamic actions outside the scrolling body with height ${height}`, async () => {
+        const ref = TestBed.inject(DialogService).open(TallDialogContent, {
+          height,
+        });
+        try {
+          await fixture.whenStable();
+          const overlay = document.getElementById((ref.instance as IDialog).componentId)!;
+          const body = overlay.querySelector<HTMLElement>('.i-card-body')!;
+          const footer = overlay.querySelector<HTMLElement>('.i-card-footer')!;
+          const card = overlay.querySelector<HTMLElement>('.i-card')!;
+          expect(footer.querySelector('i-dialog-actions')).not.toBeNull();
+          expect(body.querySelector('i-dialog-actions')).toBeNull();
+          expect(card.getBoundingClientRect().top).toBeGreaterThanOrEqual(0);
+          expect(card.getBoundingClientRect().bottom).toBeLessThanOrEqual(window.innerHeight);
+          expect(body.scrollHeight).toBeGreaterThan(body.clientHeight);
+          const footerTop = footer.getBoundingClientRect().top;
+          body.scrollTo({ top: 500, behavior: 'instant' });
+          expect(body.scrollTop).toBe(500);
+          expect(footer.getBoundingClientRect().top).toBe(footerTop);
+          TallDialogContent.current.label.set('Updated save');
+          await fixture.whenStable();
+          expect(footer.textContent).toContain('Updated save');
+          footer.querySelector<HTMLButtonElement>('button[type="submit"]')!.click();
+          expect(TallDialogContent.current.submitted).toHaveBeenCalledOnce();
+          TallDialogContent.current.showActions.set(false);
+          await fixture.whenStable();
+          expect(footer.querySelector('i-dialog-actions')).toBeNull();
+          TallDialogContent.current.showActions.set(true);
+          await fixture.whenStable();
+          expect(footer.querySelectorAll('i-dialog-actions').length).toBe(1);
+        } finally {
+          ref.close();
+        }
+      });
+    }
+
     it('escapes transformed and clipped ancestors and paints above sibling controls', () => {
       const host = fixture.nativeElement as HTMLElement;
       host.style.cssText =
@@ -248,13 +327,21 @@ describe('IDialog', () => {
       component.show();
       second.componentInstance.show();
       document.dispatchEvent(
-        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }),
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+          bubbles: true,
+          cancelable: true,
+        }),
       );
       expect(second.componentInstance.visible).toBe(false);
       expect(component.visible).toBe(true);
       expect(document.body.style.overflow).toBe('hidden');
       document.dispatchEvent(
-        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }),
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+          bubbles: true,
+          cancelable: true,
+        }),
       );
       expect(component.visible).toBe(false);
     });

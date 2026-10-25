@@ -1,6 +1,5 @@
 import { Input, Output, EventEmitter, Directive } from '@angular/core';
 
-export type DialogBreakpoints = Record<string, { width?: string; height?: string }>;
 export type DialogContentStyle = Record<string, string | number>;
 
 @Directive()
@@ -17,7 +16,6 @@ export abstract class AbstractDialog {
    */
   @Input() dismissableMask: boolean = false;
   @Input() contentStyle?: DialogContentStyle;
-  @Input() breakpoints?: DialogBreakpoints;
   @Input() visible: boolean = false;
   @Output() visibleChange = new EventEmitter<boolean>();
 }

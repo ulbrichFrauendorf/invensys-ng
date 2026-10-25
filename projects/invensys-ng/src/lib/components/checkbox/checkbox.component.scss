@@ -33,11 +33,7 @@
     .i-checkbox {
       width: 14px;
       height: 14px;
-      padding: 0 0 0 1px;
-
-      .i-checkbox-icon {
-        font-size: 8px;
-      }
+      font-size: 14px;
     }
   }
 
@@ -49,9 +45,7 @@
       width: 16px;
       height: 16px;
 
-      .i-checkbox-icon {
-        font-size: 10px;
-      }
+      font-size: 16px;
     }
   }
 
@@ -63,31 +57,14 @@
       width: 20px;
       height: 20px;
 
-      .i-checkbox-icon {
-        font-size: 12px;
-      }
+      font-size: 20px;
     }
   }
 
   .i-checkbox {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    transition: all 0.15s ease;
+    flex-shrink: 0;
+    transition: color 0.15s ease;
     cursor: pointer;
-    box-sizing: border-box;
-
-    &:focus {
-      outline: none;
-    }
-
-    .i-checkbox-icon {
-      font-size: 10px;
-      font-weight: bold;
-      transition: all 0.15s ease;
-    }
   }
 
   .i-checkbox-label {

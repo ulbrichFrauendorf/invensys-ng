@@ -165,4 +165,27 @@
       <i-button type="submit" severity="primary">Submit Fluid Form</i-button>
     </form>
   </ng-template>
+  <ng-template
+    appDemoOption="selection-display"
+    label="Selected Options Display"
+    [sourceCode]="codeExamples.selectionDisplay"
+  >
+    <div class="demo-form">
+      <i-select
+        label="Display"
+        [options]="selectionDisplayOptions"
+        optionLabel="label"
+        [(ngModel)]="selectionDisplay"
+      />
+      <i-multi-select
+        label="Skills"
+        [options]="selectData.skills"
+        optionLabel="label"
+        [selectionDisplay]="selectionDisplay.value"
+        [showClear]="true"
+        [loading]="loading()"
+        [(ngModel)]="preselectedValue"
+      />
+    </div>
+  </ng-template>
 </app-demo-playground>

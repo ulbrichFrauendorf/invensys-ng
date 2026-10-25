@@ -44,7 +44,6 @@ export class DialogsComponent implements OnInit, OnDestroy {
 
   showBasicDialog = false;
   showSingleButtonDialog = false;
-  showResponsiveDialog = false;
   showFullscreenDialog = false;
   showDropdownTestDialog = false;
 
@@ -119,6 +118,7 @@ export class DialogsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.ref?.close();
     if (this.intervalSub) {
       clearInterval(this.intervalSub);
     }
@@ -228,10 +228,6 @@ export class DialogsComponent {
       header: 'Example Dynamic Dialog',
       width: '600px',
       contentStyle: { overflow: 'auto' },
-      breakpoints: {
-        '960px': { width: '720px', height: '420px' },
-        '640px': { width: '576px', height: '480px' },
-      },
       data: {
         message: 'Hello from Dialog Service!',
         timestamp: new Date().toISOString(),
@@ -257,10 +253,7 @@ export class DialogsComponent {
   [closable]="true"
   header="Welcome to Invensys"
   width="500px"
-  height="600px"
-  [breakpoints]="{
-    '640px': { width: '576px', height: '510px' },
-  }">
+  height="400px">
   <div class="dialog-content basic-dialog">
     <div class="dialog-icon">
       <i class="pi pi-check-circle"></i>
@@ -298,10 +291,7 @@ export class DialogsComponent {
   [(visible)]="showSingleButtonDialog"
   [closable]="true"
   header="Notification"
-  width="384px"
-  [breakpoints]="{
-    '640px': { width: '576px' },
-  }">
+  width="384px">
   <div class="dialog-content basic-dialog">
     <div class="dialog-icon success">
       <i class="pi pi-check-circle"></i>
@@ -320,46 +310,12 @@ export class DialogsComponent {
   ></i-dialog-actions>
 </i-dialog>`,
 
-    responsive: `<i-dialog
-  [(visible)]="showResponsiveDialog"
-  header="Screen Size Adaptation"
-  width="800px"
-  height="600px"
-  [breakpoints]="{
-    '960px': { width: '720px', height: '420px' },
-    '640px': { width: '576px', height: '480px' },
-  }">
-  <div class="dialog-content responsive-dialog">
-    <div class="responsive-info-card">
-      <div class="info-header">
-        <i class="pi pi-desktop"></i>
-        <h5>Current Breakpoint</h5>
-      </div>
-      <p class="breakpoint-indicator">
-        Resize your browser to see the dialog adapt automatically.
-      </p>
-    </div>
-    <!-- Breakpoint cards and content -->
-  </div>
-  <i-dialog-actions
-    slot="footer"
-    (cancelEvent)="onResponsiveDialogHide()"
-    (submitEvent)="onResponsiveDialogHide()"
-    submitLabel="Got It"
-    cancelLabel="Close"
-  ></i-dialog-actions>
-</i-dialog>`,
-
     fullscreen: `<i-dialog
   [(visible)]="showFullscreenDialog"
   header="Team Assignment"
   [modal]="true"
   width="600px"
-  height="800px"
-  [breakpoints]="{
-    '960px': { width: '768px', height: '680px' },
-    '640px': { width: '608px', height: '720px' },
-  }">
+  height="800px">
   <div class="dialog-content large-dialog">
     <div class="dialog-intro">
       <i class="pi pi-users"></i>
@@ -386,10 +342,6 @@ export class DialogsComponent {
       header: 'Example Dynamic Dialog',
       width: '600px',
       contentStyle: { overflow: 'auto' },
-      breakpoints: {
-        '960px': { width: '75vw', height: '70vh' },
-        '640px': { width: '90vw', height: '80vh' },
-      },
       data: {
         message: 'Hello from Dialog Service!',
         timestamp: new Date().toISOString(),
@@ -406,10 +358,6 @@ export class DialogsComponent {
     this.showBasicDialog = true;
   }
 
-  showResponsiveDialogModal() {
-    this.showResponsiveDialog = true;
-  }
-
   showFullscreenDialogModal() {
     this.showFullscreenDialog = true;
   }
@@ -424,10 +372,6 @@ export class DialogsComponent {
 
   onSingleButtonDialogHide() {
     this.showSingleButtonDialog = false;
-  }
-
-  onResponsiveDialogHide() {
-    this.showResponsiveDialog = false;
   }
 
   onFullscreenDialogHide() {

@@ -16,14 +16,13 @@
   (keydown.space)="$event.preventDefault(); toggle()"
   (keydown.enter)="$event.preventDefault(); toggle()"
 >
-  <div class="i-checkbox" [class.i-checkbox--checked]="checked" aria-hidden="true">
-    @if (!checked && indeterminate) {
-      <i class="pi pi-minus i-checkbox-icon"></i>
-    }
-    @if (!indeterminate) {
-      <i class="pi pi-check i-checkbox-icon" [style.opacity]="checked ? '1' : '0'"></i>
-    }
-  </div>
+  <i
+    class="i-checkbox pi"
+    [class.pi-check-square]="checked && !indeterminate"
+    [class.pi-stop]="!checked && !indeterminate"
+    [class.pi-minus]="indeterminate"
+    aria-hidden="true"
+  ></i>
   @if (label) {
     <label [id]="(id || componentId) + '-label'" class="i-checkbox-label">
       {{ label }}

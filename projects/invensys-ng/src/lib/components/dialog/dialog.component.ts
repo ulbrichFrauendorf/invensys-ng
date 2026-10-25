@@ -102,25 +102,12 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
    */
   componentId = UniqueComponentId('i-dialog-');
 
-  /**
-   * Current applied width from breakpoints
-   * @internal
-   */
-  currentWidth: string = '';
-
-  /**
-   * Current applied height from breakpoints
-   * @internal
-   */
-  currentHeight: string = '';
-
   constructor(private cdr: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit(): void {
     this.initialized = true;
-    this.applyBreakpoints();
     if (this.visible) this.attachOverlay();
   }
 
@@ -128,9 +115,6 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
     if (changes['visible'] && this.initialized) {
       if (this.visible) this.attachOverlay();
       else this.detachOverlay();
-    }
-    if (changes['width'] || changes['height'] || changes['breakpoints']) {
-      this.applyBreakpoints();
     }
     if (changes['modal'] && this.overlay) {
       this.updateScrollLock();
@@ -253,48 +237,6 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
   onCloseClick(): void {
     if (this.closable) {
       this.hide();
-    }
-  }
-
-  /**
-   * Handles window resize to apply responsive breakpoints
-   * @internal
-   */
-  @HostListener('window:resize')
-  onWindowResize(): void {
-    this.applyBreakpoints();
-  }
-
-  /**
-   * Applies responsive breakpoints based on current window width
-   * @internal
-   */
-  private applyBreakpoints(): void {
-    if (!this.breakpoints) {
-      this.currentWidth = this.width;
-      this.currentHeight = this.height || '';
-      return;
-    }
-
-    const windowWidth = window.innerWidth;
-    const sortedBreakpoints = Object.keys(this.breakpoints)
-      .map((key) => ({
-        breakpoint: parseInt(key),
-        value: this.breakpoints![key],
-      }))
-      .sort((a, b) => b.breakpoint - a.breakpoint);
-
-    // Find the first matching breakpoint
-    const match = sortedBreakpoints.find((bp) => windowWidth <= bp.breakpoint);
-
-    if (match) {
-      // Object format with width and/or height
-      this.currentWidth = match.value.width || this.width;
-      this.currentHeight = match.value.height || this.height || '';
-    } else {
-      // No breakpoint matched, use default values
-      this.currentWidth = this.width;
-      this.currentHeight = this.height || '';
     }
   }
 }

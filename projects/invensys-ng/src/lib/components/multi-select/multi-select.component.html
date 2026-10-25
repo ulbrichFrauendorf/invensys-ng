@@ -16,7 +16,7 @@
   >
     <div class="i-option-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
       <div class="i-option-value">
-        @if (value.length > 0 && value.length <= maxSelectedLabels) {
+        @if (selectionDisplay === 'tags' && value.length > 0 && value.length <= maxSelectedLabels) {
           <i-chips
             [chips]="selectedChips()"
             [removable]="!disabled"
@@ -87,6 +87,24 @@
     </div>
     @if (label && useFloatLabel) {
       <label class="i-option-label" [for]="id || componentId">{{ label }}</label>
+    }
+    @if (selectionDisplay === 'list' && value.length > 0) {
+      <ul class="i-multi-select-selection" [attr.aria-label]="label + ' selected options'">
+        @for (option of value; track $index) {
+          <li class="i-multi-select-selected-item">
+            <span class="i-multi-select-selected-label">{{ getOptionLabel(option) }}</span>
+            <button
+              type="button"
+              class="i-multi-select-remove"
+              [disabled]="disabled || loading()"
+              [attr.aria-label]="'Remove ' + getOptionLabel(option)"
+              (click)="toggleOption(option); focusControl()"
+            >
+              <i class="pi pi-times" aria-hidden="true"></i>
+            </button>
+          </li>
+        }
+      </ul>
     }
     @if (showErrors) {
       <div class="i-option-error" [id]="componentId + '-error'" role="alert">

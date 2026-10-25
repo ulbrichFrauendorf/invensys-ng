@@ -92,6 +92,76 @@ describe('IMultiSelect', () => {
   });
 
   describe('Selected item display', () => {
+    it('should switch display modes without changing the selection or emitting changes', () => {
+      component.writeValue(mockOptions);
+      const changed = vi.fn();
+      component.registerOnChange(changed);
+      const emitted = vi.spyOn(component.onChange, 'emit');
+
+      fixture.componentRef.setInput('selectionDisplay', 'list');
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelectorAll('.i-multi-select-selected-item').length).toBe(
+        3,
+      );
+      expect(fixture.nativeElement.querySelector('i-chips')).toBeNull();
+      expect(component.getDisplayLabel()).toBe('3 items selected');
+
+      fixture.componentRef.setInput('selectionDisplay', 'tags');
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('i-chips')).not.toBeNull();
+      expect(component.value).toEqual(mockOptions);
+      expect(changed).not.toHaveBeenCalled();
+      expect(emitted).not.toHaveBeenCalled();
+    });
+
+    it('should render every list item beyond the tag limit and remove items through the form contract', () => {
+      fixture.componentRef.setInput('selectionDisplay', 'list');
+      fixture.componentRef.setInput('maxSelectedLabels', 1);
+      component.writeValue(mockOptions);
+      const changed = vi.fn();
+      const touched = vi.fn();
+      component.registerOnChange(changed);
+      component.registerOnTouched(touched);
+      const emitted = vi.spyOn(component.onChange, 'emit');
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelectorAll('.i-multi-select-selected-item').length).toBe(
+        3,
+      );
+      const remove = fixture.nativeElement.querySelector(
+        '.i-multi-select-remove',
+      ) as HTMLButtonElement;
+      expect(remove.getAttribute('aria-label')).toBe('Remove First Option');
+      remove.click();
+      fixture.detectChanges();
+
+      expect(component.value).toEqual(mockOptions.slice(1));
+      expect(changed).toHaveBeenCalledWith(mockOptions.slice(1));
+      expect(emitted).toHaveBeenCalledWith(mockOptions.slice(1));
+      expect(touched).toHaveBeenCalled();
+      expect(component.isOpen).toBe(false);
+      expect(document.activeElement).toBe(fixture.nativeElement.querySelector('.i-option-trigger'));
+
+      component.clearSelection();
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('.i-multi-select-selection')).toBeNull();
+    });
+
+    for (const state of ['disabled', 'loading']) {
+      it(`should prevent list removal while ${state}`, () => {
+        fixture.componentRef.setInput('selectionDisplay', 'list');
+        component.writeValue(mockOptions);
+        fixture.componentRef.setInput(state, true);
+        fixture.detectChanges();
+        const remove = fixture.nativeElement.querySelector(
+          '.i-multi-select-remove',
+        ) as HTMLButtonElement;
+        expect(remove.disabled).toBe(true);
+        remove.click();
+        expect(component.value).toEqual(mockOptions);
+      });
+    }
+
     it('should display comma-separated labels when under maxSelectedLabels', () => {
       component.value = [mockOptions[0], mockOptions[1]];
       const display = component.getDisplayLabel();

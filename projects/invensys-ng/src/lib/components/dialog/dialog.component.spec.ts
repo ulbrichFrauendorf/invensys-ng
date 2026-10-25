@@ -5,16 +5,67 @@ import { ISelect } from '../select/select.component';
 import { By } from '@angular/platform-browser';
 import { DialogService } from './services/dialog.service';
 import { IDialog } from './dialog.component';
+import { userEvent } from 'vitest/browser';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+
+@Component({
+  imports: [IDialogActions, ReactiveFormsModule],
+  template: `<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input aria-label="Username" name="username" formControlName="username" />
+    <input
+      aria-label="Password"
+      name="password"
+      formControlName="password"
+      type="password"
+    />
+    <i-dialog-actions
+      slot="footer"
+      submitLabel="Login"
+      [submitDisabled]="busy()"
+    />
+  </form>`,
+})
+class FormDialogContent {
+  static current: FormDialogContent;
+  form = new FormGroup({
+    username: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+  });
+  busy = signal(false);
+  submitted = vi.fn();
+  constructor() {
+    FormDialogContent.current = this;
+  }
+  onSubmit() {
+    if (this.form.invalid) return;
+    this.submitted();
+  }
+}
 
 @Component({ template: '<button>Dynamic action</button>' })
 class DialogTestContent {}
 
 @Component({
   imports: [IDialogActions],
-  template: `<form>
+  template: `<form (submit)="$event.preventDefault()">
     <div style="height: 2000px">Long dialog content</div>
     @if (showActions()) {
-      <i-dialog-actions slot="footer" [submitLabel]="label()" (submitEvent)="submitted()" />
+      <i-dialog-actions
+        slot="footer"
+        [submitLabel]="label()"
+        (submitEvent)="submitted()"
+      />
     }
   </form>`,
 })
@@ -78,7 +129,10 @@ describe('IDialog', () => {
     const bounds = dialog.getBoundingClientRect();
     const inset = window.innerWidth <= 640 ? 12 : 16;
     expect(bounds.width).toBeGreaterThan(0);
-    expect(bounds.width).toBeCloseTo(Math.min(2000, window.innerWidth - inset * 2), 0);
+    expect(bounds.width).toBeCloseTo(
+      Math.min(2000, window.innerWidth - inset * 2),
+      0,
+    );
     expect(bounds.left).toBeGreaterThanOrEqual(inset - 1);
     expect(bounds.bottom).toBeLessThanOrEqual(window.innerHeight - inset + 1);
     fixture.componentRef.setInput('width', '240px');
@@ -237,14 +291,18 @@ describe('IDialog', () => {
         });
         try {
           await fixture.whenStable();
-          const overlay = document.getElementById((ref.instance as IDialog).componentId)!;
+          const overlay = document.getElementById(
+            (ref.instance as IDialog).componentId,
+          )!;
           const body = overlay.querySelector<HTMLElement>('.i-card-body')!;
           const footer = overlay.querySelector<HTMLElement>('.i-card-footer')!;
           const card = overlay.querySelector<HTMLElement>('.i-card')!;
           expect(footer.querySelector('i-dialog-actions')).not.toBeNull();
           expect(body.querySelector('i-dialog-actions')).toBeNull();
           expect(card.getBoundingClientRect().top).toBeGreaterThanOrEqual(0);
-          expect(card.getBoundingClientRect().bottom).toBeLessThanOrEqual(window.innerHeight);
+          expect(card.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+            window.innerHeight,
+          );
           expect(body.scrollHeight).toBeGreaterThan(body.clientHeight);
           const footerTop = footer.getBoundingClientRect().top;
           body.scrollTo({ top: 500, behavior: 'instant' });
@@ -253,7 +311,9 @@ describe('IDialog', () => {
           TallDialogContent.current.label.set('Updated save');
           await fixture.whenStable();
           expect(footer.textContent).toContain('Updated save');
-          footer.querySelector<HTMLButtonElement>('button[type="submit"]')!.click();
+          footer
+            .querySelector<HTMLButtonElement>('button[type="submit"]')!
+            .click();
           expect(TallDialogContent.current.submitted).toHaveBeenCalledOnce();
           TallDialogContent.current.showActions.set(false);
           await fixture.whenStable();
@@ -267,6 +327,48 @@ describe('IDialog', () => {
       });
     }
 
+    it('preserves native form ownership, Enter submission and disabled state in a dynamic footer', async () => {
+      const ref = TestBed.inject(DialogService).open(FormDialogContent);
+      try {
+        await fixture.whenStable();
+        const overlay = document.getElementById(
+          (ref.instance as IDialog).componentId,
+        )!;
+        const form = overlay.querySelector('form')!;
+        const username =
+          form.querySelector<HTMLInputElement>('[name="username"]')!;
+        const password =
+          form.querySelector<HTMLInputElement>('[name="password"]')!;
+        const submit = overlay.querySelector<HTMLButtonElement>(
+          'button[type="submit"]',
+        )!;
+        expect(form.contains(submit)).toBe(false);
+        expect(submit.form).toBe(form);
+        submit.click();
+        expect(FormDialogContent.current.submitted).not.toHaveBeenCalled();
+        username.value = 'user@example.test';
+        password.value = 'test-password';
+        username.dispatchEvent(new Event('input', { bubbles: true }));
+        password.dispatchEvent(new Event('input', { bubbles: true }));
+        await fixture.whenStable();
+        username.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(FormDialogContent.current.submitted).toHaveBeenCalledTimes(1);
+        password.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(FormDialogContent.current.submitted).toHaveBeenCalledTimes(2);
+        submit.click();
+        expect(FormDialogContent.current.submitted).toHaveBeenCalledTimes(3);
+        FormDialogContent.current.busy.set(true);
+        await fixture.whenStable();
+        password.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(FormDialogContent.current.submitted).toHaveBeenCalledTimes(3);
+      } finally {
+        ref.close();
+      }
+    });
+
     it('escapes transformed and clipped ancestors and paints above sibling controls', () => {
       const host = fixture.nativeElement as HTMLElement;
       host.style.cssText =
@@ -278,7 +380,9 @@ describe('IDialog', () => {
       try {
         component.show();
         const overlay = document.getElementById(component.componentId)!;
-        expect(overlay.closest('.cdk-overlay-container')?.parentElement).toBe(document.body);
+        expect(overlay.closest('.cdk-overlay-container')?.parentElement).toBe(
+          document.body,
+        );
         expect(overlay.getBoundingClientRect().width).toBe(window.innerWidth);
         expect(overlay.getBoundingClientRect().left).toBe(0);
         expect(overlay.contains(document.elementFromPoint(45, 45))).toBe(true);
@@ -291,8 +395,9 @@ describe('IDialog', () => {
       fixture.componentRef.setInput('visible', true);
       fixture.detectChanges();
       expect(
-        document.getElementById(component.componentId)?.closest('.cdk-overlay-container')
-          ?.parentElement,
+        document
+          .getElementById(component.componentId)
+          ?.closest('.cdk-overlay-container')?.parentElement,
       ).toBe(document.body);
       fixture.componentRef.setInput('visible', false);
       fixture.detectChanges();
@@ -302,8 +407,9 @@ describe('IDialog', () => {
       component.hide();
       component.show();
       expect(
-        document.getElementById(component.componentId)?.closest('.cdk-overlay-container')
-          ?.parentElement,
+        document
+          .getElementById(component.componentId)
+          ?.closest('.cdk-overlay-container')?.parentElement,
       ).toBe(document.body);
     });
 
@@ -313,7 +419,9 @@ describe('IDialog', () => {
       second.detectChanges();
       component.show();
       second.componentInstance.show();
-      const upperOverlay = document.getElementById(second.componentInstance.componentId)!;
+      const upperOverlay = document.getElementById(
+        second.componentInstance.componentId,
+      )!;
       expect(upperOverlay.contains(document.elementFromPoint(1, 1))).toBe(true);
       component.hide();
       expect(document.body.style.overflow).toBe('hidden');
@@ -358,7 +466,12 @@ describe('IDialog', () => {
       try {
         trigger.focus();
         component.show();
-        expect(document.activeElement).toBe(component.dialogElement?.nativeElement);
+        expect(document.activeElement).toBe(
+          component.dialogElement?.nativeElement,
+        );
+        expect(
+          getComputedStyle(component.dialogElement!.nativeElement).outlineStyle,
+        ).toBe('none');
         component.hide();
         expect(document.activeElement).toBe(trigger);
       } finally {
@@ -369,7 +482,8 @@ describe('IDialog', () => {
     it('keeps projected bindings live and dropdown options above the dialog', async () => {
       const host = TestBed.createComponent(ProjectedDialogHost);
       host.detectChanges();
-      const dialog = host.debugElement.query(By.directive(IDialog)).componentInstance as IDialog;
+      const dialog = host.debugElement.query(By.directive(IDialog))
+        .componentInstance as IDialog;
       const overlay = document.getElementById(dialog.componentId)!;
       host.componentInstance.caption = 'Updated content';
       host.changeDetectorRef.markForCheck();
@@ -384,7 +498,10 @@ describe('IDialog', () => {
       const bounds = option.getBoundingClientRect();
       expect(
         option.contains(
-          document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2),
+          document.elementFromPoint(
+            bounds.x + bounds.width / 2,
+            bounds.y + bounds.height / 2,
+          ),
         ),
       ).toBe(true);
       option.click();
@@ -401,9 +518,15 @@ describe('IDialog', () => {
       const ref = TestBed.inject(DialogService).open(DialogTestContent, {
         header: 'Dynamic dialog',
       });
-      const overlay = document.getElementById((ref.instance as IDialog).componentId)!;
-      expect(overlay.closest('.cdk-overlay-container')?.parentElement).toBe(document.body);
-      expect(overlay.querySelector('.i-dialog-content button')?.textContent).toBe('Dynamic action');
+      const overlay = document.getElementById(
+        (ref.instance as IDialog).componentId,
+      )!;
+      expect(overlay.closest('.cdk-overlay-container')?.parentElement).toBe(
+        document.body,
+      );
+      expect(
+        overlay.querySelector('.i-dialog-content button')?.textContent,
+      ).toBe('Dynamic action');
       const closed = vi.fn();
       ref.onClose.subscribe(closed);
       ref.close('saved');

@@ -11,6 +11,7 @@ import {
   afterEveryRender,
 } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
+import { UniqueComponentId } from '../../../utils/uniquecomponentid';
 import { IDialog } from '../dialog.component';
 import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
 
@@ -111,7 +112,10 @@ export class DialogService {
    * }, 5000);
    * ```
    */
-  open<T>(component: Type<T>, config: IDynamicDialogConfig = {}): IDynamicDialogRef {
+  open<T>(
+    component: Type<T>,
+    config: IDynamicDialogConfig = {},
+  ): IDynamicDialogRef {
     // Create the dialog wrapper component
     const dialogRef = createComponent(IDialog, {
       environmentInjector: this.environmentInjector,
@@ -147,7 +151,9 @@ export class DialogService {
         this.appRef.detachView(dialogRef.hostView);
 
         if (dialogRef.location.nativeElement.parentNode) {
-          dialogRef.location.nativeElement.parentNode.removeChild(dialogRef.location.nativeElement);
+          dialogRef.location.nativeElement.parentNode.removeChild(
+            dialogRef.location.nativeElement,
+          );
         }
         componentRef.destroy();
         dialogRef.destroy();
@@ -197,7 +203,9 @@ export class DialogService {
 
     // Insert the dynamic component into the dialog content
     const dialogContent =
-      dialogRef.instance.dialogElement?.nativeElement.querySelector('.i-dialog-content');
+      dialogRef.instance.dialogElement?.nativeElement.querySelector(
+        '.i-dialog-content',
+      );
     if (dialogContent) {
       dialogContent.appendChild(componentRef.location.nativeElement);
     }
@@ -206,13 +214,30 @@ export class DialogService {
     // Move the live nodes so their bindings, events and Angular destruction remain intact.
     const projectFooter = () => {
       const host = componentRef.location.nativeElement as HTMLElement;
-      const footer = dialogRef.instance.dialogElement?.nativeElement.querySelector(
-        '.i-card-footer',
-      ) as HTMLElement | null;
+      const footer =
+        dialogRef.instance.dialogElement?.nativeElement.querySelector(
+          '.i-card-footer',
+        ) as HTMLElement | null;
       if (!footer) return;
-      for (const node of host.querySelectorAll<HTMLElement>('[slot="footer"]')) {
-        const owner = node.parentElement?.closest('i-card, i-dialog, [slot="footer"]');
+      for (const node of host.querySelectorAll<HTMLElement>(
+        '[slot="footer"]',
+      )) {
+        const owner = node.parentElement?.closest(
+          'i-card, i-dialog, [slot="footer"]',
+        );
         if (owner && host.contains(owner)) continue;
+        // Footer projection must preserve native submission and implicit Enter behavior.
+        for (const control of node.querySelectorAll<
+          | HTMLButtonElement
+          | HTMLInputElement
+          | HTMLSelectElement
+          | HTMLTextAreaElement
+        >('button, input, select, textarea')) {
+          const form = control.form;
+          if (!form || control.hasAttribute('form')) continue;
+          if (!form.id) form.id = UniqueComponentId('i-dialog-form-');
+          control.setAttribute('form', form.id);
+        }
         footer.appendChild(node);
       }
     };

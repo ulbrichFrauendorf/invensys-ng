@@ -7,14 +7,12 @@
 $table-transition: 0.15s ease;
 
 /* Compact only the nested detail body; preserve headers and parent row sizing. */
-:host(.i-table-compact-details)
-  > .i-table-wrapper
-  > .i-table-container
-  > table
-  > tbody
-  > tr:not(.i-table-empty-row)
-  > td {
-  padding-block: 4px;
+:host(.i-table-compact-details) {
+  .i-table-wrapper {
+    > .i-table-container > table > tbody > tr:not(.i-table-empty-row) > td {
+      padding-block: 4px;
+    }
+  }
 }
 
 .i-table-wrapper {

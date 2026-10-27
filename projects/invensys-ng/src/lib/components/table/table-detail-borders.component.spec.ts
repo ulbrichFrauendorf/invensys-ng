@@ -26,7 +26,8 @@ describe('ITable detail row borders', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const nested = fixture.debugElement.query(By.directive(ITable));
-      const detailSelector = ':scope > .i-table-wrapper > .i-table-container > table > tbody > tr';
+      const detailSelector = '.i-table-wrapper > .i-table-container > table > tbody > tr';
+      expect(nested.nativeElement.querySelectorAll(detailSelector)).toHaveLength(2);
       let detailRow = nested.nativeElement.querySelector(detailSelector);
       expect(getComputedStyle(detailRow).borderBottomStyle).toBe('solid');
       const originalDetailHeight = detailRow.getBoundingClientRect().height;

@@ -12,6 +12,7 @@
 }
 
 .i-calendar-panel {
+  box-sizing: border-box;
   min-width: min(300px, calc(100vw - 24px));
   max-width: calc(100vw - 24px);
   max-height: calc(100dvh - 24px);

@@ -56,10 +56,12 @@
       size="xtra-small"
       [text]="true"
       severity="secondary"
-      [icon]="sidebarExpanded() ? 'pi pi-angle-down' : 'pi pi-angle-up'"
-      [ariaLabel]="
-        (sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'
+      [icon]="
+        (sidebarPosition() === 'left') === sidebarExpanded()
+          ? 'pi pi-angle-double-left'
+          : 'pi pi-angle-double-right'
       "
+      [ariaLabel]="(sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'"
       [ariaExpanded]="sidebarExpanded()"
       (clicked)="toggleSidebar()"
     />

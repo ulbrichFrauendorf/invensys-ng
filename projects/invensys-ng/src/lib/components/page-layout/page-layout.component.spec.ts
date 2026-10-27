@@ -145,6 +145,10 @@ describe('PageLayoutComponent', () => {
       const scrollTop = sidebar.scrollTop;
       expect(toggle.getAttribute('aria-expanded')).toBe('true');
       expect(toggle.getAttribute('aria-label')).toBe(`Hide ${position} sidebar`);
+      expect(toggle.classList.contains('i-button--xtra-small')).toBe(true);
+      expect(toggle.querySelector('i')?.classList.contains(`pi-angle-double-${position}`)).toBe(
+        true,
+      );
 
       toggle.click();
       await fixture.whenStable();
@@ -156,6 +160,11 @@ describe('PageLayoutComponent', () => {
       expect(new DOMMatrix(getComputedStyle(sidebar).transform).m42).toBeGreaterThan(0);
       expect(toggle.getAttribute('aria-label')).toBe(`Show ${position} sidebar`);
       expect(toggle.getAttribute('aria-expanded')).toBe('false');
+      expect(
+        toggle
+          .querySelector('i')
+          ?.classList.contains(`pi-angle-double-${position === 'left' ? 'right' : 'left'}`),
+      ).toBe(true);
       expect(slot.getBoundingClientRect().height).toBeLessThan(1);
       if (!matchMedia('(max-width: 991px)').matches) {
         expect(pageBody.getBoundingClientRect().width).toBeGreaterThan(expandedWidth + 200);

@@ -30,6 +30,8 @@ export class PageLayoutsComponent {
   readonly sidebarPosition = signal<'left' | 'right'>('right');
   readonly showCode = signal(false);
   readonly showSidebar = signal(true);
+  readonly sidebarVisible = signal(true);
+  readonly sidebarCollapsible = signal(true);
   readonly showHeader = signal(true);
   readonly spacing = signal('');
   readonly rowCount = signal(80);
@@ -59,11 +61,16 @@ export class PageLayoutsComponent {
   PageHeaderActionsDirective, PageHeaderContentDirective
 } from 'invensys-ng';
 
-<i-page-layout headerText="Report automations" eyebrowText="Thomas Tyres" sidebarPosition="right"
+<i-page-layout #page headerText="Report automations" eyebrowText="Thomas Tyres" sidebarPosition="right"
+  [sidebarCollapsible]="true" [(sidebarVisible)]="sidebarVisible"
   style="--page-layout-padding: 16px; --page-layout-sidebar-width: 240px">
   <nav iPageSidebar>Organization selector</nav>
   <div iPageHeaderActions>Page actions</div>
   <p iPageHeaderContent>Optional heading description</p>
   <section>Page content</section>
-</i-page-layout>`;
+</i-page-layout>
+
+<i-button (clicked)="page.hideSidebar()">Hide sidebar</i-button>
+<i-button (clicked)="page.showSidebar()">Show sidebar</i-button>
+<i-button (clicked)="page.toggleSidebar()">Toggle sidebar</i-button>`;
 }

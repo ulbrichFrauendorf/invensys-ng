@@ -1,6 +1,9 @@
 <i-page-layout
+  #page
   headerText="Page Layouts"
   [sidebarPosition]="sidebarPosition()"
+  [sidebarCollapsible]="sidebarCollapsible()"
+  [(sidebarVisible)]="sidebarVisible"
   eyebrowText="Layout & Containers"
   [showHeader]="showHeader()"
   [style.--page-layout-padding]="spacing() || null"
@@ -8,7 +11,6 @@
   @if (showSidebar()) {
     <section iPageSidebar class="demo-sidebar">
       <h2>Sidebar start</h2>
-      <p>This entire panel must return when you scroll back to the top.</p>
       <i-listbox
         title="Organizations"
         [options]="organizations"
@@ -41,7 +43,7 @@
     <app-code-display [sourceCode]="sourceCode" [embedded]="true" />
   } @else {
     <section class="demo-controls" aria-labelledby="scroll-checks">
-      <h2 id="scroll-checks">Scrolling checks</h2>
+      <h2 id="scroll-checks">Layout controls</h2>
       <p>
         On desktop, scroll the sidebar and content separately. On mobile, scroll past the sidebar
         until this page header reaches the application bar. It should immediately snap over the
@@ -49,6 +51,20 @@
         scrolled. The sidebar title, search field, and end marker should all remain reachable.
       </p>
       <div class="control-fields">
+        <label
+          ><input
+            type="checkbox"
+            [ngModel]="sidebarCollapsible()"
+            (ngModelChange)="sidebarCollapsible.set($event)"
+          />
+          Enable sidebar collapse</label
+        >
+        <i-button
+          [disabled]="!showSidebar() || !sidebarCollapsible()"
+          (clicked)="page.hideSidebar()"
+          >Hide sidebar</i-button
+        >
+        <i-button [disabled]="!showSidebar()" (clicked)="page.showSidebar()">Show sidebar</i-button>
         <label
           >Sidebar position
           <select [ngModel]="sidebarPosition()" (ngModelChange)="sidebarPosition.set($event)">
@@ -128,6 +144,14 @@
         The shell adds no content padding. Each routed page chooses its spacing. This component uses
         <code>--page-layout-padding</code> and <code>--page-layout-sidebar-width</code>; other pages
         can use their own styles. The mobile breakpoint matches the application navigation at 991px.
+      </p>
+      <p>
+        Sidebars slide down to hide and back up to return. Collapsing is enabled by default for
+        either position. Use <code>[(sidebarVisible)]</code> to bind visibility,
+        <code>(sidebarVisibleChange)</code> to react to changes, or call <code>hideSidebar()</code>,
+        <code>showSidebar()</code>, and <code>toggleSidebar()</code> from an event handler. Set
+        <code>[sidebarCollapsible]="false"</code> to keep the sidebar expanded. Hidden content keeps
+        its selection and scroll position.
       </p>
     </section>
   }

@@ -21,6 +21,8 @@ import {
     headerText="Report automations"
     [showHeader]="showHeader()"
     [sidebarPosition]="sidebarPosition()"
+    [sidebarCollapsible]="sidebarCollapsible()"
+    [(sidebarVisible)]="sidebarVisible"
   >
     @if (showSidebar()) {
       <nav iPageSidebar>
@@ -43,6 +45,8 @@ import {
 class TestPage {
   readonly items = Array.from({ length: 40 }, (_, i) => i + 1);
   readonly sidebarPosition = signal<'left' | 'right'>('left');
+  readonly sidebarCollapsible = signal(true);
+  readonly sidebarVisible = signal(true);
   readonly showSidebar = signal(true);
   readonly showHeader = signal(true);
   readonly saved = signal(false);
@@ -57,6 +61,12 @@ class TestShell {
 }
 
 describe('PageLayoutComponent', () => {
+  async function settleMotion(root: HTMLElement) {
+    await new Promise(requestAnimationFrame);
+    await Promise.all(root.getAnimations({ subtree: true }).map((animation) => animation.finished));
+    await new Promise(requestAnimationFrame);
+  }
+
   it('renders a simple page without optional slots', async () => {
     TestBed.configureTestingModule({ imports: [PageLayoutComponent] });
     const fixture = TestBed.createComponent(PageLayoutComponent);
@@ -84,6 +94,7 @@ describe('PageLayoutComponent', () => {
       );
     fixture.componentInstance.sidebarPosition.set('right');
     await fixture.whenStable();
+    await settleMotion(root);
     expect(root.querySelectorAll('nav')).toHaveLength(1);
     if (mobile)
       expect(sidebar.getBoundingClientRect().top).toBeGreaterThanOrEqual(
@@ -93,7 +104,7 @@ describe('PageLayoutComponent', () => {
       expect(sidebar.getBoundingClientRect().left).toBeGreaterThanOrEqual(
         body.getBoundingClientRect().right,
       );
-    root.querySelector<HTMLButtonElement>('header button')!.click();
+    root.querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!.click();
     expect(fixture.componentInstance.saved()).toBe(true);
   });
 
@@ -105,7 +116,7 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelectorAll('nav')).toHaveLength(1);
     expect(root.querySelectorAll('.test-content')).toHaveLength(1);
     expect(root.querySelector('header [iPageHeaderContent]')?.textContent).toBe('Draft notice');
-    root.querySelector<HTMLButtonElement>('header button')!.click();
+    root.querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!.click();
     expect(fixture.componentInstance.saved()).toBe(true);
     fixture.componentInstance.showSidebar.set(false);
     fixture.componentInstance.showHeader.set(false);
@@ -113,6 +124,124 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelector('aside')).toBeNull();
     expect(root.querySelector('header')).toBeNull();
     expect(root.querySelector('.test-content')).not.toBeNull();
+  });
+
+  it.each(['left', 'right'] as const)(
+    'slides the %s sidebar down and back up using its click control, preserving content',
+    async (position) => {
+      TestBed.configureTestingModule({ imports: [TestPage] });
+      const fixture = TestBed.createComponent(TestPage);
+      fixture.componentInstance.sidebarPosition.set(position);
+      await fixture.whenStable();
+      const root: HTMLElement = fixture.nativeElement;
+      const slot = root.querySelector<HTMLElement>('.sidebar-slot')!;
+      const sidebar = root.querySelector<HTMLElement>('aside')!;
+      const nav = sidebar.querySelector('nav');
+      const toggle = root.querySelector<HTMLButtonElement>('.sidebar-toggle button')!;
+      const pageBody = root.querySelector<HTMLElement>('.page-body')!;
+      const expandedWidth = pageBody.getBoundingClientRect().width;
+      const expandedTop = pageBody.getBoundingClientRect().top;
+      sidebar.scrollTop = 88;
+      const scrollTop = sidebar.scrollTop;
+      expect(toggle.getAttribute('aria-expanded')).toBe('true');
+      expect(toggle.getAttribute('aria-label')).toBe(`Hide ${position} sidebar`);
+
+      toggle.click();
+      await fixture.whenStable();
+      await settleMotion(root);
+      expect(fixture.componentInstance.sidebarVisible()).toBe(false);
+      expect(slot.inert).toBe(true);
+      expect(slot.getAttribute('aria-hidden')).toBe('true');
+      expect(getComputedStyle(sidebar).visibility).toBe('hidden');
+      expect(new DOMMatrix(getComputedStyle(sidebar).transform).m42).toBeGreaterThan(0);
+      expect(toggle.getAttribute('aria-label')).toBe(`Show ${position} sidebar`);
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+      expect(slot.getBoundingClientRect().height).toBeLessThan(1);
+      if (!matchMedia('(max-width: 991px)').matches) {
+        expect(pageBody.getBoundingClientRect().width).toBeGreaterThan(expandedWidth + 200);
+      } else if (position === 'left') {
+        expect(pageBody.getBoundingClientRect().top).toBeLessThan(expandedTop);
+      }
+
+      toggle.click();
+      await fixture.whenStable();
+      await settleMotion(root);
+      expect(fixture.componentInstance.sidebarVisible()).toBe(true);
+      expect(slot.inert).toBe(false);
+      expect(getComputedStyle(sidebar).visibility).toBe('visible');
+      expect(new DOMMatrix(getComputedStyle(sidebar).transform).m42).toBe(0);
+      expect(sidebar.querySelector('nav')).toBe(nav);
+      expect(sidebar.scrollTop).toBe(scrollTop);
+      expect(root.querySelectorAll('nav')).toHaveLength(1);
+      expect(Math.abs(pageBody.getBoundingClientRect().width - expandedWidth)).toBeLessThan(1);
+    },
+  );
+
+  it('supports external visibility updates, public methods and change notifications', async () => {
+    TestBed.configureTestingModule({ imports: [TestPage] });
+    const fixture = TestBed.createComponent(TestPage);
+    fixture.componentInstance.sidebarVisible.set(false);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+      .componentInstance as PageLayoutComponent;
+    const changed = vi.fn();
+    layout.sidebarVisible.subscribe(changed);
+    expect(root.querySelector<HTMLElement>('.sidebar-slot')!.inert).toBe(true);
+    layout.showSidebar();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sidebarVisible()).toBe(true);
+    expect(changed).toHaveBeenLastCalledWith(true);
+    layout.hideSidebar();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sidebarVisible()).toBe(false);
+    expect(changed).toHaveBeenLastCalledWith(false);
+    layout.toggleSidebar();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.sidebarVisible()).toBe(true);
+    expect(changed.mock.calls).toEqual([[true], [false], [true]]);
+    fixture.componentInstance.sidebarVisible.set(false);
+    await fixture.whenStable();
+    expect(root.querySelector<HTMLElement>('.sidebar-slot')!.inert).toBe(true);
+    expect(changed).toHaveBeenCalledTimes(3);
+  });
+
+  it('keeps the sidebar expanded and removes the control when collapsing is disabled', async () => {
+    TestBed.configureTestingModule({ imports: [TestPage] });
+    const fixture = TestBed.createComponent(TestPage);
+    fixture.componentInstance.sidebarCollapsible.set(false);
+    fixture.componentInstance.sidebarVisible.set(false);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+      .componentInstance as PageLayoutComponent;
+    expect(root.querySelector('.sidebar-toggle')).toBeNull();
+    expect(root.querySelector<HTMLElement>('.sidebar-slot')!.inert).toBe(false);
+    layout.showSidebar();
+    layout.hideSidebar();
+    layout.toggleSidebar();
+    expect(layout.sidebarVisible()).toBe(true);
+  });
+
+  it('retains a restore control without a page header and returns focus from hidden content', async () => {
+    TestBed.configureTestingModule({ imports: [TestPage] });
+    const fixture = TestBed.createComponent(TestPage);
+    fixture.componentInstance.showHeader.set(false);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+      .componentInstance as PageLayoutComponent;
+    const toggle = root.querySelector<HTMLButtonElement>('.sidebar-toolbar button')!;
+    root.querySelector<HTMLButtonElement>('aside button')!.focus({ preventScroll: true });
+    layout.hideSidebar();
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(toggle);
+    toggle.click();
+    await fixture.whenStable();
+    expect(layout.sidebarVisible()).toBe(true);
+    fixture.componentInstance.showSidebar.set(false);
+    await fixture.whenStable();
+    expect(root.querySelector('.sidebar-toolbar')).toBeNull();
   });
 
   it.each([true, false])(
@@ -183,6 +312,20 @@ describe('PageLayoutComponent', () => {
           expect(
             Math.abs(sidebar.getBoundingClientRect().top - shell.getBoundingClientRect().top),
           ).toBeLessThan(2);
+        }
+        if (sidebar) {
+          const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+            .componentInstance as PageLayoutComponent;
+          layout.hideSidebar();
+          await fixture.whenStable();
+          await settleMotion(root);
+          expect(
+            Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top),
+          ).toBeLessThan(2);
+          expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+          layout.showSidebar();
+          await fixture.whenStable();
+          await settleMotion(root);
         }
         if (mobile) {
           const shellComponent = fixture.debugElement.query(By.directive(LayoutComponent))

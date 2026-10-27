@@ -1,12 +1,17 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
+  computed,
   contentChild,
+  effect,
   ElementRef,
   input,
+  model,
   viewChild,
 } from '@angular/core';
+import { IButton } from '../button/button.component';
 import { PageHeaderActionsDirective, PageSidebarDirective } from './page-layout-slots.directive';
 
 /**
@@ -18,6 +23,7 @@ import { PageHeaderActionsDirective, PageSidebarDirective } from './page-layout-
  */
 @Component({
   selector: 'i-page-layout',
+  imports: [IButton, NgTemplateOutlet],
   templateUrl: './page-layout.component.html',
   styleUrl: './page-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +34,29 @@ export class PageLayoutComponent {
   readonly showHeader = input(true);
   /** Side on which the optional sidebar appears; existing consumers default to the left. */
   readonly sidebarPosition = input<'left' | 'right'>('left');
+  /** Enables the built-in toggle and programmatic hiding for either sidebar position. */
+  readonly sidebarCollapsible = input(true);
+  /** Two-way visibility binding; changes also emit sidebarVisibleChange. */
+  readonly sidebarVisible = model(true);
+
+  protected readonly sidebarExpanded = computed(
+    () => !this.sidebarCollapsible() || this.sidebarVisible(),
+  );
+  private readonly sidebarElement = viewChild<ElementRef<HTMLElement>>('sidebarElement');
+  private readonly sidebarSlot = viewChild<ElementRef<HTMLElement>>('sidebarSlot');
+  private readonly sidebarToggle = viewChild<IButton>('sidebarToggle');
+
+  showSidebar(): void {
+    this.sidebarVisible.set(true);
+  }
+
+  hideSidebar(): void {
+    if (this.sidebarCollapsible()) this.sidebarVisible.set(false);
+  }
+
+  toggleSidebar(): void {
+    if (this.sidebarCollapsible()) this.sidebarVisible.update((visible) => !visible);
+  }
 
   protected readonly sidebar = contentChild(PageSidebarDirective);
   protected readonly headerActions = contentChild(PageHeaderActionsDirective);
@@ -35,10 +64,20 @@ export class PageLayoutComponent {
   private readonly body = viewChild.required<ElementRef<HTMLElement>>('body');
 
   constructor() {
+    effect(() => {
+      // Return keyboard focus before the collapsed sidebar becomes unreachable.
+      if (
+        !this.sidebarExpanded() &&
+        this.sidebarElement()?.nativeElement.contains(document.activeElement)
+      ) {
+        this.sidebarToggle()?.focus();
+      }
+    });
     afterRenderEffect((onCleanup) => {
       // Slot changes can move the heading without resizing its body.
       this.sidebar();
       const header = this.header()?.nativeElement;
+      const sidebarSlot = this.sidebarSlot()?.nativeElement;
       const body = this.body().nativeElement;
       const scrollport = body.closest<HTMLElement>('.layout-wrapper');
       const topbar = scrollport?.querySelector<HTMLElement>(':scope > i-topbar');
@@ -67,6 +106,7 @@ export class PageLayoutComponent {
       const observer = new ResizeObserver(update);
       observer.observe(body);
       observer.observe(topbar);
+      if (sidebarSlot) observer.observe(sidebarSlot);
       scrollport.addEventListener('scroll', update, { passive: true });
       contentScrollport?.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);

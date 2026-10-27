@@ -2,21 +2,34 @@
   class="page-layout"
   [class.with-sidebar]="sidebar()"
   [class.sidebar-right]="sidebarPosition() === 'right'"
+  [class.sidebar-hidden]="!sidebarExpanded()"
 >
   @if (sidebar()) {
-    <aside class="sidebar">
-      <ng-content select="[iPageSidebar]" />
-    </aside>
+    <div
+      class="sidebar-slot"
+      #sidebarSlot
+      [inert]="!sidebarExpanded()"
+      [attr.aria-hidden]="!sidebarExpanded()"
+    >
+      <div class="sidebar-clip">
+        <aside class="sidebar" #sidebarElement>
+          <ng-content select="[iPageSidebar]" />
+        </aside>
+      </div>
+    </div>
   }
   <div class="page-body" #body>
     @if (showHeader()) {
       <header class="page-header" #header>
         <div class="page-heading">
-          @if (eyebrowText()) {
-            <div class="eyebrow">{{ eyebrowText() }}</div>
-          }
-          <h1>{{ headerText() }}</h1>
-          <ng-content select="[iPageHeaderContent]" />
+          <ng-container [ngTemplateOutlet]="toggle" />
+          <div class="page-heading-content">
+            @if (eyebrowText()) {
+              <div class="eyebrow">{{ eyebrowText() }}</div>
+            }
+            <h1>{{ headerText() }}</h1>
+            <ng-content select="[iPageHeaderContent]" />
+          </div>
         </div>
         @if (headerActions()) {
           <div class="header-actions">
@@ -24,9 +37,28 @@
           </div>
         }
       </header>
+    } @else if (sidebar() && sidebarCollapsible()) {
+      <div class="sidebar-toolbar">
+        <ng-container [ngTemplateOutlet]="toggle" />
+      </div>
     }
     <div class="page-content">
       <ng-content />
     </div>
   </div>
 </div>
+
+<ng-template #toggle>
+  @if (sidebar() && sidebarCollapsible()) {
+    <i-button
+      #sidebarToggle
+      class="sidebar-toggle"
+      [text]="true"
+      severity="secondary"
+      [icon]="sidebarExpanded() ? 'pi pi-chevron-down' : 'pi pi-chevron-up'"
+      [ariaLabel]="(sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'"
+      [ariaExpanded]="sidebarExpanded()"
+      (clicked)="toggleSidebar()"
+    />
+  }
+</ng-template>

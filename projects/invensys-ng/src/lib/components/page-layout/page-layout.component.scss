@@ -5,16 +5,22 @@
   min-width: 0;
 
   .page-layout {
+    --sidebar-transition-duration: 240ms;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     align-items: start;
     grid-template-areas: 'body';
+    transition: grid-template-columns var(--sidebar-transition-duration) ease;
 
     &.with-sidebar {
       grid-template-columns:
         minmax(0, var(--page-layout-sidebar-width, 216px))
         minmax(0, 1fr);
       grid-template-areas: 'sidebar body';
+
+      &.sidebar-hidden {
+        grid-template-columns: minmax(0, 0px) minmax(0, 1fr);
+      }
 
       @media (max-width: 991px) {
         grid-template-columns: minmax(0, 1fr);
@@ -25,28 +31,78 @@
         grid-template-columns: minmax(0, 1fr) minmax(0, var(--page-layout-sidebar-width, 216px));
         grid-template-areas: 'body sidebar';
 
+        &.sidebar-hidden {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 0px);
+        }
+
         @media (max-width: 991px) {
           grid-template-columns: minmax(0, 1fr);
           grid-template-areas: 'body' 'sidebar';
         }
       }
+
+      // Keep a single column for both visibility states on narrow screens.
+      @media (max-width: 991px) {
+        &.sidebar-hidden,
+        &.sidebar-right.sidebar-hidden {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
     }
 
-    .sidebar {
+    .sidebar-slot {
       grid-area: sidebar;
       position: sticky;
       top: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
       min-width: 0;
-      max-height: var(--layout-content-height, 100dvh);
-      overflow: auto;
-      padding: var(--page-layout-padding, 18px);
-      box-sizing: border-box;
+      transition: grid-template-rows var(--sidebar-transition-duration) ease;
 
       @media (max-width: 991px) {
         position: static;
-        max-height: none;
-        overflow: visible;
-        padding: var(--page-layout-padding, 9px);
+      }
+
+      .sidebar-clip {
+        min-width: 0;
+        min-height: 0;
+        overflow: clip;
+
+        .sidebar {
+          width: var(--page-layout-sidebar-width, 216px);
+          max-height: var(--layout-content-height, 100dvh);
+          overflow: auto;
+          padding: var(--page-layout-padding, 18px);
+          box-sizing: border-box;
+          transform: translateY(0);
+          visibility: visible;
+          transition:
+            transform var(--sidebar-transition-duration) ease,
+            visibility 0s;
+
+          @media (max-width: 991px) {
+            width: auto;
+            max-height: none;
+            overflow: visible;
+            padding: var(--page-layout-padding, 9px);
+          }
+        }
+      }
+    }
+
+    &.sidebar-hidden {
+      .sidebar-slot {
+        grid-template-rows: minmax(0, 0fr);
+
+        .sidebar-clip {
+          .sidebar {
+            transform: translateY(100dvh);
+            visibility: hidden;
+            transition:
+              transform var(--sidebar-transition-duration) ease,
+              visibility 0s var(--sidebar-transition-duration);
+          }
+        }
       }
     }
 
@@ -74,9 +130,16 @@
         }
 
         .page-heading {
+          display: flex;
+          align-items: flex-start;
+          gap: 9px;
           flex: 1 1 180px;
           min-width: 0;
           overflow-wrap: anywhere;
+
+          .page-heading-content {
+            min-width: 0;
+          }
 
           .eyebrow {
             margin: 0 0 4.8px;
@@ -96,6 +159,22 @@
         }
       }
 
+      .sidebar-toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        padding: var(--page-layout-padding, 18px);
+
+        @media (max-width: 991px) {
+          padding: var(--page-layout-padding, 9px);
+        }
+      }
+
+      .sidebar-toggle {
+        flex: 0 0 auto;
+      }
+
       .page-content {
         min-width: 0;
         padding: var(--page-layout-padding, 18px);
@@ -106,6 +185,10 @@
           padding-bottom: max(var(--page-layout-padding, 9px), env(safe-area-inset-bottom));
         }
       }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      --sidebar-transition-duration: 0ms;
     }
   }
 }

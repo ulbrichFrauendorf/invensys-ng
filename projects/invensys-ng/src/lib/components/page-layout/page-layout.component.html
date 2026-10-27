@@ -53,10 +53,13 @@
     <i-button
       #sidebarToggle
       class="sidebar-toggle"
+      size="xtra-small"
       [text]="true"
       severity="secondary"
-      [icon]="sidebarExpanded() ? 'pi pi-chevron-down' : 'pi pi-chevron-up'"
-      [ariaLabel]="(sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'"
+      [icon]="sidebarExpanded() ? 'pi pi-angle-down' : 'pi pi-angle-up'"
+      [ariaLabel]="
+        (sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'
+      "
       [ariaExpanded]="sidebarExpanded()"
       (clicked)="toggleSidebar()"
     />

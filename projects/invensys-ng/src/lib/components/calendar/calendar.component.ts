@@ -1,16 +1,20 @@
 import {
   Component,
+  afterEveryRender,
+  ChangeDetectorRef,
+  inject,
   Input,
   Output,
   EventEmitter,
   forwardRef,
-  HostListener,
   ElementRef,
   ViewChild,
   AfterViewInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
 
+import { OverlayModule } from '@angular/cdk/overlay';
+import { OPTION_OVERLAY_POSITIONS } from '../../utils/option-picker';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { IInputText } from '../input-text/input-text.component';
@@ -65,7 +69,7 @@ export type CalendarView = 'date' | 'month' | 'year';
 @Component({
   selector: 'i-calendar',
   standalone: true,
-  imports: [FormsModule, IInputText, IButton],
+  imports: [FormsModule, IInputText, IButton, OverlayModule],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -154,6 +158,8 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
    * @internal
    */
   isOpen = false;
+
+  readonly overlayPositions = OPTION_OVERLAY_POSITIONS;
 
   /**
    * Current view date (for navigation)
@@ -247,7 +253,19 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
    */
   private onTouched: () => void = () => {};
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) {
+    const changeDetector = inject(ChangeDetectorRef);
+    // Projected controls survive a dialog's template detachment. Close their
+    // floating panel when the origin leaves the document.
+    afterEveryRender({
+      read: () => {
+        if (this.isOpen && !this.elementRef.nativeElement.isConnected) {
+          this.isOpen = false;
+          changeDetector.markForCheck();
+        }
+      },
+    });
+  }
 
   ngAfterViewInit(): void {
     this.currentView = this.view;
@@ -584,10 +602,19 @@ export class ICalendar implements ControlValueAccessor, AfterViewInit {
   }
 
   /**
-   * Closes the calendar when clicking outside
+   * Closes the popup before Escape can dismiss a containing dialog
    * @internal
    */
-  @HostListener('document:click', ['$event'])
+  onOverlayKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.isOpen = false;
+      this.elementRef.nativeElement.querySelector('input')?.focus({ preventScroll: true });
+    }
+  }
+
+  /** Closes the calendar for overlay clicks outside its origin. */
   onDocumentClick(event: MouseEvent): void {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.isOpen = false;

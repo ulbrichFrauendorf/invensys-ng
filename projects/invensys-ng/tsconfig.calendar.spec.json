@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/calendar-spec"
+  },
+  "include": [
+    "src/lib/components/calendar/calendar.component.spec.ts"
+  ]
+}

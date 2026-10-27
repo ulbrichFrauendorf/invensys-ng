@@ -1,6 +1,11 @@
 <div class="i-calendar-container" [attr.id]="componentId">
   <!-- Input field using i-input-text component -->
-  <div class="i-calendar-input-wrapper" (click)="toggleCalendar()">
+  <div
+    class="i-calendar-input-wrapper"
+    cdkOverlayOrigin
+    #origin="cdkOverlayOrigin"
+    (click)="toggleCalendar()"
+  >
     <i-input-text
       [id]="componentId"
       [label]="label"
@@ -15,7 +20,17 @@
   </div>
 
   <!-- Calendar Panel -->
-  @if (isOpen) {
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="isOpen && !disabled"
+    [cdkConnectedOverlayPositions]="overlayPositions"
+    [cdkConnectedOverlayViewportMargin]="12"
+    [cdkConnectedOverlayPush]="true"
+    (overlayOutsideClick)="onDocumentClick($event)"
+    (overlayKeydown)="onOverlayKeydown($event)"
+    (detach)="isOpen = false"
+  >
     <div #calendarPanel class="i-calendar-panel" (click)="$event.stopPropagation()">
       <!-- Header -->
       <div class="i-calendar-header">
@@ -131,5 +146,5 @@
         }
       </div>
     </div>
-  }
+  </ng-template>
 </div>

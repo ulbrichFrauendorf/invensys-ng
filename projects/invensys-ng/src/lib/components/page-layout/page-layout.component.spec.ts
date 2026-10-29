@@ -53,6 +53,44 @@ class TestPage {
 }
 
 @Component({
+  imports: [PageLayoutComponent, PageSidebarDirective, PageHeaderContentDirective],
+  template: `
+    <i-page-layout
+      headerText="Onboarding"
+      [showHeader]="outerHeader()"
+      [(sidebarVisible)]="leftVisible"
+    >
+      <nav iPageSidebar><button>Company</button></nav>
+      <div iPageHeaderContent [style.height.px]="extraHeight()"></div>
+      <i-page-layout
+        headerText="Employee"
+        sidebarPosition="right"
+        [showHeader]="innerHeader()"
+        [sidebarCollapsible]="false"
+      >
+        <nav iPageSidebar>
+          @for (item of items; track item) {
+            <button style="display:block;height:44px">Outstanding {{ item }}</button>
+          }
+        </nav>
+        <section>
+          @for (item of items; track item) {
+            <p style="height:88px">Employee field {{ item }}</p>
+          }
+        </section>
+      </i-page-layout>
+    </i-page-layout>
+  `,
+})
+class NestedTestPage {
+  readonly items = Array.from({ length: 40 }, (_, i) => i + 1);
+  readonly outerHeader = signal(true);
+  readonly innerHeader = signal(false);
+  readonly leftVisible = signal(true);
+  readonly extraHeight = signal(0);
+}
+
+@Component({
   imports: [LayoutComponent],
   template: '<i-layout [config]="config" />',
 })
@@ -253,6 +291,76 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelector('.sidebar-toolbar')).toBeNull();
   });
 
+  it.each([false, true])(
+    'keeps nested right sidebars below ancestor headers and toolbars (inner header: %s)',
+    async (innerHeader) => {
+      TestBed.configureTestingModule({
+        imports: [TestShell],
+        providers: [provideRouter([{ path: 'nested', component: NestedTestPage }])],
+      });
+      const fixture = TestBed.createComponent(TestShell);
+      await TestBed.inject(Router).navigateByUrl('/nested');
+      await fixture.whenStable();
+      const page = fixture.debugElement.query(By.directive(NestedTestPage))
+        .componentInstance as NestedTestPage;
+      page.innerHeader.set(innerHeader);
+      page.leftVisible.set(false);
+      await fixture.whenStable();
+      const root: HTMLElement = fixture.nativeElement;
+      await settleMotion(root);
+      const layouts = root.querySelectorAll<HTMLElement>('i-page-layout');
+      const outer = layouts[0];
+      const inner = layouts[1];
+      const slot = inner.querySelector<HTMLElement>('.sidebar-slot')!;
+      const sidebar = inner.querySelector<HTMLElement>('.sidebar')!;
+      const mobile = matchMedia('(max-width: 991px)').matches;
+      const scrollport = root.querySelector<HTMLElement>(
+        mobile ? '.layout-wrapper' : '.layout-main-container',
+      )!;
+      scrollport.style.scrollBehavior = 'auto';
+      scrollport.scrollTop = 500;
+      const check = async (selector: string) => {
+        await fixture.whenStable();
+        await new Promise(requestAnimationFrame);
+        await new Promise(requestAnimationFrame);
+        const header = outer.querySelector<HTMLElement>(selector)!;
+        expect(getComputedStyle(sidebar).visibility).toBe('visible');
+        expect(new DOMMatrix(getComputedStyle(sidebar).transform).m42).toBe(0);
+        expect(parseFloat(getComputedStyle(slot).top)).toBeCloseTo(
+          header.getBoundingClientRect().height,
+          0,
+        );
+        if (mobile) {
+          expect(getComputedStyle(slot).position).toBe('static');
+        } else {
+          expect(
+            Math.abs(slot.getBoundingClientRect().top - header.getBoundingClientRect().bottom),
+          ).toBeLessThan(2);
+          expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(
+            scrollport.getBoundingClientRect().bottom + 1,
+          );
+          sidebar.scrollTop = sidebar.scrollHeight;
+          expect(
+            sidebar.querySelector('button:last-child')!.getBoundingClientRect().bottom,
+          ).toBeLessThanOrEqual(sidebar.getBoundingClientRect().bottom);
+        }
+        if (innerHeader) {
+          const innerHeading = inner.querySelector<HTMLElement>('.page-header')!;
+          expect(innerHeading.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+            header.getBoundingClientRect().bottom - 1,
+          );
+        }
+        expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+      };
+      await check('.page-header');
+      page.extraHeight.set(100);
+      await check('.page-header');
+      page.outerHeader.set(false);
+      await check('.sidebar-toolbar');
+      fixture.destroy();
+    },
+  );
+
   it.each([true, false])(
     'owns its padding and snaps across the mobile app bar (sidebar: %s)',
     async (showSidebar) => {
@@ -341,13 +449,27 @@ describe('PageLayoutComponent', () => {
             .componentInstance as LayoutComponent;
           header.dispatchEvent(
             new TouchEvent('touchstart', {
-              touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 100 })],
+              touches: [
+                new Touch({
+                  identifier: 1,
+                  target: header,
+                  clientX: 50,
+                  clientY: 100,
+                }),
+              ],
               bubbles: true,
             }),
           );
           header.dispatchEvent(
             new TouchEvent('touchmove', {
-              touches: [new Touch({ identifier: 1, target: header, clientX: 50, clientY: 200 })],
+              touches: [
+                new Touch({
+                  identifier: 1,
+                  target: header,
+                  clientX: 50,
+                  clientY: 200,
+                }),
+              ],
               bubbles: true,
               cancelable: true,
             }),

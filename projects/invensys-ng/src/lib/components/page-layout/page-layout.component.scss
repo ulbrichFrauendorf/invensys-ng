@@ -50,10 +50,10 @@
       }
     }
 
-    .sidebar-slot {
+    > .sidebar-slot {
       grid-area: sidebar;
       position: sticky;
-      top: 0;
+      top: var(--page-layout-sticky-offset, 0px);
       display: grid;
       grid-template-rows: minmax(0, 1fr);
       min-width: 0;
@@ -63,14 +63,17 @@
         position: static;
       }
 
-      .sidebar-clip {
+      > .sidebar-clip {
         min-width: 0;
         min-height: 0;
         overflow: clip;
 
-        .sidebar {
+        > .sidebar {
           width: var(--page-layout-sidebar-width, 216px);
-          max-height: var(--layout-content-height, 100dvh);
+          max-height: max(
+            0px,
+            calc(var(--layout-content-height, 100dvh) - var(--page-layout-sticky-offset, 0px))
+          );
           overflow: auto;
           padding: var(--page-layout-padding, 18px);
           box-sizing: border-box;
@@ -91,11 +94,11 @@
     }
 
     &.sidebar-hidden {
-      .sidebar-slot {
+      > .sidebar-slot {
         grid-template-rows: minmax(0, 0fr);
 
-        .sidebar-clip {
-          .sidebar {
+        > .sidebar-clip {
+          > .sidebar {
             transform: translateY(100dvh);
             visibility: hidden;
             transition:
@@ -106,13 +109,13 @@
       }
     }
 
-    .page-body {
+    > .page-body {
       grid-area: body;
       min-width: 0;
 
-      .page-header {
+      > .page-header {
         position: sticky;
-        top: 0;
+        top: var(--page-layout-sticky-offset, 0px);
         z-index: 10;
         display: flex;
         flex-wrap: wrap;
@@ -159,9 +162,9 @@
         }
       }
 
-      .sidebar-toolbar {
+      > .sidebar-toolbar {
         position: sticky;
-        top: 0;
+        top: var(--page-layout-sticky-offset, 0px);
         z-index: 10;
         display: flex;
         padding: var(--page-layout-padding, 18px);
@@ -175,7 +178,7 @@
         flex: 0 0 auto;
       }
 
-      .page-content {
+      > .page-content {
         min-width: 0;
         padding: var(--page-layout-padding, 18px);
         padding-bottom: max(var(--page-layout-padding, 18px), env(safe-area-inset-bottom));

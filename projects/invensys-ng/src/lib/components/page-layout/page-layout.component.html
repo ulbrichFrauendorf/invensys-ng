@@ -38,7 +38,7 @@
         }
       </header>
     } @else if (sidebar() && sidebarCollapsible()) {
-      <div class="sidebar-toolbar">
+      <div class="sidebar-toolbar" #toolbar>
         <ng-container [ngTemplateOutlet]="toggle" />
       </div>
     }

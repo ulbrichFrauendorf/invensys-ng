@@ -15,6 +15,7 @@
     &:has(i-page-layout) {
       @media (max-width: 991px) {
         overflow-y: auto;
+        @include scrollbar.themed-scrollbar();
         scrollbar-gutter: stable;
         overscroll-behavior-y: contain;
       }
@@ -61,11 +62,11 @@
         width: min(300px, calc(100vw - 44px));
         height: 100%;
         overflow-y: auto;
+        @include scrollbar.themed-scrollbar();
         transition:
           transform 0.3s ease,
           opacity 0.3s ease;
         opacity: 1;
-        @include scrollbar.themed-scrollbar();
 
         @media (max-width: 991px) {
           position: fixed;
@@ -95,10 +96,10 @@
         flex: 1 1 auto;
         min-width: 0;
         overflow-y: auto;
+        @include scrollbar.themed-scrollbar();
         padding: 0;
         transition: margin-left 0.3s ease;
         position: relative;
-        @include scrollbar.dropdown-scrollbar();
 
         @media (max-width: 991px) {
           margin-left: 0;

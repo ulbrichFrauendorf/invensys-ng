@@ -1,3 +1,4 @@
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
 @use './field-picker.component.theme.scss' as theme;
 @include theme.i-field-picker-theme();
 :host {
@@ -7,6 +8,7 @@
   &__catalog {
     max-height: 384px;
     overflow: auto;
+    @include scrollbar.themed-scrollbar();
     margin-top: 12px;
     padding: 6px;
     border-width: 1px;

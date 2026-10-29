@@ -104,7 +104,7 @@ $listbox-transition: 0.15s ease;
       min-height: 0;
       overflow-x: hidden;
       overflow-y: auto;
-      @include scrollbar.dropdown-scrollbar();
+      @include scrollbar.themed-scrollbar();
 
       .i-listbox-option {
         display: flex;

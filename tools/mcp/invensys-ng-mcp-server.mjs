@@ -290,6 +290,21 @@ function parseInputsOutputs(source) {
     }
   }
 
+  const modelRegex =
+    /^\s*(?:readonly\s+)?([A-Za-z0-9_$]+)\s*=\s*model(?:<([^;\n]+?)>)?\(([^;]*)\);/gm;
+  for (const match of source.matchAll(modelRegex)) {
+    const args = match[3]?.trim() || "";
+    const defaultValue = args.split(/,\s*\{/)[0].trim();
+    const binding = args.match(/alias\s*:\s*['"]([^'"]+)['"]/)?.[1] || match[1];
+    const type = match[2]?.trim() || (/^(true|false)$/.test(defaultValue) ? "boolean" : undefined);
+    if (!inputs.some((input) => input.name === match[1])) {
+      inputs.push({ name: match[1], binding, type, default: defaultValue || undefined });
+    }
+    if (!outputs.some((output) => output.binding === `${binding}Change`)) {
+      outputs.push({ name: `${match[1]}Change`, binding: `${binding}Change`, type });
+    }
+  }
+
   return { inputs, outputs };
 }
 

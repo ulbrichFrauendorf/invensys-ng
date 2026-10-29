@@ -1,16 +1,18 @@
 <i-page-layout
   #page
   headerText="Page Layouts"
-  [sidebarPosition]="sidebarPosition()"
-  [sidebarCollapsible]="sidebarCollapsible()"
-  [(sidebarVisible)]="sidebarVisible"
   eyebrowText="Layout & Containers"
   [showHeader]="showHeader()"
   [style.--page-layout-padding]="spacing() || null"
 >
-  @if (showSidebar()) {
-    <section iPageSidebar class="demo-sidebar">
-      <h2>Sidebar start</h2>
+  @if (showSidebar() && sidebarMode() !== 'right') {
+    <section
+      iPageLeftSidebar
+      [(visible)]="sidebarVisible"
+      [collapsible]="sidebarCollapsible()"
+      label="Organizations"
+      class="demo-sidebar"
+    >
       <i-listbox
         title="Organizations"
         [options]="organizations"
@@ -21,7 +23,23 @@
         [filter]="true"
         [displayAsMenu]="true"
       />
-      <div class="sidebar-end"><p>Sidebar end · 40 organizations</p></div>
+    </section>
+  }
+
+  @if (showSidebar() && sidebarMode() !== 'left') {
+    <section
+      iPageRightSidebar
+      [(visible)]="rightVisible"
+      [collapsible]="sidebarCollapsible()"
+      label="Outstanding fields"
+      class="demo-sidebar"
+    >
+      <h2>Outstanding fields</h2>
+      <ul>
+        <li>Employee name</li>
+        <li>Payroll frequency</li>
+        <li>Payment method</li>
+      </ul>
     </section>
   }
 
@@ -36,20 +54,14 @@
     <i-button icon="pi pi-check" (clicked)="saved.set(true)">Save</i-button>
   </div>
   <p iPageHeaderContent class="heading-description">
-    {{ rows().length }} automations · Desktop and mobile scrolling playground
+    {{ organizationName() }} · {{ rows().length }} automations
   </p>
 
   @if (showCode()) {
     <app-code-display [sourceCode]="sourceCode" [embedded]="true" />
   } @else {
-    <section class="demo-controls" aria-labelledby="scroll-checks">
-      <h2 id="scroll-checks">Layout controls</h2>
-      <p>
-        On desktop, scroll the sidebar and content separately. On mobile, scroll past the sidebar
-        until this page header reaches the application bar. It should immediately snap over the
-        whole bar, then release when you scroll back past that point. Rotate your device while
-        scrolled. The sidebar title, search field, and end marker should all remain reachable.
-      </p>
+    <details class="demo-controls">
+      <summary>Layout options</summary>
       <div class="control-fields">
         <label
           ><input
@@ -60,16 +72,33 @@
           Enable sidebar collapse</label
         >
         <i-button
-          [disabled]="!showSidebar() || !sidebarCollapsible()"
-          (clicked)="page.hideSidebar()"
-          >Hide sidebar</i-button
+          [disabled]="
+            !showSidebar() || !sidebarCollapsible() || sidebarMode() === 'right'
+          "
+          (clicked)="page.hideSidebar('left')"
+          >Hide left sidebar</i-button
         >
-        <i-button [disabled]="!showSidebar()" (clicked)="page.showSidebar()">Show sidebar</i-button>
+        <i-button
+          [disabled]="!showSidebar() || sidebarMode() === 'right'"
+          (clicked)="page.showSidebar('left')"
+          >Show left sidebar</i-button
+        >
+        <i-button
+          [disabled]="!showSidebar() || !sidebarCollapsible() || sidebarMode() === 'left'"
+          (clicked)="page.hideSidebar('right')"
+          >Hide right sidebar</i-button
+        >
+        <i-button
+          [disabled]="!showSidebar() || sidebarMode() === 'left'"
+          (clicked)="page.showSidebar('right')"
+          >Show right sidebar</i-button
+        >
         <label
-          >Sidebar position
-          <select [ngModel]="sidebarPosition()" (ngModelChange)="sidebarPosition.set($event)">
+          >Sidebars
+          <select [ngModel]="sidebarMode()" (ngModelChange)="sidebarMode.set($event)">
             <option value="left">Left</option>
             <option value="right">Right</option>
+            <option value="both">Both</option>
           </select>
         </label>
         <label
@@ -106,25 +135,24 @@
           </select>
         </label>
       </div>
-      <p role="status">
-        {{
-          saved()
-            ? 'Saved. The projected header action is working.'
-            : 'Use Save in the sticky header to check its action.'
-        }}
-      </p>
-    </section>
+    </details>
+
+    @if (saved()) {
+      <p role="status">Saved</p>
+    }
 
     <section class="automation-list" aria-labelledby="automation-heading">
-      <h2 id="automation-heading">Automation list</h2>
+      <h2 id="automation-heading">Automations</h2>
       @for (row of rows(); track row.id) {
         <article class="automation-row">
           <span class="row-number">{{ row.id }}</span>
           <div>
-            <h3>{{ row.name }} {{ row.id }}</h3>
+            <h3>{{ row.name }}</h3>
             <p>{{ row.reports }} reports · {{ organizationName() }}</p>
           </div>
-          <span class="status" [class.paused]="row.status === 'Paused'">{{ row.status }}</span>
+          <span class="status" [class.paused]="row.status === 'Paused'">{{
+            row.status
+          }}</span>
           <i-button
             [text]="true"
             icon="pi pi-play"
@@ -133,26 +161,6 @@
           />
         </article>
       }
-      <div class="content-end">
-        <p>Content end · {{ rows().length }} rows. Scroll back to Sidebar start.</p>
-      </div>
-    </section>
-
-    <section class="usage">
-      <h2>Use in your application</h2>
-      <p>
-        The shell adds no content padding. Each routed page chooses its spacing. This component uses
-        <code>--page-layout-padding</code> and <code>--page-layout-sidebar-width</code>; other pages
-        can use their own styles. The mobile breakpoint matches the application navigation at 991px.
-      </p>
-      <p>
-        Sidebars slide down to hide and back up to return. Collapsing is enabled by default for
-        either position. Use <code>[(sidebarVisible)]</code> to bind visibility,
-        <code>(sidebarVisibleChange)</code> to react to changes, or call <code>hideSidebar()</code>,
-        <code>showSidebar()</code>, and <code>toggleSidebar()</code> from an event handler. Set
-        <code>[sidebarCollapsible]="false"</code> to keep the sidebar expanded. Hidden content keeps
-        its selection and scroll position.
-      </p>
     </section>
   }
 </i-page-layout>

@@ -1,3 +1,4 @@
+@use './scrollbar-mixins.scss' as scrollbar;
 @use './color-variables.scss' as colors;
 @use './variables' as vars;
 @use './floating-label' as floating;
@@ -182,6 +183,7 @@
   }
   .i-option-list {
     overflow: auto;
+    @include scrollbar.themed-scrollbar();
     min-height: 0;
     overscroll-behavior: contain;
   }

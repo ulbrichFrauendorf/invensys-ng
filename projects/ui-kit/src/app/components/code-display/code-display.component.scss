@@ -31,8 +31,6 @@
     }
 
     .code-block {
-      @include scrollbar.dropdown-scrollbar();
-
       pre {
         margin: 0;
         padding: 12px 16px 16px;
@@ -42,6 +40,7 @@
         white-space: pre;
         tab-size: 2;
         overflow: auto;
+        @include scrollbar.themed-scrollbar();
         -webkit-overflow-scrolling: touch;
         min-width: 100%;
 
@@ -91,7 +90,7 @@
       .code-scroll {
         width: 100%;
         overflow: auto;
-        @include scrollbar.dropdown-scrollbar();
+        @include scrollbar.themed-scrollbar();
       }
 
       pre {

@@ -1,5 +1,6 @@
-@use "./dialog.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
+@use './dialog.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-dialog-theme();
 
@@ -69,6 +70,8 @@
 }
 
 .i-dialog-content {
+  @include scrollbar.themed-scrollbar();
+
   @media (max-width: 640px) {
     overflow-wrap: anywhere;
   }

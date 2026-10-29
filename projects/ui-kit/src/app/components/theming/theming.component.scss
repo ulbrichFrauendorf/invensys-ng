@@ -1,4 +1,14 @@
 @use './theming.component.theme.scss' as theme;
+
+:host {
+  display: block;
+  margin: 18px;
+
+  @media (max-width: 991px) {
+    margin: 9px;
+  }
+}
+
 .theming-demo {
   .theming-content {
     p {

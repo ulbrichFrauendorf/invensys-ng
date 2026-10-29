@@ -14,13 +14,6 @@
     i-listbox {
       display: block;
     }
-
-    .sidebar-end {
-      margin-bottom: 0;
-      padding-block: 9px;
-      border-bottom-width: 2px;
-      border-bottom-style: solid;
-    }
   }
 
   .demo-controls {
@@ -30,11 +23,16 @@
     border-style: solid;
     border-radius: 6px;
 
+    summary {
+      cursor: pointer;
+    }
+
     .control-fields {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 12px;
+      padding-top: 12px;
 
       label {
         display: flex;
@@ -93,24 +91,6 @@
         padding: 3.6px 6px;
         border-radius: 3px;
       }
-    }
-
-    .content-end {
-      padding-block: 12px;
-      border-bottom-width: 2px;
-      border-bottom-style: solid;
-    }
-  }
-
-  .usage {
-    padding-block: 12px;
-
-    pre {
-      overflow: auto;
-      padding: 12px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 6px;
     }
   }
 }

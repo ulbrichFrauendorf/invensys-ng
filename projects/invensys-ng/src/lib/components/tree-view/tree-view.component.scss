@@ -29,10 +29,10 @@
 
   .i-tree-view-container {
     overflow: auto;
+    @include scrollbar.themed-scrollbar();
     flex: 1;
     min-height: 0;
     box-sizing: border-box;
-    @include scrollbar.dropdown-scrollbar();
   }
 
   .i-tree-view-loading {

@@ -1,3 +1,4 @@
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
 @use './tabs.component.theme.scss' as theme;
 @use '../../themes/variables' as vars;
 
@@ -13,14 +14,10 @@
   .i-tabs__header {
     display: flex;
     overflow-x: auto;
-    scrollbar-width: none;
+    @include scrollbar.themed-scrollbar();
     border-radius: inherit;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   .i-tabs__tab-item {

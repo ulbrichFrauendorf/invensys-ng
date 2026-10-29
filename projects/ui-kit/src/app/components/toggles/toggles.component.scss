@@ -1,3 +1,4 @@
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 @use './toggles.component.theme.scss' as theme;
 
 @use '../shared-demo-styles.scss' as *;
@@ -48,6 +49,7 @@
       font-size: 13px;
       line-height: 1.4;
       overflow-x: auto;
+      @include scrollbar.themed-scrollbar();
       white-space: pre-wrap;
 
       &:last-child {

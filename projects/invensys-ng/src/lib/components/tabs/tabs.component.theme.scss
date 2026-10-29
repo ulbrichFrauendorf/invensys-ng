@@ -7,10 +7,6 @@
     &__header {
       border-bottom: 1px solid colors.$color-surface-border;
       background: colors.$color-surface-card;
-
-      &::-webkit-scrollbar-thumb {
-        background: colors.$color-border;
-      }
     }
 
     &__tab {

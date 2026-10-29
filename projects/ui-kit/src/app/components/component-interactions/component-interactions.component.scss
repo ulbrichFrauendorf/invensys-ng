@@ -1,3 +1,4 @@
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 @use './component-interactions.component.theme.scss' as theme;
 .component-demo {
   .lead {
@@ -29,6 +30,7 @@
       border-radius: 4px;
       font-size: 14px;
       overflow-x: auto;
+      @include scrollbar.themed-scrollbar();
     }
   }
 

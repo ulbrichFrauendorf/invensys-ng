@@ -1,19 +1,33 @@
-<div
-  class="page-layout"
-  [class.with-sidebar]="sidebar()"
-  [class.sidebar-right]="sidebarPosition() === 'right'"
-  [class.sidebar-hidden]="!sidebarExpanded()"
->
+<div class="page-layout">
   @if (sidebar()) {
     <div
       class="sidebar-slot"
+      [class.sidebar-slot-right]="sidebarPosition() === 'right'"
+      [class.sidebar-collapsed]="!sidebarExpanded()"
       #sidebarSlot
       [inert]="!sidebarExpanded()"
       [attr.aria-hidden]="!sidebarExpanded()"
     >
       <div class="sidebar-clip">
-        <aside class="sidebar" #sidebarElement>
-          <ng-content select="[iPageSidebar]" />
+        <aside class="sidebar" #sidebarElement><ng-content select="[iPageSidebar]" /></aside>
+      </div>
+    </div>
+  }
+  @if (leftSidebar()) {
+    <div
+      class="sidebar-slot"
+      [class.sidebar-collapsed]="!expanded('left')"
+      #leftSlot
+      [inert]="!expanded('left')"
+      [attr.aria-hidden]="!expanded('left')"
+    >
+      <div class="sidebar-clip">
+        <aside
+          class="sidebar"
+          #leftSidebarElement
+          [attr.aria-label]="leftSidebar()?.label() || 'Left sidebar'"
+        >
+          <ng-content select="[iPageLeftSidebar]" />
         </aside>
       </div>
     </div>
@@ -22,7 +36,7 @@
     @if (showHeader()) {
       <header class="page-header" #header>
         <div class="page-heading">
-          <ng-container [ngTemplateOutlet]="toggle" />
+          <ng-container [ngTemplateOutlet]="leftControl" />
           <div class="page-heading-content">
             @if (eyebrowText()) {
               <div class="eyebrow">{{ eyebrowText() }}</div>
@@ -32,38 +46,70 @@
           </div>
         </div>
         @if (headerActions()) {
-          <div class="header-actions">
-            <ng-content select="[iPageHeaderActions]" />
-          </div>
+          <div class="header-actions"><ng-content select="[iPageHeaderActions]" /></div>
         }
+        <ng-container [ngTemplateOutlet]="rightControl" />
       </header>
-    } @else if (sidebar() && sidebarCollapsible()) {
+    } @else if (
+      (hasSidebar('left') && collapsible('left')) ||
+      (hasSidebar('right') && collapsible('right'))
+    ) {
       <div class="sidebar-toolbar" #toolbar>
-        <ng-container [ngTemplateOutlet]="toggle" />
+        <ng-container [ngTemplateOutlet]="leftControl" />
+        <ng-container [ngTemplateOutlet]="rightControl" />
       </div>
     }
-    <div class="page-content">
-      <ng-content />
-    </div>
+    <div class="page-content"><ng-content /></div>
   </div>
+  @if (rightSidebar()) {
+    <div
+      class="sidebar-slot sidebar-slot-right"
+      [class.sidebar-collapsed]="!expanded('right')"
+      #rightSlot
+      [inert]="!expanded('right')"
+      [attr.aria-hidden]="!expanded('right')"
+    >
+      <div class="sidebar-clip">
+        <aside
+          class="sidebar"
+          #rightSidebarElement
+          [attr.aria-label]="rightSidebar()?.label() || 'Right sidebar'"
+        >
+          <ng-content select="[iPageRightSidebar]" />
+        </aside>
+      </div>
+    </div>
+  }
 </div>
 
-<ng-template #toggle>
-  @if (sidebar() && sidebarCollapsible()) {
+<ng-template #leftControl>
+  @if (hasSidebar('left') && collapsible('left')) {
     <i-button
-      #sidebarToggle
+      #leftToggle
       class="sidebar-toggle"
       size="xtra-small"
       [text]="true"
       severity="secondary"
-      [icon]="
-        (sidebarPosition() === 'left') === sidebarExpanded()
-          ? 'pi pi-angle-double-left'
-          : 'pi pi-angle-double-right'
-      "
-      [ariaLabel]="(sidebarExpanded() ? 'Hide ' : 'Show ') + sidebarPosition() + ' sidebar'"
-      [ariaExpanded]="sidebarExpanded()"
-      (clicked)="toggleSidebar()"
+      [icon]="expanded('left') ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
+      [ariaLabel]="toggleLabel('left')"
+      [ariaExpanded]="expanded('left')"
+      (clicked)="toggleSidebar('left')"
+    />
+  }
+</ng-template>
+
+<ng-template #rightControl>
+  @if (hasSidebar('right') && collapsible('right')) {
+    <i-button
+      #rightToggle
+      class="sidebar-toggle sidebar-toggle-right"
+      size="xtra-small"
+      [text]="true"
+      severity="secondary"
+      [icon]="expanded('right') ? 'pi pi-angle-double-right' : 'pi pi-angle-double-left'"
+      [ariaLabel]="toggleLabel('right')"
+      [ariaExpanded]="expanded('right')"
+      (clicked)="toggleSidebar('right')"
     />
   }
 </ng-template>

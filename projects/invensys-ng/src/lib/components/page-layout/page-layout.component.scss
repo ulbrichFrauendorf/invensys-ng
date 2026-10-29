@@ -1,3 +1,4 @@
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
 @use './page-layout.component.theme.scss' as theme;
 
 :host {
@@ -6,61 +7,43 @@
 
   .page-layout {
     --sidebar-transition-duration: 240ms;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: start;
-    grid-template-areas: 'body';
-    transition: grid-template-columns var(--sidebar-transition-duration) ease;
+    display: flex;
+    align-items: flex-start;
 
-    &.with-sidebar {
-      grid-template-columns:
-        minmax(0, var(--page-layout-sidebar-width, 216px))
-        minmax(0, 1fr);
-      grid-template-areas: 'sidebar body';
-
-      &.sidebar-hidden {
-        grid-template-columns: minmax(0, 0px) minmax(0, 1fr);
-      }
-
-      @media (max-width: 991px) {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: 'sidebar' 'body';
-      }
-
-      &.sidebar-right {
-        grid-template-columns: minmax(0, 1fr) minmax(0, var(--page-layout-sidebar-width, 216px));
-        grid-template-areas: 'body sidebar';
-
-        &.sidebar-hidden {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 0px);
-        }
-
-        @media (max-width: 991px) {
-          grid-template-columns: minmax(0, 1fr);
-          grid-template-areas: 'body' 'sidebar';
-        }
-      }
-
-      // Keep a single column for both visibility states on narrow screens.
-      @media (max-width: 991px) {
-        &.sidebar-hidden,
-        &.sidebar-right.sidebar-hidden {
-          grid-template-columns: minmax(0, 1fr);
-        }
-      }
+    @media (max-width: 991px) {
+      flex-direction: column;
+      align-items: stretch;
     }
 
     > .sidebar-slot {
-      grid-area: sidebar;
+      --sidebar-width: var(
+        --page-layout-left-sidebar-width,
+        var(--page-layout-sidebar-width, 216px)
+      );
+      order: 0;
+      flex: 0 0 var(--sidebar-width);
+      width: var(--sidebar-width);
+      &.sidebar-slot-right {
+        --sidebar-width: var(
+          --page-layout-right-sidebar-width,
+          var(--page-layout-sidebar-width, 216px)
+        );
+        order: 2;
+      }
       position: sticky;
       top: var(--page-layout-sticky-offset, 0px);
       display: grid;
       grid-template-rows: minmax(0, 1fr);
       min-width: 0;
-      transition: grid-template-rows var(--sidebar-transition-duration) ease;
+      transition:
+        flex-basis var(--sidebar-transition-duration) ease,
+        width var(--sidebar-transition-duration) ease,
+        grid-template-rows var(--sidebar-transition-duration) ease;
 
       @media (max-width: 991px) {
         position: static;
+        flex: 0 0 auto;
+        width: 100%;
       }
 
       > .sidebar-clip {
@@ -69,12 +52,13 @@
         overflow: clip;
 
         > .sidebar {
-          width: var(--page-layout-sidebar-width, 216px);
+          width: var(--sidebar-width);
           max-height: max(
             0px,
             calc(var(--layout-content-height, 100dvh) - var(--page-layout-sticky-offset, 0px))
           );
           overflow: auto;
+          @include scrollbar.themed-scrollbar();
           padding: var(--page-layout-padding, 18px);
           box-sizing: border-box;
           transform: translateY(0);
@@ -91,10 +75,14 @@
           }
         }
       }
-    }
+      &.sidebar-collapsed {
+        flex-basis: 0px;
+        width: 0px;
 
-    &.sidebar-hidden {
-      > .sidebar-slot {
+        @media (max-width: 991px) {
+          flex-basis: auto;
+          width: 100%;
+        }
         grid-template-rows: minmax(0, 0fr);
 
         > .sidebar-clip {
@@ -110,7 +98,9 @@
     }
 
     > .page-body {
-      grid-area: body;
+      order: 1;
+      flex: 1;
+      width: 100%;
       min-width: 0;
 
       > .page-header {
@@ -176,6 +166,10 @@
 
       .sidebar-toggle {
         flex: 0 0 auto;
+
+        &.sidebar-toggle-right {
+          margin-inline-start: auto;
+        }
       }
 
       > .page-content {

@@ -15,15 +15,22 @@ import {
   viewChild,
 } from '@angular/core';
 import { IButton } from '../button/button.component';
-import { PageHeaderActionsDirective, PageSidebarDirective } from './page-layout-slots.directive';
+import {
+  PageHeaderActionsDirective,
+  PageSidebarDirective,
+  PageLeftSidebarDirective,
+  PageRightSidebarDirective,
+} from './page-layout-slots.directive';
 
 /**
- * Page-owned spacing, a sticky content header, and an optional sidebar.
+ * Page-owned spacing, one sticky content header, and optional left/right sidebars.
  * In i-layout, desktop content scrolls below the app bar; on mobile the
  * sidebar scrolls away and the content header snaps over the app bar on contact.
  * Customize spacing with --page-layout-padding and sidebar width with
- * --page-layout-sidebar-width. Nested layouts clear ancestor content headers
- * and sidebar toolbars automatically. The application shell adds no padding.
+ * --page-layout-sidebar-width, or --page-layout-left-sidebar-width and
+ * --page-layout-right-sidebar-width. Compose iPageLeftSidebar/iPageRightSidebar
+ * inside one layout; do not nest layouts to add a second sidebar.
+ * The application shell adds no padding.
  */
 @Component({
   selector: 'i-page-layout',
@@ -60,18 +67,53 @@ export class PageLayoutComponent {
   );
   private readonly sidebarElement = viewChild<ElementRef<HTMLElement>>('sidebarElement');
   private readonly sidebarSlot = viewChild<ElementRef<HTMLElement>>('sidebarSlot');
-  private readonly sidebarToggle = viewChild<IButton>('sidebarToggle');
 
-  showSidebar(): void {
-    this.sidebarVisible.set(true);
+  protected readonly leftSidebar = contentChild(PageLeftSidebarDirective);
+  protected readonly rightSidebar = contentChild(PageRightSidebarDirective);
+  private readonly leftSidebarElement =
+    viewChild<ElementRef<HTMLElement>>('leftSidebarElement');
+  private readonly rightSidebarElement =
+    viewChild<ElementRef<HTMLElement>>('rightSidebarElement');
+  private readonly leftToggle = viewChild<IButton>('leftToggle');
+  private readonly rightToggle = viewChild<IButton>('rightToggle');
+  private readonly leftSlot = viewChild<ElementRef<HTMLElement>>('leftSlot');
+  private readonly rightSlot = viewChild<ElementRef<HTMLElement>>('rightSlot');
+
+  protected panel(side: 'left' | 'right') {
+    return side === 'left' ? this.leftSidebar() : this.rightSidebar();
   }
 
-  hideSidebar(): void {
-    if (this.sidebarCollapsible()) this.sidebarVisible.set(false);
+  protected hasSidebar(side: 'left' | 'right'): boolean {
+    return !!this.panel(side) || (!!this.sidebar() && this.sidebarPosition() === side);
   }
 
-  toggleSidebar(): void {
-    if (this.sidebarCollapsible()) this.sidebarVisible.update((visible) => !visible);
+  protected collapsible(side: 'left' | 'right'): boolean {
+    return this.panel(side)?.collapsible() ?? this.sidebarCollapsible();
+  }
+
+  protected expanded(side: 'left' | 'right'): boolean {
+    return !this.collapsible(side) || (this.panel(side)?.visible() ?? this.sidebarVisible());
+  }
+
+  protected toggleLabel(side: 'left' | 'right'): string {
+    return (
+      (this.expanded(side) ? 'Hide ' : 'Show ') +
+      (this.panel(side)?.label() || side + ' sidebar')
+    );
+  }
+
+  /** A side argument targets a composed slot; omitting it preserves the single-sidebar API. */
+  showSidebar(side: 'left' | 'right' = this.sidebarPosition()): void {
+    (this.panel(side)?.visible ?? this.sidebarVisible).set(true);
+  }
+
+  hideSidebar(side: 'left' | 'right' = this.sidebarPosition()): void {
+    if (this.collapsible(side)) (this.panel(side)?.visible ?? this.sidebarVisible).set(false);
+  }
+
+  toggleSidebar(side: 'left' | 'right' = this.sidebarPosition()): void {
+    if (this.collapsible(side))
+      (this.panel(side)?.visible ?? this.sidebarVisible).update((visible) => !visible);
   }
 
   protected readonly sidebar = contentChild(PageSidebarDirective);
@@ -95,12 +137,17 @@ export class PageLayoutComponent {
       onCleanup(() => observer.disconnect());
     });
     effect(() => {
-      // Return keyboard focus before the collapsed sidebar becomes unreachable.
-      if (
-        !this.sidebarExpanded() &&
-        this.sidebarElement()?.nativeElement.contains(document.activeElement)
-      ) {
-        this.sidebarToggle()?.focus();
+      // Return focus to the control on the same side before its panel becomes unreachable.
+      for (const side of ['left', 'right'] as const) {
+        const element =
+          side === 'left' ? this.leftSidebarElement() : this.rightSidebarElement();
+        const legacy = this.sidebarPosition() === side ? this.sidebarElement() : undefined;
+        if (
+          !this.expanded(side) &&
+          (element ?? legacy)?.nativeElement.contains(document.activeElement)
+        ) {
+          (side === 'left' ? this.leftToggle() : this.rightToggle())?.focus();
+        }
       }
     });
     afterRenderEffect((onCleanup) => {
@@ -108,7 +155,7 @@ export class PageLayoutComponent {
       const stickyOffset = this.stickyOffset();
       this.sidebar();
       const header = this.header()?.nativeElement;
-      const sidebarSlot = this.sidebarSlot()?.nativeElement;
+      const sidebarSlots = [this.sidebarSlot(), this.leftSlot(), this.rightSlot()];
       const body = this.body().nativeElement;
       const scrollport = body.closest<HTMLElement>('.layout-wrapper');
       const topbar = scrollport?.querySelector<HTMLElement>(':scope > i-topbar');
@@ -137,7 +184,7 @@ export class PageLayoutComponent {
       const observer = new ResizeObserver(update);
       observer.observe(body);
       observer.observe(topbar);
-      if (sidebarSlot) observer.observe(sidebarSlot);
+      for (const slot of sidebarSlots) if (slot) observer.observe(slot.nativeElement);
       scrollport.addEventListener('scroll', update, { passive: true });
       contentScrollport?.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);

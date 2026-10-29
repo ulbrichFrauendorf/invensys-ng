@@ -4,7 +4,8 @@ import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.
 import {
   PageHeaderActionsDirective,
   PageHeaderContentDirective,
-  PageSidebarDirective,
+  PageLeftSidebarDirective,
+  PageRightSidebarDirective,
 } from '@shared/components/page-layout/page-layout-slots.directive';
 import { CodeDisplayComponent } from '../code-display/code-display.component';
 import { IButton } from '@shared/components/button/button.component';
@@ -16,7 +17,8 @@ import { IListbox } from '@shared/components/listbox/listbox.component';
     FormsModule,
     CodeDisplayComponent,
     PageLayoutComponent,
-    PageSidebarDirective,
+    PageLeftSidebarDirective,
+    PageRightSidebarDirective,
     PageHeaderActionsDirective,
     PageHeaderContentDirective,
     IButton,
@@ -27,19 +29,21 @@ import { IListbox } from '@shared/components/listbox/listbox.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageLayoutsComponent {
-  readonly sidebarPosition = signal<'left' | 'right'>('right');
+  readonly sidebarMode = signal<'left' | 'right' | 'both'>('both');
+  readonly rightVisible = signal(true);
   readonly showCode = signal(false);
   readonly showSidebar = signal(true);
   readonly sidebarVisible = signal(true);
   readonly sidebarCollapsible = signal(true);
   readonly showHeader = signal(true);
   readonly spacing = signal('');
-  readonly rowCount = signal(80);
+  readonly rowCount = signal(3);
   readonly saved = signal(false);
-  readonly organizations = Array.from({ length: 40 }, (_, i) => ({
-    id: i + 1,
-    name: i === 0 ? 'Thomas Tyres' : 'Organization ' + String(i + 1).padStart(2, '0'),
-  }));
+  readonly organizations = [
+    { id: 1, name: 'Thomas Tyres' },
+    { id: 2, name: 'Organization 02' },
+    { id: 3, name: 'Organization 03' },
+  ];
   readonly selectedOrganization = signal<{ id: number; name: string } | null>(
     this.organizations[0],
   );
@@ -49,28 +53,33 @@ export class PageLayoutsComponent {
   readonly rows = computed(() =>
     Array.from({ length: this.rowCount() }, (_, i) => ({
       id: i + 1,
-      name: ['Month-end payroll pack', 'Employee audit', 'Payment register', 'Leave balances'][
-        i % 4
-      ],
+      name: [
+        'Month-end payroll pack',
+        'Employee audit',
+        'Payment register',
+        'Leave balances',
+      ][i % 4],
       status: i % 5 === 0 ? 'Paused' : 'Active',
       reports: (i % 6) + 1,
     })),
   );
   readonly sourceCode = `import {
-  PageLayoutComponent, PageSidebarDirective,
-  PageHeaderActionsDirective, PageHeaderContentDirective
+  PageLayoutComponent, PageLeftSidebarDirective, PageRightSidebarDirective,
+  PageHeaderActionsDirective
 } from 'invensys-ng';
 
-<i-page-layout #page headerText="Report automations" eyebrowText="Thomas Tyres" sidebarPosition="right"
-  [sidebarCollapsible]="true" [(sidebarVisible)]="sidebarVisible"
-  style="--page-layout-padding: 16px; --page-layout-sidebar-width: 240px">
-  <nav iPageSidebar>Organization selector</nav>
+<i-page-layout #page headerText="Report automations"
+  style="--page-layout-left-sidebar-width: 240px; --page-layout-right-sidebar-width: 280px">
+  <nav iPageLeftSidebar [(visible)]="companyVisible" label="Company selection">
+    Organization selector
+  </nav>
+  <aside iPageRightSidebar [(visible)]="outstandingVisible" label="Outstanding fields">
+    Outstanding fields
+  </aside>
   <div iPageHeaderActions>Page actions</div>
-  <p iPageHeaderContent>Optional heading description</p>
   <section>Page content</section>
 </i-page-layout>
 
-<i-button (clicked)="page.hideSidebar()">Hide sidebar</i-button>
-<i-button (clicked)="page.showSidebar()">Show sidebar</i-button>
-<i-button (clicked)="page.toggleSidebar()">Toggle sidebar</i-button>`;
+<i-button (clicked)="page.hideSidebar('left')">Hide company selection</i-button>
+<i-button (clicked)="page.showSidebar('right')">Show outstanding fields</i-button>`;
 }

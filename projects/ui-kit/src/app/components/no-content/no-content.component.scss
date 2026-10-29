@@ -1,3 +1,4 @@
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 @use './no-content.component.theme.scss' as theme;
 
 @use '../shared-demo-styles.scss' as *;
@@ -46,6 +47,7 @@
       padding: 16px;
       margin: 0;
       overflow-x: auto;
+      @include scrollbar.themed-scrollbar();
 
       code {
         font-family: 'Courier New', Courier, monospace;

@@ -8,6 +8,8 @@ import {
   PageHeaderActionsDirective,
   PageHeaderContentDirective,
   PageSidebarDirective,
+  PageLeftSidebarDirective,
+  PageRightSidebarDirective,
 } from './page-layout-slots.directive';
 
 @Component({
@@ -91,6 +93,54 @@ class NestedTestPage {
 }
 
 @Component({
+  imports: [
+    PageLayoutComponent,
+    PageLeftSidebarDirective,
+    PageRightSidebarDirective,
+    PageHeaderActionsDirective,
+  ],
+  template: `
+    <i-page-layout
+      headerText="Employee onboarding"
+      [showHeader]="showHeader()"
+      style="--page-layout-left-sidebar-width:260px;--page-layout-right-sidebar-width:280px"
+    >
+      @if (showLeft()) {
+        <nav
+          iPageLeftSidebar
+          [(visible)]="leftVisible"
+          [collapsible]="leftCollapsible()"
+          label="Company selection"
+        >
+          <input aria-label="Company" value="Selected company" />
+        </nav>
+      }
+      @if (showRight()) {
+        <section iPageRightSidebar [(visible)]="rightVisible" label="Outstanding fields">
+          @for (item of items; track item) {
+            <button style="display:block;height:44px">Field {{ item }}</button>
+          }
+        </section>
+      }
+      <button iPageHeaderActions>Save draft</button>
+      <input class="employee-input" aria-label="Employee" value="Alice" />
+      @for (item of items; track item) {
+        <p style="height:88px">Employee field {{ item }}</p>
+      }
+    </i-page-layout>
+  `,
+})
+class ComposedTestPage {
+  readonly items = Array.from({ length: 40 }, (_, i) => i + 1);
+  readonly leftVisible = signal(true);
+  readonly rightVisible = signal(true);
+  readonly leftCollapsible = signal(true);
+  readonly showLeft = signal(true);
+  readonly showRight = signal(true);
+  readonly showHeader = signal(true);
+}
+
+@Component({
   imports: [LayoutComponent],
   template: '<i-layout [config]="config" />',
 })
@@ -101,9 +151,108 @@ class TestShell {
 describe('PageLayoutComponent', () => {
   async function settleMotion(root: HTMLElement) {
     await new Promise(requestAnimationFrame);
-    await Promise.all(root.getAnimations({ subtree: true }).map((animation) => animation.finished));
+    await Promise.all(
+      root.getAnimations({ subtree: true }).map((animation) => animation.finished),
+    );
     await new Promise(requestAnimationFrame);
   }
+
+  it('composes both sidebars around one body with controls on the matching header sides', async () => {
+    TestBed.configureTestingModule({ imports: [ComposedTestPage] });
+    const fixture = TestBed.createComponent(ComposedTestPage);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const header = root.querySelector<HTMLElement>('header')!;
+    const buttons = header.querySelectorAll<HTMLButtonElement>('.sidebar-toggle button');
+    const body = root.querySelector<HTMLElement>('.page-body')!;
+    const panels = root.querySelectorAll<HTMLElement>('.sidebar');
+    expect(root.querySelectorAll('i-page-layout')).toHaveLength(1);
+    expect(root.querySelectorAll('h1')).toHaveLength(1);
+    expect(buttons[0].getAttribute('aria-label')).toBe('Hide Company selection');
+    expect(buttons[1].getAttribute('aria-label')).toBe('Hide Outstanding fields');
+    expect(header.querySelector('.page-heading .sidebar-toggle')).not.toBeNull();
+    expect(header.lastElementChild?.classList.contains('sidebar-toggle-right')).toBe(true);
+    expect(buttons[0].getBoundingClientRect().left).toBeLessThan(
+      buttons[1].getBoundingClientRect().left,
+    );
+    if (matchMedia('(max-width: 991px)').matches) {
+      expect(panels[0].getBoundingClientRect().bottom).toBeLessThanOrEqual(
+        body.getBoundingClientRect().top,
+      );
+      expect(panels[1].getBoundingClientRect().top).toBeGreaterThanOrEqual(
+        body.getBoundingClientRect().bottom,
+      );
+    } else {
+      expect(panels[0].getBoundingClientRect().width).toBe(260);
+      expect(panels[1].getBoundingClientRect().width).toBe(280);
+      expect(panels[0].getBoundingClientRect().right).toBeLessThanOrEqual(
+        body.getBoundingClientRect().left,
+      );
+      expect(panels[1].getBoundingClientRect().left).toBeGreaterThanOrEqual(
+        body.getBoundingClientRect().right,
+      );
+    }
+    expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+  });
+
+  it('collapses either composed sidebar independently, restores focus, and retains form and panel state', async () => {
+    TestBed.configureTestingModule({ imports: [ComposedTestPage] });
+    const fixture = TestBed.createComponent(ComposedTestPage);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
+      .componentInstance as PageLayoutComponent;
+    const slots = root.querySelectorAll<HTMLElement>('.sidebar-slot');
+    const editor = root.querySelector<HTMLInputElement>('.employee-input')!;
+    editor.value = 'Edited Alice';
+    const right = slots[1].querySelector<HTMLElement>('.sidebar')!;
+    right.scrollTop = 88;
+    const scrollTop = right.scrollTop;
+    slots[1].querySelector('button')!.focus();
+    right.scrollTop = scrollTop;
+    layout.hideSidebar('right');
+    await fixture.whenStable();
+    await settleMotion(root);
+    expect(document.activeElement).toBe(root.querySelector('.sidebar-toggle-right button'));
+    expect(fixture.componentInstance.rightVisible()).toBe(false);
+    expect(fixture.componentInstance.leftVisible()).toBe(true);
+    expect(slots[0].inert).toBe(false);
+    expect(slots[1].inert).toBe(true);
+    layout.hideSidebar('left');
+    layout.showSidebar('right');
+    await fixture.whenStable();
+    await settleMotion(root);
+    expect(slots[0].inert).toBe(true);
+    expect(slots[1].inert).toBe(false);
+    expect(right.scrollTop).toBe(scrollTop);
+    expect(root.querySelector('.employee-input')).toBe(editor);
+    expect(editor.value).toBe('Edited Alice');
+    expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
+  });
+
+  it('handles one side, dynamic slots, non-collapsible panels, and a headerless toolbar', async () => {
+    TestBed.configureTestingModule({ imports: [ComposedTestPage] });
+    const fixture = TestBed.createComponent(ComposedTestPage);
+    fixture.componentInstance.showHeader.set(false);
+    fixture.componentInstance.showLeft.set(false);
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    expect(root.querySelectorAll('aside')).toHaveLength(1);
+    expect(
+      root
+        .querySelector('.sidebar-toolbar')
+        ?.lastElementChild?.classList.contains('sidebar-toggle-right'),
+    ).toBe(true);
+    fixture.componentInstance.showLeft.set(true);
+    fixture.componentInstance.leftCollapsible.set(false);
+    fixture.componentInstance.leftVisible.set(false);
+    fixture.componentInstance.showRight.set(false);
+    await fixture.whenStable();
+    expect(root.querySelectorAll('aside')).toHaveLength(1);
+    expect(root.querySelector<HTMLElement>('.sidebar-slot')!.inert).toBe(false);
+    expect(root.querySelector('.sidebar-toggle')).toBeNull();
+    expect(root.querySelector('.employee-input')).not.toBeNull();
+  });
 
   it('renders a simple page without optional slots', async () => {
     TestBed.configureTestingModule({ imports: [PageLayoutComponent] });
@@ -153,7 +302,9 @@ describe('PageLayoutComponent', () => {
     const root: HTMLElement = fixture.nativeElement;
     expect(root.querySelectorAll('nav')).toHaveLength(1);
     expect(root.querySelectorAll('.test-content')).toHaveLength(1);
-    expect(root.querySelector('header [iPageHeaderContent]')?.textContent).toBe('Draft notice');
+    expect(root.querySelector('header [iPageHeaderContent]')?.textContent).toBe(
+      'Draft notice',
+    );
     root.querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!.click();
     expect(fixture.componentInstance.saved()).toBe(true);
     fixture.componentInstance.showSidebar.set(false);
@@ -184,9 +335,9 @@ describe('PageLayoutComponent', () => {
       expect(toggle.getAttribute('aria-expanded')).toBe('true');
       expect(toggle.getAttribute('aria-label')).toBe(`Hide ${position} sidebar`);
       expect(toggle.classList.contains('i-button--xtra-small')).toBe(true);
-      expect(toggle.querySelector('i')?.classList.contains(`pi-angle-double-${position}`)).toBe(
-        true,
-      );
+      expect(
+        toggle.querySelector('i')?.classList.contains(`pi-angle-double-${position}`),
+      ).toBe(true);
 
       toggle.click();
       await fixture.whenStable();
@@ -417,7 +568,9 @@ describe('PageLayoutComponent', () => {
         scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
         await new Promise(requestAnimationFrame);
         expect(
-          Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top),
+          Math.abs(
+            header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top,
+          ),
         ).toBeLessThan(2);
         expect(getComputedStyle(header).boxShadow).not.toBe('none');
         if (mobile && sidebar) {
@@ -437,7 +590,9 @@ describe('PageLayoutComponent', () => {
           await fixture.whenStable();
           await settleMotion(root);
           expect(
-            Math.abs(header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top),
+            Math.abs(
+              header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top,
+            ),
           ).toBeLessThan(2);
           expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
           layout.showSidebar();
@@ -481,7 +636,9 @@ describe('PageLayoutComponent', () => {
         await new Promise(requestAnimationFrame);
         expect(getComputedStyle(header).boxShadow).toBe('none');
         if (sidebar && initialSidebarTop !== undefined) {
-          expect(Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop)).toBeLessThan(2);
+          expect(
+            Math.abs(sidebar.getBoundingClientRect().top - initialSidebarTop),
+          ).toBeLessThan(2);
         }
       } finally {
         fixture.destroy();

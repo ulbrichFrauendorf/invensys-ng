@@ -1,3 +1,4 @@
+@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
 @use '../../../../../invensys-ng/src/lib/themes/variables' as vars;
 @use './demo-playground.component.theme.scss' as theme;
 
@@ -17,6 +18,7 @@
     min-width: 0;
     max-width: 100%;
     overflow: auto;
+    @include scrollbar.themed-scrollbar();
   }
 
   .preview-stage {

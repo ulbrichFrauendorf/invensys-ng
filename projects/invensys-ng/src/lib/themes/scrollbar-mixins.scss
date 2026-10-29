@@ -1,8 +1,7 @@
 @use './color-variables.scss' as colors;
 
-// Mixin for consistent thin scrollbars across components
-@mixin thin-scrollbar() {
-  // Webkit browsers (Chrome, Safari, Edge)
+// Shared appearance for every visible scrollbar.
+@mixin themed-scrollbar() {
   &::-webkit-scrollbar {
     width: var(--scrollbar-size, 6px);
     height: var(--scrollbar-size, 6px);
@@ -14,16 +13,17 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
     border-radius: var(--scrollbar-radius, 3px);
+    min-height: 20px;
     transition: background 0.2s ease;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.35);
+      background: var(--scrollbar-thumb-hover, #{colors.$color-text-primary});
     }
 
     &:active {
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--scrollbar-thumb-active, #{colors.$color-primary});
     }
   }
 
@@ -31,70 +31,16 @@
     background: transparent;
   }
 
-  // Firefox
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-
-  // Smooth scrolling
-  scroll-behavior: smooth;
-}
-
-// Theme-aware scrollbar mixin
-@mixin themed-scrollbar() {
-  @include thin-scrollbar();
-
-  // Override default colors with theme colors
-  &::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
-
-    &:hover {
-      background: var(--scrollbar-thumb-hover, #{colors.$color-text-primary});
-    }
-
-    &:active {
-      background: var(--scrollbar-thumb-active, #{colors.$color-primary});
-    }
-  }
-
-  // Firefox with theme colors
   scrollbar-color: var(--scrollbar-thumb, #{colors.$color-text-secondary})
     var(--scrollbar-track, transparent);
 }
 
-// Scrollbar for dropdown/overlay components
+// Preserve existing Sass entry points with the same shared appearance.
+@mixin thin-scrollbar() {
+  @include themed-scrollbar();
+}
+
 @mixin dropdown-scrollbar() {
   @include themed-scrollbar();
-
-  // Additional styling for dropdown contexts
-  &::-webkit-scrollbar {
-    width: var(--scrollbar-size, 6px); // Slightly wider for better visibility
-    height: var(--scrollbar-size, 6px);
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--scrollbar-track-dropdown, rgba(0, 0, 0, 0.05)); // Subtle track background
-    border-radius: var(--scrollbar-radius, 3px);
-    margin: 2px 0; // Add margin to prevent cutoff
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: var(--scrollbar-radius, 3px);
-    min-height: 20px; // Ensure minimum thumb size
-
-    // More visible colors for dropdowns
-    background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
-
-    &:hover {
-      background: var(--scrollbar-thumb-hover, #{colors.$color-text-primary});
-    }
-
-    &:active {
-      background: var(--scrollbar-thumb-active, #{colors.$color-primary});
-    }
-  }
-
-  // Better Firefox scrollbar visibility
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb, #{colors.$color-text-secondary})
-    var(--scrollbar-track-dropdown, rgba(0, 0, 0, 0.05));
 }

@@ -4,9 +4,6 @@
     .demo-sidebar {
       border-color: colors.$color-surface-border;
       background: colors.$color-surface-card;
-      .sidebar-end {
-        border-bottom-color: colors.$color-primary;
-      }
     }
 
     .demo-controls {
@@ -32,18 +29,6 @@
             color: colors.$color-warning;
           }
         }
-      }
-
-      .content-end {
-        border-bottom-color: colors.$color-primary;
-      }
-    }
-
-    .usage {
-      pre {
-        color: colors.$color-text-primary;
-        border-color: colors.$color-surface-border;
-        background: colors.$color-surface-card;
       }
     }
   }

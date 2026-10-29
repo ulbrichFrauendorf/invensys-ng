@@ -1,3 +1,4 @@
+@use '../../themes/scrollbar-mixins.scss' as scrollbar;
 @use './textarea.component.theme.scss' as theme;
 @use '../../themes/variables' as vars;
 @use '../../themes/floating-label' as floating;
@@ -32,6 +33,7 @@ $textarea-transition:
   }
 
   .i-textarea {
+    @include scrollbar.themed-scrollbar();
     box-sizing: border-box;
     width: 100%;
     border-radius: vars.$componentBorderRadius;

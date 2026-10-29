@@ -2,132 +2,50 @@
 
 @mixin i-listbox-theme() {
   .i-listbox-wrapper {
+    color: colors.$color-text-primary;
     background: colors.$color-component-background;
-    border-color: colors.$color-surface-border;
-
-    &.i-listbox--invalid {
-      border-color: colors.$color-danger;
-
-      .i-listbox-header {
-        border-bottom-color: colors.$color-danger;
-      }
-    }
 
     .i-listbox-header {
       background: colors.$color-surface-card;
-      border-bottom-color: colors.$color-surface-border;
-
-      .i-listbox-title {
-        color: colors.$color-text-primary;
-      }
-
-      .i-listbox-action-btn {
-        background: colors.$color-primary;
-        color: colors.$color-text-contrast;
-
-        &:hover:not(:disabled) {
-          background: colors.$color-primary;
-        }
-      }
-
-      .i-listbox-summary {
-        color: colors.$color-text-secondary;
-      }
     }
 
     .i-listbox-dropdown {
-      background: colors.$color-component-background;
-
-      .i-listbox-filter {
-        border-bottom-color: colors.$color-surface-border;
-      }
-
       .i-listbox-options {
-        background: transparent;
-
         .i-listbox-option {
           color: colors.$color-text-primary;
+          background: transparent;
 
-          &:hover {
-            background-color: colors.$color-surface-hover;
+          &:hover:not(:disabled) {
+            background: colors.$color-surface-hover;
           }
 
-          &.selected {
-            background-color: colors.$color-surface-hover;
+          &:focus-visible {
+            outline-color: colors.$color-primary;
           }
 
-          .i-listbox-checkbox {
-            accent-color: colors.$color-primary;
-          }
-
-          .i-listbox-option-icon--left {
+          .i-listbox-checkbox,
+          .i-listbox-option-icon {
             color: colors.$color-text-secondary;
           }
 
-          .i-listbox-option-icon--right {
-            color: colors.$color-text-tertiary;
-          }
-        }
-
-        .i-listbox-no-options {
-          color: colors.$color-text-secondary;
-        }
-      }
-    }
-
-    .i-listbox-error {
-      color: colors.$color-danger;
-      background: color-mix(in srgb, colors.$color-danger 5%, transparent);
-      border-top-color: colors.$color-danger;
-    }
-  }
-
-  .i-listbox-wrapper {
-    border-color: colors.$color-surface-border;
-    background: colors.$color-component-background;
-
-    &.i-listbox--invalid {
-      border-color: colors.$color-danger;
-    }
-
-    .i-listbox-header {
-      border-bottom-color: colors.$color-surface-border;
-      background: colors.$color-surface-card;
-
-      .i-listbox-header-content {
-        .i-listbox-title {
-          color: colors.$color-text-primary;
-        }
-
-        .i-listbox-action-btn {
-          background: colors.$color-primary;
-          color: colors.$color-text-contrast;
-        }
-      }
-    }
-
-    .i-listbox-dropdown {
-      .i-listbox-filter {
-        border-bottom-color: colors.$color-surface-border;
-      }
-
-      .i-listbox-options {
-        .i-listbox-option {
-          &:hover {
-            background-color: colors.$color-surface-hover;
-          }
-
           &.selected {
-            background-color: colors.$color-surface-hover;
-          }
+            background: color-mix(
+              in srgb,
+              colors.$color-primary 10%,
+              colors.$color-component-background
+            );
 
-          .i-listbox-option-icon {
-            &--left {
-              color: colors.$color-text-secondary;
+            &:hover:not(:disabled) {
+              background: color-mix(
+                in srgb,
+                colors.$color-primary 16%,
+                colors.$color-component-background
+              );
             }
 
-            &--chevron {
-              color: colors.$color-text-tertiary;
+            .i-listbox-checkbox,
+            .i-listbox-option-icon--left {
+              color: colors.$color-primary;
             }
           }
         }
@@ -138,32 +56,19 @@
       }
     }
 
-    .i-listbox-error {
-      color: colors.$color-danger;
-      background: color-mix(in srgb, colors.$color-danger 5%, transparent);
-      border-top-color: colors.$color-danger;
-    }
     &.i-listbox--menu {
-      .i-listbox-options {
-        .i-listbox-option {
-          &.selected {
-            background-color: colors.$color-surface-hover;
-            border-left-color: colors.$color-primary;
+      .i-listbox-dropdown {
+        .i-listbox-options {
+          .i-listbox-option.selected {
+            box-shadow: inset 3px 0 colors.$color-primary;
           }
         }
       }
     }
-  }
 
-  .i-listbox-wrapper {
-    .i-listbox-options {
-      .i-listbox-option {
-        color: inherit;
-        background: transparent;
-        &:focus-visible {
-          outline-color: currentColor;
-        }
-      }
+    .i-listbox-error {
+      color: colors.$color-danger;
+      background: color-mix(in srgb, colors.$color-danger 5%, colors.$color-component-background);
     }
   }
 }

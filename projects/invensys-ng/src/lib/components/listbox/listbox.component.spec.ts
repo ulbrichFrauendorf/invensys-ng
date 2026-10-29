@@ -31,6 +31,38 @@ describe('IListbox', () => {
     expect(component).toBeTruthy();
   });
 
+  it('scrolls the options within a constrained height while keeping the header and filter fixed', async () => {
+    const host: HTMLElement = fixture.nativeElement;
+    host.style.height = '500px';
+    fixture.componentRef.setInput(
+      'options',
+      Array.from({ length: 50 }, (_, index) => ({
+        id: index,
+        label: `Option ${index + 1}`,
+      })),
+    );
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const wrapper = host.querySelector<HTMLElement>('.i-listbox-wrapper')!;
+    const options = host.querySelector<HTMLElement>('.i-listbox-options')!;
+    const header = host.querySelector<HTMLElement>('.i-listbox-header')!;
+    const filter = host.querySelector<HTMLElement>('.i-listbox-filter')!;
+    const headerTop = header.getBoundingClientRect().top;
+    const filterTop = filter.getBoundingClientRect().top;
+
+    expect(wrapper.getBoundingClientRect().height).toBeLessThanOrEqual(500);
+    expect(host.scrollHeight).toBeLessThanOrEqual(500);
+    expect(options.clientHeight).toBeGreaterThan(0);
+    expect(options.scrollHeight).toBeGreaterThan(options.clientHeight);
+
+    options.scrollTop = 200;
+
+    expect(options.scrollTop).toBe(200);
+    expect(header.getBoundingClientRect().top).toBe(headerTop);
+    expect(filter.getBoundingClientRect().top).toBe(filterTop);
+  });
+
   describe('Component Inputs', () => {
     it('should have default values', () => {
       expect(component.title).toBe('List Box');

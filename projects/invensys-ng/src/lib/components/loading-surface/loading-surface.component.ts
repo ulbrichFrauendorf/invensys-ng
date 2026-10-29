@@ -7,11 +7,14 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   templateUrl: './loading-surface.component.html',
   styleUrl: './loading-surface.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class.loading-surface-fill]': 'fillContainer()' },
 })
 export class LoadingSurfaceComponent {
   readonly loading = input(false);
   readonly variant = input<'field' | 'list' | 'table' | 'chart' | 'inline'>('list');
   readonly minimumHeight = input('160px');
+  /** Keeps projected content within a height supplied by its parent. */
+  readonly fillContainer = input(false);
   readonly ariaLabel = input('Loading data');
   readonly rows = [0, 1, 2, 3, 4];
 }

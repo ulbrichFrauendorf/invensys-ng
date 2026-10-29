@@ -5,7 +5,13 @@
 
 @include theme.i-listbox-theme();
 
-$listbox-transition: 0.15s ease;
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+}
 
 .i-listbox-wrapper {
   position: relative;
@@ -13,13 +19,19 @@ $listbox-transition: 0.15s ease;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  border: 1px solid colors.$color-surface-border;
   border-radius: vars.$componentBorderRadius;
-  border-width: 1px;
-  border-style: solid;
   overflow: hidden;
 
   &.i-listbox--fluid {
     width: 100%;
+  }
+
+  &.i-listbox--invalid {
+    border: 1px solid colors.$color-danger;
   }
 
   &.i-listbox--disabled {
@@ -28,60 +40,35 @@ $listbox-transition: 0.15s ease;
   }
 
   .i-listbox-header {
-    position: relative;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     gap: 8px;
-    padding: 20px 14px;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
+    padding: 12px 14px;
+    border-bottom: 1px solid colors.$color-surface-border;
 
     .i-listbox-header-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 24px;
+      gap: 8px;
+      min-width: 0;
+      min-height: 28px;
 
       .i-listbox-title {
+        min-width: 0;
+        font-size: 13px;
         font-weight: 600;
-        font-size: 13.8px;
+        overflow-wrap: anywhere;
       }
 
-      .i-listbox-action-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        padding: 0;
-        border: none;
-        border-radius: vars.$componentBorderRadius;
-        cursor: pointer;
-        transition: all $listbox-transition;
-
-        &:hover:not(:disabled) {
-          opacity: 0.85;
-          transform: scale(1.05);
-        }
-
-        &:active:not(:disabled) {
-          transform: scale(0.95);
-        }
-
-        &:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        i {
-          font-size: 12px;
-        }
+      i-button {
+        flex-shrink: 0;
       }
     }
 
     .i-listbox-chips-wrapper {
-      height: 32px;
+      min-width: 0;
     }
   }
 
@@ -94,63 +81,87 @@ $listbox-transition: 0.15s ease;
 
     .i-listbox-filter {
       flex-shrink: 0;
-      padding: 8px;
-      border-bottom-width: 1px;
-      border-bottom-style: solid;
+      padding: 10px;
     }
 
     .i-listbox-options {
+      display: flex;
+      flex-direction: column;
       flex: 1;
+      gap: 2px;
       min-height: 0;
+      padding: 6px;
       overflow-x: hidden;
       overflow-y: auto;
+      overscroll-behavior: contain;
       @include scrollbar.themed-scrollbar();
 
       .i-listbox-option {
         display: flex;
         align-items: center;
+        flex-shrink: 0;
         gap: 8px;
-        padding: 10px 12px;
+        width: 100%;
+        min-height: 40px;
+        box-sizing: border-box;
+        padding: 8px 12px;
+        border: 0;
+        border-radius: vars.$componentBorderRadius;
+        font: inherit;
         font-size: 12px;
+        line-height: 1.4;
+        text-align: left;
         cursor: pointer;
-        transition: background-color $listbox-transition;
+        transition:
+          background-color vars.$transitionDuration ease,
+          color vars.$transitionDuration ease;
 
-        &.has-icon {
-          padding: 16px 12px;
-        }
-
-        &.selected {
-          font-weight: 500;
+        &:focus-visible {
+          outline-width: 2px;
+          outline-style: solid;
+          outline-offset: -2px;
         }
 
         .i-listbox-checkbox {
-          pointer-events: none;
           flex-shrink: 0;
+          font-size: 16px;
+          pointer-events: none;
         }
 
         .i-listbox-option-icon {
-          font-size: 16px;
           flex-shrink: 0;
+          font-size: 16px;
 
           &--chevron {
-            margin-left: auto;
             font-size: 12px;
-            opacity: 0.6;
           }
         }
 
         .i-listbox-option-label {
           flex: 1;
+          min-width: 0;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
+        @media (pointer: coarse) {
+          min-height: 44px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
       }
 
       .i-listbox-no-options {
-        padding: 16px;
-        font-style: italic;
+        padding: 20px 12px;
+        font-size: 12px;
         text-align: center;
+      }
+
+      @media (max-width: 991px) {
+        max-height: min(320px, 50dvh);
       }
     }
   }
@@ -158,66 +169,7 @@ $listbox-transition: 0.15s ease;
   .i-listbox-error {
     flex-shrink: 0;
     padding: 8px 12px;
-    font-size: 10.8px;
-    border-top-width: 1px;
-    border-top-style: solid;
-  }
-
-  /* Menu display mode styling */
-  &.i-listbox--menu {
-    .i-listbox-options {
-      .i-listbox-option {
-        padding: 14px 16px;
-        font-size: 12.6px;
-
-        &.has-icon {
-          padding: 18px 16px;
-        }
-
-        &.selected {
-          border-left-width: 3px;
-          border-left-style: solid;
-          font-weight: 600;
-        }
-
-        .i-listbox-option-icon--chevron {
-          opacity: 0.8;
-        }
-      }
-    }
-  }
-  @media (max-width: 991px) {
-    .i-listbox-options {
-      max-height: 120px;
-    }
-  }
-}
-
-.i-listbox-wrapper {
-  .i-listbox-options {
-    @media (max-width: 768px) {
-      max-height: min(320px, 50dvh);
-    }
-  }
-}
-
-.i-listbox-wrapper {
-  .i-listbox-options {
-    .i-listbox-option {
-      width: 100%;
-      box-sizing: border-box;
-      text-align: left;
-      font-family: inherit;
-      border: 0;
-      &:focus-visible {
-        outline-width: 2px;
-        outline-style: solid;
-        outline-offset: -2px;
-      }
-      @media (pointer: coarse) {
-        min-height: 44px;
-        box-sizing: border-box;
-      }
-    }
+    font-size: 12px;
+    border-top: 1px solid colors.$color-danger;
   }
 }

@@ -1,5 +1,4 @@
 @use './divider.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-divider-theme();
 
@@ -18,8 +17,6 @@
 
   &--horizontal {
     width: 100%;
-    min-height: 18px;
-    margin: 12px 0;
 
     .i-divider-line {
       height: 1px;
@@ -63,8 +60,6 @@
   &--vertical {
     align-self: stretch;
     justify-content: center;
-    min-height: 24px;
-    margin: 0 12px;
 
     .i-divider-line {
       width: 1px;

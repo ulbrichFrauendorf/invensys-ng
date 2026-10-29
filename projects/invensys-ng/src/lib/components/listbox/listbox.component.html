@@ -1,5 +1,6 @@
 <i-loading-surface
   [loading]="loading()"
+  [fillContainer]="true"
   variant="list"
   [minimumHeight]="'200px'"
   ariaLabel="Loading options"
@@ -22,6 +23,7 @@
             [size]="'small'"
             [severity]="'contrast'"
             [icon]="actionIcon"
+            [ariaLabel]="actionTooltip || 'List actions'"
             [disabled]="disabled"
             (clicked)="onActionClick($event)"
             [attr.title]="actionTooltip"
@@ -30,7 +32,7 @@
       </div>
 
       <!-- Chips area for multiselect mode -->
-      @if (multiple && showChips) {
+      @if (multiple && showChips && hasValue()) {
         <div class="i-listbox-chips-wrapper">
           <i-chips
             class="i-listbox-chips"
@@ -55,6 +57,7 @@
             [label]="'Search ' + title"
             placeholder="Search…"
             [ngModel]="filterValue()"
+            [disabled]="disabled"
             (ngModelChange)="filterValue.set($event)"
             [fluid]="true"
             [icon]="'pi pi-search'"
@@ -71,7 +74,6 @@
             class="i-listbox-option"
             [attr.aria-pressed]="isOptionSelected(option)"
             [class.selected]="isOptionSelected(option)"
-            [class.has-icon]="!multiple && getOptionIcon(option)"
             (click)="toggleOption(option)"
           >
             <!-- Checkbox only in multiple mode -->
@@ -85,8 +87,9 @@
             }
 
             <!-- Left icon -->
-            @if (getOptionIcon(option) && !displayAsMenu) {
+            @if (getOptionIcon(option)) {
               <i
+                aria-hidden="true"
                 [class]="getOptionIcon(option)"
                 class="i-listbox-option-icon i-listbox-option-icon--left"
               ></i>
@@ -99,6 +102,7 @@
             <!-- Right chevron for menu mode -->
             @if (displayAsMenu) {
               <i
+                aria-hidden="true"
                 class="pi pi-chevron-right i-listbox-option-icon i-listbox-option-icon--chevron"
               ></i>
             }

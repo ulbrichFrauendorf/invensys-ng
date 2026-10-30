@@ -1,5 +1,5 @@
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './page-layout.component.theme.scss' as theme;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./page-layout.component.theme.scss" as theme;
 
 :host {
   display: block;
@@ -10,7 +10,7 @@
     display: flex;
     align-items: flex-start;
 
-    @media (max-width: 991px) {
+    @media (max-width: 61.9375rem) {
       flex-direction: column;
       align-items: stretch;
     }
@@ -18,7 +18,7 @@
     > .sidebar-slot {
       --sidebar-width: var(
         --page-layout-left-sidebar-width,
-        var(--page-layout-sidebar-width, 216px)
+        var(--page-layout-sidebar-width, 13.5rem)
       );
       order: 0;
       flex: 0 0 var(--sidebar-width);
@@ -26,12 +26,12 @@
       &.sidebar-slot-right {
         --sidebar-width: var(
           --page-layout-right-sidebar-width,
-          var(--page-layout-sidebar-width, 216px)
+          var(--page-layout-sidebar-width, 13.5rem)
         );
         order: 2;
       }
       position: sticky;
-      top: var(--page-layout-sticky-offset, 0px);
+      top: var(--page-layout-sticky-offset, 0rem);
       display: flex;
       flex-direction: column;
       height: auto;
@@ -42,7 +42,7 @@
         width var(--sidebar-transition-duration) ease,
         height var(--sidebar-transition-duration) ease;
 
-      @media (max-width: 991px) {
+      @media (max-width: 61.9375rem) {
         position: static;
         flex: 0 0 auto;
         width: 100%;
@@ -57,11 +57,16 @@
           width: var(--sidebar-width);
           max-height: max(
             0px,
-            calc(var(--layout-content-height, 100dvh) - var(--page-layout-sticky-offset, 0px))
+            calc(
+              var(--layout-content-height, 100dvh) - var(
+                  --page-layout-sticky-offset,
+                  0px
+                )
+            )
           );
           overflow: auto;
           @include scrollbar.themed-scrollbar();
-          padding: var(--page-layout-padding, 18px);
+          padding: var(--page-layout-padding, 1.125rem);
           box-sizing: border-box;
           transform: translateY(0);
           visibility: visible;
@@ -69,11 +74,11 @@
             transform var(--sidebar-transition-duration) ease,
             visibility 0s;
 
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             width: auto;
             max-height: none;
             overflow: visible;
-            padding: var(--page-layout-padding, 9px);
+            padding: var(--page-layout-padding, 0.5625rem);
           }
         }
       }
@@ -81,7 +86,7 @@
         flex-basis: 0px;
         width: 0px;
 
-        @media (max-width: 991px) {
+        @media (max-width: 61.9375rem) {
           flex-basis: auto;
           width: 100%;
         }
@@ -107,32 +112,32 @@
 
       > .page-header {
         position: sticky;
-        top: var(--page-layout-sticky-offset, 0px);
+        top: var(--page-layout-sticky-offset, 0rem);
         z-index: 10;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        padding: var(--page-layout-padding, 18px);
+        gap: 0.75rem;
+        padding: var(--page-layout-padding, 1.125rem);
         box-sizing: border-box;
 
-        @media (max-width: 991px) {
-          transform: translateY(var(--page-header-snap-offset, 0px));
+        @media (max-width: 61.9375rem) {
+          transform: translateY(var(--page-header-snap-offset, 0rem));
           min-height: var(--layout-topbar-height, 0px);
-          gap: 6px;
-          padding: var(--page-layout-padding, 9px);
+          gap: 0.375rem;
+          padding: var(--page-layout-padding, 0.5625rem);
         }
 
         .page-heading {
           display: flex;
           align-items: flex-start;
-          gap: 9px;
-          flex: 1 1 180px;
+          gap: 0.5625rem;
+          flex: 1 1 11.25rem;
           min-width: 0;
           overflow-wrap: anywhere;
 
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             flex-basis: 0;
           }
 
@@ -141,9 +146,9 @@
           }
 
           .eyebrow {
-            margin: 0 0 4.8px;
+            margin: 0 0 0.3rem;
             text-transform: uppercase;
-            font-size: 9px;
+            font-size: var(--i-font-caption, 0.6875rem);
             font-weight: 700;
           }
         }
@@ -152,18 +157,18 @@
           display: flex;
           flex-wrap: wrap;
           align-items: center;
-          gap: 6px;
+          gap: 0.375rem;
           min-width: 0;
           max-width: 100%;
 
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             order: 1;
             flex-basis: 100%;
           }
         }
 
         > .sidebar-toggle-right {
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             align-self: flex-start;
           }
         }
@@ -171,13 +176,13 @@
 
       > .sidebar-toolbar {
         position: sticky;
-        top: var(--page-layout-sticky-offset, 0px);
+        top: var(--page-layout-sticky-offset, 0rem);
         z-index: 10;
         display: flex;
-        padding: var(--page-layout-padding, 18px);
+        padding: var(--page-layout-padding, 1.125rem);
 
-        @media (max-width: 991px) {
-          padding: var(--page-layout-padding, 9px);
+        @media (max-width: 61.9375rem) {
+          padding: var(--page-layout-padding, 0.5625rem);
         }
       }
 
@@ -191,12 +196,18 @@
 
       > .page-content {
         min-width: 0;
-        padding: var(--page-layout-padding, 18px);
-        padding-bottom: max(var(--page-layout-padding, 18px), env(safe-area-inset-bottom));
+        padding: var(--page-layout-padding, 1.125rem);
+        padding-bottom: max(
+          var(--page-layout-padding, 1.125rem),
+          env(safe-area-inset-bottom)
+        );
 
-        @media (max-width: 991px) {
-          padding: var(--page-layout-padding, 9px);
-          padding-bottom: max(var(--page-layout-padding, 9px), env(safe-area-inset-bottom));
+        @media (max-width: 61.9375rem) {
+          padding: var(--page-layout-padding, 0.5625rem);
+          padding-bottom: max(
+            var(--page-layout-padding, 0.5625rem),
+            env(safe-area-inset-bottom)
+          );
         }
       }
     }

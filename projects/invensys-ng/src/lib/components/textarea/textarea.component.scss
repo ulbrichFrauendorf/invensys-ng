@@ -1,7 +1,7 @@
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './textarea.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
-@use '../../themes/floating-label' as floating;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./textarea.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
+@use "../../themes/floating-label" as floating;
 
 @include theme.i-textarea-theme();
 
@@ -12,10 +12,10 @@ $textarea-transition:
 .i-textarea-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--i-space-medium, 0.5rem);
   width: 100%;
   margin-top: floating.$space;
-  font-size: 12px;
+  font-size: var(--i-font-body, 0.75rem);
 
   &.i-textarea--fluid {
     width: 100%;
@@ -29,7 +29,7 @@ $textarea-transition:
   .i-textarea-container {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: var(--i-space-medium, 0.5rem);
   }
 
   .i-textarea {
@@ -39,7 +39,7 @@ $textarea-transition:
     border-radius: vars.$componentBorderRadius;
     transition: $textarea-transition;
     font-family: inherit;
-    font-size: inherit;
+    font-size: var(--i-font-body, 0.75rem);
     line-height: 1.5;
     resize: vertical;
 
@@ -70,16 +70,16 @@ $textarea-transition:
     align-items: flex-start;
 
     .i-textarea {
-      padding: 20px 10px 8px;
+      padding: 1.625rem var(--i-field-padding-inline, 0.875rem) 0.875rem;
     }
 
     .i-textarea-label {
       position: absolute;
-      top: 16px;
-      left: 12px;
+      top: 1.25rem;
+      left: var(--i-field-padding-inline, 0.875rem);
       @include floating.base;
       pointer-events: none;
-      font-size: 12px;
+      font-size: var(--i-font-body, 0.75rem);
     }
 
     .i-textarea:focus + .i-textarea-label,
@@ -93,7 +93,7 @@ $textarea-transition:
     position: relative;
 
     .i-textarea {
-      padding: 8px 12px;
+      padding: 0.875rem var(--i-field-padding-inline, 0.875rem);
     }
   }
 
@@ -101,16 +101,16 @@ $textarea-transition:
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 8px;
-    min-height: 16px;
+    gap: var(--i-space-medium, 0.5rem);
+    min-height: 1rem;
   }
 
   .i-char-count {
-    font-size: 9px;
+    font-size: var(--i-font-caption, 0.6875rem);
   }
 
   .i-error {
-    font-size: 9px;
+    font-size: var(--i-font-caption, 0.6875rem);
     flex: 1;
   }
 }
@@ -118,8 +118,8 @@ $textarea-transition:
 .i-textarea-wrapper {
   .i-textarea {
     @media (pointer: coarse) {
-      font-size: 16px;
-      min-height: 88px;
+      font-size: var(--i-font-large, 1rem);
+      min-height: 5.5rem;
     }
   }
 }

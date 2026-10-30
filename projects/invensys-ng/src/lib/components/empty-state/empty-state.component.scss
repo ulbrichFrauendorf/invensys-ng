@@ -1,33 +1,3 @@
-/* Empty state component styles */
-.i-empty-state {
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 80vh;
-  }
-
-  &__image {
-    height: auto;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-
-    &--dynamic {
-      max-width: 40%;
-    }
-
-    &--fixed {
-      width: 480px;
-    }
-
-    &--loaded {
-      opacity: 0.5;
-    }
-  }
-}
-
-/* Legacy class names for backward compatibility */
 .no-results-container {
   display: flex;
   align-items: center;
@@ -46,7 +16,7 @@
   }
 
   &.fixed {
-    width: 480px;
+    width: 30rem;
   }
 
   &.loaded {
@@ -54,7 +24,6 @@
   }
 }
 
-.i-empty-state__image--fixed,
 .no-results-image.fixed {
   max-width: 100%;
 }

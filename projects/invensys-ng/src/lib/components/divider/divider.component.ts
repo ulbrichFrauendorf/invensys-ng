@@ -29,7 +29,7 @@ export type IDividerLayout = 'horizontal' | 'vertical';
   standalone: true,
   imports: [],
   templateUrl: './divider.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './divider.component.scss',
 })
 export class IDivider {

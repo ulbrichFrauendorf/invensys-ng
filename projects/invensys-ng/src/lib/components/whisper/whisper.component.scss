@@ -1,6 +1,6 @@
-@use './whisper.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
-@use '../../themes/whisper-layout' as layout;
+@use "./whisper.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
+@use "../../themes/whisper-layout" as layout;
 
 /* Apply the whisper color mixin which uses CSS custom properties */
 @include theme.i-whisper-theme();
@@ -11,14 +11,14 @@
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-width: 400px;
-  min-width: 300px;
+  gap: var(--i-space-medium, 0.5rem);
+  max-width: 25rem;
+  min-width: 18.75rem;
 
   /* Position variations */
   &.i-whisper-top-left {
-    top: 20px;
-    left: 20px;
+    top: 1.25rem;
+    left: 1.25rem;
 
     .i-whisper-message {
       animation: whisperSlideInLeft 0.3s ease-out;
@@ -26,7 +26,7 @@
   }
 
   &.i-whisper-top-center {
-    top: 20px;
+    top: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
 
@@ -36,8 +36,8 @@
   }
 
   &.i-whisper-top-right {
-    top: 20px;
-    right: 20px;
+    top: 1.25rem;
+    right: 1.25rem;
 
     .i-whisper-message {
       animation: whisperSlideIn 0.3s ease-out;
@@ -45,8 +45,8 @@
   }
 
   &.i-whisper-bottom-left {
-    bottom: 20px;
-    left: 20px;
+    bottom: 1.25rem;
+    left: 1.25rem;
     flex-direction: column-reverse;
 
     .i-whisper-message {
@@ -55,7 +55,7 @@
   }
 
   &.i-whisper-bottom-center {
-    bottom: 20px;
+    bottom: 1.25rem;
     left: 50%;
     transform: translateX(-50%);
     flex-direction: column-reverse;
@@ -66,8 +66,8 @@
   }
 
   &.i-whisper-bottom-right {
-    bottom: 20px;
-    right: 20px;
+    bottom: 1.25rem;
+    right: 1.25rem;
     flex-direction: column-reverse;
 
     .i-whisper-message {
@@ -79,7 +79,7 @@
     pointer-events: auto;
     @include layout.frame();
     animation: whisperSlideIn 0.3s ease-out;
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
 
     .i-whisper-message-content {
       @include layout.content();
@@ -104,18 +104,18 @@
     .i-whisper-message-close {
       border: none;
       cursor: pointer;
-      padding: 4px;
+      padding: 0.25rem;
       border-radius: vars.$componentBorderRadius;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 2px;
-      margin-left: 8px;
+      margin-top: 0.125rem;
+      margin-left: 0.5rem;
       transition: background-color 0.2s;
 
       i {
-        font-size: 18px;
+        font-size: 1.125rem;
       }
     }
 
@@ -125,20 +125,20 @@
     }
   }
 
-  @media (max-width: 768px) {
-    max-width: calc(100vw - 40px);
-    min-width: 280px;
+  @media (max-width: 48rem) {
+    max-width: calc(100vw - 2.5rem);
+    min-width: 17.5rem;
 
     &.i-whisper-top-center,
     &.i-whisper-bottom-center {
-      left: 20px;
-      right: 20px;
+      left: 1.25rem;
+      right: 1.25rem;
       transform: none;
       max-width: none;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     min-width: 0;
     box-sizing: border-box;
     overflow-wrap: anywhere;
@@ -182,8 +182,8 @@
   from {
     opacity: 1;
     transform: translateX(0);
-    max-height: 200px;
-    margin-bottom: 4px;
+    max-height: 12.5rem;
+    margin-bottom: 0.25rem;
   }
   to {
     opacity: 0;

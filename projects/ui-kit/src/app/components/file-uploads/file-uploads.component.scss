@@ -3,12 +3,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   > * {
-    flex: 0 0 calc((100% - 16px) / 2);
+    flex: 0 0 calc((100% - 1rem) / 2);
     min-width: 0;
     box-sizing: border-box;
   }
-  gap: 16px;
-  @media (max-width: 700px) {
+  gap: 1rem;
+  @media (max-width: 43.75rem) {
     flex-direction: column;
     > * {
       flex: 0 0 auto;

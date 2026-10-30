@@ -26,7 +26,10 @@
       <i-card [title]="'Card with Actions'">
         <p>This card includes footer content with action buttons.</p>
         <div slot="footer">
-          <i-dialog-actions (submitEvent)="onSubmit()" (cancelEvent)="onCancel()" />
+          <i-dialog-actions
+            (submitEvent)="onSubmit()"
+            (cancelEvent)="onCancel()"
+          />
         </div>
       </i-card>
     </div>
@@ -56,7 +59,10 @@
     <div class="card-example">
       <i-card>
         <p>Simple card with just content, no title or footer.</p>
-        <p>This demonstrates the minimal card structure for basic content display.</p>
+        <p>
+          This demonstrates the minimal card structure for basic content
+          display.
+        </p>
       </i-card>
     </div>
   </ng-template>
@@ -73,7 +79,9 @@
           <p>This card fills the height of its container.</p>
           <p>The body area becomes scrollable when content overflows.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
           <p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
           <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
         </i-card>
@@ -89,7 +97,11 @@
   >
     <div class="card-example">
       @if (showClosableCard) {
-        <i-card [title]="'Closable Card'" [closable]="true" (closeCard)="onCardClosed()">
+        <i-card
+          [title]="'Closable Card'"
+          [closable]="true"
+          (closeCard)="onCardClosed()"
+        >
           <p>This card can be closed using the X button in the header.</p>
           <p>
             <small>It will reappear after 3 seconds for demo purposes.</small>
@@ -121,4 +133,10 @@
       </div>
     </div>
   </ng-template>
-</app-demo-playground>
+  <ng-template appDemoOption="action-severities" label="Action severities"
+    ><i-dialog-actions severity="primary" /><i-dialog-actions
+      severity="secondary" /><i-dialog-actions
+      severity="tertiary" /><i-dialog-actions
+      severity="info" /><i-dialog-actions severity="warning" /><i-dialog-actions
+      severity="danger" /><i-dialog-actions severity="contrast" /></ng-template
+></app-demo-playground>

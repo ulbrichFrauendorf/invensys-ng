@@ -1,6 +1,6 @@
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './calendar.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./calendar.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
 
 @include theme.i-calendar-theme();
 
@@ -14,16 +14,16 @@
 
 .i-calendar-panel {
   box-sizing: border-box;
-  min-width: min(300px, calc(100vw - 24px));
-  max-width: calc(100vw - 24px);
-  max-height: calc(100dvh - 24px);
+  min-width: min(18.75rem, calc(100vw - 1.5rem));
+  max-width: calc(100vw - 1.5rem);
+  max-height: calc(100dvh - 1.5rem);
   border-radius: vars.$borderRadius;
   overflow: auto;
   @include scrollbar.themed-scrollbar();
   animation: slideDown 0.2s ease-out;
 
-  @media (max-width: 768px) {
-    width: min(360px, calc(100vw - 24px));
+  @media (max-width: 48rem) {
+    width: min(22.5rem, calc(100vw - 1.5rem));
     min-width: 0;
     animation: none;
   }
@@ -32,8 +32,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px;
-    gap: 8px;
+    padding: 0.75rem;
+    gap: var(--i-space-medium, 0.5rem);
 
     .i-calendar-header-title {
       flex: 1;
@@ -41,36 +41,36 @@
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 12px;
+      font-size: var(--i-font-body, 0.75rem);
 
       .i-calendar-title-text {
         font-weight: 600;
-        font-size: 12px;
+        font-size: var(--i-font-body, 0.75rem);
       }
     }
   }
 
   .i-calendar-body {
-    padding: 12px;
+    padding: 0.75rem;
 
     .i-calendar-date-view {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: var(--i-space-medium, 0.5rem);
 
       .i-calendar-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        margin-bottom: 4px;
+        gap: 0.25rem;
+        margin-bottom: 0.25rem;
       }
 
       .i-calendar-days {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
+        gap: 0.25rem;
 
-        @media (max-width: 768px) {
+        @media (max-width: 48rem) {
           grid-template-columns: repeat(7, minmax(0, 1fr));
         }
       }
@@ -80,13 +80,13 @@
     .i-calendar-year-view {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
+      gap: var(--i-space-medium, 0.5rem);
     }
 
     .i-calendar-selection {
       border-radius: vars.$componentBorderRadius;
 
-      @media (max-width: 768px) {
+      @media (max-width: 48rem) {
         min-width: 0;
       }
     }
@@ -96,7 +96,7 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-0.625rem);
   }
   to {
     opacity: 1;

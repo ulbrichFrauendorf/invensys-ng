@@ -1,5 +1,5 @@
-@use './page-layouts.component.theme.scss' as theme;
-@use '../../../../../invensys-ng/src/lib/themes/variables' as vars;
+@use "./page-layouts.component.theme.scss" as theme;
+@use "../../../../../invensys-ng/src/lib/themes/variables" as vars;
 
 :host {
   display: block;
@@ -7,7 +7,7 @@
 
   .demo-sidebar {
     min-width: 0;
-    padding: 16px;
+    padding: 1rem;
     border-width: 1px;
     border-style: solid;
     border-radius: vars.$borderRadius;
@@ -17,11 +17,11 @@
   }
 
   .demo-controls {
-    margin-bottom: 18px;
-    padding: 12px;
+    margin-bottom: 1.125rem;
+    padding: 0.75rem;
     border-width: 1px;
     border-style: solid;
-    border-radius: 6px;
+    border-radius: 0.375rem;
 
     summary {
       cursor: pointer;
@@ -31,23 +31,23 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 12px;
-      padding-top: 12px;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
 
       label {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 0.375rem;
         min-height: 44px;
       }
 
       select {
         max-width: 100%;
-        padding: 6px;
+        padding: 0.375rem;
         border-width: 1px;
         border-style: solid;
-        border-radius: 3px;
+        border-radius: 0.1875rem;
         font: inherit;
       }
     }
@@ -59,7 +59,7 @@
       display: flex;
       flex-direction: row;
       > .row-number {
-        flex: 0 0 24px;
+        flex: 0 0 1.5rem;
       }
       > div {
         flex: 1;
@@ -70,37 +70,37 @@
         flex: 0 0 auto;
       }
       align-items: center;
-      gap: 9px;
-      min-height: 88px;
-      padding: 9px;
+      gap: 0.5625rem;
+      min-height: 5.5rem;
+      padding: 0.5625rem;
       border-bottom-width: 1px;
       border-bottom-style: solid;
 
-      @media (max-width: 480px) {
+      @media (max-width: 30rem) {
         flex-wrap: wrap;
         > div {
-          flex-basis: calc(100% - 48px);
+          flex-basis: calc(100% - 3rem);
         }
       }
 
       .row-number {
-        @media (max-width: 480px) {
+        @media (max-width: 30rem) {
           display: none;
         }
       }
 
       i-button {
-        @media (max-width: 480px) {
+        @media (max-width: 30rem) {
           order: 1;
         }
       }
 
       .status {
-        @media (max-width: 480px) {
+        @media (max-width: 30rem) {
           order: 2;
         }
-        padding: 3.6px 6px;
-        border-radius: 3px;
+        padding: 0.225rem 0.375rem;
+        border-radius: 0.1875rem;
       }
     }
   }

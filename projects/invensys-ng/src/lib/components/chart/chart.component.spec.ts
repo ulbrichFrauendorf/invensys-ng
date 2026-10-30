@@ -24,7 +24,7 @@ describe('IChart', () => {
   describe('Component Inputs', () => {
     it('should have default values', () => {
       expect(component.charts).toEqual([]);
-      expect(component.height).toBe('240px');
+      expect(component.height).toBe('15rem');
       expect(component.responsive).toBe(true);
     });
 
@@ -170,7 +170,7 @@ describe('IChart', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      expect(component.chartDisplays[0].height).toBe('480px');
+      expect(component.chartDisplays[0].height).toBe('30rem');
     });
 
     it('should use default height for regular bar', () => {
@@ -183,7 +183,7 @@ describe('IChart', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      expect(component.chartDisplays[0].height).toBe('240px');
+      expect(component.chartDisplays[0].height).toBe('15rem');
     });
   });
 
@@ -210,7 +210,9 @@ describe('IChart', () => {
       const chart: IChartData = {
         chartType: 'bar',
         labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['--blue-500'] }],
+        dataSets: [
+          { label: 'Test', data: [1], backgroundColors: ['--blue-500'] },
+        ],
       };
       fixture.componentRef.setInput('charts', [chart]);
       fixture.changeDetectorRef.markForCheck();
@@ -228,7 +230,9 @@ describe('IChart', () => {
       const chart: IChartData = {
         chartType: 'bar',
         labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['--green-400'] }],
+        dataSets: [
+          { label: 'Test', data: [1], backgroundColors: ['--green-400'] },
+        ],
       };
       fixture.componentRef.setInput('charts', [chart]);
       fixture.changeDetectorRef.markForCheck();
@@ -246,7 +250,9 @@ describe('IChart', () => {
       const chart: IChartData = {
         chartType: 'bar',
         labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['rgb(255, 0, 0)'] }],
+        dataSets: [
+          { label: 'Test', data: [1], backgroundColors: ['rgb(255, 0, 0)'] },
+        ],
       };
       fixture.componentRef.setInput('charts', [chart]);
       fixture.changeDetectorRef.markForCheck();
@@ -288,7 +294,9 @@ describe('IChart', () => {
       const chart: IChartData = {
         chartType: 'bar',
         labels: ['A'],
-        dataSets: [{ label: 'Test', data: [1], backgroundColors: ['--unknown-color'] }],
+        dataSets: [
+          { label: 'Test', data: [1], backgroundColors: ['--unknown-color'] },
+        ],
       };
       fixture.componentRef.setInput('charts', [chart]);
       fixture.changeDetectorRef.markForCheck();

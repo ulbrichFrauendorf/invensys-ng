@@ -1,8 +1,31 @@
-@use './color-variables.scss' as vars;
+@use "./color-variables.scss" as vars;
 
 @mixin define-body() {
+  @media (max-width: 61.9375rem) {
+    html:has(i-layout),
+    body:has(i-layout) {
+      height: auto;
+      min-height: 100%;
+      overflow: visible;
+    }
+
+    html:has(body.blocked-scroll i-layout),
+    body.blocked-scroll:has(i-layout) {
+      overflow: hidden;
+    }
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
   body {
-    font-family: 'Roboto', sans-serif;
+    font-size: var(--i-font-body);
+    font-family: "Roboto", sans-serif;
     background-color: vars.$color-surface-ground;
     color: vars.$color-text-primary;
   }

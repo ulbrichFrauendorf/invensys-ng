@@ -7,12 +7,12 @@
 .i-option-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 
   .i-multi-select-selection {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.25rem;
     min-width: 0;
     padding: 0;
     margin: 0;
@@ -21,9 +21,9 @@
     .i-multi-select-selected-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: var(--i-space-medium, 0.5rem);
       min-width: 0;
-      padding: 0 4px 0 12px;
+      padding: 0 0.25rem 0 0.75rem;
       border-radius: vars.$componentBorderRadius;
 
       .i-multi-select-selected-label {
@@ -37,8 +37,8 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        width: 32px;
-        height: 32px;
+        width: 2rem;
+        height: 2rem;
         padding: 0;
         border: 0;
         border-radius: vars.$componentBorderRadius;
@@ -55,8 +55,8 @@
         }
 
         @media (pointer: coarse) {
-          width: 44px;
-          height: 44px;
+          width: 2.75rem;
+          height: 2.75rem;
         }
       }
     }

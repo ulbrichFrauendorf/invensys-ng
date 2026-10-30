@@ -1,10 +1,14 @@
 <i-loading-surface
   [loading]="loading()"
   variant="field"
-  [minimumHeight]="'42px'"
+  [minimumHeight]="'2.625rem'"
   ariaLabel="Loading selected items"
 >
-  <div class="i-chips-wrapper" [class.i-chips-wrapper--error]="showError" [attr.id]="componentId">
+  <div
+    class="i-chips-wrapper"
+    [class.i-chips-wrapper--error]="showError"
+    [attr.id]="componentId"
+  >
     <div
       class="i-chips-container"
       [class.i-chips-box]="boxed"

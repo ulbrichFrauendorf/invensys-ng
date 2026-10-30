@@ -1,7 +1,7 @@
 <i-loading-surface
   [loading]="loading()"
   variant="field"
-  [minimumHeight]="'42px'"
+  [minimumHeight]="'2.625rem'"
   ariaLabel="Loading options"
 >
   <div
@@ -16,9 +16,11 @@
   >
     <div class="i-option-control" cdkOverlayOrigin #origin="cdkOverlayOrigin">
       <div class="i-option-value">
-        <span class="i-option-text" [class.i-option-placeholder]="value == null">{{
-          getSelectedLabel() || (useFloatLabel ? '' : placeholder)
-        }}</span>
+        <span
+          class="i-option-text"
+          [class.i-option-placeholder]="value == null"
+          >{{ getSelectedLabel() || (useFloatLabel ? "" : placeholder) }}</span
+        >
       </div>
       <button
         #trigger
@@ -76,7 +78,9 @@
       </div>
     </div>
     @if (label && useFloatLabel) {
-      <label class="i-option-label" [for]="id || componentId">{{ label }}</label>
+      <label class="i-option-label" [for]="id || componentId">{{
+        label
+      }}</label>
     }
     @if (showErrors) {
       <div class="i-option-error" [id]="componentId + '-error'" role="alert">
@@ -91,7 +95,9 @@
     [cdkConnectedOverlayOpen]="isOpen && !disabled"
     [cdkConnectedOverlayPositions]="overlayPositions"
     [cdkConnectedOverlayWidth]="
-      isOpen ? origin.elementRef.nativeElement.getBoundingClientRect().width : undefined
+      isOpen
+        ? origin.elementRef.nativeElement.getBoundingClientRect().width
+        : undefined
     "
     [cdkConnectedOverlayViewportMargin]="12"
     [cdkConnectedOverlayPush]="true"
@@ -99,7 +105,11 @@
     (attach)="focusOptions()"
     (detach)="closeDropdown()"
   >
-    <div class="i-option-panel" #optionsPanel (keydown)="onPanelKeydown($event)">
+    <div
+      class="i-option-panel"
+      #optionsPanel
+      (keydown)="onPanelKeydown($event)"
+    >
       @if (filter) {
         <div class="i-option-filter">
           <input

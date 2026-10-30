@@ -1,8 +1,17 @@
 import { signal as loadingSignal } from '@angular/core';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { JsonPipe } from '@angular/common';
-import { ITreeView, ITreeNode, IButton } from '../../../../../invensys-ng/src/public-api';
+import {
+  ITreeView,
+  ITreeNode,
+  IButton,
+} from '../../../../../invensys-ng/src/public-api';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
 import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
@@ -260,12 +269,12 @@ export class TreeViewsComponent {
 
     scrollable: `<i-tree-view [loading]="loading()"
   [value]="treeData"
-  scrollHeight="400px">
+  scrollHeight="25rem">
 </i-tree-view>`,
 
     customization: `<i-tree-view [loading]="loading()"
   [value]="customTreeData"
-  [scrollHeight]="'400px'">
+  [scrollHeight]="'25rem'">
 </i-tree-view>`,
   };
 

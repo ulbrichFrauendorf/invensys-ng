@@ -1,4 +1,4 @@
-@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@use "../../../../../invensys-ng/src/lib/themes/color-variables.scss" as colors;
 
 @mixin dialogs-theme() {
   .basic-dialog {
@@ -20,7 +20,8 @@
       .highlight-item {
         background: colors.$color-surface-card;
         color: colors.$color-text-primary;
-        box-shadow: 0 1px 3px color-mix(in srgb, colors.$color-contrast 10%, transparent);
+        box-shadow: 0 0.0625rem 0.1875rem
+          color-mix(in srgb, colors.$color-contrast 10%, transparent);
 
         i {
           color: colors.$color-primary;

@@ -3,5 +3,4 @@ export interface LayoutConfig {
   logoLight?: string;
   logoDark?: string;
   showThemeToggle?: boolean;
-  enablePullToRefresh?: boolean;
 }

@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-input-theme() {
   .i-input {
@@ -36,10 +36,10 @@
     .i-label {
       color: colors.$color-danger;
     }
+  }
 
-    .i-error {
-      color: colors.$color-danger;
-    }
+  .i-input-spinners {
+    background: colors.$color-surface-ground;
   }
 
   .i-input-spinner-button {

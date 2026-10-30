@@ -1,14 +1,14 @@
-@use './placeholders.component.theme.scss' as theme;
+@use "./placeholders.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .demo-placeholder-container {
-  height: 300px;
+  height: 18.75rem;
 
   .upload-icon {
-    font-size: 48px;
+    font-size: 3rem;
     opacity: 0.5;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
     display: block;
   }
 }
@@ -18,22 +18,22 @@
   flex-direction: row;
   flex-wrap: wrap;
   > * {
-    flex: 1 1 200px;
+    flex: 1 1 12.5rem;
     min-width: 0;
     box-sizing: border-box;
   }
-  gap: 16px;
+  gap: 1rem;
 
   &.two-columns {
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 0 0 calc((100% - 16px) / 2);
+      flex: 0 0 calc((100% - 1rem) / 2);
       min-width: 0;
       box-sizing: border-box;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       flex-direction: column;
       > * {
         flex: 0 0 auto;
@@ -43,30 +43,30 @@
   }
 
   .demo-placeholder-small {
-    height: 180px;
+    height: 11.25rem;
   }
 
   .demo-placeholder-medium {
-    height: 250px;
+    height: 15.625rem;
   }
 }
 
 .split-layout-demo {
   display: flex;
-  height: 350px;
+  height: 21.875rem;
   border-width: 1px;
   border-style: solid;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
 
   .list-panel-demo {
-    width: 200px;
+    width: 12.5rem;
     flex-shrink: 0;
     border-right-width: 1px;
     border-right-style: solid;
 
     .list-item-demo {
-      padding: 16px;
+      padding: 1rem;
       border-bottom-width: 1px;
       border-bottom-style: solid;
       cursor: pointer;
@@ -80,13 +80,13 @@
 
   .detail-panel-demo {
     flex: 1;
-    padding: 16px;
+    padding: 1rem;
   }
 }
 
 i-placeholder {
   i-button {
-    margin-top: 16px;
+    margin-top: 1rem;
   }
 }
 

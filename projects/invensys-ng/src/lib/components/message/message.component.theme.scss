@@ -1,9 +1,9 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-message-theme() {
   .i-message {
     background-color: colors.$color-surface-section;
-    border-left: 4px solid transparent;
+    border-left: 0.25rem solid transparent;
 
     .i-message-text {
       color: colors.$color-text-primary;

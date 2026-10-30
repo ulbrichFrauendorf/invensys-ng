@@ -1,4 +1,4 @@
-@use './divider.component.theme.scss' as theme;
+@use "./divider.component.theme.scss" as theme;
 
 @include theme.i-divider-theme();
 
@@ -20,15 +20,15 @@
 
     .i-divider-line {
       height: 1px;
-      min-width: 12px;
+      min-width: 0.75rem;
     }
 
     .i-divider-content {
       display: inline-flex;
       align-items: center;
       flex-shrink: 0;
-      padding: 0 9px;
-      font-size: 10.5px;
+      padding: 0 0.5625rem;
+      font-size: var(--i-font-body, 0.75rem);
       font-weight: 500;
       line-height: 1;
       white-space: nowrap;
@@ -40,7 +40,7 @@
 
     &.i-divider--align-start {
       .i-divider-line:first-child {
-        max-width: 24px;
+        max-width: 1.5rem;
       }
     }
 
@@ -52,7 +52,7 @@
 
     &.i-divider--align-end {
       .i-divider-line:last-child {
-        max-width: 24px;
+        max-width: 1.5rem;
       }
     }
   }

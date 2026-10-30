@@ -1,4 +1,9 @@
-import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 /**
  * Empty State Component
@@ -26,7 +31,7 @@ import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core
   selector: 'i-empty-state',
   standalone: true,
   templateUrl: './empty-state.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './empty-state.component.scss',
 })
 export class EmptyStateComponent {
@@ -49,12 +54,10 @@ export class EmptyStateComponent {
   imageLoaded: boolean = false;
 
   /**
-   * Handles image load with a slight delay for smooth appearance
+   * Marks the image ready; CSS owns the fade transition
    * @internal
    */
   onImageLoad(): void {
-    setTimeout(() => {
-      this.imageLoaded = true;
-    }, 200);
+    this.imageLoaded = true;
   }
 }

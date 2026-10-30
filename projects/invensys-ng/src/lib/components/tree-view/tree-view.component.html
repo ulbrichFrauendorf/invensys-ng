@@ -1,7 +1,7 @@
 <i-loading-surface
   [loading]="loadingState()"
   variant="list"
-  [minimumHeight]="scrollHeight || '200px'"
+  [minimumHeight]="scrollHeight || '12.5rem'"
   ariaLabel="Loading tree"
 >
   <div class="i-tree-view-wrapper" [style.height]="scrollHeight">
@@ -20,7 +20,7 @@
         </i-input-text>
       </div>
     }
-    @if (selectAll && selectionMode === 'checkbox') {
+    @if (selectAll && selectionMode === "checkbox") {
       <div class="i-tree-view-select-all-container">
         <div class="select-box">
           <i-checkbox
@@ -60,7 +60,9 @@
       [class.i-tree-view-node--leaf]="!hasChildren(node)"
       [class.i-tree-view-node--expanded]="node.expanded"
       [class.i-tree-view-node--collapsed]="!node.expanded && hasChildren(node)"
-      [class.i-tree-view-node--temporary-highlight]="isTemporarilyHighlighted(node)"
+      [class.i-tree-view-node--temporary-highlight]="
+        isTemporarilyHighlighted(node)
+      "
       [class]="node.styleClass"
       [style.padding-left.rem]="level * 1"
       role="treeitem"
@@ -84,7 +86,7 @@
             <i-loading-surface
               [loading]="!!node.loading"
               variant="inline"
-              minimumHeight="16px"
+              minimumHeight="1rem"
               ariaLabel="Loading node"
               ><i [class]="getToggleIcon(node)"></i
             ></i-loading-surface>
@@ -92,7 +94,7 @@
         } @else {
           <span class="i-tree-view-toggler-spacer"></span>
         }
-        @if (selectionMode === 'checkbox') {
+        @if (selectionMode === "checkbox") {
           <div class="i-tree-view-checkbox-container">
             <i-checkbox
               [checked]="isSelected(node) && !isPartiallySelected(node)"

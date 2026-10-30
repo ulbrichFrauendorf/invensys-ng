@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 @mixin i-rule-editor-theme() {
   .i-rule-editor {
     color: colors.$color-text-primary;
@@ -21,6 +21,7 @@
   }
 
   .i-rule-editor__row.cdk-drag-preview {
-    box-shadow: 0 8px 24px color-mix(in srgb, colors.$color-shadow 15%, transparent);
+    box-shadow: 0 0.5rem 1.5rem
+      color-mix(in srgb, colors.$color-shadow 15%, transparent);
   }
 }

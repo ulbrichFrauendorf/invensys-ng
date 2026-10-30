@@ -4,7 +4,7 @@ $space: 1.5em;
 
 @mixin base {
   padding: 0;
-  max-width: calc(100% - 24px);
+  max-width: calc(100% - 1.5rem);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -18,8 +18,8 @@ $space: 1.5em;
 }
 
 @mixin floated {
-  top: -4px;
-  left: 12px;
+  top: -0.25rem;
+  left: 0.75rem;
   transform: translateY(-100%);
-  font-size: 0.85em;
+  font-size: var(--i-font-caption, 0.6875rem);
 }

@@ -1,4 +1,4 @@
-@use './placeholder.component.theme.scss' as theme;
+@use "./placeholder.component.theme.scss" as theme;
 
 @include theme.i-placeholder-theme();
 
@@ -13,14 +13,14 @@
 
   .i-placeholder-content {
     text-align: center;
-    max-width: 400px;
-    padding: 24px;
+    max-width: 25rem;
+    padding: 1.5rem;
     transition: none;
     animation: none;
 
     i {
-      font-size: 48px;
-      margin-bottom: 18px;
+      font-size: 3rem;
+      margin-bottom: 1.125rem;
       display: block;
     }
   }

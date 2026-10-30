@@ -1,4 +1,4 @@
-@use './dialog-actions.component.theme.scss' as theme;
+@use "./dialog-actions.component.theme.scss" as theme;
 :host {
   display: block;
 }
@@ -7,8 +7,8 @@
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
-  gap: 9px;
-  padding-top: 12px;
+  gap: 0.5625rem;
+  padding-top: 0.75rem;
   border-top-width: 1px;
   border-top-style: solid;
 }

@@ -1,20 +1,20 @@
-@use './chip.component.theme.scss' as theme;
+@use "./chip.component.theme.scss" as theme;
 
 @include theme.i-chip-theme();
 
 .i-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: var(--i-font-body, 0.75rem);
   font-weight: 500;
   transition: all 0.2s ease;
   user-select: none;
-  max-width: min(150px, 100%);
+  max-width: min(9.375rem, 100%);
   box-sizing: border-box;
-  min-height: 32px;
+  min-height: 2rem;
 
   &.i-chip-disabled {
     opacity: 0.6;
@@ -26,8 +26,8 @@
   }
 
   .i-chip-image {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
@@ -55,8 +55,8 @@
     position: relative;
     z-index: 2;
     pointer-events: auto;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 50%;
     &:focus-visible {
       outline-width: 2px;
@@ -70,16 +70,16 @@
   }
 
   @media (pointer: coarse) {
-    min-height: 40px;
-    padding: 4px 8px;
+    min-height: 2.5rem;
+    padding: 0.25rem 0.5rem;
   }
 }
 
 .i-chip {
   .i-chip-remove-icon {
     @media (pointer: coarse) {
-      width: 32px;
-      height: 32px;
+      width: 2rem;
+      height: 2rem;
     }
   }
 }

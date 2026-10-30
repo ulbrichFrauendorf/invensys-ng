@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ExampleDialogComponent } from '../example-dialog/example-dialog.component';
 import { IDialog } from '@shared/components/dialog/dialog.component';
 import { IButton } from '@shared/components/button/button.component';
@@ -6,10 +12,18 @@ import { IDynamicDialogRef } from '@shared/components/dialog/services/dialog.int
 import { DialogService } from '@shared/components/dialog/services/dialog.service';
 import { IDialogActions } from '@shared/components/dialog/inner/dialog-actions/dialog-actions.component';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { Observable, BehaviorSubject, interval } from 'rxjs';
-import { IListbox, ListboxOption } from '@shared/components/listbox/listbox.component';
+import {
+  IListbox,
+  ListboxOption,
+} from '@shared/components/listbox/listbox.component';
 import { TooltipDirective } from '@shared/directives/tooltip/tooltip.directive';
 import { ISelect } from '@shared/components/select/select.component';
 import { IMultiSelect } from '@shared/components/multi-select/multi-select.component';
@@ -226,7 +240,7 @@ export class DialogsComponent {
   displayExampleDialog() {
     this.ref = this.dialogService.open(ExampleDialogComponent, {
       header: 'Example Dynamic Dialog',
-      width: '600px',
+      width: '37.5rem',
       contentStyle: { overflow: 'auto' },
       data: {
         message: 'Hello from Dialog Service!',
@@ -252,8 +266,8 @@ export class DialogsComponent {
   [(visible)]="showBasicDialog"
   [closable]="true"
   header="Welcome to Invensys"
-  width="500px"
-  height="400px">
+  width="31.25rem"
+  height="25rem">
   <div class="dialog-content basic-dialog">
     <div class="dialog-icon">
       <i class="pi pi-check-circle"></i>
@@ -291,7 +305,7 @@ export class DialogsComponent {
   [(visible)]="showSingleButtonDialog"
   [closable]="true"
   header="Notification"
-  width="384px">
+  width="24rem">
   <div class="dialog-content basic-dialog">
     <div class="dialog-icon success">
       <i class="pi pi-check-circle"></i>
@@ -314,8 +328,8 @@ export class DialogsComponent {
   [(visible)]="showFullscreenDialog"
   header="Team Assignment"
   [modal]="true"
-  width="600px"
-  height="800px">
+  width="37.5rem"
+  height="50rem">
   <div class="dialog-content large-dialog">
     <div class="dialog-intro">
       <i class="pi pi-users"></i>
@@ -340,7 +354,7 @@ export class DialogsComponent {
   displayExampleDialog() {
     this.ref = this.dialogService.open(ExampleDialogComponent, {
       header: 'Example Dynamic Dialog',
-      width: '600px',
+      width: '37.5rem',
       contentStyle: { overflow: 'auto' },
       data: {
         message: 'Hello from Dialog Service!',

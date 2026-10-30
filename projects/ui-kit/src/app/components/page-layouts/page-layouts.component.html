@@ -5,7 +5,7 @@
   [showHeader]="showHeader()"
   [style.--page-layout-padding]="spacing() || null"
 >
-  @if (showSidebar() && sidebarMode() !== 'right') {
+  @if (showSidebar() && sidebarMode() !== "right") {
     <section
       iPageLeftSidebar
       [(visible)]="sidebarVisible"
@@ -26,7 +26,7 @@
     </section>
   }
 
-  @if (showSidebar() && sidebarMode() !== 'left') {
+  @if (showSidebar() && sidebarMode() !== "left") {
     <section
       iPageRightSidebar
       [(visible)]="rightVisible"
@@ -84,7 +84,9 @@
           >Show left sidebar</i-button
         >
         <i-button
-          [disabled]="!showSidebar() || !sidebarCollapsible() || sidebarMode() === 'left'"
+          [disabled]="
+            !showSidebar() || !sidebarCollapsible() || sidebarMode() === 'left'
+          "
           (clicked)="page.hideSidebar('right')"
           >Hide right sidebar</i-button
         >
@@ -95,7 +97,10 @@
         >
         <label
           >Sidebars
-          <select [ngModel]="sidebarMode()" (ngModelChange)="sidebarMode.set($event)">
+          <select
+            [ngModel]="sidebarMode()"
+            (ngModelChange)="sidebarMode.set($event)"
+          >
             <option value="left">Left</option>
             <option value="right">Right</option>
             <option value="both">Both</option>
@@ -122,8 +127,8 @@
           <select [ngModel]="spacing()" (ngModelChange)="spacing.set($event)">
             <option value="">Responsive default</option>
             <option value="0px">None</option>
-            <option value="8px">Compact · 8px</option>
-            <option value="32px">Roomy · 32px</option>
+            <option value="0.5rem">Compact · 8px</option>
+            <option value="2rem">Roomy · 32px</option>
           </select>
         </label>
         <label

@@ -1,20 +1,20 @@
-@use './steppers.component.theme.scss' as theme;
+@use "./steppers.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .step-content {
-  min-height: 160px;
-  padding: 20px;
+  min-height: 10rem;
+  padding: 1.25rem;
   border-width: 1px;
   border-style: solid;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .step-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 0.75rem;
   width: 100%;
 }
 

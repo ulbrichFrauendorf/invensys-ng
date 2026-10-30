@@ -1,15 +1,15 @@
-@use './card-buttons.component.theme.scss' as theme;
+@use "./card-buttons.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .interactive-cards {
-  --carousel-min-item-width: 260px;
+  --carousel-min-item-width: 16.25rem;
   text-align: center;
 
   .card-tool-icon {
     display: inline-block;
-    margin-top: 16px;
-    font-size: 24px;
+    margin-top: 1rem;
+    font-size: 1.5rem;
   }
 }
 

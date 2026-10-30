@@ -1,4 +1,4 @@
-@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@use "../../../../../invensys-ng/src/lib/themes/color-variables.scss" as colors;
 
 @mixin tooltips-theme() {
   .position-showcase {
@@ -32,7 +32,11 @@
         }
 
         &.danger:hover {
-          background: color-mix(in srgb, colors.$color-danger 12%, colors.$color-surface-card);
+          background: color-mix(
+            in srgb,
+            colors.$color-danger 12%,
+            colors.$color-surface-card
+          );
           color: colors.$color-danger;
         }
       }
@@ -75,7 +79,8 @@
 
         &:focus {
           border-color: colors.$color-primary;
-          box-shadow: 0 0 0 3px color-mix(in srgb, colors.$color-primary 15%, transparent);
+          box-shadow: 0 0 0 0.1875rem
+            color-mix(in srgb, colors.$color-primary 15%, transparent);
         }
       }
     }
@@ -122,7 +127,11 @@
       .status-item {
         .status-badge {
           &.success {
-            background: color-mix(in srgb, colors.$color-success 12%, colors.$color-surface-card);
+            background: color-mix(
+              in srgb,
+              colors.$color-success 12%,
+              colors.$color-surface-card
+            );
             border-color: color-mix(
               in srgb,
               colors.$color-success 25%,
@@ -131,12 +140,20 @@
             color: colors.$color-success;
 
             &:hover {
-              background: color-mix(in srgb, colors.$color-success 25%, colors.$color-surface-card);
+              background: color-mix(
+                in srgb,
+                colors.$color-success 25%,
+                colors.$color-surface-card
+              );
             }
           }
 
           &.warning {
-            background: color-mix(in srgb, colors.$color-warning 12%, colors.$color-surface-card);
+            background: color-mix(
+              in srgb,
+              colors.$color-warning 12%,
+              colors.$color-surface-card
+            );
             border-color: color-mix(
               in srgb,
               colors.$color-warning 25%,
@@ -145,12 +162,20 @@
             color: colors.$color-warning;
 
             &:hover {
-              background: color-mix(in srgb, colors.$color-warning 25%, colors.$color-surface-card);
+              background: color-mix(
+                in srgb,
+                colors.$color-warning 25%,
+                colors.$color-surface-card
+              );
             }
           }
 
           &.danger {
-            background: color-mix(in srgb, colors.$color-danger 12%, colors.$color-surface-card);
+            background: color-mix(
+              in srgb,
+              colors.$color-danger 12%,
+              colors.$color-surface-card
+            );
             border-color: color-mix(
               in srgb,
               colors.$color-danger 25%,
@@ -159,17 +184,33 @@
             color: colors.$color-danger;
 
             &:hover {
-              background: color-mix(in srgb, colors.$color-danger 25%, colors.$color-surface-card);
+              background: color-mix(
+                in srgb,
+                colors.$color-danger 25%,
+                colors.$color-surface-card
+              );
             }
           }
 
           &.info {
-            background: color-mix(in srgb, colors.$color-info 12%, colors.$color-surface-card);
-            border-color: color-mix(in srgb, colors.$color-info 25%, colors.$color-surface-border);
+            background: color-mix(
+              in srgb,
+              colors.$color-info 12%,
+              colors.$color-surface-card
+            );
+            border-color: color-mix(
+              in srgb,
+              colors.$color-info 25%,
+              colors.$color-surface-border
+            );
             color: colors.$color-info;
 
             &:hover {
-              background: color-mix(in srgb, colors.$color-info 25%, colors.$color-surface-card);
+              background: color-mix(
+                in srgb,
+                colors.$color-info 25%,
+                colors.$color-surface-card
+              );
             }
           }
         }

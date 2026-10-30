@@ -1,3 +1,4 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
@@ -8,6 +9,8 @@ import {
   QueryList,
   AfterContentInit,
   ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
 } from '@angular/core';
 import { ITabPanel } from './tab-panel.component';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
@@ -48,6 +51,8 @@ import { UniqueComponentId } from '../../utils/uniquecomponentid';
   styleUrl: './tabs.component.scss',
 })
 export class ITabs implements AfterContentInit {
+  private readonly destroyRef = inject(DestroyRef);
+
   /**
    * Index of the currently active tab
    * @default 0
@@ -95,9 +100,11 @@ export class ITabs implements AfterContentInit {
 
   ngAfterContentInit(): void {
     this.tabs = this.tabPanels.toArray();
-    this.tabPanels.changes.subscribe(() => {
-      this.tabs = this.tabPanels.toArray();
-    });
+    this.tabPanels.changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.tabs = this.tabPanels.toArray();
+      });
   }
 
   /**
@@ -209,7 +216,9 @@ export class ITabs implements AfterContentInit {
    * @internal
    */
   private focusTab(index: number): void {
-    const tabElement = document.getElementById(`${this.componentId}-tab-${index}`);
+    const tabElement = document.getElementById(
+      `${this.componentId}-tab-${index}`,
+    );
     tabElement?.focus();
   }
 }

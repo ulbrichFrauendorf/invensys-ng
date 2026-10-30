@@ -1,7 +1,7 @@
 <i-loading-surface
   [loading]="loading()"
   variant="list"
-  [minimumHeight]="'200px'"
+  [minimumHeight]="'12.5rem'"
   ariaLabel="Loading fields"
 >
   <div class="i-field-picker" role="group" [attr.aria-label]="ariaLabel">
@@ -18,7 +18,9 @@
       @for (group of groups; track group.name; let groupIndex = $index) {
         <section [attr.aria-labelledby]="componentId + '-group-' + groupIndex">
           <header class="i-field-picker__group-header">
-            <h3 [id]="componentId + '-group-' + groupIndex">{{ group.name }}</h3>
+            <h3 [id]="componentId + '-group-' + groupIndex">
+              {{ group.name }}
+            </h3>
             <span>{{ group.options.length }}</span>
           </header>
           @for (option of group.options; track option.key) {

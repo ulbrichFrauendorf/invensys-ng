@@ -15,7 +15,11 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
+  <ng-template
+    appDemoOption="option-2"
+    label="Size Variants"
+    [sourceCode]="codeExamples.sizes"
+  >
     <div class="demo-content">
       <div class="size-grid">
         <div class="size-item">
@@ -65,7 +69,7 @@
   >
     <div class="demo-content centered">
       <i-button [loading]="isLoading" (clicked)="simulateLoading()">
-        {{ isLoading ? 'Loading...' : 'Click Me' }}
+        Run action
       </i-button>
     </div>
   </ng-template>
@@ -85,24 +89,96 @@
         <i-button severity="danger" [loading]="true">Danger</i-button>
       </div>
       <div class="button-grid">
-        <i-button severity="primary" [outlined]="true" [loading]="true">Primary</i-button>
-        <i-button severity="secondary" [outlined]="true" [loading]="true">Secondary</i-button>
-        <i-button severity="success" [outlined]="true" [loading]="true">Success</i-button>
-        <i-button severity="info" [outlined]="true" [loading]="true">Info</i-button>
-        <i-button severity="warning" [outlined]="true" [loading]="true">Warning</i-button>
-        <i-button severity="danger" [outlined]="true" [loading]="true">Danger</i-button>
+        <i-button severity="primary" [outlined]="true" [loading]="true"
+          >Primary</i-button
+        >
+        <i-button severity="secondary" [outlined]="true" [loading]="true"
+          >Secondary</i-button
+        >
+        <i-button severity="success" [outlined]="true" [loading]="true"
+          >Success</i-button
+        >
+        <i-button severity="info" [outlined]="true" [loading]="true"
+          >Info</i-button
+        >
+        <i-button severity="warning" [outlined]="true" [loading]="true"
+          >Warning</i-button
+        >
+        <i-button severity="danger" [outlined]="true" [loading]="true"
+          >Danger</i-button
+        >
       </div>
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Loading Overlay" [sourceCode]="codeExamples.inCard">
+  <ng-template
+    appDemoOption="option-6"
+    label="Loading Overlay"
+    [sourceCode]="codeExamples.inCard"
+  >
     <div class="demo-content">
       <div class="loading-card-demo">
         <div class="loading-overlay-demo">
           <i-progress-spinner></i-progress-spinner>
-          <p>Loading content...</p>
         </div>
       </div>
     </div>
   </ng-template>
+  <ng-template appDemoOption="color-modes" label="Colour modes">
+    <i-progress-spinner colorMode="accent" ariaLabel="Accent spinner" />
+    <i-progress-spinner colorMode="text" ariaLabel="Text spinner" />
+  </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-progress-spinner
+      severity="primary"
+      colorMode="accent"
+      ariaLabel="primary accent" /><i-progress-spinner
+      severity="primary"
+      colorMode="text"
+      ariaLabel="primary text" /><i-progress-spinner
+      severity="secondary"
+      colorMode="accent"
+      ariaLabel="secondary accent" /><i-progress-spinner
+      severity="secondary"
+      colorMode="text"
+      ariaLabel="secondary text" /><i-progress-spinner
+      severity="tertiary"
+      colorMode="accent"
+      ariaLabel="tertiary accent" /><i-progress-spinner
+      severity="tertiary"
+      colorMode="text"
+      ariaLabel="tertiary text" /><i-progress-spinner
+      severity="success"
+      colorMode="accent"
+      ariaLabel="success accent" /><i-progress-spinner
+      severity="success"
+      colorMode="text"
+      ariaLabel="success text" /><i-progress-spinner
+      severity="info"
+      colorMode="accent"
+      ariaLabel="info accent" /><i-progress-spinner
+      severity="info"
+      colorMode="text"
+      ariaLabel="info text" /><i-progress-spinner
+      severity="warning"
+      colorMode="accent"
+      ariaLabel="warning accent" /><i-progress-spinner
+      severity="warning"
+      colorMode="text"
+      ariaLabel="warning text" /><i-progress-spinner
+      severity="danger"
+      colorMode="accent"
+      ariaLabel="danger accent" /><i-progress-spinner
+      severity="danger"
+      colorMode="text"
+      ariaLabel="danger text" /><i-progress-spinner
+      severity="contrast"
+      colorMode="accent"
+      ariaLabel="contrast accent" /><i-progress-spinner
+      severity="contrast"
+      colorMode="text"
+      ariaLabel="contrast text"
+  /></ng-template>
 </app-demo-playground>

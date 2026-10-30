@@ -1,11 +1,11 @@
-@use './tree-view.component.theme.scss' as theme;
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use '../../themes/variables' as vars;
+@use "./tree-view.component.theme.scss" as theme;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "../../themes/variables" as vars;
 
 @include theme.i-tree-view-theme();
 
 .i-tree-view-wrapper {
-  padding: 8px 8px 0 8px;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   overflow: hidden;
   box-sizing: border-box;
   display: flex;
@@ -13,17 +13,17 @@
 
   .i-tree-view-filter-container {
     position: relative;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
     flex-shrink: 0;
   }
 
   .i-tree-view-select-all-container {
-    margin-bottom: 8px;
-    padding: 8px 0;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
     flex-shrink: 0;
 
     .select-box {
-      padding-left: 10px;
+      padding-left: 0.625rem;
     }
   }
 
@@ -39,12 +39,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 20px;
-    font-size: 12px;
+    gap: var(--i-space-medium, 0.5rem);
+    padding: 1.25rem;
+    font-size: var(--i-font-body, 0.75rem);
 
     .pi-spinner {
-      font-size: 16px;
+      font-size: var(--i-font-body, 0.75rem);
     }
   }
 
@@ -52,8 +52,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    font-size: 12px;
+    padding: 1.25rem;
+    font-size: var(--i-font-body, 0.75rem);
     font-style: italic;
   }
 }
@@ -88,20 +88,20 @@
   .i-tree-view-node-content {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 0.25rem;
     box-sizing: border-box;
-    padding: 2px 8px;
+    padding: 0.125rem 0.5rem;
     border-radius: vars.$componentBorderRadius;
     transition: all 0.15s ease;
-    min-height: 28px;
+    min-height: 1.75rem;
   }
 
   .i-tree-view-toggler {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border: none;
     cursor: pointer;
     border-radius: calc(vars.$componentBorderRadius / 2);
@@ -112,14 +112,14 @@
     }
 
     i {
-      font-size: 12px;
+      font-size: var(--i-font-small, 0.75rem);
       transition: transform 0.15s ease;
     }
   }
 
   .i-tree-view-toggler-spacer {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     flex-shrink: 0;
   }
 
@@ -130,12 +130,12 @@
   }
 
   .i-tree-view-node-icon {
-    font-size: 12px;
+    font-size: var(--i-font-small, 0.75rem);
     flex-shrink: 0;
   }
 
   .i-tree-view-node-label {
-    font-size: 12px;
+    font-size: var(--i-font-body, 0.75rem);
     line-height: 1.4;
     flex: 1;
     overflow: hidden;
@@ -156,8 +156,8 @@
 .i-tree-view-node {
   .i-tree-view-toggler {
     @media (pointer: coarse) {
-      width: 44px;
-      height: 44px;
+      width: 2.75rem;
+      height: 2.75rem;
       flex-shrink: 0;
     }
   }
@@ -166,7 +166,7 @@
 .i-tree-view-node {
   .i-tree-view-toggler-spacer {
     @media (pointer: coarse) {
-      width: 44px;
+      width: 2.75rem;
     }
   }
 }

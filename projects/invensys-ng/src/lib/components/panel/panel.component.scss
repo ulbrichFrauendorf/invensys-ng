@@ -1,5 +1,5 @@
-@use './panel.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
+@use "./panel.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
 
 @include theme.i-panel-theme();
 
@@ -21,21 +21,21 @@
   margin: 0;
   padding: 0;
   min-inline-size: 0;
-  min-height: 48px;
+  min-height: 3rem;
 
   .i-panel-header-wrap {
     padding: 0;
-    margin-left: 20px;
-    max-width: calc(100% - 40px);
+    margin-left: 1.25rem;
+    max-width: calc(100% - 2.5rem);
 
     .i-panel-header {
       display: inline-flex;
       flex-direction: row;
       align-items: center;
-      gap: 8px;
+      gap: var(--i-space-medium, 0.5rem);
       max-width: 100%;
       box-sizing: border-box;
-      padding: 4px 12px;
+      padding: 0.25rem 0.75rem;
       user-select: none;
       transition: color vars.$transitionDuration ease;
 
@@ -43,12 +43,12 @@
       &.i-panel-header:where(button) {
         border: none;
         cursor: pointer;
-        padding: 4px 12px;
+        padding: 0.25rem 0.75rem;
         font-family: inherit;
       }
 
       .i-panel-toggle-icon {
-        font-size: 12px;
+        font-size: var(--i-font-small, 0.75rem);
         font-weight: 600;
         display: inline-block;
         flex-shrink: 0;
@@ -56,7 +56,7 @@
 
       .i-panel-title {
         font-weight: 500;
-        font-size: 12px;
+        font-size: var(--i-font-body, 0.75rem);
         line-height: 1;
         display: inline-block;
         min-width: 0;
@@ -72,7 +72,7 @@
     transition:
       max-height 0.3s ease,
       opacity 0.2s ease;
-    max-height: 1000px;
+    max-height: 62.5rem;
     opacity: 1;
 
     &.i-panel-content-wrapper--collapsed {
@@ -83,6 +83,6 @@
   }
 
   .i-panel-content {
-    padding: 16px;
+    padding: 1rem;
   }
 }

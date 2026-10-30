@@ -16,11 +16,20 @@
     <p>Basic tree structure with expand/collapse functionality.</p>
 
     <div class="demo-actions">
-      <i-button severity="secondary" (clicked)="expandAll()"> Expand All </i-button>
-      <i-button severity="secondary" (clicked)="collapseAll()"> Collapse All </i-button>
+      <i-button severity="secondary" (clicked)="expandAll()">
+        Expand All
+      </i-button>
+      <i-button severity="secondary" (clicked)="collapseAll()">
+        Collapse All
+      </i-button>
     </div>
 
-    <i-tree-view [loading]="loading()" [value]="basicTreeData" scrollHeight="300px"> </i-tree-view>
+    <i-tree-view
+      [loading]="loading()"
+      [value]="basicTreeData"
+      scrollHeight="18.75rem"
+    >
+    </i-tree-view>
   </ng-template>
 
   <ng-template
@@ -29,9 +38,10 @@
     sourceCodeEncoded="%3Cp%3E%0A%20%20%20%20%20%20%20%20Select%20nodes%20using%20checkboxes.%20Child%20selections%20propagate%20to%20parents.%0A%20%20%20%20%20%20%20%20Search%20for%20a%20node%2C%20select%20it%2C%20then%20clear%20the%20search%20to%20keep%20working%20with%0A%20%20%20%20%20%20%20%20your%20selection.%20The%20component%20includes%20an%20integrated%20%22Select%20All%22%20checkbox.%0A%20%20%20%20%20%20%3C%2Fp%3E%0A%0A%20%20%20%20%20%20%3Cdiv%20class%3D%22demo-actions%22%3E%0A%20%20%20%20%20%20%20%20%3Ci-button%20severity%3D%22secondary%22%20(clicked)%3D%22clearCheckboxSelection()%22%3E%0A%20%20%20%20%20%20%20%20%20%20Clear%20Selection%0A%20%20%20%20%20%20%20%20%3C%2Fi-button%3E%0A%20%20%20%20%20%20%3C%2Fdiv%3E%0A%0A%20%20%20%20%20%20%3Ci-tree-view%0A%20%20%20%20%20%20%20%20%5Bvalue%5D%3D%22organizationData%22%0A%20%20%20%20%20%20%20%20selectionMode%3D%22checkbox%22%0A%20%20%20%20%20%20%20%20%5BselectAll%5D%3D%22true%22%0A%20%20%20%20%20%20%20%20filterPlaceholder%3D%22Search%20organization...%22%0A%20%20%20%20%20%20%20%20%5B(selection)%5D%3D%22checkboxSelection%22%0A%20%20%20%20%20%20%20%20(onNodeSelect)%3D%22onCheckboxNodeSelect(%24event)%22%0A%20%20%20%20%20%20%20%20(onNodeUnselect)%3D%22onCheckboxNodeUnselect(%24event)%22%0A%20%20%20%20%20%20%20%20scrollHeight%3D%22300px%22%0A%20%20%20%20%20%20%3E%0A%20%20%20%20%20%20%3C%2Fi-tree-view%3E%0A%0A%20%20%20%20%20%20%40if%20(checkboxSelection.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20%3Cdiv%20class%3D%22selection-info%22%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cstrong%3ESelected%20(%7B%7B%20checkboxSelection.length%20%7D%7D%20items)%3A%3C%2Fstrong%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40for%20(node%20of%20checkboxSelection%3B%20track%20node.key)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%7B%20node.label%20%7D%7D%20%3Csmall%3E(%7B%7B%20node.key%20%7D%7D)%3C%2Fsmall%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%20%20%20%20%20%20%3Cdetails%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Csummary%3EView%20Details%3C%2Fsummary%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpre%3E%7B%7B%20getMultipleNodesSummary(checkboxSelection)%20%7C%20json%20%7D%7D%3C%2Fpre%3E%0A%20%20%20%20%20%20%20%20%20%20%3C%2Fdetails%3E%0A%20%20%20%20%20%20%20%20%3C%2Fdiv%3E%0A%20%20%20%20%20%20%7D"
   >
     <p>
-      Select nodes using checkboxes. Child selections propagate to parents. Search for a node,
-      select it, then clear the search to keep working with your selection. The component includes
-      an integrated "Select All" checkbox.
+      Select nodes using checkboxes. Child selections propagate to parents.
+      Search for a node, select it, then clear the search to keep working with
+      your selection. The component includes an integrated "Select All"
+      checkbox.
     </p>
 
     <div class="demo-actions">
@@ -49,7 +59,7 @@
       [(selection)]="checkboxSelection"
       (onNodeSelect)="onCheckboxNodeSelect($event)"
       (onNodeUnselect)="onCheckboxNodeUnselect($event)"
-      scrollHeight="300px"
+      scrollHeight="18.75rem"
     >
     </i-tree-view>
 
@@ -77,10 +87,14 @@
     [sourceCode]="codeExamples.selection"
     [tsCode]="tsExamples.selection"
   >
-    <p>Click on any node to select it. Only one node can be selected at a time.</p>
+    <p>
+      Click on any node to select it. Only one node can be selected at a time.
+    </p>
 
     <div class="demo-actions">
-      <i-button severity="secondary" (clicked)="clearSingleSelection()"> Clear Selection </i-button>
+      <i-button severity="secondary" (clicked)="clearSingleSelection()">
+        Clear Selection
+      </i-button>
     </div>
 
     <i-tree-view
@@ -90,7 +104,7 @@
       [(selection)]="singleSelection"
       (onNodeSelect)="onSingleNodeSelect($event)"
       (onNodeUnselect)="onSingleNodeUnselect($event)"
-      scrollHeight="300px"
+      scrollHeight="18.75rem"
     >
     </i-tree-view>
 
@@ -125,7 +139,7 @@
       [(selection)]="multipleSelection"
       (onNodeSelect)="onMultipleNodeSelect($event)"
       (onNodeUnselect)="onMultipleNodeUnselect($event)"
-      scrollHeight="300px"
+      scrollHeight="18.75rem"
     >
     </i-tree-view>
 
@@ -147,7 +161,11 @@
     }
   </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Filtering" [sourceCode]="codeExamples.filtering">
+  <ng-template
+    appDemoOption="option-5"
+    label="Filtering"
+    [sourceCode]="codeExamples.filtering"
+  >
     <p>Search through tree nodes using the built-in filter.</p>
 
     <i-tree-view
@@ -155,13 +173,20 @@
       [value]="basicTreeData"
       [filter]="true"
       filterPlaceholder="Search files and folders..."
-      scrollHeight="300px"
+      scrollHeight="18.75rem"
     >
     </i-tree-view>
   </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Events" [sourceCode]="codeExamples.events">
-    <p>TreeView emits various events for node interactions. Check the console for event logs.</p>
+  <ng-template
+    appDemoOption="option-6"
+    label="Events"
+    [sourceCode]="codeExamples.events"
+  >
+    <p>
+      TreeView emits various events for node interactions. Check the console for
+      event logs.
+    </p>
 
     <i-tree-view
       [loading]="loading()"
@@ -171,7 +196,7 @@
       (onNodeUnselect)="onSingleNodeUnselect($event)"
       (onNodeExpand)="onNodeExpand($event)"
       (onNodeCollapse)="onNodeCollapse($event)"
-      scrollHeight="250px"
+      scrollHeight="15.625rem"
     >
     </i-tree-view>
   </ng-template>
@@ -183,7 +208,11 @@
   >
     <p>Set a fixed height for the tree to make it scrollable.</p>
 
-    <i-tree-view [loading]="loading()" [value]="organizationData" scrollHeight="200px">
+    <i-tree-view
+      [loading]="loading()"
+      [value]="organizationData"
+      scrollHeight="12.5rem"
+    >
     </i-tree-view>
   </ng-template>
 
@@ -250,7 +279,9 @@
             <td>selectAll</td>
             <td>boolean</td>
             <td>false</td>
-            <td>Show integrated "Select All" checkbox for checkbox selection mode</td>
+            <td>
+              Show integrated "Select All" checkbox for checkbox selection mode
+            </td>
           </tr>
         </tbody>
       </table>
@@ -269,22 +300,22 @@
         <tbody>
           <tr>
             <td>onNodeSelect</td>
-            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
             <td>Fired when a node is selected</td>
           </tr>
           <tr>
             <td>onNodeUnselect</td>
-            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
             <td>Fired when a node is unselected</td>
           </tr>
           <tr>
             <td>onNodeExpand</td>
-            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
             <td>Fired when a node is expanded</td>
           </tr>
           <tr>
             <td>onNodeCollapse</td>
-            <td>{{ '{' }} originalEvent: Event, node: ITreeNode {{ '}' }}</td>
+            <td>{{ "{" }} originalEvent: Event, node: ITreeNode {{ "}" }}</td>
             <td>Fired when a node is collapsed</td>
           </tr>
           <tr>

@@ -1,10 +1,11 @@
-@use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
+@use "../../../../../invensys-ng/src/lib/themes/color-variables.scss" as colors;
 @mixin layouts-theme() {
   .layouts-demo {
     .layout-preview {
       .preview-image {
         border-color: colors.$color-surface-border;
-        box-shadow: 0 2px 8px color-mix(in srgb, colors.$color-contrast 10%, transparent);
+        box-shadow: 0 0.125rem 0.5rem
+          color-mix(in srgb, colors.$color-contrast 10%, transparent);
       }
 
       .preview-placeholder {
@@ -68,7 +69,11 @@
 
     .usage-notes {
       .note-item {
-        background: color-mix(in srgb, colors.$color-primary 10%, colors.$color-surface-ground);
+        background: color-mix(
+          in srgb,
+          colors.$color-primary 10%,
+          colors.$color-surface-ground
+        );
         border-left-color: colors.$color-primary;
 
         i {

@@ -386,7 +386,7 @@ export class TablesComponent {
   [sortable]="true"
   [filterable]="true"
   [globalFilter]="true"
-  [height]="'360px'"
+  [height]="'22.5rem'"
   [striped]="true"
   (onSort)="onSort($event)"
   (onFilter)="onFilter($event)"
@@ -398,7 +398,7 @@ export class TablesComponent {
   dataKey="id"
   [(selection)]="selectedProducts"
   [hoverable]="true"
-  [height]="'360px'"
+  [height]="'22.5rem'"
   (onSelectionChange)="onSelectionChange($event)"
 ></i-table>`,
 
@@ -407,13 +407,13 @@ export class TablesComponent {
   [detailRowBorders]="false"
   [sortable]="true"
   [striped]="true"
-  [height]="'420px'"
+  [height]="'26.25rem'"
 ></i-table>`,
 
     icons: `<i-table [loading]="loading()"
   [grid]="iconGrid"
   [sortable]="true"
-  [height]="'360px'"
+  [height]="'22.5rem'"
   [hoverable]="true"
 ></i-table>`,
 
@@ -424,7 +424,7 @@ export class TablesComponent {
   [downloadable]="true"
   [virtualScroll]="true"
   downloadFormat="csv"
-  [height]="'400px'"
+  [height]="'25rem'"
   (onDownload)="onDownload($event)"
 ></i-table>`,
   };
@@ -601,7 +601,13 @@ largeGrid: GridData<Product> = {
   // ── Helpers ───────────────────────────────────────────────────────────────
 
   private generateLargeDataset(count: number): Product[] {
-    const categories = ['Electronics', 'Accessories', 'Audio', 'Storage', 'Furniture'];
+    const categories = [
+      'Electronics',
+      'Accessories',
+      'Audio',
+      'Storage',
+      'Furniture',
+    ];
     const statuses = ['In Stock', 'Low Stock', 'Out of Stock'];
     return Array.from({ length: count }, (_, i) => {
       const statusLabel = statuses[Math.floor(Math.random() * statuses.length)];
@@ -619,8 +625,16 @@ largeGrid: GridData<Product> = {
               ? 'pi pi-exclamation-circle'
               : 'pi pi-times-circle',
         statusSeverity:
-          statusLabel === 'In Stock' ? 'success' : statusLabel === 'Low Stock' ? 'warn' : 'danger',
-        date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1)
+          statusLabel === 'In Stock'
+            ? 'success'
+            : statusLabel === 'Low Stock'
+              ? 'warn'
+              : 'danger',
+        date: new Date(
+          2024,
+          Math.floor(Math.random() * 12),
+          Math.floor(Math.random() * 28) + 1,
+        )
           .toISOString()
           .split('T')[0],
         tags: [],

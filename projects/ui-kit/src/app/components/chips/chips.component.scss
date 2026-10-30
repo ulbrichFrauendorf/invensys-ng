@@ -1,6 +1,6 @@
-@use './chips.component.theme.scss' as theme;
+@use "./chips.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .chip-examples {
   @extend .demo-examples;
@@ -14,11 +14,11 @@
   }
 
   .reset-button {
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
     border-width: 1px;
     border-style: solid;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 0.375rem;
+    font-size: var(--i-font-body, 0.75rem);
     cursor: pointer;
     transition: background-color 0.2s ease;
   }

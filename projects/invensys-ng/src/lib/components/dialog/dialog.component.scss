@@ -1,6 +1,6 @@
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './dialog.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./dialog.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
 
 @include theme.i-dialog-theme();
 
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 1rem;
   box-sizing: border-box;
   animation: fadeIn 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity;
@@ -26,7 +26,7 @@
     max-width: 100%;
     min-width: 0;
     min-height: 0;
-    max-height: calc(100dvh - 32px);
+    max-height: calc(100dvh - 2rem);
     outline: none;
 
     > i-card {
@@ -38,14 +38,16 @@
     will-change: transform, opacity;
     transform: translateZ(0);
 
-    @media (max-width: 640px) {
-      max-height: calc(100dvh - 12px - max(12px, env(safe-area-inset-bottom)));
+    @media (max-width: 40rem) {
+      max-height: calc(
+        100dvh - 0.75rem - max(0.75rem, env(safe-area-inset-bottom))
+      );
     }
   }
 
-  @media (max-width: 640px) {
-    padding: 12px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  @media (max-width: 40rem) {
+    padding: 0.75rem;
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
 }
 
@@ -61,7 +63,7 @@
 @keyframes slideInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -30px, 0) scale3d(0.95, 0.95, 1);
+    transform: translate3d(0, -1.875rem, 0) scale3d(0.95, 0.95, 1);
   }
   to {
     opacity: 1;
@@ -72,7 +74,7 @@
 .i-dialog-content {
   @include scrollbar.themed-scrollbar();
 
-  @media (max-width: 640px) {
+  @media (max-width: 40rem) {
     overflow-wrap: anywhere;
   }
 }

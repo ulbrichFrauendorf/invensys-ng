@@ -1,14 +1,18 @@
 <i-loading-surface
   [loading]="loading()"
   variant="list"
-  [minimumHeight]="'160px'"
+  [minimumHeight]="'10rem'"
   ariaLabel="Loading rules"
 >
   <div class="i-rule-editor" role="group" [attr.aria-label]="ariaLabel">
     <div class="i-rule-editor__toolbar">
-      <i-button icon="pi pi-plus" size="small" [disabled]="!canAdd" (clicked)="add()">{{
-        addLabel
-      }}</i-button>
+      <i-button
+        icon="pi pi-plus"
+        size="small"
+        [disabled]="!canAdd"
+        (clicked)="add()"
+        >{{ addLabel }}</i-button
+      >
     </div>
     <div
       class="i-rule-editor__rules"
@@ -31,16 +35,24 @@
             class="i-rule-editor__drag-handle"
             cdkDragHandle
             [disabled]="readonly || disabled"
-            [attr.aria-label]="'Reorder rule ' + (index + 1) + '. Use up and down arrow keys.'"
+            [attr.aria-label]="
+              'Reorder rule ' + (index + 1) + '. Use up and down arrow keys.'
+            "
             title="Drag to reorder"
-            (keydown.arrowup)="reorder(index, index - 1); $event.preventDefault()"
-            (keydown.arrowdown)="reorder(index, index + 1); $event.preventDefault()"
+            (keydown.arrowup)="
+              reorder(index, index - 1); $event.preventDefault()
+            "
+            (keydown.arrowdown)="
+              reorder(index, index + 1); $event.preventDefault()
+            "
           >
             <i class="pi pi-bars" aria-hidden="true"></i>
           </button>
           <div
             class="i-rule-editor__fields"
-            [class.i-rule-editor__fields--valueless]="operator(rule)?.requiresValue === false"
+            [class.i-rule-editor__fields--valueless]="
+              operator(rule)?.requiresValue === false
+            "
           >
             <i-select
               label="Field"
@@ -64,7 +76,7 @@
               [ngModelOptions]="{ standalone: true }"
             />
             @if (operator(rule)?.requiresValue !== false) {
-              @if (field(rule)?.type === 'boolean') {
+              @if (field(rule)?.type === "boolean") {
                 <i-select
                   label="Value"
                   [options]="booleanOptions"
@@ -83,7 +95,9 @@
                   [readonly]="readonly || disabled"
                   [fluid]="true"
                   [ngModel]="rule.value"
-                  (ngModelChange)="update(index, { value: $event == null ? '' : '' + $event })"
+                  (ngModelChange)="
+                    update(index, { value: $event == null ? '' : '' + $event })
+                  "
                   [ngModelOptions]="{ standalone: true }"
                 />
               }
@@ -104,8 +118,11 @@
         <i-no-content [message]="emptyMessage" />
       }
     </div>
-    <span class="i-rule-editor__announcement" role="status" aria-live="polite">{{
-      announcement
-    }}</span>
+    <span
+      class="i-rule-editor__announcement"
+      role="status"
+      aria-live="polite"
+      >{{ announcement }}</span
+    >
   </div>
 </i-loading-surface>

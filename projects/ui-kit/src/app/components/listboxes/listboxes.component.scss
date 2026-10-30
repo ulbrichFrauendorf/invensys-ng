@@ -1,10 +1,10 @@
-@use './listboxes.component.theme.scss' as theme;
+@use "./listboxes.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .wrapper {
   display: flex;
-  height: 500px;
+  height: 31.25rem;
 
   i-listbox {
     flex: 1;
@@ -13,10 +13,10 @@
 }
 
 .demo-info {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 4px;
-  font-size: 14.4px;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  font-size: var(--i-font-body, 0.75rem);
 }
 
 @include theme.listboxes-theme();

@@ -30,7 +30,9 @@ import {
       <nav iPageSidebar>
         <h2>Sidebar start</h2>
         @for (item of items; track item) {
-          <button style="display:block;height:44px">Organization {{ item }}</button>
+          <button style="display:block;height:44px">
+            Organization {{ item }}
+          </button>
         }
         <p class="sidebar-end">Sidebar end</p>
       </nav>
@@ -55,7 +57,11 @@ class TestPage {
 }
 
 @Component({
-  imports: [PageLayoutComponent, PageSidebarDirective, PageHeaderContentDirective],
+  imports: [
+    PageLayoutComponent,
+    PageSidebarDirective,
+    PageHeaderContentDirective,
+  ],
   template: `
     <i-page-layout
       headerText="Onboarding"
@@ -72,7 +78,9 @@ class TestPage {
       >
         <nav iPageSidebar>
           @for (item of items; track item) {
-            <button style="display:block;height:44px">Outstanding {{ item }}</button>
+            <button style="display:block;height:44px">
+              Outstanding {{ item }}
+            </button>
           }
         </nav>
         <section>
@@ -116,7 +124,11 @@ class NestedTestPage {
         </nav>
       }
       @if (showRight()) {
-        <section iPageRightSidebar [(visible)]="rightVisible" label="Outstanding fields">
+        <section
+          iPageRightSidebar
+          [(visible)]="rightVisible"
+          label="Outstanding fields"
+        >
           @for (item of items; track item) {
             <button style="display:block;height:44px">Field {{ item }}</button>
           }
@@ -145,14 +157,16 @@ class ComposedTestPage {
   template: '<i-layout [config]="config" />',
 })
 class TestShell {
-  readonly config = { websiteName: 'Layout test', enablePullToRefresh: true };
+  readonly config = { websiteName: 'Layout test' };
 }
 
 describe('PageLayoutComponent', () => {
   async function settleMotion(root: HTMLElement) {
     await new Promise(requestAnimationFrame);
     await Promise.all(
-      root.getAnimations({ subtree: true }).map((animation) => animation.finished),
+      root
+        .getAnimations({ subtree: true })
+        .map((animation) => animation.finished),
     );
     await new Promise(requestAnimationFrame);
   }
@@ -174,27 +188,30 @@ describe('PageLayoutComponent', () => {
       const actions = header.querySelector<HTMLElement>('.header-actions')!;
       const rightRect = right.getBoundingClientRect();
       const headerRect = header.getBoundingClientRect();
-      expect(Math.abs(rightRect.top - heading.getBoundingClientRect().top)).toBeLessThan(
-        1,
-      );
+      expect(
+        Math.abs(rightRect.top - heading.getBoundingClientRect().top),
+      ).toBeLessThan(1);
       expect(
         Math.abs(
           rightRect.right -
-            (headerRect.right - parseFloat(getComputedStyle(header).paddingRight)),
+            (headerRect.right -
+              parseFloat(getComputedStyle(header).paddingRight)),
         ),
       ).toBeLessThan(1);
       if (showLeft) {
         const left = heading.querySelector<HTMLElement>('.sidebar-toggle')!;
-        expect(Math.abs(rightRect.top - left.getBoundingClientRect().top)).toBeLessThan(
-          1,
-        );
+        expect(
+          Math.abs(rightRect.top - left.getBoundingClientRect().top),
+        ).toBeLessThan(1);
       }
       expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(
         rightRect.bottom,
       );
       right.querySelector('button')!.click();
       await fixture.whenStable();
-      expect(Math.abs(right.getBoundingClientRect().top - rightRect.top)).toBeLessThan(1);
+      expect(
+        Math.abs(right.getBoundingClientRect().top - rightRect.top),
+      ).toBeLessThan(1);
       fixture.destroy();
     },
   );
@@ -205,15 +222,25 @@ describe('PageLayoutComponent', () => {
     await fixture.whenStable();
     const root: HTMLElement = fixture.nativeElement;
     const header = root.querySelector<HTMLElement>('header')!;
-    const buttons = header.querySelectorAll<HTMLButtonElement>('.sidebar-toggle button');
+    const buttons = header.querySelectorAll<HTMLButtonElement>(
+      '.sidebar-toggle button',
+    );
     const body = root.querySelector<HTMLElement>('.page-body')!;
     const panels = root.querySelectorAll<HTMLElement>('.sidebar');
     expect(root.querySelectorAll('i-page-layout')).toHaveLength(1);
     expect(root.querySelectorAll('h1')).toHaveLength(1);
-    expect(buttons[0].getAttribute('aria-label')).toBe('Hide Company selection');
-    expect(buttons[1].getAttribute('aria-label')).toBe('Hide Outstanding fields');
-    expect(header.querySelector('.page-heading .sidebar-toggle')).not.toBeNull();
-    expect(header.lastElementChild?.classList.contains('sidebar-toggle-right')).toBe(true);
+    expect(buttons[0].getAttribute('aria-label')).toBe(
+      'Hide Company selection',
+    );
+    expect(buttons[1].getAttribute('aria-label')).toBe(
+      'Hide Outstanding fields',
+    );
+    expect(
+      header.querySelector('.page-heading .sidebar-toggle'),
+    ).not.toBeNull();
+    expect(
+      header.lastElementChild?.classList.contains('sidebar-toggle-right'),
+    ).toBe(true);
     expect(buttons[0].getBoundingClientRect().left).toBeLessThan(
       buttons[1].getBoundingClientRect().left,
     );
@@ -255,7 +282,9 @@ describe('PageLayoutComponent', () => {
     layout.hideSidebar('right');
     await fixture.whenStable();
     await settleMotion(root);
-    expect(document.activeElement).toBe(root.querySelector('.sidebar-toggle-right button'));
+    expect(document.activeElement).toBe(
+      root.querySelector('.sidebar-toggle-right button'),
+    );
     expect(fixture.componentInstance.rightVisible()).toBe(false);
     expect(fixture.componentInstance.leftVisible()).toBe(true);
     expect(slots[0].inert).toBe(false);
@@ -301,7 +330,9 @@ describe('PageLayoutComponent', () => {
     const fixture = TestBed.createComponent(PageLayoutComponent);
     fixture.componentRef.setInput('headerText', 'Reports');
     await fixture.whenStable();
-    expect(fixture.nativeElement.querySelector('h1').textContent).toBe('Reports');
+    expect(fixture.nativeElement.querySelector('h1').textContent).toBe(
+      'Reports',
+    );
     expect(fixture.nativeElement.querySelector('aside')).toBeNull();
     expect(fixture.nativeElement.querySelector('.header-actions')).toBeNull();
   });
@@ -333,7 +364,9 @@ describe('PageLayoutComponent', () => {
       expect(sidebar.getBoundingClientRect().left).toBeGreaterThanOrEqual(
         body.getBoundingClientRect().right,
       );
-    root.querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!.click();
+    root
+      .querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!
+      .click();
     expect(fixture.componentInstance.saved()).toBe(true);
   });
 
@@ -347,7 +380,9 @@ describe('PageLayoutComponent', () => {
     expect(root.querySelector('header [iPageHeaderContent]')?.textContent).toBe(
       'Draft notice',
     );
-    root.querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!.click();
+    root
+      .querySelector<HTMLButtonElement>('header button[iPageHeaderActions]')!
+      .click();
     expect(fixture.componentInstance.saved()).toBe(true);
     fixture.componentInstance.showSidebar.set(false);
     fixture.componentInstance.showHeader.set(false);
@@ -368,17 +403,23 @@ describe('PageLayoutComponent', () => {
       const slot = root.querySelector<HTMLElement>('.sidebar-slot')!;
       const sidebar = root.querySelector<HTMLElement>('aside')!;
       const nav = sidebar.querySelector('nav');
-      const toggle = root.querySelector<HTMLButtonElement>('.sidebar-toggle button')!;
+      const toggle = root.querySelector<HTMLButtonElement>(
+        '.sidebar-toggle button',
+      )!;
       const pageBody = root.querySelector<HTMLElement>('.page-body')!;
       const expandedWidth = pageBody.getBoundingClientRect().width;
       const expandedTop = pageBody.getBoundingClientRect().top;
       sidebar.scrollTop = 88;
       const scrollTop = sidebar.scrollTop;
       expect(toggle.getAttribute('aria-expanded')).toBe('true');
-      expect(toggle.getAttribute('aria-label')).toBe(`Hide ${position} sidebar`);
+      expect(toggle.getAttribute('aria-label')).toBe(
+        `Hide ${position} sidebar`,
+      );
       expect(toggle.classList.contains('i-button--xtra-small')).toBe(true);
       expect(
-        toggle.querySelector('i')?.classList.contains(`pi-angle-double-${position}`),
+        toggle
+          .querySelector('i')
+          ?.classList.contains(`pi-angle-double-${position}`),
       ).toBe(true);
 
       toggle.click();
@@ -388,17 +429,25 @@ describe('PageLayoutComponent', () => {
       expect(slot.inert).toBe(true);
       expect(slot.getAttribute('aria-hidden')).toBe('true');
       expect(getComputedStyle(sidebar).visibility).toBe('hidden');
-      expect(new DOMMatrix(getComputedStyle(sidebar).transform).m42).toBeGreaterThan(0);
-      expect(toggle.getAttribute('aria-label')).toBe(`Show ${position} sidebar`);
+      expect(
+        new DOMMatrix(getComputedStyle(sidebar).transform).m42,
+      ).toBeGreaterThan(0);
+      expect(toggle.getAttribute('aria-label')).toBe(
+        `Show ${position} sidebar`,
+      );
       expect(toggle.getAttribute('aria-expanded')).toBe('false');
       expect(
         toggle
           .querySelector('i')
-          ?.classList.contains(`pi-angle-double-${position === 'left' ? 'right' : 'left'}`),
+          ?.classList.contains(
+            `pi-angle-double-${position === 'left' ? 'right' : 'left'}`,
+          ),
       ).toBe(true);
       expect(slot.getBoundingClientRect().height).toBeLessThan(1);
       if (!matchMedia('(max-width: 991px)').matches) {
-        expect(pageBody.getBoundingClientRect().width).toBeGreaterThan(expandedWidth + 200);
+        expect(pageBody.getBoundingClientRect().width).toBeGreaterThan(
+          expandedWidth + 200,
+        );
       } else if (position === 'left') {
         expect(pageBody.getBoundingClientRect().top).toBeLessThan(expandedTop);
       }
@@ -413,7 +462,9 @@ describe('PageLayoutComponent', () => {
       expect(sidebar.querySelector('nav')).toBe(nav);
       expect(sidebar.scrollTop).toBe(scrollTop);
       expect(root.querySelectorAll('nav')).toHaveLength(1);
-      expect(Math.abs(pageBody.getBoundingClientRect().width - expandedWidth)).toBeLessThan(1);
+      expect(
+        Math.abs(pageBody.getBoundingClientRect().width - expandedWidth),
+      ).toBeLessThan(1);
     },
   );
 
@@ -471,8 +522,12 @@ describe('PageLayoutComponent', () => {
     const root: HTMLElement = fixture.nativeElement;
     const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
       .componentInstance as PageLayoutComponent;
-    const toggle = root.querySelector<HTMLButtonElement>('.sidebar-toolbar button')!;
-    root.querySelector<HTMLButtonElement>('aside button')!.focus({ preventScroll: true });
+    const toggle = root.querySelector<HTMLButtonElement>(
+      '.sidebar-toolbar button',
+    )!;
+    root
+      .querySelector<HTMLButtonElement>('aside button')!
+      .focus({ preventScroll: true });
     layout.hideSidebar();
     await fixture.whenStable();
     expect(document.activeElement).toBe(toggle);
@@ -489,7 +544,9 @@ describe('PageLayoutComponent', () => {
     async (innerHeader) => {
       TestBed.configureTestingModule({
         imports: [TestShell],
-        providers: [provideRouter([{ path: 'nested', component: NestedTestPage }])],
+        providers: [
+          provideRouter([{ path: 'nested', component: NestedTestPage }]),
+        ],
       });
       const fixture = TestBed.createComponent(TestShell);
       await TestBed.inject(Router).navigateByUrl('/nested');
@@ -507,9 +564,9 @@ describe('PageLayoutComponent', () => {
       const slot = inner.querySelector<HTMLElement>('.sidebar-slot')!;
       const sidebar = inner.querySelector<HTMLElement>('.sidebar')!;
       const mobile = matchMedia('(max-width: 991px)').matches;
-      const scrollport = root.querySelector<HTMLElement>(
-        mobile ? '.layout-wrapper' : '.layout-main-container',
-      )!;
+      const scrollport = mobile
+        ? (document.scrollingElement as HTMLElement)
+        : root.querySelector<HTMLElement>('.layout-main-container')!;
       scrollport.style.scrollBehavior = 'auto';
       scrollport.scrollTop = 500;
       const check = async (selector: string) => {
@@ -527,21 +584,26 @@ describe('PageLayoutComponent', () => {
           expect(getComputedStyle(slot).position).toBe('static');
         } else {
           expect(
-            Math.abs(slot.getBoundingClientRect().top - header.getBoundingClientRect().bottom),
+            Math.abs(
+              slot.getBoundingClientRect().top -
+                header.getBoundingClientRect().bottom,
+            ),
           ).toBeLessThan(2);
           expect(sidebar.getBoundingClientRect().bottom).toBeLessThanOrEqual(
             scrollport.getBoundingClientRect().bottom + 1,
           );
           sidebar.scrollTop = sidebar.scrollHeight;
           expect(
-            sidebar.querySelector('button:last-child')!.getBoundingClientRect().bottom,
+            sidebar.querySelector('button:last-child')!.getBoundingClientRect()
+              .bottom,
           ).toBeLessThanOrEqual(sidebar.getBoundingClientRect().bottom);
         }
         if (innerHeader) {
-          const innerHeading = inner.querySelector<HTMLElement>('.page-header')!;
-          expect(innerHeading.getBoundingClientRect().top).toBeGreaterThanOrEqual(
-            header.getBoundingClientRect().bottom - 1,
-          );
+          const innerHeading =
+            inner.querySelector<HTMLElement>('.page-header')!;
+          expect(
+            innerHeading.getBoundingClientRect().top,
+          ).toBeGreaterThanOrEqual(header.getBoundingClientRect().bottom - 1);
         }
         expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
       };
@@ -571,13 +633,18 @@ describe('PageLayoutComponent', () => {
           .componentInstance as TestPage;
         pageComponent.showSidebar.set(showSidebar);
         await fixture.whenStable();
-        const shell = root.querySelector<HTMLElement>('.layout-main-container')!;
-        const wrapper = root.querySelector<HTMLElement>('.layout-wrapper')!;
-        const sidebar = root.querySelector<HTMLElement>('i-page-layout .sidebar');
+        const shell = root.querySelector<HTMLElement>(
+          '.layout-main-container',
+        )!;
+        const sidebar = root.querySelector<HTMLElement>(
+          'i-page-layout .sidebar',
+        );
         const header = root.querySelector<HTMLElement>('.page-header')!;
         const page = root.querySelector<HTMLElement>('i-page-layout')!;
         const mobile = matchMedia('(max-width: 991px)').matches;
-        const scrollOwner = mobile ? wrapper : shell;
+        const scrollOwner = mobile
+          ? (document.scrollingElement as HTMLElement)
+          : shell;
         scrollOwner.style.scrollBehavior = 'auto';
         expect(getComputedStyle(header).boxShadow).toBe('none');
         expect(getComputedStyle(shell).padding).toBe('0px');
@@ -585,33 +652,49 @@ describe('PageLayoutComponent', () => {
         expect(getComputedStyle(header).paddingLeft).toBe('8px');
         expect(getComputedStyle(shell).paddingLeft).toBe('0px');
         const initialSidebarTop = sidebar?.getBoundingClientRect().top;
-        const bodyTop = root.querySelector('.page-body')!.getBoundingClientRect().top;
+        const bodyTop = root
+          .querySelector('.page-body')!
+          .getBoundingClientRect().top;
+        const bodyDocumentTop = bodyTop + window.scrollY;
         if (mobile) {
           const topbar = root.querySelector<HTMLElement>('i-topbar')!;
-          const edge = wrapper.getBoundingClientRect().top;
+          const edge = 0;
           const barBottom = topbar.getBoundingClientRect().bottom;
           const waitForScroll = async () => {
             await new Promise(requestAnimationFrame);
             await new Promise(requestAnimationFrame);
           };
           // Both directions must skip every partially overlapping position.
-          for (const remaining of [barBottom - edge - 1, 1, (barBottom - edge) / 2]) {
-            wrapper.scrollTop = bodyTop - edge - remaining;
+          for (const remaining of [
+            barBottom - edge - 1,
+            1,
+            (barBottom - edge) / 2,
+          ]) {
+            scrollOwner.scrollTop = bodyDocumentTop - edge - remaining;
             await waitForScroll();
-            expect(Math.abs(header.getBoundingClientRect().top - edge)).toBeLessThan(2);
-            expect(header.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(barBottom);
+            expect(
+              Math.abs(header.getBoundingClientRect().top - edge),
+            ).toBeLessThan(2);
+            expect(
+              header.getBoundingClientRect().bottom,
+            ).toBeGreaterThanOrEqual(barBottom);
             expect(getComputedStyle(header).boxShadow).not.toBe('none');
           }
-          wrapper.scrollTop = 0;
+          scrollOwner.scrollTop = 0;
           await waitForScroll();
-          expect(Math.abs(header.getBoundingClientRect().top - bodyTop)).toBeLessThan(2);
+          expect(
+            Math.abs(header.getBoundingClientRect().top - bodyTop),
+          ).toBeLessThan(2);
           expect(getComputedStyle(header).boxShadow).toBe('none');
         }
-        scrollOwner.scrollTop = bodyTop - scrollOwner.getBoundingClientRect().top + 100;
+        scrollOwner.scrollTop = mobile
+          ? bodyDocumentTop + 100
+          : bodyTop - scrollOwner.getBoundingClientRect().top + 100;
         await new Promise(requestAnimationFrame);
         expect(
           Math.abs(
-            header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top,
+            header.getBoundingClientRect().top -
+              (mobile ? 0 : scrollOwner.getBoundingClientRect().top),
           ),
         ).toBeLessThan(2);
         expect(getComputedStyle(header).boxShadow).not.toBe('none');
@@ -622,57 +705,29 @@ describe('PageLayoutComponent', () => {
         } else if (sidebar) {
           expect(sidebar.scrollHeight).toBeGreaterThan(sidebar.clientHeight);
           expect(
-            Math.abs(sidebar.getBoundingClientRect().top - shell.getBoundingClientRect().top),
+            Math.abs(
+              sidebar.getBoundingClientRect().top -
+                shell.getBoundingClientRect().top,
+            ),
           ).toBeLessThan(2);
         }
         if (sidebar) {
-          const layout = fixture.debugElement.query(By.directive(PageLayoutComponent))
-            .componentInstance as PageLayoutComponent;
+          const layout = fixture.debugElement.query(
+            By.directive(PageLayoutComponent),
+          ).componentInstance as PageLayoutComponent;
           layout.hideSidebar();
           await fixture.whenStable();
           await settleMotion(root);
           expect(
             Math.abs(
-              header.getBoundingClientRect().top - scrollOwner.getBoundingClientRect().top,
+              header.getBoundingClientRect().top -
+                (mobile ? 0 : scrollOwner.getBoundingClientRect().top),
             ),
           ).toBeLessThan(2);
           expect(root.scrollWidth).toBeLessThanOrEqual(root.clientWidth);
           layout.showSidebar();
           await fixture.whenStable();
           await settleMotion(root);
-        }
-        if (mobile) {
-          const shellComponent = fixture.debugElement.query(By.directive(LayoutComponent))
-            .componentInstance as LayoutComponent;
-          header.dispatchEvent(
-            new TouchEvent('touchstart', {
-              touches: [
-                new Touch({
-                  identifier: 1,
-                  target: header,
-                  clientX: 50,
-                  clientY: 100,
-                }),
-              ],
-              bubbles: true,
-            }),
-          );
-          header.dispatchEvent(
-            new TouchEvent('touchmove', {
-              touches: [
-                new Touch({
-                  identifier: 1,
-                  target: header,
-                  clientX: 50,
-                  clientY: 200,
-                }),
-              ],
-              bubbles: true,
-              cancelable: true,
-            }),
-          );
-          expect(shellComponent.pullDistance()).toBe(0);
-          header.dispatchEvent(new TouchEvent('touchend', { touches: [], bubbles: true }));
         }
         scrollOwner.scrollTop = 0;
         await new Promise(requestAnimationFrame);

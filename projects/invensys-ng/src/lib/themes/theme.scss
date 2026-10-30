@@ -1,9 +1,11 @@
-@use './colors.theme.scss' as colors-theme;
-@use './body.theme.scss' as body-theme;
-@use './scrollbar.theme.scss' as scrollbar-theme;
-@use './typography.theme.scss' as typography-theme;
+@use "./sizing.theme.scss" as sizing-theme;
+@use "./colors.theme.scss" as colors-theme;
+@use "./body.theme.scss" as body-theme;
+@use "./scrollbar.theme.scss" as scrollbar-theme;
+@use "./typography.theme.scss" as typography-theme;
 
 @mixin define-theme($body: true, $typography: true, $scrollbar: true) {
+  @include sizing-theme.define-sizing();
   @include colors-theme.define-color-palette(light);
   @include colors-theme.define-color-palette(dark);
 

@@ -11,8 +11,10 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class LoadingSurfaceComponent {
   readonly loading = input(false);
-  readonly variant = input<'field' | 'list' | 'table' | 'chart' | 'inline'>('list');
-  readonly minimumHeight = input('160px');
+  readonly variant = input<'field' | 'list' | 'table' | 'chart' | 'inline'>(
+    'list',
+  );
+  readonly minimumHeight = input('10rem');
   /** Keeps projected content within a height supplied by its parent. */
   readonly fillContainer = input(false);
   readonly ariaLabel = input('Loading data');

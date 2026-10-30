@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-overlay-panel-theme() {
   .overlay-panel {
@@ -6,47 +6,6 @@
     border: 1px solid colors.$color-surface-border;
     color: colors.$color-text-primary;
     box-shadow: colors.$color-box-shadow;
-  }
-
-  /* Arrow colors for top position (arrow points down) */
-  .overlay-panel-top {
-    .overlay-panel-arrow {
-      border-top-color: colors.$color-component-background-secondary;
-    }
-  }
-
-  /* Arrow colors for bottom position (arrow points up) */
-  .overlay-panel-bottom {
-    .overlay-panel-arrow {
-      border-bottom-color: colors.$color-component-background-secondary;
-    }
-  }
-
-  /* Arrow colors for left position (arrow points right) */
-  .overlay-panel-left {
-    .overlay-panel-arrow {
-      border-left-color: colors.$color-component-background-secondary;
-    }
-  }
-
-  /* Arrow colors for right position (arrow points left) */
-  .overlay-panel-right {
-    .overlay-panel-arrow {
-      border-right-color: colors.$color-component-background-secondary;
-    }
-  }
-
-  /* Arrow colors for left arrow (panel right of target) */
-  .overlay-panel-left {
-    .overlay-panel-arrow {
-      &::before {
-        border-right-color: colors.$color-surface-border;
-      }
-
-      &::after {
-        border-right-color: colors.$color-component-background-secondary;
-      }
-    }
   }
 
   .overlay-panel-close {
@@ -58,6 +17,7 @@
   }
 
   .overlay-panel {
-    box-shadow: 0 2px 12px 0 color-mix(in srgb, colors.$color-shadow 10%, transparent);
+    box-shadow: 0 0.125rem 0.75rem 0
+      color-mix(in srgb, colors.$color-shadow 10%, transparent);
   }
 }

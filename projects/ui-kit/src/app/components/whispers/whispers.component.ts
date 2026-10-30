@@ -17,6 +17,15 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 export class WhispersComponent {
   constructor(private whisperService: WhisperService) {}
 
+  showPosition(key: string): void {
+    this.whisperService.add({
+      key,
+      severity: 'info',
+      summary: key,
+      detail: 'Position preview',
+    });
+  }
+
   // Example messages for different severities
   messageExamples = {
     success: {
@@ -231,6 +240,10 @@ import { IWhisper } from 'invensys-ng';
 })
 export class ExampleComponent {
   constructor(private whisperService: WhisperService) {}
+
+  showPosition(key: string): void {
+    this.whisperService.add({ key, severity: 'info', summary: key, detail: 'Position preview' });
+  }
 }`,
 
     usage: `// Show success message
@@ -291,6 +304,10 @@ import { IWhisper } from 'invensys-ng';
 })
 export class ExampleComponent {
   constructor(private whisperService: WhisperService) {}
+
+  showPosition(key: string): void {
+    this.whisperService.add({ key, severity: 'info', summary: key, detail: 'Position preview' });
+  }
 
   showMessage() {
     this.whisperService.add({

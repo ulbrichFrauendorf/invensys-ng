@@ -13,29 +13,7 @@
       >
         <i-sidebar [menuModel]="menuModel" />
       </div>
-      <div class="layout-main-container" #mainContainer>
-        @if (config.enablePullToRefresh && layoutService.state().isMobileViewport) {
-          <div
-            class="pull-to-refresh-indicator"
-            [style.transform]="
-              'translateY(' + Math.max(-INDICATOR_OFFSET, pullDistance() - INDICATOR_OFFSET) + 'px)'
-            "
-            [style.opacity]="Math.min(1, pullDistance() / PULL_THRESHOLD)"
-          >
-            <div class="refresh-icon" [class.refreshing]="isRefreshing()">
-              <i class="pi pi-refresh"></i>
-            </div>
-            <div class="refresh-text">
-              {{
-                isRefreshing()
-                  ? 'Refreshing...'
-                  : pullDistance() >= PULL_THRESHOLD
-                    ? 'Release to refresh'
-                    : 'Pull to refresh'
-              }}
-            </div>
-          </div>
-        }
+      <div class="layout-main-container">
         <div class="layout-main">
           <router-outlet />
         </div>

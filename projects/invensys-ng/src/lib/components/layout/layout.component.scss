@@ -1,9 +1,9 @@
-@use './layout.component.theme.scss' as theme;
+@use "./layout.component.theme.scss" as theme;
 
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
 
 .layout {
-  --layout-topbar-height: 60px;
+  --layout-topbar-height: 3.75rem;
   .layout-wrapper {
     display: flex;
     flex-direction: column;
@@ -11,17 +11,16 @@
     height: 100dvh;
     overflow: hidden;
 
-    /* Page layouts share the shell scrollport; other routed pages retain normal shell scrolling. */
-    &:has(i-page-layout) {
-      @media (max-width: 991px) {
-        overflow-y: auto;
-        @include scrollbar.themed-scrollbar();
-        scrollbar-gutter: stable;
-        overscroll-behavior-y: contain;
-      }
+    @media (max-width: 61.9375rem) {
+      height: auto;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: visible;
+    }
 
+    &:has(i-page-layout) {
       > i-topbar {
-        @media (max-width: 991px) {
+        @media (max-width: 61.9375rem) {
           position: sticky;
           top: 0;
           z-index: 1;
@@ -29,14 +28,14 @@
         }
 
         &:has(.layout-topbar-menu-mobile-active) {
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             z-index: 11;
           }
         }
       }
 
       .layout-body {
-        @media (max-width: 991px) {
+        @media (max-width: 61.9375rem) {
           flex: 1 0 auto;
         }
 
@@ -44,7 +43,7 @@
           container-type: size;
           --layout-content-height: 100cqh;
 
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             container-type: normal;
             overflow: visible;
           }
@@ -59,7 +58,7 @@
 
       .layout-sidebar-container {
         flex-shrink: 0;
-        width: min(300px, calc(100vw - 44px));
+        width: min(18.75rem, calc(100vw - 2.75rem));
         height: 100%;
         overflow-y: auto;
         @include scrollbar.themed-scrollbar();
@@ -68,7 +67,7 @@
           opacity 0.3s ease;
         opacity: 1;
 
-        @media (max-width: 991px) {
+        @media (max-width: 61.9375rem) {
           position: fixed;
           left: 0;
           top: 0;
@@ -101,39 +100,10 @@
         transition: margin-left 0.3s ease;
         position: relative;
 
-        @media (max-width: 991px) {
+        @media (max-width: 61.9375rem) {
           margin-left: 0;
           width: 100%;
-        }
-
-        .pull-to-refresh-indicator {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 60px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 6px;
-          pointer-events: none;
-          z-index: 10;
-          transition: opacity 0.2s ease;
-
-          .refresh-icon {
-            font-size: 18px;
-            transition: transform 0.3s ease;
-
-            &.refreshing {
-              animation: spin 1s linear infinite;
-            }
-          }
-
-          .refresh-text {
-            font-size: 10.5px;
-            font-weight: 500;
-          }
+          overflow: visible;
         }
 
         .layout-main {
@@ -145,18 +115,7 @@
 
     &.layout-static-inactive {
       .layout-main-container {
-        margin-left: -300px;
-      }
-    }
-
-    &.layout-overlay-active {
-      .layout-sidebar-container {
-        position: fixed;
-        left: 0;
-        top: 60px;
-        height: calc(100vh - 60px);
-        height: calc(100dvh - 60px);
-        z-index: 999;
+        margin-left: -18.75rem;
       }
     }
 
@@ -175,15 +134,6 @@
         display: block;
       }
     }
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 

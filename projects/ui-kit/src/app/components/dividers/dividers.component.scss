@@ -1,13 +1,13 @@
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .vertical-example {
   display: flex;
   align-items: center;
-  min-height: 64px;
+  min-height: 4rem;
 }
 
 .usage-example {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }

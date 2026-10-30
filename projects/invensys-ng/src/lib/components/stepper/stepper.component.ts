@@ -1,3 +1,4 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentInit,
@@ -8,6 +9,8 @@ import {
   Output,
   QueryList,
   ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
 import { ICarousel } from '../carousel/carousel.component';
@@ -49,6 +52,8 @@ export interface StepperChangeEvent {
   styleUrl: './stepper.component.scss',
 })
 export class IStepper implements AfterContentInit {
+  private readonly destroyRef = inject(DestroyRef);
+
   /** Zero-based index of the active step. */
   @Input() activeIndex = 0;
 
@@ -74,7 +79,9 @@ export class IStepper implements AfterContentInit {
 
   ngAfterContentInit(): void {
     this.syncSteps();
-    this.stepComponents.changes.subscribe(() => this.syncSteps());
+    this.stepComponents.changes
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.syncSteps());
   }
 
   selectStep(event: Event, index: number): void {

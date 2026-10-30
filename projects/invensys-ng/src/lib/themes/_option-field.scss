@@ -1,7 +1,7 @@
-@use './scrollbar-mixins.scss' as scrollbar;
-@use './color-variables.scss' as colors;
-@use './variables' as vars;
-@use './floating-label' as floating;
+@use "./scrollbar-mixins.scss" as scrollbar;
+@use "./color-variables.scss" as colors;
+@use "./variables" as vars;
+@use "./floating-label" as floating;
 
 @mixin option-field() {
   :host {
@@ -35,7 +35,7 @@
   .i-option-value {
     flex: 1;
     min-width: 0;
-    padding: 4px 0 4px 12px;
+    padding: 0.625rem 0 0.625rem var(--i-field-padding-inline, 0.875rem);
     pointer-events: none;
   }
   .i-option-text {
@@ -68,7 +68,7 @@
   .i-native-select {
     display: none;
     opacity: 0;
-    font-size: 16px;
+    font-size: var(--i-font-large, 1rem);
   }
   .i-option-actions {
     display: flex;
@@ -83,8 +83,8 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     flex-shrink: 0;
     padding: 0;
     border: 0;
@@ -98,11 +98,11 @@
     }
   }
   .i-option-arrow {
-    width: 32px;
+    width: 2rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: var(--i-font-small, 0.75rem);
   }
   .i-option-arrow i {
     transition: transform 0.15s ease;
@@ -113,8 +113,8 @@
   .i-option-label {
     @include floating.base;
     position: absolute;
-    top: 21px;
-    left: 12px;
+    top: calc(var(--i-field-height, 2.75rem) / 2);
+    left: var(--i-field-padding-inline, 0.875rem);
     transform: translateY(-50%);
     pointer-events: none;
     color: colors.$color-text-secondary;
@@ -143,15 +143,15 @@
     }
   }
   .i-option-error {
-    margin-top: 4px;
-    font-size: 12px;
+    margin-top: 0.25rem;
+    font-size: var(--i-font-small, 0.75rem);
     color: colors.$color-danger;
   }
   .i-option-panel {
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    max-height: min(360px, calc(100dvh - 24px));
+    max-height: min(22.5rem, calc(100dvh - 1.5rem));
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -159,18 +159,18 @@
     border-radius: vars.$componentBorderRadius;
     background: colors.$color-component-background;
     color: colors.$color-text-primary;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
   }
   .i-option-filter {
-    padding: 8px;
+    padding: 0.5rem;
     flex-shrink: 0;
   }
   .i-option-search {
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    min-height: 40px;
-    padding: 8px;
+    min-height: 2.5rem;
+    padding: 0.5rem;
     font: inherit;
     border: 1px solid colors.$color-surface-border;
     border-radius: vars.$componentBorderRadius;
@@ -190,11 +190,11 @@
   .i-option {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--i-space-medium, 0.5rem);
     width: 100%;
     box-sizing: border-box;
-    min-height: 40px;
-    padding: 8px 12px;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
     border: 0;
     font: inherit;
     text-align: left;
@@ -216,7 +216,7 @@
     color: colors.$color-primary;
   }
   .i-option-empty {
-    padding: 12px;
+    padding: 0.75rem;
     color: colors.$color-text-secondary;
   }
   @media (pointer: coarse) {
@@ -225,15 +225,15 @@
       min-height: 44px;
     }
     .i-option-clear {
-      width: 44px;
-      height: 44px;
+      width: 2.75rem;
+      height: 2.75rem;
     }
     .i-option-search {
       min-height: 44px;
-      font-size: 16px;
+      font-size: var(--i-font-large, 1rem);
     }
   }
-  @media (max-width: 991px) and (pointer: coarse) {
+  @media (max-width: 61.9375rem) and (pointer: coarse) {
     .native-on-mobile .i-option-trigger {
       display: none;
     }

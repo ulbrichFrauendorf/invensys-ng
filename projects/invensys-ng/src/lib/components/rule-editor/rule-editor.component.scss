@@ -1,4 +1,4 @@
-@use './rule-editor.component.theme.scss' as theme;
+@use "./rule-editor.component.theme.scss" as theme;
 @include theme.i-rule-editor-theme();
 :host {
   display: block;
@@ -8,12 +8,12 @@
   &__toolbar {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 9px;
+    margin-bottom: 0.5625rem;
   }
   &__rules {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 0.5625rem;
   }
   &__row {
     display: flex;
@@ -22,23 +22,23 @@
       flex: 0 0 auto;
     }
     align-items: center;
-    gap: 9px;
-    padding: 12px;
+    gap: 0.5625rem;
+    padding: 0.75rem;
     border-width: 1px;
     border-style: solid;
-    border-radius: 6px;
+    border-radius: 0.375rem;
   }
   &__drag-handle {
-    flex: 0 0 24px;
+    flex: 0 0 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     padding: 0;
     border: 0;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     cursor: grab;
     touch-action: none;
 
@@ -61,19 +61,19 @@
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 0 0 calc((100% - 18px) / 3);
+      flex: 0 0 calc((100% - 1.125rem) / 3);
       min-width: 0;
       box-sizing: border-box;
     }
     align-items: end;
-    gap: 9px;
+    gap: 0.5625rem;
     min-width: 0;
   }
   &__fields--valueless {
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 0 0 calc((100% - 9px) / 2);
+      flex: 0 0 calc((100% - 0.5625rem) / 2);
       min-width: 0;
       box-sizing: border-box;
     }
@@ -99,16 +99,16 @@
 }
 
 .i-rule-editor__fields {
-  @container (max-width: 576px) {
+  @container (max-width: 36rem) {
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 0 0 calc((100% - 9px) / 2);
+      flex: 0 0 calc((100% - 0.5625rem) / 2);
       min-width: 0;
       box-sizing: border-box;
     }
   }
-  @container (max-width: 408px) {
+  @container (max-width: 25.5rem) {
     flex-direction: column;
     align-items: stretch;
     > * {
@@ -120,7 +120,7 @@
 
 .i-rule-editor__fields {
   > :nth-child(3) {
-    @container (max-width: 576px) {
+    @container (max-width: 36rem) {
       flex-basis: 100%;
     }
   }

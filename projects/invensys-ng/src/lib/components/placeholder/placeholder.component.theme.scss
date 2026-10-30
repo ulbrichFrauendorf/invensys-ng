@@ -1,5 +1,5 @@
-@use '../../themes/color-variables.scss' as colors;
-@use '../../themes/_variables.scss' as vars;
+@use "../../themes/color-variables.scss" as colors;
+@use "../../themes/_variables.scss" as vars;
 
 @mixin i-placeholder-theme() {
   .i-placeholder {
@@ -7,11 +7,15 @@
     border-radius: vars.$borderRadius;
     border: 2px dashed colors.$color-surface-border;
     animation: placeholderFadeIn 0.3s ease;
-    min-height: 200px;
+    min-height: 12.5rem;
 
     &.has-pattern {
-      background-image: radial-gradient(circle, colors.$color-surface-border 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(
+        circle,
+        colors.$color-surface-border 1px,
+        transparent 1px
+      );
+      background-size: 1.25rem 1.25rem;
     }
   }
 

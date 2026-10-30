@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { ISeverity } from '@shared/enums/IButtonSeverity';
 
@@ -8,7 +14,7 @@ export type MessageSize = 'small' | 'medium' | 'large';
   selector: 'i-message',
   imports: [],
   templateUrl: './message.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './message.component.scss',
 })
 export class IMessage {

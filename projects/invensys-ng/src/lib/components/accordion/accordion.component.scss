@@ -1,5 +1,5 @@
-@use './accordion.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
+@use "./accordion.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
 
 @include theme.i-accordion-theme();
 
@@ -30,7 +30,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 16px;
+    padding: 1rem;
     cursor: pointer;
     user-select: none;
     transition: background-color vars.$transitionDuration ease;
@@ -38,20 +38,20 @@
     .i-accordion-header-content {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
 
       .i-accordion-icon {
-        font-size: 12px;
+        font-size: var(--i-font-small, 0.75rem);
       }
 
       .i-accordion-title {
         font-weight: 600;
-        font-size: 12px;
+        font-size: var(--i-font-body, 0.75rem);
       }
     }
 
     .i-accordion-toggle-icon {
-      font-size: 12px;
+      font-size: var(--i-font-small, 0.75rem);
       transition: transform vars.$transitionDuration ease;
     }
   }
@@ -60,7 +60,7 @@
     transition:
       max-height 0.3s ease,
       opacity 0.2s ease;
-    max-height: 1000px;
+    max-height: 62.5rem;
     opacity: 1;
     border-radius: 0 0 vars.$borderRadius vars.$borderRadius;
 
@@ -71,7 +71,7 @@
     }
 
     .i-accordion-content {
-      padding: 0 16px 16px 16px;
+      padding: 0 1rem 1rem 1rem;
     }
   }
 }

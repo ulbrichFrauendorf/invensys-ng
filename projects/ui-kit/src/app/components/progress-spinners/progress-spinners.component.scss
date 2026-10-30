@@ -1,27 +1,27 @@
-@use './progress-spinners.component.theme.scss' as theme;
+@use "./progress-spinners.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .size-grid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   > * {
-    flex: 1 1 150px;
+    flex: 1 1 9.375rem;
     min-width: 0;
     box-sizing: border-box;
   }
-  gap: 32px;
-  padding: 32px;
+  gap: 2rem;
+  padding: 2rem;
 
   .size-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 1rem;
 
     span {
-      font-size: 14px;
+      font-size: var(--i-font-body, 0.75rem);
     }
   }
 }
@@ -29,12 +29,12 @@
 .button-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 1rem;
+  padding: 1rem 0;
 
   i-button {
     flex: 1 1 auto;
-    min-width: 120px;
+    min-width: 7.5rem;
   }
 }
 
@@ -42,15 +42,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 150px;
+  min-height: 9.375rem;
 }
 
 .loading-card-demo {
   position: relative;
-  min-height: 200px;
+  min-height: 12.5rem;
   border-width: 1px;
   border-style: solid;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
   .loading-overlay-demo {
     position: absolute;
@@ -59,7 +59,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 1rem;
     backdrop-filter: blur(2px);
   }
 }

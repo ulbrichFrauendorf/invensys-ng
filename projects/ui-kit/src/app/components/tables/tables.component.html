@@ -28,7 +28,7 @@
       [sortable]="true"
       [filterable]="true"
       [globalFilter]="true"
-      [height]="'360px'"
+      [height]="'22.5rem'"
       [striped]="true"
       (onSort)="onSort($event)"
       (onFilter)="onFilter($event)"
@@ -48,7 +48,7 @@
       dataKey="id"
       [(selection)]="selectedProducts"
       [hoverable]="true"
-      [height]="'360px'"
+      [height]="'22.5rem'"
       (onSelectionChange)="onSelectionChange($event)"
     ></i-table>
   </ng-template>
@@ -60,8 +60,9 @@
     [tsCode]="tsCodeExamples.detail"
   >
     <p>
-      Expand a category to view its detail rows. Use <code>[detailRowBorders]="false"</code> to hide
-      their bottom borders and condense their height for easier viewing on mobile.
+      Expand a category to view its detail rows. Use
+      <code>[detailRowBorders]="false"</code> to hide their bottom borders and
+      condense their height for easier viewing on mobile.
     </p>
     <label>
       <input
@@ -90,7 +91,7 @@
       [loading]="loading()"
       [grid]="iconGrid"
       [sortable]="true"
-      [height]="'360px'"
+      [height]="'22.5rem'"
       [hoverable]="true"
     ></i-table>
   </ng-template>
@@ -109,8 +110,47 @@
       [downloadable]="true"
       [virtualScroll]="true"
       downloadFormat="csv"
-      [height]="'400px'"
+      [height]="'25rem'"
       (onDownload)="onDownload($event)"
     ></i-table>
+  </ng-template>
+  <ng-template appDemoOption="sizes" label="Sizes">
+    <i-table [grid]="flatGrid" size="small" />
+    <i-table [grid]="flatGrid" size="medium" />
+    <i-table [grid]="flatGrid" size="large" />
+  </ng-template>
+  <ng-template appDemoOption="single-selection" label="Single selection">
+    <i-table
+      [grid]="flatGrid"
+      selectionMode="single"
+      dataKey="id"
+      [(selection)]="selectedProducts"
+    />
+  </ng-template>
+  <ng-template appDemoOption="export-formats" label="Export formats">
+    <i-table
+      [grid]="flatGrid"
+      [downloadable]="true"
+      downloadMode="direct"
+      downloadFormat="csv"
+    />
+    <i-table
+      [grid]="flatGrid"
+      [downloadable]="true"
+      downloadMode="direct"
+      downloadFormat="excel"
+    />
+    <i-table
+      [grid]="flatGrid"
+      [downloadable]="true"
+      downloadMode="direct"
+      downloadFormat="json"
+    />
+    <i-table
+      [grid]="flatGrid"
+      [downloadable]="true"
+      downloadMode="api"
+      (onDownload)="onDownload($event)"
+    />
   </ng-template>
 </app-demo-playground>

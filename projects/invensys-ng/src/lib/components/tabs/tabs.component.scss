@@ -1,6 +1,6 @@
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './tabs.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./tabs.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
 
 @include theme.i-tabs-theme();
 
@@ -29,17 +29,17 @@
   .i-tabs__tab {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
+    gap: var(--i-space-medium, 0.5rem);
+    padding: 0.75rem 1.25rem;
     border: none;
-    font-size: 12px;
+    font-size: var(--i-font-body, 0.75rem);
     font-weight: 500;
     cursor: pointer;
     position: relative;
     white-space: nowrap;
 
     &--active::after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: 0;
       left: 0;
@@ -52,7 +52,7 @@
     }
 
     &--icon-only {
-      padding: 12px 16px;
+      padding: 0.75rem 1rem;
 
       .i-tabs__tab-icon {
         margin: 0;
@@ -60,7 +60,7 @@
     }
 
     .i-tabs__tab-icon {
-      font-size: 16px;
+      font-size: var(--i-font-large, 1rem);
       display: inline-flex;
       align-items: center;
     }
@@ -74,16 +74,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
-    margin-left: 4px;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-left: 0.25rem;
     padding: 0;
     border: none;
     border-radius: 50%;
     cursor: pointer;
 
     i {
-      font-size: 12px;
+      font-size: var(--i-font-small, 0.75rem);
     }
   }
 
@@ -95,7 +95,7 @@
 
     .i-tabs__panel {
       display: none;
-      padding: 16px;
+      padding: 1rem;
 
       &--active {
         display: block;
@@ -103,7 +103,7 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     .i-tabs__panels {
       .i-tabs__panel {
         padding-left: 0;
@@ -130,9 +130,9 @@
 .i-tabs {
   .i-tabs__tab-close {
     @media (pointer: coarse) {
-      width: 32px;
-      height: 32px;
-      margin-left: 4px;
+      width: 2rem;
+      height: 2rem;
+      margin-left: 0.25rem;
       flex-shrink: 0;
     }
   }

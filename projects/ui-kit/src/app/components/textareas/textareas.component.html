@@ -15,14 +15,18 @@
       <div class="textarea-stack">
         <i-textarea label="Description" [(ngModel)]="basicValue" />
         <i-textarea label="Notes" [(ngModel)]="notesValue" [rows]="6" />
-        <i-textarea label="Comment (200 chars)" [(ngModel)]="commentValue" [maxLength]="200" />
+        <i-textarea
+          label="Comment (200 chars)"
+          [(ngModel)]="commentValue"
+          [maxLength]="200"
+        />
       </div>
 
       <div class="values-display">
         <h4>Current Values:</h4>
-        <p><strong>Description:</strong> {{ basicValue || '(empty)' }}</p>
-        <p><strong>Notes:</strong> {{ notesValue || '(empty)' }}</p>
-        <p><strong>Comment:</strong> {{ commentValue || '(empty)' }}</p>
+        <p><strong>Description:</strong> {{ basicValue || "(empty)" }}</p>
+        <p><strong>Notes:</strong> {{ notesValue || "(empty)" }}</p>
+        <p><strong>Comment:</strong> {{ commentValue || "(empty)" }}</p>
       </div>
     </div>
   </ng-template>
@@ -36,11 +40,18 @@
     <form [formGroup]="basicForm" class="demo-form">
       <div class="textarea-stack">
         <i-textarea label="Bio" formControlName="bio" [fluid]="true" />
-        <i-textarea label="Address" formControlName="address" [rows]="3" [fluid]="true" />
+        <i-textarea
+          label="Address"
+          formControlName="address"
+          [rows]="3"
+          [fluid]="true"
+        />
         <i-textarea label="Notes" formControlName="notes" [fluid]="true" />
       </div>
 
-      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')"> Submit Form </i-button>
+      <i-button severity="primary" (click)="onSubmit(basicForm, 'basic')">
+        Submit Form
+      </i-button>
     </form>
   </ng-template>
 
@@ -52,8 +63,16 @@
   >
     <form [formGroup]="validationForm" class="demo-form">
       <div class="textarea-stack">
-        <i-textarea label="Required Field" formControlName="requiredField" [fluid]="true" />
-        <i-textarea label="Min Length (20 chars)" formControlName="minLengthField" [fluid]="true" />
+        <i-textarea
+          label="Required Field"
+          formControlName="requiredField"
+          [fluid]="true"
+        />
+        <i-textarea
+          label="Min Length (20 chars)"
+          formControlName="minLengthField"
+          [fluid]="true"
+        />
         <i-textarea
           label="Max 100 chars"
           formControlName="maxLengthField"
@@ -62,7 +81,10 @@
         />
       </div>
 
-      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+      <i-button
+        severity="primary"
+        (click)="onSubmit(validationForm, 'validation')"
+      >
         Validate Form
       </i-button>
     </form>
@@ -99,7 +121,11 @@
   >
     <div class="demo-form">
       <div class="textarea-stack">
-        <i-textarea label="Disabled Textarea" [disabled]="true" [fluid]="true" />
+        <i-textarea
+          label="Disabled Textarea"
+          [disabled]="true"
+          [fluid]="true"
+        />
         <i-textarea
           label="Disabled With Value"
           [disabled]="true"
@@ -117,12 +143,32 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
+  <ng-template
+    appDemoOption="option-6"
+    label="Fluid Layout"
+    [sourceCode]="codeExamples.fluid"
+  >
     <form [formGroup]="basicForm" class="demo-form">
-      <i-textarea label="Full Width Notes" formControlName="notes" [fluid]="true" [rows]="5" />
-      <i-button severity="primary" [fluid]="true" (click)="onSubmit(basicForm, 'fluid')">
+      <i-textarea
+        label="Full Width Notes"
+        formControlName="notes"
+        [fluid]="true"
+        [rows]="5"
+      />
+      <i-button
+        severity="primary"
+        [fluid]="true"
+        (click)="onSubmit(basicForm, 'fluid')"
+      >
         Submit
       </i-button>
     </form>
   </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-textarea label="Surface notes" backgroundStyle="surface" /><i-textarea
+      label="Component notes"
+      backgroundStyle="component"
+  /></ng-template>
 </app-demo-playground>

@@ -1,8 +1,17 @@
 /* General */
-$scale: 14px; /* main font size */
-$borderRadius: 8px; /* border radius of layout element e.g. card, sidebar */
-$componentBorderRadius: 4px; /* border radius of components e.g. buttons, inputs */
+$scale: var(--i-font-body, 0.75rem); /* main font size */
+$borderRadius: var(
+  --i-radius-surface,
+  0.5rem
+); /* border radius of layout element e.g. card, sidebar */
+$componentBorderRadius: var(
+  --i-radius-control,
+  0.25rem
+); /* border radius of components e.g. buttons, inputs */
 $transitionDuration: 0.2s; /* transition duration of layout elements e.g. sidebar, overlay menus */
 /* Standardized component input height (useful for input-text, chips, select triggers)
 	Set this to match the visual height of inputs across the library. */
-$component-input-height: 42px; /* default: matches float-label input (14px font + 14px padding top+bottom) */
+$component-input-height: var(
+  --i-field-height,
+  2.75rem
+); /* Shared padded field height; buttons retain their own control size tokens. */

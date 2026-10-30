@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-button-theme() {
   /* Primary */
@@ -11,7 +11,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-primary;
-      border-color: color-mix(in srgb, colors.$color-primary 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-primary 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-primary 7%, transparent);
       }
@@ -36,7 +40,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-secondary;
-      border-color: color-mix(in srgb, colors.$color-secondary 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-secondary 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-secondary 7%, transparent);
       }
@@ -61,7 +69,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-success;
-      border-color: color-mix(in srgb, colors.$color-success 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-success 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-success 7%, transparent);
       }
@@ -86,7 +98,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-info;
-      border-color: color-mix(in srgb, colors.$color-info 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-info 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-info 7%, transparent);
       }
@@ -111,7 +127,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-warning;
-      border-color: color-mix(in srgb, colors.$color-warning 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-warning 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-warning 7%, transparent);
       }
@@ -136,7 +156,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-danger;
-      border-color: color-mix(in srgb, colors.$color-danger 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-danger 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         background: color-mix(in srgb, colors.$color-danger 7%, transparent);
       }
@@ -161,7 +185,11 @@
     &.i-button--outlined {
       background: transparent;
       color: colors.$color-text-secondary;
-      border-color: color-mix(in srgb, colors.$color-contrast 40%, transparent) !important;
+      border-color: color-mix(
+        in srgb,
+        colors.$color-contrast 40%,
+        transparent
+      ) !important;
       &:hover:not(:disabled) {
         color: colors.$color-text-primary;
         background: colors.$color-surface-hover;
@@ -209,9 +237,11 @@
 
       &--raised {
         box-shadow:
-          0 3px 1px -2px color-mix(in srgb, colors.$color-shadow 20%, transparent),
+          0 0.1875rem 1px -2px
+            color-mix(in srgb, colors.$color-shadow 20%, transparent),
           0 2px 2px 0 color-mix(in srgb, colors.$color-shadow 14%, transparent),
-          0 1px 5px 0 color-mix(in srgb, colors.$color-shadow 12%, transparent);
+          0 1px 0.3125rem 0
+            color-mix(in srgb, colors.$color-shadow 12%, transparent);
       }
 
       &--outlined {

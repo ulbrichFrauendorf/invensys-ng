@@ -1,65 +1,66 @@
-@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
-@use './radio-buttons.component.theme.scss' as theme;
+@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
+  scrollbar;
+@use "./radio-buttons.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .radio-buttons-demo {
   .radio-examples {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
 
     .example-row {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 4px 0;
+      gap: 1rem;
+      padding: 0.25rem 0;
     }
 
     .status {
-      font-size: 14px;
+      font-size: var(--i-font-body, 0.75rem);
       font-weight: 500;
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 4px;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
     }
   }
 
   .form-section {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
   }
 
   .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 
     .group-label {
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 0.75rem;
       font-weight: 500;
     }
   }
 
   .form-actions {
     display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
   }
 
   .form-output {
     border-width: 1px;
     border-style: solid;
-    border-radius: 4px;
-    padding: 16px;
-    margin-top: 16px;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-top: 1rem;
 
     pre {
-      margin: 0 0 16px 0;
+      margin: 0 0 1rem 0;
       border-width: 1px;
       border-style: solid;
-      border-radius: 4px;
-      padding: 12px;
-      font-size: 13px;
+      border-radius: 0.25rem;
+      padding: 0.75rem;
+      font-size: var(--i-font-body, 0.75rem);
       line-height: 1.4;
       overflow-x: auto;
       @include scrollbar.themed-scrollbar();

@@ -1,6 +1,9 @@
+import { RootSizeService } from '../../themes/root-size.service';
 import { LoadingSurfaceComponent } from '../loading-surface/loading-surface.component';
 import {
   ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
   Component,
   Input,
   Output,
@@ -43,7 +46,7 @@ export interface TableColumn {
   sortable?: boolean;
   /** Whether this column is filterable */
   filterable?: boolean;
-  /** Column width (e.g., '100px', '20%') */
+  /** Column width (e.g., '6.25rem', '20%') */
   width?: string;
   /** Text alignment within the column */
   align?: 'left' | 'center' | 'right';
@@ -412,7 +415,7 @@ export class ITable {
 
   /**
    * Container height (also controls virtual scroll viewport height).
-   * @example '400px'
+   * @example '25rem'
    */
   @Input() height?: string;
 
@@ -427,10 +430,14 @@ export class ITable {
   @Input() virtualScroll = false;
 
   /**
-   * Item size for virtual scroll (height of each row in pixels)
+   * Item size for virtual scroll (height of each row in design pixels at a 16px root; follows UI scale)
    * @default 48
    */
-  @Input() virtualScrollItemSize = 48;
+  readonly virtualScrollItemSize = input(48);
+  private readonly rootSize = inject(RootSizeService);
+  readonly scaledRowSize = computed(
+    () => (this.virtualScrollItemSize() * this.rootSize.pixels()) / 16,
+  );
 
   /**
    * Minimum buffer size in pixels for virtual scroll
@@ -529,6 +536,12 @@ export class ITable {
    * Filter debounce timer
    * @internal
    */
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly cleanupFilterTimer = this.destroyRef.onDestroy(() => {
+    if (this.filterTimer) clearTimeout(this.filterTimer);
+  });
+
   private filterTimer: ReturnType<typeof setTimeout> | null = null;
 
   /**
@@ -581,11 +594,12 @@ export class ITable {
     // Apply global filter
     const globalFilter = this.globalFilterValue();
     if (globalFilter) {
+      const normalizedFilter = globalFilter.toLowerCase();
       const cols = this.gridColumns();
       result = result.filter((row) =>
         cols.some((col) => {
           const value = this.getCellValue(row, col.field);
-          return String(value).toLowerCase().includes(globalFilter.toLowerCase());
+          return String(value).toLowerCase().includes(normalizedFilter);
         }),
       );
     }
@@ -595,9 +609,10 @@ export class ITable {
     Object.keys(filters).forEach((field) => {
       const filterValue = filters[field];
       if (filterValue) {
+        const normalizedFilter = filterValue.toLowerCase();
         result = result.filter((row) => {
           const value = this.getCellValue(row, field);
-          return String(value).toLowerCase().includes(filterValue.toLowerCase());
+          return String(value).toLowerCase().includes(normalizedFilter);
         });
       }
     });
@@ -644,7 +659,9 @@ export class ITable {
       case 'date':
         try {
           const date = new Date(value);
-          return column.format ? this.formatDate(date, column.format) : date.toLocaleDateString();
+          return column.format
+            ? this.formatDate(date, column.format)
+            : date.toLocaleDateString();
         } catch {
           return String(value);
         }
@@ -797,7 +814,9 @@ export class ITable {
     if (this.sortField !== column.field) {
       return 'pi pi-sort-alt';
     }
-    return this.sortOrder === 'asc' ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down';
+    return this.sortOrder === 'asc'
+      ? 'pi pi-sort-amount-up'
+      : 'pi pi-sort-amount-down';
   }
 
   // ===== FILTERING METHODS =====
@@ -884,7 +903,9 @@ export class ITable {
       }
     } else if (this.selectionMode === 'multiple') {
       if (isSelected) {
-        this.selection = this.selection.filter((s) => !this.compareObjects(s, row));
+        this.selection = this.selection.filter(
+          (s) => !this.compareObjects(s, row),
+        );
         this.onRowUnselect.emit(row);
       } else {
         this.selection = [...this.selection, row];
@@ -931,7 +952,9 @@ export class ITable {
   areAllRowsSelected(): boolean {
     const data = this.processedData();
     if (data.length === 0) return false;
-    return data.every((d: any) => this.selection?.some((s: any) => this.compareObjects(s, d)));
+    return data.every((d: any) =>
+      this.selection?.some((s: any) => this.compareObjects(s, d)),
+    );
   }
 
   /**
@@ -974,7 +997,9 @@ export class ITable {
    * @internal
    */
   isActionLoading(action: GridAction, row: any): boolean {
-    return typeof action.loading === 'function' ? action.loading(row) : !!action.loading;
+    return typeof action.loading === 'function'
+      ? action.loading(row)
+      : !!action.loading;
   }
 
   isActionDisabled(action: GridAction, row: any): boolean {
@@ -1099,7 +1124,9 @@ export class ITable {
     const headers = columns
       .map((col) => {
         const escaped = String(col.header).replace(/"/g, '""');
-        return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n')
+        return escaped.includes(',') ||
+          escaped.includes('"') ||
+          escaped.includes('\n')
           ? `"${escaped}"`
           : escaped;
       })
@@ -1113,7 +1140,9 @@ export class ITable {
           const formatted = this.formatCellValue(value, col);
           // Escape quotes and wrap in quotes if contains comma or quote
           const escaped = String(formatted).replace(/"/g, '""');
-          return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n')
+          return escaped.includes(',') ||
+            escaped.includes('"') ||
+            escaped.includes('\n')
             ? `"${escaped}"`
             : escaped;
         })
@@ -1140,7 +1169,11 @@ export class ITable {
    * Creates and triggers file download
    * @internal
    */
-  private downloadFile(content: string, filename: string, mimeType: string): void {
+  private downloadFile(
+    content: string,
+    filename: string,
+    mimeType: string,
+  ): void {
     const blob = new Blob([content], { type: mimeType });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -1165,7 +1198,8 @@ export class ITable {
     this.resizeStartX = event.pageX;
 
     const widths = this.columnWidths();
-    this.resizeStartWidth = widths[column.field] || this.getColumnDefaultWidth(column);
+    this.resizeStartWidth =
+      widths[column.field] || this.getColumnDefaultWidth(column);
   }
 
   /**

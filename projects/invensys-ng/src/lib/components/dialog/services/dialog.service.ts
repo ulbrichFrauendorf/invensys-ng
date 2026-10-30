@@ -31,7 +31,7 @@ import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
  * openDialog() {
  *   const ref = this.dialogService.open(MyCustomComponent, {
  *     header: 'Edit User',
- *     width: '500px',
+ *     width: '31.25rem',
  *     data: { userId: 123 }
  *   });
  *
@@ -49,8 +49,8 @@ import { IDynamicDialogConfig, IDynamicDialogRef } from './dialog.interfaces';
  * openFormDialog() {
  *   this.dialogService.open(FormComponent, {
  *     header: 'Create New Item',
- *     width: '600px',
- *     contentStyle: { overflow: 'auto', padding: '20px' },
+ *     width: '37.5rem',
+ *     contentStyle: { overflow: 'auto', padding: '1.25rem' },
  *     data: { mode: 'create' }
  *   });
  * }
@@ -89,8 +89,8 @@ export class DialogService {
    * ```typescript
    * const ref = this.dialogService.open(UserFormComponent, {
    *   header: 'Edit User',
-   *   width: '500px',
-   *   height: '600px',
+   *   width: '31.25rem',
+   *   height: '37.5rem',
    *   closable: true,
    *   modal: true,
    *   data: {
@@ -128,7 +128,7 @@ export class DialogService {
 
     // Set dialog properties
     dialogRef.instance.header = config.header;
-    dialogRef.instance.width = config.width || '300px';
+    dialogRef.instance.width = config.width || '18.75rem';
     dialogRef.instance.height = config.height;
     dialogRef.instance.contentStyle = config.contentStyle;
     dialogRef.instance.closable = config.closable !== false;

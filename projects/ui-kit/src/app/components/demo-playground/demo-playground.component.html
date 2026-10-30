@@ -1,5 +1,30 @@
-<i-page-layout [headerText]="title" [eyebrowText]="eyebrow" sidebarPosition="right">
+<i-page-layout
+  [headerText]="title"
+  [eyebrowText]="eyebrow"
+  sidebarPosition="right"
+>
   <div iPageHeaderActions class="demo-header-actions">
+    <label>
+      UI scale
+      <input
+        type="number"
+        min="0.5"
+        max="2"
+        step="0.05"
+        [ngModel]="scale"
+        (ngModelChange)="setScale($event)"
+      />
+    </label>
+    @for (value of scaleOptions; track value) {
+      <i-button
+        size="small"
+        [text]="scale !== value"
+        [ariaLabel]="'UI scale ' + value * 100 + '%'"
+        (clicked)="setScale(value)"
+      >
+        {{ value * 100 }}%
+      </i-button>
+    }
     @if (showLoadingControl) {
       <i-toggle
         label="Loading preview"
@@ -15,10 +40,14 @@
       [ariaLabel]="showCode() ? 'View preview' : 'View code'"
       (clicked)="showCode.set(!showCode())"
     >
-      {{ showCode() ? 'Preview' : 'Code' }}
+      {{ showCode() ? "Preview" : "Code" }}
     </i-button>
   </div>
-  <section iPageSidebar class="options-panel" aria-labelledby="demo-options-heading">
+  <section
+    iPageSidebar
+    class="options-panel"
+    aria-labelledby="demo-options-heading"
+  >
     <div class="panel-heading">
       <h2 id="demo-options-heading">Options</h2>
       @if (description) {
@@ -64,8 +93,8 @@
           <p>
             {{
               selectedOption()
-                ? 'No code is available for this example.'
-                : 'Select an option to view its code.'
+                ? "No code is available for this example."
+                : "Select an option to view its code."
             }}
           </p>
         </div>

@@ -43,30 +43,12 @@ describe('EmptyStateComponent', () => {
     });
   });
 
-  describe('Image loading', () => {
-    it('should set imageLoaded to true after delay', async () => {
-      vi.useFakeTimers();
-      expect(component.imageLoaded).toBe(false);
-      component.onImageLoad();
-
-      await vi.advanceTimersByTimeAsync(250);
-
-      expect(component.imageLoaded).toBe(true);
-    });
-
-    it('should have a 200ms delay before marking image as loaded', async () => {
-      vi.useFakeTimers();
-      component.onImageLoad();
-
-      await vi.advanceTimersByTimeAsync(100);
-
-      expect(component.imageLoaded).toBe(false);
-
-      await vi.advanceTimersByTimeAsync(150);
-
-      expect(component.imageLoaded).toBe(true);
-    });
+  it('reveals the image immediately after load without a timer', () => {
+    fixture.nativeElement.querySelector('img').dispatchEvent(new Event('load'));
+    expect(component.imageLoaded).toBe(true);
+    fixture.detectChanges();
+    expect(
+      fixture.nativeElement.querySelector('img').classList.contains('loaded'),
+    ).toBe(true);
   });
 });
-
-afterEach(() => vi.useRealTimers());

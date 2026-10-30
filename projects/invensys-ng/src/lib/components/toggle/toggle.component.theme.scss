@@ -1,4 +1,4 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-toggle-theme() {
   .i-toggle-wrapper {
@@ -23,8 +23,16 @@
         border-color: colors.$color-primary;
 
         &:hover {
-          background-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
-          border-color: color-mix(in srgb, colors.$color-primary 80%, transparent);
+          background-color: color-mix(
+            in srgb,
+            colors.$color-primary 80%,
+            transparent
+          );
+          border-color: color-mix(
+            in srgb,
+            colors.$color-primary 80%,
+            transparent
+          );
         }
 
         .i-toggle-thumb {
@@ -69,7 +77,8 @@
   .i-toggle-wrapper {
     .i-toggle {
       &:focus {
-        box-shadow: 0 0 0 2px color-mix(in srgb, colors.$color-primary 30%, transparent);
+        box-shadow: 0 0 0 0.125rem
+          color-mix(in srgb, colors.$color-primary 30%, transparent);
       }
     }
   }

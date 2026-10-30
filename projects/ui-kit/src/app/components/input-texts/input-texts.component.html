@@ -14,17 +14,33 @@
     <div class="demo-form">
       <div class="input-grid">
         <i-input-text label="Text Input" type="text" [(ngModel)]="textValue" />
-        <i-input-text label="Email Input" type="email" [(ngModel)]="emailValue" />
-        <i-input-text label="Password Input" type="password" [(ngModel)]="passwordValue" />
-        <i-input-text label="Number Input" type="number" [(ngModel)]="numberValue" />
-        <i-input-text label="Pre-filled Number" type="number" [(ngModel)]="prefilledNumberValue" />
+        <i-input-text
+          label="Email Input"
+          type="email"
+          [(ngModel)]="emailValue"
+        />
+        <i-input-text
+          label="Password Input"
+          type="password"
+          [(ngModel)]="passwordValue"
+        />
+        <i-input-text
+          label="Number Input"
+          type="number"
+          [(ngModel)]="numberValue"
+        />
+        <i-input-text
+          label="Pre-filled Number"
+          type="number"
+          [(ngModel)]="prefilledNumberValue"
+        />
       </div>
 
       <div class="values-display">
         <h4>Current Values:</h4>
-        <p><strong>Text:</strong> {{ textValue || '(empty)' }}</p>
-        <p><strong>Email:</strong> {{ emailValue || '(empty)' }}</p>
-        <p><strong>Password:</strong> {{ passwordValue || '(empty)' }}</p>
+        <p><strong>Text:</strong> {{ textValue || "(empty)" }}</p>
+        <p><strong>Email:</strong> {{ emailValue || "(empty)" }}</p>
+        <p><strong>Password:</strong> {{ passwordValue || "(empty)" }}</p>
         <p><strong>Number:</strong> {{ numberValue }}</p>
         <p><strong>Pre-filled Number:</strong> {{ prefilledNumberValue }}</p>
       </div>
@@ -72,13 +88,20 @@
         }
       </div>
 
-      <i-button severity="primary" (click)="onSubmit(validationForm, 'validation')">
+      <i-button
+        severity="primary"
+        (click)="onSubmit(validationForm, 'validation')"
+      >
         Submit Validation Form
       </i-button>
     </form>
   </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
+  <ng-template
+    appDemoOption="option-4"
+    label="Fluid Layout"
+    [sourceCode]="codeExamples.fluid"
+  >
     <form [formGroup]="fluidForm" class="demo-form">
       <div class="input-stack">
         @for (input of inputExamples.fluid; track input.formControlName) {
@@ -91,7 +114,11 @@
         }
       </div>
 
-      <i-button severity="primary" [fluid]="true" (click)="onSubmit(fluidForm, 'fluid')">
+      <i-button
+        severity="primary"
+        [fluid]="true"
+        (click)="onSubmit(fluidForm, 'fluid')"
+      >
         Submit Fluid Form
       </i-button>
     </form>
@@ -105,38 +132,53 @@
   >
     <form [formGroup]="prefilledForm" class="demo-form">
       <div class="input-grid">
-        <i-input-text label="Full Name" type="text" formControlName="prefilledText" />
-        <i-input-text label="Email Address" type="email" formControlName="prefilledEmail" />
+        <i-input-text
+          label="Full Name"
+          type="text"
+          formControlName="prefilledText"
+        />
+        <i-input-text
+          label="Email Address"
+          type="email"
+          formControlName="prefilledEmail"
+        />
         <i-input-text
           label="Price"
           type="number"
           formControlName="prefilledNumber"
           [attr.step]="0.01"
         />
-        <i-input-text label="Quantity" type="number" formControlName="prefilledQuantity" />
+        <i-input-text
+          label="Quantity"
+          type="number"
+          formControlName="prefilledQuantity"
+        />
       </div>
 
       <div class="values-display">
         <h4>Pre-filled Values:</h4>
         <p>
           <strong>Name:</strong>
-          {{ prefilledForm.get('prefilledText')?.value }}
+          {{ prefilledForm.get("prefilledText")?.value }}
         </p>
         <p>
           <strong>Email:</strong>
-          {{ prefilledForm.get('prefilledEmail')?.value }}
+          {{ prefilledForm.get("prefilledEmail")?.value }}
         </p>
         <p>
           <strong>Price:</strong>
-          {{ prefilledForm.get('prefilledNumber')?.value }}
+          {{ prefilledForm.get("prefilledNumber")?.value }}
         </p>
         <p>
           <strong>Quantity:</strong>
-          {{ prefilledForm.get('prefilledQuantity')?.value }}
+          {{ prefilledForm.get("prefilledQuantity")?.value }}
         </p>
       </div>
 
-      <i-button severity="primary" (click)="onSubmit(prefilledForm, 'prefilled')">
+      <i-button
+        severity="primary"
+        (click)="onSubmit(prefilledForm, 'prefilled')"
+      >
         Submit Pre-filled Form
       </i-button>
     </form>
@@ -149,7 +191,11 @@
   >
     <form class="demo-form disabled-examples">
       <div class="input-grid">
-        <i-input-text label="Disabled Text" placeholder="Cannot edit" [disabled]="true" />
+        <i-input-text
+          label="Disabled Text"
+          placeholder="Cannot edit"
+          [disabled]="true"
+        />
         <i-input-text
           label="Disabled With Icon"
           [icon]="'pi pi-search'"
@@ -165,13 +211,19 @@
       </div>
     </form>
   </ng-template>
-  <ng-template appDemoOption="option-7" label="Floating Labels on Different Backgrounds">
+  <ng-template
+    appDemoOption="option-7"
+    label="Floating Labels on Different Backgrounds"
+  >
     <p>
-      Focus and clear the fields to check floating labels. Use the theme toggle to compare light and
-      dark surfaces.
+      Focus and clear the fields to check floating labels. Use the theme toggle
+      to compare light and dark surfaces.
     </p>
     @for (surface of labelSurfaces; track surface) {
-      <div class="label-surface" [class]="'label-surface label-surface--' + surface">
+      <div
+        class="label-surface"
+        [class]="'label-surface label-surface--' + surface"
+      >
         <h4>{{ surface }} background</h4>
         <div class="input-grid">
           <i-input-text label="Empty field" icon="pi pi-search" />
@@ -181,7 +233,11 @@
             backgroundStyle="component"
             [ngModel]="'Example value'"
           />
-          <i-input-text label="Disabled field" [disabled]="true" [ngModel]="'Disabled value'" />
+          <i-input-text
+            label="Disabled field"
+            [disabled]="true"
+            [ngModel]="'Disabled value'"
+          />
           <i-input-text
             label="Invalid field"
             [externalInvalid]="true"
@@ -202,9 +258,17 @@
           />
           <i-calendar label="Calendar" [ngModel]="labelDate" />
           <i-textarea label="Textarea" [ngModel]="'Example text'" [rows]="2" />
-          <i-input-text label="Without floating label" [useFloatLabel]="false" />
+          <i-input-text
+            label="Without floating label"
+            [useFloatLabel]="false"
+          />
         </div>
       </div>
     }
   </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-input-text label="Surface input" backgroundStyle="surface"
+  /></ng-template>
 </app-demo-playground>

@@ -1,21 +1,21 @@
-@use './data-editors.component.theme.scss' as theme;
+@use "./data-editors.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .data-editors-demo {
   .editor-intro {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       align-items: flex-start;
       flex-direction: column;
-      gap: 12px;
+      gap: 0.75rem;
     }
   }
 

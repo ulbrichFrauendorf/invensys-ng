@@ -11,10 +11,10 @@ export interface IDynamicDialogConfig {
   /** The message content to display (if applicable) */
   message?: string;
 
-  /** The preferred width, automatically constrained to the viewport. Can be any valid CSS width value (e.g., '500px', '50vw'). Defaults to '300px' */
+  /** The preferred width, automatically constrained to the viewport. Can be any valid CSS width value (e.g., '31.25rem', '50vw'). Defaults to '18.75rem' */
   width?: string;
 
-  /** The preferred height, automatically constrained to the viewport. Can be any valid CSS height value (e.g., '400px', '50vh') */
+  /** The preferred height, automatically constrained to the viewport. Can be any valid CSS height value (e.g., '25rem', '50vh') */
   height?: string;
 
   /** Custom CSS styles to apply to the dialog content container */

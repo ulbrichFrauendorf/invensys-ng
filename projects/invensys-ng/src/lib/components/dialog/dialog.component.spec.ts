@@ -147,7 +147,7 @@ describe('IDialog', () => {
       expect(component.closable).toBe(true);
       expect(component.modal).toBe(true);
       expect(component.visible).toBe(false);
-      expect(component.width).toBe('800px');
+      expect(component.width).toBe('50rem');
     });
 
     it('should accept header input', () => {

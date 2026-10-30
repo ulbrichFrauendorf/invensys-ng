@@ -1,15 +1,15 @@
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .input-grid {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 0 0 calc((100% - 16px) / 2);
+      flex: 0 0 calc((100% - 1rem) / 2);
       min-width: 0;
       box-sizing: border-box;
     }

@@ -36,33 +36,38 @@
         tooltipPosition="below"
         [tooltipDelay]="100"
       />
-      @if (type === 'number' && !disabled && !readonly) {
+      @if (type === "number" && !disabled && !readonly) {
         <div class="i-input-spinners">
           <button
             type="button"
-            class="i-input-spinner-button i-input-spinner-up"
+            class="i-input-spinner-button"
+            (mousedown)="$event.preventDefault()"
             (click)="incrementNumber(inputElement)"
             [attr.aria-label]="'Increment ' + label"
             tabindex="-1"
           >
-            <i class="pi pi-chevron-up"></i>
+            <i class="pi pi-chevron-up" aria-hidden="true"></i>
           </button>
           <button
             type="button"
-            class="i-input-spinner-button i-input-spinner-down"
+            class="i-input-spinner-button"
+            (mousedown)="$event.preventDefault()"
             (click)="decrementNumber(inputElement)"
             [attr.aria-label]="'Decrement ' + label"
             tabindex="-1"
           >
-            <i class="pi pi-chevron-down"></i>
+            <i class="pi pi-chevron-down" aria-hidden="true"></i>
           </button>
         </div>
       }
     </div>
     @if (useFloatLabel) {
-      <label [for]="id || componentId" class="i-label" [class.floated]="forceFloated || hasValue">{{
-        label
-      }}</label>
+      <label
+        [for]="id || componentId"
+        class="i-label"
+        [class.floated]="forceFloated || hasValue"
+        >{{ label }}</label
+      >
     }
     <ng-content></ng-content>
   </div>

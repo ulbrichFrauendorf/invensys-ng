@@ -26,7 +26,7 @@ describe('ICheckbox', () => {
     it('should have default values', () => {
       expect(component.disabled).toBe(false);
       expect(component.readonly).toBe(false);
-      expect(component.size).toBe('medium');
+      expect(component.size).toBe('small');
       expect(component.indeterminate).toBe(false);
       expect(component.checked).toBe(false);
     });

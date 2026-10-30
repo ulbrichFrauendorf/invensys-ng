@@ -1,0 +1,30 @@
+/** Include once globally; root placement also sizes body-mounted overlays. */
+@mixin define-sizing() {
+  html {
+    font-size: calc(100% * var(--i-ui-scale, 1));
+  }
+
+  :root {
+    --i-choice-small: 0.75rem;
+    --i-choice-medium: 0.875rem;
+    --i-choice-large: 1rem;
+    --i-control-small: 1.75rem;
+    --i-control-medium: 2rem;
+    --i-control-large: 2.25rem;
+    --i-field-height: 2.75rem;
+    --i-field-padding-inline: 0.875rem;
+    --i-space-small: 0.25rem;
+    --i-space-medium: 0.5rem;
+    --i-space-large: 1rem;
+    --i-font-caption: 0.6875rem;
+    --i-font-small: 0.75rem;
+    --i-font-body: 0.75rem;
+    --i-font-large: 1rem;
+    --i-font-emphasis: 0.875rem;
+    --i-heading-small: 1rem;
+    --i-heading-medium: 1.125rem;
+    --i-heading-large: 1.25rem;
+    --i-radius-control: 0.25rem;
+    --i-radius-surface: 0.5rem;
+  }
+}

@@ -1,13 +1,14 @@
-@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
-@use '../../../../../invensys-ng/src/lib/themes/variables' as vars;
-@use './demo-playground.component.theme.scss' as theme;
+@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
+  scrollbar;
+@use "../../../../../invensys-ng/src/lib/themes/variables" as vars;
+@use "./demo-playground.component.theme.scss" as theme;
 
 @include theme.demo-playground-theme();
 
 :host {
   display: block;
   min-width: 0;
-  --page-layout-sidebar-width: 320px;
+  --page-layout-sidebar-width: 20rem;
 }
 
 .demo-content {
@@ -25,13 +26,13 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 24px;
+    gap: 1.5rem;
     min-width: 0;
 
     &.empty-preview {
       align-items: center;
       justify-content: center;
-      min-height: 240px;
+      min-height: 15rem;
       text-align: center;
     }
   }
@@ -40,9 +41,9 @@
 .options-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
   min-width: 0;
-  padding: 20px;
+  padding: 1.25rem;
   border-width: 1px;
   border-style: solid;
   border-radius: vars.$borderRadius;
@@ -51,11 +52,11 @@
   .panel-heading {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
   }
 
   .option-row {
-    padding: 12px 0;
+    padding: 0.75rem 0;
 
     &:first-child {
       padding-top: 0;
@@ -70,18 +71,18 @@
     }
   }
 
-  @media (max-width: 991px) {
-    padding: 16px;
+  @media (max-width: 61.9375rem) {
+    padding: 1rem;
   }
 }
 
 .usage-notes {
-  margin-top: 28px;
+  margin-top: 1.75rem;
 }
 
 .demo-header-actions {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 0.75rem;
 }

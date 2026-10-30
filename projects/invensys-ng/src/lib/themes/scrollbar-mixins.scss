@@ -1,21 +1,21 @@
-@use './color-variables.scss' as colors;
+@use "./color-variables.scss" as colors;
 
 // Shared appearance for every visible scrollbar.
 @mixin themed-scrollbar() {
   &::-webkit-scrollbar {
-    width: var(--scrollbar-size, 6px);
-    height: var(--scrollbar-size, 6px);
+    width: var(--scrollbar-size, 0.375rem);
+    height: var(--scrollbar-size, 0.375rem);
   }
 
   &::-webkit-scrollbar-track {
     background: var(--scrollbar-track, transparent);
-    border-radius: var(--scrollbar-radius, 3px);
+    border-radius: var(--scrollbar-radius, 0.1875rem);
   }
 
   &::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb, #{colors.$color-text-secondary});
-    border-radius: var(--scrollbar-radius, 3px);
-    min-height: 20px;
+    border-radius: var(--scrollbar-radius, 0.1875rem);
+    min-height: 1.25rem;
     transition: background 0.2s ease;
 
     &:hover {

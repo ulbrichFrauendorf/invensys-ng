@@ -1,7 +1,7 @@
 <i-loading-surface
   [loading]="loading()"
   variant="list"
-  [minimumHeight]="'160px'"
+  [minimumHeight]="'10rem'"
   ariaLabel="Loading items"
 >
   <ol
@@ -24,7 +24,9 @@
           class="i-ordered-list__drag-handle"
           cdkDragHandle
           [disabled]="readonly || disabled"
-          [attr.aria-label]="'Reorder ' + itemLabel(item) + '. Use up and down arrow keys.'"
+          [attr.aria-label]="
+            'Reorder ' + itemLabel(item) + '. Use up and down arrow keys.'
+          "
           title="Drag to reorder"
           (keydown.arrowup)="move(index, -1); $event.preventDefault()"
           (keydown.arrowdown)="move(index, 1); $event.preventDefault()"

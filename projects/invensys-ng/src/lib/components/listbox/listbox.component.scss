@@ -1,7 +1,7 @@
-@use './listbox.component.theme.scss' as theme;
-@use '../../themes/scrollbar-mixins.scss' as scrollbar;
-@use '../../themes/variables' as vars;
-@use '../../themes/color-variables.scss' as colors;
+@use "./listbox.component.theme.scss" as theme;
+@use "../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "../../themes/variables" as vars;
+@use "../../themes/color-variables.scss" as colors;
 
 @include theme.i-listbox-theme();
 
@@ -43,21 +43,21 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    gap: 8px;
-    padding: 12px 14px;
+    gap: var(--i-space-medium, 0.5rem);
+    padding: 0.75rem 0.875rem;
     border-bottom: 1px solid colors.$color-surface-border;
 
     .i-listbox-header-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: var(--i-space-medium, 0.5rem);
       min-width: 0;
-      min-height: 28px;
+      min-height: 1.75rem;
 
       .i-listbox-title {
         min-width: 0;
-        font-size: 13px;
+        font-size: var(--i-font-body, 0.75rem);
         font-weight: 600;
         overflow-wrap: anywhere;
       }
@@ -81,16 +81,16 @@
 
     .i-listbox-filter {
       flex-shrink: 0;
-      padding: 10px;
+      padding: 0.625rem;
     }
 
     .i-listbox-options {
       display: flex;
       flex-direction: column;
       flex: 1;
-      gap: 2px;
+      gap: 0.125rem;
       min-height: 0;
-      padding: 6px;
+      padding: 0.375rem;
       overflow-x: hidden;
       overflow-y: auto;
       overscroll-behavior: contain;
@@ -100,15 +100,15 @@
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        gap: 8px;
+        gap: var(--i-space-medium, 0.5rem);
         width: 100%;
-        min-height: 40px;
+        min-height: 2.5rem;
         box-sizing: border-box;
-        padding: 8px 12px;
+        padding: 0.5rem 0.75rem;
         border: 0;
         border-radius: vars.$componentBorderRadius;
         font: inherit;
-        font-size: 12px;
+        font-size: var(--i-font-body, 0.75rem);
         line-height: 1.4;
         text-align: left;
         cursor: pointer;
@@ -124,16 +124,16 @@
 
         .i-listbox-checkbox {
           flex-shrink: 0;
-          font-size: 16px;
+          font-size: var(--i-font-large, 1rem);
           pointer-events: none;
         }
 
         .i-listbox-option-icon {
           flex-shrink: 0;
-          font-size: 16px;
+          font-size: var(--i-font-large, 1rem);
 
           &--chevron {
-            font-size: 12px;
+            font-size: var(--i-font-body, 0.75rem);
           }
         }
 
@@ -155,21 +155,21 @@
       }
 
       .i-listbox-no-options {
-        padding: 20px 12px;
-        font-size: 12px;
+        padding: 1.25rem 0.75rem;
+        font-size: var(--i-font-body, 0.75rem);
         text-align: center;
       }
 
-      @media (max-width: 991px) {
-        max-height: min(320px, 50dvh);
+      @media (max-width: 61.9375rem) {
+        max-height: min(20rem, 50dvh);
       }
     }
   }
 
   .i-listbox-error {
     flex-shrink: 0;
-    padding: 8px 12px;
-    font-size: 12px;
+    padding: 0.5rem 0.75rem;
+    font-size: var(--i-font-caption, 0.6875rem);
     border-top: 1px solid colors.$color-danger;
   }
 }

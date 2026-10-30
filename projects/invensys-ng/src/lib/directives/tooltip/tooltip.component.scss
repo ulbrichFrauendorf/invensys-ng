@@ -1,17 +1,17 @@
-@use './tooltip.component.theme.scss' as theme;
-@use '../../themes/variables' as vars;
+@use "./tooltip.component.theme.scss" as theme;
+@use "../../themes/variables" as vars;
 
 /* Apply the tooltip theme mixin which uses CSS custom properties */
 @include theme.i-tooltip-theme();
 
 .i-tooltip {
   position: relative;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   border-radius: vars.$componentBorderRadius;
-  font-size: 10.8px;
+  font-size: var(--i-font-body, 0.75rem);
   line-height: 1.4;
   white-space: nowrap;
-  max-width: 200px;
+  max-width: 12.5rem;
   word-wrap: break-word;
   white-space: normal;
   z-index: 10000;
@@ -22,14 +22,14 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-width: 6px;
+    border-width: 0.375rem;
     border-style: solid;
   }
 
   /* Arrow positioning for different tooltip positions */
   &--above {
     .i-tooltip__arrow {
-      bottom: -6px;
+      bottom: -0.375rem;
       left: 50%;
       transform: translateX(-50%);
       border-bottom: none;
@@ -38,7 +38,7 @@
 
   &--below {
     .i-tooltip__arrow {
-      top: -6px;
+      top: -0.375rem;
       left: 50%;
       transform: translateX(-50%);
       border-top: none;
@@ -47,7 +47,7 @@
 
   &--left {
     .i-tooltip__arrow {
-      right: -6px;
+      right: -0.375rem;
       top: 50%;
       transform: translateY(-50%);
       border-right: none;
@@ -56,7 +56,7 @@
 
   &--right {
     .i-tooltip__arrow {
-      left: -6px;
+      left: -0.375rem;
       top: 50%;
       transform: translateY(-50%);
       border-left: none;

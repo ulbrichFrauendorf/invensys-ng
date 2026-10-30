@@ -1,4 +1,8 @@
-<app-demo-playground class="steppers-demo" title="Steppers" eyebrow="Layout &amp; Containers">
+<app-demo-playground
+  class="steppers-demo"
+  title="Steppers"
+  eyebrow="Layout &amp; Containers"
+>
   <ng-template
     appDemoOption="option-1"
     label="Linear workflow"
@@ -6,14 +10,26 @@
     [sourceCode]="sourceCode"
     [tsCode]="tsCode"
   >
-    <i-stepper [(activeIndex)]="activeIndex" [linear]="true" ariaLabel="Report setup">
-      <i-step label="Report details" icon="pi pi-file-edit" [completed]="detailsComplete">
+    <i-stepper
+      [(activeIndex)]="activeIndex"
+      [linear]="true"
+      ariaLabel="Report setup"
+    >
+      <i-step
+        label="Report details"
+        icon="pi pi-file-edit"
+        [completed]="detailsComplete"
+      >
         <div class="step-content">
           <h3>Report details</h3>
         </div>
       </i-step>
 
-      <i-step label="Choose columns" icon="pi pi-table" [completed]="columnsComplete">
+      <i-step
+        label="Choose columns"
+        icon="pi pi-table"
+        [completed]="columnsComplete"
+      >
         <div class="step-content">
           <h3>Choose columns</h3>
         </div>
@@ -34,7 +50,10 @@
       </i-step>
       <div stepperActions class="step-actions">
         @if (activeIndex > 0) {
-          <i-button severity="contrast" [text]="true" (clicked)="activeIndex = activeIndex - 1"
+          <i-button
+            severity="contrast"
+            [text]="true"
+            (clicked)="activeIndex = activeIndex - 1"
             >Back</i-button
           >
         }
@@ -50,10 +69,23 @@
             >
           }
           @case (2) {
-            <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
+            <i-button icon="pi pi-check" (clicked)="resultsComplete = true"
+              >Save report</i-button
+            >
           }
         }
       </div>
     </i-stepper>
   </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-stepper orientation="horizontal"
+      ><i-step label="Details">Details</i-step
+      ><i-step label="Review">Review</i-step></i-stepper
+    ><i-stepper orientation="vertical"
+      ><i-step label="Details">Details</i-step
+      ><i-step label="Review">Review</i-step></i-stepper
+    ></ng-template
+  >
 </app-demo-playground>

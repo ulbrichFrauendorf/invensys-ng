@@ -39,8 +39,8 @@ import { AbstractDialog } from './dialog-base';
  * <i-dialog
  *   [(visible)]="showDialog"
  *   header="Custom Size"
- *   width="480px"
- *   height="320px">
+ *   width="30rem"
+ *   height="20rem">
  *   <p>Content</p>
  * </i-dialog>
  *
@@ -73,7 +73,10 @@ import { AbstractDialog } from './dialog-base';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog.component.scss',
 })
-export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChanges {
+export class IDialog
+  extends AbstractDialog
+  implements OnInit, OnDestroy, OnChanges
+{
   private static readonly openDialogs: IDialog[] = [];
   private static readonly scrollLocks = new WeakMap<
     Document,
@@ -88,7 +91,8 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
   private scrollLocked = false;
   private previousFocus?: HTMLElement;
 
-  @ViewChild('dialogTemplate', { static: true }) private dialogTemplate!: TemplateRef<unknown>;
+  @ViewChild('dialogTemplate', { static: true })
+  private dialogTemplate!: TemplateRef<unknown>;
 
   /**
    * Reference to the dialog element for positioning and styling
@@ -130,11 +134,18 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
     this.previousFocus = this.document.activeElement as HTMLElement | undefined;
     // Share the CDK layer with connected dropdowns and escape ancestor stacking contexts.
     this.overlayRef = this.overlayService.create();
-    this.overlayRef.attach(new TemplatePortal(this.dialogTemplate, this.viewContainerRef));
-    this.overlay = this.overlayRef.overlayElement.querySelector<HTMLElement>('.i-dialog-overlay')!;
+    this.overlayRef.attach(
+      new TemplatePortal(this.dialogTemplate, this.viewContainerRef),
+    );
+    this.overlay =
+      this.overlayRef.overlayElement.querySelector<HTMLElement>(
+        '.i-dialog-overlay',
+      )!;
     IDialog.openDialogs.push(this);
     this.updateScrollLock();
-    this.overlay.querySelector<HTMLElement>('.i-dialog-container')?.focus({ preventScroll: true });
+    this.overlay
+      .querySelector<HTMLElement>('.i-dialog-container')
+      ?.focus({ preventScroll: true });
   }
 
   private detachOverlay(): void {
@@ -225,7 +236,12 @@ export class IDialog extends AbstractDialog implements OnInit, OnDestroy, OnChan
     const target = event.target as HTMLElement;
     const overlay = event.currentTarget as HTMLElement;
 
-    if (this.modal && this.closable && this.dismissableMask && target === overlay) {
+    if (
+      this.modal &&
+      this.closable &&
+      this.dismissableMask &&
+      target === overlay
+    ) {
       this.hide();
     }
   }

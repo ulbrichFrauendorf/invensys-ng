@@ -1,13 +1,14 @@
-@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
-@use './component-interactions.component.theme.scss' as theme;
+@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
+  scrollbar;
+@use "./component-interactions.component.theme.scss" as theme;
 .component-demo {
   .lead {
-    font-size: 18px;
-    margin-bottom: 32px;
+    font-size: var(--i-font-body, 0.75rem);
+    margin-bottom: 2rem;
   }
 
   .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 
     &:last-child {
       margin-bottom: 0;
@@ -15,20 +16,20 @@
   }
 
   .form-values {
-    margin-top: 16px;
-    padding: 16px;
-    border-radius: 4px;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.25rem;
 
     strong {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
     }
 
     pre {
       margin: 0;
-      padding: 8px;
-      border-radius: 4px;
-      font-size: 14px;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      font-size: var(--i-font-body, 0.75rem);
       overflow-x: auto;
       @include scrollbar.themed-scrollbar();
     }
@@ -36,9 +37,9 @@
 
   .actions {
     display: flex;
-    gap: 16px;
-    margin-top: 32px;
-    padding-top: 24px;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
     border-top-width: 1px;
     border-top-style: solid;
   }
@@ -48,11 +49,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     > * {
-      flex: 1 1 300px;
+      flex: 1 1 18.75rem;
       min-width: 0;
       box-sizing: border-box;
     }
-    gap: 24px;
+    gap: 1.5rem;
 
     i-panel {
       height: fit-content;

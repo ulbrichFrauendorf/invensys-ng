@@ -1,14 +1,14 @@
-@use './dialogs.component.theme.scss' as theme;
+@use "./dialogs.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .dialog-content {
   ul {
-    margin: 16px 0;
-    padding-left: 24px;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
 
     li {
-      margin: 4px 0;
+      margin: 0.25rem 0;
       line-height: 1.5;
     }
   }
@@ -16,42 +16,42 @@
 
 .basic-dialog {
   text-align: center;
-  padding: 8px 0;
+  padding: 0.5rem 0;
 
   .dialog-icon {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 
     i {
-      font-size: 48px;
+      font-size: 3rem;
     }
   }
 
   .feature-highlights {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 1rem;
     justify-content: center;
-    padding: 16px;
-    border-radius: 8px;
+    padding: 1rem;
+    border-radius: 0.5rem;
 
     .highlight-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13.6px;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 1.25rem;
+      font-size: var(--i-font-body, 0.75rem);
 
       i {
-        font-size: 16px;
+        font-size: 1rem;
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 40rem) {
         justify-content: center;
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       flex-direction: column;
       align-items: stretch;
     }
@@ -62,59 +62,59 @@
   .dialog-intro {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 24px;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
 
     > i {
-      font-size: 32px;
+      font-size: 2rem;
       flex-shrink: 0;
-      @media (max-width: 640px) {
-        font-size: 40px;
+      @media (max-width: 40rem) {
+        font-size: 2.5rem;
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       flex-direction: column;
       text-align: center;
     }
   }
 
   .listbox-demo-form {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 
     .form-field {
       label {
         display: block;
         font-weight: 500;
-        margin-bottom: 8px;
+        margin-bottom: 0.5rem;
       }
     }
 
     .error-message {
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 13.6px;
-      margin-top: 8px;
+      gap: 0.25rem;
+      font-size: var(--i-font-caption, 0.6875rem);
+      margin-top: 0.5rem;
 
       i {
-        font-size: 14.4px;
+        font-size: 0.9rem;
       }
     }
   }
 
   .selection-summary {
-    border-radius: 8px;
-    padding: 16px;
+    border-radius: 0.5rem;
+    padding: 1rem;
 
     .summary-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
       border-bottom-width: 1px;
       border-bottom-style: solid;
 
@@ -125,35 +125,35 @@
 
     .summary-stats {
       display: flex;
-      gap: 24px;
+      gap: 1.5rem;
       flex-wrap: wrap;
 
       .stat-item {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 4px;
-        min-width: 60px;
+        gap: 0.25rem;
+        min-width: 3.75rem;
 
         .stat-value {
-          font-size: 24px;
+          font-size: var(--i-font-emphasis, 0.875rem);
           font-weight: 700;
         }
 
         .stat-label {
-          font-size: 12px;
+          font-size: var(--i-font-caption, 0.6875rem);
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.03125rem;
         }
 
         &.status {
           i {
-            font-size: 24px;
+            font-size: 1.5rem;
           }
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 40rem) {
         justify-content: space-around;
       }
     }
@@ -161,38 +161,38 @@
 }
 
 .dialog-example-actions {
-  margin-top: 16px;
+  margin-top: 1rem;
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   justify-content: center;
 }
 .dialog-content-full-height {
   height: 100%;
 
   .dropdown-test-instruction {
-    margin-bottom: 16px;
-    padding: 12px;
-    border-radius: 4px;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
     border-width: 1px;
     border-style: solid;
 
     ol {
-      margin: 8px 0 0 0;
-      padding-left: 20px;
+      margin: 0.5rem 0 0 0;
+      padding-left: 1.25rem;
     }
     .dropdown-check-list {
-      margin: 8px 0 0;
-      padding-left: 20px;
+      margin: 0.5rem 0 0;
+      padding-left: 1.25rem;
     }
   }
   .dropdown-controls {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 1rem;
 
     .dropdown-values-panel {
-      padding: 12px;
-      border-radius: 4px;
+      padding: 0.75rem;
+      border-radius: 0.25rem;
     }
   }
 }

@@ -15,12 +15,12 @@
 
     .i-carousel-viewport {
       display: flex;
-      gap: 24px;
+      gap: 1.5rem;
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
-      padding: 4px;
+      padding: 0.25rem;
 
       &::-webkit-scrollbar {
         display: none;
@@ -37,8 +37,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding-top: 8px;
+      gap: 0.75rem;
+      padding-top: 0.5rem;
 
       .i-carousel-indicators {
         display: flex;
@@ -46,7 +46,7 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 4px;
+        gap: 0.25rem;
         min-width: 0;
 
         .i-carousel-dot {
@@ -54,25 +54,25 @@
           align-items: center;
           justify-content: center;
           flex: 0 0 auto;
-          width: 24px;
-          height: 24px;
+          width: 1.5rem;
+          height: 1.5rem;
           padding: 0;
           border: 0;
-          border-radius: 12px;
+          border-radius: 0.75rem;
           cursor: pointer;
 
           &::before {
             content: "";
-            width: 8px;
-            height: 8px;
-            border-radius: 4px;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 0.25rem;
           }
 
           &.i-carousel-dot-active {
-            width: 36px;
+            width: 2.25rem;
 
             &::before {
-              width: 20px;
+              width: 1.25rem;
             }
           }
         }
@@ -87,7 +87,7 @@
       .i-carousel-viewport {
         --carousel-item-flex: var(
           --carousel-overflow-item-flex,
-          1 0 var(--carousel-min-item-width, 180px)
+          1 0 var(--carousel-min-item-width, 11.25rem)
         );
         flex-direction: var(--carousel-overflow-direction, row);
       }
@@ -102,7 +102,7 @@
 
   &.mobile-only {
     container-type: normal;
-    @container (min-width: 901px) {
+    @container (min-width: 56.3125rem) {
       .i-carousel {
         .i-carousel-viewport {
           --carousel-item-flex: var(--carousel-wide-item-flex, 1 1 0);

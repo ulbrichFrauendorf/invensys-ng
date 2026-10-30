@@ -1,18 +1,18 @@
-@use './tables.component.theme.scss' as theme;
+@use "./tables.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .visual-examples {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .selection-info {
-  margin-bottom: 12px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 14.4px;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: var(--i-font-body, 0.75rem);
 }
 
 @include theme.tables-theme();

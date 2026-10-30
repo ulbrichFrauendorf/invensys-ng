@@ -1,30 +1,30 @@
-@use './cards.component.theme.scss' as theme;
+@use "./cards.component.theme.scss" as theme;
 
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .card-example {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 
   .full-height-container {
-    height: 300px;
+    height: 18.75rem;
     border-width: 2px;
     border-style: dashed;
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
   }
 
   .closed-message {
-    padding: 32px;
+    padding: 2rem;
     text-align: center;
     border-width: 2px;
     border-style: dashed;
-    border-radius: 8px;
+    border-radius: 0.5rem;
   }
 
   .custom-card-header {
     display: flex;
     align-items: baseline;
-    gap: 8px;
+    gap: 0.5rem;
   }
 }
 

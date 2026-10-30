@@ -20,50 +20,50 @@
   }
 
   h1 {
-    font-size: 24px;
+    font-size: var(--i-heading-large, 1.25rem);
   }
 
   h2 {
-    font-size: 20px;
+    font-size: var(--i-heading-medium, 1.125rem);
   }
 
   h3 {
-    font-size: 18px;
+    font-size: var(--i-heading-small, 1rem);
   }
 
   h4 {
-    font-size: 16px;
+    font-size: var(--i-font-emphasis, 0.875rem);
   }
 
   h5 {
-    font-size: 14px;
+    font-size: var(--i-font-body, 0.75rem);
   }
 
   h6 {
-    font-size: 12px;
+    font-size: var(--i-font-small, 0.75rem);
   }
 
   mark {
     background: colors.$color-warning;
     color: colors.$color-contrast;
-    padding: 4px 6.4px;
+    padding: 0.25rem 0.4rem;
     font-family: monospace;
   }
 
   blockquote {
-    margin: 16px 0;
-    padding: 0 32px;
-    border-left: 4px solid colors.$color-text-tertiary;
+    margin: 1rem 0;
+    padding: 0 2rem;
+    border-left: 0.25rem solid colors.$color-text-tertiary;
   }
 
   hr {
     border-top: solid colors.$color-surface-border;
     border-width: 1px 0 0;
-    margin: 16px 0;
+    margin: 1rem 0;
   }
 
   p {
-    margin: 0 0 16px;
+    margin: 0 0 1rem;
     line-height: 1.5;
 
     &:last-child {

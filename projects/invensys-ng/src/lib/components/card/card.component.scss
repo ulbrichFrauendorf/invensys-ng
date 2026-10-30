@@ -1,6 +1,7 @@
-@use './card.component.theme.scss' as theme;
-@use '../../themes/_variables.scss' as vars;
-@use '../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss' as scrollbar;
+@use "./card.component.theme.scss" as theme;
+@use "../../themes/_variables.scss" as vars;
+@use "../../../../../invensys-ng/src/lib/themes/scrollbar-mixins.scss" as
+  scrollbar;
 
 @include theme.i-card-theme();
 
@@ -34,7 +35,7 @@
 
 .i-card {
   border-radius: vars.$borderRadius;
-  padding: 12px;
+  padding: 0.75rem;
 
   .i-card-header {
     display: flex;
@@ -43,25 +44,25 @@
     align-items: center;
 
     .i-card-title {
-      padding-left: 12px;
-      font-size: 18px;
+      padding-left: 0.75rem;
+      font-size: var(--i-font-emphasis, 0.875rem);
       font-weight: 600;
     }
   }
 
   .i-card-body {
-    padding: 0 12px 0;
+    padding: 0 0.75rem 0;
   }
 
   .i-card-footer {
-    padding: 12px 0 0;
+    padding: 0.75rem 0 0;
 
     &:empty {
       display: none;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     .i-card-body {
       padding-left: 0;
       padding-right: 0;

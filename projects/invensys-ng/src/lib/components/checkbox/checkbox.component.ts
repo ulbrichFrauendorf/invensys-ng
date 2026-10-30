@@ -100,9 +100,9 @@ export class ICheckbox implements ControlValueAccessor {
 
   /**
    * Size of the checkbox
-   * @default 'medium'
+   * @default 'small'
    */
-  @Input() size: ICheckboxSize = 'medium';
+  @Input() size: ICheckboxSize = 'small';
 
   /**
    * Whether the checkbox is in indeterminate state

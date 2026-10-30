@@ -12,8 +12,12 @@
     [tsCode]="dynamicDialogTsCode"
   >
     <div class="demo-content">
-      <p>Use the DialogService to programmatically open dialogs with components.</p>
-      <i-button severity="primary" (clicked)="displayExampleDialog()">Open Dynamic Dialog</i-button>
+      <p>
+        Use the DialogService to programmatically open dialogs with components.
+      </p>
+      <i-button severity="primary" (clicked)="displayExampleDialog()"
+        >Open Dynamic Dialog</i-button
+      >
     </div>
   </ng-template>
 
@@ -23,8 +27,14 @@
     [sourceCode]="codeExamples.basic"
   >
     <div class="demo-content">
-      <p>Use the i-dialog component directly in your template for declarative dialogs.</p>
-      <i-button severity="secondary" [outlined]="true" (clicked)="showBasicDialogModal()"
+      <p>
+        Use the i-dialog component directly in your template for declarative
+        dialogs.
+      </p>
+      <i-button
+        severity="secondary"
+        [outlined]="true"
+        (clicked)="showBasicDialogModal()"
         >Open Basic Dialog</i-button
       >
     </div>
@@ -34,8 +44,8 @@
       [(visible)]="showBasicDialog"
       [closable]="true"
       header="Welcome to Invensys"
-      width="500px"
-      height="400px"
+      width="31.25rem"
+      height="25rem"
     >
       <div class="dialog-content basic-dialog">
         <div class="dialog-icon">
@@ -43,8 +53,8 @@
         </div>
         <h4>Getting Started</h4>
         <p class="dialog-description">
-          Welcome to the Invensys component library! This dialog demonstrates a clean, user-friendly
-          design with proper spacing and hierarchy.
+          Welcome to the Invensys component library! This dialog demonstrates a
+          clean, user-friendly design with proper spacing and hierarchy.
         </p>
         <div class="feature-highlights">
           <div class="highlight-item">
@@ -88,7 +98,10 @@
     [sourceCode]="codeExamples.singleButton"
   >
     <div class="demo-content">
-      <p>Dialog with only one button by setting [showCancel]="false" on dialog actions.</p>
+      <p>
+        Dialog with only one button by setting [showCancel]="false" on dialog
+        actions.
+      </p>
       <i-button severity="success" (clicked)="showSingleButtonDialogModal()"
         >Open Single Button Dialog</i-button
       >
@@ -99,7 +112,7 @@
       [(visible)]="showSingleButtonDialog"
       [closable]="true"
       header="Notification"
-      width="384px"
+      width="24rem"
     >
       <div class="dialog-content basic-dialog">
         <div class="dialog-icon success">
@@ -107,8 +120,8 @@
         </div>
         <h4>Success!</h4>
         <p class="dialog-description">
-          Your changes have been saved successfully. This dialog only has one action button for
-          acknowledgment.
+          Your changes have been saved successfully. This dialog only has one
+          action button for acknowledgment.
         </p>
       </div>
       <i-dialog-actions
@@ -127,9 +140,9 @@
   >
     <div class="demo-content">
       <p>
-        <strong>Testing dropdown behavior in dialogs:</strong> This dialog contains select and
-        multi-select dropdowns. Click inside the dialog but outside an expanded dropdown to test if
-        it properly closes.
+        <strong>Testing dropdown behavior in dialogs:</strong> This dialog
+        contains select and multi-select dropdowns. Click inside the dialog but
+        outside an expanded dropdown to test if it properly closes.
       </p>
       <i-button severity="danger" (clicked)="showDropdownTestDialogModal()"
         >Open Dropdown Test Dialog</i-button
@@ -140,8 +153,8 @@
     <i-dialog
       [(visible)]="showDropdownTestDialog"
       header="Dropdown Test in Dialog"
-      width="600px"
-      height="500px"
+      width="37.5rem"
+      height="31.25rem"
     >
       <div class="dialog-content dialog-content-full-height">
         <div class="dropdown-test-instruction">
@@ -149,7 +162,9 @@
           <ol class="dropdown-check-list">
             <li>Open the "Country" dropdown below</li>
             <li>Click anywhere else in the dialog (but not on the dropdown)</li>
-            <li>Observe if the dropdown closes automatically (expected behavior)</li>
+            <li>
+              Observe if the dropdown closes automatically (expected behavior)
+            </li>
             <li>Repeat with the "Skills" multi-select dropdown</li>
           </ol>
         </div>
@@ -168,7 +183,8 @@
             >
             </i-select>
             @if (
-              dropdownTestForm.get('country')?.invalid && dropdownTestForm.get('country')?.touched
+              dropdownTestForm.get("country")?.invalid &&
+              dropdownTestForm.get("country")?.touched
             ) {
               <small class="error-message">
                 <i class="pi pi-exclamation-circle"></i>
@@ -192,7 +208,8 @@
             >
             </i-multi-select>
             @if (
-              dropdownTestForm.get('skills')?.invalid && dropdownTestForm.get('skills')?.touched
+              dropdownTestForm.get("skills")?.invalid &&
+              dropdownTestForm.get("skills")?.touched
             ) {
               <small class="error-message">
                 <i class="pi pi-exclamation-circle"></i>
@@ -205,9 +222,10 @@
             <p>
               <strong>Current Values:</strong><br />
               Country:
-              {{ dropdownTestForm.get('country')?.value?.label || 'None' }}<br />
+              {{ dropdownTestForm.get("country")?.value?.label || "None"
+              }}<br />
               Skills:
-              {{ (dropdownTestForm.get('skills')?.value || []).length }}
+              {{ (dropdownTestForm.get("skills")?.value || []).length }}
               selected
             </p>
           </div>
@@ -224,7 +242,11 @@
     </i-dialog>
   </ng-template>
 
-  <ng-template appDemoOption="option-6" label="Large Dialog" [sourceCode]="codeExamples.fullscreen">
+  <ng-template
+    appDemoOption="option-6"
+    label="Large Dialog"
+    [sourceCode]="codeExamples.fullscreen"
+  >
     <div class="demo-content">
       <p>Dialogs with larger dimensions for complex content.</p>
       <i-button severity="warning" (clicked)="showFullscreenDialogModal()"
@@ -237,8 +259,8 @@
       [(visible)]="showFullscreenDialog"
       header="Team Assignment"
       [modal]="true"
-      width="600px"
-      height="800px"
+      width="37.5rem"
+      height="50rem"
     >
       <div class="dialog-content large-dialog">
         <div class="dialog-intro">
@@ -267,8 +289,8 @@
             </i-listbox>
 
             @if (
-              largeDialogForm.get('selectedDepartments')?.invalid &&
-              largeDialogForm.get('selectedDepartments')?.touched
+              largeDialogForm.get("selectedDepartments")?.invalid &&
+              largeDialogForm.get("selectedDepartments")?.touched
             ) {
               <small class="error-message">
                 <i class="pi pi-exclamation-circle"></i>
@@ -286,17 +308,27 @@
           <div class="summary-stats">
             <div class="stat-item">
               <span class="stat-value">{{
-                (largeDialogForm.get('selectedDepartments')?.value || []).length
+                (largeDialogForm.get("selectedDepartments")?.value || []).length
               }}</span>
               <span class="stat-label">Selected</span>
             </div>
             <div class="stat-item">
-              <span class="stat-value">{{ (departmentOptions$ | async)?.length || 0 }}</span>
+              <span class="stat-value">{{
+                (departmentOptions$ | async)?.length || 0
+              }}</span>
               <span class="stat-label">Available</span>
             </div>
             <div class="stat-item status" [class.valid]="largeDialogForm.valid">
-              <i [class]="largeDialogForm.valid ? 'pi pi-check-circle' : 'pi pi-times-circle'"></i>
-              <span class="stat-label">{{ largeDialogForm.valid ? 'Ready' : 'Incomplete' }}</span>
+              <i
+                [class]="
+                  largeDialogForm.valid
+                    ? 'pi pi-check-circle'
+                    : 'pi pi-times-circle'
+                "
+              ></i>
+              <span class="stat-label">{{
+                largeDialogForm.valid ? "Ready" : "Incomplete"
+              }}</span>
             </div>
           </div>
         </div>

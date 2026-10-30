@@ -1,4 +1,4 @@
-@use './loading-surface.component.theme.scss' as theme;
+@use "./loading-surface.component.theme.scss" as theme;
 @include theme.loading-surface-theme();
 
 :host {
@@ -33,27 +33,27 @@
     inset: 0;
     display: flex;
     align-items: center;
-    padding: 12px;
-    border-radius: 4px;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
     .loading-shapes {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 0.75rem;
       width: 100%;
     }
     .loading-shape {
       display: block;
-      height: 16px;
-      border-radius: 4px;
+      height: 1rem;
+      border-radius: 0.25rem;
       animation: loading-pulse 1.4s ease-in-out infinite alternate;
       &:nth-child(even) {
         width: 78%;
       }
     }
     &.loading-placeholder-field {
-      padding: 8px;
+      padding: 0.5rem;
       .loading-shape {
-        height: 16px;
+        height: 1rem;
         &:not(:first-child) {
           display: none;
         }
@@ -64,7 +64,7 @@
       .loading-shapes {
         flex-direction: row;
         align-items: flex-end;
-        gap: 8px;
+        gap: var(--i-space-medium, 0.5rem);
       }
       .loading-shape {
         flex: 1;

@@ -26,7 +26,11 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Sizes" [sourceCode]="codeExamples.sizes">
+  <ng-template
+    appDemoOption="option-2"
+    label="Sizes"
+    [sourceCode]="codeExamples.sizes"
+  >
     <div class="message-examples">
       <i-message severity="info" size="small">
         <strong>Small:</strong> Compact message for inline hints.
@@ -46,28 +50,47 @@
     [sourceCode]="codeExamples.closable"
   >
     <div class="message-examples">
-      <i-message severity="info" [closable]="true" [(visible)]="showClosableInfo">
+      <i-message
+        severity="info"
+        [closable]="true"
+        [(visible)]="showClosableInfo"
+      >
         Click the X to dismiss this info message.
       </i-message>
-      <i-message severity="warning" [closable]="true" [(visible)]="showClosableWarning">
+      <i-message
+        severity="warning"
+        [closable]="true"
+        [(visible)]="showClosableWarning"
+      >
         This warning can also be dismissed.
       </i-message>
-      <i-message severity="danger" [closable]="true" [(visible)]="showClosableDanger">
+      <i-message
+        severity="danger"
+        [closable]="true"
+        [(visible)]="showClosableDanger"
+      >
         Critical alerts can be closable too.
       </i-message>
       @if (!showClosableInfo || !showClosableWarning || !showClosableDanger) {
-        <button class="reset-button" (click)="resetClosableMessages()">Reset Messages</button>
+        <button class="reset-button" (click)="resetClosableMessages()">
+          Reset Messages
+        </button>
       }
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-4" label="Custom Icons" [sourceCode]="codeExamples.customIcon">
+  <ng-template
+    appDemoOption="option-4"
+    label="Custom Icons"
+    [sourceCode]="codeExamples.customIcon"
+  >
     <div class="message-examples">
       <i-message severity="primary" icon="pi pi-star">
         <strong>Featured:</strong> Check out our new premium features.
       </i-message>
       <i-message severity="info" icon="pi pi-bolt">
-        <strong>Quick Tip:</strong> Use keyboard shortcuts for faster navigation.
+        <strong>Quick Tip:</strong> Use keyboard shortcuts for faster
+        navigation.
       </i-message>
       <i-message severity="success" icon="pi pi-thumbs-up">
         <strong>Great job!</strong> You've completed all tasks.
@@ -82,8 +105,8 @@
   >
     <div class="message-examples">
       <i-message severity="warning">
-        <strong>Action Required:</strong> Please update your payment method before
-        <em>December 1st</em> to avoid service interruption.
+        <strong>Action Required:</strong> Please update your payment method
+        before <em>December 1st</em> to avoid service interruption.
       </i-message>
       <i-message severity="info">
         Need help? Visit our <strong>documentation</strong> or contact
@@ -91,4 +114,11 @@
       </i-message>
     </div>
   </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-message severity="secondary">Secondary</i-message
+    ><i-message severity="tertiary">Tertiary</i-message
+    ><i-message severity="contrast">Contrast</i-message></ng-template
+  >
 </app-demo-playground>

@@ -12,15 +12,32 @@
     [tsCode]="tsExamples.usage"
   >
     <div class="button-grid">
-      <i-button severity="success" (clicked)="showSuccessMessage()" icon="check_circle">
+      <i-button
+        severity="success"
+        (clicked)="showSuccessMessage()"
+        icon="check_circle"
+      >
         Success
       </i-button>
-      <i-button severity="info" (clicked)="showInfoMessage()" icon="info"> Info </i-button>
-      <i-button severity="warning" (clicked)="showWarningMessage()" icon="warning">
+      <i-button severity="info" (clicked)="showInfoMessage()" icon="info">
+        Info
+      </i-button>
+      <i-button
+        severity="warning"
+        (clicked)="showWarningMessage()"
+        icon="warning"
+      >
         Warning
       </i-button>
-      <i-button severity="danger" (clicked)="showErrorMessage()"> Error </i-button>
-      <i-button severity="primary" (clicked)="showStackingDemo()" icon="layers" [outlined]="true">
+      <i-button severity="danger" (clicked)="showErrorMessage()">
+        Error
+      </i-button>
+      <i-button
+        severity="primary"
+        (clicked)="showStackingDemo()"
+        icon="layers"
+        [outlined]="true"
+      >
         Test Stacking
       </i-button>
     </div>
@@ -37,16 +54,32 @@
         Messages with keys will show in specific whisper containers:
       </p>
       <div class="button-grid">
-        <i-button severity="info" (clicked)="showMultipleMessages()" icon="queue">
+        <i-button
+          severity="info"
+          (clicked)="showMultipleMessages()"
+          icon="queue"
+        >
           Multiple Messages
         </i-button>
-        <i-button severity="secondary" (clicked)="showLeftMessage()" icon="arrow_back">
+        <i-button
+          severity="secondary"
+          (clicked)="showLeftMessage()"
+          icon="arrow_back"
+        >
           Left Message
         </i-button>
-        <i-button severity="secondary" (clicked)="showRightMessage()" icon="arrow_forward">
+        <i-button
+          severity="secondary"
+          (clicked)="showRightMessage()"
+          icon="arrow_forward"
+        >
           Right Message
         </i-button>
-        <i-button severity="primary" (clicked)="showGlobalMessage()" icon="public">
+        <i-button
+          severity="primary"
+          (clicked)="showGlobalMessage()"
+          icon="public"
+        >
           Global Message
         </i-button>
         <i-button
@@ -68,8 +101,15 @@
     [tsCode]="tsExamples.basic"
   >
     <div class="demo-section">
-      <p class="section-description">Simulate a user link action like the one in your request:</p>
-      <i-button severity="success" (clicked)="simulateUserLinkAction()" icon="link" [raised]="true">
+      <p class="section-description">
+        Simulate a user link action like the one in your request:
+      </p>
+      <i-button
+        severity="success"
+        (clicked)="simulateUserLinkAction()"
+        icon="link"
+        [raised]="true"
+      >
         Link Users (Simulated)
       </i-button>
     </div>
@@ -81,9 +121,23 @@
     [sourceCode]="codeExamples.basic"
   >
     <div class="setup-info">
-      <p>Add the whisper component to your app.component.html template for global notifications:</p>
+      <p>
+        Add the whisper component to your app.component.html template for global
+        notifications:
+      </p>
       <code>&lt;i-whisper position="top-right"&gt;&lt;/i-whisper&gt;</code>
     </div>
+  </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional positions"
+  >
+    <i-button (clicked)="showPosition('top-center')">top-center</i-button>
+    <i-whisper key="top-center" position="top-center" />
+    <i-button (clicked)="showPosition('bottom-left')">bottom-left</i-button>
+    <i-whisper key="bottom-left" position="bottom-left" />
+    <i-button (clicked)="showPosition('bottom-right')">bottom-right</i-button>
+    <i-whisper key="bottom-right" position="bottom-right" />
   </ng-template>
 </app-demo-playground>
 <i-whisper key="global" position="bottom-center" />

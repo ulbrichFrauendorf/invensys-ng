@@ -1,31 +1,13 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-layout-theme() {
   .layout {
     .layout-wrapper {
       .layout-body {
         .layout-sidebar-container {
-          @media (max-width: 991px) {
+          @media (max-width: 61.9375rem) {
             background: colors.$color-surface-overlay;
           }
-        }
-
-        .layout-main-container {
-          .pull-to-refresh-indicator {
-            .refresh-icon {
-              color: colors.$color-primary;
-            }
-
-            .refresh-text {
-              color: colors.$color-text-secondary;
-            }
-          }
-        }
-      }
-
-      &.layout-overlay-active {
-        .layout-sidebar-container {
-          background: colors.$color-surface-overlay;
         }
       }
 

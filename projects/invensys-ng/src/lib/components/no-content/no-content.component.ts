@@ -43,7 +43,7 @@ import { IPlaceholder } from '../placeholder/placeholder.component';
   standalone: true,
   imports: [IPlaceholder],
   templateUrl: './no-content.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './no-content.component.scss',
 })
 export class NoContentComponent {

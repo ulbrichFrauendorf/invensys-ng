@@ -1,45 +1,45 @@
-@use './tag.component.theme.scss' as theme;
+@use "./tag.component.theme.scss" as theme;
 
 @include theme.i-tag-theme();
 
 .i-tag {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 9.6px;
+  gap: 0.3125rem;
+  padding: 0.1875rem 0.625rem;
+  border-radius: 0.25rem;
+  font-size: var(--i-font-body, 0.75rem);
   font-weight: 600;
-  letter-spacing: 0.192px;
+  letter-spacing: 0.012rem;
   white-space: nowrap;
   user-select: none;
   line-height: 1.4;
   transition: opacity 0.15s ease;
 
   &.i-tag-rounded {
-    border-radius: 999px;
+    border-radius: 62.4375rem;
   }
 
   &.i-tag-lg {
-    font-size: 10.8px;
-    padding: 4px 12px;
-    letter-spacing: 0.216px;
+    font-size: var(--i-font-body, 0.75rem);
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.0135rem;
     .i-tag-icon {
-      font-size: 9.72px;
+      font-size: 1em;
     }
   }
 
   &.i-tag-sm {
-    font-size: 8.64px;
-    padding: 2px 8px;
-    letter-spacing: 0.1728px;
+    font-size: var(--i-font-body, 0.75rem);
+    padding: 0.125rem 0.5rem;
+    letter-spacing: 0.0108rem;
     .i-tag-icon {
-      font-size: 7.776px;
+      font-size: 1em;
     }
   }
 
   .i-tag-icon {
-    font-size: 8.64px;
+    font-size: 1em;
     flex-shrink: 0;
   }
 

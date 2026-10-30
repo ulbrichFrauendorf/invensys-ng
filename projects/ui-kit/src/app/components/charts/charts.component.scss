@@ -1,16 +1,16 @@
-@use '../shared-demo-styles.scss' as *;
+@use "../shared-demo-styles.scss" as *;
 
 .chart-container {
-  min-height: 300px;
+  min-height: 18.75rem;
 }
 
 .chart-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 1.5rem;
 
   .chart-half {
     flex: 1;
-    min-width: 280px;
+    min-width: 17.5rem;
   }
 }

@@ -10,6 +10,19 @@ import { IMessage } from '../../../../../invensys-ng/src/lib/components/message/
   styleUrl: './theming.component.scss',
 })
 export class ThemingComponent {
+  sizingCode = `@use "invensys-ng/src/lib/themes/theme.scss" as theme;
+@include theme.define-theme();
+
+:root { --i-ui-scale: 1; }
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--i-space-medium);
+}
+
+.control-icon { font-size: 1em; }`;
+
   themeFileCode = `.light {
   --color-primary: #f97316;
   --color-secondary: #374151;

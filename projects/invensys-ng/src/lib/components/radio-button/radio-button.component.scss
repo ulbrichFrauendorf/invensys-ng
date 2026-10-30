@@ -1,12 +1,12 @@
-@use './radio-button.component.theme.scss' as theme;
+@use "./radio-button.component.theme.scss" as theme;
 
 @include theme.i-radio-button-theme();
 
 .i-radio-button-wrapper {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: var(--i-space-medium, 0.5rem);
+  font-size: var(--i-font-body, 0.75rem);
 
   &.i-radio-button--fluid {
     display: flex;
@@ -29,8 +29,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 1.125rem;
+    height: 1.125rem;
     border-radius: 50%;
     transition: all 0.15s ease;
     cursor: pointer;
@@ -41,8 +41,8 @@
     }
 
     .i-radio-button-icon {
-      width: 10px;
-      height: 10px;
+      width: 0.625rem;
+      height: 0.625rem;
       border-radius: 50%;
       transition: all 0.15s ease;
       transform: scale(0);
@@ -70,7 +70,7 @@
 
 .i-radio-button-wrapper {
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   &:focus-visible {
     outline-width: 2px;
     outline-style: solid;

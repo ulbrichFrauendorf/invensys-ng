@@ -1,10 +1,10 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-whisper-theme() {
   .i-whisper-message {
     background: colors.$color-surface-section;
     color: colors.$color-text-primary;
-    border-left: 4px solid transparent; // Default border
+    border-left: 0.25rem solid transparent; // Default border
 
     .i-whisper-message-close {
       color: colors.$color-text-secondary;
@@ -94,7 +94,11 @@
         background: none;
 
         &:hover {
-          background-color: color-mix(in srgb, colors.$color-shadow 10%, transparent);
+          background-color: color-mix(
+            in srgb,
+            colors.$color-shadow 10%,
+            transparent
+          );
         }
       }
     }

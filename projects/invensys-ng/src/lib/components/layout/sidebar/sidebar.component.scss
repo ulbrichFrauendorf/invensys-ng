@@ -1,5 +1,5 @@
-@use '../../../themes/scrollbar-mixins.scss' as scrollbar;
-@use './sidebar.component.theme.scss' as theme;
+@use "../../../themes/scrollbar-mixins.scss" as scrollbar;
+@use "./sidebar.component.theme.scss" as theme;
 
 .sidebar {
   display: flex;
@@ -9,7 +9,7 @@
   transition:
     transform 0.2s,
     left 0.2s;
-  padding: 24px 12px 40px;
+  padding: 1.5rem 0.75rem 2.5rem;
 
   .sidebar-mobile-header {
     display: none;
@@ -25,7 +25,7 @@
     flex: 1;
   }
 
-  @media (max-width: 991px) {
+  @media (max-width: 61.9375rem) {
     height: 100%;
     padding: 0;
 
@@ -34,15 +34,15 @@
       position: sticky;
       top: 0;
       z-index: 3;
-      padding: 12px 12px 8px 12px;
+      padding: 0.75rem 0.75rem 0.5rem 0.75rem;
     }
 
     .sidebar-menu-wrapper {
       flex: 1 1 auto;
-      max-height: calc(100vh - 56px);
+      max-height: calc(100vh - 3.5rem);
       overflow: auto;
       @include scrollbar.themed-scrollbar();
-      padding: 12px;
+      padding: 0.75rem;
     }
   }
 }

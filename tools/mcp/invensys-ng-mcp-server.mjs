@@ -329,7 +329,7 @@ function findMatchingTagEnd(text, startIndex, selector) {
   return closeIndex + closeTag.length;
 }
 
-function extractElementExamples(text, selector, limit = 5) {
+function extractElementExamples(text, selector, limit = Infinity) {
   const examples = [];
   const tagRegex = new RegExp(
     `<${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`,
@@ -347,7 +347,7 @@ function extractElementExamples(text, selector, limit = 5) {
   return examples;
 }
 
-function extractDirectiveExamples(text, directiveName, limit = 5) {
+function extractDirectiveExamples(text, directiveName, limit = Infinity) {
   const examples = [];
   const attrRegex = new RegExp(`<[^>]+\\b${directiveName}\\b[^>]*>`, "g");
 
@@ -360,7 +360,7 @@ function extractDirectiveExamples(text, directiveName, limit = 5) {
   return examples;
 }
 
-function extractBacktickExamples(text, needle, limit = 5) {
+function extractBacktickExamples(text, needle, limit = Infinity) {
   const examples = [];
   const parts = text.split("`");
 
@@ -374,16 +374,12 @@ function extractBacktickExamples(text, needle, limit = 5) {
   return examples;
 }
 
-async function collectExamples(selector) {
-  const files = await walk(UI_DEMO_ROOT, (filePath) =>
-    /\.(html|ts)$/.test(filePath),
-  );
+async function collectExamples(selector, demoSources) {
   const isDirective = selector.startsWith("[") && selector.endsWith("]");
   const needle = isDirective ? selector.slice(1, -1) : `<${selector}`;
   const examples = [];
 
-  for (const filePath of files) {
-    const text = await readOptional(filePath);
+  for (const { filePath, text } of demoSources) {
     const snippets = isDirective
       ? [
           ...extractDirectiveExamples(text, selector.slice(1, -1)),
@@ -398,13 +394,10 @@ async function collectExamples(selector) {
       if (!examples.some((example) => example.code === snippet)) {
         examples.push({
           source: relativeFromRoot(filePath),
-          code:
-            snippet.length > 1800
-              ? `${snippet.slice(0, 1800).trimEnd()}\n...`
-              : snippet,
+          code: snippet,
         });
       }
-      if (examples.length >= 8) return examples;
+
     }
   }
 
@@ -444,7 +437,7 @@ function buildUsageMarkdown(item) {
   if (item.inputs.length) {
     lines.push("", "## Inputs");
     for (const input of item.inputs) {
-      const required = input.required ? " required" : "";
+      const required = (input.required ? " required" : "") + (input.values?.length ? `; values: ${input.values.map((value) => JSON.stringify(value)).join(", ")}` : "");
       const type = input.type ? `: ${input.type}` : "";
       const defaultValue = input.default ? ` = ${input.default}` : "";
       lines.push(`- \`${input.binding}\`${type}${defaultValue}${required}`);
@@ -466,7 +459,8 @@ function buildUsageMarkdown(item) {
 
   if (item.examples.length) {
     lines.push("", "## Examples");
-    for (const example of item.examples.slice(0, 3)) {
+    if (item.exampleCount !== undefined) lines.push(`Matching examples: ${item.exampleCount}. Next exampleOffset: ${item.nextExampleOffset ?? "none"}. Use exampleQuery to filter by a variation.`);
+    for (const example of item.examples) {
       lines.push(
         "",
         `From \`${example.source}\`:`,
@@ -491,6 +485,14 @@ export async function buildCatalogFromSource() {
   const candidateFiles = await walk(path.join(LIB_ROOT, "lib"), (filePath) =>
     /\.(component|directive)\.ts$/.test(filePath),
   );
+  const demoPaths = await walk(UI_DEMO_ROOT, (filePath) => /\.(html|ts)$/.test(filePath));
+  const demoSources = await Promise.all(demoPaths.map(async (filePath) => ({ filePath, text: await readOptional(filePath) })));
+  const sourcePaths = await walk(path.join(LIB_ROOT, "lib"), (filePath) => /\.ts$/.test(filePath) && !filePath.endsWith(".spec.ts"));
+  const allSources = await Promise.all(sourcePaths.map(readOptional));
+  const aliases = new Map();
+  for (const text of allSources) {
+    for (const match of text.matchAll(/(?:export\s+)?type\s+(\w+)\s*=\s*([^;]+);/g)) aliases.set(match[1], match[2]);
+  }
   const components = [];
 
   for (const filePath of candidateFiles) {
@@ -506,7 +508,21 @@ export async function buildCatalogFromSource() {
     const themePath = filePath.replace(/\.ts$/, ".theme.scss");
     const templateText = await readOptional(templatePath);
     const { inputs, outputs } = parseInputsOutputs(source);
-    const examples = await collectExamples(selector);
+    const parent = source.match(/class\s+\w+\s+extends\s+(\w+)/)?.[1];
+    if (parent) {
+      const parentSource = allSources.find((text) => new RegExp(`class\\s+${parent}\\b`).test(text));
+      if (parentSource) {
+        const inherited = parseInputsOutputs(parentSource);
+        inputs.push(...inherited.inputs.filter((item) => !inputs.some((own) => own.binding === item.binding)));
+        outputs.push(...inherited.outputs.filter((item) => !outputs.some((own) => own.binding === item.binding)));
+      }
+    }
+    for (const item of inputs) {
+      const type = aliases.get(item.type) || item.type || "";
+      item.values = [...type.matchAll(/['"]([^'"]+)['"]/g)].map((match) => match[1]);
+      if (type === "boolean" || /^(true|false)$/.test(item.default || "")) item.values = [false, true];
+    }
+    const examples = await collectExamples(selector, demoSources);
     const kind = source.includes("@Directive") ? "directive" : "component";
     const name = selector.replace(/^\[|\]$/g, "");
     const relatedFiles = [];
@@ -632,8 +648,18 @@ async function getComponentUsage(args = {}) {
     args.component || args.selector || args.name,
   );
   const format = args.format || "markdown";
-  if (format === "json") return component;
-  return buildUsageMarkdown(component);
+  const query = String(args.exampleQuery || "").toLowerCase();
+  const matching = component.examples.filter((example) => !query || example.code.toLowerCase().includes(query));
+  const offset = Math.max(0, Math.floor(Number(args.exampleOffset) || 0));
+  const limit = Math.max(1, Math.min(50, Math.floor(Number(args.exampleLimit) || 8)));
+  const page = {
+    ...component,
+    examples: matching.slice(offset, offset + limit),
+    exampleCount: matching.length,
+    nextExampleOffset: offset + limit < matching.length ? offset + limit : null,
+  };
+  if (format === "json") return page;
+  return buildUsageMarkdown(page);
 }
 
 async function searchComponents(args = {}) {
@@ -672,6 +698,7 @@ async function searchComponents(args = {}) {
 }
 
 const THEME_SOURCE_FILES = [
+  "projects/invensys-ng/src/lib/themes/sizing.theme.scss",
   "projects/invensys-ng/src/lib/themes/theme.scss",
   "projects/invensys-ng/src/lib/themes/colors.theme.scss",
   "projects/invensys-ng/src/lib/themes/color-variables.scss",
@@ -895,6 +922,7 @@ function buildThemingGuide() {
       persistenceKey: "viewModeColorScheme",
     },
     instructions: [
+      "Include the theme globally once. Use rem sizing tokens and set --i-ui-scale on document.documentElement (default 1). Checkbox sizes are 0.75/0.875/1rem. Keep 44px coarse-pointer hit areas and thin pixel borders; do not infer scale from display resolution. Body-mounted overlays inherit root scaling.",
       "For the simplest setup, import `invensys-ng/src/lib/themes/theme.scss` from the application global stylesheet and include `invensys-theme.define-theme()` once. This includes colors, body defaults, typography, and scrollbar tokens.",
       "If the caller owns body styling, use `@include invensys-theme.define-theme($body: false);` or import `body.theme.scss` separately only where desired.",
       "Create an app-owned global theme SCSS file, normally `src/theme.scss` or `src/styles/theme.scss`.",
@@ -1452,6 +1480,9 @@ const tools = [
           description:
             "Selector, id, display name, or exported class name, such as i-button, button, or IButton.",
         },
+        exampleQuery: { type: "string", description: "Filter examples by a variation or binding, such as tertiary or virtualScroll." },
+        exampleOffset: { type: "integer", minimum: 0, default: 0 },
+        exampleLimit: { type: "integer", minimum: 1, maximum: 50, default: 8 },
         format: {
           type: "string",
           enum: ["markdown", "json"],

@@ -6,7 +6,7 @@ import { ISeverity } from '../../enums/IButtonSeverity';
   selector: 'i-progress-spinner',
   imports: [NgClass],
   templateUrl: './progress-spinner.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./progress-spinner.component.scss'],
 })
 export class IProgressSpinner {

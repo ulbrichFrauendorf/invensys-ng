@@ -48,6 +48,17 @@ import {
   styleUrl: './demo-playground.component.scss',
 })
 export class DemoPlaygroundComponent implements AfterContentInit {
+  readonly scaleOptions = [0.85, 1, 1.25];
+  scale =
+    Number(document.documentElement.style.getPropertyValue('--i-ui-scale')) ||
+    1;
+
+  setScale(value: number): void {
+    if (!Number.isFinite(value) || value < 0.5 || value > 2) return;
+    this.scale = value;
+    document.documentElement.style.setProperty('--i-ui-scale', String(value));
+  }
+
   @Input() showLoadingControl = false;
   readonly loading = model(false);
   @Input() title = 'Component';
@@ -72,7 +83,9 @@ export class DemoPlaygroundComponent implements AfterContentInit {
   ngAfterContentInit(): void {
     const options = this.optionTemplates.toArray();
     this.options.set(options);
-    this.selectedKey.set((options.find((option) => option.selected) ?? options[0])?.key ?? null);
+    this.selectedKey.set(
+      (options.find((option) => option.selected) ?? options[0])?.key ?? null,
+    );
   }
 
   readonly selectedOption = computed(() =>

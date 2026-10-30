@@ -11,7 +11,9 @@
     [sourceCode]="codeExamples.severities"
     [tsCode]="tsExamples.basic"
   >
-    <p class="section-description">Buttons come in 7 severity levels for different use cases.</p>
+    <p class="section-description">
+      Buttons come in 7 severity levels for different use cases.
+    </p>
     <div class="button-examples">
       @for (severity of severities; track severity) {
         <i-button [severity]="severity">{{ severity | titlecase }}</i-button>
@@ -19,8 +21,14 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-2" label="Size Variants" [sourceCode]="codeExamples.sizes">
-    <p class="section-description">Available in small, medium (default), and large sizes.</p>
+  <ng-template
+    appDemoOption="option-2"
+    label="Size Variants"
+    [sourceCode]="codeExamples.sizes"
+  >
+    <p class="section-description">
+      Available in small, medium (default), and large sizes.
+    </p>
     <div class="button-examples align-end">
       <i-button size="small">Small</i-button>
       <i-button size="medium">Medium</i-button>
@@ -28,7 +36,11 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-3" label="Button Styles" [sourceCode]="codeExamples.styles">
+  <ng-template
+    appDemoOption="option-3"
+    label="Button Styles"
+    [sourceCode]="codeExamples.styles"
+  >
     <p class="section-description">
       Choose from filled (default), outlined, text, and raised styles.
     </p>
@@ -74,15 +86,20 @@
     [sourceCode]="codeExamples.icons"
   >
     <p class="section-description">
-      Add icons to buttons using PrimeIcons. Icon-only buttons are automatically styled.
+      Add icons to buttons using PrimeIcons. Icon-only buttons are automatically
+      styled.
     </p>
     <div class="button-grid">
       <div class="style-group">
         <span class="style-label">With Text</span>
         <div class="button-examples">
           <i-button severity="primary" icon="pi pi-check">Save</i-button>
-          <i-button severity="danger" icon="pi pi-trash" [outlined]="true">Delete</i-button>
-          <i-button severity="info" icon="pi pi-search" [text]="true">Search</i-button>
+          <i-button severity="danger" icon="pi pi-trash" [outlined]="true"
+            >Delete</i-button
+          >
+          <i-button severity="info" icon="pi pi-search" [text]="true"
+            >Search</i-button
+          >
         </div>
       </div>
       <div class="style-group">
@@ -97,14 +114,24 @@
     </div>
   </ng-template>
 
-  <ng-template appDemoOption="option-5" label="Fluid Layout" [sourceCode]="codeExamples.fluid">
+  <ng-template
+    appDemoOption="option-5"
+    label="Fluid Layout"
+    [sourceCode]="codeExamples.fluid"
+  >
     <p class="section-description">
       Fluid buttons expand to fill the full width of their container.
     </p>
     <div class="fluid-container">
       <i-button severity="primary" [fluid]="true">Submit Form</i-button>
-      <i-button severity="secondary" [fluid]="true" [outlined]="true">Cancel</i-button>
-      <i-button severity="success" [fluid]="true" [raised]="true" icon="pi pi-download"
+      <i-button severity="secondary" [fluid]="true" [outlined]="true"
+        >Cancel</i-button
+      >
+      <i-button
+        severity="success"
+        [fluid]="true"
+        [raised]="true"
+        icon="pi pi-download"
         >Download Report</i-button
       >
     </div>
@@ -120,10 +147,19 @@
     </p>
     <div class="button-examples">
       <i-button severity="primary" [disabled]="true">Primary</i-button>
-      <i-button severity="success" [outlined]="true" [disabled]="true">Outlined</i-button>
+      <i-button severity="success" [outlined]="true" [disabled]="true"
+        >Outlined</i-button
+      >
       <i-button severity="info" [text]="true" [disabled]="true">Text</i-button>
-      <i-button severity="warning" [raised]="true" [disabled]="true">Raised</i-button>
+      <i-button severity="warning" [raised]="true" [disabled]="true"
+        >Raised</i-button
+      >
       <i-button severity="danger" icon="pi pi-trash" [disabled]="true" />
     </div>
   </ng-template>
+  <ng-template
+    appDemoOption="additional-variations"
+    label="Additional variations"
+    ><i-button severity="tertiary">Tertiary</i-button></ng-template
+  >
 </app-demo-playground>

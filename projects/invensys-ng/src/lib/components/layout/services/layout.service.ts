@@ -9,7 +9,7 @@ export interface AppConfig {
   inputStyle: string;
   colorScheme: string;
   ripple: boolean;
-  scale: number;
+  scale?: number;
 }
 
 interface LayoutState {
@@ -28,14 +28,15 @@ export class LayoutService {
     ripple: true,
     inputStyle: 'outlined',
     colorScheme: localStorage.getItem(LocalStorageColorSchemeKey) || 'light',
-    scale: 12,
   };
 
   config: WritableSignal<AppConfig> = signal<AppConfig>(this._config);
 
   public colorScheme = signal(this.config().colorScheme);
 
-  state: WritableSignal<LayoutState> = signal<LayoutState>(this.createInitialLayoutState());
+  state: WritableSignal<LayoutState> = signal<LayoutState>(
+    this.createInitialLayoutState(),
+  );
 
   private configUpdate = new Subject<AppConfig>();
 
@@ -44,7 +45,7 @@ export class LayoutService {
   constructor() {
     effect(() => {
       const config = this.config();
-      this.changeScale(config.scale);
+      if (config.scale !== undefined) this.changeScale(config.scale);
       this.onConfigUpdate();
     });
   }
@@ -71,7 +72,9 @@ export class LayoutService {
 
   closeSidebar() {
     this.state.update((currentState) =>
-      currentState.isSidebarOpen ? { ...currentState, isSidebarOpen: false } : currentState,
+      currentState.isSidebarOpen
+        ? { ...currentState, isSidebarOpen: false }
+        : currentState,
     );
   }
 
@@ -115,6 +118,12 @@ export class LayoutService {
   }
 
   changeScale(value: number) {
-    document.documentElement.style.fontSize = `${value}px`;
+    if (
+      typeof document !== 'undefined' &&
+      Number.isFinite(value) &&
+      value > 0
+    ) {
+      document.documentElement.style.setProperty('--i-ui-scale', String(value));
+    }
   }
 }

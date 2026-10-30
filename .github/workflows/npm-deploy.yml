@@ -47,8 +47,11 @@ jobs:
       - name: Install root dependencies
         run: npm ci
 
-      - name: Audit dependencies
+      - name: Audit dependencies before publish and deploy
         run: npm audit --audit-level=low
+
+      - name: Install test browser
+        run: npx --no-install playwright install --with-deps chromium
 
       - name: Update version in package.json
         run: |
@@ -57,6 +60,12 @@ jobs:
 
       - name: Build package and site artifacts
         run: npm run build
+
+      - name: Run all unit tests
+        run: npm test -- --watch=false
+
+      - name: Run desktop and touch regressions
+        run: npm run test:frontend
 
       - name: Publish to NPM (OIDC)
         # NOTE: No NODE_AUTH_TOKEN env/secret needed when using OIDC trusted publishing

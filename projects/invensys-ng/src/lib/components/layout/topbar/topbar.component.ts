@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { LayoutService, LocalStorageColorSchemeKey } from '../services/layout.service';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -15,6 +23,23 @@ import { LayoutConfig } from '../models/layout-config.model';
 export class TopbarComponent implements OnInit {
   @Input() config!: LayoutConfig;
   isDark: boolean = false;
+  @ViewChild('menuTrigger', { read: ElementRef })
+  menuTrigger?: ElementRef<HTMLElement>;
+  @ViewChild('menu') menu?: ElementRef<HTMLElement>;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target;
+    if (
+      !this.layoutService.state().profileSidebarVisible ||
+      !(target instanceof Node) ||
+      this.menuTrigger?.nativeElement.contains(target) ||
+      this.menu?.nativeElement.contains(target)
+    ) {
+      return;
+    }
+    this.layoutService.closeProfileSidebar();
+  }
 
   constructor(public layoutService: LayoutService) {}
 

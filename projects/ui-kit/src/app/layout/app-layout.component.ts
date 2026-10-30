@@ -2,21 +2,64 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LayoutComponent } from '@shared/components/layout/layout.component';
 import { LayoutConfig } from '@shared/components/layout/models/layout-config.model';
 import { MenuModel } from '@shared/components/layout/models/menu.model';
+import { LayoutService } from '@shared/components/layout/services/layout.service';
+import { IInputText } from '@shared/components/input-text/input-text.component';
+import { FormsModule } from '@angular/forms';
+import { IButton } from '@shared/components/button/button.component';
+import { IOverlayPanel } from '@shared/components/overlay-panel/overlay-panel.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [LayoutComponent],
+  imports: [LayoutComponent, IInputText, FormsModule, IButton, IOverlayPanel],
   changeDetection: ChangeDetectionStrategy.Eager,
+  styles: `
+    .site-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  `,
   template: `
     <i-layout [config]="layoutConfig" [menuModel]="menuModel">
       <ng-container topbarActions>
-        <!-- Additional topbar actions can be added here if needed -->
+        <i-button
+          icon="pi pi-cog"
+          severity="contrast"
+          [text]="true"
+          ariaLabel="Site controls"
+          (clicked)="siteControls.toggle($event)"
+        />
+        <i-overlay-panel #siteControls [appendTo]="null">
+          <div class="site-controls">
+            <h3>Site controls</h3>
+            <i-input-text
+              label="UI scale (%)"
+              type="number"
+              [ngModel]="scalePercent"
+              (ngModelChange)="setScale($event)"
+            />
+          </div>
+        </i-overlay-panel>
       </ng-container>
     </i-layout>
   `,
 })
 export class AppLayoutComponent {
+  scalePercent =
+    (Number(document.documentElement.style.getPropertyValue('--i-ui-scale')) ||
+      1) * 100;
+
+  constructor(private readonly layoutService: LayoutService) {}
+
+  setScale(value: string | null): void {
+    const percent = Number(value);
+    if (!value || !Number.isFinite(percent) || percent < 50 || percent > 200)
+      return;
+    this.scalePercent = percent;
+    this.layoutService.changeScale(percent / 100);
+  }
+
   layoutConfig: LayoutConfig = {
     websiteName: 'Invensys-NG',
     logoLight: 'assets/layout/images/invensys-icon-light.png',

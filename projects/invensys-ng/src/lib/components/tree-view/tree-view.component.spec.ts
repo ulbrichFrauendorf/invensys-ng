@@ -376,14 +376,51 @@ describe('ITreeView', () => {
       expect(component.selection).toBe(initialSelection);
     });
 
-    it('should not handle click in checkbox mode', () => {
+    it('toggles checkbox selection from the row', () => {
       fixture.componentRef.setInput('selectionMode', 'checkbox');
-      const node = mockTreeData[0];
-      const mockEvent = new Event('click');
-      const initialSelection = component.selection;
+      fixture.componentRef.setInput('selection', []);
+      fixture.detectChanges();
+      const node = component.value[0];
+      const row: HTMLElement = fixture.nativeElement.querySelector('.i-tree-view-node');
 
-      component.onNodeClick(mockEvent, node);
-      expect(component.selection).toBe(initialSelection);
+      row.querySelector<HTMLElement>('.i-tree-view-node-label')!.click();
+      expect(component.selection).toContain(node);
+      expect(component.selection).toContain(node.children![0]);
+      row.click();
+      expect(component.selection).toEqual([]);
+    });
+
+    it('toggles checkbox selection only once from the checkbox and preserves expansion clicks', async () => {
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selection', []);
+      fixture.detectChanges();
+      const node = component.value[0];
+      const row: HTMLElement = fixture.nativeElement.querySelector('.i-tree-view-node');
+      const changes = vi.spyOn(component.selectionChange, 'emit');
+
+      row.querySelector<HTMLElement>('[role="checkbox"]')!.click();
+      await vi.advanceTimersByTimeAsync(0);
+      expect(component.selection).toContain(node);
+      expect(changes).toHaveBeenCalledTimes(1);
+
+      row.querySelector<HTMLElement>('.i-tree-view-toggler')!.click();
+      expect(node.expanded).toBe(true);
+      expect(changes).toHaveBeenCalledTimes(1);
+    });
+
+    it('supports row keyboard activation and ignores non-selectable nodes', () => {
+      fixture.componentRef.setInput('selectionMode', 'checkbox');
+      fixture.componentRef.setInput('selection', []);
+      fixture.detectChanges();
+      const node = component.value[0];
+      const row: HTMLElement = fixture.nativeElement.querySelector('.i-tree-view-node');
+
+      row.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+      expect(component.selection).toContain(node);
+      node.selectable = false;
+      row.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      expect(component.selection).toContain(node);
     });
   });
 

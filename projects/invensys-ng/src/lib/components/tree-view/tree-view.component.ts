@@ -405,6 +405,8 @@ export class ITreeView implements OnInit, OnChanges {
     }
 
     if (this.selectionMode === 'checkbox') {
+      this.addTemporaryHighlight(node);
+      this.selectCheckboxNode(event, node);
       return;
     }
 
@@ -476,7 +478,7 @@ export class ITreeView implements OnInit, OnChanges {
   }
 
   onCheckboxChange(checked: boolean, node: ITreeNode) {
-    if (this.loading || node.loading) return;
+    if (this.loading || node.loading || node.selectable === false) return;
     this.addTemporaryHighlight(node);
 
     const fakeEvent = new MouseEvent('click', {

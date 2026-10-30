@@ -4,27 +4,6 @@
   sidebarPosition="right"
 >
   <div iPageHeaderActions class="demo-header-actions">
-    <label>
-      UI scale
-      <input
-        type="number"
-        min="0.5"
-        max="2"
-        step="0.05"
-        [ngModel]="scale"
-        (ngModelChange)="setScale($event)"
-      />
-    </label>
-    @for (value of scaleOptions; track value) {
-      <i-button
-        size="small"
-        [text]="scale !== value"
-        [ariaLabel]="'UI scale ' + value * 100 + '%'"
-        (clicked)="setScale(value)"
-      >
-        {{ value * 100 }}%
-      </i-button>
-    }
     @if (showLoadingControl) {
       <i-toggle
         label="Loading preview"

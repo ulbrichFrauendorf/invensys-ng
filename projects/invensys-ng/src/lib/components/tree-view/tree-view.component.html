@@ -95,10 +95,16 @@
           <span class="i-tree-view-toggler-spacer"></span>
         }
         @if (selectionMode === "checkbox") {
-          <div class="i-tree-view-checkbox-container">
+          <div
+            class="i-tree-view-checkbox-container"
+            (click)="$event.stopPropagation()"
+            (keydown.enter)="$event.stopPropagation()"
+            (keydown.space)="$event.stopPropagation()"
+          >
             <i-checkbox
               [checked]="isSelected(node) && !isPartiallySelected(node)"
               [indeterminate]="isPartiallySelected(node)"
+              [disabled]="loading || !!node.loading || node.selectable === false"
               (onChange)="onCheckboxChange($event, node)"
               [id]="getCheckboxId(node)"
               size="small"

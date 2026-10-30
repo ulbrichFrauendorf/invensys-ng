@@ -29,6 +29,7 @@ describe('LayoutComponent', () => {
   });
 
   afterEach(() => {
+    fixture.nativeElement.remove();
     fixture.destroy();
     vi.clearAllTimers();
     vi.useRealTimers();
@@ -50,6 +51,26 @@ describe('LayoutComponent', () => {
     await fixture.whenStable();
     expect(service.state().isSidebarOpen).toBe(false);
     expect(document.body.classList.contains('blocked-scroll')).toBe(false);
+  });
+
+  it('closes the mobile topbar menu only when clicking outside it', async () => {
+    document.body.appendChild(fixture.nativeElement);
+    const trigger: HTMLElement = fixture.nativeElement.querySelector(
+      '.layout-topbar-menu-button button',
+    );
+    const menu: HTMLElement = fixture.nativeElement.querySelector(
+      '.layout-topbar-menu',
+    );
+
+    trigger.click();
+    await fixture.whenStable();
+    expect(service.state().profileSidebarVisible).toBe(true);
+
+    menu.click();
+    expect(service.state().profileSidebarVisible).toBe(true);
+
+    document.body.click();
+    expect(service.state().profileSidebarVisible).toBe(false);
   });
 
   it('updates the viewport state on resize', async () => {

@@ -100,6 +100,13 @@ export class LayoutService {
     }));
   }
 
+  closeProfileSidebar() {
+    this.state.update((currentState) => ({
+      ...currentState,
+      profileSidebarVisible: false,
+    }));
+  }
+
   private isMobileViewport(width: number = this.getViewportWidth()) {
     return width <= this.mobileBreakpoint;
   }

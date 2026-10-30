@@ -13,6 +13,7 @@
     (clicked)="layoutService.toggleSidebar()"
   ></i-button>
   <i-button
+    #menuTrigger
     class="layout-topbar-menu-button"
     [severity]="'contrast'"
     size="medium"
@@ -22,6 +23,7 @@
   ></i-button>
 
   <div
+    #menu
     class="layout-topbar-menu"
     [ngClass]="{
       'layout-topbar-menu-mobile-active': layoutService.state().profileSidebarVisible,

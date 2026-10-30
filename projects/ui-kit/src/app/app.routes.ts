@@ -1,3 +1,4 @@
+import { CarouselsComponent } from './components/carousels/carousels.component';
 import { DataEditorsComponent } from './components/data-editors/data-editors.component';
 import { ReportingWorkflowsComponent } from './components/reporting-workflows/reporting-workflows.component';
 import { Routes } from '@angular/router';
@@ -61,7 +62,10 @@ export const routes: Routes = [
       {
         path: 'components',
         children: [
-          { path: 'reporting-workflows', component: ReportingWorkflowsComponent },
+          {
+            path: 'reporting-workflows',
+            component: ReportingWorkflowsComponent,
+          },
           { path: 'file-uploads', component: FileUploadsComponent },
           { path: 'data-editors', component: DataEditorsComponent },
           { path: 'accordions', component: AccordionsComponent },
@@ -95,6 +99,7 @@ export const routes: Routes = [
           { path: 'selects', component: SelectsComponent },
           { path: 'tables', component: TablesComponent },
           { path: 'steppers', component: SteppersComponent },
+          { path: 'carousels', component: CarouselsComponent },
           { path: 'tabs', component: TabsComponent },
           { path: 'tooltips', component: TooltipsComponent },
           { path: 'toggles', component: TogglesComponent },

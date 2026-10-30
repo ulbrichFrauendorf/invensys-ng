@@ -83,3 +83,6 @@ export * from './lib/utils/zindexutils';
 export * from './lib/components/field-picker/field-picker.component';
 export * from './lib/components/ordered-list/ordered-list.component';
 export * from './lib/components/rule-editor/rule-editor.component';
+
+export * from './lib/components/carousel/carousel.component';
+export * from './lib/components/carousel/carousel-item.directive';

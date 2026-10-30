@@ -1,15 +1,27 @@
-<div class="i-stepper" [ngClass]="'i-stepper--' + orientation" [attr.id]="componentId">
-  <div class="i-stepper__body">
-    <ol class="i-stepper__navigation" [attr.aria-label]="ariaLabel">
+<div
+  class="i-stepper"
+  [ngClass]="'i-stepper-' + orientation"
+  [attr.id]="componentId"
+>
+  <div class="i-stepper-body">
+    <i-carousel
+      class="i-stepper-navigation"
+      [mobileOnly]="true"
+      [activeIndex]="activeIndex"
+      [ariaLabel]="ariaLabel"
+      role="list"
+    >
       @for (step of steps; track step; let index = $index; let last = $last) {
-        <li
-          class="i-stepper__item"
-          [class.i-stepper__item--active]="activeIndex === index"
-          [class.i-stepper__item--completed]="step.completed"
-          [class.i-stepper__item--disabled]="!canSelect(index)"
+        <div
+          role="listitem"
+          iCarouselItem
+          class="i-stepper-item"
+          [class.i-stepper-item-active]="activeIndex === index"
+          [class.i-stepper-item-completed]="step.completed"
+          [class.i-stepper-item-disabled]="!canSelect(index)"
         >
           <button
-            class="i-stepper__trigger"
+            class="i-stepper-trigger"
             type="button"
             [attr.id]="componentId + '-step-' + index"
             [attr.aria-current]="activeIndex === index ? 'step' : null"
@@ -22,46 +34,51 @@
             (click)="selectStep($event, index)"
             (keydown)="onKeyDown($event, index)"
           >
-            <span class="i-stepper__sr-only">Step {{ index + 1 }} of {{ steps.length }}.</span>
-            <span class="i-stepper__indicator" aria-hidden="true">
+            <span class="i-stepper-sr-only"
+              >Step {{ index + 1 }} of {{ steps.length }}.</span
+            >
+            <span class="i-stepper-indicator" aria-hidden="true">
               @if (step.icon) {
                 <i [ngClass]="step.icon"></i>
               } @else {
                 {{ index + 1 }}
               }
             </span>
-            <span class="i-stepper__copy">
-              <span class="i-stepper__label">{{ step.label }}</span>
+            <span class="i-stepper-copy">
+              <span class="i-stepper-label">{{ step.label }}</span>
               @if (step.description) {
                 <span
-                  class="i-stepper__description"
+                  class="i-stepper-description"
                   [attr.id]="componentId + '-description-' + index"
                   >{{ step.description }}</span
                 >
               }
             </span>
             @if (step.optional && !step.completed) {
-              <span class="i-stepper__optional">Optional</span>
+              <span class="i-stepper-optional">Optional</span>
             }
             @if (step.completed) {
-              <span class="i-stepper__completion"
+              <span class="i-stepper-completion"
                 ><i class="pi pi-check" aria-hidden="true"></i
-                ><span class="i-stepper__sr-only">Completed.</span></span
+                ><span class="i-stepper-sr-only">Completed.</span></span
               >
             } @else if (!last) {
-              <i class="pi pi-chevron-right i-stepper__chevron" aria-hidden="true"></i>
+              <i
+                class="pi pi-chevron-right i-stepper-chevron"
+                aria-hidden="true"
+              ></i>
             }
           </button>
           @if (!last) {
-            <span class="i-stepper__connector" aria-hidden="true"></span>
+            <span class="i-stepper-connector" aria-hidden="true"></span>
           }
-        </li>
+        </div>
       }
-    </ol>
+    </i-carousel>
     @for (step of steps; track step; let index = $index) {
       <section
-        class="i-stepper__panel"
-        [class.i-stepper__panel--active]="activeIndex === index"
+        class="i-stepper-panel"
+        [class.i-stepper-panel-active]="activeIndex === index"
         [attr.id]="componentId + '-panel-' + index"
         [attr.aria-labelledby]="componentId + '-step-' + index"
         [attr.hidden]="activeIndex !== index || null"
@@ -73,5 +90,5 @@
       </section>
     }
   </div>
-  <div class="i-stepper__actions"><ng-content select="[stepperActions]" /></div>
+  <div class="i-stepper-actions"><ng-content select="[stepperActions]" /></div>
 </div>

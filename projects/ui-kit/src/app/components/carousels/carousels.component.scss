@@ -1,0 +1,12 @@
+:host {
+  display: block;
+
+  .feature-slide {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    padding: 24px;
+  }
+}

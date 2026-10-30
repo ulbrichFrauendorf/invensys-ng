@@ -1,0 +1,17 @@
+<app-demo-playground title="Carousels" eyebrow="Layout &amp; Containers">
+  <ng-template
+    appDemoOption="slides"
+    label="Featured tools"
+    [selected]="true"
+    [sourceCode]="sourceCode"
+    [tsCode]="tsCode"
+  >
+    <i-carousel [(activeIndex)]="activeIndex" ariaLabel="Featured tools">
+      <section iCarouselItem class="feature-slide"><h3>Reports</h3></section>
+      <section iCarouselItem class="feature-slide"><h3>Onboarding</h3></section>
+      <section iCarouselItem class="feature-slide">
+        <h3>Automations</h3>
+      </section>
+    </i-carousel>
+  </ng-template>
+</app-demo-playground>

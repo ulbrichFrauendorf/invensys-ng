@@ -1,0 +1,40 @@
+<section
+  class="i-carousel"
+  role="region"
+  aria-roledescription="carousel"
+  [attr.aria-label]="ariaLabel"
+>
+  <div
+    #viewport
+    class="i-carousel-viewport"
+    tabindex="0"
+    [attr.aria-label]="ariaLabel + ' slides'"
+    (keydown)="onKeyDown($event)"
+    (scrollend)="onScrollEnd()"
+  >
+    <ng-content />
+  </div>
+  @if (count > 1) {
+    <div class="i-carousel-controls">
+      <i-button
+        icon="pi pi-chevron-left"
+        severity="contrast"
+        [text]="true"
+        ariaLabel="Previous slide"
+        [disabled]="activeIndex <= 0"
+        (clicked)="goTo(activeIndex - 1)"
+      />
+      <span aria-live="polite" aria-atomic="true"
+        >{{ activeIndex + 1 }} of {{ count }}</span
+      >
+      <i-button
+        icon="pi pi-chevron-right"
+        severity="contrast"
+        [text]="true"
+        ariaLabel="Next slide"
+        [disabled]="activeIndex >= count - 1"
+        (clicked)="goTo(activeIndex + 1)"
+      />
+    </div>
+  }
+</section>

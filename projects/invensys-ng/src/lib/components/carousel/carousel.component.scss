@@ -1,0 +1,48 @@
+@use "./carousel.component.theme" as theme;
+
+:host {
+  display: block;
+  min-width: 0;
+  container-type: inline-size;
+
+  .i-carousel {
+    min-width: 0;
+
+    .i-carousel-viewport {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      padding: 4px;
+    }
+
+    .i-carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 8px;
+    }
+  }
+
+  &.mobile-only {
+    container-type: normal;
+    @container (min-width: 901px) {
+      .i-carousel {
+        .i-carousel-viewport {
+          --carousel-item-flex: var(--carousel-wide-item-flex, 1 1 0);
+          flex-direction: var(--carousel-wide-direction, row);
+          overflow: visible;
+        }
+
+        .i-carousel-controls {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@include theme.i-carousel-theme();

@@ -1,59 +1,55 @@
-@use '../../themes/color-variables.scss' as colors;
+@use "../../themes/color-variables.scss" as colors;
 
 @mixin i-stepper-theme() {
   .i-stepper {
     color: colors.$color-text-primary;
-    &__trigger {
-      background: colors.$color-surface-section;
-      color: colors.$color-text-primary;
-      border-bottom-color: transparent;
-      &:hover:not(:disabled) {
-        background: colors.$color-surface-hover;
+
+    .i-stepper-body {
+      .i-stepper-navigation {
+        .i-stepper-item {
+          .i-stepper-trigger {
+            background: colors.$color-surface-section;
+            color: colors.$color-text-primary;
+            &:hover:not(:disabled) {
+              background: colors.$color-surface-hover;
+            }
+            &:focus-visible {
+              outline: 2px solid colors.$color-primary;
+              outline-offset: 2px;
+            }
+            &:disabled {
+              cursor: not-allowed;
+            }
+            .i-stepper-indicator {
+              color: colors.$color-text-tertiary;
+            }
+            .i-stepper-optional,
+            .i-stepper-chevron {
+              color: colors.$color-text-secondary;
+            }
+            .i-stepper-completion {
+              color: colors.$color-success;
+            }
+          }
+          .i-stepper-connector {
+            background: colors.$color-surface-border;
+          }
+          &.i-stepper-item-completed {
+            .i-stepper-indicator {
+              color: colors.$color-success;
+            }
+          }
+          &.i-stepper-item-active:not(.i-stepper-item-completed) {
+            .i-stepper-chevron,
+            .i-stepper-indicator {
+              color: colors.$color-primary;
+            }
+          }
+          &.i-stepper-item-disabled {
+            opacity: 0.55;
+          }
+        }
       }
-      &:focus-visible {
-        outline: 2px solid colors.$color-primary;
-        outline-offset: 2px;
-      }
-      &:disabled {
-        cursor: not-allowed;
-      }
-    }
-    &__indicator {
-      color: colors.$color-text-tertiary;
-    }
-    &__optional {
-      color: colors.$color-text-secondary;
-    }
-    &__completion {
-      color: colors.$color-success;
-    }
-    &__chevron {
-      color: colors.$color-text-secondary;
-    }
-    &__connector {
-      background: colors.$color-surface-border;
-    }
-    &__item--completed {
-      > .i-stepper__connector {
-        background: colors.$color-surface-border;
-      }
-    }
-    &__item--active:not(.i-stepper__item--completed) .i-stepper__chevron {
-      color: colors.$color-primary;
-    }
-    &__item--completed {
-      .i-stepper__indicator {
-        color: colors.$color-success;
-      }
-    }
-    &__item--active:not(.i-stepper__item--completed) .i-stepper__trigger {
-      border-bottom-color: colors.$color-primary;
-    }
-    &__item--active:not(.i-stepper__item--completed) .i-stepper__indicator {
-      color: colors.$color-primary;
-    }
-    &__item--disabled {
-      opacity: 0.55;
     }
   }
 }

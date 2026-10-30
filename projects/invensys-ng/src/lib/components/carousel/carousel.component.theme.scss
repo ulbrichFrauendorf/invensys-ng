@@ -1,0 +1,15 @@
+@use "../../themes/color-variables.scss" as colors;
+
+@mixin i-carousel-theme() {
+  .i-carousel {
+    .i-carousel-viewport {
+      &:focus-visible {
+        outline: 2px solid colors.$color-primary;
+        outline-offset: 2px;
+      }
+    }
+    .i-carousel-controls {
+      color: colors.$color-text-secondary;
+    }
+  }
+}

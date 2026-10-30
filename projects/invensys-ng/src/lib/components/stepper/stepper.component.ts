@@ -10,6 +10,8 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { UniqueComponentId } from '../../utils/uniquecomponentid';
+import { ICarousel } from '../carousel/carousel.component';
+import { ICarouselItem } from '../carousel/carousel-item.directive';
 import { IStep } from './step.component';
 
 export type StepperOrientation = 'horizontal' | 'vertical';
@@ -41,7 +43,7 @@ export interface StepperChangeEvent {
 @Component({
   selector: 'i-stepper',
   standalone: true,
-  imports: [NgClass, NgTemplateOutlet],
+  imports: [NgClass, NgTemplateOutlet, ICarousel, ICarouselItem],
   templateUrl: './stepper.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './stepper.component.scss',
@@ -53,7 +55,7 @@ export class IStepper implements AfterContentInit {
   /** Prevents skipping incomplete steps when enabled. */
   @Input() linear = false;
 
-  /** Navigation layout. Horizontal steppers collapse to vertical on small screens. */
+  /** Navigation layout. Step headers become a swipeable carousel on small screens. */
   @Input() orientation: StepperOrientation = 'horizontal';
 
   /** Accessible label for the step navigation. */
@@ -96,12 +98,16 @@ export class IStepper implements AfterContentInit {
       return true;
     }
 
-    return this.steps.slice(0, index).every((item) => item.completed || item.optional);
+    return this.steps
+      .slice(0, index)
+      .every((item) => item.completed || item.optional);
   }
 
   onKeyDown(event: KeyboardEvent, index: number): void {
     const directionKeys =
-      this.orientation === 'vertical' ? ['ArrowUp', 'ArrowDown'] : ['ArrowLeft', 'ArrowRight'];
+      this.orientation === 'vertical'
+        ? ['ArrowUp', 'ArrowDown']
+        : ['ArrowLeft', 'ArrowRight'];
 
     if (event.key === directionKeys[0]) {
       this.focusAdjacent(index, -1);
@@ -125,7 +131,10 @@ export class IStepper implements AfterContentInit {
       return;
     }
 
-    this.activeIndex = Math.min(Math.max(this.activeIndex, 0), this.steps.length - 1);
+    this.activeIndex = Math.min(
+      Math.max(this.activeIndex, 0),
+      this.steps.length - 1,
+    );
   }
 
   private focusAdjacent(index: number, direction: number): void {

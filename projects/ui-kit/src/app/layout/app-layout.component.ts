@@ -160,6 +160,11 @@ export class AppLayoutComponent {
           routerLink: ['/components/tabs'],
         },
         {
+          label: 'Carousels',
+          icon: 'pi pi-fw pi-images',
+          routerLink: ['/components/carousels'],
+        },
+        {
           label: 'Steppers',
           icon: 'pi pi-fw pi-list-check',
           routerLink: ['/components/steppers'],

@@ -157,6 +157,48 @@ describe('PageLayoutComponent', () => {
     await new Promise(requestAnimationFrame);
   }
 
+  it.each([true, false])(
+    'keeps the mobile right control at the top right with or without a left control (left: %s)',
+    async (showLeft) => {
+      if (!matchMedia('(max-width: 991px)').matches) return;
+      TestBed.configureTestingModule({ imports: [ComposedTestPage] });
+      const fixture = TestBed.createComponent(ComposedTestPage);
+      fixture.componentInstance.showLeft.set(showLeft);
+      fixture.componentInstance.leftVisible.set(false);
+      await fixture.whenStable();
+      const root: HTMLElement = fixture.nativeElement;
+      const header = root.querySelector<HTMLElement>('.page-header')!;
+      header.style.width = '320px';
+      const right = header.querySelector<HTMLElement>('.sidebar-toggle-right')!;
+      const heading = header.querySelector<HTMLElement>('.page-heading')!;
+      const actions = header.querySelector<HTMLElement>('.header-actions')!;
+      const rightRect = right.getBoundingClientRect();
+      const headerRect = header.getBoundingClientRect();
+      expect(Math.abs(rightRect.top - heading.getBoundingClientRect().top)).toBeLessThan(
+        1,
+      );
+      expect(
+        Math.abs(
+          rightRect.right -
+            (headerRect.right - parseFloat(getComputedStyle(header).paddingRight)),
+        ),
+      ).toBeLessThan(1);
+      if (showLeft) {
+        const left = heading.querySelector<HTMLElement>('.sidebar-toggle')!;
+        expect(Math.abs(rightRect.top - left.getBoundingClientRect().top)).toBeLessThan(
+          1,
+        );
+      }
+      expect(actions.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+        rightRect.bottom,
+      );
+      right.querySelector('button')!.click();
+      await fixture.whenStable();
+      expect(Math.abs(right.getBoundingClientRect().top - rightRect.top)).toBeLessThan(1);
+      fixture.destroy();
+    },
+  );
+
   it('composes both sidebars around one body with controls on the matching header sides', async () => {
     TestBed.configureTestingModule({ imports: [ComposedTestPage] });
     const fixture = TestBed.createComponent(ComposedTestPage);

@@ -25,4 +25,9 @@ export class CarouselsComponent {
   <section iCarouselItem><h3>Automations</h3></section>
 </i-carousel>`;
   readonly tsCode = `import { ICarousel, ICarouselItem } from 'invensys-ng';`;
+  readonly fullWidthSourceCode = `<i-carousel [fullWidth]="true" [showNavigators]="true" ariaLabel="Featured tools">
+  <section iCarouselItem><h3>Reports</h3></section>
+  <section iCarouselItem><h3>Onboarding</h3></section>
+  <section iCarouselItem><h3>Automations</h3></section>
+</i-carousel>`;
 }

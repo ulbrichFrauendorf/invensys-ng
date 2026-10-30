@@ -3,7 +3,12 @@
 :host {
   display: block;
   min-width: 0;
+  max-width: 100%;
   container-type: inline-size;
+
+  &.full-width {
+    --carousel-item-flex: 0 0 100%;
+  }
 
   .i-carousel {
     min-width: 0;
@@ -14,8 +19,18 @@
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
+      scrollbar-width: none;
       padding: 4px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &.i-carousel-dragging {
+        scroll-snap-type: none;
+        user-select: none;
+        cursor: grabbing;
+      }
     }
 
     .i-carousel-controls {
@@ -24,6 +39,64 @@
       justify-content: space-between;
       gap: 12px;
       padding-top: 8px;
+
+      .i-carousel-indicators {
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-width: 0;
+
+        .i-carousel-dot {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 0 0 auto;
+          width: 24px;
+          height: 24px;
+          padding: 0;
+          border: 0;
+          border-radius: 12px;
+          cursor: pointer;
+
+          &::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+          }
+
+          &.i-carousel-dot-active {
+            width: 36px;
+
+            &::before {
+              width: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.overflow-only {
+    container-type: normal;
+
+    .i-carousel {
+      .i-carousel-viewport {
+        --carousel-item-flex: var(
+          --carousel-overflow-item-flex,
+          1 0 var(--carousel-min-item-width, 180px)
+        );
+        flex-direction: var(--carousel-overflow-direction, row);
+      }
+    }
+
+    &:not(.is-overflowing) {
+      .i-carousel-controls {
+        display: none;
+      }
     }
   }
 

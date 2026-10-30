@@ -11,12 +11,16 @@
     margin-bottom: 9px;
   }
   &__rules {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 9px;
   }
   &__row {
-    display: grid;
-    grid-template-columns: 24px minmax(0, 1fr) auto;
+    display: flex;
+    flex-direction: row;
+    > i-button {
+      flex: 0 0 auto;
+    }
     align-items: center;
     gap: 9px;
     padding: 12px;
@@ -25,8 +29,11 @@
     border-radius: 6px;
   }
   &__drag-handle {
-    display: grid;
-    place-items: center;
+    flex: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
     padding: 0;
@@ -49,14 +56,27 @@
     }
   }
   &__fields {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    > * {
+      flex: 0 0 calc((100% - 18px) / 3);
+      min-width: 0;
+      box-sizing: border-box;
+    }
     align-items: end;
     gap: 9px;
     min-width: 0;
   }
   &__fields--valueless {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex-direction: row;
+    flex-wrap: wrap;
+    > * {
+      flex: 0 0 calc((100% - 9px) / 2);
+      min-width: 0;
+      box-sizing: border-box;
+    }
   }
   &__fields > i-select,
   &__fields > i-input-text {
@@ -80,17 +100,28 @@
 
 .i-rule-editor__fields {
   @container (max-width: 576px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex-direction: row;
+    flex-wrap: wrap;
+    > * {
+      flex: 0 0 calc((100% - 9px) / 2);
+      min-width: 0;
+      box-sizing: border-box;
+    }
   }
   @container (max-width: 408px) {
-    grid-template-columns: minmax(0, 1fr);
+    flex-direction: column;
+    align-items: stretch;
+    > * {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
   }
 }
 
 .i-rule-editor__fields {
   > :nth-child(3) {
     @container (max-width: 576px) {
-      grid-column: 1 / -1;
+      flex-basis: 100%;
     }
   }
 }

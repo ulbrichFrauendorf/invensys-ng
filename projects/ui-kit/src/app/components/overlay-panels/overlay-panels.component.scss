@@ -3,8 +3,14 @@
 @use '../shared-demo-styles.scss' as *;
 
 .position-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  > * {
+    flex: 1 1 150px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
   gap: 32px;
   padding: 32px;
 }

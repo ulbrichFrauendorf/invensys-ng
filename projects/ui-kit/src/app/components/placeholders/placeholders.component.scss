@@ -14,15 +14,31 @@
 }
 
 .demo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  > * {
+    flex: 1 1 200px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
   gap: 16px;
 
   &.two-columns {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
+    flex-wrap: wrap;
+    > * {
+      flex: 0 0 calc((100% - 16px) / 2);
+      min-width: 0;
+      box-sizing: border-box;
+    }
 
     @media (max-width: 768px) {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      > * {
+        flex: 0 0 auto;
+        min-width: 0;
+      }
     }
   }
 

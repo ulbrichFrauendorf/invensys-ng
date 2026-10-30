@@ -1,7 +1,7 @@
 @use '../../../../../invensys-ng/src/lib/themes/color-variables.scss' as colors;
 
 @mixin card-buttons-theme() {
-  .interactive-card-grid {
+  .interactive-cards {
     .card-tool-icon {
       color: colors.$color-primary;
     }

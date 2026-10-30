@@ -1,11 +1,17 @@
 .demo-form {
   .form-grid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 24px;
     margin-bottom: 24px;
 
     @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      flex-direction: row;
+      flex-wrap: wrap;
+      > * {
+        flex: 1 1 300px;
+        min-width: 0;
+      }
     }
   }
 
@@ -13,7 +19,7 @@
     width: 100%;
   }
 
-  i-button[type="submit"] {
+  i-button[type='submit'] {
     margin-top: 16px;
   }
 }

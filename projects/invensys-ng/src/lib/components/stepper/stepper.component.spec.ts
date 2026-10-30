@@ -40,6 +40,9 @@ import {
         [completed]="reviewComplete"
         >Review content</i-step
       >
+      @for (label of extraSteps; track label) {
+        <i-step [label]="label">{{ label }} content</i-step>
+      }
       <footer stepperActions><button type="button">Continue</button></footer>
     </i-stepper>
   `,
@@ -52,6 +55,7 @@ class TestHostComponent {
   detailsComplete = false;
   reviewDisabled = true;
   reviewComplete = false;
+  extraSteps: string[] = [];
   lastChange: StepperChangeEvent | null = null;
 }
 
@@ -128,7 +132,12 @@ describe('IStepper', () => {
     expect(items[0].getBoundingClientRect().top).toBe(
       items[1].getBoundingClientRect().top,
     );
-    expect(viewport.scrollWidth).toBeGreaterThan(viewport.clientWidth * 2);
+    expect(items[0].getBoundingClientRect().width).toBeLessThan(
+      viewport.clientWidth,
+    );
+    expect(
+      fixture.nativeElement.querySelector('.i-carousel-controls i-button'),
+    ).toBeNull();
     host.activeIndex = 1;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
@@ -165,6 +174,67 @@ describe('IStepper', () => {
       items[0].getBoundingClientRect().bottom,
     );
     expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+  });
+
+  async function settleLayout(): Promise<void> {
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    fixture.detectChanges();
+  }
+
+  it('shrinks cards gradually across 900px and enables the carousel only below their combined minimum width', async () => {
+    const root: HTMLElement = fixture.nativeElement;
+    const viewport = root.querySelector<HTMLElement>('.i-carousel-viewport')!;
+    const item = root.querySelector<HTMLElement>('.i-stepper-item')!;
+    const controls = root.querySelector<HTMLElement>('.i-carousel-controls')!;
+    let previousWidth = 0;
+    let previousItemWidth = 0;
+    for (const width of [1100, 940, 901, 900, 880, 825, 700, 600, 596]) {
+      root.style.width = `${width}px`;
+      await settleLayout();
+      const itemWidth = item.getBoundingClientRect().width;
+      expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+      expect(getComputedStyle(controls).display).toBe('none');
+      expect(itemWidth).toBeCloseTo((width - 56) / 3, 1);
+      if (previousWidth) {
+        expect(previousItemWidth - itemWidth).toBeCloseTo(
+          (previousWidth - width) / 3,
+          1,
+        );
+      }
+      previousWidth = width;
+      previousItemWidth = itemWidth;
+    }
+    for (const width of [595, 500, 360]) {
+      root.style.width = `${width}px`;
+      await settleLayout();
+      expect(item.getBoundingClientRect().width).toBeCloseTo(180, 1);
+      expect(viewport.scrollWidth).toBeGreaterThan(viewport.clientWidth);
+      expect(getComputedStyle(controls).display).toBe('flex');
+    }
+    root.style.width = '825px';
+    await settleLayout();
+    expect(getComputedStyle(controls).display).toBe('none');
+    expect(viewport.scrollLeft).toBe(0);
+  });
+
+  it('uses the actual number of steps when deciding whether the carousel is needed', async () => {
+    const root: HTMLElement = fixture.nativeElement;
+    root.style.width = '1100px';
+    host.extraSteps = ['Permissions', 'Schedule', 'Delivery', 'Confirmation'];
+    await settleLayout();
+    const viewport = root.querySelector<HTMLElement>('.i-carousel-viewport')!;
+    const controls = root.querySelector<HTMLElement>('.i-carousel-controls')!;
+    expect(viewport.scrollWidth).toBeGreaterThan(viewport.clientWidth);
+    expect(getComputedStyle(controls).display).toBe('flex');
+    expect(root.querySelectorAll('.i-carousel-dot')).toHaveLength(7);
+    host.extraSteps = [];
+    await settleLayout();
+    expect(viewport.scrollWidth).toBeLessThanOrEqual(viewport.clientWidth);
+    expect(getComputedStyle(controls).display).toBe('none');
   });
 
   it('updates the active index and emits change details', () => {

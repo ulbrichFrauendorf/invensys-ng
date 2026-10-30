@@ -55,7 +55,7 @@ export class IStepper implements AfterContentInit {
   /** Prevents skipping incomplete steps when enabled. */
   @Input() linear = false;
 
-  /** Navigation layout. Step headers become a swipeable carousel on small screens. */
+  /** Navigation layout. Step headers become swipeable only when their minimum widths no longer fit. */
   @Input() orientation: StepperOrientation = 'horizontal';
 
   /** Accessible label for the step navigation. */

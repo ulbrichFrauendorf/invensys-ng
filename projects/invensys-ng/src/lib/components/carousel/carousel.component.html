@@ -7,34 +7,51 @@
   <div
     #viewport
     class="i-carousel-viewport"
+    [class.i-carousel-dragging]="dragging"
     tabindex="0"
     [attr.aria-label]="ariaLabel + ' slides'"
     (keydown)="onKeyDown($event)"
     (scrollend)="onScrollEnd()"
+    (pointerdown)="onPointerDown($event)"
+    (lostpointercapture)="finishDrag($event)"
+    (dragstart)="preventNativeDrag($event)"
   >
     <ng-content />
   </div>
-  @if (count > 1) {
+  @if (count > 0) {
     <div class="i-carousel-controls">
-      <i-button
-        icon="pi pi-chevron-left"
-        severity="contrast"
-        [text]="true"
-        ariaLabel="Previous slide"
-        [disabled]="activeIndex <= 0"
-        (clicked)="goTo(activeIndex - 1)"
-      />
-      <span aria-live="polite" aria-atomic="true"
-        >{{ activeIndex + 1 }} of {{ count }}</span
-      >
-      <i-button
-        icon="pi pi-chevron-right"
-        severity="contrast"
-        [text]="true"
-        ariaLabel="Next slide"
-        [disabled]="activeIndex >= count - 1"
-        (clicked)="goTo(activeIndex + 1)"
-      />
+      @if (showNavigators && count > 1) {
+        <i-button
+          icon="pi pi-chevron-left"
+          severity="contrast"
+          [text]="true"
+          ariaLabel="Previous slide"
+          [disabled]="activeIndex <= 0"
+          (clicked)="goTo(activeIndex - 1)"
+        />
+      }
+      <div class="i-carousel-indicators" role="group" aria-label="Choose slide">
+        @for (item of items; track item; let index = $index) {
+          <button
+            type="button"
+            class="i-carousel-dot"
+            [class.i-carousel-dot-active]="activeIndex === index"
+            [attr.aria-label]="'Go to slide ' + (index + 1) + ' of ' + count"
+            [attr.aria-current]="activeIndex === index ? 'true' : null"
+            (click)="goTo(index)"
+          ></button>
+        }
+      </div>
+      @if (showNavigators && count > 1) {
+        <i-button
+          icon="pi pi-chevron-right"
+          severity="contrast"
+          [text]="true"
+          ariaLabel="Next slide"
+          [disabled]="activeIndex >= count - 1"
+          (clicked)="goTo(activeIndex + 1)"
+        />
+      }
     </div>
   }
 </section>

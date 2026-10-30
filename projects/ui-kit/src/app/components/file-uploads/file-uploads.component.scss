@@ -1,8 +1,18 @@
 .border-comparison {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  > * {
+    flex: 0 0 calc((100% - 16px) / 2);
+    min-width: 0;
+    box-sizing: border-box;
+  }
   gap: 16px;
   @media (max-width: 700px) {
-    grid-template-columns: minmax(0, 1fr);
+    flex-direction: column;
+    > * {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
   }
 }

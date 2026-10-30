@@ -11,9 +11,10 @@
     [sourceCode]="codeExamples.cardButton"
   >
     <p>Use a card button for an action or selection. Try Tab, Enter and Space.</p>
-    <div class="interactive-card-grid">
+    <i-carousel class="interactive-cards" [overflowOnly]="true" ariaLabel="Tools">
       @for (tool of cardTools; track tool.key) {
         <i-card-button
+          iCarouselItem
           [fullHeight]="true"
           [selected]="activeTool() === tool.key"
           ariaControls="card-tool-panel"
@@ -24,7 +25,7 @@
           <p>{{ tool.description }}</p>
         </i-card-button>
       }
-    </div>
+    </i-carousel>
     <p id="card-tool-panel" aria-live="polite">
       Selected tool: {{ activeTool() === 'password' ? 'Add password' : 'Add watermark' }}
     </p>
@@ -36,16 +37,16 @@
     [sourceCode]="codeExamples.cardLink"
   >
     <p>Routes render as links, including open in a new tab. Disabled cards cannot be activated.</p>
-    <div class="interactive-card-grid">
-      <i-card-button routerLink="/components/file-uploads" [fullHeight]="true">
+    <i-carousel class="interactive-cards" [overflowOnly]="true" ariaLabel="Card links">
+      <i-card-button iCarouselItem routerLink="/components/file-uploads" [fullHeight]="true">
         <i class="pi pi-upload card-tool-icon" aria-hidden="true"></i>
         <h3>File uploads</h3>
         <p>Browse upload examples.</p>
       </i-card-button>
-      <i-card-button [disabled]="true" [fullHeight]="true">
+      <i-card-button iCarouselItem [disabled]="true" [fullHeight]="true">
         <h3>Coming soon</h3>
         <p>This action is unavailable.</p>
       </i-card-button>
-    </div>
+    </i-carousel>
   </ng-template>
 </app-demo-playground>

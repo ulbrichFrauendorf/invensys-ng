@@ -32,13 +32,15 @@
       }
       position: sticky;
       top: var(--page-layout-sticky-offset, 0px);
-      display: grid;
-      grid-template-rows: minmax(0, 1fr);
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      interpolate-size: allow-keywords;
       min-width: 0;
       transition:
         flex-basis var(--sidebar-transition-duration) ease,
         width var(--sidebar-transition-duration) ease,
-        grid-template-rows var(--sidebar-transition-duration) ease;
+        height var(--sidebar-transition-duration) ease;
 
       @media (max-width: 991px) {
         position: static;
@@ -83,7 +85,7 @@
           flex-basis: auto;
           width: 100%;
         }
-        grid-template-rows: minmax(0, 0fr);
+        height: 0px;
 
         > .sidebar-clip {
           > .sidebar {

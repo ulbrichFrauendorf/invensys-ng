@@ -14,4 +14,22 @@
       </section>
     </i-carousel>
   </ng-template>
+  <ng-template
+    appDemoOption="full-width"
+    label="Full-width slides with navigation"
+    [sourceCode]="fullWidthSourceCode"
+    [tsCode]="tsCode"
+  >
+    <i-carousel
+      [fullWidth]="true"
+      [showNavigators]="true"
+      ariaLabel="Featured tools"
+    >
+      <section iCarouselItem class="feature-slide"><h3>Reports</h3></section>
+      <section iCarouselItem class="feature-slide"><h3>Onboarding</h3></section>
+      <section iCarouselItem class="feature-slide">
+        <h3>Automations</h3>
+      </section>
+    </i-carousel>
+  </ng-template>
 </app-demo-playground>

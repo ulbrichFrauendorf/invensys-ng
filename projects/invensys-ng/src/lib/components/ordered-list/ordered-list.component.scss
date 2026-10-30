@@ -5,14 +5,15 @@
   container-type: inline-size;
 }
 .i-ordered-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 9px;
   list-style: none;
   padding: 0;
   margin: 0;
   &__item {
-    display: grid;
-    grid-template-columns: 24px minmax(0, 1fr) auto;
+    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 12px;
     padding: 12px;
@@ -21,8 +22,11 @@
     border-radius: 6px;
   }
   &__drag-handle {
-    display: grid;
-    place-items: center;
+    flex: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
     padding: 0;
@@ -45,6 +49,7 @@
     }
   }
   &__content {
+    flex: 1;
     min-width: 0;
     overflow-wrap: anywhere;
     display: flex;
@@ -53,6 +58,7 @@
     padding-top: 3px;
   }
   &__actions {
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     gap: 3px;

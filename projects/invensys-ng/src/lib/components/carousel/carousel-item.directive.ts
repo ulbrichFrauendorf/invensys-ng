@@ -5,8 +5,9 @@ import { Directive, ElementRef, inject } from '@angular/core';
   selector: '[iCarouselItem]',
   standalone: true,
   host: {
-    '[style.flex]': "'var(--carousel-item-flex, 0 0 100%)'",
+    '[style.flex]': "'var(--carousel-item-flex, 0 0 auto)'",
     '[style.min-width.px]': '0',
+    '[style.max-width]': "'100%'",
     '[style.scroll-snap-align]': "'start'",
   },
 })

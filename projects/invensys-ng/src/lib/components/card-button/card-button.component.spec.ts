@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { ICardButton } from './card-button.component';
+import { cdp } from 'vitest/browser';
 
 @Component({
   imports: [ICardButton],
@@ -35,8 +36,35 @@ class Host {
 })
 class SlotsHost {}
 
+@Component({
+  imports: [ICardButton],
+  template: `<div class="scroll-parent" style="height: 120px; overflow: auto">
+    <i-card-button [fullHeight]="true" style="height: 80px">Card content</i-card-button>
+    <div style="height: 600px"></div>
+  </div>`,
+})
+class ScrollHost {}
+
 describe('ICardButton', () => {
   beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
+
+  it('allows the page to scroll when the wheel is over a full-height card body', async () => {
+    const fixture = TestBed.createComponent(ScrollHost);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const body = root.querySelector<HTMLElement>('.i-card-body')!;
+    const parent = root.querySelector<HTMLElement>('.scroll-parent')!;
+    const bounds = body.getBoundingClientRect();
+    await cdp().send('Input.dispatchMouseEvent', {
+      type: 'mouseWheel',
+      x: bounds.left + bounds.width / 2,
+      y: bounds.top + bounds.height / 2,
+      deltaX: 0,
+      deltaY: 100,
+    });
+    await vi.waitFor(() => expect(parent.scrollTop).toBeGreaterThan(0));
+  });
 
   it('renders projected content in a native non-submit button and emits once', () => {
     const fixture = TestBed.createComponent(Host);

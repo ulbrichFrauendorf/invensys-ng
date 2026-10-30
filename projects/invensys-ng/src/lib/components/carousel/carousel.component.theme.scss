@@ -10,6 +10,25 @@
     }
     .i-carousel-controls {
       color: colors.$color-text-secondary;
+
+      .i-carousel-indicators {
+        .i-carousel-dot {
+          background: transparent;
+
+          &::before {
+            background: colors.$color-text-secondary;
+          }
+
+          &.i-carousel-dot-active::before {
+            background: colors.$color-primary;
+          }
+
+          &:focus-visible {
+            outline: 2px solid colors.$color-primary;
+            outline-offset: 2px;
+          }
+        }
+      }
     }
   }
 }

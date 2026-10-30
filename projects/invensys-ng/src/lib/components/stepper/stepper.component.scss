@@ -22,6 +22,12 @@
         min-width: 0;
         width: 100%;
 
+        &.is-overflowing {
+          .i-stepper-connector {
+            display: none;
+          }
+        }
+
         .i-stepper-item {
           position: relative;
           min-width: 0;
@@ -92,10 +98,6 @@
             width: 24px;
             height: 2px;
             transform: translateY(-50%);
-
-            @container (max-width: 900px) {
-              display: none;
-            }
           }
         }
       }
@@ -122,8 +124,8 @@
         .i-stepper-navigation {
           @container (min-width: 901px) {
             flex: 0 0 min(280px, 35%);
-            --carousel-wide-direction: column;
-            --carousel-wide-item-flex: 0 0 auto;
+            --carousel-overflow-direction: column;
+            --carousel-overflow-item-flex: 0 0 auto;
 
             .i-stepper-item {
               .i-stepper-chevron {

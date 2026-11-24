@@ -1,0 +1,60 @@
+@use '../../themes/color-variables' as colors;
+
+@mixin i-accordion-stepper-theme() {
+  :host {
+    .i-accordion-stepper {
+      .i-accordion-stepper-item {
+        background: colors.$color-surface-card;
+        color: colors.$color-text-primary;
+
+        .i-accordion-stepper-trigger {
+          background: transparent;
+          color: inherit;
+
+          &:hover:not(:disabled):not([aria-expanded='true']) {
+            background: colors.$color-surface-hover;
+          }
+
+          &:focus-visible {
+            outline: 2px solid colors.$color-primary;
+          }
+
+          &:disabled {
+            opacity: 0.6;
+          }
+
+          .i-accordion-stepper-indicator {
+            background: colors.$color-surface-section;
+            color: colors.$color-text-primary;
+          }
+
+          .i-accordion-stepper-copy {
+            .i-accordion-stepper-description {
+              color: colors.$color-text-secondary;
+            }
+          }
+
+          .i-accordion-stepper-optional,
+          .i-accordion-stepper-chevron {
+            color: colors.$color-text-secondary;
+          }
+
+          .i-accordion-stepper-completion {
+            color: colors.$color-success;
+          }
+        }
+
+        &.i-accordion-stepper-item-open {
+          .i-accordion-stepper-trigger {
+            background: color-mix(in srgb, colors.$color-primary 8%, colors.$color-surface-card);
+
+            .i-accordion-stepper-indicator {
+              background: colors.$color-surface-card;
+              color: colors.$color-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+}

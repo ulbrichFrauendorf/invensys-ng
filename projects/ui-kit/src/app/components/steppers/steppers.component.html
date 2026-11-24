@@ -1,8 +1,4 @@
-<app-demo-playground
-  class="steppers-demo"
-  title="Steppers"
-  eyebrow="Layout &amp; Containers"
->
+<app-demo-playground class="steppers-demo" title="Steppers" eyebrow="Layout &amp; Containers">
   <ng-template
     appDemoOption="option-1"
     label="Linear workflow"
@@ -10,26 +6,14 @@
     [sourceCode]="sourceCode"
     [tsCode]="tsCode"
   >
-    <i-stepper
-      [(activeIndex)]="activeIndex"
-      [linear]="true"
-      ariaLabel="Report setup"
-    >
-      <i-step
-        label="Report details"
-        icon="pi pi-file-edit"
-        [completed]="detailsComplete"
-      >
+    <i-stepper [(activeIndex)]="activeIndex" [linear]="true" ariaLabel="Report setup">
+      <i-step label="Report details" icon="pi pi-file-edit" [completed]="detailsComplete">
         <div class="step-content">
           <h3>Report details</h3>
         </div>
       </i-step>
 
-      <i-step
-        label="Choose columns"
-        icon="pi pi-table"
-        [completed]="columnsComplete"
-      >
+      <i-step label="Choose columns" icon="pi pi-table" [completed]="columnsComplete">
         <div class="step-content">
           <h3>Choose columns</h3>
         </div>
@@ -50,10 +34,7 @@
       </i-step>
       <div stepperActions class="step-actions">
         @if (activeIndex > 0) {
-          <i-button
-            severity="contrast"
-            [text]="true"
-            (clicked)="activeIndex = activeIndex - 1"
+          <i-button severity="contrast" [text]="true" (clicked)="activeIndex = activeIndex - 1"
             >Back</i-button
           >
         }
@@ -69,23 +50,43 @@
             >
           }
           @case (2) {
-            <i-button icon="pi pi-check" (clicked)="resultsComplete = true"
-              >Save report</i-button
-            >
+            <i-button icon="pi pi-check" (clicked)="resultsComplete = true">Save report</i-button>
           }
         }
       </div>
     </i-stepper>
   </ng-template>
   <ng-template
-    appDemoOption="additional-variations"
-    label="Additional variations"
+    appDemoOption="accordion-workflow"
+    label="Accordion workflow"
+    [sourceCode]="accordionCode"
+  >
+    <i-accordion-stepper [(activeIndex)]="accordionIndex" ariaLabel="Report setup">
+      <i-step
+        label="Report details"
+        description="Name and layout"
+        icon="pi pi-file-edit"
+        [completed]="true"
+      >
+        <p>Monthly payroll comparison</p>
+      </i-step>
+      <i-step label="Review" description="Confirm selected columns" icon="pi pi-eye">
+        <p>Employee number, pay period, and gross pay</p>
+      </i-step>
+      <div stepperActions class="step-actions">
+        @if (accordionIndex === 0) {
+          <i-button (clicked)="accordionIndex = 1">Review columns</i-button>
+        } @else {
+          <i-button severity="secondary" (clicked)="accordionIndex = 0">Back</i-button>
+        }
+      </div>
+    </i-accordion-stepper>
+  </ng-template>
+  <ng-template appDemoOption="additional-variations" label="Additional variations"
     ><i-stepper orientation="horizontal"
-      ><i-step label="Details">Details</i-step
-      ><i-step label="Review">Review</i-step></i-stepper
+      ><i-step label="Details">Details</i-step><i-step label="Review">Review</i-step></i-stepper
     ><i-stepper orientation="vertical"
-      ><i-step label="Details">Details</i-step
-      ><i-step label="Review">Review</i-step></i-stepper
+      ><i-step label="Details">Details</i-step><i-step label="Review">Review</i-step></i-stepper
     ></ng-template
   >
 </app-demo-playground>

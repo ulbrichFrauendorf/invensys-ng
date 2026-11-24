@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IButton } from '../../../../../invensys-ng/src/lib/components/button/button.component';
+import { IAccordionStepper } from '../../../../../invensys-ng/src/lib/components/accordion-stepper/accordion-stepper.component';
 import { IStep } from '../../../../../invensys-ng/src/lib/components/stepper/step.component';
 import { IStepper } from '../../../../../invensys-ng/src/lib/components/stepper/stepper.component';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -8,13 +9,41 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 @Component({
   selector: 'app-steppers',
   standalone: true,
-  imports: [DemoPlaygroundComponent, DemoOptionDirective, IButton, IStep, IStepper],
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
+    IButton,
+    IAccordionStepper,
+    IStep,
+    IStepper,
+  ],
   templateUrl: './steppers.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './steppers.component.scss',
 })
 export class SteppersComponent {
   activeIndex = 0;
+  accordionIndex = 0;
+  readonly accordionCode = `<i-accordion-stepper [(activeIndex)]="accordionIndex" ariaLabel="Report setup">
+  <i-step
+    label="Report details"
+    description="Name and layout"
+    icon="pi pi-file-edit"
+    [completed]="true"
+  >
+    <p>Monthly payroll comparison</p>
+  </i-step>
+  <i-step label="Review" description="Confirm selected columns" icon="pi pi-eye">
+    <p>Employee number, pay period, and gross pay</p>
+  </i-step>
+  <div stepperActions class="step-actions">
+    @if (accordionIndex === 0) {
+      <i-button (clicked)="accordionIndex = 1">Review columns</i-button>
+    } @else {
+      <i-button severity="secondary" (clicked)="accordionIndex = 0">Back</i-button>
+    }
+  </div>
+</i-accordion-stepper>`;
   detailsComplete = false;
   columnsComplete = false;
   resultsComplete = false;

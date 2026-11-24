@@ -1,0 +1,67 @@
+<div class="i-accordion-stepper" role="group" [attr.aria-label]="ariaLabel" [attr.id]="componentId">
+  @for (step of steps; track step; let index = $index) {
+    @let active = activeIndex === index;
+    <div class="i-accordion-stepper-item" [class.i-accordion-stepper-item-open]="active">
+      <div role="heading" aria-level="3">
+        <button
+          class="i-accordion-stepper-trigger"
+          type="button"
+          [attr.id]="componentId + '-step-' + index"
+          [attr.aria-current]="active ? 'step' : null"
+          [attr.aria-expanded]="active"
+          [attr.aria-disabled]="active ? 'true' : null"
+          [attr.aria-controls]="componentId + '-panel-' + index"
+          [attr.aria-label]="headerLabel(step, index)"
+          [attr.aria-describedby]="step.description ? componentId + '-description-' + index : null"
+          [disabled]="!canSelect(index)"
+          (click)="selectStep($event, index)"
+          (keydown)="onKeyDown($event, index)"
+        >
+          <span class="i-accordion-stepper-indicator" aria-hidden="true">
+            @if (step.icon) {
+              <i [class]="step.icon"></i>
+            } @else {
+              {{ index + 1 }}
+            }
+          </span>
+          <span class="i-accordion-stepper-copy">
+            <span class="i-accordion-stepper-label">{{ step.label }}</span>
+            @if (step.description) {
+              <span
+                class="i-accordion-stepper-description"
+                [attr.id]="componentId + '-description-' + index"
+                >{{ step.description }}</span
+              >
+            }
+          </span>
+          @if (step.completed) {
+            <i class="pi pi-check i-accordion-stepper-completion" aria-hidden="true"></i>
+          } @else if (step.optional) {
+            <span class="i-accordion-stepper-optional">Optional</span>
+          }
+          <i
+            class="pi i-accordion-stepper-chevron"
+            [class.pi-chevron-up]="active"
+            [class.pi-chevron-down]="!active"
+            aria-hidden="true"
+          ></i>
+        </button>
+      </div>
+      <div
+        class="i-accordion-stepper-panel"
+        role="region"
+        [attr.id]="componentId + '-panel-' + index"
+        [attr.aria-labelledby]="componentId + '-step-' + index"
+        [hidden]="!active"
+      >
+        @if (active) {
+          <ng-container [ngTemplateOutlet]="step.contentTemplate" />
+          <ng-container [ngTemplateOutlet]="actions" />
+        }
+      </div>
+    </div>
+  }
+</div>
+<ng-template #actions>
+  <div class="i-accordion-stepper-actions"><ng-content select="[stepperActions]" /></div>
+</ng-template>

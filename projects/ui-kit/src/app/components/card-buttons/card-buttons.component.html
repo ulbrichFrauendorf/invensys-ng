@@ -11,21 +11,19 @@
     [sourceCode]="codeExamples.cardButton"
   >
     <p>Use a card button for an action or selection. Try Tab, Enter and Space.</p>
-    <i-carousel class="interactive-cards" [overflowOnly]="true" ariaLabel="Tools">
+    <nav iCardButtonGroup compact aria-label="Tools">
       @for (tool of cardTools; track tool.key) {
         <i-card-button
-          iCarouselItem
-          [fullHeight]="true"
+          tile
+          [title]="tool.title"
+          [description]="tool.description"
+          [icon]="tool.icon"
           [selected]="activeTool() === tool.key"
           ariaControls="card-tool-panel"
           (clicked)="activeTool.set(tool.key)"
-        >
-          <i class="card-tool-icon" [class]="tool.icon" aria-hidden="true"></i>
-          <h3>{{ tool.title }}</h3>
-          <p>{{ tool.description }}</p>
-        </i-card-button>
+        />
       }
-    </i-carousel>
+    </nav>
     <p id="card-tool-panel" aria-live="polite">
       Selected tool: {{ activeTool() === 'password' ? 'Add password' : 'Add watermark' }}
     </p>

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  input,
+  output,
+} from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Params, RouterLink, UrlTree } from '@angular/router';
 import { ICard } from '../card/card.component';
@@ -13,7 +20,7 @@ import { ICard } from '../card/card.component';
  *   ariaControls="password-panel" (clicked)="activeTool.set('password')">
  *   <h2>Add password</h2><p>Protect your PDFs.</p>
  * </i-card-button>
- * <i-card-button routerLink="/reports"><h2>Reports</h2></i-card-button>
+ * <i-card-button tile title="Reports" icon="pi pi-file" routerLink="/reports" />
  */
 @Component({
   selector: 'i-card-button',
@@ -21,10 +28,19 @@ import { ICard } from '../card/card.component';
   templateUrl: './card-button.component.html',
   styleUrl: './card-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[class.i-card-button--full-height]': 'fullHeight()' },
+  host: {
+    '[class.i-card-button--full-height]': 'fillsHeight()',
+    '[class.i-card-button-tile]': 'tile()',
+  },
 })
 export class ICardButton {
   readonly title = input<string>();
+  /** Displays the title, icon and description together in a centered card body. */
+  readonly tile = input(false, { transform: booleanAttribute });
+  /** PrimeIcons classes for the decorative icon in tile mode. */
+  readonly icon = input<string>();
+  readonly iconColor = input<'primary' | 'success' | 'info' | 'warning'>('primary');
+  readonly description = input<string>();
   readonly fullHeight = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
   /** Set to true/false for toggle buttons; null omits aria-pressed. */
@@ -37,6 +53,8 @@ export class ICardButton {
   readonly fragment = input<string>();
   readonly target = input<string>();
   readonly clicked = output<MouseEvent>();
+
+  protected readonly fillsHeight = computed(() => this.fullHeight() || this.tile());
 
   protected activate(event: MouseEvent): void {
     if (this.disabled()) {

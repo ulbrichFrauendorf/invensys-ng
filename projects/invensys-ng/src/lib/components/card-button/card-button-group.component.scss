@@ -1,0 +1,12 @@
+:host {
+  --i-card-button-tile-width: 17.5rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: calc(var(--i-space-large) * 1.5);
+}
+
+:host(.i-card-button-group-compact) {
+  --i-card-button-tile-width: 10rem;
+}

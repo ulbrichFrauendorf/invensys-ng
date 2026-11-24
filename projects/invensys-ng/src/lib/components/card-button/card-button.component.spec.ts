@@ -1,7 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { ICardButton } from './card-button.component';
+import { ICardButtonGroup } from './card-button-group.component';
+import type {} from '@vitest/browser-playwright';
 import { cdp } from 'vitest/browser';
 
 @Component({
@@ -44,6 +46,24 @@ class SlotsHost {}
   </div>`,
 })
 class ScrollHost {}
+
+@Component({
+  imports: [ICardButton, ICardButtonGroup],
+  template: `<nav iCardButtonGroup [compact]="compact()" style="width: 24rem">
+    <i-card-button
+      tile
+      title="Add password"
+      description="Require a password to open PDFs"
+      icon="pi pi-lock"
+      ariaControls="tool-panel"
+      [selected]="true"
+    />
+    <i-card-button tile title="Add watermark" />
+  </nav>`,
+})
+class TileGroupHost {
+  readonly compact = signal(false);
+}
 
 describe('ICardButton', () => {
   beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
@@ -117,6 +137,30 @@ describe('ICardButton', () => {
       'Footer detail',
     );
     expect(fixture.nativeElement.textContent).not.toContain('Fallback title');
+  });
+
+  it('renders centered tile content in the native button and wraps to the group width', () => {
+    const fixture = TestBed.createComponent(TileGroupHost);
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    const [password, watermark] = root.querySelectorAll('i-card-button button');
+
+    expect(password.querySelector('h5')?.textContent).toBe('Add password');
+    expect(password.querySelector('p')?.textContent).toBe('Require a password to open PDFs');
+    expect(password.querySelector('[aria-hidden="true"] i.pi-lock')).not.toBeNull();
+    expect(password.querySelector('.i-card-title')).toBeNull();
+    expect(password.getAttribute('aria-controls')).toBe('tool-panel');
+    expect(password.getAttribute('aria-pressed')).toBe('true');
+    expect(watermark.querySelector('p')).toBeNull();
+    expect(watermark.getBoundingClientRect().top).toBeGreaterThan(
+      password.getBoundingClientRect().top,
+    );
+
+    fixture.componentInstance.compact.set(true);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+    expect(watermark.getBoundingClientRect().top).toBe(password.getBoundingClientRect().top);
+    expect(watermark.getBoundingClientRect().height).toBe(password.getBoundingClientRect().height);
   });
 
   it('renders routes as real links and removes navigation when disabled', () => {

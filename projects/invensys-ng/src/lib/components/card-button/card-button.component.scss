@@ -1,15 +1,23 @@
-@use "./card-button.component.theme.scss" as theme;
-@use "../../themes/variables" as vars;
+@use './card-button.component.theme.scss' as theme;
+@use '../../themes/variables' as vars;
 
 :host {
   display: block;
   min-width: 0;
 }
+
 :host(.i-card-button--full-height) {
   height: 100%;
+
+  .i-card-button {
+    height: 100%;
+  }
 }
-:host(.i-card-button--full-height) .i-card-button {
-  height: 100%;
+
+:host(.i-card-button-tile) {
+  flex: 1 1 min(100%, var(--i-card-button-tile-width, 100%));
+  height: auto;
+  text-align: center;
 }
 
 .i-card-title {
@@ -36,7 +44,26 @@
     box-shadow 0.2s ease,
     border-color 0.2s ease;
 
-  &:hover:not(:disabled):not([aria-disabled="true"]) {
+  .i-card-button-tile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--i-space-large);
+
+    .i-card-button-tile-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  &:hover:not(:disabled):not([aria-disabled='true']) {
     transform: translateY(-0.25rem);
   }
   &:focus-visible {
@@ -45,7 +72,7 @@
     outline-offset: 0.1875rem;
   }
   &:disabled,
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     cursor: default;
     opacity: 0.65;
   }
@@ -54,7 +81,7 @@
   }
 }
 
-.i-card-button:hover:not(:disabled):not([aria-disabled="true"]) {
+.i-card-button:hover:not(:disabled):not([aria-disabled='true']) {
   @media (prefers-reduced-motion: reduce) {
     transform: none;
   }

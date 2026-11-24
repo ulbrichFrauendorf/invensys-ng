@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ICardButton } from '@shared/components/card-button/card-button.component';
+import { ICardButtonGroup } from '@shared/components/card-button/card-button-group.component';
 import { ICarousel } from '@shared/components/carousel/carousel.component';
 import { ICarouselItem } from '@shared/components/carousel/carousel-item.directive';
 import { DemoPlaygroundComponent } from '../demo-playground/demo-playground.component';
@@ -7,7 +8,14 @@ import { DemoOptionDirective } from '../demo-playground/demo-option.directive';
 
 @Component({
   selector: 'app-card-buttons',
-  imports: [DemoPlaygroundComponent, DemoOptionDirective, ICardButton, ICarousel, ICarouselItem],
+  imports: [
+    DemoPlaygroundComponent,
+    DemoOptionDirective,
+    ICardButton,
+    ICardButtonGroup,
+    ICarousel,
+    ICarouselItem,
+  ],
   templateUrl: './card-buttons.component.html',
   styleUrl: './card-buttons.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,16 +38,13 @@ export class CardButtonsComponent {
   ];
 
   readonly codeExamples = {
-    cardButton: `<i-carousel [overflowOnly]="true" ariaLabel="Tools" style="--carousel-min-item-width: 260px">
-@for (tool of tools; track tool.key) {
-  <i-card-button iCarouselItem [fullHeight]="true" [selected]="activeTool() === tool.key"
-    ariaControls="tool-panel" (clicked)="activeTool.set(tool.key)">
-    <i [class]="tool.icon" aria-hidden="true"></i>
-    <h2>{{ tool.title }}</h2>
-    <p>{{ tool.description }}</p>
-  </i-card-button>
-}
-</i-carousel>`,
+    cardButton: `<nav iCardButtonGroup compact aria-label="Tools">
+  @for (tool of tools; track tool.key) {
+    <i-card-button tile [title]="tool.title" [description]="tool.description" [icon]="tool.icon"
+      [selected]="activeTool() === tool.key" ariaControls="tool-panel"
+      (clicked)="activeTool.set(tool.key)" />
+  }
+</nav>`,
     cardLink: `<i-carousel [overflowOnly]="true" ariaLabel="Card links" style="--carousel-min-item-width: 260px">
 <i-card-button iCarouselItem routerLink="/components/file-uploads" [fullHeight]="true">
   <h3>File uploads</h3><p>Browse upload examples.</p>

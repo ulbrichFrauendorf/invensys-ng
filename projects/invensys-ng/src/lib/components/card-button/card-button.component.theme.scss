@@ -6,6 +6,26 @@
     background: transparent;
     color: colors.$color-text-primary;
 
+    .i-card-button-tile-content {
+      .i-card-button-tile-icon {
+        &.i-card-button-tile-icon-primary {
+          color: colors.$color-primary;
+        }
+
+        &.i-card-button-tile-icon-success {
+          color: colors.$color-success;
+        }
+
+        &.i-card-button-tile-icon-info {
+          color: colors.$color-info;
+        }
+
+        &.i-card-button-tile-icon-warning {
+          color: colors.$color-warning;
+        }
+      }
+    }
+
     &:hover:not(:disabled):not([aria-disabled='true']) {
       box-shadow: colors.$color-box-shadow;
       border-color: colors.$color-surface-border;

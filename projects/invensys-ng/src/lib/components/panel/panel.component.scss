@@ -1,5 +1,5 @@
-@use "./panel.component.theme.scss" as theme;
-@use "../../themes/_variables.scss" as vars;
+@use './panel.component.theme.scss' as theme;
+@use '../../themes/_variables.scss' as vars;
 
 @include theme.i-panel-theme();
 
@@ -69,14 +69,11 @@
 
   .i-panel-content-wrapper {
     overflow: visible;
-    transition:
-      max-height 0.3s ease,
-      opacity 0.2s ease;
-    max-height: 62.5rem;
+    transition: opacity 0.2s ease;
     opacity: 1;
 
     &.i-panel-content-wrapper--collapsed {
-      max-height: 0;
+      height: 0;
       opacity: 0;
       overflow: hidden;
     }

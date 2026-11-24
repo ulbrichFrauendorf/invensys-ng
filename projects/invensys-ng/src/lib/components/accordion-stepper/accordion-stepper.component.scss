@@ -15,77 +15,108 @@
       border: 1px solid colors.$color-surface-border;
       border-radius: var(--i-radius-surface);
 
-      &.i-accordion-stepper-item-open {
-        border: 1px solid colors.$color-primary;
+      .i-accordion-stepper-header {
+        display: flex;
+        border-radius: var(--i-radius-surface);
 
-        .i-accordion-stepper-trigger {
-          border-end-start-radius: 0;
-          border-end-end-radius: 0;
-          cursor: default;
+        .i-accordion-stepper-heading {
+          flex: 1 1 auto;
+          min-width: 0;
+          border-radius: inherit;
+
+          .i-accordion-stepper-trigger {
+            display: flex;
+            width: 100%;
+            min-height: var(--i-field-height);
+            align-items: center;
+            gap: var(--i-space-medium);
+            padding: var(--i-space-medium) var(--i-space-large);
+            box-sizing: border-box;
+            border: 0;
+            border-radius: inherit;
+            font: inherit;
+            text-align: start;
+            cursor: pointer;
+
+            &:focus-visible {
+              outline-offset: -2px;
+            }
+
+            &:disabled {
+              cursor: not-allowed;
+            }
+
+            .i-accordion-stepper-indicator {
+              display: flex;
+              flex: 0 0 var(--i-control-medium);
+              height: var(--i-control-medium);
+              align-items: center;
+              justify-content: center;
+              border-radius: var(--i-radius-control);
+              font-size: var(--i-font-emphasis);
+              font-weight: 600;
+            }
+
+            .i-accordion-stepper-copy {
+              display: flex;
+              flex: 1 1 auto;
+              flex-direction: column;
+              min-width: 0;
+              gap: var(--i-space-small);
+              overflow-wrap: anywhere;
+
+              .i-accordion-stepper-label {
+                font-size: var(--i-font-emphasis);
+                font-weight: 600;
+                line-height: 1.25;
+              }
+
+              .i-accordion-stepper-description {
+                font-size: var(--i-font-body);
+                line-height: 1.35;
+              }
+            }
+
+            .i-accordion-stepper-optional,
+            .i-accordion-stepper-chevron {
+              font-size: var(--i-font-caption);
+            }
+
+            .i-accordion-stepper-completion,
+            .i-accordion-stepper-chevron {
+              flex-shrink: 0;
+            }
+          }
+        }
+
+        .i-accordion-stepper-previous {
+          display: flex;
+          flex: 0 0 var(--i-field-height);
+          min-width: 44px;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          border: 0;
+          border-start-end-radius: var(--i-radius-surface);
+          font-size: var(--i-font-caption);
+          cursor: pointer;
+
+          &:focus-visible {
+            outline-offset: -2px;
+          }
         }
       }
 
-      .i-accordion-stepper-trigger {
-        display: flex;
-        width: 100%;
-        min-height: var(--i-field-height);
-        align-items: center;
-        gap: var(--i-space-medium);
-        padding: var(--i-space-medium) var(--i-space-large);
-        box-sizing: border-box;
-        border: 0;
-        border-radius: var(--i-radius-surface);
-        font: inherit;
-        text-align: start;
-        cursor: pointer;
+      &.i-accordion-stepper-item-open {
+        .i-accordion-stepper-header {
+          border-end-start-radius: 0;
+          border-end-end-radius: 0;
 
-        &:focus-visible {
-          outline-offset: -2px;
-        }
-
-        &:disabled {
-          cursor: not-allowed;
-        }
-
-        .i-accordion-stepper-indicator {
-          display: flex;
-          flex: 0 0 var(--i-control-medium);
-          height: var(--i-control-medium);
-          align-items: center;
-          justify-content: center;
-          border-radius: var(--i-radius-control);
-          font-size: var(--i-font-emphasis);
-          font-weight: 600;
-        }
-
-        .i-accordion-stepper-copy {
-          display: flex;
-          flex: 1 1 auto;
-          flex-direction: column;
-          min-width: 0;
-          gap: var(--i-space-small);
-          overflow-wrap: anywhere;
-
-          .i-accordion-stepper-label {
-            font-size: var(--i-font-emphasis);
-            font-weight: 600;
-            line-height: 1.25;
+          .i-accordion-stepper-heading {
+            .i-accordion-stepper-trigger {
+              cursor: default;
+            }
           }
-
-          .i-accordion-stepper-description {
-            font-size: var(--i-font-body);
-            line-height: 1.35;
-          }
-        }
-
-        .i-accordion-stepper-optional,
-        .i-accordion-stepper-chevron {
-          font-size: var(--i-font-caption);
-        }
-
-        .i-accordion-stepper-completion,
-        .i-accordion-stepper-chevron {
-          flex-shrink: 0;
         }
       }
 

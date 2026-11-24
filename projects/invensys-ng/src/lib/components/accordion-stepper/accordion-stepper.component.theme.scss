@@ -7,50 +7,64 @@
         background: colors.$color-surface-card;
         color: colors.$color-text-primary;
 
-        .i-accordion-stepper-trigger {
-          background: transparent;
-          color: inherit;
+        .i-accordion-stepper-header {
+          .i-accordion-stepper-trigger,
+          .i-accordion-stepper-previous {
+            background: transparent;
+            color: inherit;
 
-          &:hover:not(:disabled):not([aria-expanded='true']) {
-            background: colors.$color-surface-hover;
-          }
-
-          &:focus-visible {
-            outline: 2px solid colors.$color-primary;
-          }
-
-          &:disabled {
-            opacity: 0.6;
-          }
-
-          .i-accordion-stepper-indicator {
-            background: colors.$color-surface-section;
-            color: colors.$color-text-primary;
-          }
-
-          .i-accordion-stepper-copy {
-            .i-accordion-stepper-description {
-              color: colors.$color-text-secondary;
+            &:focus-visible {
+              outline: 2px solid colors.$color-primary;
             }
           }
 
-          .i-accordion-stepper-optional,
-          .i-accordion-stepper-chevron {
-            color: colors.$color-text-secondary;
+          .i-accordion-stepper-trigger {
+            &:hover:not(:disabled):not([aria-expanded='true']) {
+              background: colors.$color-surface-hover;
+            }
+
+            &:disabled {
+              opacity: 0.6;
+            }
+
+            .i-accordion-stepper-indicator {
+              background: colors.$color-surface-section;
+            }
+
+            .i-accordion-stepper-copy {
+              .i-accordion-stepper-description {
+                color: colors.$color-text-secondary;
+              }
+            }
+
+            .i-accordion-stepper-optional,
+            .i-accordion-stepper-chevron {
+              color: colors.$color-text-secondary;
+            }
+
+            .i-accordion-stepper-completion {
+              color: colors.$color-success;
+            }
           }
 
-          .i-accordion-stepper-completion {
-            color: colors.$color-success;
+          .i-accordion-stepper-previous {
+            color: colors.$color-text-secondary;
+
+            &:hover {
+              background: colors.$color-surface-hover;
+              color: colors.$color-text-primary;
+            }
           }
         }
 
         &.i-accordion-stepper-item-open {
-          .i-accordion-stepper-trigger {
-            background: color-mix(in srgb, colors.$color-primary 8%, colors.$color-surface-card);
+          .i-accordion-stepper-header {
+            background: colors.$color-surface-section;
 
-            .i-accordion-stepper-indicator {
-              background: colors.$color-surface-card;
-              color: colors.$color-primary;
+            .i-accordion-stepper-trigger {
+              .i-accordion-stepper-indicator {
+                background: colors.$color-surface-card;
+              }
             }
           }
         }

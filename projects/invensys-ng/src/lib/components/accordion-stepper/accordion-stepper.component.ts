@@ -45,6 +45,16 @@ export class IAccordionStepper extends StepperBase implements OnChanges {
     return `Step ${index + 1} of ${this.steps.length}: ${step.label}${status}`;
   }
 
+  protected selectPrevious(event: Event, index: number): void {
+    const previousIndex = index - 1;
+    if (!this.canSelect(previousIndex)) {
+      return;
+    }
+
+    this.selectStep(event, previousIndex);
+    afterNextRender(() => this.focusStep(this.activeIndex), { injector: this.injector });
+  }
+
   protected onKeyDown(event: KeyboardEvent, index: number): void {
     this.moveFocus(event, index, 'ArrowUp', 'ArrowDown');
   }

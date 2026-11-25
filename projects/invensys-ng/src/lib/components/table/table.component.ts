@@ -6,6 +6,7 @@ import {
   inject,
   Component,
   Input,
+  model,
   Output,
   EventEmitter,
   signal,
@@ -530,7 +531,7 @@ export class ITable {
    * Expanded rows
    * @internal
    */
-  expandedRows = signal<Set<any>>(new Set());
+  readonly expandedRows = model<Set<any>>(new Set());
 
   /**
    * Filter debounce timer
@@ -1045,18 +1046,18 @@ export class ITable {
     event.stopPropagation();
     if (!this.hasDetails()) return;
 
-    const expanded = this.expandedRows();
-    const isExpanded = expanded.has(row);
+    const expanded = new Set(this.expandedRows());
+    const expandedRow = this.findExpandedRow(row);
 
-    if (isExpanded) {
-      expanded.delete(row);
+    if (expandedRow !== undefined) {
+      expanded.delete(expandedRow);
       this.onRowCollapse.emit(row);
     } else {
       expanded.add(row);
       this.onRowExpand.emit(row);
     }
 
-    this.expandedRows.set(new Set(expanded));
+    this.expandedRows.set(expanded);
   }
 
   /**
@@ -1064,7 +1065,18 @@ export class ITable {
    * @internal
    */
   isRowExpanded(row: any): boolean {
-    return this.expandedRows().has(row);
+    return this.findExpandedRow(row) !== undefined;
+  }
+
+  private findExpandedRow(row: any): any {
+    const expanded = this.expandedRows();
+    if (expanded.has(row)) return row;
+    if (this.dataKey && row?.[this.dataKey] != null) {
+      for (const expandedRow of expanded) {
+        if (this.compareObjects(expandedRow, row)) return expandedRow;
+      }
+    }
+    return undefined;
   }
 
   // ===== DOWNLOAD METHODS =====

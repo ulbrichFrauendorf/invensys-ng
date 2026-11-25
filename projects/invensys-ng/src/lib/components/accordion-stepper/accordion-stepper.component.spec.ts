@@ -1,11 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { PageLayoutComponent } from '../page-layout/page-layout.component';
 import { IPanel } from '../panel/panel.component';
 import { IStep } from '../stepper/step.component';
 import { StepperChangeEvent } from '../stepper/stepper.component';
 import { IAccordionStepper } from './accordion-stepper.component';
 
 @Component({
+  selector: 'test-accordion-stepper',
   imports: [IAccordionStepper, IPanel, IStep],
   template: `
     <i-accordion-stepper
@@ -38,6 +40,20 @@ class Host {
     this.detailsComplete.set(true);
     this.index.set(2);
   }
+}
+
+@Component({
+  imports: [Host, PageLayoutComponent],
+  template: `
+    <div class="scrollport" style="height: 16rem; overflow-y: auto">
+      <i-page-layout headerText="Report setup">
+        <test-accordion-stepper />
+      </i-page-layout>
+    </div>
+  `,
+})
+class ScrollHost {
+  readonly stepper = viewChild.required(Host);
 }
 
 describe('IAccordionStepper', () => {
@@ -97,6 +113,52 @@ describe('IAccordionStepper', () => {
     expect(actions.top).toBeGreaterThanOrEqual(content.bottom);
     expect(panel.getBoundingClientRect().bottom).toBeGreaterThanOrEqual(actions.bottom);
     expect(nextHeader.top).toBeGreaterThanOrEqual(actions.bottom);
+  });
+
+  it('aligns a newly opened step below the sticky page header even at the end of the viewport', async () => {
+    const fixture = TestBed.createComponent(ScrollHost);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const scrollport = root.querySelector<HTMLElement>('.scrollport')!;
+    const pageHeader = root.querySelector<HTMLElement>('.page-header')!;
+    expect(scrollport.scrollTop).toBe(0);
+
+    fixture.componentInstance.stepper().advance();
+    fixture.detectChanges();
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+    const currentHeader = root
+      .querySelector('[aria-current="step"]')
+      ?.closest('.i-accordion-stepper-header');
+    expect(currentHeader?.getBoundingClientRect().top).toBeCloseTo(
+      pageHeader.getBoundingClientRect().bottom,
+      0,
+    );
+    expect(scrollport.scrollTop).toBeGreaterThan(0);
+  });
+
+  it('derives the open header background from the active theme', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    const openHeader = root.querySelector(
+      '.i-accordion-stepper-item-open .i-accordion-stepper-header',
+    )!;
+    const closedHeader = root.querySelector(
+      '.i-accordion-stepper-item:not(.i-accordion-stepper-item-open) .i-accordion-stepper-header',
+    )!;
+
+    root.style.setProperty('--color-primary', 'orange');
+    root.style.setProperty('--surface-card', 'white');
+    const lightBackground = getComputedStyle(openHeader).backgroundColor;
+    expect(lightBackground).not.toBe(getComputedStyle(closedHeader).backgroundColor);
+
+    root.style.setProperty('--color-primary', 'yellow');
+    root.style.setProperty('--surface-card', 'black');
+    const darkBackground = getComputedStyle(openHeader).backgroundColor;
+    expect(darkBackground).not.toBe(lightBackground);
+    expect(darkBackground).not.toBe(getComputedStyle(closedHeader).backgroundColor);
   });
 
   it('uses the active caret to open the previous available step and restore focus', async () => {

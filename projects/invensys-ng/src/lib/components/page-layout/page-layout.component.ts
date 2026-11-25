@@ -34,7 +34,10 @@ import {
  */
 @Component({
   selector: 'i-page-layout',
-  host: { '[style.--page-layout-sticky-offset.px]': 'stickyOffset()' },
+  host: {
+    '[style.--page-layout-sticky-offset.px]': 'stickyOffset()',
+    '[style.--page-layout-content-sticky-offset.px]': 'contentStickyOffset()',
+  },
   imports: [IButton, NgTemplateOutlet],
   templateUrl: './page-layout.component.html',
   styleUrl: './page-layout.component.scss',
@@ -52,7 +55,7 @@ export class PageLayoutComponent {
   protected readonly stickyOffset: Signal<number> = computed(
     () => this.parentLayout?.contentStickyOffset() ?? 0,
   );
-  private readonly contentStickyOffset: Signal<number> = computed(
+  protected readonly contentStickyOffset: Signal<number> = computed(
     () => this.stickyOffset() + this.stickyHeaderHeight(),
   );
   readonly headerText = input.required<string>();

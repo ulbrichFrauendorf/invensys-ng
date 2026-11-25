@@ -4,6 +4,7 @@
 :host {
   display: block;
   min-width: 0;
+  overflow-anchor: none;
 
   .i-accordion-stepper {
     display: flex;

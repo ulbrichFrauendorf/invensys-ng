@@ -59,7 +59,11 @@
 
         &.i-accordion-stepper-item-open {
           .i-accordion-stepper-header {
-            background: colors.$color-surface-section;
+            background: color-mix(
+              in srgb,
+              #{colors.$color-primary} 12%,
+              #{colors.$color-surface-card}
+            );
 
             .i-accordion-stepper-trigger {
               .i-accordion-stepper-indicator {

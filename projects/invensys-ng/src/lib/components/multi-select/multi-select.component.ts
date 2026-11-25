@@ -112,7 +112,7 @@ export class IMultiSelect implements ControlValueAccessor {
   readonly loading = input(false);
 
   /**
-   * Label text displayed for the multi-select
+   * Field label. An empty string disables the floating label and uses the placeholder as the accessible name.
    * @default 'Multi Select'
    */
   @Input() label = 'Multi Select';
@@ -622,7 +622,7 @@ export class IMultiSelect implements ControlValueAccessor {
     const err = c?.errors || {};
     switch (key) {
       case 'required':
-        return `${this.label} is required`;
+        return `${this.label || 'Selection'} is required`;
       case 'minlength':
         return `Minimum ${err['minlength']?.requiredLength} items required`;
       case 'minArrayLength':

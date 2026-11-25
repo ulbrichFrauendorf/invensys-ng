@@ -33,6 +33,30 @@ class Host {
 }
 
 describe('ITable action progress', () => {
+  it('keeps a detail row expanded when the grid replaces it with the same data key', () => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.detectChanges();
+    fixture.debugElement
+      .query(By.css('.i-table-expand-cell button'))
+      .nativeElement.click();
+    fixture.detectChanges();
+
+    const host = fixture.componentInstance;
+    host.grid = { ...host.grid, rows: [{ id: 'run' }, { id: 'another-run' }] };
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.queryAll(By.css('.i-table-expanded-row')),
+    ).toHaveLength(1);
+    fixture.debugElement
+      .query(By.css('.i-table-expand-cell button'))
+      .nativeElement.click();
+    fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css('.i-table-expanded-row')),
+    ).toBeNull();
+  });
+
   it('renders the shared spinner in detail actions, leaves that heading blank, and stops after completion', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.changeDetectorRef.markForCheck();

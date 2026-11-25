@@ -31,6 +31,25 @@ describe('IMultiSelect', () => {
     expect(component).toBeTruthy();
   });
 
+  it('shows the placeholder and keeps an accessible name without a visible label', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.componentRef.setInput('placeholder', 'Choose a region');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.i-option-label')).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.i-option-field--float'),
+    ).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.i-option-text').textContent.trim(),
+    ).toBe('Choose a region');
+    expect(
+      fixture.nativeElement
+        .querySelector('.i-option-trigger')
+        .getAttribute('aria-label'),
+    ).toBe('Choose a region');
+  });
+
   describe('Component Inputs', () => {
     it('should have default values', () => {
       expect(component.label).toBe('Multi Select');
